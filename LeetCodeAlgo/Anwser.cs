@@ -77,6 +77,62 @@ namespace LeetCodeAlgo
             return number;
         }
 
+        //18
+        public IList<IList<int>> FourSum(int[] nums, int target)
+        {
+            Array.Sort(nums);
+            List<IList<int>> result = new List<IList<int>>();
+            List<int> codeList = new List<int>();
+            int i=0, j=1, k=2, l=3;
+            for(i = 0; i < nums.Length - 3; i++)
+            {
+                //if (i>0 && nums[i] == nums[i - 1] && i+1 < j) { continue; }
+                for (j = i + 1; j < nums.Length - 2; j++)
+                {
+                    //if (j > 1 && nums[j] == nums[j - 1] && j+1  < k) { continue; }
+                    for (k = j + 1; k < nums.Length - 1; k++)
+                    {
+                        //if (k > 2 && nums[k] == nums[k - 1] && k+1  < l) { continue; }
+                        for (l = k + 1; l < nums.Length; l++)
+                        {
+                            if (nums[i] + nums[j] + nums[k] + nums[l] > target)
+                            {
+                                break;
+                            }
+
+                            if (nums[i] + nums[j] + nums[k] + nums[l] == target)
+                            {
+                                //int code= GetCode(current);
+                                int code = nums[i] + 10*nums[j] + 100*nums[k] + 1000*nums[l];
+
+                                if (!codeList.Contains(code))
+                                {
+                                    codeList.Add(code);
+                                    result.Add(new int[] { nums[i], nums[j], nums[k], nums[l] });
+                                }
+
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+        public int GetCode(int[] nums)
+        {
+
+            return nums[0]+nums[1]*10+nums[2]*100+nums[3]*1000;
+        }
+
+        public bool IsSameFourIntArray(int[] first,int[] second)
+        {
+            for(int i = 0; i < first.Length; i++)
+            {
+                if (first[i] != second[i]) return false;
+            }
+            return true;
+        }
         //26
         public int RemoveDuplicates(int[] nums)
         {
@@ -123,7 +179,12 @@ namespace LeetCodeAlgo
 
             return nums.Length;
         }
+        //38
+        public string CountAndSay(int n)
+        {
+            string s = n.ToString();
 
+        }
         //53
         public int MaxSubArray(int[] nums)
         {

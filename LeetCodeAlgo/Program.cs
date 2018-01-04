@@ -12,8 +12,9 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var a = new Anwser();
-            int data = 333;
-            Console.WriteLine("result="+ a.IntToRoman(data));
+            //var input = new char[]{ 'a', 'a', 'b', 'b', 'b', 'c', 'c' };
+            var input = new char[] { 'a' };
+            Console.WriteLine("result="+ a.Compress(input));
             Console.ReadLine();
         }
     }
