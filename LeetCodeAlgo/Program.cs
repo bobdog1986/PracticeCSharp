@@ -13,8 +13,8 @@ namespace LeetCodeAlgo
             Console.WriteLine("Run\r\n****************************\r\n");
             var a = new Anwser();
             //var input = new char[]{ 'a', 'a', 'b', 'b', 'b', 'c', 'c' };
-            var input = 2;
-            var result = a.CountAndSay(input);
+            var input = 2147483647;
+            var result = a.IsPerfectSquare(input);
             Console.WriteLine("result="+ result);
 
             Console.ReadLine();

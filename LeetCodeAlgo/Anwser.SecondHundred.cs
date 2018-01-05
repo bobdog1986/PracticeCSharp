@@ -125,5 +125,20 @@ namespace LeetCodeAlgo
             }
             throw new ArgumentOutOfRangeException();
         }
+        //174 not done
+        public int CalculateMinimumHP(int[,] dungeon)
+        {
+            if (dungeon == null || dungeon.Length == 0) return 0;
+
+            int col = dungeon.GetLength(0);
+            int row = dungeon.GetLength(1);
+
+            int maxLost = 0;
+
+            List<int> path = new List<int>();
+
+
+            return maxLost > 0?1:(maxLost+1);
+        }
     }
 }
