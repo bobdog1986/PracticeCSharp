@@ -13,8 +13,10 @@ namespace LeetCodeAlgo
             Console.WriteLine("Run\r\n****************************\r\n");
             var a = new Anwser();
             //var input = new char[]{ 'a', 'a', 'b', 'b', 'b', 'c', 'c' };
-            var input = new char[] { 'a' };
-            Console.WriteLine("result="+ a.Compress(input));
+            var input = 2;
+            var result = a.CountAndSay(input);
+            Console.WriteLine("result="+ result);
+
             Console.ReadLine();
         }
     }

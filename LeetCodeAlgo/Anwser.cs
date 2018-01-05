@@ -83,8 +83,8 @@ namespace LeetCodeAlgo
             Array.Sort(nums);
             List<IList<int>> result = new List<IList<int>>();
             List<int> codeList = new List<int>();
-            int i=0, j=1, k=2, l=3;
-            for(i = 0; i < nums.Length - 3; i++)
+            int i = 0, j = 1, k = 2, l = 3;
+            for (i = 0; i < nums.Length - 3; i++)
             {
                 //if (i>0 && nums[i] == nums[i - 1] && i+1 < j) { continue; }
                 for (j = i + 1; j < nums.Length - 2; j++)
@@ -103,7 +103,7 @@ namespace LeetCodeAlgo
                             if (nums[i] + nums[j] + nums[k] + nums[l] == target)
                             {
                                 //int code= GetCode(current);
-                                int code = nums[i] + 10*nums[j] + 100*nums[k] + 1000*nums[l];
+                                int code = nums[i] + 10 * nums[j] + 100 * nums[k] + 1000 * nums[l];
 
                                 if (!codeList.Contains(code))
                                 {
@@ -122,12 +122,12 @@ namespace LeetCodeAlgo
         public int GetCode(int[] nums)
         {
 
-            return nums[0]+nums[1]*10+nums[2]*100+nums[3]*1000;
+            return nums[0] + nums[1] * 10 + nums[2] * 100 + nums[3] * 1000;
         }
 
-        public bool IsSameFourIntArray(int[] first,int[] second)
+        public bool IsSameFourIntArray(int[] first, int[] second)
         {
-            for(int i = 0; i < first.Length; i++)
+            for (int i = 0; i < first.Length; i++)
             {
                 if (first[i] != second[i]) return false;
             }
@@ -182,9 +182,44 @@ namespace LeetCodeAlgo
         //38
         public string CountAndSay(int n)
         {
-            string s = n.ToString();
+            string s = "1";
+            if (n == 1) return s;
 
+            for (int i = 0; i < n - 1; i++)
+            {
+                s = GetCountAndSay(s);
+            }
+            return s;
         }
+
+        public string GetCountAndSay(string s)
+        {
+            var arr = s.ToCharArray();
+            List<char> result = new List<char>();
+            char pre = arr[0];
+            int occured = 1;
+            char current;
+            for (int i = 1; i < arr.Length; i++)
+            {
+                current = arr[i];
+                if (current == pre)
+                {
+                    occured++;
+                }
+                else
+                {
+                    result.AddRange(occured.ToString().ToCharArray());
+                    result.Add(pre);
+                    pre = current;
+                    occured = 1;
+                }
+
+            }
+            result.AddRange(occured.ToString().ToCharArray());
+            result.Add(pre);
+            return new string(result.ToArray());
+        }
+
         //53
         public int MaxSubArray(int[] nums)
         {
@@ -264,6 +299,82 @@ namespace LeetCodeAlgo
         {
             if (nums == null || nums.Length == 0) return 0;
             return nums.Aggregate((x, y) => x + y);
+        }
+        //94
+        public IList<int> InorderTraversal(TreeNode root)
+        {
+            List<int> values = new List<int>();
+
+            if (root == null) return values;
+
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            TreeNode node = root;
+
+            while (node != null || stack.Any())
+            {
+                if (node != null)
+                {
+                    stack.Push(node);
+                    node = node.left;
+                }
+                else
+                {
+                    var item = stack.Pop();
+                    values.Add(item.val);
+                    node = item.right;
+                }
+            }
+            return values;
+        }
+
+        public IList<int> LayerTraversal(TreeNode root)
+        {
+            List<int> values = new List<int>();
+
+            if (root == null) return values;
+
+            IList<TreeNode> nodes = new List<TreeNode> { root };
+
+            while (nodes != null && nodes.Count > 0)
+            {
+                nodes = GetInorderAndReturnSubNodes(nodes, values);
+            }
+
+            return values;
+        }
+        public IList<TreeNode> GetInorderAndReturnSubNodes(IList<TreeNode> nodes,List<int> values)
+        {
+            if (nodes == null||nodes.Count==0) return null;
+            IList<TreeNode> subNodes = new List<TreeNode>();
+            foreach(var n in nodes)
+            {
+                values.Add(n.val);
+                if (n.left != null) { subNodes.Add(n.left); }
+                if (n.right != null) { subNodes.Add(n.right); }
+            }
+            return subNodes;
+        }
+        //98
+        public bool IsValidBST(TreeNode root)
+        {
+            if (root == null) return true;
+            if (root.left == null && root.right == null) return true;
+            return IsValidNode(root, (long)int.MaxValue+1, (long)int.MinValue-1);
+            //return (root.left != null && ((root.left.val < root.val) && IsValidBST(root.left))) &&
+            //    (root.right != null && ((root.right.val > root.val) && IsValidBST(root.right)));
+
+            //return (root.left == null || ((root.left.val < root.val) && IsValidBST(root.left))) &&
+            //    (root.right == null || ((root.right.val > root.val) && IsValidBST(root.right)));
+        }
+
+        public bool IsValidNode(TreeNode node, long maxlimit, long minlimit)
+        {
+            if (node == null) return true;
+            if (node.val >= maxlimit || node.val <= minlimit) return false;
+
+            return IsValidNode(node.left, Math.Min(node.val, maxlimit), minlimit) &&
+                IsValidNode(node.right, maxlimit, Math.Max(node.val, minlimit));
+
         }
     }
 }

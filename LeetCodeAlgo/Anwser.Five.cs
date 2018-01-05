@@ -39,11 +39,6 @@ namespace LeetCodeAlgo
                 }
             }
 
-            foreach(var i in result)
-            {
-                Console.WriteLine(i);
-            }
-            //chars = result.ToArray();
             Array.Copy(result.ToArray(), chars, result.Count);
             return result.Count;
         }
@@ -55,5 +50,23 @@ namespace LeetCodeAlgo
         {
             return num.ToString().ToCharArray();
         }
+        //492
+        public int[] ConstructRectangle(int area)
+        {
+            int[] result = new int[2] {area,1 };
+            int min = (int)Math.Sqrt(area);
+            for(int len = min; len < area; len++)
+            {
+                if (area % len == 0)
+                {
+                    if(len>= area / len)
+                    {
+                        return new int[2] { len, area / len };
+                    }
+                }
+            }
+            return result;
+        }
+
     }
 }
