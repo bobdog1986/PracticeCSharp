@@ -300,6 +300,49 @@ namespace LeetCodeAlgo
             if (nums == null || nums.Length == 0) return 0;
             return nums.Aggregate((x, y) => x + y);
         }
+
+        //65
+        public bool IsNumber(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return false;
+            s = s.TrimStart();
+            s = s.TrimEnd();
+            if (string.IsNullOrEmpty(s)) return false;
+
+            try
+            {
+                double d = double.Parse(s);
+                return true;
+            }
+            catch
+            {
+                if (s.Contains(" ")) return false;
+
+                if (s.Contains("e"))
+                {
+                    int idx = s.IndexOf('e');
+                    if (idx == s.LastIndexOf('e')&&(idx>0 &&idx<s.Length-1))
+                    {
+                        var arr = s.Split('e');
+                        if (arr.Length != 2) return false;
+                        double part;
+                        long exp;
+                        try
+                        {
+                            part = double.Parse(arr[0]);
+                            exp = long.Parse(arr[1]);
+                            return true;
+                        }
+                        catch
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
         //94
         public IList<int> InorderTraversal(TreeNode root)
         {
