@@ -11,32 +11,6 @@ namespace LeetCodeAlgo
     /// </summary>
     public partial class Anwser
     {
-        //121
-        public int MaxProfit(int[] prices)
-        {
-            int result = 0;
-            for (int i = 0; i < prices.Length-1; i++)
-            {
-                if (prices[i] >= prices[i + 1]) continue;
-                int leftMax = GetMaxNumb(prices, i + 1);
-                if (prices[i] < leftMax)
-                {
-                    int profit = leftMax - prices[i];
-                    if (result < profit) result = profit;
-                }
-            }
-            return result;
-        }
-
-        public int GetMaxNumb(int[] prices,int index)
-        {
-            int result = prices[index];
-            for(int i = index+1; i < prices.Length; i++)
-            {
-                if (result < prices[i]) result = prices[i];
-            }
-            return result;
-        }
         //105
         public TreeNode BuildTree(int[] preorder, int[] inorder)
         {
@@ -103,6 +77,58 @@ namespace LeetCodeAlgo
 
         //    return root;
         //}
+
+        //121
+        public int MaxProfit(int[] prices)
+        {
+            int result = 0;
+            for (int i = 0; i < prices.Length - 1; i++)
+            {
+                if (prices[i] >= prices[i + 1]) continue;
+                int leftMax = GetMaxNumb(prices, i + 1);
+                if (prices[i] < leftMax)
+                {
+                    int profit = leftMax - prices[i];
+                    if (result < profit) result = profit;
+                }
+            }
+            return result;
+        }
+
+        public int GetMaxNumb(int[] prices, int index)
+        {
+            int result = prices[index];
+            for (int i = index + 1; i < prices.Length; i++)
+            {
+                if (result < prices[i]) result = prices[i];
+            }
+            return result;
+        }
+
+        //128
+        public int LongestConsecutive(int[] nums)
+        {
+            if (nums == null || nums.Length == 0) return 0;
+            Array.Sort(nums);
+            int max = 1;
+            int current = 1;
+            int pre = nums[0];
+            for(int i = 1; i < nums.Length; i++)
+            {
+                if (nums[i] <= pre + 1)
+                {
+                    if(nums[i]!=pre)current++;
+                }
+                else
+                {
+                    max = Math.Max(current, max);
+                    current = 1;
+                }
+                pre = nums[i];
+            }
+
+            return max = Math.Max(current, max);
+        }
         // 167
         public int[] TwoSumII(int[] numbers, int target)
         {

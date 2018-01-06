@@ -8,32 +8,42 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        //367 not pass
-        public bool IsPerfectSquare(int num)
+        //202
+        private List<int> happyList = new List<int>();
+        public bool IsHappy(int n)
         {
-            if (num < 0) return false;
-            if (num <= 1) return true;
+            if (n == 1) return true;
+            if (happyList.Contains(n)) return false;
+            happyList.Add(n);
 
-            int len = num.ToString().Length;
-            
-            int exp = len / 2;
-            if (len % 2 == 0) { exp--; }
-
-            int min = 1;
-            while (exp > 0)
+            return IsHappy(GetDigitSquare(n));
+        }
+        public int GetDigitSquare(int n)
+        {
+            int result = 0;
+            int last;
+            while (n > 0)
             {
-                min *= 10;
-                exp--;
+                last = n % 10;
+                result += last * last;
+                n /= 10;
             }
+            return result;
+        }
+        //258
+        public int AddDigits(int num)
+        {
+            if (num < 10) return num;
 
-            int i= min;
-            while (i>= min && i*i<=num)
+            int total = 0;
+            while (num >= 10)
             {
-                if (i * i == num) return true;
-
-                i++;
+                total+= num % 10;
+                num /= 10;
             }
-            return false;
+            total += num;
+
+            return AddDigits(total);
         }
     }
 }

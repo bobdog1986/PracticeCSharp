@@ -300,7 +300,68 @@ namespace LeetCodeAlgo
             if (nums == null || nums.Length == 0) return 0;
             return nums.Aggregate((x, y) => x + y);
         }
+        //56
+        public IList<Interval> Merge(IList<Interval> intervals)
+        {
+            if (intervals == null || intervals.Count <= 1) return intervals;
 
+            IList<Interval> result = new List<Interval>();
+
+            for(int i = 0; i < intervals.Count; i++)
+            {
+                Interval current = intervals[i];
+                result.Add(current);
+                result = TrimIntervalFromEnd(result);
+            }
+            return result;
+        }
+        public IList<Interval> TrimIntervalFromEnd(IList<Interval> list)
+        {
+            if (list == null || list.Count<=1) return list;
+            while (list.Count > 1)
+            {
+                Interval current = list[list.Count - 1];
+                Interval pre = list[list.Count - 2];
+                if (pre.end < current.start)
+                {
+                    break;
+                }
+                else
+                {
+                    if (pre.start <= current.start)
+                    {
+                        pre.start = Math.Min(pre.start, current.start);
+                        pre.end = Math.Max(pre.end, current.end);
+                        list.Remove(current);
+                    }
+                    else
+                    {
+                        SwapIntervalNode(ref pre, ref current);
+                        list.Remove(current);
+                        list = TrimIntervalFromEnd(list);
+                        list.Add(current);
+                    }
+                }
+            }
+
+            return list;
+        }
+        public void SwapIntervalNode(ref Interval a, ref Interval b)
+        {
+            var temp = a;
+            a = b;
+            b = temp;
+        }
+        public Interval MergeIntervalNodes(Interval current, Interval next)
+        {
+            return new Interval(Math.Min(current.start, next.start), Math.Max(current.end, next.end));
+        }
+        //57 not pass
+        public IList<Interval> Insert(IList<Interval> intervals, Interval newInterval)
+        {
+
+            return intervals;
+        }
         //65
         public bool IsNumber(string s)
         {
@@ -342,6 +403,15 @@ namespace LeetCodeAlgo
             }
 
             return false;
+        }
+
+        //69
+        public int MySqrt(int x)
+        {
+            long r = x;
+            while (r * r > x)
+                r = (r + x / r) / 2;
+            return (int)r;
         }
         //94
         public IList<int> InorderTraversal(TreeNode root)

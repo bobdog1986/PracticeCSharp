@@ -67,6 +67,34 @@ namespace LeetCodeAlgo
             }
             return result;
         }
+        //495
+        public int FindPoisonedDuration(int[] timeSeries, int duration)
+        {
+            if (timeSeries == null || timeSeries.Length == 0) return 0;
 
+            Array.Sort(timeSeries);
+
+            int begin = timeSeries[0];
+            int expired = begin+duration;
+
+            int total = 0;
+            for(int i = 1; i < timeSeries.Length; i++)
+            {
+                if (timeSeries[i] < expired)
+                {
+                    expired = timeSeries[i] + duration;
+                }
+                else
+                {
+                    total += expired - begin;
+
+                    begin = timeSeries[i];
+                    expired = begin + duration;
+                }
+            }
+
+            total+= expired - begin;
+            return total;
+        }
     }
 }
