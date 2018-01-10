@@ -30,6 +30,29 @@ namespace LeetCodeAlgo
             }
             return result;
         }
+        //240
+        public bool SearchMatrix(int[,] matrix, int target)
+        {
+            if (matrix == null) return false;
+
+            return SerachMatrix(matrix, 0, matrix.GetLength(0), target);
+        }
+        public bool SerachMatrix(int[,] matrix,int startRowIndex, int endColIndex, int target)
+        {
+            if (matrix == null) return false;
+            int col = matrix.GetLength(0);
+            int row = matrix.GetLength(1);
+
+            for (int i = startRowIndex; i < row; i++)
+            {
+                for(int j = 0; j < endColIndex; j++)
+                {
+                    if (matrix[i, j] == target) return true;
+                    if (matrix[i, j] > target) return SerachMatrix(matrix, i, j, target);
+                }
+            }
+            return false;
+        }
         //258
         public int AddDigits(int num)
         {
