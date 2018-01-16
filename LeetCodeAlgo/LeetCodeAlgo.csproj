@@ -54,6 +54,7 @@
     <Compile Include="TreeNode.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Anwser.EightHundred.cs" />
     <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

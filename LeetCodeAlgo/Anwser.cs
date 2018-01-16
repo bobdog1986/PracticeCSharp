@@ -26,6 +26,21 @@ namespace LeetCodeAlgo
             }
             throw new ArgumentOutOfRangeException();
         }
+        //8
+        public int MyAtoi(string str)
+        {
+            if (string.IsNullOrEmpty(str)) return 0;
+            str = str.Trim();
+            if (string.IsNullOrEmpty(str)) return 0;
+            try
+            {
+                return int.Parse(str);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
 
         //12
         public string IntToRoman(int num)

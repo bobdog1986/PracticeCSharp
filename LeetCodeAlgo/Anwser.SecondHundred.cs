@@ -129,6 +129,35 @@ namespace LeetCodeAlgo
 
             return max = Math.Max(current, max);
         }
+        //149
+
+        public int MaxPoints(Point[] points)
+        {
+            if (points == null || points.Length == 0) return 0;
+            Dictionary<int,int> dict=new Dictionary<int, int>();
+            Dictionary<int, int> dictY = new Dictionary<int, int>();
+            foreach (var i in points)
+            {
+                if (dict.ContainsKey(i.x))
+                {
+                    dict[i.x]++;
+                }
+                else
+                {
+                    dict[i.x] = 1;
+                }
+
+                if (dictY.ContainsKey(i.y))
+                {
+                    dictY[i.y]++;
+                }
+                else
+                {
+                    dictY[i.y] = 1;
+                }
+            }
+            return Math.Max(dict.Values.Max(), dictY.Values.Max());
+        }
         // 167
         public int[] TwoSumII(int[] numbers, int target)
         {
@@ -165,6 +194,69 @@ namespace LeetCodeAlgo
 
 
             return maxLost > 0?1:(maxLost+1);
+        }
+        //187
+        public IList<string> FindRepeatedDnaSequences(string s)
+        {
+            Dictionary<string, int> dna = new Dictionary<string, int>();
+            List<string> repeat = new List<string>();
+            if (string.IsNullOrEmpty(s)) return repeat;
+            if (s.Length <= 10) return repeat;
+
+            for (int i = 0; i < s.Length - 10 + 1; i++)
+            {
+                string str = s.Substring(i, 10);
+                if (dna.ContainsKey(str))
+                {
+                    dna[str]++;
+                }
+                else
+                {
+                    dna.Add(str, 1);
+                }
+            }
+
+            repeat = dna.Where(o => o.Value > 1).Select(o => o.Key).ToList();
+
+            return repeat; 
+
+            /*
+            List<string> all = new List<string>();
+            List<string> repeat = new List<string>();
+
+            if (string.IsNullOrEmpty(s)) return repeat;
+            if (s.Length <= 10) return repeat;
+
+            for (int i = 0; i < s.Length - 10 + 1; i++)
+            {
+                string str = s.Substring(i, 10);
+                if (all.Contains(str))
+                {
+                    if (!repeat.Contains(str))
+                    {
+                        repeat.Add(str);
+                    }
+                }
+                else
+                {
+                    all.Add(str);
+                }
+            }
+
+            return repeat;*/
+        }
+        //198
+        public int Rob(int[] nums)
+        {
+            int i = 0;
+            int e = 0;
+            for (int k = 0; k < nums.Length; k++)
+            {
+                int tmp = i;
+                i = nums[k] + e;
+                e = Math.Max(tmp, e);
+            }
+            return Math.Max(i, e);
         }
     }
 }
