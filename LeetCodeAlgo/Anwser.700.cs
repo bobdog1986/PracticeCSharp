@@ -8,7 +8,20 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-		//728
+        //704. Binary Search
+
+        public int Search_704(int[] nums, int target)
+        {
+            for(int i=0; i<nums.Length; i++)
+            {
+                if (nums[i] == target) { return i; }
+                if(nums[i] > target) { return -1; }
+            }
+
+            return -1;
+        }
+
+        //728
         public IList<int> SelfDividingNumbers(int left, int right)
         {
             List<int> result = new List<int>();

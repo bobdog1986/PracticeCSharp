@@ -43,18 +43,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Anwser.cs" />
-    <Compile Include="Anwser.Five.cs" />
-    <Compile Include="Anwser.SecondHundred.cs" />
-    <Compile Include="Anwser.SevenHundred.cs" />
-    <Compile Include="Anwser.FourHundred.cs" />
-    <Compile Include="Anwser.ThreeHundred.cs" />
+    <Compile Include="Anwser.400.cs" />
+    <Compile Include="Anwser.100.cs" />
+    <Compile Include="Anwser.600.cs" />
+    <Compile Include="Anwser.300.cs" />
+    <Compile Include="Anwser.200.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TreeNode.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Anwser.EightHundred.cs" />
+    <Compile Include="Anwser.700.cs" />
     <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

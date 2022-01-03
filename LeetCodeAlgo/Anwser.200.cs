@@ -68,5 +68,35 @@ namespace LeetCodeAlgo
 
             return AddDigits(total);
         }
+
+        //278. First Bad Version
+
+        public int FirstBadVersion(int n)
+        {
+            return FirstBadVersion(1,n);
+        }
+
+        public int FirstBadVersion(int start, int end)
+        {
+            if (start == end) return start;
+
+            int num = end - start + 1;
+            int mid = num / 2 + start - 1;
+
+            if (IsBadVersion(mid))
+            {
+                return FirstBadVersion(start, mid);
+            }
+            else
+            {
+                return FirstBadVersion(mid + 1, end);
+            }
+        }
+
+        public bool IsBadVersion(int n)
+        {
+            int bad = 10;
+            return (n >= bad);
+        }
     }
 }

@@ -194,6 +194,45 @@ namespace LeetCodeAlgo
 
             return nums.Length;
         }
+
+        //35. Search Insert Position
+
+        public int SearchInsert(int[] nums, int target)
+        {
+            return SearchInsert(nums,target,0,nums.Length-1);
+        }
+
+        public int SearchInsert(int[] nums, int target, int start, int end)
+        {
+            if(start == end )
+            {
+                if (nums[start] <= target)
+                {
+                    return start;
+                }
+                else
+                {
+                    return start+1;
+                }
+            }
+
+            int num = end - start + 1;
+            int mid = num / 2 + start - 1;
+            if(nums[mid] == target)
+            {
+                return mid;
+            }
+            else if (nums[mid] < target)
+            {
+                return SearchInsert(nums, target, mid+1, end);
+            }
+            else
+            {
+                return SearchInsert(nums, target, start, mid-1);
+            }
+        }
+
+
         //38
         public string CountAndSay(int n)
         {
