@@ -277,83 +277,26 @@ namespace LeetCodeAlgo
         //53
         public int MaxSubArray(int[] nums)
         {
-            //int result = nums[0], maxEndingHere = nums[0];
-            //for (int i = 1; i < nums.Length; ++i)
-            //{
-            //    maxEndingHere = Math.Max(maxEndingHere + nums[i], nums[i]);
-            //    result = Math.Max(result, maxEndingHere);
-            //}
-            //return result;
+            int sum = 0;
+            int max = nums[0];
 
-            int result = nums[0];
-            int maxAdd = nums[0];
-            for (int i = 1; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
-                maxAdd = nums[i];
-                result = Math.Max(result, maxAdd);
-            }
-            return result;
+                sum += nums[i];
+                if (sum <= 0)
+                {
+                    sum = 0;
+                }
 
-            ///
-            //if (nums.Length == 1) return nums[0];
-            //if (nums.Length == 2)
-            //{
-            //    return Math.Max(MaxHead(nums), MaxTail(nums));
-            //}
-
-            //int result = nums.Max();
-
-            //for (int i =1; i < nums.Length-1; i++)
-            //{
-            //    int tail = MaxTail(nums.Slice(0, i));
-            //    int head = MaxHead(nums.Slice(i, nums.Length - i));
-            //    int added = 0;
-            //    if (tail >= 0)
-            //    {
-            //        added = head > 0 ? tail + head : tail;
-            //    }
-            //    else
-            //    {
-            //        if (head >= 0)
-            //        {
-            //            added = head;
-            //        }
-            //        else
-            //        {
-            //            added = tail > head ? tail : head;
-            //        }
-            //    }
-
-            //    result = added > result ? added : result;
-            //}
-            //return result;
-        }
-
-        public int MaxTail(int[] nums)
-        {
-            if (nums.Length == 1)
-            {
-                return nums[0];
+                max = Math.Max(max, sum);
             }
 
-            return MaxTail(nums.Slice(0, nums.Length - 1)) > 0 ? nums[nums.Length - 1] + MaxTail(nums.Slice(0, nums.Length - 1)) : nums[nums.Length - 1];
+
+
+            return max;
         }
 
-        public int MaxHead(int[] nums)
-        {
-            if (nums.Length == 1)
-            {
-                return nums[0];
-            }
 
-            return MaxHead(nums.Slice(1, nums.Length - 1)) > 0 ? nums[0] + MaxHead(nums.Slice(1, nums.Length - 1)) : nums[0];
-        }
-
-        public int Sum(int[] nums)
-        {
-            if (nums == null || nums.Length == 0) return 0;
-            return nums.Aggregate((x, y) => x + y);
-        }
         //56
         public IList<Interval> Merge(IList<Interval> intervals)
         {

@@ -13,14 +13,14 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var input = new int[] { 1,2,3,4,5,6,7};
+            var input = new int[] { 1,2,3,-1,4,-1};
             Console.WriteLine(string.Join(",", input.Select(x => x.ToString())));
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            anwser.Rotate(input, 2);
+            var result = anwser.MaxSubArray(input);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
-            Console.WriteLine(string.Join(",", input.Select(x=>x.ToString())));
+            Console.WriteLine(result);
             Console.ReadLine();
         }
     }

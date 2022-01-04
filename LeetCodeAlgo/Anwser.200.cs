@@ -30,6 +30,14 @@ namespace LeetCodeAlgo
             }
             return result;
         }
+
+        //217. Contains Duplicate
+        public bool ContainsDuplicate(int[] nums)
+        {
+            var dist= nums.Distinct();
+            return dist.Count()!=nums.Length;
+        }
+
         //240
         public bool SearchMatrix(int[,] matrix, int target)
         {
