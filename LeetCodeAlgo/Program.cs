@@ -17,10 +17,13 @@ namespace LeetCodeAlgo
             Console.WriteLine(string.Join(",", input.Select(x => x.ToString())));
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            var result = anwser.SearchInsert(input,0);
+
+            var root =new TreeNode(1,null,new TreeNode(2,new TreeNode(3),null));
+            var result = anwser.InorderTraversal_Iteratively(root);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
-            Console.WriteLine(result);
+            //Console.WriteLine(result);
+            Console.WriteLine(String.Join(",",result));
             Console.ReadLine();
         }
     }

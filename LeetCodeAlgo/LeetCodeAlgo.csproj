@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Anwser.BTree.cs" />
     <Compile Include="Anwser.K1100.cs" />
     <Compile Include="Anwser.500.cs" />
     <Compile Include="Anwser.900.cs" />
