@@ -210,19 +210,41 @@ namespace LeetCodeAlgo
 
         public IList<IList<int>> LevelOrder(TreeNode root)
         {
-            var result =new List<List<int>>();
 
+
+            var result =new List<IList<int>>();
+            if (root == null)
+                return result;
             var nodes=new Queue<TreeNode>();
             nodes.Enqueue(root);
 
-            var subs = new Queue<TreeNode>();
             while(nodes.Count>0)
             {
+                var list=new List<int>();
+                var subs = new Queue<TreeNode>();
 
+                while (nodes.Count > 0)
+                {
+                    var node = nodes.Dequeue();
+                    list.Add((int)node.val);
+
+                    if(node.left != null)
+                    {
+                        subs.Enqueue(node.left);
+                    }
+
+                    if(node.right != null)
+                    {
+                        subs.Enqueue(node.right);
+                    }
+                }
+
+                result.Add(list);
+
+                nodes = subs;
             }
 
-
-            return null;
+            return result;
         }
 
     }
