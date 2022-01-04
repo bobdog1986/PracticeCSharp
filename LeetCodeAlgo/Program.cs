@@ -13,11 +13,11 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var input = new int[] { 1,2,3,-1,4,-1};
+            var input = new int[] { 1,3,5};
             Console.WriteLine(string.Join(",", input.Select(x => x.ToString())));
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            var result = anwser.Tribonacci(34);
+            var result = anwser.SearchInsert(input,0);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
             Console.WriteLine(result);

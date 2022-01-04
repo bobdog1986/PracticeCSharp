@@ -206,7 +206,7 @@ namespace LeetCodeAlgo
         {
             if(start == end )
             {
-                if (nums[start] <= target)
+                if (nums[start] >= target)
                 {
                     return start;
                 }
@@ -216,11 +216,27 @@ namespace LeetCodeAlgo
                 }
             }
 
+            if (start + 1 == end)
+            {
+                if (nums[start] >= target)
+                {
+                    return start;
+                }
+                else if(nums[end]<target)
+                {
+                    return end + 1;
+                }
+                else
+                {
+                    return start + 1;
+                }
+            }
+
             int num = end - start + 1;
-            int mid = num / 2 + start - 1;
+            int mid = num / 2 + start;
             if(nums[mid] == target)
             {
-                return mid;
+                return SearchInsert(nums, target, start, mid);
             }
             else if (nums[mid] < target)
             {
