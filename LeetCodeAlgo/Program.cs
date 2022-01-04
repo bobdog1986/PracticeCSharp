@@ -12,19 +12,15 @@ namespace LeetCodeAlgo
         static void Main(string[] args)
         {
             Console.WriteLine("Run\r\n****************************\r\n");
-            var a = new Anwser();
-            //var input = new char[]{ 'a', 'a', 'b', 'b', 'b', 'c', 'c' };
-            //var input = 25;
-            var input = new int[] { 1, 22 };
-            Console.WriteLine(int.MaxValue);
+            var anwser = new Anwser();
+            var input = new int[] { 1,2,3,4,5,6,7};
+            Console.WriteLine(string.Join(",", input.Select(x => x.ToString())));
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            var result = a.SelfDividingNumbers(1,22);
+            anwser.Rotate(input, 2);
             sw.Stop();
-            Console.WriteLine("result="+ result);
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
-            //2761ms
-
+            Console.WriteLine(string.Join(",", input.Select(x=>x.ToString())));
             Console.ReadLine();
         }
     }

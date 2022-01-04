@@ -245,6 +245,33 @@ namespace LeetCodeAlgo
 
             return repeat;*/
         }
+
+        //189. Rotate Array
+
+        public void Rotate(int[] nums, int k)
+        {
+            k=k % nums.Length;
+
+            if (k == 0) return;
+
+            int[] temp = new int[k];
+            for(int i = 0; i < k; i++)
+            {
+                temp[i] = nums[nums.Length-k+i];
+            }
+
+            for(int i = nums.Length-1; i >k-1; i--)
+            {
+                nums[i] = nums[i-k];
+            }
+
+            for(int i = 0;i < k; i++)
+            {
+                nums[i] = temp[i];
+            }
+        }
+
+
         //198
         public int Rob(int[] nums)
         {
