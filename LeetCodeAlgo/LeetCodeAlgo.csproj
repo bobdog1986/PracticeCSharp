@@ -42,8 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Anwser.K1100.cs" />
+    <Compile Include="Anwser.500.cs" />
     <Compile Include="Anwser.900.cs" />
-    <Compile Include="Anwser.cs" />
+    <Compile Include="Anwser.0.cs" />
     <Compile Include="Anwser.400.cs" />
     <Compile Include="Anwser.100.cs" />
     <Compile Include="Anwser.600.cs" />

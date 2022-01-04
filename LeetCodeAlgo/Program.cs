@@ -17,7 +17,7 @@ namespace LeetCodeAlgo
             Console.WriteLine(string.Join(",", input.Select(x => x.ToString())));
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            var result = anwser.MaxSubArray(input);
+            var result = anwser.Tribonacci(34);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
             Console.WriteLine(result);

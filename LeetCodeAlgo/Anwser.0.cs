@@ -278,7 +278,7 @@ namespace LeetCodeAlgo
         public int MaxSubArray(int[] nums)
         {
             int sum = 0;
-            int max = nums[0];
+            int max = nums.Max();
 
             for (int i = 0; i < nums.Length; i++)
             {
@@ -287,11 +287,11 @@ namespace LeetCodeAlgo
                 {
                     sum = 0;
                 }
-
-                max = Math.Max(max, sum);
+                else
+                {
+                    max = Math.Max(max, sum);
+                }
             }
-
-
 
             return max;
         }
