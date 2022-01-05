@@ -199,12 +199,12 @@ namespace LeetCodeAlgo
 
         public int SearchInsert(int[] nums, int target)
         {
-            return SearchInsert(nums,target,0,nums.Length-1);
+            return SearchInsert(nums, target, 0, nums.Length - 1);
         }
 
         public int SearchInsert(int[] nums, int target, int start, int end)
         {
-            if(start == end )
+            if (start == end)
             {
                 if (nums[start] >= target)
                 {
@@ -212,7 +212,7 @@ namespace LeetCodeAlgo
                 }
                 else
                 {
-                    return start+1;
+                    return start + 1;
                 }
             }
 
@@ -222,7 +222,7 @@ namespace LeetCodeAlgo
                 {
                     return start;
                 }
-                else if(nums[end]<target)
+                else if (nums[end] < target)
                 {
                     return end + 1;
                 }
@@ -234,17 +234,17 @@ namespace LeetCodeAlgo
 
             int num = end - start + 1;
             int mid = num / 2 + start;
-            if(nums[mid] == target)
+            if (nums[mid] == target)
             {
                 return SearchInsert(nums, target, start, mid);
             }
             else if (nums[mid] < target)
             {
-                return SearchInsert(nums, target, mid+1, end);
+                return SearchInsert(nums, target, mid + 1, end);
             }
             else
             {
-                return SearchInsert(nums, target, start, mid-1);
+                return SearchInsert(nums, target, start, mid - 1);
             }
         }
 
@@ -320,7 +320,7 @@ namespace LeetCodeAlgo
 
             IList<Interval> result = new List<Interval>();
 
-            for(int i = 0; i < intervals.Count; i++)
+            for (int i = 0; i < intervals.Count; i++)
             {
                 Interval current = intervals[i];
                 result.Add(current);
@@ -330,7 +330,7 @@ namespace LeetCodeAlgo
         }
         public IList<Interval> TrimIntervalFromEnd(IList<Interval> list)
         {
-            if (list == null || list.Count<=1) return list;
+            if (list == null || list.Count <= 1) return list;
             while (list.Count > 1)
             {
                 Interval current = list[list.Count - 1];
@@ -395,7 +395,7 @@ namespace LeetCodeAlgo
                 if (s.Contains("e"))
                 {
                     int idx = s.IndexOf('e');
-                    if (idx == s.LastIndexOf('e')&&(idx>0 &&idx<s.Length-1))
+                    if (idx == s.LastIndexOf('e') && (idx > 0 && idx < s.Length - 1))
                     {
                         var arr = s.Split('e');
                         if (arr.Length != 2) return false;
@@ -426,6 +426,107 @@ namespace LeetCodeAlgo
                 r = (r + x / r) / 2;
             return (int)r;
         }
+
+        //88. Merge Sorted Array
+        public void Merge(int[] nums1, int m, int[] nums2, int n)
+        {
+            if (nums1 == null || nums1.Length==0||m==0)
+            {
+                if (nums2 == null || nums2.Length == 0 || n == 0)
+                {
+                    //
+                }
+                else
+                {
+                    for(int a = 0; a < nums1.Length; a++)
+                    {
+                        if (a < m+n)
+                        {
+                            nums1[a] = nums2[a];
+
+                        }
+                        else
+                        {
+                            nums1[a] = 0;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if(nums2 == null || nums2.Length == 0 || n == 0)
+                {
+                    for (int a = 0; a < nums1.Length; a++)
+                    {
+                        if (a < m + n)
+                        {
+                            nums1[a] = nums1[a];
+
+                        }
+                        else
+                        {
+                            nums1[a] = 0;
+                        }
+                    }
+                }
+                else
+                {
+                    int[] result=new int[m+n];
+                    int k = 0;
+                    int j = 0;
+                    int i = 0;
+                    while (i<m && j<n )
+                    {
+                        if (nums1[i] <= nums2[j])
+                        {
+                            result[k] = nums1[i];
+                            k++;
+                            i++;
+                        }
+                        else
+                        {
+                            result[k] = nums2[j];
+                            k++;
+                            j++;
+                        }
+                    }
+
+                    while (k < m + n)
+                    {
+                        if (i < m)
+                        {
+                            result[k]=nums1[i];
+                            k++;
+                            i++;
+                        }
+
+                        if (j < n)
+                        {
+                            result[k] = nums2[j];
+                            k++;
+                            j++;
+                        }
+                    }
+
+
+                    for(int a=0; a<nums1.Length; a++)
+                    {
+                        if (a < k)
+                        {
+                            nums1[a] =result[a];
+
+                        }
+                        else
+                        {
+                            nums1[a] = 0;
+                        }
+                    }
+                }
+            }
+            Console.WriteLine($"nums1 = {string.Join(",",nums1)}");
+
+        }
+
         //94
         public IList<int> InorderTraversal(TreeNode root)
         {
