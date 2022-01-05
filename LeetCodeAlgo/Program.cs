@@ -13,17 +13,19 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var input = new int[] { 1,3,5};
-            Console.WriteLine(string.Join(",", input.Select(x => x.ToString())));
+            var array = new int[] { 0, 1, 0, 3, 12};
+            Console.WriteLine(string.Join(",", array));
             Stopwatch sw = new Stopwatch();
             sw.Start();
             //[3,9,20,null,null,15,7]
             var root =new TreeNode(3,new TreeNode(9),new TreeNode(20,new TreeNode(15),new TreeNode(7)));
-            var result = anwser.MaxDepth(root);
+            //var result = anwser.MoveZeroes(array);
+            anwser.MoveZeroes(array);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
-            Console.WriteLine(result);
+            //Console.WriteLine(result);
             //Console.WriteLine(String.Join(",",result));
+            Console.WriteLine(String.Join(",", array));
             Console.ReadLine();
         }
     }

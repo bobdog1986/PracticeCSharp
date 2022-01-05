@@ -158,7 +158,7 @@ namespace LeetCodeAlgo
             }
             return Math.Max(dict.Values.Max(), dictY.Values.Max());
         }
-        // 167
+        // 167 Two Sum II - Input Array Is Sorted
         public int[] TwoSumII(int[] numbers, int target)
         {
             for (int i = 0; i < numbers.Length - 1; i++)
@@ -170,7 +170,7 @@ namespace LeetCodeAlgo
 
                 for (int j = i + 1; j < numbers.Length; j++)
                 {
-                    if (numbers[i] + numbers[j] > target) { continue; }
+                    if (numbers[i] + numbers[j] != target) { continue; }
 
                     if (numbers[i] + numbers[j] == target)
                     {
@@ -218,7 +218,7 @@ namespace LeetCodeAlgo
 
             repeat = dna.Where(o => o.Value > 1).Select(o => o.Key).ToList();
 
-            return repeat; 
+            return repeat;
 
             /*
             List<string> all = new List<string>();

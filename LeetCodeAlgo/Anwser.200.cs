@@ -106,5 +106,37 @@ namespace LeetCodeAlgo
             int bad = 10;
             return (n >= bad);
         }
+
+        //283. Move Zeroes
+        public void MoveZeroes(int[] nums)
+        {
+            if(nums == null||nums.Length==0)
+                return;
+
+            int zeroCount = 0;
+            for(int i = 0; i < nums.Length-1; i++)
+            {
+                if (i + zeroCount >= nums.Length-1)
+                    break;
+
+                while(nums[i] == 0)
+                {
+                    for(int j = i;j < nums.Length - 1 -zeroCount; j++)
+                    {
+                        nums[j] = nums[j+1];
+                    }
+
+                    nums[nums.Length-1-zeroCount] = 0;
+
+                    zeroCount++;
+
+                    if (i + zeroCount >= nums.Length - 1)
+                        break;
+                }
+            }
+
+            Console.WriteLine($"zer0Count = {zeroCount}");
+        }
+
     }
 }
