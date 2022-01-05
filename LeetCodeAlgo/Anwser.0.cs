@@ -429,54 +429,69 @@ namespace LeetCodeAlgo
         //70. Climbing Stairs
         public int ClimbStairs(int n)
         {
-            int step2Count = n / 2;
+            //bottom to up
+            if (n == 0) return 0;
+            if (n == 1) return 1;
+            if (n == 2) return 2;
 
-            long totalCount = 0;
-
-            for(int i=0; i<=step2Count; i++)
+            int seed1 = 1;
+            int seed2 = 1;
+            for(int i=n -2 ; i >0 ;i--)
             {
-                totalCount += ClimbSeqCount(n-2*i,i);
+                int temp = seed1;
+                seed1 = seed2;
+                seed2 = seed2 + temp;
             }
 
-            return (int)totalCount;
-        }
+            return seed1 + seed2;
 
 
-        public long ClimbSeqCount(int step1, int step2)
-        {
-            if (step1 == 0 || step2 == 0)
-                return 1;
+            //brute force, out of memory
+            if (n == 0) return 0;
+            int totalCount = 0;
 
-            if(step1==1)
-                return step2+1;
+            int root = 0;
 
-            if (step2 == 1)
-                return step1 + 1;
+            Queue<int> nodes = new Queue<int>();
+            nodes.Enqueue(root);
 
-            var result= (long)(Math.Pow(step1+1,step2)) - Factorial(step1+1,step2)/ Factorial(step2);
-
-            //Console.WriteLine($"step1={step1}, step2={step2}, result1 = {result}");
-
-            return result;
-        }
-
-        public long Factorial(long a)
-        {
-            if(a == 0) return 1;
-            if(a == 1) return 1;
-            return a * Factorial(a - 1);
-        }
-
-        public long Factorial(long a, int num)
-        {
-            long result = 1;
-            int i = 0;
-            while(i < num)
+            while (nodes.Count > 0)
             {
-                result *= (a-i);
-                i++;
+                var node = nodes.Dequeue();
+                var left = node + 1;
+                var right = node + 2;
+
+                if (left < n)
+                {
+                    nodes.Enqueue(left);
+                }
+                else if (left == n)
+                {
+                    totalCount++;
+                }
+
+                if (right < n)
+                {
+                    nodes.Enqueue(right);
+                }
+                else if (right == n)
+                {
+                    totalCount++;
+                }
             }
-            return result;
+
+            return totalCount;
+        }
+
+        public int ClimbStairsN(int n)
+        {
+            if(n==0) return 0;
+            if(n == 1) return 1;
+            if(n==2) return 2;
+
+            return ClimbStairsN(n-1)+ClimbStairsN(n-2);
+
+            return 0;
         }
 
 

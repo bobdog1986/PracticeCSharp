@@ -22,7 +22,7 @@ namespace LeetCodeAlgo
             sw.Start();
             //[3,9,20,null,null,15,7]
             var root =new TreeNode(3,new TreeNode(9),new TreeNode(20,new TreeNode(15),new TreeNode(7)));
-            var result = anwser.ClimbStairs(7);
+            var result = anwser.ClimbStairs(4);
             //anwser.Merge(arr1,3,arr2,3);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
