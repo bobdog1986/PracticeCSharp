@@ -426,6 +426,59 @@ namespace LeetCodeAlgo
                 r = (r + x / r) / 2;
             return (int)r;
         }
+        //70. Climbing Stairs
+        public int ClimbStairs(int n)
+        {
+            int step2Count = n / 2;
+
+            long totalCount = 0;
+
+            for(int i=0; i<=step2Count; i++)
+            {
+                totalCount += ClimbSeqCount(n-2*i,i);
+            }
+
+            return (int)totalCount;
+        }
+
+
+        public long ClimbSeqCount(int step1, int step2)
+        {
+            if (step1 == 0 || step2 == 0)
+                return 1;
+
+            if(step1==1)
+                return step2+1;
+
+            if (step2 == 1)
+                return step1 + 1;
+
+            var result= (long)(Math.Pow(step1+1,step2)) - Factorial(step1+1,step2)/ Factorial(step2);
+
+            //Console.WriteLine($"step1={step1}, step2={step2}, result1 = {result}");
+
+            return result;
+        }
+
+        public long Factorial(long a)
+        {
+            if(a == 0) return 1;
+            if(a == 1) return 1;
+            return a * Factorial(a - 1);
+        }
+
+        public long Factorial(long a, int num)
+        {
+            long result = 1;
+            int i = 0;
+            while(i < num)
+            {
+                result *= (a-i);
+                i++;
+            }
+            return result;
+        }
+
 
         //88. Merge Sorted Array
         public void Merge(int[] nums1, int m, int[] nums2, int n)
