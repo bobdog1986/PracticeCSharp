@@ -24,7 +24,44 @@ namespace LeetCodeAlgo
             }
 
         }
+        //350. Intersection of Two Arrays II
+        public int[] Intersect(int[] nums1, int[] nums2)
+        {
+            Array.Sort(nums1);
+            Array.Sort(nums2);
 
+            if(nums1.Length < nums2.Length)
+            {
+                var temp = nums1;
+                nums1 = nums2;
+                nums2 = temp;
+            }
+
+
+            List<int> result = new List<int>();
+            int i=0;
+            int j = 0;
+            while(i<nums1.Length && j<nums2.Length)
+            {
+                if(nums1[i] == nums2[j])
+                {
+                    result.Add(nums1[i]);
+                    i++;
+                    j++;
+                }
+                else if (nums1[i] > nums2[j])
+                {
+                    j++;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+
+
+            return result.ToArray();
+        }
         //367 not pass
         public bool IsPerfectSquare(int num)
         {
