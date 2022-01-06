@@ -8,6 +8,26 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
+        //344. Reverse String
+        public void ReverseString(char[] s)
+        {
+            if (s == null || s.Length <= 1)
+                return;
+
+            Console.WriteLine(string.Join(",",s));
+
+            int half=s.Length/2;
+            char temp;
+            for (int i = 0; i < half; i++)
+            {
+                temp = s[i];
+                s[i] = s[s.Length - 1 - i];
+                s[s.Length - 1 - i] = temp;
+            }
+
+            Console.WriteLine(string.Join(",", s));
+        }
+
         //367 not pass
         public bool IsPerfectSquare(int num)
         {
