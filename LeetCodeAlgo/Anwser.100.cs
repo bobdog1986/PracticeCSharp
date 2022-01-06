@@ -78,31 +78,29 @@ namespace LeetCodeAlgo
         //    return root;
         //}
 
-        //121
+        //121. Best Time to Buy and Sell Stock
+
         public int MaxProfit(int[] prices)
         {
-            int result = 0;
-            for (int i = 0; i < prices.Length - 1; i++)
-            {
-                if (prices[i] >= prices[i + 1]) continue;
-                int leftMax = GetMaxNumb(prices, i + 1);
-                if (prices[i] < leftMax)
-                {
-                    int profit = leftMax - prices[i];
-                    if (result < profit) result = profit;
-                }
-            }
-            return result;
-        }
+            if(prices == null || prices.Length<=1)
+                return 0;
 
-        public int GetMaxNumb(int[] prices, int index)
-        {
-            int result = prices[index];
-            for (int i = index + 1; i < prices.Length; i++)
+            if(prices.Length ==2)
             {
-                if (result < prices[i]) result = prices[i];
+                if (prices[0] >= prices[1])
+                    return 0;
+                else
+                    return prices[1] - prices[0];
             }
-            return result;
+
+            int MinSoFar = prices[0];
+            int maxProfit = 0;
+            foreach (var currentPrice in prices)
+            {
+                MinSoFar = Math.Min(MinSoFar, currentPrice);
+                maxProfit = Math.Max(maxProfit, currentPrice - MinSoFar);
+            }
+            return maxProfit;
         }
 
         //128
