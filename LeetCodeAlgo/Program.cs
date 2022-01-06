@@ -13,22 +13,23 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var arr1 = new char[] { 'h', 'e', 'l', 'l', 'o' };
+            var arr1 = "Let's take LeetCode contest";
+            //var arr1 = new char[] { 'h', 'e', 'l', 'l', 'o' };
             //var arr1 = new int[] { 1, 100, 1, 1, 1, 100, 1, 1, 100, 1 };
             //var arr2 = new int[] { 2,5,6 };
 
-            Console.WriteLine(string.Join(",", arr1));
+            //Console.WriteLine(string.Join(",", arr1));
             //Console.WriteLine(string.Join(",", arr2));
             Stopwatch sw = new Stopwatch();
             sw.Start();
             //[3,9,20,null,null,15,7]
             var root =new TreeNode(3,new TreeNode(9),new TreeNode(20,new TreeNode(15),new TreeNode(7)));
             //var result = anwser.ReverseString(arr1);
-            anwser.ReverseString(arr1);
+            var result =anwser.ReverseWords(arr1);
             //anwser.Merge(arr1,3,arr2,3);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
-            //Console.WriteLine(result);
+            Console.WriteLine(result);
             //Console.WriteLine(String.Join(",",result));
             //Console.WriteLine(String.Join(",", arr1));
             Console.ReadLine();

@@ -14,8 +14,6 @@ namespace LeetCodeAlgo
             if (s == null || s.Length <= 1)
                 return;
 
-            Console.WriteLine(string.Join(",",s));
-
             int half=s.Length/2;
             char temp;
             for (int i = 0; i < half; i++)
@@ -25,7 +23,6 @@ namespace LeetCodeAlgo
                 s[s.Length - 1 - i] = temp;
             }
 
-            Console.WriteLine(string.Join(",", s));
         }
 
         //367 not pass
