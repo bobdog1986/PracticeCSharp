@@ -13,7 +13,7 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var arr1 = new int[] { 2, 7, 9, 3, 1 };
+            var arr1 = new int[] { 1, 2, 3, 1};
             //var arr2 = new int[] { 9, 4, 9, 8, 4 };
 
             Console.WriteLine(string.Join(",", arr1));

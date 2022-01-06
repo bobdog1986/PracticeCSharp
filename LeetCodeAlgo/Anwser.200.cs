@@ -31,6 +31,46 @@ namespace LeetCodeAlgo
             return result;
         }
 
+        //213. House Robber II
+        public int Rob(int[] nums)
+        {
+            if (nums == null || nums.Length == 0)
+                return 0;
+            if (nums.Length == 1)
+                return nums[0];
+
+            int[] withoutFirst = new int[nums.Length-1];
+            for (int i = 0; i < nums.Length - 1; i++)
+                withoutFirst[i] = nums[i];
+            int[] withoutLast = new int[nums.Length - 1];
+            for (int i = 0; i < nums.Length - 1; i++)
+                withoutLast[i] = nums[i+1];
+
+            //Return maximum of two results
+            return Math.Max(Rob_Line(withoutFirst), Rob_Line(withoutLast));
+        }
+
+        public int Rob_Line(int[] nums)
+        {
+            if (nums == null || nums.Length == 0)
+                return 0;
+            if (nums.Length == 1)
+                return nums[0];
+
+            int[] dp = new int[nums.Length];
+
+            dp[0] = nums[0];
+            dp[1] = Math.Max(nums[0], nums[1]);
+
+            for (int i = 2; i < nums.Length; i++)
+            {
+                int a = nums[i] + dp[i - 2];
+                dp[i] = Math.Max(a, dp[i - 1]);
+            }
+
+            return dp[nums.Length - 1];
+        }
+
         //217. Contains Duplicate
         public bool ContainsDuplicate(int[] nums)
         {

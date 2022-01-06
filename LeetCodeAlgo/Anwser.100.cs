@@ -271,7 +271,7 @@ namespace LeetCodeAlgo
 
 
         //198. House Robber
-        public int Rob(int[] nums)
+        public int Rob_198(int[] nums)
         {
             if (nums == null || nums.Length == 0)
                 return 0;
