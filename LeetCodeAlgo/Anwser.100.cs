@@ -270,18 +270,26 @@ namespace LeetCodeAlgo
         }
 
 
-        //198
+        //198. House Robber
         public int Rob(int[] nums)
         {
-            int i = 0;
-            int e = 0;
-            for (int k = 0; k < nums.Length; k++)
+            if (nums == null || nums.Length == 0)
+                return 0;
+            if(nums.Length == 1)
+                return nums[0];
+
+            int[] dp = new int[nums.Length];
+
+            dp[0] = nums[0];
+            dp[1] = Math.Max(nums[0],nums[1]);
+
+            for(int i = 2; i < nums.Length; i++)
             {
-                int tmp = i;
-                i = nums[k] + e;
-                e = Math.Max(tmp, e);
+                int a = nums[i] + dp[i - 2];
+                dp[i] = Math.Max(a, dp[i - 1]);
             }
-            return Math.Max(i, e);
+
+            return dp[nums.Length - 1];
         }
     }
 }
