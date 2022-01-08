@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Anwser.800.cs" />
     <Compile Include="Anwser.BTree.cs" />
     <Compile Include="Anwser.K1100.cs" />
     <Compile Include="Anwser.500.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Anwser.300.cs" />
     <Compile Include="Anwser.200.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="ListNode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TreeNode.cs" />
