@@ -148,6 +148,57 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+        //19. Remove Nth Node From End of List
+
+
+        public ListNode RemoveNthFromEnd(ListNode head, int n)
+        {
+            if(head == null || head.next==null)
+                return null;
+            int count= GetListNodeCount(head);
+            if (n == count)
+                return head.next;
+
+
+            var node1 = GetListNode(head, count- n-1);
+            node1.next=node1.next.next;
+
+            return head;
+        }
+
+        public ListNode GetListNode(ListNode listNode,int index)
+        {
+            while (index > 0)
+            {
+                listNode = listNode.next;
+                index--;
+            }
+            return listNode;
+        }
+
+        public int GetListNodeCount(ListNode listnode)
+        {
+            int count = 0;
+            while(listnode != null)
+            {
+                count++;
+                listnode= listnode.next;
+            }
+            return count;
+        }
+
+        public void PrintListNode(ListNode listNode)
+        {
+            List<int> list = new List<int>();
+            while(listNode != null)
+            {
+                list.Add(listNode.val);
+                listNode= listNode.next;    
+            }
+
+            Console.WriteLine($"ListNode is [{string.Join(",",list)}]");
+        }
+
         //26
         public int RemoveDuplicates(int[] nums)
         {

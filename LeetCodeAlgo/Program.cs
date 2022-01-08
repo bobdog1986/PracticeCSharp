@@ -15,20 +15,22 @@ namespace LeetCodeAlgo
             var anwser = new Anwser();
             var arr1 = new int[] { 1, 2, 3, 1};
             //var arr2 = new int[] { 9, 4, 9, 8, 4 };
-
-            Console.WriteLine(string.Join(",", arr1));
+            var listnode=new ListNode(1,new ListNode(2));
+            anwser.PrintListNode(listnode);
+            //Console.WriteLine(string.Join(",", arr1));
             //Console.WriteLine(string.Join(",", arr2));
             Stopwatch sw = new Stopwatch();
             sw.Start();
             //[3,9,20,null,null,15,7]
             var root =new TreeNode(3,new TreeNode(9),new TreeNode(20,new TreeNode(15),new TreeNode(7)));
-            var result = anwser.Rob(arr1);
+            var result = anwser.RemoveNthFromEnd(listnode,2);
+            anwser.PrintListNode(result);
             //var result =anwser.Intersect(arr1,arr2);
             //anwser.Merge(arr1,3,arr2,3);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
             //Console.WriteLine(result);
-            Console.WriteLine(String.Join(",",result));
+            //Console.WriteLine(String.Join(",",result));
             //Console.WriteLine(String.Join(",", arr1));
             Console.ReadLine();
         }
