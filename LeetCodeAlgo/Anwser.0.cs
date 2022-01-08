@@ -26,6 +26,58 @@ namespace LeetCodeAlgo
             }
             throw new ArgumentOutOfRangeException();
         }
+
+        //3. Longest Substring Without Repeating Characters
+        public int LengthOfLongestSubstring(string s)
+        {
+            if(string.IsNullOrEmpty(s))
+                return 0;
+            if (s.Length == 1)
+                return 1;
+
+            int max = 1;
+            int len = 0;
+            List<char> list = new List<char>();
+            for (int i = 0;i < s.Length; i++)
+            {
+                char c = s[i];
+                if (list.Contains(c))
+                {
+                    max=Math.Max(max, len);
+                    //list.Clear();
+                    var a= list.IndexOf(c);
+                    if (a == list.Count - 1)
+                    {
+                        list.Clear();
+                        list.Add(c);
+                        len = 1;
+                    }
+                    else
+                    {
+                        while (a >= 0)
+                        {
+                            list.RemoveAt(0);
+                            a--;
+                            len--;
+                        }
+                        list.Add(c);
+                        len++;
+                    }
+
+
+                }
+                else
+                {
+                    len++;
+                    list.Add((char)c);
+                }
+            }
+
+            max = Math.Max(max, len);
+
+            return max;
+        }
+
         //8
         public int MyAtoi(string str)
         {
