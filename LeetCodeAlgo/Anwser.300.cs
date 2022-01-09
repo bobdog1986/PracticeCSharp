@@ -74,6 +74,29 @@ namespace LeetCodeAlgo
             }
             return num == 0;
         }
+        //383. Ransom Note
+        public bool CanConstruct(string ransomNote, string magazine)
+        {
+            var arr1= ransomNote.ToArray().ToList();
+            var arr2= magazine.ToArray().ToList();
+            while (arr1.Count>0)
+            {
+                var j = arr2.IndexOf(arr1[0]);
+                if (j>= 0)
+                {
+                    arr1.RemoveAt(0);
+                    arr2.RemoveAt(j);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
+
         //387. First Unique Character in a String
 
         public int FirstUniqChar(string s)
