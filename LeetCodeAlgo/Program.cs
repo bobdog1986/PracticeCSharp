@@ -13,7 +13,7 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var arr1 = new int[] { 3,1,1,1,1};
+            var arr1 = new int[] { 5,-3,5 };
             //var arr2 = new int[] { 9, 4, 9, 8, 4 };
         //    var arr3 = new int[][] 
         //    {
@@ -36,7 +36,7 @@ namespace LeetCodeAlgo
             var root =new TreeNode(3,new TreeNode(9),new TreeNode(20,new TreeNode(15),new TreeNode(7)));
             //var result = anwser.CheckInclusion("hello", "ooolleoooleh");//ooolleoooleh
             //var result = anwser.CheckInclusion("abc", "ccccbbbbaaaa");//ooolleoooleh
-            var result = anwser.Jump(arr1);//ooolleoooleh
+            var result = anwser.MaxSubarraySumCircular(arr1);//ooolleoooleh
             //"rvwrk"
             //"lznomzggwrvrkxecjaq"
             //anwser.PrintListNode(result);
