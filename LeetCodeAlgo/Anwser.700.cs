@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
@@ -12,10 +9,10 @@ namespace LeetCodeAlgo
 
         public int Search_704(int[] nums, int target)
         {
-            for(int i=0; i<nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 if (nums[i] == target) { return i; }
-                if(nums[i] > target) { return -1; }
+                if (nums[i] > target) { return -1; }
             }
 
             return -1;
@@ -25,14 +22,14 @@ namespace LeetCodeAlgo
         public IList<int> SelfDividingNumbers(int left, int right)
         {
             List<int> result = new List<int>();
-			for(int i = left; i <= right; i++)
+            for (int i = left; i <= right; i++)
             {
                 bool pass = false;
                 int temp = i;
                 while (temp > 0)
                 {
                     int mod = temp % 10;
-                    if (mod == 0|| i % mod != 0)
+                    if (mod == 0 || i % mod != 0)
                     {
                         pass = true;
                         break;
@@ -47,7 +44,7 @@ namespace LeetCodeAlgo
             return result;
         }
 
-		public bool IsSelfDivided(int num)
+        public bool IsSelfDivided(int num)
         {
             List<int> divid = new List<int>();
             int full = num;
@@ -57,12 +54,57 @@ namespace LeetCodeAlgo
                 full /= 10;
             }
 
-			foreach(var i in divid)
+            foreach (var i in divid)
             {
-                if (i == 0|| num % i != 0) return false;
+                if (i == 0 || num % i != 0) return false;
             }
             return true;
         }
+
+        //733. Flood Fill
+
+        public int[][] FloodFill(int[][] image, int sr, int sc, int newColor)
+        {
+            int color=image[sr][sc];
+            if (color == newColor)
+                return image;
+            int row = image.Length;
+            int col = image[0].Length;
+
+            Queue<int[]> queue = new Queue<int[]>();
+            queue.Enqueue(new int[] { sr, sc });
+            image[sr][sc]=newColor;
+            while (queue.Count > 0)
+            {
+                var point=queue.Dequeue();
+                if ((point[0] > 0)  && (image[point[0] - 1][point[1]] == color))
+                {
+                    image[point[0] - 1][point[1]] = newColor;
+                    queue.Enqueue(new int[] { point[0] - 1 , point[1] });
+                }
+
+                if ((point[0] < row-1) && (image[point[0] + 1][point[1]] == color))
+                {
+                    image[point[0] + 1][point[1]] = newColor;
+                    queue.Enqueue(new int[] { point[0] + 1, point[1] });
+                }
+
+                if ((point[1] > 0 ) && (image[point[0]][point[1]-1] == color))
+                {
+                    image[point[0]][point[1] - 1] = newColor;
+                    queue.Enqueue(new int[] { point[0], point[1]-1 });
+                }
+
+                if ((point[1] < col - 1) && (image[point[0]][point[1]+1] == color))
+                {
+                    image[point[0]][point[1] + 1] = newColor;
+                    queue.Enqueue(new int[] { point[0], point[1] + 1});
+                }
+            }
+
+            return image;
+        }
+
 
         //746. Min Cost Climbing Stairs
         public int MinCostClimbingStairs(int[] cost)
@@ -86,14 +128,13 @@ namespace LeetCodeAlgo
             return Math.Min(dp[cost.Length - 1], dp[cost.Length - 2]);
         }
 
-
         public int MinCostClimbingStairs_BruteForce(int[] cost)
         {
-            if(cost == null || cost.Length == 0) return 0;
+            if (cost == null || cost.Length == 0) return 0;
 
-            if(cost.Length == 1)return cost[0];
+            if (cost.Length == 1) return cost[0];
 
-            if(cost.Length ==2 )return Math.Min( cost[0],cost[1]);
+            if (cost.Length == 2) return Math.Min(cost[0], cost[1]);
 
             int minCost = int.MaxValue;
 
@@ -102,25 +143,23 @@ namespace LeetCodeAlgo
             nodes.Enqueue(new int[] { 0, cost[0] });
             nodes.Enqueue(new int[] { 1, cost[1] });
 
-            while(nodes.Count > 0)
+            while (nodes.Count > 0)
             {
                 var node = nodes.Dequeue();
                 if (node[0] < cost.Length - 2)
                 {
-                    if((node[1] + cost[node[0] + 1])< minCost)
+                    if ((node[1] + cost[node[0] + 1]) < minCost)
                     {
                         nodes.Enqueue(new int[] { node[0] + 1, node[1] + cost[node[0] + 1] });
-
                     }
                     if (node[1] + cost[node[0] + 2] < minCost)
                     {
                         nodes.Enqueue(new int[] { node[0] + 2, node[1] + cost[node[0] + 2] });
-
                     }
                 }
                 else
                 {
-                    if(node[1] < minCost)
+                    if (node[1] < minCost)
                     {
                         minCost = node[1];
                     }
@@ -132,7 +171,7 @@ namespace LeetCodeAlgo
 
         public int GetMinCost(int n)
         {
-            return Math.Min(n,int.MaxValue);
+            return Math.Min(n, int.MaxValue);
         }
     }
 }

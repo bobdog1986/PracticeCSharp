@@ -15,6 +15,7 @@ namespace LeetCodeAlgo
             var anwser = new Anwser();
             var arr1 = new int[] { 1, 2, 3, 1};
             //var arr2 = new int[] { 9, 4, 9, 8, 4 };
+            var arr3 = new int[][] { new int[]{ 0,0,0 }, new int[] { 0, 1, 1 }};
             var listnode=new ListNode(1,new ListNode(2));
             //anwser.PrintListNode(listnode);
             //Console.WriteLine(string.Join(",", arr1));
@@ -25,7 +26,7 @@ namespace LeetCodeAlgo
             var root =new TreeNode(3,new TreeNode(9),new TreeNode(20,new TreeNode(15),new TreeNode(7)));
             //var result = anwser.CheckInclusion("hello", "ooolleoooleh");//ooolleoooleh
             //var result = anwser.CheckInclusion("abc", "ccccbbbbaaaa");//ooolleoooleh
-            var result = anwser.CheckInclusion("rvwrk", "lznomzggwrvrkxecjaq");//ooolleoooleh
+            var result = anwser.FloodFill(arr3,1,1,1);//ooolleoooleh
             //"rvwrk"
             //"lznomzggwrvrkxecjaq"
             //anwser.PrintListNode(result);
@@ -33,7 +34,11 @@ namespace LeetCodeAlgo
             //anwser.Merge(arr1,3,arr2,3);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
-            Console.WriteLine(result);
+            foreach(var i in arr3)
+            {
+                Console.WriteLine(String.Join(",",i));
+            }
+            //Console.WriteLine(result);
             //Console.WriteLine(String.Join(",",result));
             //Console.WriteLine(String.Join(",", arr1));
             Console.ReadLine();
