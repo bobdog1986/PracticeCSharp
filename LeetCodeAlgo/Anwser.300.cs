@@ -74,7 +74,33 @@ namespace LeetCodeAlgo
             }
             return num == 0;
         }
+        //387. First Unique Character in a String
 
+        public int FirstUniqChar(string s)
+        {
+            Dictionary<char,int> dic=new Dictionary<char, int>();
+
+
+            for(int i=0; i<s.Length; i++)
+            {
+                if (dic.ContainsKey(s[i]))
+                {
+                    dic[s[i]] = -1;
+                }
+                else
+                {
+                    dic.Add(s[i], i);
+                }
+            }
+
+            foreach(var i in dic.Values)
+            {
+                if (i != -1)
+                    return i;
+            }
+
+            return -1;
+        }
 
     }
 }

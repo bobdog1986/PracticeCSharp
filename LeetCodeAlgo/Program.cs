@@ -36,7 +36,7 @@ namespace LeetCodeAlgo
             var root =new TreeNode(3,new TreeNode(9),new TreeNode(20,new TreeNode(15),new TreeNode(7)));
             //var result = anwser.CheckInclusion("hello", "ooolleoooleh");//ooolleoooleh
             //var result = anwser.CheckInclusion("abc", "ccccbbbbaaaa");//ooolleoooleh
-            var result = anwser.SearchMatrix(arr3,130);//ooolleoooleh
+            var result = anwser.FirstUniqChar("leetcode");//ooolleoooleh
             //"rvwrk"
             //"lznomzggwrvrkxecjaq"
             //anwser.PrintListNode(result);
