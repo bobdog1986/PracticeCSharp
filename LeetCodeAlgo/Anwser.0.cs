@@ -639,6 +639,115 @@ namespace LeetCodeAlgo
             return 0;
         }
 
+        //74. Search a 2D Matrix
+        public bool SearchMatrix(int[][] matrix, int target)
+        {
+            int row = matrix.Length;
+            int col = matrix[0].Length;
+
+            if (matrix[0][0] == target || matrix[row - 1][col - 1] == target)
+                return true;
+            if (matrix[0][0] > target || matrix[row - 1][col - 1] < target)
+                return false;
+
+            int a = 0;
+            int b = row - 1;
+
+            int m = (a+b) / 2;
+            bool findRow = false;
+            while (m>=a && m<=b)
+            {
+                if (matrix[m][col - 1] == target)
+                {
+                    return true;
+                }
+                else if(matrix[m][col - 1]>target)
+                {
+                    if ((m > a))
+                    {
+                        if(matrix[m-1][col - 1] == target)
+                        {
+                            return true;
+                        }
+                        else if(matrix[m - 1][col - 1] < target)
+                        {
+                            findRow = true;
+
+                            break;
+                        }
+                        else
+                        {
+                            b = m;
+                            m = (a+b) / 2;
+                        }
+                    }
+                    else
+                    {
+                        findRow = true;
+                        break;
+                    }
+                }
+                else
+                {
+                    if ((m < b))
+                    {
+                        if (matrix[m + 1][col - 1] == target)
+                        {
+                            return true;
+                        }
+                        else if (matrix[m + 1][col - 1] > target)
+                        {
+                            findRow = true;
+                            m++;
+                            break;
+                        }
+                        else
+                        {
+                            a = m;
+                            m = (a+b)/2;
+                        }
+                    }
+                    else
+                    {
+                        findRow = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!findRow)
+                return false;
+
+            if(matrix[m][col-1]==target || matrix[m][0]==target)
+                return true;
+
+            int n = col-1;
+            n = n / 2;
+
+            int x = 0;
+            int y = col - 1;
+
+            bool result = false;
+            while (n >= x && n <= y && (y-x>1))
+            {
+                if (matrix[m][n] == target)
+                {
+                    return true;
+                }
+                else if (matrix[m][n] > target)
+                {
+                    y = n;
+                    n = (n - x) / 2;
+                }
+                else
+                {
+                    x = n;
+                    n += (y - n) / 2;
+                }
+            }
+
+            return false;
+        }
 
         //88. Merge Sorted Array
         public void Merge(int[] nums1, int m, int[] nums2, int n)
