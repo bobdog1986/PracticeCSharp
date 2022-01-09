@@ -23,7 +23,11 @@ namespace LeetCodeAlgo
             sw.Start();
             //[3,9,20,null,null,15,7]
             var root =new TreeNode(3,new TreeNode(9),new TreeNode(20,new TreeNode(15),new TreeNode(7)));
-            var result = anwser.LengthOfLongestSubstring("abcabcaa");
+            //var result = anwser.CheckInclusion("hello", "ooolleoooleh");//ooolleoooleh
+            //var result = anwser.CheckInclusion("abc", "ccccbbbbaaaa");//ooolleoooleh
+            var result = anwser.CheckInclusion("rvwrk", "lznomzggwrvrkxecjaq");//ooolleoooleh
+            //"rvwrk"
+            //"lznomzggwrvrkxecjaq"
             //anwser.PrintListNode(result);
             //var result =anwser.Intersect(arr1,arr2);
             //anwser.Merge(arr1,3,arr2,3);
