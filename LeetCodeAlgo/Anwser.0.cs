@@ -456,6 +456,49 @@ namespace LeetCodeAlgo
 
             return max;
         }
+        //55. Jump Game
+        public bool CanJump(int[] nums)
+        {
+            if(nums.Length == 1)
+                return true;
+            if (nums.Length == 2)
+                return nums[0] > 0;
+
+            bool[] dp = new bool[nums.Length];
+
+            int i=nums.Length-1;
+            dp[i] = true;
+            i--;
+            while(i >= 0)
+            {
+                if(nums[i] == 0)
+                {
+                    dp[i] = false;
+                }
+                else
+                {
+                    bool has = false;
+                    for(int j=1;j <= nums[i] ; j++)
+                    {
+                        if (i + j <=nums.Length-1 && dp[i + j])
+                        {
+                            has = true;
+                            break;
+                        }
+
+                    }
+
+                    dp[i] = has;
+
+                }
+
+                i--;
+            }
+
+            return dp[0];
+
+        }
+
 
 
         //56
