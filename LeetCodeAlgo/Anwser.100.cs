@@ -78,6 +78,32 @@ namespace LeetCodeAlgo
         //    return root;
         //}
 
+        //118. Pascal's Triangle
+        public IList<IList<int>> Generate(int numRows)
+        {
+            List<IList<int>> list=new List<IList<int>>();
+            int i = 1;
+            list.Add(new List<int>() { 1 });
+            i++;
+            while(i <= numRows)
+            {
+                var list2=new List<int>();
+                int j = 1;
+                list2.Add(1);
+                j++;
+                while (j < i)
+                {
+                    list2.Add(list[i-1-1][j-1-1]+list[i-1-1][j-1]);
+                    j++;
+                }
+                list2.Add(1);
+                list.Add(list2);
+                i++;
+            }
+
+            return list;
+        }
+
         //121. Best Time to Buy and Sell Stock
 
         public int MaxProfit(int[] prices)

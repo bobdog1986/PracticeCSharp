@@ -26,7 +26,7 @@ namespace LeetCodeAlgo
             var root =new TreeNode(3,new TreeNode(9),new TreeNode(20,new TreeNode(15),new TreeNode(7)));
             //var result = anwser.CheckInclusion("hello", "ooolleoooleh");//ooolleoooleh
             //var result = anwser.CheckInclusion("abc", "ccccbbbbaaaa");//ooolleoooleh
-            var result = anwser.FloodFill(arr3,1,1,1);//ooolleoooleh
+            var result = anwser.Generate(3);//ooolleoooleh
             //"rvwrk"
             //"lznomzggwrvrkxecjaq"
             //anwser.PrintListNode(result);
@@ -34,7 +34,7 @@ namespace LeetCodeAlgo
             //anwser.Merge(arr1,3,arr2,3);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
-            foreach(var i in arr3)
+            foreach(var i in result)
             {
                 Console.WriteLine(String.Join(",",i));
             }
