@@ -101,6 +101,29 @@ namespace LeetCodeAlgo
             }
             return false;
         }
+
+        //242. Valid Anagram
+
+        public bool IsAnagram(string s, string t)
+        {
+            var arr1 = s.ToArray().ToList();
+            var arr2 = t.ToArray().ToList();
+            while (arr1.Count > 0)
+            {
+                var j = arr2.IndexOf(arr1[0]);
+                if (j >= 0)
+                {
+                    arr1.RemoveAt(0);
+                    arr2.RemoveAt(j);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return arr2.Count==0;
+        }
+
         //258
         public int AddDigits(int num)
         {

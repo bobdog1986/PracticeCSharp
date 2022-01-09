@@ -96,7 +96,6 @@ namespace LeetCodeAlgo
         }
 
 
-
         //387. First Unique Character in a String
 
         public int FirstUniqChar(string s)
