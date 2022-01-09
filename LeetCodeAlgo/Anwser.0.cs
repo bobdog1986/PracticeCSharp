@@ -434,7 +434,55 @@ namespace LeetCodeAlgo
             result.Add(pre);
             return new string(result.ToArray());
         }
+        //45. Jump Game II
+        public int Jump(int[] nums)
+        {
+            if (nums.Length == 1)
+                return 0;
+            if (nums.Length == 2)
+                return 1;
 
+            bool[] canDp = GetCanJumpArray(nums);
+            int[] dp= new int[nums.Length];
+
+            int i = nums.Length - 1;
+            dp[i] = 0;
+            i--;
+
+            while (i >= 0)
+            {
+                if (canDp[i]==false)
+                {
+                    dp[i] = 0;
+                }
+                else
+                {
+                    for (int j = nums[i]; j >=1; j--)
+                    {
+                        if (i + j >= nums.Length - 1 )
+                        {
+                            dp[i] = 1;
+                            break;
+                        }
+                        else if(canDp[i+j])
+                        {
+                            if(dp[i] == 0)
+                            {
+                                dp[i] = Math.Min(nums.Length - 1, 1 + dp[i + j]);
+                            }
+                            else
+                            {
+                                dp[i] = Math.Min(dp[i], 1 + dp[i + j]);
+                            }
+                        }
+                    }
+                }
+
+                i--;
+            }
+
+            return dp[0];
+        }
         //53
         public int MaxSubArray(int[] nums)
         {
@@ -469,6 +517,7 @@ namespace LeetCodeAlgo
             int i=nums.Length-1;
             dp[i] = true;
             i--;
+
             while(i >= 0)
             {
                 if(nums[i] == 0)
@@ -485,20 +534,54 @@ namespace LeetCodeAlgo
                             has = true;
                             break;
                         }
-
                     }
 
                     dp[i] = has;
-
                 }
 
                 i--;
             }
-
             return dp[0];
-
         }
 
+        public bool[] GetCanJumpArray(int[] nums)
+        {
+            if (nums.Length == 1)
+                return new bool[] { true };
+            if (nums.Length == 2)
+                return new bool[] { true ,true};
+
+            bool[] dp = new bool[nums.Length];
+
+            int i = nums.Length - 1;
+            dp[i] = true;
+            i--;
+
+            while (i >= 0)
+            {
+                if (nums[i] == 0)
+                {
+                    dp[i] = false;
+                }
+                else
+                {
+                    bool has = false;
+                    for (int j = 1; j <= nums[i]; j++)
+                    {
+                        if (i + j <= nums.Length - 1 && dp[i + j])
+                        {
+                            has = true;
+                            break;
+                        }
+                    }
+
+                    dp[i] = has;
+                }
+
+                i--;
+            }
+            return dp;
+        }
 
 
         //56
