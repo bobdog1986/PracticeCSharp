@@ -351,6 +351,48 @@ namespace LeetCodeAlgo
             }
         }
 
+        //36. Valid Sudoku
+
+        public bool IsValidSudoku(char[][] board)
+        {
+            int[][] arrRow = new int[9][];
+            int[][] arrCol = new int[9][];
+            int[][] arrBlock = new int[9][];
+
+            for (int i = 0; i < 9; i++)
+            {
+                arrRow[i] = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                arrCol[i] = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                arrBlock[i] = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            }
+
+            for (int i = 0; i < board.Length; i++)
+            {
+                for(int j = 0; j < board[i].Length; j++)
+                {
+                    char v=board[i][j];
+                    if (v == '.')
+                    {
+                        continue;
+                    }
+
+                    int k = v - '1';
+
+                    if(arrRow[i][k] == 0 && arrCol[j][k]==0 && arrBlock[i/3*3+j/3][k]==0)
+                    {
+                        arrRow[i][k] = 1;
+                        arrCol[j][k] = 1;
+                        arrBlock[i / 3 * 3 + j / 3][k] = 1;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
 
         //38
         public string CountAndSay(int n)
