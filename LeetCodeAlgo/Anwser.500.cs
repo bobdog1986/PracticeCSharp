@@ -40,6 +40,30 @@ namespace LeetCodeAlgo
 
             return String.Join(" ", arr);
         }
+        //566. Reshape the Matrix
+        public int[][] MatrixReshape(int[][] mat, int r, int c)
+        {
+            int row=mat.Length;
+            int col=mat[0].Length;
+
+            if (row * col != r * c)
+                return mat;
+
+            List<int[]> list=new List<int[]>();
+            for (int i = 0; i < r; i++)
+            {
+                var list2=new List<int>();
+                for (int j = 0; j < c; j++)
+                {
+                    int index = i * c + j ;
+                    list2.Add(mat[index / col][index % col]);
+                }
+                list.Add(list2.ToArray());
+            }
+
+            return list.ToArray();
+        }
+
 
         //567. Permutation in String
 
