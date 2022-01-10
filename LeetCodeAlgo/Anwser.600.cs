@@ -39,6 +39,35 @@ namespace LeetCodeAlgo
             return num3 < num1 + num2;
         }
 
+        //617. Merge Two Binary Trees
+
+        public TreeNode MergeTrees(TreeNode root1, TreeNode root2)
+        {
+            if (root1 == null && root2 == null)
+                return null;
+
+            var result = new TreeNode();
+            result.val = (root1 != null ? root1.val : 0) + (root2 != null ? root2.val : 0);
+
+            if (root1 == null)
+            {
+                result.left = root2.left;
+                result.right = root2.right;
+            }
+            else if (root2 == null)
+            {
+                result.left = root1.left;
+                result.right = root1.right;
+            }
+            else
+            {
+                result.left = MergeTrees(root1.left, root2.left);
+                result.right = MergeTrees(root1.right, root2.right);
+            }
+
+            return result;
+        }
+
         //695. Max Area of Island
 
         public int MaxAreaOfIsland(int[][] grid)

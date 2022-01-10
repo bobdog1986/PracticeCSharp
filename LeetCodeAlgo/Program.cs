@@ -14,7 +14,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
             var arr1 = new int[] { 5,-3,5 };
-            //var arr2 = new int[] { 9, 4, 9, 8, 4 };
+            var arr2 = new int[] { 9, 4, 9, 8, 4 };
         //    var arr3 = new int[][] 
         //    {
         //        new int[]{114,114,116,118,120,120,120,122,122,124,124,126,127,128,129,131,133,133,135,137,139,139 },
@@ -32,16 +32,10 @@ namespace LeetCodeAlgo
             //Console.WriteLine(string.Join(",", arr2));
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            //[3,9,20,null,null,15,7]
-            var root =new TreeNode(3,new TreeNode(9),new TreeNode(20,new TreeNode(15),new TreeNode(7)));
-            //var result = anwser.CheckInclusion("hello", "ooolleoooleh");//ooolleoooleh
-            //var result = anwser.CheckInclusion("abc", "ccccbbbbaaaa");//ooolleoooleh
-            var result = anwser.MaxSubarraySumCircular(arr1);//ooolleoooleh
-            //"rvwrk"
-            //"lznomzggwrvrkxecjaq"
+            //var root =new TreeNode(3,new TreeNode(9),new TreeNode(20,new TreeNode(15),new TreeNode(7)));
+            //var result = anwser.MaxSubarraySumCircular(arr1);//ooolleoooleh
             //anwser.PrintListNode(result);
-            //var result =anwser.Intersect(arr1,arr2);
-            //anwser.Merge(arr1,3,arr2,3);
+            var result =anwser.Intersect(arr1,arr2);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
             Console.WriteLine(result);
