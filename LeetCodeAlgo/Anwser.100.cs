@@ -183,6 +183,29 @@ namespace LeetCodeAlgo
 
             return max = Math.Max(current, max);
         }
+
+        //141. Linked List Cycle
+
+        public bool HasCycle(ListNode head)
+        {
+            if(head == null || head.next==null) return false;
+
+            List<ListNode> list = new List<ListNode>();
+
+            while (head!=null)
+            {
+                if(list.IndexOf(head) == -1)
+                {
+                    list.Add(head);
+                    head = head.next;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         //149
 
         public int MaxPoints(Point[] points)
