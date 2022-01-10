@@ -250,6 +250,56 @@ namespace LeetCodeAlgo
 
             Console.WriteLine($"ListNode is [{string.Join(",",list)}]");
         }
+        //21. Merge Two Sorted Lists
+        public ListNode MergeTwoLists(ListNode list1, ListNode list2)
+        {
+            if (list1 == null || list2 == null)
+                return list1 ?? list2;
+
+            ListNode list = null;
+
+            if (list1.val <= list2.val)
+            {
+                list = list1;
+                list1 = list1.next;
+            }
+            else
+            {
+                list = list2;
+                list2 = list2.next;
+            }
+            ListNode last = list;
+
+            while (list1 != null || list2 != null)
+            {
+                if (list1 == null)
+                {
+                    last.next = list2;
+                    break;
+                }
+                else if (list2 == null)
+                {
+                    last.next = list1;
+                    break;
+                }
+                else
+                {
+                    if (list1.val <= list2.val)
+                    {
+                        last.next = list1;
+                        list1 = list1.next;
+                    }
+                    else
+                    {
+                        last.next = list2;
+                        list2= list2.next;
+                    }
+
+                    last = last.next;
+                }
+            }
+            return list;
+        }
 
         //26
         public int RemoveDuplicates(int[] nums)
