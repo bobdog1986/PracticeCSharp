@@ -30,6 +30,40 @@ namespace LeetCodeAlgo
             }
             return result;
         }
+        //203. Remove Linked List Elements
+        public ListNode RemoveElements(ListNode head, int val)
+        {
+            while(head != null)
+            {
+                if(val == head.val)
+                {
+                    head = head.next;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            if (head == null)
+                return null;
+
+            var current=head;
+
+            while (current.next!= null)
+            {
+                if (current.next.val == val)
+                {
+                    current.next = current.next.next;
+                }
+                else
+                {
+                    current = current.next;
+                }
+            }
+
+            return head;
+        }
 
         //213. House Robber II
         public int Rob(int[] nums)
