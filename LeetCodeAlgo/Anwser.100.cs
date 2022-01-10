@@ -235,6 +235,145 @@ namespace LeetCodeAlgo
             }
             return Math.Max(dict.Values.Max(), dictY.Values.Max());
         }
+        //152. Maximum Product Subarray
+        public int MaxProduct(int[] nums)
+        {
+            if (nums == null || nums.Length == 0)
+                return 0;
+            if (nums.Length == 1)
+                return nums[0];
+
+            int max = -10;
+
+            List<int> list = new List<int>();
+            List<int> indexsOfNegative = new List<int>();
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] == 0)
+                {
+                    max=Math.Max(max,0);
+                    max=Math.Max(max, GetMaxProduct(list, indexsOfNegative));
+
+                    list.Clear();
+                    indexsOfNegative.Clear();
+                }
+                else
+                {
+                    list.Add(nums[i]);
+                    if(nums[i] < 0)
+                    {
+                        indexsOfNegative.Add(list.Count-1);
+                    }
+                }
+            }
+
+            max = Math.Max(max, GetMaxProduct(list, indexsOfNegative));
+
+            return max;
+        }
+
+        public int GetMaxProduct(List<int> list,List<int> indexsOfNegative=null)
+        {
+            if (list.Count == 0)
+                return 0;
+            if(list.Count == 1)
+                return list[0];
+
+            if (indexsOfNegative==null || indexsOfNegative.Count % 2 == 0)
+            {
+                return list.Aggregate((x,y)=>x*y);
+            }
+            else
+            {
+                return Math.Max(
+                    GetMaxProduct(list.GetRange(indexsOfNegative[0] + 1, list.Count - indexsOfNegative[0] - 1)),
+                    GetMaxProduct(list.GetRange(0, indexsOfNegative[indexsOfNegative.Count - 1]))
+                    );
+            }
+        }
+
+        //wrong understand input is sorted nums
+        //public int MaxProduct(int[] nums)
+        //{
+        //    if(nums == null || nums.Length == 0)
+        //        return 0;
+        //    if(nums.Length == 1)
+        //        return nums[0];
+
+        //    int max = -10;
+
+        //    int start = nums[0];
+        //    int end = nums[0];
+
+        //    for (int i = 0; i < nums.Length-1; i++)
+        //    {
+        //        if (nums[i] + 1 == nums[i + 1])
+        //        {
+        //            end = nums[i + 1];
+        //        }
+        //        else
+        //        {
+        //            max = Math.Max(max, GetMaxProductFromContinuous(start,end));
+        //            start = nums[i + 1];
+        //            end = nums[i + 1];
+        //        }
+        //    }
+
+        //    max = Math.Max(max, GetMaxProductFromContinuous(start, end));
+
+        //    return max;
+        //}
+
+        //public int GetMaxProductFromContinuous(int start,int end)
+        //{
+        //    if (start == end)
+        //    {
+        //        return start;
+        //    }
+        //    else
+        //    {
+        //        if (start < 0 && end < 0)
+        //        {
+        //            if ((end - start + 1) % 2 == 1)
+        //            {
+        //                return Factorial(start, end-1);
+        //            }
+        //            else
+        //            {
+        //                return Factorial(start, end);
+        //            }
+        //        }
+        //        else if(start >0 && end > 0)
+        //        {
+        //            return Factorial(start, end);
+        //        }
+        //        else if(start <0 && end > 0)
+        //        {
+        //            return Math.Max(((-start) % 2 == 1 && start < -1) ? Factorial(start, -2) : Factorial(start, -1), Factorial(1, end));
+        //        }
+        //        else if (start == 0)
+        //        {
+        //            return Factorial(1, end);
+        //        }
+        //        else
+        //        {
+        //            return ((-start) % 2 == 1 && start < -1) ? Factorial(start, -2) : Factorial(start, -1);
+        //        }
+        //    }
+        //}
+
+        //public int Factorial(int i, int j)
+        //{
+        //    int result = 1;
+        //    while (i <= j)
+        //    {
+        //        result *= i;
+        //        i++;
+        //    }
+        //    return result;
+        //}
+
         // 167 Two Sum II - Input Array Is Sorted
         public int[] TwoSumII(int[] numbers, int target)
         {
