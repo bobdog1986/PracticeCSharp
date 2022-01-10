@@ -78,6 +78,36 @@ namespace LeetCodeAlgo
         //    return root;
         //}
 
+        //116. Populating Next Right Pointers in Each Node
+
+        public Node Connect(Node root)
+        {
+            if (root == null)
+                return null;
+
+            List<Node> list = new List<Node>();
+            list.Add(root);
+            while (list.Count!=0)
+            {
+                List<Node> subs = new List<Node>();
+
+                bool hasSubs =list[0].left!= null;
+                for (int i = 0; i < list.Count; i++)
+                {
+                    list[i].next = i == list.Count - 1 ? null : list[i + 1];
+                    if (hasSubs)
+                    {
+                        subs.Add(list[i].left);
+                        subs.Add(list[i].right);
+                    }
+                }
+
+                list = subs;
+            }
+
+            return root;
+
+        }
         //118. Pascal's Triangle
         public IList<IList<int>> Generate(int numRows)
         {
