@@ -13,7 +13,7 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var arr1 = new int[] {-3,-1,-1 };
+            var arr1 = new int[] {1,2,3,5,-6,4,0,10};
             var arr2 = new int[] { 9, 4, 9, 8, 4 };
         //    var arr3 = new int[][] 
         //    {
@@ -35,7 +35,7 @@ namespace LeetCodeAlgo
             //var root =new TreeNode(3,new TreeNode(9),new TreeNode(20,new TreeNode(15),new TreeNode(7)));
             //var result = anwser.MaxSubarraySumCircular(arr1);//ooolleoooleh
             //anwser.PrintListNode(result);
-            var result =anwser.MaxProduct(arr1);
+            var result =anwser.GetMaxLen(arr1);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
             Console.WriteLine(result);

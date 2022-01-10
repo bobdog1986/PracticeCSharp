@@ -53,6 +53,7 @@
     <Compile Include="Anwser.600.cs" />
     <Compile Include="Anwser.300.cs" />
     <Compile Include="Anwser.200.cs" />
+    <Compile Include="Anwser.K1500.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="ListNode.cs" />
     <Compile Include="Program.cs" />
