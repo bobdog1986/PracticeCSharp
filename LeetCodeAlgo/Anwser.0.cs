@@ -250,6 +250,7 @@ namespace LeetCodeAlgo
 
             Console.WriteLine($"ListNode is [{string.Join(",",list)}]");
         }
+
         //21. Merge Two Sorted Lists
         public ListNode MergeTwoLists(ListNode list1, ListNode list2)
         {

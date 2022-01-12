@@ -64,6 +64,42 @@ namespace LeetCodeAlgo
 
             return head;
         }
+        //206. Reverse Linked List
+
+        public ListNode ReverseList(ListNode head)
+        {
+            if (head == null || head.next == null)
+                return head;
+
+            var stack=new Stack<ListNode>();
+            while (head != null)
+            {
+                var next = head.next;
+                head.next = null;
+                stack.Push(head);
+                head = next;
+            }
+
+            ListNode result = null;
+            ListNode current = null;
+
+            while (stack.Count > 0)
+            {
+                var node=stack.Pop();
+                if(result == null)
+                {
+                    result = node;
+                    current = result;
+                }
+                else
+                {
+                    current.next= node;
+                    current = node;
+                }
+            }
+
+            return result;
+        }
 
         //213. House Robber II
         public int Rob(int[] nums)
