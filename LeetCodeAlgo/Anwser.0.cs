@@ -250,7 +250,43 @@ namespace LeetCodeAlgo
 
             Console.WriteLine($"ListNode is [{string.Join(",",list)}]");
         }
+        //20. Valid Parentheses
 
+        public bool IsValid(string s)
+        {
+            if(string.IsNullOrEmpty(s))
+                return false;
+
+            Stack<char> qe = new Stack<char>();
+            foreach(var c in s)
+            {
+                if (c == '[' || c == '{' || c == '(')
+                {
+                    qe.Push(c);
+                }
+
+                if(c == ']' || c == '}' || c == ')')
+                {
+                    if (qe.Count == 0)
+                        return false;
+
+                    var a = qe.Pop();
+
+                    if(a == '[' && c==']'
+                        || a == '(' && c == ')'
+                        || a == '{' && c == '}')
+                    {
+
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return qe.Count==0;
+        }
         //21. Merge Two Sorted Lists
         public ListNode MergeTwoLists(ListNode list1, ListNode list2)
         {
