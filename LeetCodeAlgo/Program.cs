@@ -38,7 +38,7 @@ namespace LeetCodeAlgo
                 //new int[] {23,24,26,26,26,27,27 },
                 //new int[] {28,29,29,30,32,32,34 },
             };
-            var listnode=new ListNode(1,new ListNode(2, new ListNode(3,new ListNode(4,new ListNode(5)))));
+            var listnode = new ListNode(1, new ListNode(1, new ListNode(3, null)));//new ListNode(4,new ListNode(5)))));
             //anwser.PrintListNode(listnode);
             Console.WriteLine(String.Join("\r\n", mat1.Select(o => String.Join(",", o))));
 
@@ -49,7 +49,7 @@ namespace LeetCodeAlgo
             //var root =new TreeNode(3,new TreeNode(9),new TreeNode(20,new TreeNode(15),new TreeNode(7)));
             //var result = anwser.MaxSubarraySumCircular(arr1);//ooolleoooleh
             //anwser.PrintListNode(result);
-            var result =anwser.ReverseList(listnode);
+            var result =anwser.DeleteDuplicates(listnode);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
             Console.WriteLine(result.val.ToString() + result.next.val);

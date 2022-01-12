@@ -928,6 +928,52 @@ namespace LeetCodeAlgo
             return false;
         }
 
+        //83. Remove Duplicates from Sorted List
+
+        public ListNode DeleteDuplicates(ListNode head)
+        {
+            if (head == null || head.next == null)
+                return head;
+
+            var queue = new Queue<ListNode>();
+            int last = int.MinValue;
+
+            while (head != null)
+            {
+                if (last == head.val)
+                {
+                    head= head.next;
+                }
+                else
+                {
+                    last = head.val;
+                    var next = head.next;
+                    head.next = null;
+                    queue.Enqueue(head);
+                    head = next;
+                }
+            }
+
+            ListNode result = null;
+            ListNode current = null;
+
+            while (queue.Count > 0)
+            {
+                var node = queue.Dequeue();
+                if (result == null)
+                {
+                    result = node;
+                    current = result;
+                }
+                else
+                {
+                    current.next = node;
+                    current = node;
+                }
+            }
+
+            return result;
+        }
         //88. Merge Sorted Array
         public void Merge(int[] nums1, int m, int[] nums2, int n)
         {
