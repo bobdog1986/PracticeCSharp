@@ -238,6 +238,34 @@ namespace LeetCodeAlgo
         //152. Maximum Product Subarray
         public int MaxProduct(int[] nums)
         {
+            int max = nums[0], min = nums[0], ans = nums[0];
+            int n = nums.Length;
+
+            for (int i = 1; i < n; i++)
+            {
+
+                // Swapping min and max
+                if (nums[i] < 0)
+                {
+                    int temp = max;
+                    max = min;
+                    min = temp;
+                }
+
+
+
+                max = Math.Max(nums[i], max * nums[i]);
+                min = Math.Min(nums[i], min * nums[i]);
+
+
+                ans = Math.Max(ans, max);
+            }
+
+            return ans;
+        }
+
+        public int MaxProduct_1(int[] nums)
+        {
             if (nums == null || nums.Length == 0)
                 return 0;
             if (nums.Length == 1)
