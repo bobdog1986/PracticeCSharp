@@ -147,6 +147,9 @@ namespace LeetCodeAlgo
             var dist= nums.Distinct();
             return dist.Count()!=nums.Length;
         }
+        //232. Implement Queue using Stacks
+
+        //232. Implement Queue using Stacks
 
         //240
         public bool SearchMatrix(int[,] matrix, int target)
