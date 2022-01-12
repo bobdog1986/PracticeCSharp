@@ -18,17 +18,19 @@ namespace LeetCodeAlgo
             var arr1 = new int[] {0,0,1,1,1};
             var mat1 = new int[][]
             {
-                //new int[]{114,114,116,118,120,120,120,122,122,124,124,126,127,128,129,131,133,133,135,137,139,139 },
-                new int[]{0,0,1,0,1,1,1,0,1,1},
-                new int[]{1,1,1,1,0,1,1,1,1,1},
-                new int[]{1,1,1,1,1,0,0,0,1,1},
-                new int[]{1,0,1,0,1,1,1,0,1,1},
-                new int[]{0,0,1,1,1,0,1,1,1,1},
-                new int[]{1,0,1,1,1,1,1,1,1,1},
-                new int[]{1,1,1,1,0,1,0,1,0,1},
-                new int[]{0,1,0,0,0,1,0,0,1,1},
-                new int[]{1,1,1,0,1,1,0,1,0,1},
-                new int[]{1,0,1,1,1,0,1,1,1,0},
+                new int[]{0,2},
+                //new int[]{1,1,1,},
+                //new int[]{1,1,2,},
+                //new int[]{0,0,1,0,1,1,1,0,1,1},
+                //new int[]{1,1,1,1,0,1,1,1,1,1},
+                //new int[]{1,1,1,1,1,0,0,0,1,1},
+                //new int[]{1,0,1,0,1,1,1,0,1,1},
+                //new int[]{0,0,1,1,1,0,1,1,1,1},
+                //new int[]{1,0,1,1,1,1,1,1,1,1},
+                //new int[]{1,1,1,1,0,1,0,1,0,1},
+                //new int[]{0,1,0,0,0,1,0,0,1,1},
+                //new int[]{1,1,1,0,1,1,0,1,0,1},
+                //new int[]{1,0,1,1,1,0,1,1,1,0},
                                 //new int[]{-8,-7,-5,-3,-3,-1,1}, 
                 //new int[] { 2,2,2,3,3,5,7 },
                 //new int[] {8,9,11,11,13,15,17 },
@@ -47,11 +49,11 @@ namespace LeetCodeAlgo
             //var root =new TreeNode(3,new TreeNode(9),new TreeNode(20,new TreeNode(15),new TreeNode(7)));
             //var result = anwser.MaxSubarraySumCircular(arr1);//ooolleoooleh
             //anwser.PrintListNode(result);
-            var result =anwser.UpdateMatrix(mat1);
+            var result =anwser.OrangesRotting(mat1);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
-            //Console.WriteLine(result);
-            Console.WriteLine(String.Join("\r\n", result.Select(o=> String.Join(",",o))));
+            Console.WriteLine(result);
+            //Console.WriteLine(String.Join("\r\n", result.Select(o=> String.Join(",",o))));
             //Console.WriteLine(String.Join(",", arr1));
             Console.ReadLine();
         }

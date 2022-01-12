@@ -124,5 +124,95 @@ namespace LeetCodeAlgo
             return list3.ToArray();
 
         }
+
+        //994. Rotting Oranges
+
+        public int OrangesRotting(int[][] grid)
+        {
+            int rowLen = grid.Length;
+            int colLen=grid[0].Length;
+
+
+            int totalCount = rowLen * colLen;
+
+            int rottenCount = 0;
+            int emptyCount = 0;
+
+            bool isFirstLoop=true;
+
+            Queue<int[]> queue = new Queue<int[]>();
+
+            for (int i = 0; i < rowLen; i++)
+            {
+                for (int j = 0; j < colLen; j++)
+                {
+                    if (grid[i][j] == 0)
+                    {
+                        emptyCount++;
+                    }
+                    else if(grid[i][j]== 1)
+                    {
+                        queue.Enqueue(new int[] { i, j });
+                    }
+                    else
+                    {
+                        rottenCount++;
+                    }
+                }
+            }
+
+            if (rottenCount == totalCount)
+                return 0;
+
+            int lastRottenCount = rottenCount;
+
+            int loop = 0;
+
+            int lastCount =-1;
+            Queue<int[]> q2;
+
+            while (lastCount != queue.Count && queue.Count>0)
+            {
+                lastCount = queue.Count;
+                List<int[]> list = new List<int[]>();
+                q2 = new Queue<int[]>();
+                while (queue.Count > 0)
+                {
+                    var x = queue.Dequeue();
+                    if ((x[0] > 0 && grid[x[0] - 1][x[1]] == 2)
+                            ||(x[0] < rowLen - 1 && grid[x[0] + 1][x[1]] == 2)
+                            || (x[1] > 0 && grid[x[0]][x[1] - 1] == 2)
+                            || (x[1] < colLen - 1 && grid[x[0]][x[1] + 1] == 2))
+                    {
+                        //grid[x[0]][x[1]] = 2;
+                        list.Add(x);
+                    }
+                    else
+                    {
+                        q2.Enqueue(x);
+                    }
+                }
+
+
+                if (list.Count == 0)
+                {
+                    return -1;
+                }
+                else
+                {
+                    queue = q2;
+                    foreach(var i in list)
+                    {
+                        grid[i[0]][i[1]] = 2;
+                    }
+                }
+
+                loop++;
+
+            }
+
+
+            return queue.Count == 0?loop:-1;
+        }
     }
 }
