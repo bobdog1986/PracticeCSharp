@@ -136,7 +136,7 @@ namespace LeetCodeAlgo
 
         //121. Best Time to Buy and Sell Stock
 
-        public int MaxProfit(int[] prices)
+        public int MaxProfit_121(int[] prices)
         {
             if(prices == null || prices.Length<=1)
                 return 0;
@@ -157,6 +157,66 @@ namespace LeetCodeAlgo
                 maxProfit = Math.Max(maxProfit, currentPrice - MinSoFar);
             }
             return maxProfit;
+        }
+
+        //122
+        public int MaxProfit(int[] prices)
+        {
+            if (prices == null || prices.Length <= 1)
+                return 0;
+
+            if (prices.Length == 2)
+            {
+                if (prices[0] >= prices[1])
+                    return 0;
+                else
+                    return prices[1] - prices[0];
+            }
+
+            int sum = 0;
+            bool isHold = false;
+            int buy = 0;
+            for (int i=0;i<prices.Length-1;i++)
+            {
+                if (isHold)
+                {
+                    if (i == prices.Length - 2)
+                    {
+                        sum+= Math.Max(prices[i + 1], prices[i]) - buy;
+                    }
+                    else
+                    {
+                        if(prices[i] <= prices[i + 1])
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            sum+=prices[i]-buy;
+                            isHold = false;
+                        }
+                    }
+                }
+                else
+                {
+                    if (prices[i] >= prices[i + 1])
+                        continue;
+
+                    if (i == prices.Length - 2)
+                    {
+                        if (prices[i] < prices[i + 1])
+                        {
+                            sum += prices[i + 1] - prices[i];
+                        }
+                        break;
+                    }
+
+                    isHold = true;
+                    buy = prices[i];
+
+                }
+            }
+            return sum;
         }
 
         //128
