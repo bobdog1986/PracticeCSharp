@@ -24,6 +24,192 @@ namespace LeetCodeAlgo
             return Fib(n - 1) + Fib(n-2);
         }
 
+        //542. 01 Matrix
+        public int[][] UpdateMatrix(int[][] mat)
+        {
+            int rowLen = mat.Length;
+            int colLen = mat[0].Length;
+
+            int[][] result = new int[rowLen][];
+            for (int i=0; i<rowLen;i++)
+            {
+                result[i] = new int[colLen];
+            }
+
+            //init every cell as max value, assuming the only 0 at furthest corner cell
+            for (int i = 0; i < rowLen; i++)
+            {
+                for(int j=0; j<colLen; j++)
+                {
+                    result[i][j] = Math.Max(i, rowLen - i - 1) + Math.Max(j, colLen - j - 1);
+                }
+            }
+
+            //left-top to right-bottom
+            int MAX_DISTANCE = (rowLen -1) +(colLen - 1);
+
+            //dp value
+            int distance;
+
+            //loop rows first, forward sequence then backward
+            for (int r = 0; r < rowLen; r++)
+            {
+                if (colLen == 1)
+                    break;
+
+                distance = MAX_DISTANCE;
+                for (int c = 0; c < colLen; c++)
+                {
+                    if (mat[r][c] == 0)
+                    {
+                        distance = 0;
+                    }
+                    else
+                    {
+                        if(distance != MAX_DISTANCE)
+                        {
+                            distance++;
+                        }
+                    }
+                    result[r][c] = Math.Min(result[r][c], distance);
+                }
+
+                distance = MAX_DISTANCE;
+                for (int c = colLen - 1; c >= 0; c--)
+                {
+                    if (mat[r][c] == 0)
+                    {
+                        distance = 0;
+                    }
+                    else
+                    {
+                        if (distance != MAX_DISTANCE)
+                        {
+                            distance++;
+                        }
+                    }
+                    result[r][c] = Math.Min(result[r][c], distance);
+                }
+            }
+
+            //then loop cols
+            for(int c = 0; c < colLen; c++)
+            {
+                if (rowLen == 1)
+                    break;
+
+                distance = MAX_DISTANCE;
+                for (int r = 0; r < rowLen; r++)
+                {
+                    if (mat[r][c] == 0)
+                    {
+                        distance = 0;
+                    }
+                    else
+                    {
+                        if (distance != MAX_DISTANCE)
+                        {
+                            distance++;
+                        }
+                    }
+                    result[r][c] = Math.Min(result[r][c], distance);
+                }
+
+                distance = MAX_DISTANCE;
+                for (int r = rowLen -1; r >= 0; r--)
+                {
+                    if (mat[r][c] == 0)
+                    {
+                        distance = 0;
+                    }
+                    else
+                    {
+                        if (distance != MAX_DISTANCE)
+                        {
+                            distance++;
+                        }
+                    }
+                    result[r][c] = Math.Min(result[r][c], distance);
+                }
+            }
+
+            if (rowLen == 1 || colLen == 1)
+                return result;
+
+            //every cell value is min of itself and all adjacents(left,right,top,bottom) 
+            for (int i = 0; i < rowLen; i++)
+            {
+                for (int j = 0; j < colLen; j++)
+                {
+                    if (j > 0)
+                    {
+                        result[i][j] = Math.Min(result[i][j], result[i][j - 1]+1);
+                    }
+
+                    if (j < colLen - 1)
+                    {
+                        result[i][j] = Math.Min(result[i][j], result[i][j + 1] + 1);
+
+                    }
+
+                    if (i > 0)
+                    {
+                        result[i][j] = Math.Min(result[i][j], result[i-1][j] + 1);
+
+                    }
+
+                    if (i < rowLen - 1)
+                    {
+                        result[i][j] = Math.Min(result[i][j], result[i + 1][j] + 1);
+
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public int[] UpdateMatrixRow(int[] data)
+        {
+            if(data==null)
+                return null;
+            if (data.Length == 0)
+                return data;
+
+            int[] result = new int[data.Length];
+
+            int left = 0;
+            for(int i=0; i < data.Length; i++)
+            {
+                if(data[i] == 0)
+                {
+                    left = 0;
+                }
+                else
+                {
+                    left++;
+                }
+                result[i] = left;
+            }
+
+            int right = 0;
+            for (int i = data.Length-1; i >=0; i--)
+            {
+                if (data[i] == 0)
+                {
+                    right = 0;
+                }
+                else
+                {
+                    right++;
+                }
+                result[i] =Math.Min(result[i],  right);
+            }
+
+            return result;
+        }
+
+
         //557. Reverse Words in a String III
         public string ReverseWords(string s)
         {
