@@ -16,7 +16,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
             //var arr1 = new int[] { 1, 2, 3, 4 };
-            var arr1 = "1ab";
+            var arr1 = "1ac1b";
             var mat1 = new int[][]
             {
                 new int[]{0,2},
