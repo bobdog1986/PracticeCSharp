@@ -266,6 +266,28 @@ namespace LeetCodeAlgo
             }
             return false;
         }
+
+        ///144. Binary Tree Preorder Traversal
+
+        public IList<int> PreorderTraversal(TreeNode root)
+        {
+            var result = new List<int>();
+            PreorderTraversal(root, result);
+            return result;
+        }
+
+        public void PreorderTraversal(TreeNode node, IList<int> list)
+        {
+            if(node == null)
+                return;
+
+            list.Add(node.val);
+            PreorderTraversal(node.left, list);
+            PreorderTraversal(node.right, list);
+
+        }
+
+
         //149
 
         public int MaxPoints(Point[] points)
