@@ -49,12 +49,12 @@ namespace LeetCodeAlgo
             //var root =new TreeNode(3,new TreeNode(9),new TreeNode(20,new TreeNode(15),new TreeNode(7)));
             //var result = anwser.MaxSubarraySumCircular(arr1);//ooolleoooleh
             //anwser.PrintListNode(result);
-            var result =anwser.MaxProfit(arr1);
+            var result =anwser.Combine(3,1);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
-            Console.WriteLine(result);
+            //Console.WriteLine(result);
             //Console.WriteLine(result.val.ToString() + result.next.val);
-            //Console.WriteLine(String.Join("\r\n", result.Select(o=> String.Join(",",o))));
+            Console.WriteLine(String.Join("\r\n", result.Select(o=> String.Join(",",o))));
             //Console.WriteLine(String.Join(",", arr1));
             Console.ReadLine();
         }

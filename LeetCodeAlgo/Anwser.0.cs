@@ -964,6 +964,129 @@ namespace LeetCodeAlgo
             return false;
         }
 
+        //77. Combinations
+        public IList<IList<int>> Combine(int n, int k)
+        {
+
+            if (n == 0)
+                return null;
+
+            if (k == 0)
+                return null;
+
+            if (n < k)
+                return null;
+
+            List<IList<int>> result = new List<IList<int>>();
+
+            if (n == k)
+            {
+
+                List<int> list = new List<int>();
+
+                for (int i=1;i<=n;i++)
+                    list.Add(i);
+
+                result.Add(list);
+                return result;
+            }
+
+            if(k == 1)
+            {
+
+                for (int i = 1; i <= n; i++)
+                {
+                    List<int> list = new List<int>();
+
+                    list.Add(i);
+                    result.Add(list);
+                }
+
+                return result;
+            }
+
+            for(int i = 1; i <= n - k + 1; i++)
+            {
+                var list1 = Combine(n - 1, k,i);
+                var list2 = Combine(n - 1, k - 1,i);
+
+                if(list1!=null && list1.Count > 0)
+                {
+                    foreach(var item in list1)
+                        result.Add(item);
+                }
+
+                if (list2 != null && list2.Count > 0)
+                {
+                    foreach (var item in list2)
+                    {
+                        item.Add(n);
+                    }
+
+                    foreach (var item in list2)
+                        result.Add(item);
+                }
+            }
+
+            return result;
+        }
+
+        public IList<IList<int>> Combine(int n, int k , int start)
+        {
+            if (n == 0)
+                return null;
+
+            if (k == 0)
+                return null;
+
+            if (n-start+1 < k)
+                return null;
+
+            if (n - start + 1 == k)
+            {
+                List<IList<int>> result = new List<IList<int>>();
+
+                List<int> list = new List<int>();
+
+                for (int i = start; i <= n; i++)
+                    list.Add(i);
+
+                result.Add(list);
+                return result;
+            }
+
+            var list1 = Combine(n - 1, k,start);
+            var list2 = Combine(n - 1, k - 1,start);
+
+            if (list2 != null && list2.Count > 0)
+            {
+                foreach (var i in list2)
+                {
+                    i.Add(n);
+                }
+            }
+
+            if (list1 != null && list1.Count > 0)
+            {
+                if (list2 != null && list2.Count > 0)
+                {
+                    foreach (var i in list2)
+                    {
+                        list1.Add(i);
+                    }
+                }
+
+                return list1;
+            }
+
+            if (list2 != null && list2.Count > 0)
+            {
+                return list2;
+            }
+
+            return null;
+        }
+
         //83. Remove Duplicates from Sorted List
 
         public ListNode DeleteDuplicates(ListNode head)
