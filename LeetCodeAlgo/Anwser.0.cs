@@ -1299,6 +1299,24 @@ namespace LeetCodeAlgo
         //94
         public IList<int> InorderTraversal(TreeNode root)
         {
+            var result =new List<int>();
+            InorderTraversal_Recursion(root, result);
+            return result;
+        }
+
+        public void InorderTraversal_Recursion(TreeNode node,IList<int> list)
+        {
+            if (node == null)
+                return;
+            InorderTraversal_Recursion(node.left,list);
+            list.Add(node.val);
+
+            InorderTraversal_Recursion(node.right, list);
+
+        }
+
+        public IList<int> InorderTraversal_Iteration(TreeNode root)
+        {
             List<int> values = new List<int>();
 
             if (root == null) return values;
