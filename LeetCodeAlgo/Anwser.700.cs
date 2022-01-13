@@ -208,5 +208,133 @@ namespace LeetCodeAlgo
         {
             return Math.Min(n, int.MaxValue);
         }
+
+        ///784. Letter Case Permutation
+        ///Given a string s, you can transform every letter individually to be lowercase or uppercase to create another string.
+        ///Return a list of all possible strings we could create.Return the output in any order.
+        /// 1 <= s.length <= 12
+        /// s consists of lowercase English letters, uppercase English letters, and digits.
+
+        public IList<string> LetterCasePermutation(string s)
+        {
+            var result = new List<string>();
+
+            var carrIndex=new List<int>();
+
+            var carr= s.ToCharArray();
+            for(int i=0; i<s.Length; i++)
+            {
+                if(char.IsLetter(carr[i]))
+                {
+                    carrIndex.Add(i);
+                }
+            }
+
+            if(carrIndex.Count == 0)
+            {
+                result.Add(s);
+            }
+            else
+            {
+                LetterCasePermutation(s, new List<int>(), new List<int>(), carrIndex, result);
+                //for(int i = 0; i < carrIndex.Count; i++)
+                //{
+                //    List<int> list1 = new List<int>();
+                //    List<int> list2 = new List<int>();
+
+                //    List<int> list11 = new List<int>();
+                //    List<int> list12 = new List<int>();
+
+                //    List<int> list3 = new List<int>();
+                //    List<int> list13 = new List<int>();
+                //    foreach (var a in carrIndex)
+                //    {
+                //        if (a != carrIndex[i])
+                //        {
+                //            list3.Add(a);
+                //            list13.Add(a);
+                //        }
+                //    }
+
+                //    list1.Add(carrIndex[i]);
+                //    //list2
+
+                //    //list11
+                //    list12.Add(carrIndex[i]);
+
+                //    //list3.Remove(list3[i]);
+                //    //list13.Remove(list3[i]);
+
+                //    LetterCasePermutation(s, list1, list2, list3, result);
+                //    LetterCasePermutation(s, list11, list12, list13, result);
+                //}
+            }
+            return result;
+        }
+
+        public void LetterCasePermutation(string s, IList<int> upperList, IList<int> lowerList, IList<int> leftList, IList<string> result)
+        {
+            if (leftList.Count == 0)
+            {
+                var arr = s.ToCharArray();
+                foreach(var i in upperList)
+                {
+                    if(arr[i]>='a')
+                        arr[i] = (char)((byte)arr[i] -32);
+                }
+
+                foreach (var i in lowerList)
+                {
+                    if (arr[i] <= 'Z')
+                        arr[i] = (char)((byte)arr[i] + 32);
+                }
+
+                result.Add(string.Join("", arr));
+            }
+
+            for (int i = 0; i < leftList.Count; i++)
+            {
+                List<int> list1 = new List<int>();
+                List<int> list2 = new List<int>();
+
+                List<int> list11 = new List<int>();
+                List<int> list12 = new List<int>();
+
+                List<int> list3 = new List<int>();
+                List<int> list13 = new List<int>();
+
+                foreach (var a in upperList)
+                {
+                    list1.Add(a);
+                    list11.Add(a);
+                }
+
+                foreach(var a in lowerList)
+                {
+                    list2.Add(a);
+                    list12.Add(a);
+                }
+
+                foreach (var a in leftList)
+                {
+                    if (a != leftList[i])
+                    {
+                        list3.Add(a);
+                        list13.Add(a);
+                    }
+                }
+
+                list1.Add(leftList[i]);
+
+                list12.Add(leftList[i]);
+
+                //list3.Remove(list3[i]);
+                //list13.Remove(list3[i]);
+
+                LetterCasePermutation(s, list1, list2, list3, result);
+                LetterCasePermutation(s, list11, list12, list13, result);
+            }
+        }
+
     }
 }
