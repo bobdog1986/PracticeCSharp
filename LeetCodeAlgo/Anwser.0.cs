@@ -30,7 +30,7 @@ namespace LeetCodeAlgo
         //3. Longest Substring Without Repeating Characters
         public int LengthOfLongestSubstring(string s)
         {
-            if(string.IsNullOrEmpty(s))
+            if (string.IsNullOrEmpty(s))
                 return 0;
             if (s.Length == 1)
                 return 1;
@@ -38,14 +38,14 @@ namespace LeetCodeAlgo
             int max = 1;
             int len = 0;
             List<char> list = new List<char>();
-            for (int i = 0;i < s.Length; i++)
+            for (int i = 0; i < s.Length; i++)
             {
                 char c = s[i];
                 if (list.Contains(c))
                 {
-                    max=Math.Max(max, len);
+                    max = Math.Max(max, len);
                     //list.Clear();
-                    var a= list.IndexOf(c);
+                    var a = list.IndexOf(c);
                     if (a == list.Count - 1)
                     {
                         list.Clear();
@@ -205,20 +205,20 @@ namespace LeetCodeAlgo
 
         public ListNode RemoveNthFromEnd(ListNode head, int n)
         {
-            if(head == null || head.next==null)
+            if (head == null || head.next == null)
                 return null;
-            int count= GetListNodeCount(head);
+            int count = GetListNodeCount(head);
             if (n == count)
                 return head.next;
 
 
-            var node1 = GetListNode(head, count- n-1);
-            node1.next=node1.next.next;
+            var node1 = GetListNode(head, count - n - 1);
+            node1.next = node1.next.next;
 
             return head;
         }
 
-        public ListNode GetListNode(ListNode listNode,int index)
+        public ListNode GetListNode(ListNode listNode, int index)
         {
             while (index > 0)
             {
@@ -231,10 +231,10 @@ namespace LeetCodeAlgo
         public int GetListNodeCount(ListNode listnode)
         {
             int count = 0;
-            while(listnode != null)
+            while (listnode != null)
             {
                 count++;
-                listnode= listnode.next;
+                listnode = listnode.next;
             }
             return count;
         }
@@ -242,37 +242,37 @@ namespace LeetCodeAlgo
         public void PrintListNode(ListNode listNode)
         {
             List<int> list = new List<int>();
-            while(listNode != null)
+            while (listNode != null)
             {
                 list.Add(listNode.val);
-                listNode= listNode.next;    
+                listNode = listNode.next;
             }
 
-            Console.WriteLine($"ListNode is [{string.Join(",",list)}]");
+            Console.WriteLine($"ListNode is [{string.Join(",", list)}]");
         }
         //20. Valid Parentheses
 
         public bool IsValid(string s)
         {
-            if(string.IsNullOrEmpty(s))
+            if (string.IsNullOrEmpty(s))
                 return false;
 
             Stack<char> qe = new Stack<char>();
-            foreach(var c in s)
+            foreach (var c in s)
             {
                 if (c == '[' || c == '{' || c == '(')
                 {
                     qe.Push(c);
                 }
 
-                if(c == ']' || c == '}' || c == ')')
+                if (c == ']' || c == '}' || c == ')')
                 {
                     if (qe.Count == 0)
                         return false;
 
                     var a = qe.Pop();
 
-                    if(a == '[' && c==']'
+                    if (a == '[' && c == ']'
                         || a == '(' && c == ')'
                         || a == '{' && c == '}')
                     {
@@ -285,7 +285,7 @@ namespace LeetCodeAlgo
                 }
             }
 
-            return qe.Count==0;
+            return qe.Count == 0;
         }
         //21. Merge Two Sorted Lists
         public ListNode MergeTwoLists(ListNode list1, ListNode list2)
@@ -329,7 +329,7 @@ namespace LeetCodeAlgo
                     else
                     {
                         last.next = list2;
-                        list2= list2.next;
+                        list2 = list2.next;
                     }
 
                     last = last.next;
@@ -455,9 +455,9 @@ namespace LeetCodeAlgo
 
             for (int i = 0; i < board.Length; i++)
             {
-                for(int j = 0; j < board[i].Length; j++)
+                for (int j = 0; j < board[i].Length; j++)
                 {
-                    char v=board[i][j];
+                    char v = board[i][j];
                     if (v == '.')
                     {
                         continue;
@@ -465,7 +465,7 @@ namespace LeetCodeAlgo
 
                     int k = v - '1';
 
-                    if(arrRow[i][k] == 0 && arrCol[j][k]==0 && arrBlock[i/3*3+j/3][k]==0)
+                    if (arrRow[i][k] == 0 && arrCol[j][k] == 0 && arrBlock[i / 3 * 3 + j / 3][k] == 0)
                     {
                         arrRow[i][k] = 1;
                         arrCol[j][k] = 1;
@@ -530,7 +530,7 @@ namespace LeetCodeAlgo
                 return 1;
 
             bool[] canDp = GetCanJumpArray(nums);
-            int[] dp= new int[nums.Length];
+            int[] dp = new int[nums.Length];
 
             int i = nums.Length - 1;
             dp[i] = 0;
@@ -538,22 +538,22 @@ namespace LeetCodeAlgo
 
             while (i >= 0)
             {
-                if (canDp[i]==false)
+                if (canDp[i] == false)
                 {
                     dp[i] = 0;
                 }
                 else
                 {
-                    for (int j = nums[i]; j >=1; j--)
+                    for (int j = nums[i]; j >= 1; j--)
                     {
-                        if (i + j >= nums.Length - 1 )
+                        if (i + j >= nums.Length - 1)
                         {
                             dp[i] = 1;
                             break;
                         }
-                        else if(canDp[i+j])
+                        else if (canDp[i + j])
                         {
-                            if(dp[i] == 0)
+                            if (dp[i] == 0)
                             {
                                 dp[i] = Math.Min(nums.Length - 1, 1 + dp[i + j]);
                             }
@@ -569,6 +569,69 @@ namespace LeetCodeAlgo
             }
 
             return dp[0];
+        }
+
+        //46. Permutations
+        //1 <= nums.length <= 6
+        //-10 <= nums[i] <= 10
+        //All the integers of nums are unique.
+        public IList<IList<int>> Permute(int[] nums)
+        {
+            if (nums == null || nums.Length == 0)
+                return null;
+
+            var result = new List<IList<int>>();
+
+            if (nums.Length == 1)
+            {
+                result.Add(nums.ToList());
+                return result;
+            }
+
+            for(int i = 0; i < nums.Length; i++)
+            {
+                var list1 = new List<int>();
+                var list2 = new List<int>();
+
+                foreach (var n in nums)
+                    list2.Add(n);
+
+                list1.Add(nums[i]);
+                list2.RemoveAt(i);
+
+                Permute_Recurison(list1, list2, result);
+            }
+
+            return result;
+        }
+
+        public void Permute_Recurison(IList<int> head, IList<int> tail, IList<IList<int>> result)
+        {
+
+            if (tail == null || tail.Count == 0)
+            {
+                result.Add(head);
+                return;
+            }
+            else
+            {
+                for(int i = 0;i < tail.Count; i++)
+                {
+                    var list1 = new List<int>();
+                    var list2 = new List<int>();
+
+                    foreach (var m in head)
+                        list1.Add(m);
+
+                    foreach (var n in tail)
+                        list2.Add(n);
+
+                    list1.Add(tail[i]);
+                    list2.RemoveAt(i);
+
+                    Permute_Recurison(list1, list2, result);
+                }
+            }
         }
 
         //53. Maximum Subarray
