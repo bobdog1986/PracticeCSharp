@@ -286,8 +286,23 @@ namespace LeetCodeAlgo
             PreorderTraversal(node.right, list);
 
         }
+        //145. Binary Tree Postorder Traversal
+        public IList<int> PostorderTraversal(TreeNode root)
+        {
+            var result = new List<int>();
+            PostorderTraversal(root, result);
+            return result;
+        }
+        public void PostorderTraversal(TreeNode node, IList<int> list)
+        {
+            if (node == null)
+                return;
 
+            PostorderTraversal(node.left, list);
+            PostorderTraversal(node.right, list);
+            list.Add(node.val);
 
+        }
         //149
 
         public int MaxPoints(Point[] points)

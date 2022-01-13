@@ -1296,7 +1296,7 @@ namespace LeetCodeAlgo
 
         }
 
-        //94
+        //94. Binary Tree Inorder Traversal
         public IList<int> InorderTraversal(TreeNode root)
         {
             var result =new List<int>();
