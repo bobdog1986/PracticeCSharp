@@ -47,10 +47,12 @@ namespace LeetCodeAlgo
             //Console.WriteLine(string.Join(",", arr2));
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            //var root =new TreeNode(3,new TreeNode(9),new TreeNode(20,new TreeNode(15),new TreeNode(7)));
+            var root =new TreeNode(3,
+                new TreeNode(20, new TreeNode(15), new TreeNode(7)),
+                new TreeNode(20,new TreeNode(7),new TreeNode(15)));
             //var result = anwser.MaxSubarraySumCircular(arr1);//ooolleoooleh
             //anwser.PrintListNode(result);
-            var result =anwser.MinimumTotal(mat1);
+            var result =anwser.IsSymmetric(root);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
             Console.WriteLine(result);

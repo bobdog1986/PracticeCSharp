@@ -208,7 +208,7 @@ namespace LeetCodeAlgo
         }
 
 
-        public IList<IList<int>> LevelOrder(TreeNode root)
+        public IList<IList<int>> LevelOrder_1(TreeNode root)
         {
             var result =new List<IList<int>>();
             if (root == null)
@@ -248,7 +248,7 @@ namespace LeetCodeAlgo
 
         private int maxDepth = 0;
 
-        public int MaxDepth(TreeNode root)
+        public int MaxDepth_1(TreeNode root)
         {
             if(root == null)
                 return maxDepth;
@@ -290,7 +290,7 @@ namespace LeetCodeAlgo
         }
 
         private bool isSymm = true;
-        public bool IsSymmetric(TreeNode root)
+        public bool IsSymmetric_1(TreeNode root)
         {
             if (root == null)
                 return isSymm;

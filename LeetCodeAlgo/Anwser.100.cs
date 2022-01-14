@@ -11,6 +11,65 @@ namespace LeetCodeAlgo
     /// </summary>
     public partial class Anwser
     {
+        ///101. Symmetric Tree
+        ///Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+        public bool IsSymmetric(TreeNode root)
+        {
+            if (root == null)
+                return true;
+
+            List<TreeNode> lefts = new List<TreeNode>();
+            List<TreeNode> rights = new List<TreeNode>();
+
+            if(root.left != null)
+                lefts.Add(root.left);
+
+            if(root.right != null)
+                rights.Add(root.right);
+
+            return IsSymmetric(lefts, rights);
+        }
+
+        public bool IsSymmetric(IList<TreeNode> lefts, IList<TreeNode> rights)
+        {
+            if (lefts.Count == 0 && rights.Count == 0)
+                return true;
+
+            if (lefts.Count != rights.Count)
+                return false;
+
+            List<TreeNode> sub1 = new List<TreeNode>();
+            List<TreeNode> sub2 = new List<TreeNode>();
+
+            for(int i = 0; i < lefts.Count; i++)
+            {
+                var left = lefts[i];
+                var right = rights[lefts.Count - 1-i];
+
+                if(left.val!=right.val)
+                    return false;
+
+                if (left.left == null && right.right != null
+                    || left.left != null && right.right == null
+                    || left.right == null && right.left != null
+                    || left.right != null && right.left == null)
+                    return false;
+
+                if(left.left!=null)
+                    sub1.Add(left.left);
+                if(left.right!=null)
+                    sub1.Add((TreeNode)left.right);
+
+                if(right.right!=null)
+                    sub2.Insert(0,(TreeNode)right.right);
+                if(right.left!=null)
+                    sub2.Insert(0, right.left);
+            }
+
+            return IsSymmetric(sub1,sub2);
+        }
+
+
         /// 102. Binary Tree Level Order Traversal
         /// Given the root of a binary tree, return the level order traversal of its nodes' values.
         /// (i.e., from left to right, level by level).
