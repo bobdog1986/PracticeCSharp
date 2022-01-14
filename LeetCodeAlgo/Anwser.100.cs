@@ -788,8 +788,6 @@ namespace LeetCodeAlgo
         {
             if(n == 0) return 0;
 
-            Console.WriteLine(Convert.ToString(n, 2));
-
             uint result = 0;
             uint a = uint.MaxValue / 2 + 1;
             uint c = 1;
@@ -805,8 +803,6 @@ namespace LeetCodeAlgo
                 a = a / 2;
                 c = c * 2;
             }
-
-            Console.WriteLine(Convert.ToString(result, 2));
 
             return result;
         }

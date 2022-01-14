@@ -47,17 +47,23 @@ namespace LeetCodeAlgo
             //Console.WriteLine(string.Join(",", arr1));
             //Console.WriteLine(string.Join(",", arr2));
             Stopwatch sw = new Stopwatch();
+            Console.WriteLine("**************");
+            Console.WriteLine("start watch ms");
             sw.Start();
             var root =new TreeNode(3,
                 new TreeNode(20, new TreeNode(15), new TreeNode(7)),
                 new TreeNode(20,new TreeNode(7),new TreeNode(15)));
             //var result = anwser.MaxSubarraySumCircular(arr1);//ooolleoooleh
             //anwser.PrintListNode(result);
-            var result =anwser.reverseBits(uint.MaxValue- uint.MaxValue%2);
+            var result = anwser.IsSameAfterReversals(1234);
+            //var result1 = anwser.IsSameAfterReversals(1230);
+            //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
             Console.WriteLine("***");
             Console.WriteLine(result);
+            //Console.WriteLine(result1);
+            //Console.WriteLine(result2);
             //Console.WriteLine(result.val.ToString() + result.next.val);
             //if(result.Count > 0)
             //    Console.WriteLine(String.Join("\r\n", result.Select(o=> String.Join(",",o))));
