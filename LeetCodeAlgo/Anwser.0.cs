@@ -78,20 +78,96 @@ namespace LeetCodeAlgo
             return max;
         }
 
-        //8
-        public int MyAtoi(string str)
+        ///8. String to Integer (atoi)
+        ///Implement the myAtoi(string s) function, which converts a string to a int (similar to C/C++'s atoi function).
+        ///Constraints:
+        ///0 <= s.length <= 200
+        ///s consists of English letters(lower-case and upper-case), digits(0-9), ' ', '+', '-', and '.'.
+
+        public int MyAtoi(string s)
         {
-            if (string.IsNullOrEmpty(str)) return 0;
-            str = str.Trim();
-            if (string.IsNullOrEmpty(str)) return 0;
-            try
+            if (string.IsNullOrEmpty(s)) return 0;
+                s = s.Trim();
+
+            if (string.IsNullOrEmpty(s)) return 0;
+            List<char> list=new List<char>();
+            int sign = 0;
+            for(int i = 0;i < s.Length; i++)
             {
-                return int.Parse(str);
+                if (char.IsDigit(s[i]))
+                {
+                    list.Add(s[i]);
+                }
+                else
+                {
+                    if (list.Count > 0)
+                        break; ;
+
+                    if (s[i] == '+' && sign==0)
+                    {
+                        sign = 1;
+                    }
+                    else if (s[i] == '-' && sign == 0)
+                    {
+                        sign = -1;
+                    }
+                    else
+                    {
+                        return 0;
+                        //
+                    }
+                }
             }
-            catch
+
+            while (true)
             {
-                return 0;
+                if (list.Count == 0)
+                    break;
+
+                if (list[0] == '0')
+                {
+                    list.RemoveAt(0);
+                }
+                else
+                {
+                    break;
+                }
             }
+
+            if (list.Count > 0)
+            {
+                long ll;
+                try
+                {
+                    ll = long.Parse(string.Join("", list));
+                }
+                catch(Exception ex)
+                {
+                    return sign == -1 ? int.MinValue : int.MaxValue; 
+                }
+
+                if (sign == -1)
+                {
+                    ll = 0 - ll;
+
+                    if (ll <= int.MinValue)
+                        ll = int.MinValue;
+
+                    return (int)ll;
+                }
+                else
+                {
+                    if(ll>=int.MaxValue)
+                        ll = int.MaxValue;
+
+                    return (int)ll;
+                }
+
+
+            }
+
+            return 0;
+
         }
 
         //12

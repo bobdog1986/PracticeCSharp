@@ -52,7 +52,7 @@ namespace LeetCodeAlgo
                 new TreeNode(20,new TreeNode(7),new TreeNode(15)));
             //var result = anwser.MaxSubarraySumCircular(arr1);//ooolleoooleh
             //anwser.PrintListNode(result);
-            var result =anwser.IsSymmetric(root);
+            var result =anwser.MyAtoi(" - 42aa + 44");
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
             Console.WriteLine(result);
