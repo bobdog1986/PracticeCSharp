@@ -53,16 +53,18 @@ namespace LeetCodeAlgo
                 new TreeNode(20,new TreeNode(7),new TreeNode(15)));
             //var result = anwser.MaxSubarraySumCircular(arr1);//ooolleoooleh
             //anwser.PrintListNode(result);
-            var result =anwser.FourSum(arr1, -1);
+            var result =anwser.HammingWeight(uint.MaxValue);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
-            //Console.WriteLine(result.Count);
             Console.WriteLine("***");
+
+            Console.WriteLine(result);
+            Console.WriteLine("===");
             //Console.WriteLine(result.val.ToString() + result.next.val);
-            if(result.Count > 0)
-                Console.WriteLine(String.Join("\r\n", result.Select(o=> String.Join(",",o))));
-            else
-                Console.WriteLine("Result count = 0");
+            //if(result.Count > 0)
+            //    Console.WriteLine(String.Join("\r\n", result.Select(o=> String.Join(",",o))));
+            //else
+            //    Console.WriteLine("Result count = 0");
             //Console.WriteLine(String.Join(",", arr1));
             Console.ReadLine();
         }

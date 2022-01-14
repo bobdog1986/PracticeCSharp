@@ -782,11 +782,29 @@ namespace LeetCodeAlgo
         }
 
         /// 191. Number of 1 Bits
+        /// eg. 5=101, return count of 1 = 2;
 
         public int HammingWeight(uint n) 
         {
+            if(n == 0) return 0;
+            uint a = uint.MaxValue/2+1;
 
-            return 0;
+            int count = 0;
+            while (n > 0)
+            {
+                var b = n / a;
+                if (b == 1)
+                {
+                    n -= a;
+                    count++;
+                }
+
+                a = a / 2;
+            }
+
+
+
+            return count;
         }
 
     //198. House Robber
