@@ -11,6 +11,43 @@ namespace LeetCodeAlgo
     /// </summary>
     public partial class Anwser
     {
+        /// 102. Binary Tree Level Order Traversal
+        /// Given the root of a binary tree, return the level order traversal of its nodes' values.
+        /// (i.e., from left to right, level by level).
+        public IList<IList<int>> LevelOrder(TreeNode root)
+        { 
+            var result = new List<IList<int>>();
+            if (root == null)
+                return result;
+
+            var nodes=new List<TreeNode>() { root};
+
+            while(nodes.Count > 0)
+            {
+                var subs = new List<TreeNode>();
+                var list=new List<int>();
+                foreach(TreeNode node in nodes)
+                {
+                    if (node == null)
+                        continue;
+
+                    list.Add(node.val);
+
+                    if(node.left != null)
+                        subs.Add(node.left);
+                    if(node.right != null)
+                        subs.Add(node.right);
+                }
+
+                nodes=subs;
+                result.Add(list);
+            }
+
+            return result;
+        }
+
+
+
         //105
         public TreeNode BuildTree(int[] preorder, int[] inorder)
         {
