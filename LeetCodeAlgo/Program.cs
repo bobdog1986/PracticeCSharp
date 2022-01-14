@@ -20,24 +20,13 @@ namespace LeetCodeAlgo
             //var arr1 = "1ac1b";
             var mat1 = new int[][]
             {
-                new int[]{2},
-                new int[]{3,4,},
-                new int[]{6,5,7,},
+                new int[]{32768,65536},
+                new int[]{32768,65536},
+                new int[]{32768,65536},
+                new int[]{32768,65536},
+                //new int[]{6,5,7,},
                 //new int[]{0,0,1,0,1,1,1,0,1,1},
                 //new int[]{1,1,1,1,0,1,1,1,1,1},
-                //new int[]{1,1,1,1,1,0,0,0,1,1},
-                //new int[]{1,0,1,0,1,1,1,0,1,1},
-                //new int[]{0,0,1,1,1,0,1,1,1,1},
-                //new int[]{1,0,1,1,1,1,1,1,1,1},
-                //new int[]{1,1,1,1,0,1,0,1,0,1},
-                //new int[]{0,1,0,0,0,1,0,0,1,1},
-                //new int[]{1,1,1,0,1,1,0,1,0,1},
-                //new int[]{1,0,1,1,1,0,1,1,1,0},
-                                //new int[]{-8,-7,-5,-3,-3,-1,1}, 
-                //new int[] { 2,2,2,3,3,5,7 },
-                //new int[] {8,9,11,11,13,15,17 },
-                //new int[] { 18,18,18,20,20,20,21},
-                //new int[] {23,24,26,26,26,27,27 },
                 //new int[] {28,29,29,30,32,32,34 },
             };
             var listnode = new ListNode(1, new ListNode(1, new ListNode(3, null)));//new ListNode(4,new ListNode(5)))));
@@ -55,14 +44,15 @@ namespace LeetCodeAlgo
                 new TreeNode(20,new TreeNode(7),new TreeNode(15)));
             //var result = anwser.MaxSubarraySumCircular(arr1);//ooolleoooleh
             //anwser.PrintListNode(result);
-            var result = anwser.NumIdenticalPairs(arr1);
-            //var result1 = anwser.IsSameAfterReversals(1230);
+            var result = anwser.InterchangeableRectangles(mat1);
+
+            var result1 = anwser.Gcb(32768,65536);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
             Console.WriteLine("***");
             Console.WriteLine(result);
-            //Console.WriteLine(result1);
+            Console.WriteLine(result1);
             //Console.WriteLine(result2);
             //Console.WriteLine(result.val.ToString() + result.next.val);
             //if(result.Count > 0)
