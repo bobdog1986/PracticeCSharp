@@ -15,8 +15,9 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            //var arr1 = new int[] { 1, 2, 3, 4 };
-            var arr1 = "1ac1b";
+            var arr1 = new int[] { -1,0,1,2,-1,-4 };
+            var arr2 = new int[] { 3,4 };
+            //var arr1 = "1ac1b";
             var mat1 = new int[][]
             {
                 new int[]{2},
@@ -52,12 +53,16 @@ namespace LeetCodeAlgo
                 new TreeNode(20,new TreeNode(7),new TreeNode(15)));
             //var result = anwser.MaxSubarraySumCircular(arr1);//ooolleoooleh
             //anwser.PrintListNode(result);
-            var result =anwser.MyAtoi(" - 42aa + 44");
+            var result =anwser.FourSum(arr1, -1);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
-            Console.WriteLine(result);
+            //Console.WriteLine(result.Count);
+            Console.WriteLine("***");
             //Console.WriteLine(result.val.ToString() + result.next.val);
-            //Console.WriteLine(String.Join("\r\n", result.Select(o=> String.Join(",",o))));
+            if(result.Count > 0)
+                Console.WriteLine(String.Join("\r\n", result.Select(o=> String.Join(",",o))));
+            else
+                Console.WriteLine("Result count = 0");
             //Console.WriteLine(String.Join(",", arr1));
             Console.ReadLine();
         }

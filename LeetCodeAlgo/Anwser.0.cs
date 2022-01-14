@@ -63,8 +63,6 @@ namespace LeetCodeAlgo
                         list.Add(c);
                         len++;
                     }
-
-
                 }
                 else
                 {
@@ -78,6 +76,56 @@ namespace LeetCodeAlgo
             return max;
         }
 
+        ///4. Median of Two Sorted Arrays
+        ///Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
+        ///The overall run time complexity should be O(log (m+n)).
+
+        public double FindMedianSortedArrays(int[] nums1, int[] nums2)
+        {
+            if (nums1.Length == 0 && nums2.Length == 0)
+                return 0;
+            int i=0, j = 0;
+            int[] nums=new int[nums1.Length + nums2.Length];
+            while(i<nums1.Length || j < nums2.Length)
+            {
+                if (i == nums1.Length)
+                {
+                    nums[i + j] = nums2[j];
+                    j++;
+                }
+                else if(j== nums2.Length)
+                {
+                    nums[i + j] = nums1[i];
+                    i++;
+                }
+                else
+                {
+                    if (nums1[i] <= nums2[j])
+                    {
+                        nums[i + j] = nums1[i];
+                        i++;
+                    }
+                    else
+                    {
+                        nums[i + j] = nums2[j];
+                        j++;
+                    }
+
+                }
+            }
+
+            if(nums.Length %2 == 0)
+            {
+                return (nums[nums.Length / 2 - 1] + nums[nums.Length / 2])/2.0;
+
+            }
+            else
+            {
+                return nums[nums.Length / 2];
+            }
+
+        }
+
         ///8. String to Integer (atoi)
         ///Implement the myAtoi(string s) function, which converts a string to a int (similar to C/C++'s atoi function).
         ///Constraints:
@@ -87,12 +135,12 @@ namespace LeetCodeAlgo
         public int MyAtoi(string s)
         {
             if (string.IsNullOrEmpty(s)) return 0;
-                s = s.Trim();
+            s = s.Trim();
 
             if (string.IsNullOrEmpty(s)) return 0;
-            List<char> list=new List<char>();
+            List<char> list = new List<char>();
             int sign = 0;
-            for(int i = 0;i < s.Length; i++)
+            for (int i = 0; i < s.Length; i++)
             {
                 if (char.IsDigit(s[i]))
                 {
@@ -103,7 +151,7 @@ namespace LeetCodeAlgo
                     if (list.Count > 0)
                         break; ;
 
-                    if (s[i] == '+' && sign==0)
+                    if (s[i] == '+' && sign == 0)
                     {
                         sign = 1;
                     }
@@ -141,9 +189,9 @@ namespace LeetCodeAlgo
                 {
                     ll = long.Parse(string.Join("", list));
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    return sign == -1 ? int.MinValue : int.MaxValue; 
+                    return sign == -1 ? int.MinValue : int.MaxValue;
                 }
 
                 if (sign == -1)
@@ -157,17 +205,14 @@ namespace LeetCodeAlgo
                 }
                 else
                 {
-                    if(ll>=int.MaxValue)
+                    if (ll >= int.MaxValue)
                         ll = int.MaxValue;
 
                     return (int)ll;
                 }
-
-
             }
 
             return 0;
-
         }
 
         //12
@@ -220,51 +265,78 @@ namespace LeetCodeAlgo
             return number;
         }
 
-        //18
+        ///18. 4Sum
+        ///Given an array nums of n integers, return an array of all the unique
+        ///quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:
+        ///Input: nums = [2,2,2,2,2], target = 8
+        ///Output: [[2,2,2,2]]
         public IList<IList<int>> FourSum(int[] nums, int target)
         {
-            Array.Sort(nums);
             List<IList<int>> result = new List<IList<int>>();
-            List<int> codeList = new List<int>();
-            int i = 0, j = 1, k = 2, l = 3;
-            for (i = 0; i < nums.Length - 3; i++)
-            {
-                //if (i>0 && nums[i] == nums[i - 1] && i+1 < j) { continue; }
-                for (j = i + 1; j < nums.Length - 2; j++)
-                {
-                    //if (j > 1 && nums[j] == nums[j - 1] && j+1  < k) { continue; }
-                    for (k = j + 1; k < nums.Length - 1; k++)
-                    {
-                        //if (k > 2 && nums[k] == nums[k - 1] && k+1  < l) { continue; }
-                        for (l = k + 1; l < nums.Length; l++)
-                        {
-                            if (nums[i] + nums[j] + nums[k] + nums[l] > target)
-                            {
-                                break;
-                            }
 
-                            if (nums[i] + nums[j] + nums[k] + nums[l] == target)
-                            {
-                                //int code= GetCode(current);
-                                int code = nums[i] + 10 * nums[j] + 100 * nums[k] + 1000 * nums[l];
+            int number = 4;
 
-                                if (!codeList.Contains(code))
-                                {
-                                    codeList.Add(code);
-                                    result.Add(new int[] { nums[i], nums[j], nums[k], nums[l] });
-                                }
+            if (nums == null || nums.Length < number)
+                return result;
 
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
+            Array.Sort(nums);
+
+            var list = new List<int>();
+
+            FourSum_Recursion(nums, result, list, 0, target, number,0,0);
             return result;
         }
+
+        public void FourSum_Recursion(int[] nums, IList<IList<int>> result, IList<int> list, int index, int target, int needNumber , int sum, int currentCount)
+        {
+            if (index + needNumber > nums.Length)
+                return;
+
+            if (needNumber <= 1)
+            {
+                bool found = false;
+                for(int i = index; i < nums.Length; i++)
+                {
+                    if (target - sum > nums[nums.Length - 1]
+                        || target - sum < nums[i])
+                        break;
+
+                    if (sum + nums[i] == target)
+                    {
+                        list.Add(nums[i]);
+                        found = true;
+                        break;
+                    }
+
+                }
+
+                if(found)
+                {
+                    if ( result.Count==0 || 
+                            result.FirstOrDefault(item => 
+                                                item[0] == list[0]
+                                             && item[1] == list[1]
+                                             && item[2] == list[2]
+                                             && item[3] == list[3]) == null)
+                        result.Add(list);
+                }
+            }
+            else
+            {
+                for (int i=index; i < nums.Length-needNumber+1; i++)
+                {
+                    var sub=new List<int>(list);
+                    sub.Add(nums[i]);
+
+                    FourSum_Recursion(nums, result, sub, i+1, target, needNumber-1,sum+ nums[i],currentCount+1);
+                }
+            }
+
+        }
+
+
         public int GetCode(int[] nums)
         {
-
             return nums[0] + nums[1] * 10 + nums[2] * 100 + nums[3] * 1000;
         }
 
@@ -276,8 +348,8 @@ namespace LeetCodeAlgo
             }
             return true;
         }
-        //19. Remove Nth Node From End of List
 
+        //19. Remove Nth Node From End of List
 
         public ListNode RemoveNthFromEnd(ListNode head, int n)
         {
@@ -286,7 +358,6 @@ namespace LeetCodeAlgo
             int count = GetListNodeCount(head);
             if (n == count)
                 return head.next;
-
 
             var node1 = GetListNode(head, count - n - 1);
             node1.next = node1.next.next;
@@ -326,6 +397,7 @@ namespace LeetCodeAlgo
 
             Console.WriteLine($"ListNode is [{string.Join(",", list)}]");
         }
+
         //20. Valid Parentheses
 
         public bool IsValid(string s)
@@ -352,7 +424,6 @@ namespace LeetCodeAlgo
                         || a == '(' && c == ')'
                         || a == '{' && c == '}')
                     {
-
                     }
                     else
                     {
@@ -363,6 +434,7 @@ namespace LeetCodeAlgo
 
             return qe.Count == 0;
         }
+
         //21. Merge Two Sorted Lists
         public ListNode MergeTwoLists(ListNode list1, ListNode list2)
         {
@@ -591,12 +663,12 @@ namespace LeetCodeAlgo
                     pre = current;
                     occured = 1;
                 }
-
             }
             result.AddRange(occured.ToString().ToCharArray());
             result.Add(pre);
             return new string(result.ToArray());
         }
+
         //45. Jump Game II
         public int Jump(int[] nums)
         {
@@ -664,7 +736,7 @@ namespace LeetCodeAlgo
                 return result;
             }
 
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 var list1 = new List<int>();
                 var list2 = new List<int>();
@@ -683,7 +755,6 @@ namespace LeetCodeAlgo
 
         public void Permute_Recurison(IList<int> head, IList<int> tail, IList<IList<int>> result)
         {
-
             if (tail == null || tail.Count == 0)
             {
                 result.Add(head);
@@ -691,7 +762,7 @@ namespace LeetCodeAlgo
             }
             else
             {
-                for(int i = 0;i < tail.Count; i++)
+                for (int i = 0; i < tail.Count; i++)
                 {
                     var list1 = new List<int>();
                     var list2 = new List<int>();
@@ -732,32 +803,33 @@ namespace LeetCodeAlgo
 
             return max;
         }
+
         //55. Jump Game
         public bool CanJump(int[] nums)
         {
-            if(nums.Length == 1)
+            if (nums.Length == 1)
                 return true;
             if (nums.Length == 2)
                 return nums[0] > 0;
 
             bool[] dp = new bool[nums.Length];
 
-            int i=nums.Length-1;
+            int i = nums.Length - 1;
             dp[i] = true;
             i--;
 
-            while(i >= 0)
+            while (i >= 0)
             {
-                if(nums[i] == 0)
+                if (nums[i] == 0)
                 {
                     dp[i] = false;
                 }
                 else
                 {
                     bool has = false;
-                    for(int j=1;j <= nums[i] ; j++)
+                    for (int j = 1; j <= nums[i]; j++)
                     {
-                        if (i + j <=nums.Length-1 && dp[i + j])
+                        if (i + j <= nums.Length - 1 && dp[i + j])
                         {
                             has = true;
                             break;
@@ -777,7 +849,7 @@ namespace LeetCodeAlgo
             if (nums.Length == 1)
                 return new bool[] { true };
             if (nums.Length == 2)
-                return new bool[] { true ,true};
+                return new bool[] { true, true };
 
             bool[] dp = new bool[nums.Length];
 
@@ -811,7 +883,6 @@ namespace LeetCodeAlgo
             return dp;
         }
 
-
         //56
         public IList<Interval> Merge(IList<Interval> intervals)
         {
@@ -827,6 +898,7 @@ namespace LeetCodeAlgo
             }
             return result;
         }
+
         public IList<Interval> TrimIntervalFromEnd(IList<Interval> list)
         {
             if (list == null || list.Count <= 1) return list;
@@ -858,22 +930,25 @@ namespace LeetCodeAlgo
 
             return list;
         }
+
         public void SwapIntervalNode(ref Interval a, ref Interval b)
         {
             var temp = a;
             a = b;
             b = temp;
         }
+
         public Interval MergeIntervalNodes(Interval current, Interval next)
         {
             return new Interval(Math.Min(current.start, next.start), Math.Max(current.end, next.end));
         }
+
         //57 not pass
         public IList<Interval> Insert(IList<Interval> intervals, Interval newInterval)
         {
-
             return intervals;
         }
+
         //65
         public bool IsNumber(string s)
         {
@@ -925,6 +1000,7 @@ namespace LeetCodeAlgo
                 r = (r + x / r) / 2;
             return (int)r;
         }
+
         //70. Climbing Stairs
         public int ClimbStairs(int n)
         {
@@ -935,7 +1011,7 @@ namespace LeetCodeAlgo
 
             int seed1 = 1;
             int seed2 = 1;
-            for(int i=n -2 ; i >0 ;i--)
+            for (int i = n - 2; i > 0; i--)
             {
                 int temp = seed1;
                 seed1 = seed2;
@@ -943,7 +1019,6 @@ namespace LeetCodeAlgo
             }
 
             return seed1 + seed2;
-
 
             //brute force, out of memory
             if (n == 0) return 0;
@@ -984,11 +1059,11 @@ namespace LeetCodeAlgo
 
         public int ClimbStairsN(int n)
         {
-            if(n==0) return 0;
-            if(n == 1) return 1;
-            if(n==2) return 2;
+            if (n == 0) return 0;
+            if (n == 1) return 1;
+            if (n == 2) return 2;
 
-            return ClimbStairsN(n-1)+ClimbStairsN(n-2);
+            return ClimbStairsN(n - 1) + ClimbStairsN(n - 2);
 
             return 0;
         }
@@ -1007,23 +1082,23 @@ namespace LeetCodeAlgo
             int a = 0;
             int b = row - 1;
 
-            int m = (a+b) / 2;
+            int m = (a + b) / 2;
             bool findRow = false;
-            while (m>=a && m<=b)
+            while (m >= a && m <= b)
             {
                 if (matrix[m][col - 1] == target)
                 {
                     return true;
                 }
-                else if(matrix[m][col - 1]>target)
+                else if (matrix[m][col - 1] > target)
                 {
                     if ((m > a))
                     {
-                        if(matrix[m-1][col - 1] == target)
+                        if (matrix[m - 1][col - 1] == target)
                         {
                             return true;
                         }
-                        else if(matrix[m - 1][col - 1] < target)
+                        else if (matrix[m - 1][col - 1] < target)
                         {
                             findRow = true;
 
@@ -1032,7 +1107,7 @@ namespace LeetCodeAlgo
                         else
                         {
                             b = m;
-                            m = (a+b) / 2;
+                            m = (a + b) / 2;
                         }
                     }
                     else
@@ -1058,7 +1133,7 @@ namespace LeetCodeAlgo
                         else
                         {
                             a = m;
-                            m = (a+b)/2;
+                            m = (a + b) / 2;
                         }
                     }
                     else
@@ -1072,17 +1147,17 @@ namespace LeetCodeAlgo
             if (!findRow)
                 return false;
 
-            if(matrix[m][col-1]==target || matrix[m][0]==target)
+            if (matrix[m][col - 1] == target || matrix[m][0] == target)
                 return true;
 
-            int n = col-1;
+            int n = col - 1;
             n = n / 2;
 
             int x = 0;
             int y = col - 1;
 
             bool result = false;
-            while (n >= x && n <= y && (y-x>1))
+            while (n >= x && n <= y && (y - x > 1))
             {
                 if (matrix[m][n] == target)
                 {
@@ -1106,7 +1181,6 @@ namespace LeetCodeAlgo
         ///77. Combinations
         public IList<IList<int>> Combine(int n, int k)
         {
-
             if (n == 0)
                 return null;
 
@@ -1120,19 +1194,17 @@ namespace LeetCodeAlgo
 
             if (n == k)
             {
-
                 List<int> list = new List<int>();
 
-                for (int i=1;i<=n;i++)
+                for (int i = 1; i <= n; i++)
                     list.Add(i);
 
                 result.Add(list);
                 return result;
             }
 
-            if(k == 1)
+            if (k == 1)
             {
-
                 for (int i = 1; i <= n; i++)
                 {
                     List<int> list = new List<int>();
@@ -1144,14 +1216,14 @@ namespace LeetCodeAlgo
                 return result;
             }
 
-            for(int i = 1; i <= n - k + 1; i++)
+            for (int i = 1; i <= n - k + 1; i++)
             {
-                var list1 = Combine(n - 1, k,i);
-                var list2 = Combine(n - 1, k - 1,i);
+                var list1 = Combine(n - 1, k, i);
+                var list2 = Combine(n - 1, k - 1, i);
 
-                if(list1!=null && list1.Count > 0)
+                if (list1 != null && list1.Count > 0)
                 {
-                    foreach(var item in list1)
+                    foreach (var item in list1)
                         result.Add(item);
                 }
 
@@ -1170,7 +1242,7 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        public IList<IList<int>> Combine(int n, int k , int start)
+        public IList<IList<int>> Combine(int n, int k, int start)
         {
             if (n == 0)
                 return null;
@@ -1178,7 +1250,7 @@ namespace LeetCodeAlgo
             if (k == 0)
                 return null;
 
-            if (n-start+1 < k)
+            if (n - start + 1 < k)
                 return null;
 
             if (n - start + 1 == k)
@@ -1194,8 +1266,8 @@ namespace LeetCodeAlgo
                 return result;
             }
 
-            var list1 = Combine(n - 1, k,start);
-            var list2 = Combine(n - 1, k - 1,start);
+            var list1 = Combine(n - 1, k, start);
+            var list2 = Combine(n - 1, k - 1, start);
 
             if (list2 != null && list2.Count > 0)
             {
@@ -1240,7 +1312,7 @@ namespace LeetCodeAlgo
             {
                 if (last == head.val)
                 {
-                    head= head.next;
+                    head = head.next;
                 }
                 else
                 {
@@ -1272,10 +1344,11 @@ namespace LeetCodeAlgo
 
             return result;
         }
+
         //88. Merge Sorted Array
         public void Merge(int[] nums1, int m, int[] nums2, int n)
         {
-            if (nums1 == null || nums1.Length==0||m==0)
+            if (nums1 == null || nums1.Length == 0 || m == 0)
             {
                 if (nums2 == null || nums2.Length == 0 || n == 0)
                 {
@@ -1283,12 +1356,11 @@ namespace LeetCodeAlgo
                 }
                 else
                 {
-                    for(int a = 0; a < nums1.Length; a++)
+                    for (int a = 0; a < nums1.Length; a++)
                     {
-                        if (a < m+n)
+                        if (a < m + n)
                         {
                             nums1[a] = nums2[a];
-
                         }
                         else
                         {
@@ -1299,14 +1371,13 @@ namespace LeetCodeAlgo
             }
             else
             {
-                if(nums2 == null || nums2.Length == 0 || n == 0)
+                if (nums2 == null || nums2.Length == 0 || n == 0)
                 {
                     for (int a = 0; a < nums1.Length; a++)
                     {
                         if (a < m + n)
                         {
                             nums1[a] = nums1[a];
-
                         }
                         else
                         {
@@ -1316,11 +1387,11 @@ namespace LeetCodeAlgo
                 }
                 else
                 {
-                    int[] result=new int[m+n];
+                    int[] result = new int[m + n];
                     int k = 0;
                     int j = 0;
                     int i = 0;
-                    while (i<m && j<n )
+                    while (i < m && j < n)
                     {
                         if (nums1[i] <= nums2[j])
                         {
@@ -1340,7 +1411,7 @@ namespace LeetCodeAlgo
                     {
                         if (i < m)
                         {
-                            result[k]=nums1[i];
+                            result[k] = nums1[i];
                             k++;
                             i++;
                         }
@@ -1353,13 +1424,11 @@ namespace LeetCodeAlgo
                         }
                     }
 
-
-                    for(int a=0; a<nums1.Length; a++)
+                    for (int a = 0; a < nums1.Length; a++)
                     {
                         if (a < k)
                         {
-                            nums1[a] =result[a];
-
+                            nums1[a] = result[a];
                         }
                         else
                         {
@@ -1368,27 +1437,25 @@ namespace LeetCodeAlgo
                     }
                 }
             }
-            Console.WriteLine($"nums1 = {string.Join(",",nums1)}");
-
+            Console.WriteLine($"nums1 = {string.Join(",", nums1)}");
         }
 
         //94. Binary Tree Inorder Traversal
         public IList<int> InorderTraversal(TreeNode root)
         {
-            var result =new List<int>();
+            var result = new List<int>();
             InorderTraversal_Recursion(root, result);
             return result;
         }
 
-        public void InorderTraversal_Recursion(TreeNode node,IList<int> list)
+        public void InorderTraversal_Recursion(TreeNode node, IList<int> list)
         {
             if (node == null)
                 return;
-            InorderTraversal_Recursion(node.left,list);
+            InorderTraversal_Recursion(node.left, list);
             list.Add(node.val);
 
             InorderTraversal_Recursion(node.right, list);
-
         }
 
         public IList<int> InorderTraversal_Iteration(TreeNode root)
@@ -1432,11 +1499,12 @@ namespace LeetCodeAlgo
 
             return values;
         }
-        public IList<TreeNode> GetInorderAndReturnSubNodes(IList<TreeNode> nodes,List<int> values)
+
+        public IList<TreeNode> GetInorderAndReturnSubNodes(IList<TreeNode> nodes, List<int> values)
         {
-            if (nodes == null||nodes.Count==0) return null;
+            if (nodes == null || nodes.Count == 0) return null;
             IList<TreeNode> subNodes = new List<TreeNode>();
-            foreach(var n in nodes)
+            foreach (var n in nodes)
             {
                 values.Add(n.val);
                 if (n.left != null) { subNodes.Add(n.left); }
@@ -1444,12 +1512,13 @@ namespace LeetCodeAlgo
             }
             return subNodes;
         }
+
         //98
         public bool IsValidBST(TreeNode root)
         {
             if (root == null) return true;
             if (root.left == null && root.right == null) return true;
-            return IsValidNode(root, (long)int.MaxValue+1, (long)int.MinValue-1);
+            return IsValidNode(root, (long)int.MaxValue + 1, (long)int.MinValue - 1);
             //return (root.left != null && ((root.left.val < root.val) && IsValidBST(root.left))) &&
             //    (root.right != null && ((root.right.val > root.val) && IsValidBST(root.right)));
 
@@ -1464,7 +1533,6 @@ namespace LeetCodeAlgo
 
             return IsValidNode(node.left, Math.Min(node.val, maxlimit), minlimit) &&
                 IsValidNode(node.right, maxlimit, Math.Max(node.val, minlimit));
-
         }
     }
 }
