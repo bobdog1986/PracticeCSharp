@@ -780,7 +780,36 @@ namespace LeetCodeAlgo
                 nums[i] = temp[i];
             }
         }
+        ///190. Reverse Bits
+        ///Reverse bits of a given 32 bits unsigned integer.
 
+
+        public uint reverseBits(uint n)
+        {
+            if(n == 0) return 0;
+
+            Console.WriteLine(Convert.ToString(n, 2));
+
+            uint result = 0;
+            uint a = uint.MaxValue / 2 + 1;
+            uint c = 1;
+            while (a>0)
+            {
+                uint b= n / a;
+                if (b == 1)
+                {
+                    n = n - a;
+
+                    result += c;
+                }
+                a = a / 2;
+                c = c * 2;
+            }
+
+            Console.WriteLine(Convert.ToString(result, 2));
+
+            return result;
+        }
         /// 191. Number of 1 Bits
         /// eg. 5=101, return count of 1 = 2;
 
@@ -801,8 +830,6 @@ namespace LeetCodeAlgo
 
                 a = a / 2;
             }
-
-
 
             return count;
         }
