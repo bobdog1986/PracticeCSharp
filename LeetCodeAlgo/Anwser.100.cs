@@ -134,6 +134,48 @@ namespace LeetCodeAlgo
             return list;
         }
 
+        ///120. Triangle
+        ///Given a triangle array, return the minimum path sum from top to bottom.
+        ///   2
+        ///  3 4
+        /// 6 5 7   = 2 3 5
+        public int MinimumTotal(IList<IList<int>> triangle)
+        {
+            if(triangle == null)
+                return 0;
+
+            int level = 1;
+            List<int> minList = new List<int>();
+            minList.Add(triangle[level-1][0]);
+
+            while (++level <= triangle.Count)
+            {
+                List<int> subList = new List<int>();
+
+                for (int i=0; i < level; i++)
+                {
+                    if (i == 0)
+                    {
+                        subList.Add(triangle[level-1][0]+minList[0]);
+                    }
+                    else if(i>0 && i < level - 1)
+                    {
+                        subList.Add(Math.Min(triangle[level - 1][i] + minList[i-1], triangle[level - 1][i] + minList[i]));
+                    }
+                    else
+                    {
+                        subList.Add(triangle[level - 1][level-1]+minList[level-1-1]);
+                    }
+                }
+
+                minList = subList;
+            }
+
+            return minList.Min();
+        }
+
+
+
         //121. Best Time to Buy and Sell Stock
 
         public int MaxProfit_121(int[] prices)
@@ -628,8 +670,7 @@ namespace LeetCodeAlgo
 
             for(int i = 2; i < nums.Length; i++)
             {
-                int a = nums[i] + dp[i - 2];
-                dp[i] = Math.Max(a, dp[i - 1]);
+                dp[i] = Math.Max(nums[i] + dp[i - 2], dp[i - 1]);
             }
 
             return dp[nums.Length - 1];

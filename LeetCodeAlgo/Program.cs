@@ -19,9 +19,9 @@ namespace LeetCodeAlgo
             var arr1 = "1ac1b";
             var mat1 = new int[][]
             {
-                new int[]{0,2},
-                //new int[]{1,1,1,},
-                //new int[]{1,1,2,},
+                new int[]{2},
+                new int[]{3,4,},
+                new int[]{6,5,7,},
                 //new int[]{0,0,1,0,1,1,1,0,1,1},
                 //new int[]{1,1,1,1,0,1,1,1,1,1},
                 //new int[]{1,1,1,1,1,0,0,0,1,1},
@@ -50,12 +50,12 @@ namespace LeetCodeAlgo
             //var root =new TreeNode(3,new TreeNode(9),new TreeNode(20,new TreeNode(15),new TreeNode(7)));
             //var result = anwser.MaxSubarraySumCircular(arr1);//ooolleoooleh
             //anwser.PrintListNode(result);
-            var result =anwser.LetterCasePermutation(arr1);
+            var result =anwser.MinimumTotal(mat1);
             sw.Stop();
             Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
-            Console.WriteLine(result.Count);
+            Console.WriteLine(result);
             //Console.WriteLine(result.val.ToString() + result.next.val);
-            Console.WriteLine(String.Join("\r\n", result.Select(o=> String.Join(",",o))));
+            //Console.WriteLine(String.Join("\r\n", result.Select(o=> String.Join(",",o))));
             //Console.WriteLine(String.Join(",", arr1));
             Console.ReadLine();
         }
