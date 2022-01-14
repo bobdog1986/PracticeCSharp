@@ -15,7 +15,7 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var arr1 = new int[] { -1,0,1,2,-1,-4 };
+            var arr1 = new int[] { 1,1,2,3,4,4,4 };
             var arr2 = new int[] { 3,4 };
             //var arr1 = "1ac1b";
             var mat1 = new int[][]
@@ -55,7 +55,7 @@ namespace LeetCodeAlgo
                 new TreeNode(20,new TreeNode(7),new TreeNode(15)));
             //var result = anwser.MaxSubarraySumCircular(arr1);//ooolleoooleh
             //anwser.PrintListNode(result);
-            var result = anwser.IsSameAfterReversals(1234);
+            var result = anwser.NumIdenticalPairs(arr1);
             //var result1 = anwser.IsSameAfterReversals(1230);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();

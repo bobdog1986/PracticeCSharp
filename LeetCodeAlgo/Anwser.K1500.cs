@@ -6,10 +6,37 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
-
     public partial class Anwser
     {
-        //1567. Maximum Length of Subarray With Positive Product
+        ///1512. Number of Good Pairs
+        ///Given an array of integers nums, return the number of good pairs.
+        ///A pair(i, j) is called good if nums[i] == nums[j] and i<j.
+        ///nums = [1,1,1,1], result =6;
+        ///1 <= nums.length <= 100
+        ///1 <= nums[i] <= 100
+        public int NumIdenticalPairs(int[] nums)
+        {
+            if(nums == null || nums.Length == 0)
+                return 0;
+
+            int result = 0;
+
+            int[] arr = new int[100+1];
+            foreach(var i in nums)
+                arr[i]++;
+
+            foreach(var i in arr)
+            {
+                if (i > 1)
+                {
+                    result+= i*(i-1)/2;
+                }
+            }
+
+            return result;
+        }
+
+        ///1567. Maximum Length of Subarray With Positive Product
 
         public int GetMaxLen(int[] nums)
         {
@@ -31,7 +58,6 @@ namespace LeetCodeAlgo
                 {
                     if (count <= max)
                     {
-
                     }
                     else
                     {
@@ -52,9 +78,8 @@ namespace LeetCodeAlgo
                 }
                 else
                 {
-                    if(nums[i] > 0)
+                    if (nums[i] > 0)
                     {
-
                     }
                     else
                     {
@@ -64,11 +89,9 @@ namespace LeetCodeAlgo
                         negEnd = count;
 
                         negCount++;
-
                     }
                     count++;
                 }
-
             }
 
             if (negCount % 2 == 0)
@@ -87,7 +110,7 @@ namespace LeetCodeAlgo
             if (nums == null || nums.Length == 0)
                 return 0;
             if (nums.Length == 1)
-                return nums[0]>0?1:0;
+                return nums[0] > 0 ? 1 : 0;
 
             int max = 0;
 
@@ -123,7 +146,7 @@ namespace LeetCodeAlgo
 
         public int GetMaxLen(List<int> list, List<int> indexsOfNegative = null)
         {
-            if (list.Count ==0)
+            if (list.Count == 0)
                 return 0;
 
             if (list.Count == 1)
@@ -135,7 +158,7 @@ namespace LeetCodeAlgo
             }
             else
             {
-                return Math.Max(list.Count - indexsOfNegative[0]-1, indexsOfNegative[indexsOfNegative.Count - 1]);
+                return Math.Max(list.Count - indexsOfNegative[0] - 1, indexsOfNegative[indexsOfNegative.Count - 1]);
             }
         }
     }
