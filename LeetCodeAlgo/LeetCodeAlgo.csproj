@@ -55,11 +55,10 @@
     <Compile Include="Anwser.200.cs" />
     <Compile Include="Anwser.K1500.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="ListNode.cs" />
     <Compile Include="MyQueue.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TreeNode.cs" />
+    <Compile Include="ALLStructs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Anwser.700.cs" />

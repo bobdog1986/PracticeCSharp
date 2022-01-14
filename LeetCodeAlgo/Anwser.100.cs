@@ -781,9 +781,16 @@ namespace LeetCodeAlgo
             }
         }
 
+        /// 191. Number of 1 Bits
 
-        //198. House Robber
-        public int Rob_198(int[] nums)
+        public int HammingWeight(uint n) 
+        {
+
+            return 0;
+        }
+
+    //198. House Robber
+    public int Rob_198(int[] nums)
         {
             if (nums == null || nums.Length == 0)
                 return 0;

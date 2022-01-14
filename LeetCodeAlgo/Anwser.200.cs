@@ -147,6 +147,28 @@ namespace LeetCodeAlgo
             var dist= nums.Distinct();
             return dist.Count()!=nums.Length;
         }
+        ///231. Power of Two
+        ///Given an integer n, return true if it is a power of two.
+
+        public bool IsPowerOfTwo(int n)
+        {
+            if(n<=0)
+                return false;
+
+            while (n >= 1)
+            {
+                if (n == 1)
+                    return true;
+
+                if (n % 2 == 1)
+                    return false;
+
+                n = n / 2;
+            }
+
+            return false;
+        }
+
         //232. Implement Queue using Stacks
 
         //232. Implement Queue using Stacks
