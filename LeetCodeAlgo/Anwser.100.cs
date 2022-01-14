@@ -46,7 +46,38 @@ namespace LeetCodeAlgo
             return result;
         }
 
+        /// 104. Maximum Depth of Binary Tree
+        /// Given the root of a binary tree, return its maximum depth.
+        ///A binary tree's maximum depth is the number of nodes along the longest path
+        ///from the root node down to the farthest leaf node.
+        public int MaxDepth(TreeNode root)
+        {
+            if(root == null)
+                return 0;
 
+            int deep = 0;
+            var nodes = new List<TreeNode>() { root};
+            while(nodes.Count > 0)
+            {
+                deep++;
+                var subs = new List<TreeNode>();
+                foreach(var node in nodes)
+                {
+                    if (node == null)
+                        continue;
+
+                    if(node.left != null)
+                        subs.Add((TreeNode)node.left);
+
+                    if(node.right!= null)
+                        subs.Add((TreeNode)node.right);
+                }
+
+                nodes = subs;
+            }
+
+            return deep;
+        }
 
         //105
         public TreeNode BuildTree(int[] preorder, int[] inorder)
