@@ -15,13 +15,14 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var arr1 = new int[] { 1,1,2,3,4,4,4 };
-            var arr2 = new int[] { 3,4 };
+            var arr1 = new int[] { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,4 };
+
+            var arr2 = new int[] {-76, 3, 66, -32, 64, 2, -19, -8, -5, -93, 80, -5, -76, -78, 64, 2, 16};
             //var arr1 = "1ac1b";
             var mat1 = new int[][]
             {
                 new int[]{32768,65536},
-                new int[]{32768,65536},
+                //new int[]{32768,65536},
                 //new int[]{6,5,7,},
                 //new int[]{0,0,1,0,1,1,1,0,1,1},
                 //new int[]{1,1,1,1,0,1,1,1,1,1},
@@ -31,7 +32,7 @@ namespace LeetCodeAlgo
             //anwser.PrintListNode(listnode);
             //Console.WriteLine(String.Join("\r\n", mat1.Select(o => String.Join(",", o))));
 
-            //Console.WriteLine(string.Join(",", arr1));
+            Console.WriteLine(arr1.Count());
             //Console.WriteLine(string.Join(",", arr2));
             Stopwatch sw = new Stopwatch();
             Console.WriteLine("**************start watch ms*******");
@@ -40,14 +41,13 @@ namespace LeetCodeAlgo
                 new TreeNode(20, new TreeNode(15), new TreeNode(7)),
                 new TreeNode(20,new TreeNode(7),new TreeNode(15)));
             //anwser.rev10(result);
-            var result = anwser.CountNicePairs(new int[] { 9, 4, 0 ,2,13,1});
+            var result = anwser.MinJumps(arr2);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();
             Console.WriteLine($"**********stop watch ms ={sw.ElapsedMilliseconds}*******");
             Console.WriteLine("***********Output Result*******");
             Console.WriteLine("*****************************");
-
 
             Console.WriteLine($"Result = {result}");
             //Console.WriteLine(result.val.ToString() + result.next.val);
@@ -56,8 +56,6 @@ namespace LeetCodeAlgo
             //else
             //    Console.WriteLine("Result count = 0");
             //Console.WriteLine(String.Join(",", arr1));
-
-
 
             Console.WriteLine("*****************************");
             Console.WriteLine("=========Finish!========");

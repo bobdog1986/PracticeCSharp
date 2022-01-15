@@ -8,6 +8,9 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
+        /// <summary>
+        /// BTree PreorderTraversal Iteratively
+        /// </summary>
         public IList<int> PreorderTraversal_Iteratively(TreeNode root)
         {
             if (root == null)
@@ -20,11 +23,11 @@ namespace LeetCodeAlgo
 
             while (stack.Count > 0)
             {
-                var node=stack.Pop();
-                if(node == null) { break; }
+                var node = stack.Pop();
+                if (node == null) { break; }
 
                 list.Add(node.val);
-                if(node.right != null)
+                if (node.right != null)
                 {
                     stack.Push(node.right);
                 }
@@ -35,10 +38,12 @@ namespace LeetCodeAlgo
                 }
             }
 
-
             return list;
         }
 
+        /// <summary>
+        /// BTree InorderTraversal Iteratively
+        /// </summary>
         public IList<int> InorderTraversal_Iteratively(TreeNode root)
         {
             if (root == null)
@@ -56,7 +61,7 @@ namespace LeetCodeAlgo
 
                 if (node.left != null)
                 {
-                    var left=node.left;
+                    var left = node.left;
 
                     node.left = null;
                     stack.Push(node);
@@ -71,13 +76,14 @@ namespace LeetCodeAlgo
                 {
                     stack.Push(node.right);
                 }
-
             }
-
 
             return list;
         }
 
+        /// <summary>
+        /// BTree PostorderTraversal Iteratively
+        /// </summary>
         public IList<int> PostorderTraversal_Iteratively(TreeNode root)
         {
             if (root == null)
@@ -98,10 +104,9 @@ namespace LeetCodeAlgo
                 node.left = null;
                 node.right = null;
 
-
-                if(left != null)
+                if (left != null)
                 {
-                    if(right != null)
+                    if (right != null)
                     {
                         stack.Push(node);
                         stack.Push(right);
@@ -117,7 +122,7 @@ namespace LeetCodeAlgo
                 }
                 else
                 {
-                    if(right != null)
+                    if (right != null)
                     {
                         stack.Push(node);
                         stack.Push(right);
@@ -129,17 +134,18 @@ namespace LeetCodeAlgo
                 list.Add(node.val);
             }
 
-
             return list;
         }
 
-
+        /// <summary>
+        /// BTree PreorderTraversal Recursion
+        /// </summary>
         public IList<int> PreorderTraversal_Recursion(TreeNode root)
         {
             if (root == null)
                 return new List<int>();
 
-            var list=new List<int>();
+            var list = new List<int>();
             list.Add(root.val);
             PreorderTraversal_Recursion_Add(root.left, list);
             PreorderTraversal_Recursion_Add(root.right, list);
@@ -147,8 +153,7 @@ namespace LeetCodeAlgo
             return list;
         }
 
-
-        public void PreorderTraversal_Recursion_Add(TreeNode node,IList<int> list)
+        public void PreorderTraversal_Recursion_Add(TreeNode node, IList<int> list)
         {
             if (node == null)
                 return;
@@ -158,7 +163,9 @@ namespace LeetCodeAlgo
             PreorderTraversal_Recursion_Add(node.right, list);
         }
 
-
+        /// <summary>
+        /// BTree InorderTraversal Recursion
+        /// </summary>
         public IList<int> InorderTraversal_Recursion(TreeNode root)
         {
             if (root == null)
@@ -172,7 +179,6 @@ namespace LeetCodeAlgo
             return list;
         }
 
-
         public void InorderTraversal_Recursion_Add(TreeNode node, IList<int> list)
         {
             if (node == null)
@@ -183,6 +189,9 @@ namespace LeetCodeAlgo
             InorderTraversal_Recursion_Add(node.right, list);
         }
 
+        /// <summary>
+        /// BTree PostorderTraversal Recursion
+        /// </summary>
         public IList<int> PostorderTraversal_Recursion(TreeNode root)
         {
             if (root == null)
@@ -204,21 +213,22 @@ namespace LeetCodeAlgo
             PostorderTraversal_Recursion_Add(node.left, list);
             PostorderTraversal_Recursion_Add(node.right, list);
             list.Add(node.val);
-
         }
 
-
+        /// <summary>
+        /// BTree LevelOrder Iteratively
+        /// </summary>
         public IList<IList<int>> LevelOrder_1(TreeNode root)
         {
-            var result =new List<IList<int>>();
+            var result = new List<IList<int>>();
             if (root == null)
                 return result;
-            var nodes=new Queue<TreeNode>();
+            var nodes = new Queue<TreeNode>();
             nodes.Enqueue(root);
 
-            while(nodes.Count>0)
+            while (nodes.Count > 0)
             {
-                var list=new List<int>();
+                var list = new List<int>();
                 var subs = new Queue<TreeNode>();
 
                 while (nodes.Count > 0)
@@ -226,12 +236,12 @@ namespace LeetCodeAlgo
                     var node = nodes.Dequeue();
                     list.Add((int)node.val);
 
-                    if(node.left != null)
+                    if (node.left != null)
                     {
                         subs.Enqueue(node.left);
                     }
 
-                    if(node.right != null)
+                    if (node.right != null)
                     {
                         subs.Enqueue(node.right);
                     }
@@ -245,12 +255,11 @@ namespace LeetCodeAlgo
             return result;
         }
 
-
         private int maxDepth = 0;
 
         public int MaxDepth_1(TreeNode root)
         {
-            if(root == null)
+            if (root == null)
                 return maxDepth;
 
             maxDepth++;
@@ -260,7 +269,7 @@ namespace LeetCodeAlgo
                 LoopTree(root.left, 1);
             }
 
-            if(root.right != null)
+            if (root.right != null)
             {
                 LoopTree(root.right, 1);
             }
@@ -277,19 +286,19 @@ namespace LeetCodeAlgo
 
             maxDepth = Math.Max(maxDepth, depth);
 
-            if(node.left != null)
+            if (node.left != null)
             {
                 LoopTree(node.left, depth);
-
             }
 
-            if(node.right != null)
+            if (node.right != null)
             {
                 LoopTree(node.right, depth);
             }
         }
 
         private bool isSymm = true;
+
         public bool IsSymmetric_1(TreeNode root)
         {
             if (root == null)
@@ -299,8 +308,8 @@ namespace LeetCodeAlgo
 
             List<TreeNode> leftNodes = new List<TreeNode>();
             List<TreeNode> rightNodes = new List<TreeNode>();
-            if(root.left!=null) leftNodes.Add(root.left);
-            if(root.right!=null) rightNodes.Add(root.right);
+            if (root.left != null) leftNodes.Add(root.left);
+            if (root.right != null) rightNodes.Add(root.right);
 
             while (true)
             {
@@ -310,7 +319,7 @@ namespace LeetCodeAlgo
                 if (leftNodes.Count == 0 && rightNodes.Count == 0)
                     break;
 
-                if(leftNodes.Count != rightNodes.Count)
+                if (leftNodes.Count != rightNodes.Count)
                 {
                     isSymm = false;
                     break;
@@ -318,17 +327,17 @@ namespace LeetCodeAlgo
 
                 List<TreeNode> subLeftNodes = new List<TreeNode>();
                 List<TreeNode> subRigthNodes = new List<TreeNode>();
-                for (int i=0; i<leftNodes.Count; i++)
+                for (int i = 0; i < leftNodes.Count; i++)
                 {
-                    if(leftNodes[i].val != rightNodes[i].val)
+                    if (leftNodes[i].val != rightNodes[i].val)
                     {
                         isSymm = false;
                         break;
                     }
 
-                    if(leftNodes[i].left == null && rightNodes[i].right != null)
+                    if (leftNodes[i].left == null && rightNodes[i].right != null)
                     {
-                        isSymm=false;
+                        isSymm = false;
                         break;
                     }
 
@@ -354,16 +363,13 @@ namespace LeetCodeAlgo
                     if (leftNodes[i].right != null) subLeftNodes.Add(leftNodes[i].right);
                     if (rightNodes[i].right != null) subRigthNodes.Add(rightNodes[i].right);
                     if (rightNodes[i].left != null) subRigthNodes.Add(rightNodes[i].left);
-
                 }
 
                 leftNodes = subLeftNodes;
                 rightNodes = subRigthNodes;
             }
 
-
             return isSymm;
-
         }
 
         public void IsSymmetric(TreeNode left, TreeNode right)
@@ -374,13 +380,13 @@ namespace LeetCodeAlgo
             if (left == null && right == null)
                 return;
 
-            if(left == null||right == null)
+            if (left == null || right == null)
             {
                 isSymm = false;
                 return;
             }
 
-            if(left.val != right.val)
+            if (left.val != right.val)
             {
                 isSymm = false;
                 return;
@@ -388,55 +394,14 @@ namespace LeetCodeAlgo
 
             IsSymmetric(left.left, right.right);
             IsSymmetric(left.right, right.left);
-
         }
 
-        private bool hasPathSum = false;
-        public bool HasPathSum(TreeNode root, int targetSum)
-        {
-            if (root == null)
-                return hasPathSum;
+        /// 112 HasPathSum, see other file
+        /// Given the root of a binary tree and an integer targetSum,
+        /// return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
+        public void HasPathSum_112() { }
 
-            int sum = root.val;
-
-            if (root.left == null && root.right == null)
-            {
-                if (sum == targetSum)
-                {
-                    hasPathSum = true;
-                }
-                return hasPathSum;
-            }
-
-            LoopPathSum(root.left, sum, targetSum);
-            LoopPathSum(root.right, sum, targetSum);
-
-            return hasPathSum;
-        }
-
-        public void LoopPathSum(TreeNode node,int sum, int targetSum)
-        {
-            if (hasPathSum)
-                return;
-
-            if (node == null)
-                return;
-
-            sum+=node.val;
-
-            if(node.left == null && node.right == null)
-            {
-                if (sum == targetSum)
-                {
-                    hasPathSum = true;
-                }
-                return;
-            }
-
-            LoopPathSum(node.left, sum, targetSum);
-            LoopPathSum(node.right, sum, targetSum);
-
-        }
+        ///
 
     }
 }

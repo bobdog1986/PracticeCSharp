@@ -207,6 +207,43 @@ namespace LeetCodeAlgo
 
         //116. Populating Next Right Pointers in Each Node
 
+        /// 112. Path Sum
+        /// Given the root of a binary tree and an integer targetSum,
+        /// return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
+        public bool HasPathSum(TreeNode root, int targetSum)
+        {
+            if (root == null)
+                return false;
+
+            var result = LoopPathSum(root, 0, targetSum);
+            if (result)
+                return true;
+
+            return false;
+        }
+
+        public bool LoopPathSum(TreeNode node, int sum, int targetSum)
+        {
+            if (node == null)
+                return false;
+
+            sum += node.val;
+
+            if (node.left == null && node.right == null && sum == targetSum)
+            {
+                return true;
+            }
+
+            var resultLeft = LoopPathSum(node.left, sum, targetSum);
+            if (resultLeft)
+                return true;
+            var resultRight = LoopPathSum(node.right, sum, targetSum);
+            if (resultRight)
+                return true;
+
+            return false;
+
+        }
         public Node Connect(Node root)
         {
             if (root == null)

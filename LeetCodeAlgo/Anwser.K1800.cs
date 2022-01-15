@@ -18,37 +18,33 @@ namespace LeetCodeAlgo
 
         public int CountNicePairs(int[] nums)
         {
-            public int CountNicePairs(int[] nums)
+            long modulo = 1000000007;
+            long count = 0;
+
+            Dictionary<int, long> diffPairs = new Dictionary<int, long>();
+
+            for (int i = 0; i < nums.Length; i++)
             {
-                long modulo = 1000000007;
-                long count = 0;
+                var rev1 = rev10(nums[i]);
+                //var rev2 = rev10(rev1);
+                var diff = nums[i] - rev1;
 
-                Dictionary<int, long> diffPairs = new Dictionary<int, long>();
-
-                for (int i = 0; i < nums.Length; i++)
+                if (diffPairs.ContainsKey(diff))
                 {
-                    var rev1 = rev10(nums[i]);
-                    //var rev2 = rev10(rev1);
-                    var diff = nums[i] - rev1;
-
-                    if (diffPairs.ContainsKey(diff))
-                    {
-                        diffPairs[diff]++;
-                    }
-                    else
-                    {
-                        diffPairs.Add(diff, 1);
-                    }
+                    diffPairs[diff]++;
                 }
-
-                foreach (var pair in diffPairs)
+                else
                 {
-                    count += pair.Value * (pair.Value - 1) / 2;
+                    diffPairs.Add(diff, 1);
                 }
-
-                return (int)(count % modulo);
             }
 
+            foreach (var pair in diffPairs)
+            {
+                count += pair.Value * (pair.Value - 1) / 2;
+            }
+
+            return (int)(count % modulo);
         }
 
         public int rev10(int n)
