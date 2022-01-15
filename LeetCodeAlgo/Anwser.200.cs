@@ -147,6 +147,33 @@ namespace LeetCodeAlgo
             var dist= nums.Distinct();
             return dist.Count()!=nums.Length;
         }
+
+        ///226. Invert Binary Tree
+        ///Given the root of a binary tree, invert the tree, and return its root.
+
+        public TreeNode InvertTree(TreeNode root)
+        {
+            InvertTree_Recursion(root);
+            return root;
+        }
+
+        public void InvertTree_Recursion(TreeNode node)
+        {
+            if (node == null)
+                return;
+
+            if (node.left == null && node.right == null)
+                return;
+
+            var temp = node.left;
+            node.left = node.right;
+            node.right = temp;
+
+            InvertTree_Recursion(node.left);
+            InvertTree_Recursion(node.right);
+        }
+
+
         ///231. Power of Two
         ///Given an integer n, return true if it is a power of two.
 
