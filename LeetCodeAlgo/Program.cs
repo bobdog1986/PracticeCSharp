@@ -41,15 +41,16 @@ namespace LeetCodeAlgo
                 new TreeNode(20, new TreeNode(15), new TreeNode(7)),
                 new TreeNode(20,new TreeNode(7),new TreeNode(15)));
             //anwser.rev10(result);
-            var result = anwser.MinJumps(arr2);
+            var result = anwser.GetRow(33);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();
             Console.WriteLine($"**********stop watch ms ={sw.ElapsedMilliseconds}*******");
             Console.WriteLine("***********Output Result*******");
             Console.WriteLine("*****************************");
+            Console.WriteLine(String.Join(",", result));
 
-            Console.WriteLine($"Result = {result}");
+            //Console.WriteLine($"Result = {result}");
             //Console.WriteLine(result.val.ToString() + result.next.val);
             //if(result.Count > 0)
             //    Console.WriteLine(String.Join("\r\n", result.Select(o=> String.Join(",",o))));

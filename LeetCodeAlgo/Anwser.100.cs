@@ -298,6 +298,31 @@ namespace LeetCodeAlgo
             return list;
         }
 
+        ///119. Pascal's Triangle II
+        ///Given an integer rowIndex, return the rowIndexth (0-indexed) row of the Pascal's triangle.
+        ///In Pascal's triangle, each number is the sum of the two numbers directly above it as shown:
+        public IList<int> GetRow(int rowIndex)
+        {
+            List<int> currentRow=new List<int>() { 1 };
+            int lastRowIndex = 0;
+            while (lastRowIndex < rowIndex)
+            {
+                var list2 = new List<int>();
+                int j = 0;
+                list2.Add(1);
+                j++;
+                while (j < lastRowIndex+1)
+                {
+                    list2.Add(currentRow[j - 1] + currentRow[j]);
+                    j++;
+                }
+                list2.Add(1);
+                currentRow=list2;
+                lastRowIndex++;
+            }
+
+            return currentRow;
+        }
         ///120. Triangle
         ///Given a triangle array, return the minimum path sum from top to bottom.
         ///   2
