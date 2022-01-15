@@ -22,8 +22,6 @@ namespace LeetCodeAlgo
             {
                 new int[]{32768,65536},
                 new int[]{32768,65536},
-                new int[]{32768,65536},
-                new int[]{32768,65536},
                 //new int[]{6,5,7,},
                 //new int[]{0,0,1,0,1,1,1,0,1,1},
                 //new int[]{1,1,1,1,0,1,1,1,1,1},
@@ -31,29 +29,27 @@ namespace LeetCodeAlgo
             };
             var listnode = new ListNode(1, new ListNode(1, new ListNode(3, null)));//new ListNode(4,new ListNode(5)))));
             //anwser.PrintListNode(listnode);
-            Console.WriteLine(String.Join("\r\n", mat1.Select(o => String.Join(",", o))));
+            //Console.WriteLine(String.Join("\r\n", mat1.Select(o => String.Join(",", o))));
 
             //Console.WriteLine(string.Join(",", arr1));
             //Console.WriteLine(string.Join(",", arr2));
             Stopwatch sw = new Stopwatch();
-            Console.WriteLine("**************");
-            Console.WriteLine("start watch ms");
+            Console.WriteLine("**************start watch ms*******");
             sw.Start();
             var root =new TreeNode(3,
                 new TreeNode(20, new TreeNode(15), new TreeNode(7)),
                 new TreeNode(20,new TreeNode(7),new TreeNode(15)));
-            //var result = anwser.MaxSubarraySumCircular(arr1);//ooolleoooleh
-            //anwser.PrintListNode(result);
-            var result = anwser.InterchangeableRectangles(mat1);
-
-            var result1 = anwser.Gcb(32768,65536);
+            //anwser.rev10(result);
+            var result = anwser.CountNicePairs(new int[] { 9, 4, 0 ,2,13,1});
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
-            Console.WriteLine("stop watch ms = " + sw.ElapsedMilliseconds);
-            Console.WriteLine("***");
-            Console.WriteLine(result);
-            Console.WriteLine(result1);
-            //Console.WriteLine(result2);
+            Console.WriteLine();
+            Console.WriteLine($"**********stop watch ms ={sw.ElapsedMilliseconds}*******");
+            Console.WriteLine("***********Output Result*******");
+            Console.WriteLine("*****************************");
+
+
+            Console.WriteLine($"Result = {result}");
             //Console.WriteLine(result.val.ToString() + result.next.val);
             //if(result.Count > 0)
             //    Console.WriteLine(String.Join("\r\n", result.Select(o=> String.Join(",",o))));
@@ -61,7 +57,10 @@ namespace LeetCodeAlgo
             //    Console.WriteLine("Result count = 0");
             //Console.WriteLine(String.Join(",", arr1));
 
-            Console.WriteLine("=====Finish!=====");
+
+
+            Console.WriteLine("*****************************");
+            Console.WriteLine("=========Finish!========");
             Console.ReadLine();
         }
     }
