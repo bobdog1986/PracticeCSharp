@@ -84,16 +84,16 @@ namespace LeetCodeAlgo
         {
             if (nums1.Length == 0 && nums2.Length == 0)
                 return 0;
-            int i=0, j = 0;
-            int[] nums=new int[nums1.Length + nums2.Length];
-            while(i<nums1.Length || j < nums2.Length)
+            int i = 0, j = 0;
+            int[] nums = new int[nums1.Length + nums2.Length];
+            while (i < nums1.Length || j < nums2.Length)
             {
                 if (i == nums1.Length)
                 {
                     nums[i + j] = nums2[j];
                     j++;
                 }
-                else if(j== nums2.Length)
+                else if (j == nums2.Length)
                 {
                     nums[i + j] = nums1[i];
                     i++;
@@ -110,20 +110,17 @@ namespace LeetCodeAlgo
                         nums[i + j] = nums2[j];
                         j++;
                     }
-
                 }
             }
 
-            if(nums.Length %2 == 0)
+            if (nums.Length % 2 == 0)
             {
-                return (nums[nums.Length / 2 - 1] + nums[nums.Length / 2])/2.0;
-
+                return (nums[nums.Length / 2 - 1] + nums[nums.Length / 2]) / 2.0;
             }
             else
             {
                 return nums[nums.Length / 2];
             }
-
         }
 
         ///8. String to Integer (atoi)
@@ -283,11 +280,11 @@ namespace LeetCodeAlgo
 
             var list = new List<int>();
 
-            FourSum_Recursion(nums, result, list, 0, target, number,0,0);
+            FourSum_Recursion(nums, result, list, 0, target, number, 0, 0);
             return result;
         }
 
-        public void FourSum_Recursion(int[] nums, IList<IList<int>> result, IList<int> list, int index, int target, int needNumber , int sum, int currentCount)
+        public void FourSum_Recursion(int[] nums, IList<IList<int>> result, IList<int> list, int index, int target, int needNumber, int sum, int currentCount)
         {
             if (index + needNumber > nums.Length)
                 return;
@@ -295,7 +292,7 @@ namespace LeetCodeAlgo
             if (needNumber <= 1)
             {
                 bool found = false;
-                for(int i = index; i < nums.Length; i++)
+                for (int i = index; i < nums.Length; i++)
                 {
                     if (target - sum > nums[nums.Length - 1]
                         || target - sum < nums[i])
@@ -307,13 +304,12 @@ namespace LeetCodeAlgo
                         found = true;
                         break;
                     }
-
                 }
 
-                if(found)
+                if (found)
                 {
-                    if ( result.Count==0 || 
-                            result.FirstOrDefault(item => 
+                    if (result.Count == 0 ||
+                            result.FirstOrDefault(item =>
                                                 item[0] == list[0]
                                              && item[1] == list[1]
                                              && item[2] == list[2]
@@ -323,17 +319,15 @@ namespace LeetCodeAlgo
             }
             else
             {
-                for (int i=index; i < nums.Length-needNumber+1; i++)
+                for (int i = index; i < nums.Length - needNumber + 1; i++)
                 {
-                    var sub=new List<int>(list);
+                    var sub = new List<int>(list);
                     sub.Add(nums[i]);
 
-                    FourSum_Recursion(nums, result, sub, i+1, target, needNumber-1,sum+ nums[i],currentCount+1);
+                    FourSum_Recursion(nums, result, sub, i + 1, target, needNumber - 1, sum + nums[i], currentCount + 1);
                 }
             }
-
         }
-
 
         public int GetCode(int[] nums)
         {
@@ -992,6 +986,48 @@ namespace LeetCodeAlgo
             return false;
         }
 
+        ///66. Plus One
+        /// 0-index is the highest bit
+        ///Input: digits = [1,2,3]
+        ///Output: [1,2,4]
+
+        public int[] PlusOne(int[] digits)
+        {
+            if(digits == null || digits.Length == 0)
+                return new int[] { 1};
+
+            int i = digits.Length-1;
+            while (i >=0)
+            {
+                if (digits[i] != 9)
+                {
+                    digits[i]++;
+                    return digits;
+                }
+                else
+                {
+                    if (0 == i)
+                    {
+                        digits[i]++;
+                        break;
+                    }
+                    else
+                    {
+                        digits[i] = 0;
+                    }
+                }
+
+                i--;
+            }
+
+            if (digits[0] == 10)
+            {
+                digits = new int[digits.Length + 1];
+                digits[0] = 1;
+            }
+            return digits;
+        }
+
         //69
         public int MySqrt(int x)
         {
@@ -1511,6 +1547,37 @@ namespace LeetCodeAlgo
                 if (n.right != null) { subNodes.Add(n.right); }
             }
             return subNodes;
+        }
+
+        /// 96. Unique Binary Search Trees
+        public int NumTrees(int n)
+        {
+            return 0;
+        }
+
+        public int getFactorial(int n)
+        {
+            if (n == 0 || n == 1) return 1;
+
+            return n * getFactorial(n - 1);
+        }
+
+        public int getFactorial(int n, int count)
+        {
+            int result = 1;
+
+            while (count > 0 && n > 0)
+            {
+                result *= n;
+                n--;
+                count--;
+            }
+            return result;
+        }
+
+        public int getCombine(int n, int count)
+        {
+            return getFactorial(n, count) / getFactorial(count);
         }
 
         //98
