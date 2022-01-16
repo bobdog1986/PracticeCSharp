@@ -383,6 +383,38 @@ namespace LeetCodeAlgo
             return String.Join("",list);
         }
 
+        ///7. Reverse Integer
+        ///Given a signed 32-bit integer x, return x with its digits reversed.
+        ///If reversing x causes the value to go outside the signed 32-bit integer range [-2^31, 2^31 - 1], then return 0.
+        ///Assume the environment does not allow you to store 64-bit integers (signed or unsigned).
+
+        public int Reverse(int x)
+        {
+            if (x == 0) return 0;
+
+            bool isNeg = false;
+            if (x < 0)
+            {
+                isNeg = true;
+                if(x==int.MinValue)
+                    return 0;
+                x = -x;
+            }
+
+            int result = 0;
+            while (x > 0)
+            {
+                if (result > (int.MaxValue / 10))
+                    return 0;
+
+                result *= 10;
+                result += x % 10;
+                x = x / 10;
+            }
+
+            return isNeg ? -result : result;
+        }
+
         /// 8. String to Integer (atoi)
         ///Implement the myAtoi(string s) function, which converts a string to a int (similar to C/C++'s atoi function).
         ///Constraints:
