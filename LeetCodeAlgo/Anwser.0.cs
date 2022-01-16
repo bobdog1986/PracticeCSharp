@@ -298,6 +298,91 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///6. Zigzag Conversion
+        ///Zigzag is Z line, row=3
+        ///A     A     A
+        ///A  A  A  A  A
+        ///A     A
+        public string Convert_6(string s, int numRows)
+        {
+            if (s.Length <= numRows || numRows==1)
+                return s;
+
+            int zagLen = numRows + (numRows - 2);
+            int zagCount = 1;
+            int zagColCount = 1 + (numRows - 2);
+            while (true)
+            {
+                int sum1 = zagCount * zagLen;
+
+                if (s.Length <= sum1)
+                {
+                    break;
+                }
+                else
+                {
+                    zagCount++;
+                }
+            }
+
+            char[][] mat= new char[numRows][];
+            for(int i=0;i<mat.Length;i++)
+            {
+                mat[i] = new char[zagCount* zagLen];
+            }
+
+            for(int i = 0; i < s.Length; i++)
+            {
+                int zagIndex = i/zagLen;
+                int zagModulo = i % zagLen;
+
+                int c = zagIndex * zagColCount;
+                if (zagModulo == 0)
+                {
+
+                }
+                else if (zagModulo < numRows)
+                {
+                    //c++;
+                }
+                else
+                {
+                    //c++;
+                    c +=zagModulo - numRows + 1;
+                }
+
+                int r = 0;
+                if (zagModulo ==0)
+                {
+                    //r=0
+                }
+                if (zagModulo < numRows)
+                {
+                    r = zagModulo;
+                }
+                else
+                {
+                    r = numRows -1- ( zagModulo - numRows + 1);
+                }
+
+                mat[r][c] = s[i];
+            }
+
+            List<char> list= new List<char>();
+            foreach(var r in mat)
+            {
+                foreach(var a in r)
+                {
+                    if ((byte)a != 0)
+                    {
+                        list.Add(a);
+                    }
+                }
+            }
+
+            return String.Join("",list);
+        }
+
         /// 8. String to Integer (atoi)
         ///Implement the myAtoi(string s) function, which converts a string to a int (similar to C/C++'s atoi function).
         ///Constraints:
