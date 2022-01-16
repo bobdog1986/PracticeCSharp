@@ -104,6 +104,8 @@ namespace LeetCodeAlgo
         }
 
         /// 3. Longest Substring Without Repeating Characters
+        /// Given a string s, find the length of the longest substring without repeating characters.
+
         public int LengthOfLongestSubstring(string s)
         {
             if (string.IsNullOrEmpty(s))
@@ -199,7 +201,104 @@ namespace LeetCodeAlgo
             }
         }
 
-        ///8. String to Integer (atoi)
+
+        ///5. Longest Palindromic Substring
+        ///Given a string s, return the longest palindromic substring in s.
+        ///Input: s = "babad" Output: "bab"
+
+        public string LongestPalindrome(string s)
+        {
+            if(string.IsNullOrEmpty(s) || s.Length == 1)
+                return s;
+
+            if(s.Length==1)
+                return s;
+
+            string result = s[s.Length / 2].ToString();
+
+            LongestPalindrome_Odd_Recursion(s, (s.Length - 1) / 2, ref result);
+            LongestPalindrome_Odd_Recursion(s, (s.Length + 1) / 2, ref result);
+
+            LongestPalindrome_Even_Recursion(s, (s.Length - 1) / 2, ref result);
+            LongestPalindrome_Even_Recursion(s, (s.Length + 1) / 2, ref result);
+
+            return result;
+        }
+
+        public void LongestPalindrome_Odd_Recursion(string s, int center , ref string result)
+        {
+            if (center <= 0 || center >= s.Length - 1)
+                return;
+
+            List<char> list=new List<char>() { s[center] };
+
+            for (int i = 1; i <= center && i <= s.Length-1-center; i++)
+            {
+                if (s[center - i] == s[center + i])
+                {
+                    list.Add (s[center + i]);
+                    list.Insert(0, s[center - i]);
+                }
+                else
+                {
+                    if (list.Count > result.Length)
+                    {
+                        result = String.Join("", list);
+                    }
+
+                    if(center<= (s.Length - 1) / 2)
+                    {
+                        LongestPalindrome_Odd_Recursion(s, center - 1, ref result);
+                    }
+                    if (center >= (s.Length + 1) / 2)
+                    {
+                        LongestPalindrome_Odd_Recursion(s, center + 1, ref result);
+                    }
+                    break;
+                }
+            }
+
+            if(list.Count > result.Length)
+            {
+                result = String.Join("", list);
+            }
+        }
+
+        public void LongestPalindrome_Even_Recursion(string s, int center, ref string result)
+        {
+            if (center < 0 || center > s.Length - 1)
+                return;
+
+            List<char> list = new List<char>();
+
+            for (int i = 0; i <= center && i <= s.Length - 1 - center-1; i++)
+            {
+                if (s[center-i] == s[center +i+ 1])
+                {
+                    list.Add(s[center + i + 1]);
+                    list.Insert(0, s[center - i]);
+                }
+                else
+                {
+                    if (center <= (s.Length - 1) / 2)
+                    {
+                        LongestPalindrome_Even_Recursion(s, center - 1, ref result);
+                    }
+                    if (center >= (s.Length + 1) / 2)
+                    {
+                        LongestPalindrome_Even_Recursion(s, center + 1, ref result);
+                    }
+                    break;
+                }
+            }
+
+            if (list.Count > result.Length)
+            {
+                result = String.Join("", list);
+            }
+        }
+
+        /// 8. String to Integer (atoi)
         ///Implement the myAtoi(string s) function, which converts a string to a int (similar to C/C++'s atoi function).
         ///Constraints:
         ///0 <= s.length <= 200
