@@ -683,6 +683,49 @@ namespace LeetCodeAlgo
             }
             return number;
         }
+        ///14. Longest Common Prefix
+        /// find the longest common prefix string amongst an array of strings.
+        /// Input: strs = ["flower","flow","flight"]
+        /// Output: "fl"
+        public string LongestCommonPrefix(string[] strs)
+        {
+            if(strs.Length==1)
+                return strs[0].Length==0?string.Empty:strs[0];
+
+            string result= strs[0];
+
+            for(int i=1; i<strs.Length; i++)
+            {
+                result = LongestCommonPrefix(result, strs[i]);
+                if (string.IsNullOrEmpty(result))
+                    return string.Empty;
+            }
+
+            return result;
+        }
+
+        public string LongestCommonPrefix(string str1,string str2)
+        {
+            if (string.IsNullOrEmpty(str1) || string.IsNullOrEmpty(str2))
+                return string.Empty;
+
+            List<char> list=new List<char>();
+
+            for(int i=0;i<str1.Length && i < str2.Length; i++)
+            {
+                if (str1[i] == str2[i])
+                {
+                    list.Add(str1[i]);
+                }
+                else
+                {
+                    break;
+                }
+
+            }
+
+            return list.Count > 0 ?String.Join("",list) : String.Empty;
+        }
 
         ///18. 4Sum
         ///Given an array nums of n integers, return an array of all the unique
