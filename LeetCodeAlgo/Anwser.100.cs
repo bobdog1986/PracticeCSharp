@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
-    /// <summary>
-    /// range 101-200
-    /// </summary>
     public partial class Anwser
     {
         ///101. Symmetric Tree

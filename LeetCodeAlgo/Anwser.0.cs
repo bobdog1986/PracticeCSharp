@@ -37,7 +37,6 @@ namespace LeetCodeAlgo
         ///Input: l1 = [2,4,3], l2 = [5,6,4]
         ///Output: [7,0,8]
         ///Explanation: 342 + 465 = 807.
-
         public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
         {
             var node1 = l1;
@@ -46,13 +45,13 @@ namespace LeetCodeAlgo
             bool carry = false;
             ListNode root = null;
             var current = root;
-            while(node1!=null || node2 != null)
+            while (node1 != null || node2 != null)
             {
-                var node=new ListNode();
+                var node = new ListNode();
                 int val = 0;
                 if (node1 == null)
                 {
-                    val= node2.val;
+                    val = node2.val;
                     if (carry)
                         val++;
                     carry = val / 10 == 1;
@@ -69,7 +68,6 @@ namespace LeetCodeAlgo
                     node.val = val % 10;
 
                     node1 = node1.next;
-
                 }
                 else
                 {
@@ -85,7 +83,7 @@ namespace LeetCodeAlgo
 
                 if (current == null)
                 {
-                    root= node;
+                    root = node;
                     current = node;
                 }
                 else
@@ -105,7 +103,6 @@ namespace LeetCodeAlgo
 
         /// 3. Longest Substring Without Repeating Characters
         /// Given a string s, find the length of the longest substring without repeating characters.
-
         public int LengthOfLongestSubstring(string s)
         {
             if (string.IsNullOrEmpty(s))
@@ -157,7 +154,6 @@ namespace LeetCodeAlgo
         ///4. Median of Two Sorted Arrays
         ///Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
         ///The overall run time complexity should be O(log (m+n)).
-
         public double FindMedianSortedArrays(int[] nums1, int[] nums2)
         {
             if (nums1.Length == 0 && nums2.Length == 0)
@@ -201,17 +197,15 @@ namespace LeetCodeAlgo
             }
         }
 
-
         ///5. Longest Palindromic Substring
         ///Given a string s, return the longest palindromic substring in s.
         ///Input: s = "babad" Output: "bab"
-
         public string LongestPalindrome(string s)
         {
-            if(string.IsNullOrEmpty(s) || s.Length == 1)
+            if (string.IsNullOrEmpty(s) || s.Length == 1)
                 return s;
 
-            if(s.Length==1)
+            if (s.Length == 1)
                 return s;
 
             string result = s[s.Length / 2].ToString();
@@ -225,18 +219,18 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        public void LongestPalindrome_Odd_Recursion(string s, int center , ref string result)
+        public void LongestPalindrome_Odd_Recursion(string s, int center, ref string result)
         {
             if (center <= 0 || center >= s.Length - 1)
                 return;
 
-            List<char> list=new List<char>() { s[center] };
+            List<char> list = new List<char>() { s[center] };
 
-            for (int i = 1; i <= center && i <= s.Length-1-center; i++)
+            for (int i = 1; i <= center && i <= s.Length - 1 - center; i++)
             {
                 if (s[center - i] == s[center + i])
                 {
-                    list.Add (s[center + i]);
+                    list.Add(s[center + i]);
                     list.Insert(0, s[center - i]);
                 }
                 else
@@ -246,7 +240,7 @@ namespace LeetCodeAlgo
                         result = String.Join("", list);
                     }
 
-                    if(center<= (s.Length - 1) / 2)
+                    if (center <= (s.Length - 1) / 2)
                     {
                         LongestPalindrome_Odd_Recursion(s, center - 1, ref result);
                     }
@@ -258,7 +252,7 @@ namespace LeetCodeAlgo
                 }
             }
 
-            if(list.Count > result.Length)
+            if (list.Count > result.Length)
             {
                 result = String.Join("", list);
             }
@@ -271,9 +265,9 @@ namespace LeetCodeAlgo
 
             List<char> list = new List<char>();
 
-            for (int i = 0; i <= center && i <= s.Length - 1 - center-1; i++)
+            for (int i = 0; i <= center && i <= s.Length - 1 - center - 1; i++)
             {
-                if (s[center-i] == s[center +i+ 1])
+                if (s[center - i] == s[center + i + 1])
                 {
                     list.Add(s[center + i + 1]);
                     list.Insert(0, s[center - i]);
@@ -305,7 +299,7 @@ namespace LeetCodeAlgo
         ///A     A
         public string Convert_6(string s, int numRows)
         {
-            if (s.Length <= numRows || numRows==1)
+            if (s.Length <= numRows || numRows == 1)
                 return s;
 
             int zagLen = numRows + (numRows - 2);
@@ -325,21 +319,20 @@ namespace LeetCodeAlgo
                 }
             }
 
-            char[][] mat= new char[numRows][];
-            for(int i=0;i<mat.Length;i++)
+            char[][] mat = new char[numRows][];
+            for (int i = 0; i < mat.Length; i++)
             {
-                mat[i] = new char[zagCount* zagLen];
+                mat[i] = new char[zagCount * zagLen];
             }
 
-            for(int i = 0; i < s.Length; i++)
+            for (int i = 0; i < s.Length; i++)
             {
-                int zagIndex = i/zagLen;
+                int zagIndex = i / zagLen;
                 int zagModulo = i % zagLen;
 
                 int c = zagIndex * zagColCount;
                 if (zagModulo == 0)
                 {
-
                 }
                 else if (zagModulo < numRows)
                 {
@@ -348,11 +341,11 @@ namespace LeetCodeAlgo
                 else
                 {
                     //c++;
-                    c +=zagModulo - numRows + 1;
+                    c += zagModulo - numRows + 1;
                 }
 
                 int r = 0;
-                if (zagModulo ==0)
+                if (zagModulo == 0)
                 {
                     //r=0
                 }
@@ -362,16 +355,16 @@ namespace LeetCodeAlgo
                 }
                 else
                 {
-                    r = numRows -1- ( zagModulo - numRows + 1);
+                    r = numRows - 1 - (zagModulo - numRows + 1);
                 }
 
                 mat[r][c] = s[i];
             }
 
-            List<char> list= new List<char>();
-            foreach(var r in mat)
+            List<char> list = new List<char>();
+            foreach (var r in mat)
             {
-                foreach(var a in r)
+                foreach (var a in r)
                 {
                     if ((byte)a != 0)
                     {
@@ -380,14 +373,13 @@ namespace LeetCodeAlgo
                 }
             }
 
-            return String.Join("",list);
+            return String.Join("", list);
         }
 
         ///7. Reverse Integer
         ///Given a signed 32-bit integer x, return x with its digits reversed.
         ///If reversing x causes the value to go outside the signed 32-bit integer range [-2^31, 2^31 - 1], then return 0.
         ///Assume the environment does not allow you to store 64-bit integers (signed or unsigned).
-
         public int Reverse(int x)
         {
             if (x == 0) return 0;
@@ -396,7 +388,7 @@ namespace LeetCodeAlgo
             if (x < 0)
             {
                 isNeg = true;
-                if(x==int.MinValue)
+                if (x == int.MinValue)
                     return 0;
                 x = -x;
             }
@@ -420,10 +412,9 @@ namespace LeetCodeAlgo
         ///Constraints:
         ///0 <= s.length <= 200
         ///s consists of English letters(lower-case and upper-case), digits(0-9), ' ', '+', '-', and '.'.
-
         public int MyAtoi(string s)
         {
-            if (string.IsNullOrEmpty(s)) 
+            if (string.IsNullOrEmpty(s))
                 return 0;
             s = s.Trim();
 
@@ -511,8 +502,6 @@ namespace LeetCodeAlgo
         ///An integer is a palindrome when it reads the same backward as forward.
         ///For example, 121 is a palindrome while 123 is not.
         /// -121 is not
-
-
         public bool IsPalindrome(int x)
         {
             if (x < 0)
@@ -525,7 +514,7 @@ namespace LeetCodeAlgo
             int n = x;
             int m = 0;
             List<int> digits = new List<int>();
-            while (n >0)
+            while (n > 0)
             {
                 len++;
                 m = n % 10;
@@ -536,7 +525,7 @@ namespace LeetCodeAlgo
 
             if (len % 2 == 1)
             {
-                for(int i= 1; i <= (len - 1) / 2; i++)
+                for (int i = 1; i <= (len - 1) / 2; i++)
                 {
                     if (digits[(len - 1) / 2 - i] != digits[(len - 1) / 2 + i])
                         return false;
@@ -669,20 +658,6 @@ namespace LeetCodeAlgo
                     FourSum_Recursion(nums, result, sub, i + 1, target, needNumber - 1, sum + nums[i], currentCount + 1);
                 }
             }
-        }
-
-        public int GetCode(int[] nums)
-        {
-            return nums[0] + nums[1] * 10 + nums[2] * 100 + nums[3] * 1000;
-        }
-
-        public bool IsSameFourIntArray(int[] first, int[] second)
-        {
-            for (int i = 0; i < first.Length; i++)
-            {
-                if (first[i] != second[i]) return false;
-            }
-            return true;
         }
 
         //19. Remove Nth Node From End of List
@@ -1055,10 +1030,10 @@ namespace LeetCodeAlgo
             return dp[0];
         }
 
-        //46. Permutations
-        //1 <= nums.length <= 6
-        //-10 <= nums[i] <= 10
-        //All the integers of nums are unique.
+        ///46. Permutations
+        ///1 <= nums.length <= 6
+        ///-10 <= nums[i] <= 10
+        ///All the integers of nums are unique.
         public IList<IList<int>> Permute(int[] nums)
         {
             if (nums == null || nums.Length == 0)
@@ -1335,11 +1310,11 @@ namespace LeetCodeAlgo
 
         public int[] PlusOne(int[] digits)
         {
-            if(digits == null || digits.Length == 0)
-                return new int[] { 1};
+            if (digits == null || digits.Length == 0)
+                return new int[] { 1 };
 
-            int i = digits.Length-1;
-            while (i >=0)
+            int i = digits.Length - 1;
+            while (i >= 0)
             {
                 if (digits[i] != 9)
                 {
@@ -1375,7 +1350,7 @@ namespace LeetCodeAlgo
         ///1 <= a.length, b.length <= 104, no leading zero
         public string AddBinary(string a, string b)
         {
-            if(string.IsNullOrEmpty(a)&& string.IsNullOrEmpty(b))
+            if (string.IsNullOrEmpty(a) && string.IsNullOrEmpty(b))
                 return string.Empty;
 
             if (string.IsNullOrEmpty(a))
@@ -1401,17 +1376,16 @@ namespace LeetCodeAlgo
             List<char> result = new List<char>();
 
             bool carry = false;
-            while (i<= s2.Length-1)
+            while (i <= s2.Length - 1)
             {
                 if (i >= s1.Length)
                 {
-                    if (s2[s2.Length-1-i] == '0')
+                    if (s2[s2.Length - 1 - i] == '0')
                     {
                         if (carry)
                         {
-                            result.Insert(0,'1');
+                            result.Insert(0, '1');
                             carry = false;
-
                         }
                         else
                         {
@@ -1424,7 +1398,6 @@ namespace LeetCodeAlgo
                         {
                             result.Insert(0, '0');
                             carry = true;
-
                         }
                         else
                         {
@@ -1440,20 +1413,18 @@ namespace LeetCodeAlgo
                         {
                             result.Insert(0, '1');
                             carry = false;
-
                         }
                         else
                         {
                             result.Insert(0, '0');
                         }
                     }
-                    else if(s1[s1.Length - 1 - i] == '1' && s2[s2.Length - 1 - i] == '1')
+                    else if (s1[s1.Length - 1 - i] == '1' && s2[s2.Length - 1 - i] == '1')
                     {
                         if (carry)
                         {
                             result.Insert(0, '1');
                             carry = true;
-
                         }
                         else
                         {
@@ -1467,7 +1438,6 @@ namespace LeetCodeAlgo
                         {
                             result.Insert(0, '0');
                             carry = true;
-
                         }
                         else
                         {
@@ -1475,7 +1445,6 @@ namespace LeetCodeAlgo
                             carry = false;
                         }
                     }
-
                 }
 
                 i++;
@@ -1486,11 +1455,8 @@ namespace LeetCodeAlgo
                 result.Insert(0, '1');
             }
 
-            return String.Join("",result);
-
+            return String.Join("", result);
         }
-
-
 
         //69
         public int MySqrt(int x)
@@ -1501,7 +1467,8 @@ namespace LeetCodeAlgo
             return (int)r;
         }
 
-        //70. Climbing Stairs
+        ///70. Climbing Stairs
+        ///
         public int ClimbStairs(int n)
         {
             //bottom to up
@@ -1509,6 +1476,7 @@ namespace LeetCodeAlgo
             if (n == 1) return 1;
             if (n == 2) return 2;
 
+            //dp , not recursion
             int seed1 = 1;
             int seed2 = 1;
             for (int i = n - 2; i > 0; i--)
@@ -1519,53 +1487,15 @@ namespace LeetCodeAlgo
             }
 
             return seed1 + seed2;
-
-            //brute force, out of memory
-            if (n == 0) return 0;
-            int totalCount = 0;
-
-            int root = 0;
-
-            Queue<int> nodes = new Queue<int>();
-            nodes.Enqueue(root);
-
-            while (nodes.Count > 0)
-            {
-                var node = nodes.Dequeue();
-                var left = node + 1;
-                var right = node + 2;
-
-                if (left < n)
-                {
-                    nodes.Enqueue(left);
-                }
-                else if (left == n)
-                {
-                    totalCount++;
-                }
-
-                if (right < n)
-                {
-                    nodes.Enqueue(right);
-                }
-                else if (right == n)
-                {
-                    totalCount++;
-                }
-            }
-
-            return totalCount;
         }
 
-        public int ClimbStairsN(int n)
+        public int ClimbStairs_Recursion(int n)
         {
             if (n == 0) return 0;
             if (n == 1) return 1;
             if (n == 2) return 2;
 
-            return ClimbStairsN(n - 1) + ClimbStairsN(n - 2);
-
-            return 0;
+            return ClimbStairs_Recursion(n - 1) + ClimbStairs_Recursion(n - 2);
         }
 
         //74. Search a 2D Matrix
@@ -1940,7 +1870,193 @@ namespace LeetCodeAlgo
             Console.WriteLine($"nums1 = {string.Join(",", nums1)}");
         }
 
-        //94. Binary Tree Inorder Traversal
+        ///91. Decode Ways
+        ///A message containing letters from A-Z can be encoded into numbers using the following mapping:
+        ///'A' -> "1", Z->26
+        ///"AAJF" with the grouping (1 1 10 6)
+        ///"KJF" with the grouping(11 10 6)
+
+        public int NumDecodings(string s)
+        {
+            if (string.IsNullOrEmpty(s) || s.Length == 0)
+                return 0;
+            if (s[0] == '0')
+                return 0;
+            if (s.Length == 1)
+                return 1;
+
+            var arr = s.ToArray();
+
+            //find continue 1,2 sub string
+            Dictionary<int ,int> dict=new Dictionary<int, int>();
+
+            int len = 0;
+            bool isLoop1or2 = false;
+            int start = 0;
+            for(int i = 0; i < arr.Length; i++)
+            {
+                if(arr[i] == '1' || arr[i] == '2')
+                {
+                    if (!isLoop1or2)
+                    {
+                        start = i;
+                        isLoop1or2 = true;
+                    }
+                    len++;
+                }
+                else
+                {
+                    if (isLoop1or2)
+                    {
+                        if(start==0
+                            || (arr[start-1]=='0'|| (arr[start-1]>='3' && arr[start-1] <= '9')))
+                        {
+
+                        }
+                        else
+                        {
+                            start--;
+                            len--;
+                        }
+
+                        if (arr[i] == '0')
+                        {
+                            len--;
+                        }
+                        else
+                        {
+
+                        }
+
+                        if(len>=3)
+                            dict.Add(start, len);
+
+                        len = 0;
+                        isLoop1or2 = false;
+                    }
+                }
+            }
+
+            if (len == arr.Length)
+                return NumDecodings_Only1or2(len);
+
+            if (isLoop1or2 && len > 0)
+            {
+                if (len >= 3)
+                    dict.Add(start, len);
+            }
+
+            return NumDecodings_Recursion(arr, 0, dict);
+        }
+
+        public int NumDecodings_Recursion(char[] arr, int start, Dictionary<int, int> dict)
+        {
+            if (arr==null || arr.Length == 0)
+                return 0;
+
+            if (start < 0 || start >= arr.Length)
+                return 0;
+
+            //if(dict.ContainsKey(start))
+            //    return NumDecodings_Only1or2(dict[start])* NumDecodings_Recursion(arr,start+ dict[start],dict);
+
+            int i = start;
+
+            if (arr[i] == '0')
+                return 0;
+
+            if (i == arr.Length-1)
+                return 1;
+
+            if (i == arr.Length - 2)
+            {
+                if (arr[i] == '1')
+                {
+                    if (arr[i+1] == '0')
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return 2;
+                    }
+                }
+                else if (arr[i] == '2')
+                {
+                    if (arr[i+1] == '0')
+                    {
+                        return 1;
+                    }
+                    else if (arr[i+1] >= '7' && arr[i + 1] <= '9')
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return 2;
+                    }
+                }
+                else
+                {
+                    return arr[i + 1] == '0' ? 0 : 1;
+                }
+            }
+
+            if (arr[i] == '1')
+            {
+                if (arr[i+1] == '0')
+                {
+                    return NumDecodings_Recursion(arr,i+2, dict);
+                }
+                else
+                {
+                    return NumDecodings_Recursion(arr, i + 1, dict) + NumDecodings_Recursion(arr, i + 2, dict);
+                }
+            }
+            else if (arr[i] == '2')
+            {
+                if (arr[i+1] >= '7' && arr[i + 1] <= '9')
+                {
+                    return NumDecodings_Recursion(arr, i + 2, dict);
+
+                }
+                else if (arr[i + 1] == '0')
+                {
+                    return NumDecodings_Recursion(arr, i + 2, dict);
+                }
+                else
+                {
+                    return NumDecodings_Recursion(arr, i + 1, dict) + NumDecodings_Recursion(arr, i + 2, dict);
+                }
+            }
+            else
+            {
+                return NumDecodings_Recursion(arr, i + 1, dict);
+            }
+        }
+
+        public int NumDecodings_Only1or2(int n)
+        {
+            if (n == 1)
+                return 1;
+            if (n == 2)
+                return 2;
+
+            int dp1 = 1;
+            int dp2 = 2;
+            int dp = dp1 + dp2;
+            for (int i = 3; i <= n; i++)
+            {
+                dp = dp1 + dp2;
+                dp1 = dp2;
+                dp2 = dp;
+            }
+
+            return dp;//NumDecodings_Only1or2(n - 1) + NumDecodings_Only1or2(n - 2);
+        }
+
+
+        /// 94. Binary Tree Inorder Traversal
         public IList<int> InorderTraversal(TreeNode root)
         {
             var result = new List<int>();

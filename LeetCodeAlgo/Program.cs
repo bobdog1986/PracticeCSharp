@@ -36,11 +36,12 @@ namespace LeetCodeAlgo
                 new TreeNode(20, new TreeNode(15), new TreeNode(7)),
                 new TreeNode(20,new TreeNode(7),new TreeNode(15)));
 
-            var result = anwser.IsPalindrome(2221);
+            //var result = anwser.NumDecodings("111111111111111111111111111111111111111111111");
+            var result = anwser.NumDecodings("2839");
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();
-            Console.WriteLine($"**********stop watch ms ={sw.ElapsedMilliseconds}*******");
+            Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
             Console.WriteLine(String.Join(",", result));
 
