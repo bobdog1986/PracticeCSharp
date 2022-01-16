@@ -36,7 +36,7 @@ namespace LeetCodeAlgo
                 new TreeNode(20, new TreeNode(15), new TreeNode(7)),
                 new TreeNode(20,new TreeNode(7),new TreeNode(15)));
 
-            var result = anwser.PlusOne(arr1);
+            var result = anwser.AddBinary("1","11");
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();

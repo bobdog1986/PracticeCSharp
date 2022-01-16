@@ -1028,6 +1028,128 @@ namespace LeetCodeAlgo
             return digits;
         }
 
+        /// 67. Add Binary
+        /// Given two binary strings a and b, return their sum as a binary string.
+        ///1 <= a.length, b.length <= 104, no leading zero
+        public string AddBinary(string a, string b)
+        {
+            if(string.IsNullOrEmpty(a)&& string.IsNullOrEmpty(b))
+                return string.Empty;
+
+            if (string.IsNullOrEmpty(a))
+                return b;
+            if (string.IsNullOrEmpty(b))
+                return a;
+
+            string s1;
+            string s2;
+            if (a.Length <= b.Length)
+            {
+                s1 = a;
+                s2 = b;
+            }
+            else
+            {
+                s1 = b;
+                s2 = a;
+            }
+
+            int i = 0;
+
+            List<char> result = new List<char>();
+
+            bool carry = false;
+            while (i<= s2.Length-1)
+            {
+                if (i >= s1.Length)
+                {
+                    if (s2[s2.Length-1-i] == '0')
+                    {
+                        if (carry)
+                        {
+                            result.Insert(0,'1');
+                            carry = false;
+
+                        }
+                        else
+                        {
+                            result.Insert(0, '0');
+                        }
+                    }
+                    else
+                    {
+                        if (carry)
+                        {
+                            result.Insert(0, '0');
+                            carry = true;
+
+                        }
+                        else
+                        {
+                            result.Insert(0, '1');
+                        }
+                    }
+                }
+                else
+                {
+                    if (s1[s1.Length - 1 - i] == '0' && s2[s2.Length - 1 - i] == '0')
+                    {
+                        if (carry)
+                        {
+                            result.Insert(0, '1');
+                            carry = false;
+
+                        }
+                        else
+                        {
+                            result.Insert(0, '0');
+                        }
+                    }
+                    else if(s1[s1.Length - 1 - i] == '1' && s2[s2.Length - 1 - i] == '1')
+                    {
+                        if (carry)
+                        {
+                            result.Insert(0, '1');
+                            carry = true;
+
+                        }
+                        else
+                        {
+                            result.Insert(0, '0');
+                            carry = true;
+                        }
+                    }
+                    else
+                    {
+                        if (carry)
+                        {
+                            result.Insert(0, '0');
+                            carry = true;
+
+                        }
+                        else
+                        {
+                            result.Insert(0, '1');
+                            carry = false;
+                        }
+                    }
+
+                }
+
+                i++;
+            }
+
+            if (carry)
+            {
+                result.Insert(0, '1');
+            }
+
+            return String.Join("",result);
+
+        }
+
+
+
         //69
         public int MySqrt(int x)
         {
