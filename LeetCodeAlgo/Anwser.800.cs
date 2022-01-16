@@ -8,7 +8,44 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        //876. Middle of the Linked List
+        ///849. Maximize Distance to Closest Person
+        public int MaxDistToClosest(int[] seats)
+        {
+            int max = 1;
+
+            int len = 0;
+            for(int i = 0; i < seats.Length; i++)
+            {
+                if(seats[i] == 0)
+                {
+                    len++;
+                }
+                else
+                {
+                    if (len > 0)
+                    {
+                        if (len == i)
+                        {
+                            //continous seats from 0-index
+                            max = Math.Max(max, len);
+                        }
+                        else
+                        {
+                            max = Math.Max(max, (len+1)/2);
+                        }
+
+                        len = 0;
+                    }
+                }
+            }
+
+            //continous seats to last-index
+            if (len>0)
+                max = Math.Max(max, len);
+            return max;
+
+        }
+        /// 876. Middle of the Linked List
         public ListNode MiddleNode(ListNode head)
         {
             if(head == null||head.next == null)
