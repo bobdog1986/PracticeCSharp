@@ -7,6 +7,26 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
+        ///700. Search in a Binary Search Tree
+        ///You are given the root of a binary search tree (BST) and an integer val.
+        ///Find the node in the BST equals val and return the subtree rooted with that node.
+        ///If such a node does not exist, return null.
+        public TreeNode SearchBST(TreeNode root, int val)
+        {
+            if(root == null)
+                return null;
+
+            while(root != null)
+            {
+                if(val==root.val)
+                    return root;
+
+                root = val > root.val?root.right:root.left;
+            }
+
+            return root;
+        }
+
         ///704. Binary Search  O(log n)
         ///Given an array of integers nums which is sorted in ascending order,
         ///and an integer target, write a function to search target in nums.
