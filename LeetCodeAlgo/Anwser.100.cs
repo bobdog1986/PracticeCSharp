@@ -269,7 +269,13 @@ namespace LeetCodeAlgo
             return root;
 
         }
-        //118. Pascal's Triangle
+        ///118. Pascal's Triangle
+        ///Given an integer numRows, return the first numRows of Pascal's triangle.
+        ///    1
+        ///   1 1
+        ///  1 2 1
+        /// 1 3 3 1
+
         public IList<IList<int>> Generate(int numRows)
         {
             List<IList<int>> list=new List<IList<int>>();
@@ -320,6 +326,7 @@ namespace LeetCodeAlgo
 
             return currentRow;
         }
+
         ///120. Triangle
         ///Given a triangle array, return the minimum path sum from top to bottom.
         ///   2
@@ -359,7 +366,6 @@ namespace LeetCodeAlgo
 
             return minList.Min();
         }
-
 
 
         //121. Best Time to Buy and Sell Stock

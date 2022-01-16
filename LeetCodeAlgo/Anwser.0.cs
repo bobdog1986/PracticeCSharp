@@ -543,7 +543,81 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        //12
+        ///11. Container With Most Water
+        /// max value of (j-i)*min(arr[i],arr[j])
+        public int MaxArea(int[] height)
+        {
+            int max = 0;
+
+            int left = 0;
+            int right = height.Length - 1;
+
+            while (left < right)
+            {
+                if (height[left] == 0)
+                {
+                    left++;
+                    continue;
+                }
+
+                if (height[right] == 0)
+                {
+                    right--;
+                    continue;
+                }
+
+                if (height[left] <= height[right])
+                {
+                    max = Math.Max(max, (right - left) * height[left]);
+                    left++;
+                }
+                else
+                {
+                    max = Math.Max(max, (right - left) * height[right]);
+                    right--;
+                }
+            }
+
+            return max;
+        }
+
+
+        public int MaxArea_HeadToEnd(int[] height)
+        {
+            int max = 0;
+
+            int maxEnd =0;
+            int maxHeight = 0;
+            for(int i=0; i < height.Length-1; i++)
+            {
+                if (height[i] == 0)
+                    continue;
+
+                if (height[i] * (height.Length - 1 - i + 1) <= max)
+                    continue;
+
+                for(int j=i+1; j < height.Length; j++)
+                {
+                    if (height[j] == 0)
+                        continue;
+
+                    if (j <= maxEnd && height[j] <= maxHeight)
+                        continue;
+
+                    var h = Math.Min(height[i], height[j]);
+                    var a = (j - i) * h;
+                    if (a > max)
+                    {
+                        max = a;
+                        maxEnd = j;
+                        maxHeight = h;
+                    }
+                }
+            }
+
+            return max;
+        }
+        /// 12
         public string IntToRoman(int num)
         {
             if ((num < 0) || (num > 3999)) throw new ArgumentOutOfRangeException();

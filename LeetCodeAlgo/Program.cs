@@ -15,7 +15,7 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var arr1 = new int[] { 0,0,0,0,0, 1,0 };
+            var arr1 = new int[] { 1,1};
             //var arr2 = new int[] {-76, 3, 66, -32, 64, 2, -19, -8, -5, -93, 80, -5, -76, -78, 64, 2, 16};
             //var arr1 = "1ac1b";
             var mat1 = new int[][]
@@ -39,7 +39,7 @@ namespace LeetCodeAlgo
                 new TreeNode(20,new TreeNode(7),new TreeNode(15)));
 
             //var result = anwser.NumDecodings("111111111111111111111111111111111111111111111");
-            var result = anwser.MinFallingPathSum(mat1);
+            var result = anwser.MaxArea(arr1);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();
