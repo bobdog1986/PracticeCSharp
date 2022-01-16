@@ -7,17 +7,55 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        //704. Binary Search
-
+        ///704. Binary Search  O(log n)
+        ///Given an array of integers nums which is sorted in ascending order,
+        ///and an integer target, write a function to search target in nums.
+        ///If target exists, then return its index.Otherwise, return -1.
+        ///All the integers in nums are unique.
         public int Search_704(int[] nums, int target)
         {
-            for (int i = 0; i < nums.Length; i++)
+            if(nums == null || nums.Length == 0) 
+                return 0;
+            if (nums.Length == 1 && nums[0] == target)
+                return 0;
+
+
+            int i=nums.Length/2;
+            int low = 0;
+            int high = nums.Length - 1;
+
+            int result = -1;
+
+
+            while(i>=low && i <= high && (high-low)>=1)
             {
-                if (nums[i] == target) { return i; }
-                if (nums[i] > target) { return -1; }
+                if (target < nums[low] || target > nums[high])
+                    return -1;
+
+                if (target == nums[low])
+                    return low;
+                if (target == nums[high])
+                    return high;
+
+
+                if (nums[i] == target)
+                {
+                    return i;
+                }
+                else if(nums[i] > target)
+                {
+                    high = i - 1;
+                    i = low + (high - low) / 2;
+                }
+                else
+                {
+                    low = i + 1;
+
+                    i= low + (high - low) / 2;
+                }
             }
 
-            return -1;
+            return result;
         }
 
         //728

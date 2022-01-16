@@ -475,6 +475,47 @@ namespace LeetCodeAlgo
             return max = Math.Max(current, max);
         }
 
+        /// 136. Single Number
+        /// Given a non - empty array of integers nums, every element appears twice except for one.Find that single one.
+        /// You must implement a solution with a linear runtime complexity and use only constant extra space.
+        /// Input: nums = [2,2,1]
+        /// Output: 1
+
+        public int SingleNumber(int[] nums)
+        {
+            if(nums.Length==1)
+                return nums[0];
+
+            int a = nums[0];
+
+            for(int i = 1; i < nums.Length; i++)
+            {
+                a^=nums[i];
+            }
+
+            return a;
+
+            //return nums.Aggregate((x, y) => x ^ y);
+
+            //Dictionary<int, int> dict = new Dictionary<int, int>();
+
+            //foreach(var i in nums)
+            //{
+            //    if (dict.ContainsKey(i))
+            //    {
+            //        dict.Remove(i);
+            //    }
+            //    else
+            //    {
+            //        dict.Add(i, 1);
+            //    }
+            //}
+
+            //return dict.ElementAt(0).Key;
+
+        }
+
+
         //141. Linked List Cycle
 
         public bool HasCycle(ListNode head)
@@ -842,10 +883,11 @@ namespace LeetCodeAlgo
                 nums[i] = temp[i];
             }
         }
+
         ///190. Reverse Bits
         ///Reverse bits of a given 32 bits unsigned integer.
-
-
+        ///Input: n =            00000010100101000001111010011100
+        ///Output:    964176192 (00111001011110000010100101000000)
         public uint reverseBits(uint n)
         {
             if(n == 0) return 0;
