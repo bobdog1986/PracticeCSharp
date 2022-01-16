@@ -617,10 +617,25 @@ namespace LeetCodeAlgo
 
             return max;
         }
-        /// 12
+
+        /// 12. Integer to Roman
+        /// Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
+        /// I             1
+        /// V             5
+        /// X             10
+        /// L             50
+        /// C             100
+        /// D             500
+        /// M             1000
+        /// CM            900
+        /// CD            400
+        /// XC            90
+        /// XL            40
+        /// IX            9
+        /// IV            4
         public string IntToRoman(int num)
         {
-            if ((num < 0) || (num > 3999)) throw new ArgumentOutOfRangeException();
+            if ((num <= 0) || (num > 3999)) throw new ArgumentOutOfRangeException();
             if (num >= 1000) return "M" + IntToRoman(num - 1000);
             if (num >= 900) return "CM" + IntToRoman(num - 900);
             if (num >= 500) return "D" + IntToRoman(num - 500);
@@ -638,7 +653,9 @@ namespace LeetCodeAlgo
             return string.Empty;
         }
 
-        //13
+        ///13. Roman to Integer
+        ///Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
+        ///It is guaranteed that s is a valid roman numeral in the range [1, 3999]
         public int RomanToInt(string s)
         {
             Dictionary<char, int> dictionary = new Dictionary<char, int>()
