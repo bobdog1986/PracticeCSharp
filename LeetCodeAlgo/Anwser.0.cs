@@ -423,10 +423,13 @@ namespace LeetCodeAlgo
 
         public int MyAtoi(string s)
         {
-            if (string.IsNullOrEmpty(s)) return 0;
+            if (string.IsNullOrEmpty(s)) 
+                return 0;
             s = s.Trim();
 
-            if (string.IsNullOrEmpty(s)) return 0;
+            if (string.IsNullOrEmpty(s))
+                return 0;
+
             List<char> list = new List<char>();
             int sign = 0;
             for (int i = 0; i < s.Length; i++)
@@ -438,7 +441,7 @@ namespace LeetCodeAlgo
                 else
                 {
                     if (list.Count > 0)
-                        break; ;
+                        break;
 
                     if (s[i] == '+' && sign == 0)
                     {
@@ -451,11 +454,11 @@ namespace LeetCodeAlgo
                     else
                     {
                         return 0;
-                        //
                     }
                 }
             }
 
+            //remove head 0
             while (true)
             {
                 if (list.Count == 0)
@@ -502,6 +505,53 @@ namespace LeetCodeAlgo
             }
 
             return 0;
+        }
+
+        ///9. Palindrome Number
+        ///An integer is a palindrome when it reads the same backward as forward.
+        ///For example, 121 is a palindrome while 123 is not.
+        /// -121 is not
+
+
+        public bool IsPalindrome(int x)
+        {
+            if (x < 0)
+                return false;
+
+            if (x < 10)
+                return true;
+
+            int len = 0;
+            int n = x;
+            int m = 0;
+            List<int> digits = new List<int>();
+            while (n >0)
+            {
+                len++;
+                m = n % 10;
+
+                n = n / 10;
+                digits.Add(m);
+            }
+
+            if (len % 2 == 1)
+            {
+                for(int i= 1; i <= (len - 1) / 2; i++)
+                {
+                    if (digits[(len - 1) / 2 - i] != digits[(len - 1) / 2 + i])
+                        return false;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < len / 2; i++)
+                {
+                    if (digits[(len - 1) / 2 - i] != digits[(len + 1) / 2 + i])
+                        return false;
+                }
+            }
+
+            return true;
         }
 
         //12

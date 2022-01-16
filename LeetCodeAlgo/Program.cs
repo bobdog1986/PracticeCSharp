@@ -36,7 +36,7 @@ namespace LeetCodeAlgo
                 new TreeNode(20, new TreeNode(15), new TreeNode(7)),
                 new TreeNode(20,new TreeNode(7),new TreeNode(15)));
 
-            var result = anwser.Convert("a",1);
+            var result = anwser.IsPalindrome(2221);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();
