@@ -1887,78 +1887,32 @@ namespace LeetCodeAlgo
 
             var arr = s.ToArray();
 
-            //find continue 1,2 sub string
-            Dictionary<int ,int> dict=new Dictionary<int, int>();
 
             int len = 0;
-            bool isLoop1or2 = false;
-            int start = 0;
             for(int i = 0; i < arr.Length; i++)
             {
                 if(arr[i] == '1' || arr[i] == '2')
                 {
-                    if (!isLoop1or2)
-                    {
-                        start = i;
-                        isLoop1or2 = true;
-                    }
                     len++;
                 }
                 else
                 {
-                    if (isLoop1or2)
-                    {
-                        if(start==0
-                            || (arr[start-1]=='0'|| (arr[start-1]>='3' && arr[start-1] <= '9')))
-                        {
-
-                        }
-                        else
-                        {
-                            start--;
-                            len--;
-                        }
-
-                        if (arr[i] == '0')
-                        {
-                            len--;
-                        }
-                        else
-                        {
-
-                        }
-
-                        if(len>=3)
-                            dict.Add(start, len);
-
-                        len = 0;
-                        isLoop1or2 = false;
-                    }
                 }
             }
 
             if (len == arr.Length)
                 return NumDecodings_Only1or2(len);
 
-            if (isLoop1or2 && len > 0)
-            {
-                if (len >= 3)
-                    dict.Add(start, len);
-            }
-
-            return NumDecodings_Recursion(arr, 0, dict);
+            return NumDecodings_Recursion(arr, 0);
         }
 
-        public int NumDecodings_Recursion(char[] arr, int start, Dictionary<int, int> dict)
+        public int NumDecodings_Recursion(char[] arr, int start)
         {
             if (arr==null || arr.Length == 0)
                 return 0;
 
             if (start < 0 || start >= arr.Length)
                 return 0;
-
-            //if(dict.ContainsKey(start))
-            //    return NumDecodings_Only1or2(dict[start])* NumDecodings_Recursion(arr,start+ dict[start],dict);
 
             int i = start;
 
@@ -2006,37 +1960,38 @@ namespace LeetCodeAlgo
             {
                 if (arr[i+1] == '0')
                 {
-                    return NumDecodings_Recursion(arr,i+2, dict);
+                    return NumDecodings_Recursion(arr,i+2);
                 }
                 else
                 {
-                    return NumDecodings_Recursion(arr, i + 1, dict) + NumDecodings_Recursion(arr, i + 2, dict);
+                    return NumDecodings_Recursion(arr, i + 1) + NumDecodings_Recursion(arr, i + 2);
                 }
             }
             else if (arr[i] == '2')
             {
                 if (arr[i+1] >= '7' && arr[i + 1] <= '9')
                 {
-                    return NumDecodings_Recursion(arr, i + 2, dict);
+                    return NumDecodings_Recursion(arr, i + 2);
 
                 }
                 else if (arr[i + 1] == '0')
                 {
-                    return NumDecodings_Recursion(arr, i + 2, dict);
+                    return NumDecodings_Recursion(arr, i + 2);
                 }
                 else
                 {
-                    return NumDecodings_Recursion(arr, i + 1, dict) + NumDecodings_Recursion(arr, i + 2, dict);
+                    return NumDecodings_Recursion(arr, i + 1) + NumDecodings_Recursion(arr, i + 2);
                 }
             }
             else
             {
-                return NumDecodings_Recursion(arr, i + 1, dict);
+                return NumDecodings_Recursion(arr, i + 1);
             }
         }
 
         public int NumDecodings_Only1or2(int n)
         {
+            //Resursion will timeout
             if (n == 1)
                 return 1;
             if (n == 2)
@@ -2052,7 +2007,7 @@ namespace LeetCodeAlgo
                 dp2 = dp;
             }
 
-            return dp;//NumDecodings_Only1or2(n - 1) + NumDecodings_Only1or2(n - 2);
+            return dp;
         }
 
 
@@ -2130,8 +2085,11 @@ namespace LeetCodeAlgo
         }
 
         /// 96. Unique Binary Search Trees
+        /// Given an integer n, return the number of structurally unique BST's (binary search trees)
+        /// which has exactly n nodes of unique values from 1 to n.
         public int NumTrees(int n)
         {
+
             return 0;
         }
 

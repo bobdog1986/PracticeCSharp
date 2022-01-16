@@ -59,6 +59,43 @@ namespace LeetCodeAlgo
 
         //    return max;
         //}
+        /// 931. Minimum Falling Path Sum
+        public int MinFallingPathSum(int[][] matrix)
+        {
+
+            var len=matrix.Length;
+            if(len==1)
+                return matrix[0][0];
+
+            int[] dp=new int[len];
+
+            for(int i=0;i<len;i++)
+                dp[i]=matrix[0][i];
+
+            for (int i =1; i < len; i++)
+            {
+                int[] dp2 = new int[len];
+                for (int k = 0; k < len; k++)
+                    dp2[k] = dp[k];
+
+                for (int j = 0; j < len; j++)
+                {
+                    int a = dp2[j] + matrix[i][j];
+
+                    if (j > 0)
+                        a = Math.Min(a, dp2[j - 1] + matrix[i][j]);
+
+                    if(j<len-1)
+                        a = Math.Min(a, dp2[j + 1] + matrix[i][j]);
+
+                    dp[j]= a;
+                }
+            }
+
+            return dp.Min();
+
+        }
+
 
         //977. Squares of a Sorted Array
 

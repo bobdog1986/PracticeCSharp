@@ -20,8 +20,10 @@ namespace LeetCodeAlgo
             //var arr1 = "1ac1b";
             var mat1 = new int[][]
             {
-                new int[]{32768,65536},
                 //new int[]{32768,65536},
+                //new int[]{32768,65536},
+                new int[]{-19,57,},
+                new int[]{-40,-5,},
                 //new int[]{6,5,7,},
                 //new int[]{0,0,1,0,1,1,1,0,1,1},
             };
@@ -37,7 +39,7 @@ namespace LeetCodeAlgo
                 new TreeNode(20,new TreeNode(7),new TreeNode(15)));
 
             //var result = anwser.NumDecodings("111111111111111111111111111111111111111111111");
-            var result = anwser.NumDecodings("2839");
+            var result = anwser.MinFallingPathSum(mat1);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();
