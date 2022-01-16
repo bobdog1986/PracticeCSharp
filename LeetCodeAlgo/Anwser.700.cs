@@ -27,7 +27,52 @@ namespace LeetCodeAlgo
             return root;
         }
 
-        ///704. Binary Search  O(log n)
+        ///701. Insert into a Binary Search Tree
+        ///You are given the root node of a binary search tree (BST) and a value to insert into the tree.
+        ///Return the root node of the BST after the insertion.
+        ///It is guaranteed that the new value does not exist in the original BST.
+        ///All the values Node.val are unique.
+        ///It's guaranteed that val does not exist in the original BST.
+        public TreeNode InsertIntoBST(TreeNode root, int val)
+        {
+            var add = new TreeNode(val);
+            if (root == null)
+                return add;
+
+            var node = root;
+
+            while (node != null)
+            {
+                if(val > node.val)
+                {
+                    if(node.right == null)
+                    {
+                        node.right = add;
+                        break;
+                    }
+                    else
+                    {
+                        node=node.right;
+                    }
+                }
+                else
+                {
+                    if (node.left == null)
+                    {
+                        node.left = add;
+                        break;
+                    }
+                    else
+                    {
+                        node = node.left;
+                    }
+                }
+
+            }
+
+            return root;
+        }
+        /// 704. Binary Search  O(log n)
         ///Given an array of integers nums which is sorted in ascending order,
         ///and an integer target, write a function to search target in nums.
         ///If target exists, then return its index.Otherwise, return -1.
