@@ -11,7 +11,10 @@ namespace LeetCodeAlgo
     /// </summary>
     public partial class Anwser
     {
-        // 1
+        /// 1. Two Sum
+        /// Given an array of integers nums and an integer target,
+        /// return indices of the two numbers such that they add up to target.
+        /// each input would have exactly one solution, and you may not use the same element twice.
         public int[] TwoSum(int[] nums, int target)
         {
             for (int i = 0; i < nums.Length - 1; i++)
@@ -24,10 +27,83 @@ namespace LeetCodeAlgo
                     }
                 }
             }
-            throw new ArgumentOutOfRangeException();
+            return null;
         }
 
-        //3. Longest Substring Without Repeating Characters
+        ///2. Add Two Numbers
+        ///You are given two non-empty linked lists representing two non-negative integers.
+        ///The digits are stored in reverse order, and each of their nodes contains a single digit.
+        ///Add the two numbers and return the sum as a linked list.
+        ///Input: l1 = [2,4,3], l2 = [5,6,4]
+        ///Output: [7,0,8]
+        ///Explanation: 342 + 465 = 807.
+
+        public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
+        {
+            var node1 = l1;
+            var node2 = l2;
+
+            bool carry = false;
+            ListNode root = null;
+            var current = root;
+            while(node1!=null || node2 != null)
+            {
+                var node=new ListNode();
+                int val = 0;
+                if (node1 == null)
+                {
+                    val= node2.val;
+                    if (carry)
+                        val++;
+                    carry = val / 10 == 1;
+                    node.val = val % 10;
+
+                    node2 = node2.next;
+                }
+                else if (node2 == null)
+                {
+                    val = node1.val;
+                    if (carry)
+                        val++;
+                    carry = val / 10 == 1;
+                    node.val = val % 10;
+
+                    node1 = node1.next;
+
+                }
+                else
+                {
+                    val = node1.val + node2.val;
+                    if (carry)
+                        val++;
+                    carry = val / 10 == 1;
+                    node.val = val % 10;
+
+                    node1 = node1.next;
+                    node2 = node2.next;
+                }
+
+                if (current == null)
+                {
+                    root= node;
+                    current = node;
+                }
+                else
+                {
+                    current.next = node;
+                    current = node;
+                }
+            }
+
+            if (carry)
+            {
+                current.next = new ListNode(1);
+            }
+
+            return root;
+        }
+
+        /// 3. Longest Substring Without Repeating Characters
         public int LengthOfLongestSubstring(string s)
         {
             if (string.IsNullOrEmpty(s))
