@@ -37,11 +37,11 @@ namespace LeetCodeAlgo
             //[5,4,6,null,null,3,7]
             var tree =new TreeNode(0,
                 new TreeNode(-1),null);
-    //        var tree = new TreeNode(3,
-    //new TreeNode(1, new TreeNode(0), new TreeNode(2)),
-    //new TreeNode(5, new TreeNode(4), new TreeNode(6)));
+            //        var tree = new TreeNode(3,
+            //new TreeNode(1, new TreeNode(0), new TreeNode(2)),
+            //new TreeNode(5, new TreeNode(4), new TreeNode(6)));
             //var result = anwser.NumDecodings("111111111111111111111111111111111111111111111");
-            var result = anwser.IsValidBST(tree);
+            var result = anwser.WordPattern("abba","dd dd dd dd");
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();

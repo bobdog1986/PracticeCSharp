@@ -356,5 +356,42 @@ namespace LeetCodeAlgo
             Console.WriteLine($"zer0Count = {zeroCount}");
         }
 
+        ///290. Word Pattern
+        ///Given a pattern and a string s, find if s follows the same pattern.
+        ///pattern = "abba", s = "dog cat cat dog", return true
+        ///pattern = "abba", s = "dog dog dog dog", return false
+        public bool WordPattern(string pattern, string s)
+        {
+            var carr = pattern.ToCharArray();
+            var words=s.Split(' ');
+
+            if (carr.Length != words.Length)
+                return false;
+
+            Dictionary<char, string>  dict = new Dictionary<char, string>();
+
+            for(int i = 0; i < carr.Length; i++)
+            {
+                if (dict.ContainsKey(carr[i]))
+                {
+                    if(dict[carr[i]]!= words[i])
+                    {
+                        return false;
+                    }
+                }
+                else if (dict.ContainsValue(words[i]))
+                {
+                    return false;
+                }
+                else
+                {
+                    dict.Add(carr[i], words[i]);
+                }
+            }
+
+            return true;
+        }
+
+
     }
 }
