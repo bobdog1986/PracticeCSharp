@@ -68,7 +68,28 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        //695. Max Area of Island
+        ///653. Two Sum IV - Input is a BST
+        ///return true if there exist two elements in the BST such that sum = target.
+
+        public bool FindTarget(TreeNode root, int k)
+        {
+            return FindTarget(root,k,new List<int>());
+        }
+
+        public bool FindTarget(TreeNode root, int k, IList<int> list)
+        {
+            if (root == null)
+                return false;
+
+            if (list.Contains(root.val))
+                return true;
+
+            list.Add(k - root.val);
+
+            return FindTarget(root.left, k, list) || FindTarget(root.right, k, list);
+        }
+
+        /// 695. Max Area of Island
 
         public int MaxAreaOfIsland(int[][] grid)
         {
