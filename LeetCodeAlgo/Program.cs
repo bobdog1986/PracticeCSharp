@@ -15,9 +15,9 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            //var arr1 = new int[] { 1,1};
+            var arr1 = new int[] { -1, 0, 1, 2, -1, -4 };
             //var arr2 = new int[] {-76, 3, 66, -32, 64, 2, -19, -8, -5, -93, 80, -5, -76, -78, 64, 2, 16};
-            var arr1 = new string[] { "acc", "aaa", "aaba" };
+            //var arr1 = new string[] { "acc", "aaa", "aaba" };
             var mat1 = new int[][]
             {
                 //new int[]{32768,65536},
@@ -39,20 +39,20 @@ namespace LeetCodeAlgo
                 new TreeNode(20,new TreeNode(7),new TreeNode(15)));
 
             //var result = anwser.NumDecodings("111111111111111111111111111111111111111111111");
-            var result = anwser.LongestCommonPrefix(arr1);
+            var result = anwser.ThreeSum(arr1);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
-            Console.WriteLine(String.Join(",", result));
+            //Console.WriteLine(String.Join(",", result));
 
             //Console.WriteLine($"Result = {result}");
             //Console.WriteLine(result.val.ToString() + result.next.val);
-            //if(result.Count > 0)
-            //    Console.WriteLine(String.Join("\r\n", result.Select(o=> String.Join(",",o))));
-            //else
-            //    Console.WriteLine("Result count = 0");
+            if (result.Count > 0)
+                Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+            else
+                Console.WriteLine("Result count = 0");
             //Console.WriteLine(String.Join(",", arr1));
 
             Console.WriteLine("=========Finish!========");

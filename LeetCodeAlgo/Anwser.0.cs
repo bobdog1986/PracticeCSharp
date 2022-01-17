@@ -726,6 +726,185 @@ namespace LeetCodeAlgo
 
             return list.Count > 0 ?String.Join("",list) : String.Empty;
         }
+        ///15. 3Sum
+        ///nums[i] + nums[j] + nums[k] == 0. no duplicate values
+        public IList<IList<int>> ThreeSum(int[] nums)
+        {
+            if(nums==null || nums.Length<=2)
+                return new List<IList<int>>();
+
+            var llist=new List<IList<int>>();
+
+            int[] pos = new int[100001];
+            int[] neg = new int[100001];
+
+            int right = 0;
+            int left = 0;
+
+            foreach(int i in nums)
+            {
+                if (i == 0)
+                {
+                    pos[0]++;
+                }
+                else if (i > 0)
+                {
+                    pos[i]++;
+                    right=Math.Max(right,i);
+                }
+                else
+                {
+                    neg[-i]++;
+                    left = Math.Max(left, -i);
+                }
+            }
+
+            if (pos[0] >= 3)
+            {
+                llist.Add(new List<int> { 0,0,0});
+            }
+
+            if (pos[0] >= 1)
+            {
+                for(int i = 1; i <= right; i++)
+                {
+                    if(pos[i] > 0 && neg[i] > 0)
+                    {
+                        llist.Add(new List<int> { -i, 0, i });
+                    }
+                }
+            }
+
+            for (int i = 1; i <= right; i++)
+            {
+                if (pos[i] == 0)
+                    continue;
+                for (int j = 1; j <= left; j++)
+                {
+                    if (i == j)
+                        continue;
+                    if (neg[j] == 0)
+                        continue;
+
+                    var target = j - i;
+                    if (target > 0)
+                    {
+                        if (pos[target] == 0)
+                            continue;
+
+                        if (target == i && pos[i] <= 1)
+                            continue;
+
+                        //already added
+                        if (target < i)
+                            continue;
+
+                        llist.Add(new List<int> { -j,  i ,target});
+                    }
+                    else if (target < 0)
+                    {
+                        if (neg[-target] == 0)
+                            continue;
+
+                        if (-target == j && neg[j] <= 1)
+                            continue;
+
+                        //already added
+                        if (-target < j)
+                            continue;
+
+                        llist.Add(new List<int> { target, - j, i });
+                    }
+                    else
+                    {
+                        //no zero
+                    }
+                }
+            }
+
+
+            return llist;
+        }
+
+        public void ThreeSum_Recursion(int[] nums, int left, int right, IList<IList<int>> result)
+        {
+            if (left + 1 >= right)
+                return;
+
+            if (result.FirstOrDefault(x => x[0] == nums[left] && x[2] == nums[right]) != null)
+            {
+                ThreeSum_Recursion(nums, left + 1, right, result);
+                ThreeSum_Recursion(nums, left, right - 1, result);
+            }
+
+            if (nums[right-2] + nums[right - 1] + nums[right] < 0)
+                return;
+            if (nums[left] + nums[left + 1] + nums[left+2] > 0)
+                return;
+
+            int sum = nums[left] + nums[right];
+
+            int target  = 0 -sum;
+
+            var idx = BinarySearch(nums, left, right, target);
+            if (idx == -1)
+            {
+
+            }
+            else
+            {
+                List<int> list = new List<int>() { nums[left], nums[idx], nums[right] };
+
+                if (result.FirstOrDefault(l => l[0] == nums[left]
+                                         && l[1] == nums[idx]
+                                         && l[2] == nums[right]) == null)
+                {
+                    result.Add(list);
+                }
+            }
+
+            ThreeSum_Recursion(nums, left + 1, right, result);
+            ThreeSum_Recursion(nums, left, right - 1, result);
+        }
+
+        public int BinarySearch(int[] nums, int left, int right, int target)
+        {
+            if (left== right && nums[left] == target)
+                return left;
+
+            int low = left;
+            int high = right;
+            int i = low + (high - low) / 2;
+
+            while (i >= low && i <= high && (high - low) >= 1)
+            {
+                if (target < nums[low] || target > nums[high])
+                    return -1;
+
+                if (target == nums[low])
+                    return low;
+                if (target == nums[high])
+                    return high;
+
+                if (nums[i] == target)
+                {
+                    return i;
+                }
+                else if (nums[i] > target)
+                {
+                    high = i - 1;
+                    i = low + (high - low) / 2;
+                }
+                else
+                {
+                    low = i + 1;
+
+                    i = low + (high - low) / 2;
+                }
+            }
+
+            return -1;
+        }
 
         ///18. 4Sum
         ///Given an array nums of n integers, return an array of all the unique
