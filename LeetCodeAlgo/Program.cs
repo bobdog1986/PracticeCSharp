@@ -34,12 +34,14 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
-            var root =new TreeNode(3,
-                new TreeNode(20, new TreeNode(15), new TreeNode(7)),
-                new TreeNode(20,new TreeNode(7),new TreeNode(15)));
-
+            //[5,4,6,null,null,3,7]
+            var tree =new TreeNode(0,
+                new TreeNode(-1),null);
+    //        var tree = new TreeNode(3,
+    //new TreeNode(1, new TreeNode(0), new TreeNode(2)),
+    //new TreeNode(5, new TreeNode(4), new TreeNode(6)));
             //var result = anwser.NumDecodings("111111111111111111111111111111111111111111111");
-            var result = anwser.ThreeSum(arr1);
+            var result = anwser.IsValidBST(tree);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();
@@ -47,12 +49,12 @@ namespace LeetCodeAlgo
             Console.WriteLine("***********Output Result*******");
             //Console.WriteLine(String.Join(",", result));
 
-            //Console.WriteLine($"Result = {result}");
+            Console.WriteLine($"Result = {result}");
             //Console.WriteLine(result.val.ToString() + result.next.val);
-            if (result.Count > 0)
-                Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
-            else
-                Console.WriteLine("Result count = 0");
+            //if (result.Count > 0)
+            //    Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+            //else
+            //    Console.WriteLine("Result count = 0");
             //Console.WriteLine(String.Join(",", arr1));
 
             Console.WriteLine("=========Finish!========");

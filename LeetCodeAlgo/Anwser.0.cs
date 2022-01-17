@@ -586,9 +586,9 @@ namespace LeetCodeAlgo
         {
             int max = 0;
 
-            int maxEnd =0;
+            int maxEnd = 0;
             int maxHeight = 0;
-            for(int i=0; i < height.Length-1; i++)
+            for (int i = 0; i < height.Length - 1; i++)
             {
                 if (height[i] == 0)
                     continue;
@@ -596,7 +596,7 @@ namespace LeetCodeAlgo
                 if (height[i] * (height.Length - 1 - i + 1) <= max)
                     continue;
 
-                for(int j=i+1; j < height.Length; j++)
+                for (int j = i + 1; j < height.Length; j++)
                 {
                     if (height[j] == 0)
                         continue;
@@ -689,12 +689,12 @@ namespace LeetCodeAlgo
         /// Output: "fl"
         public string LongestCommonPrefix(string[] strs)
         {
-            if(strs.Length==1)
-                return strs[0].Length==0?string.Empty:strs[0];
+            if (strs.Length == 1)
+                return strs[0].Length == 0 ? string.Empty : strs[0];
 
-            string result= strs[0];
+            string result = strs[0];
 
-            for(int i=1; i<strs.Length; i++)
+            for (int i = 1; i < strs.Length; i++)
             {
                 result = LongestCommonPrefix(result, strs[i]);
                 if (string.IsNullOrEmpty(result))
@@ -704,14 +704,14 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        public string LongestCommonPrefix(string str1,string str2)
+        public string LongestCommonPrefix(string str1, string str2)
         {
             if (string.IsNullOrEmpty(str1) || string.IsNullOrEmpty(str2))
                 return string.Empty;
 
-            List<char> list=new List<char>();
+            List<char> list = new List<char>();
 
-            for(int i=0;i<str1.Length && i < str2.Length; i++)
+            for (int i = 0; i < str1.Length && i < str2.Length; i++)
             {
                 if (str1[i] == str2[i])
                 {
@@ -724,16 +724,16 @@ namespace LeetCodeAlgo
 
             }
 
-            return list.Count > 0 ?String.Join("",list) : String.Empty;
+            return list.Count > 0 ? String.Join("", list) : String.Empty;
         }
         ///15. 3Sum
         ///nums[i] + nums[j] + nums[k] == 0. no duplicate values
         public IList<IList<int>> ThreeSum(int[] nums)
         {
-            if(nums==null || nums.Length<=2)
+            if (nums == null || nums.Length <= 2)
                 return new List<IList<int>>();
 
-            var llist=new List<IList<int>>();
+            var llist = new List<IList<int>>();
 
             int[] pos = new int[100001];
             int[] neg = new int[100001];
@@ -741,7 +741,7 @@ namespace LeetCodeAlgo
             int right = 0;
             int left = 0;
 
-            foreach(int i in nums)
+            foreach (int i in nums)
             {
                 if (i == 0)
                 {
@@ -750,7 +750,7 @@ namespace LeetCodeAlgo
                 else if (i > 0)
                 {
                     pos[i]++;
-                    right=Math.Max(right,i);
+                    right = Math.Max(right, i);
                 }
                 else
                 {
@@ -761,14 +761,14 @@ namespace LeetCodeAlgo
 
             if (pos[0] >= 3)
             {
-                llist.Add(new List<int> { 0,0,0});
+                llist.Add(new List<int> { 0, 0, 0 });
             }
 
             if (pos[0] >= 1)
             {
-                for(int i = 1; i <= right; i++)
+                for (int i = 1; i <= right; i++)
                 {
-                    if(pos[i] > 0 && neg[i] > 0)
+                    if (pos[i] > 0 && neg[i] > 0)
                     {
                         llist.Add(new List<int> { -i, 0, i });
                     }
@@ -799,7 +799,7 @@ namespace LeetCodeAlgo
                         if (target < i)
                             continue;
 
-                        llist.Add(new List<int> { -j,  i ,target});
+                        llist.Add(new List<int> { -j, i, target });
                     }
                     else if (target < 0)
                     {
@@ -813,7 +813,7 @@ namespace LeetCodeAlgo
                         if (-target < j)
                             continue;
 
-                        llist.Add(new List<int> { target, - j, i });
+                        llist.Add(new List<int> { target, -j, i });
                     }
                     else
                     {
@@ -837,14 +837,14 @@ namespace LeetCodeAlgo
                 ThreeSum_Recursion(nums, left, right - 1, result);
             }
 
-            if (nums[right-2] + nums[right - 1] + nums[right] < 0)
+            if (nums[right - 2] + nums[right - 1] + nums[right] < 0)
                 return;
-            if (nums[left] + nums[left + 1] + nums[left+2] > 0)
+            if (nums[left] + nums[left + 1] + nums[left + 2] > 0)
                 return;
 
             int sum = nums[left] + nums[right];
 
-            int target  = 0 -sum;
+            int target = 0 - sum;
 
             var idx = BinarySearch(nums, left, right, target);
             if (idx == -1)
@@ -869,7 +869,7 @@ namespace LeetCodeAlgo
 
         public int BinarySearch(int[] nums, int left, int right, int target)
         {
-            if (left== right && nums[left] == target)
+            if (left == right && nums[left] == target)
                 return left;
 
             int low = left;
@@ -2202,9 +2202,9 @@ namespace LeetCodeAlgo
 
 
             int len = 0;
-            for(int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
-                if(arr[i] == '1' || arr[i] == '2')
+                if (arr[i] == '1' || arr[i] == '2')
                 {
                     len++;
                 }
@@ -2221,7 +2221,7 @@ namespace LeetCodeAlgo
 
         public int NumDecodings_Recursion(char[] arr, int start)
         {
-            if (arr==null || arr.Length == 0)
+            if (arr == null || arr.Length == 0)
                 return 0;
 
             if (start < 0 || start >= arr.Length)
@@ -2232,14 +2232,14 @@ namespace LeetCodeAlgo
             if (arr[i] == '0')
                 return 0;
 
-            if (i == arr.Length-1)
+            if (i == arr.Length - 1)
                 return 1;
 
             if (i == arr.Length - 2)
             {
                 if (arr[i] == '1')
                 {
-                    if (arr[i+1] == '0')
+                    if (arr[i + 1] == '0')
                     {
                         return 1;
                     }
@@ -2250,11 +2250,11 @@ namespace LeetCodeAlgo
                 }
                 else if (arr[i] == '2')
                 {
-                    if (arr[i+1] == '0')
+                    if (arr[i + 1] == '0')
                     {
                         return 1;
                     }
-                    else if (arr[i+1] >= '7' && arr[i + 1] <= '9')
+                    else if (arr[i + 1] >= '7' && arr[i + 1] <= '9')
                     {
                         return 1;
                     }
@@ -2271,9 +2271,9 @@ namespace LeetCodeAlgo
 
             if (arr[i] == '1')
             {
-                if (arr[i+1] == '0')
+                if (arr[i + 1] == '0')
                 {
-                    return NumDecodings_Recursion(arr,i+2);
+                    return NumDecodings_Recursion(arr, i + 2);
                 }
                 else
                 {
@@ -2282,7 +2282,7 @@ namespace LeetCodeAlgo
             }
             else if (arr[i] == '2')
             {
-                if (arr[i+1] >= '7' && arr[i + 1] <= '9')
+                if (arr[i + 1] >= '7' && arr[i + 1] <= '9')
                 {
                     return NumDecodings_Recursion(arr, i + 2);
 
@@ -2431,26 +2431,27 @@ namespace LeetCodeAlgo
             return getFactorial(n, count) / getFactorial(count);
         }
 
-        //98
+        ///98. Validate Binary Search Tree
+        /// left.val<=Node.Val<=right.val
+
         public bool IsValidBST(TreeNode root)
         {
-            if (root == null) return true;
-            if (root.left == null && root.right == null) return true;
-            return IsValidNode(root, (long)int.MaxValue + 1, (long)int.MinValue - 1);
-            //return (root.left != null && ((root.left.val < root.val) && IsValidBST(root.left))) &&
-            //    (root.right != null && ((root.right.val > root.val) && IsValidBST(root.right)));
-
-            //return (root.left == null || ((root.left.val < root.val) && IsValidBST(root.left))) &&
-            //    (root.right == null || ((root.right.val > root.val) && IsValidBST(root.right)));
+            return IsValidBST_Recursion(root);
         }
 
-        public bool IsValidNode(TreeNode node, long maxlimit, long minlimit)
+        public bool IsValidBST_Recursion(TreeNode root, TreeNode left=null, TreeNode right = null)
         {
-            if (node == null) return true;
-            if (node.val >= maxlimit || node.val <= minlimit) return false;
+            if (root == null)
+                return true;
 
-            return IsValidNode(node.left, Math.Min(node.val, maxlimit), minlimit) &&
-                IsValidNode(node.right, maxlimit, Math.Max(node.val, minlimit));
+            if(left!=null && root.val<= left.val)
+                return false;
+
+            if(right!=null && root.val>= right.val)
+                return false ;
+
+            return IsValidBST_Recursion(root.left, left, root) && IsValidBST_Recursion(root.right,root, right);
         }
+
     }
 }
