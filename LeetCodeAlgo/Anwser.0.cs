@@ -1598,7 +1598,42 @@ namespace LeetCodeAlgo
             }
         }
 
-        ///34. Find First and Last Position of Element in Sorted Array
+        ///33. Search in Rotated Sorted Array
+        /// original array [1,2,3,4,5] sorted in ascending order (with distinct values).
+        /// then possibly rotated to eg. [3,4,5,1,2]
+        /// return the index of target if it is in nums or -1
+        public int Search(int[] nums, int target)
+        {
+            if (nums.Length == 1)
+                return nums[0] == target ? 0 : -1;
+
+            int i = 0;
+            while (i <= nums.Length-1)
+            {
+                if(nums[i] == target)
+                    return i;
+
+                if (nums[i] < nums[0])
+                {
+                    //rotated
+                    if (target > nums[0])
+                    {
+                        return -1;
+                    }
+
+                    if (target < nums[i])
+                    {
+                        return -1;
+                    }
+                }
+
+                i++;
+            }
+
+            return -1;
+        }
+
+        /// 34. Find First and Last Position of Element in Sorted Array
         ///[5,7,7,8,8,10], target = 8, return [3,4], if not found return [-1,-1]
         public int[] SearchRange(int[] nums, int target)
         {
