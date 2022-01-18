@@ -484,35 +484,19 @@ namespace LeetCodeAlgo
 
         public int SingleNumber(int[] nums)
         {
-            if (nums.Length == 1)
-                return nums[0];
+            return nums.Aggregate((x, y) => x ^ y);
 
-            int a = nums[0];
+            //if (nums.Length == 1)
+            //    return nums[0];
 
-            for (int i = 1; i < nums.Length; i++)
-            {
-                a ^= nums[i];
-            }
+            //int a = nums[0];
 
-            return a;
-
-            //return nums.Aggregate((x, y) => x ^ y);
-
-            //Dictionary<int, int> dict = new Dictionary<int, int>();
-
-            //foreach(var i in nums)
+            //for (int i = 1; i < nums.Length; i++)
             //{
-            //    if (dict.ContainsKey(i))
-            //    {
-            //        dict.Remove(i);
-            //    }
-            //    else
-            //    {
-            //        dict.Add(i, 1);
-            //    }
+            //    a ^= nums[i];
             //}
 
-            //return dict.ElementAt(0).Key;
+            //return a;
         }
 
         //141. Linked List Cycle
@@ -781,7 +765,35 @@ namespace LeetCodeAlgo
             throw new ArgumentOutOfRangeException();
         }
 
-        //174 not done
+
+
+        ///169. Majority Element
+        ///The majority element is the element that appears more than n/2 times.
+        public int MajorityElement(int[] nums)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+
+            int half = nums.Length % 2 == 1 ? nums.Length/2+1 : nums.Length / 2;
+
+            //int time = 1;
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if (dict.ContainsKey(nums[i]))
+                {
+                    dict[nums[i]]++;
+                }
+                else
+                {
+                    dict.Add(nums[i], 1);
+                }
+            }
+
+            var major=dict.Where(x => x.Value>=half).ToList();
+            if (major == null)
+                return -1;
+            return major[0].Key;
+        }
+        /// 174 not done
         public int CalculateMinimumHP(int[,] dungeon)
         {
             if (dungeon == null || dungeon.Length == 0) return 0;
