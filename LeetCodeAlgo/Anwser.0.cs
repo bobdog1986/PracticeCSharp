@@ -1598,7 +1598,46 @@ namespace LeetCodeAlgo
             }
         }
 
-        //36. Valid Sudoku
+        ///34. Find First and Last Position of Element in Sorted Array
+        ///[5,7,7,8,8,10], target = 8, return [3,4], if not found return [-1,-1]
+        public int[] SearchRange(int[] nums, int target)
+        {
+            int[] result = new int[] { -1, -1 };
+            if(nums.Length == 0)
+                return result;
+
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] < target)
+                {
+                    continue;
+
+                }
+                else if (nums[i] == target)
+                {
+                    if (result[0] == -1)
+                    {
+                        result[0] = i;
+
+                        if (result[1] == -1)
+                        {
+                            result[1] = i;
+                        }
+                    }
+                    else
+                    {
+                        result[1] = i;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return result;
+        }
+        /// 36. Valid Sudoku
 
         public bool IsValidSudoku(char[][] board)
         {

@@ -15,7 +15,7 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var arr1 = new int[] { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1 };
+            var arr1 = new int[] { 5, 7, 7, 8, 8, 10 };
             //var arr2 = new int[] {-76, 3, 66, -32, 64, 2, -19, -8, -5, -93, 80, -5, -76, -78, 64, 2, 16};
             //var arr1 = new string[] { "acc", "aaa", "aaba" };
             var mat1 = new int[][]
@@ -42,7 +42,7 @@ namespace LeetCodeAlgo
             //new TreeNode(5, new TreeNode(4), new TreeNode(6)));
             //var result = anwser.NumDecodings("111111111111111111111111111111111111111111111");
 
-            var result = anwser.CanPlaceFlowers(arr1, 12);
+            var result = anwser.SearchRange(arr1, 7);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
