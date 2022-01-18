@@ -725,6 +725,40 @@ namespace LeetCodeAlgo
             return nums[start];
         }
 
+        ///162. Find Peak Element
+        ///return the index to any of the peaks which greater than its neighbors.
+        ///nums[-1] = nums[n] = int.Min
+        public int FindPeakElement(int[] nums)
+        {
+            if(nums.Length==1)
+                return 0;
+
+            bool left, right;
+            for(int i = 0; i < nums.Length; i++)
+            {
+                left= i == 0 || nums[i] > nums[i - 1];
+                right = i == nums.Length - 1 || nums[i] > nums[i + 1];
+                if (left&&right)
+                {
+                    return i;
+                }
+                //else if(left)
+                //{
+                //    ;
+                //}
+                else if (right)
+                {
+                    i++;
+                }
+                //else
+                //{
+                //    i++;
+                //}
+            }
+
+            return 0;
+        }
+
         public int[] TwoSumII(int[] numbers, int target)
         {
             for (int i = 0; i < numbers.Length - 1; i++)
