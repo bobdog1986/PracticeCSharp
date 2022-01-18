@@ -14,7 +14,7 @@ namespace LeetCodeAlgo
             Array.Sort(nums);
             int count = 0;
             int i, j, k;
-            for (i = 0; i < nums.Length-2; i++)
+            for (i = 0; i < nums.Length - 2; i++)
             {
                 for (j = i + 1; j < nums.Length - 1; j++)
                 {
@@ -34,7 +34,7 @@ namespace LeetCodeAlgo
             return count;
         }
 
-        public bool IsTriangle(int num1,int num2,int num3)
+        public bool IsTriangle(int num1, int num2, int num3)
         {
             return num3 < num1 + num2;
         }
@@ -73,7 +73,7 @@ namespace LeetCodeAlgo
 
         public bool FindTarget(TreeNode root, int k)
         {
-            return FindTarget(root,k,new List<int>());
+            return FindTarget(root, k, new List<int>());
         }
 
         public bool FindTarget(TreeNode root, int k, IList<int> list)
@@ -97,10 +97,10 @@ namespace LeetCodeAlgo
             int col = grid[0].Length;
 
             List<List<int>> list = new List<List<int>>();
-            for(int i = 0;i < row; i++)
+            for (int i = 0; i < row; i++)
             {
                 List<int> list2 = new List<int>();
-                for(int j = 0;j < col; j++)
+                for (int j = 0; j < col; j++)
                 {
                     list2.Add(0);
                 }
@@ -108,21 +108,21 @@ namespace LeetCodeAlgo
             }
 
             int max = 0;
-            for(int i = 0; i < row; i++)
+            for (int i = 0; i < row; i++)
             {
-                for(int j = 0; j < col; j++)
+                for (int j = 0; j < col; j++)
                 {
-                    if(grid[i][j] == 1 && list[i][j]==0)
+                    if (grid[i][j] == 1 && list[i][j] == 0)
                     {
                         Queue<int[]> queue = new Queue<int[]>();
 
                         list[i][j] = 1;
                         int count = 1;
-                        queue.Enqueue(new int[] {i,j});
+                        queue.Enqueue(new int[] { i, j });
 
-                        while(queue.Count > 0)
+                        while (queue.Count > 0)
                         {
-                            var point=queue.Dequeue();
+                            var point = queue.Dequeue();
 
                             if ((point[0] > 0) && grid[point[0] - 1][point[1]] == 1 && list[point[0] - 1][point[1]] == 0)
                             {
@@ -136,36 +136,31 @@ namespace LeetCodeAlgo
                                 list[point[0] + 1][point[1]] = 1;
                                 queue.Enqueue(new int[] { point[0] + 1, point[1] });
                                 count++;
-
                             }
 
-                            if ((point[1] > 0) && (grid[point[0]][point[1] - 1] == 1) && list[point[0]][point[1]-1] == 0)
+                            if ((point[1] > 0) && (grid[point[0]][point[1] - 1] == 1) && list[point[0]][point[1] - 1] == 0)
                             {
                                 list[point[0]][point[1] - 1] = 1;
                                 queue.Enqueue(new int[] { point[0], point[1] - 1 });
                                 count++;
-
                             }
 
-                            if ((point[1] < col - 1) && (grid[point[0]][point[1] + 1] == 1) && list[point[0]][point[1]+1] == 0)
+                            if ((point[1] < col - 1) && (grid[point[0]][point[1] + 1] == 1) && list[point[0]][point[1] + 1] == 0)
                             {
                                 list[point[0]][point[1] + 1] = 1;
                                 queue.Enqueue(new int[] { point[0], point[1] + 1 });
                                 count++;
-
                             }
-
                         }
 
                         max = Math.Max(max, count);
                     }
-
-
                 }
             }
 
             return max;
         }
+
         //697
         public int FindShortestSubArray(int[] nums)
         {
@@ -183,26 +178,28 @@ namespace LeetCodeAlgo
             }
 
             int frequency = dictionary.Values.Max();
-            var candidate = dictionary.Where(o => o.Value == frequency).Select(o=>o.Key);
+            var candidate = dictionary.Where(o => o.Value == frequency).Select(o => o.Key);
             int minLength = nums.Length;
-            foreach(var i in candidate)
+            foreach (var i in candidate)
             {
-                int length = GetLastIndex(nums, i)- GetFirstIndex(nums, i)+1;
+                int length = GetLastIndex(nums, i) - GetFirstIndex(nums, i) + 1;
                 minLength = length < minLength ? length : minLength;
             }
             return minLength;
         }
-        public int GetFirstIndex(int[] nums,int key)
+
+        public int GetFirstIndex(int[] nums, int key)
         {
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 if (nums[i] == key) return i;
             }
             throw new ArgumentOutOfRangeException();
         }
+
         public int GetLastIndex(int[] nums, int key)
         {
-            for (int i = nums.Length-1; i >=0; i--)
+            for (int i = nums.Length - 1; i >= 0; i--)
             {
                 if (nums[i] == key) return i;
             }

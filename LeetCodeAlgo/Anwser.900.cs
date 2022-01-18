@@ -10,7 +10,6 @@ namespace LeetCodeAlgo
     {
         //918. Maximum Sum Circular Subarray
 
-
         //918 failed, time exceed
         //public int MaxSubarraySumCircular(int[] nums)
         //{
@@ -62,17 +61,16 @@ namespace LeetCodeAlgo
         /// 931. Minimum Falling Path Sum
         public int MinFallingPathSum(int[][] matrix)
         {
-
-            var len=matrix.Length;
-            if(len==1)
+            var len = matrix.Length;
+            if (len == 1)
                 return matrix[0][0];
 
-            int[] dp=new int[len];
+            int[] dp = new int[len];
 
-            for(int i=0;i<len;i++)
-                dp[i]=matrix[0][i];
+            for (int i = 0; i < len; i++)
+                dp[i] = matrix[0][i];
 
-            for (int i =1; i < len; i++)
+            for (int i = 1; i < len; i++)
             {
                 int[] dp2 = new int[len];
                 for (int k = 0; k < len; k++)
@@ -85,38 +83,34 @@ namespace LeetCodeAlgo
                     if (j > 0)
                         a = Math.Min(a, dp2[j - 1] + matrix[i][j]);
 
-                    if(j<len-1)
+                    if (j < len - 1)
                         a = Math.Min(a, dp2[j + 1] + matrix[i][j]);
 
-                    dp[j]= a;
+                    dp[j] = a;
                 }
             }
 
             return dp.Min();
-
         }
-
 
         //977. Squares of a Sorted Array
 
         public int[] SortedSquares(int[] nums)
         {
-
-            var list1=new List<int>();
-            var list2=new List<int>();
+            var list1 = new List<int>();
+            var list2 = new List<int>();
 
             var list3 = new List<int>();
 
-
             for (int i = 0; i < nums.Length; i++)
             {
-                if(nums[i] == 0)
+                if (nums[i] == 0)
                 {
                     list3.Add(0);
                 }
                 else
                 {
-                    if (nums[i]>0)
+                    if (nums[i] > 0)
                     {
                         list2.Add(nums[i]);
                     }
@@ -159,7 +153,6 @@ namespace LeetCodeAlgo
             }
 
             return list3.ToArray();
-
         }
 
         //994. Rotting Oranges
@@ -167,15 +160,14 @@ namespace LeetCodeAlgo
         public int OrangesRotting(int[][] grid)
         {
             int rowLen = grid.Length;
-            int colLen=grid[0].Length;
-
+            int colLen = grid[0].Length;
 
             int totalCount = rowLen * colLen;
 
             int rottenCount = 0;
             int emptyCount = 0;
 
-            bool isFirstLoop=true;
+            bool isFirstLoop = true;
 
             Queue<int[]> queue = new Queue<int[]>();
 
@@ -187,7 +179,7 @@ namespace LeetCodeAlgo
                     {
                         emptyCount++;
                     }
-                    else if(grid[i][j]== 1)
+                    else if (grid[i][j] == 1)
                     {
                         queue.Enqueue(new int[] { i, j });
                     }
@@ -205,10 +197,10 @@ namespace LeetCodeAlgo
 
             int loop = 0;
 
-            int lastCount =-1;
+            int lastCount = -1;
             Queue<int[]> q2;
 
-            while (lastCount != queue.Count && queue.Count>0)
+            while (lastCount != queue.Count && queue.Count > 0)
             {
                 lastCount = queue.Count;
                 List<int[]> list = new List<int[]>();
@@ -217,7 +209,7 @@ namespace LeetCodeAlgo
                 {
                     var x = queue.Dequeue();
                     if ((x[0] > 0 && grid[x[0] - 1][x[1]] == 2)
-                            ||(x[0] < rowLen - 1 && grid[x[0] + 1][x[1]] == 2)
+                            || (x[0] < rowLen - 1 && grid[x[0] + 1][x[1]] == 2)
                             || (x[1] > 0 && grid[x[0]][x[1] - 1] == 2)
                             || (x[1] < colLen - 1 && grid[x[0]][x[1] + 1] == 2))
                     {
@@ -230,7 +222,6 @@ namespace LeetCodeAlgo
                     }
                 }
 
-
                 if (list.Count == 0)
                 {
                     return -1;
@@ -238,18 +229,16 @@ namespace LeetCodeAlgo
                 else
                 {
                     queue = q2;
-                    foreach(var i in list)
+                    foreach (var i in list)
                     {
                         grid[i[0]][i[1]] = 2;
                     }
                 }
 
                 loop++;
-
             }
 
-
-            return queue.Count == 0?loop:-1;
+            return queue.Count == 0 ? loop : -1;
         }
     }
 }

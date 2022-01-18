@@ -49,7 +49,7 @@ namespace LeetCodeAlgo
 
         public int rev10(int n)
         {
-            if (n <10) return n;
+            if (n < 10) return n;
 
             int result = 0;
             int m = 10;
@@ -58,7 +58,7 @@ namespace LeetCodeAlgo
                 result = result * 10;
 
                 var a = n % m;
-                result +=  a;
+                result += a;
                 n = n / m;
             }
 

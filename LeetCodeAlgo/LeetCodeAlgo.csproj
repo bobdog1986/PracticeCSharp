@@ -43,8 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Anwser.800.cs" />
-    <Compile Include="Anwser.Spec.BTree.cs" />
-    <Compile Include="Anwser.K1100.cs" />
+    <Compile Include="Anwser.BTree.cs" />
+    <Compile Include="Anwser.A1100.cs" />
     <Compile Include="Anwser.500.cs" />
     <Compile Include="Anwser.900.cs" />
     <Compile Include="Anwser.0.cs" />
@@ -53,11 +53,12 @@
     <Compile Include="Anwser.600.cs" />
     <Compile Include="Anwser.300.cs" />
     <Compile Include="Anwser.200.cs" />
-    <Compile Include="Anwser.K1400.cs" />
-    <Compile Include="Anwser.K1500.cs" />
-    <Compile Include="Anwser.K1800.cs" />
-    <Compile Include="Anwser.K2000.cs" />
-    <Compile Include="Anwser.K2100.cs" />
+    <Compile Include="Anwser.A1400.cs" />
+    <Compile Include="Anwser.A1500.cs" />
+    <Compile Include="Anwser.A1800.cs" />
+    <Compile Include="Anwser.A2000.cs" />
+    <Compile Include="Anwser.A2100.cs" />
+    <Compile Include="Anwser.Helper.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="MyQueue.cs" />
     <Compile Include="Program.cs" />

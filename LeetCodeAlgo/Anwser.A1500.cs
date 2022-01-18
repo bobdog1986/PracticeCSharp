@@ -16,20 +16,20 @@ namespace LeetCodeAlgo
         ///1 <= nums[i] <= 100
         public int NumIdenticalPairs(int[] nums)
         {
-            if(nums == null || nums.Length == 0)
+            if (nums == null || nums.Length == 0)
                 return 0;
 
             int result = 0;
 
-            int[] arr = new int[100+1];
-            foreach(var i in nums)
+            int[] arr = new int[100 + 1];
+            foreach (var i in nums)
                 arr[i]++;
 
-            foreach(var i in arr)
+            foreach (var i in arr)
             {
                 if (i > 1)
                 {
-                    result+= i*(i-1)/2;
+                    result += i * (i - 1) / 2;
                 }
             }
 

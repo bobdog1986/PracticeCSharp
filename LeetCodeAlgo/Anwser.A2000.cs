@@ -12,22 +12,22 @@ namespace LeetCodeAlgo
         public long InterchangeableRectangles(int[][] rectangles)
         {
             long sum = 0;
-            Dictionary<string,long> pairs = new Dictionary<string, long>();
-            foreach(var rect in rectangles)
+            Dictionary<string, long> pairs = new Dictionary<string, long>();
+            foreach (var rect in rectangles)
             {
-                var gcb = Gcb(rect[0],rect[1]);
+                var gcb = Gcb(rect[0], rect[1]);
                 var key = rect[0] / gcb + ":" + rect[1] / gcb;
-                if(pairs.ContainsKey(key))
+                if (pairs.ContainsKey(key))
                     pairs[key]++;
                 else
                     pairs.Add(key, 1);
             }
 
-            foreach(var pair in pairs)
+            foreach (var pair in pairs)
             {
-                if(pair.Value > 1)
+                if (pair.Value > 1)
                 {
-                    sum+= pair.Value*(pair.Value-1)/2;
+                    sum += pair.Value * (pair.Value - 1) / 2;
                 }
             }
             return sum;

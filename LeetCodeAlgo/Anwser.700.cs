@@ -13,15 +13,15 @@ namespace LeetCodeAlgo
         ///If such a node does not exist, return null.
         public TreeNode SearchBST(TreeNode root, int val)
         {
-            if(root == null)
+            if (root == null)
                 return null;
 
-            while(root != null)
+            while (root != null)
             {
-                if(val==root.val)
+                if (val == root.val)
                     return root;
 
-                root = val > root.val?root.right:root.left;
+                root = val > root.val ? root.right : root.left;
             }
 
             return root;
@@ -43,16 +43,16 @@ namespace LeetCodeAlgo
 
             while (node != null)
             {
-                if(val > node.val)
+                if (val > node.val)
                 {
-                    if(node.right == null)
+                    if (node.right == null)
                     {
                         node.right = add;
                         break;
                     }
                     else
                     {
-                        node=node.right;
+                        node = node.right;
                     }
                 }
                 else
@@ -67,11 +67,11 @@ namespace LeetCodeAlgo
                         node = node.left;
                     }
                 }
-
             }
 
             return root;
         }
+
         /// 704. Binary Search  O(log n)
         ///Given an array of integers nums which is sorted in ascending order,
         ///and an integer target, write a function to search target in nums.
@@ -79,20 +79,18 @@ namespace LeetCodeAlgo
         ///All the integers in nums are unique.
         public int Search_704(int[] nums, int target)
         {
-            if(nums == null || nums.Length == 0) 
+            if (nums == null || nums.Length == 0)
                 return 0;
             if (nums.Length == 1 && nums[0] == target)
                 return 0;
 
-
-            int i=nums.Length/2;
+            int i = nums.Length / 2;
             int low = 0;
             int high = nums.Length - 1;
 
             int result = -1;
 
-
-            while(i>=low && i <= high && (high-low)>=1)
+            while (i >= low && i <= high && (high - low) >= 1)
             {
                 if (target < nums[low] || target > nums[high])
                     return -1;
@@ -102,12 +100,11 @@ namespace LeetCodeAlgo
                 if (target == nums[high])
                     return high;
 
-
                 if (nums[i] == target)
                 {
                     return i;
                 }
-                else if(nums[i] > target)
+                else if (nums[i] > target)
                 {
                     high = i - 1;
                     i = low + (high - low) / 2;
@@ -116,7 +113,7 @@ namespace LeetCodeAlgo
                 {
                     low = i + 1;
 
-                    i= low + (high - low) / 2;
+                    i = low + (high - low) / 2;
                 }
             }
 
@@ -170,7 +167,7 @@ namespace LeetCodeAlgo
 
         public int[][] FloodFill(int[][] image, int sr, int sc, int newColor)
         {
-            int color=image[sr][sc];
+            int color = image[sr][sc];
             if (color == newColor)
                 return image;
             int row = image.Length;
@@ -178,32 +175,32 @@ namespace LeetCodeAlgo
 
             Queue<int[]> queue = new Queue<int[]>();
             queue.Enqueue(new int[] { sr, sc });
-            image[sr][sc]=newColor;
+            image[sr][sc] = newColor;
             while (queue.Count > 0)
             {
-                var point=queue.Dequeue();
-                if ((point[0] > 0)  && (image[point[0] - 1][point[1]] == color))
+                var point = queue.Dequeue();
+                if ((point[0] > 0) && (image[point[0] - 1][point[1]] == color))
                 {
                     image[point[0] - 1][point[1]] = newColor;
-                    queue.Enqueue(new int[] { point[0] - 1 , point[1] });
+                    queue.Enqueue(new int[] { point[0] - 1, point[1] });
                 }
 
-                if ((point[0] < row-1) && (image[point[0] + 1][point[1]] == color))
+                if ((point[0] < row - 1) && (image[point[0] + 1][point[1]] == color))
                 {
                     image[point[0] + 1][point[1]] = newColor;
                     queue.Enqueue(new int[] { point[0] + 1, point[1] });
                 }
 
-                if ((point[1] > 0 ) && (image[point[0]][point[1]-1] == color))
+                if ((point[1] > 0) && (image[point[0]][point[1] - 1] == color))
                 {
                     image[point[0]][point[1] - 1] = newColor;
-                    queue.Enqueue(new int[] { point[0], point[1]-1 });
+                    queue.Enqueue(new int[] { point[0], point[1] - 1 });
                 }
 
-                if ((point[1] < col - 1) && (image[point[0]][point[1]+1] == color))
+                if ((point[1] < col - 1) && (image[point[0]][point[1] + 1] == color))
                 {
                     image[point[0]][point[1] + 1] = newColor;
-                    queue.Enqueue(new int[] { point[0], point[1] + 1});
+                    queue.Enqueue(new int[] { point[0], point[1] + 1 });
                 }
             }
 
@@ -222,7 +219,7 @@ namespace LeetCodeAlgo
             {
                 arr[nums[i]]++;
                 max = Math.Max(max, nums[i]);
-                min= Math.Min(min, nums[i]);
+                min = Math.Min(min, nums[i]);
             }
 
             if (max == min)
@@ -238,7 +235,7 @@ namespace LeetCodeAlgo
             j += 2;
             while (j <= max)
             {
-                dp[j]= Math.Max(dp[j-1], dp[j-2]+arr[j] * (j));
+                dp[j] = Math.Max(dp[j - 1], dp[j - 2] + arr[j] * (j));
                 j++;
             }
             return dp[max];
@@ -323,46 +320,44 @@ namespace LeetCodeAlgo
         {
             var result = new List<string>();
 
-            var carrIndexs=new List<int>();
+            var carrIndexs = new List<int>();
 
-            var carr= s.ToCharArray();
-            for(int i=0; i<s.Length; i++)
+            var carr = s.ToCharArray();
+            for (int i = 0; i < s.Length; i++)
             {
-                if(char.IsLetter(carr[i]))
+                if (char.IsLetter(carr[i]))
                 {
                     carrIndexs.Add(i);
                 }
             }
 
-            if(carrIndexs.Count == 0)
+            if (carrIndexs.Count == 0)
             {
                 result.Add(s);
             }
             else
             {
-                IList<IList<int>> combines= new List<IList<int>>();
+                IList<IList<int>> combines = new List<IList<int>>();
                 combines.Add(new List<int>());
-                for(int i = 1; i <= carrIndexs.Count; i++)
+                for (int i = 1; i <= carrIndexs.Count; i++)
                 {
-                    var comb2 = Combine(carrIndexs.Count,i);
-                    foreach(var j in comb2)
+                    var comb2 = Combine(carrIndexs.Count, i);
+                    foreach (var j in comb2)
                         combines.Add(j);
                 }
 
-                foreach(var c in combines)
+                foreach (var c in combines)
                 {
                     var arr = s.ToCharArray();
-                    for(int i=0;i< carrIndexs.Count;i++ )
+                    for (int i = 0; i < carrIndexs.Count; i++)
                     {
-                        if (c.Contains(i+1))
+                        if (c.Contains(i + 1))
                         {
                             arr[carrIndexs[i]] = char.ToUpper(arr[carrIndexs[i]]);
-
                         }
                         else
                         {
                             arr[carrIndexs[i]] = char.ToLower(arr[carrIndexs[i]]);
-
                         }
                     }
 

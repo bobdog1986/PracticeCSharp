@@ -4,19 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo
+﻿namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
         //1137. N-th Tribonacci Number
         public int Tribonacci(int n)
         {
-            if(n == 0)
+            if (n == 0)
             {
                 return 0;
             }
 
-            if(n == 1)
+            if (n == 1)
             {
                 return 1;
             }

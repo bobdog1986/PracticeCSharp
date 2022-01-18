@@ -19,7 +19,7 @@ namespace LeetCodeAlgo
 
         public int MinJumps(int[] arr)
         {
-            if(arr == null || arr.Length<=1)
+            if (arr == null || arr.Length <= 1)
                 return 0;
 
             if (arr.Length == 2 || arr[0] == arr[arr.Length - 1])
@@ -32,7 +32,7 @@ namespace LeetCodeAlgo
 
             Dictionary<int, List<int>> valueIndexDict = new Dictionary<int, List<int>>();
 
-            for (int i=0;i<arr.Length;i++)
+            for (int i = 0; i < arr.Length; i++)
             {
                 if (valueIndexDict.ContainsKey(arr[i]))
                 {
@@ -51,7 +51,7 @@ namespace LeetCodeAlgo
 
             int specIndex = arr.Length - 1;
 
-            for(int i=arr.Length-1;i>=0; i--)
+            for (int i = arr.Length - 1; i >= 0; i--)
             {
                 if (valueIndexDict[arr[i]].Count > 1)
                 {
@@ -76,11 +76,11 @@ namespace LeetCodeAlgo
 
             foreach (var pair in valueIndexDict)
             {
-                if(pair.Value.Count > 1)
+                if (pair.Value.Count > 1)
                 {
-                    var list=new List<int>(pair.Value);
+                    var list = new List<int>(pair.Value);
 
-                    for(int i = 1; i < list.Count-1; i++)
+                    for (int i = 1; i < list.Count - 1; i++)
                     {
                         if (arr[list[i]] == arr[list[i] - 1] && arr[list[i]] == arr[list[i] + 1])
                         {
@@ -91,18 +91,17 @@ namespace LeetCodeAlgo
                 }
             }
 
-
             //List<int> visitValueList = new List<int>() {  };
 
-            List<List<int>> allPath=new List<List<int>>();
+            List<List<int>> allPath = new List<List<int>>();
 
-            allPath.Add(new List<int>() { 0});
+            allPath.Add(new List<int>() { 0 });
 
             while (true)
             {
                 var list = new List<int>();
 
-                var lastList=allPath.Last();
+                var lastList = allPath.Last();
 
                 foreach (var i in lastList)
                 {
@@ -125,7 +124,6 @@ namespace LeetCodeAlgo
                                 stepToSpecIndex++;
                             }
                             return allPath.Count - 1 + stepToSpecIndex;
-
                         }
 
                         if (i > 0 && arr[i - 1] == arr[specIndex])
@@ -135,14 +133,12 @@ namespace LeetCodeAlgo
                                 stepToSpecIndex++;
 
                             return allPath.Count - 1 + stepToSpecIndex;
-
                         }
                     }
 
-
                     foreach (var j in valueIndexDict[arr[i]])
                     {
-                        if (!visitIndexList.Contains(j) && i!=j)
+                        if (!visitIndexList.Contains(j) && i != j)
                         {
                             list.Add(j);
 
@@ -180,8 +176,7 @@ namespace LeetCodeAlgo
                     break;
             }
 
-            return allPath.Count -1;
-
+            return allPath.Count - 1;
         }
 
         ///

@@ -11,17 +11,16 @@ namespace LeetCodeAlgo
         //509. Fibonacci Number
         public int Fib(int n)
         {
-            if(n == 0)
+            if (n == 0)
             {
                 return 0;
             }
-            if(n == 1)
+            if (n == 1)
             {
                 return 1;
-
             }
 
-            return Fib(n - 1) + Fib(n-2);
+            return Fib(n - 1) + Fib(n - 2);
         }
 
         //542. 01 Matrix
@@ -31,7 +30,7 @@ namespace LeetCodeAlgo
             int colLen = mat[0].Length;
 
             int[][] result = new int[rowLen][];
-            for (int i=0; i<rowLen;i++)
+            for (int i = 0; i < rowLen; i++)
             {
                 result[i] = new int[colLen];
             }
@@ -39,14 +38,14 @@ namespace LeetCodeAlgo
             //init every cell as max value, assuming the only 0 at furthest corner cell
             for (int i = 0; i < rowLen; i++)
             {
-                for(int j=0; j<colLen; j++)
+                for (int j = 0; j < colLen; j++)
                 {
                     result[i][j] = Math.Max(i, rowLen - i - 1) + Math.Max(j, colLen - j - 1);
                 }
             }
 
             //left-top to right-bottom
-            int MAX_DISTANCE = (rowLen -1) +(colLen - 1);
+            int MAX_DISTANCE = (rowLen - 1) + (colLen - 1);
 
             //dp value
             int distance;
@@ -66,7 +65,7 @@ namespace LeetCodeAlgo
                     }
                     else
                     {
-                        if(distance != MAX_DISTANCE)
+                        if (distance != MAX_DISTANCE)
                         {
                             distance++;
                         }
@@ -93,7 +92,7 @@ namespace LeetCodeAlgo
             }
 
             //then loop cols
-            for(int c = 0; c < colLen; c++)
+            for (int c = 0; c < colLen; c++)
             {
                 if (rowLen == 1)
                     break;
@@ -116,7 +115,7 @@ namespace LeetCodeAlgo
                 }
 
                 distance = MAX_DISTANCE;
-                for (int r = rowLen -1; r >= 0; r--)
+                for (int r = rowLen - 1; r >= 0; r--)
                 {
                     if (mat[r][c] == 0)
                     {
@@ -136,32 +135,29 @@ namespace LeetCodeAlgo
             if (rowLen == 1 || colLen == 1)
                 return result;
 
-            //every cell value is min of itself and all adjacents(left,right,top,bottom) 
+            //every cell value is min of itself and all adjacents(left,right,top,bottom)
             for (int i = 0; i < rowLen; i++)
             {
                 for (int j = 0; j < colLen; j++)
                 {
                     if (j > 0)
                     {
-                        result[i][j] = Math.Min(result[i][j], result[i][j - 1]+1);
+                        result[i][j] = Math.Min(result[i][j], result[i][j - 1] + 1);
                     }
 
                     if (j < colLen - 1)
                     {
                         result[i][j] = Math.Min(result[i][j], result[i][j + 1] + 1);
-
                     }
 
                     if (i > 0)
                     {
-                        result[i][j] = Math.Min(result[i][j], result[i-1][j] + 1);
-
+                        result[i][j] = Math.Min(result[i][j], result[i - 1][j] + 1);
                     }
 
                     if (i < rowLen - 1)
                     {
                         result[i][j] = Math.Min(result[i][j], result[i + 1][j] + 1);
-
                     }
                 }
             }
@@ -171,7 +167,7 @@ namespace LeetCodeAlgo
 
         public int[] UpdateMatrixRow(int[] data)
         {
-            if(data==null)
+            if (data == null)
                 return null;
             if (data.Length == 0)
                 return data;
@@ -179,9 +175,9 @@ namespace LeetCodeAlgo
             int[] result = new int[data.Length];
 
             int left = 0;
-            for(int i=0; i < data.Length; i++)
+            for (int i = 0; i < data.Length; i++)
             {
-                if(data[i] == 0)
+                if (data[i] == 0)
                 {
                     left = 0;
                 }
@@ -193,7 +189,7 @@ namespace LeetCodeAlgo
             }
 
             int right = 0;
-            for (int i = data.Length-1; i >=0; i--)
+            for (int i = data.Length - 1; i >= 0; i--)
             {
                 if (data[i] == 0)
                 {
@@ -203,45 +199,45 @@ namespace LeetCodeAlgo
                 {
                     right++;
                 }
-                result[i] =Math.Min(result[i],  right);
+                result[i] = Math.Min(result[i], right);
             }
 
             return result;
         }
 
-
         //557. Reverse Words in a String III
         public string ReverseWords(string s)
         {
-            var arr=s.Split(' ');
-            if(arr.Length == 0)
+            var arr = s.Split(' ');
+            if (arr.Length == 0)
                 return s;
 
-            for(int i =0;i<arr.Length;i++)
+            for (int i = 0; i < arr.Length; i++)
             {
-                var carr= arr[i].ToCharArray();
+                var carr = arr[i].ToCharArray();
                 ReverseString(carr);
-                arr[i] = String.Join("",carr);
+                arr[i] = String.Join("", carr);
             }
 
             return String.Join(" ", arr);
         }
+
         //566. Reshape the Matrix
         public int[][] MatrixReshape(int[][] mat, int r, int c)
         {
-            int row=mat.Length;
-            int col=mat[0].Length;
+            int row = mat.Length;
+            int col = mat[0].Length;
 
             if (row * col != r * c)
                 return mat;
 
-            List<int[]> list=new List<int[]>();
+            List<int[]> list = new List<int[]>();
             for (int i = 0; i < r; i++)
             {
-                var list2=new List<int>();
+                var list2 = new List<int>();
                 for (int j = 0; j < c; j++)
                 {
-                    int index = i * c + j ;
+                    int index = i * c + j;
                     list2.Add(mat[index / col][index % col]);
                 }
                 list.Add(list2.ToArray());
@@ -250,12 +246,11 @@ namespace LeetCodeAlgo
             return list.ToArray();
         }
 
-
         //567. Permutation in String
 
         public bool CheckInclusion(string s1, string s2)
         {
-            if(s1.Length==1)
+            if (s1.Length == 1)
                 return s2.Contains(s1);
 
             int[] arr1 = new int[26];
@@ -265,9 +260,9 @@ namespace LeetCodeAlgo
                 arr1[c - 'a']++;
             }
 
-            for (int i = 0; i <= s2.Length-s1.Length; i++)
+            for (int i = 0; i <= s2.Length - s1.Length; i++)
             {
-                if(arr1[s2[i]-'a']!=0)
+                if (arr1[s2[i] - 'a'] != 0)
                 {
                     int[] arr2 = new int[26];
 
@@ -281,13 +276,12 @@ namespace LeetCodeAlgo
                     if (IsTwoArrayEqual(arr1, arr2))
                         return true;
                 }
-
             }
 
             return false;
         }
 
-        public bool IsTwoArrayEqual(int[] arr1,int[] arr2)
+        public bool IsTwoArrayEqual(int[] arr1, int[] arr2)
         {
             if (arr2.Length != arr1.Length)
                 return false;
@@ -295,7 +289,7 @@ namespace LeetCodeAlgo
             int i = 0;
             while (i < arr1.Length)
             {
-                if(arr1[i] != arr2[i])
+                if (arr1[i] != arr2[i])
                     return false;
                 i++;
             }

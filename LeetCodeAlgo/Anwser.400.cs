@@ -16,7 +16,7 @@ namespace LeetCodeAlgo
             char pre = chars[0];
             int occured = 1;
             char current;
-            for(int i = 1; i < chars.Length; i++)
+            for (int i = 1; i < chars.Length; i++)
             {
                 current = chars[i];
                 if (current == pre)
@@ -53,13 +53,13 @@ namespace LeetCodeAlgo
         //492
         public int[] ConstructRectangle(int area)
         {
-            int[] result = new int[2] {area,1 };
+            int[] result = new int[2] { area, 1 };
             int min = (int)Math.Sqrt(area);
-            for(int len = min; len < area; len++)
+            for (int len = min; len < area; len++)
             {
                 if (area % len == 0)
                 {
-                    if(len>= area / len)
+                    if (len >= area / len)
                     {
                         return new int[2] { len, area / len };
                     }
@@ -75,10 +75,10 @@ namespace LeetCodeAlgo
             Array.Sort(timeSeries);
 
             int begin = timeSeries[0];
-            int expired = begin+duration;
+            int expired = begin + duration;
 
             int total = 0;
-            for(int i = 1; i < timeSeries.Length; i++)
+            for (int i = 1; i < timeSeries.Length; i++)
             {
                 if (timeSeries[i] < expired)
                 {
@@ -93,7 +93,7 @@ namespace LeetCodeAlgo
                 }
             }
 
-            total+= expired - begin;
+            total += expired - begin;
             return total;
         }
     }

@@ -10,12 +10,10 @@ namespace LeetCodeAlgo
     {
         public MyQueue()
         {
-
         }
 
-        private Stack<int> q1=new Stack<int>();
-        private Stack<int> q2=new Stack<int>();
-
+        private Stack<int> q1 = new Stack<int>();
+        private Stack<int> q2 = new Stack<int>();
 
         public void Push(int x)
         {
@@ -53,19 +51,18 @@ namespace LeetCodeAlgo
                 b.Push(a.Pop());
             }
 
-            var result= b.Peek();
+            var result = b.Peek();
 
-            while(b.Count > 0)
+            while (b.Count > 0)
             {
                 a.Push(b.Pop());
-
             }
             return result;
         }
 
         public bool Empty()
         {
-            return q1.Count == 0 && q2.Count==0;
+            return q1.Count == 0 && q2.Count == 0;
         }
     }
 }

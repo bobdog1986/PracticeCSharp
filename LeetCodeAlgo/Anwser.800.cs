@@ -14,9 +14,9 @@ namespace LeetCodeAlgo
             int max = 1;
 
             int len = 0;
-            for(int i = 0; i < seats.Length; i++)
+            for (int i = 0; i < seats.Length; i++)
             {
-                if(seats[i] == 0)
+                if (seats[i] == 0)
                 {
                     len++;
                 }
@@ -31,7 +31,7 @@ namespace LeetCodeAlgo
                         }
                         else
                         {
-                            max = Math.Max(max, (len+1)/2);
+                            max = Math.Max(max, (len + 1) / 2);
                         }
 
                         len = 0;
@@ -40,22 +40,22 @@ namespace LeetCodeAlgo
             }
 
             //continous seats to last-index
-            if (len>0)
+            if (len > 0)
                 max = Math.Max(max, len);
             return max;
-
         }
+
         /// 876. Middle of the Linked List
         public ListNode MiddleNode(ListNode head)
         {
-            if(head == null||head.next == null)
+            if (head == null || head.next == null)
                 return head;
 
             var next = head.next;
 
             int count = 1;
             //List<int> nodes = new List<int>();
-            while(next != null)
+            while (next != null)
             {
                 count++;
                 //nodes.Add(head.val);

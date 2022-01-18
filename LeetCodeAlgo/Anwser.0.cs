@@ -12,9 +12,9 @@ namespace LeetCodeAlgo
     public partial class Anwser
     {
         /// 1. Two Sum
-        /// Given an array of integers nums and an integer target,
         /// return indices of the two numbers such that they add up to target.
         /// each input would have exactly one solution, and you may not use the same element twice.
+        /// 2 <= nums.length <= 10^4, -10^9 <= nums[i] <= 10^9, -10^9 <= target <= 10^9
         public int[] TwoSum(int[] nums, int target)
         {
             for (int i = 0; i < nums.Length - 1; i++)
@@ -142,7 +142,7 @@ namespace LeetCodeAlgo
                 else
                 {
                     len++;
-                    list.Add((char)c);
+                    list.Add(c);
                 }
             }
 
@@ -581,7 +581,6 @@ namespace LeetCodeAlgo
             return max;
         }
 
-
         public int MaxArea_HeadToEnd(int[] height)
         {
             int max = 0;
@@ -683,6 +682,7 @@ namespace LeetCodeAlgo
             }
             return number;
         }
+
         ///14. Longest Common Prefix
         /// find the longest common prefix string amongst an array of strings.
         /// Input: strs = ["flower","flow","flight"]
@@ -721,11 +721,11 @@ namespace LeetCodeAlgo
                 {
                     break;
                 }
-
             }
 
             return list.Count > 0 ? String.Join("", list) : String.Empty;
         }
+
         ///15. 3Sum
         ///nums[i] + nums[j] + nums[k] == 0. no duplicate values
         public IList<IList<int>> ThreeSum(int[] nums)
@@ -822,10 +822,12 @@ namespace LeetCodeAlgo
                 }
             }
 
-
             return llist;
         }
 
+        /// <summary>
+        /// NOT PASS , time out
+        /// </summary>
         public void ThreeSum_Recursion(int[] nums, int left, int right, IList<IList<int>> result)
         {
             if (left + 1 >= right)
@@ -846,10 +848,9 @@ namespace LeetCodeAlgo
 
             int target = 0 - sum;
 
-            var idx = BinarySearch(nums, left, right, target);
+            var idx = binarySearch(nums, left, right, target);
             if (idx == -1)
             {
-
             }
             else
             {
@@ -867,46 +868,433 @@ namespace LeetCodeAlgo
             ThreeSum_Recursion(nums, left, right - 1, result);
         }
 
-        public int BinarySearch(int[] nums, int left, int right, int target)
+        ///16. 3Sum Closest
+        ///return three integers nums such that the sum is closest to target.
+        ///-1000 <= nums[i] <= 1000, len = [3,1000], -10000<=target<=10000
+        public int ThreeSumClosest(int[] nums, int target)
         {
-            if (left == right && nums[left] == target)
-                return left;
+            if (nums.Length == 3)
+                return nums[0] + nums[1] + nums[2];
 
-            int low = left;
-            int high = right;
-            int i = low + (high - low) / 2;
+            int ship = 1000;
+            int[] arr = new int[2001];
+            int startIndex = 2000;
+            int endIndex = 0;
 
-            while (i >= low && i <= high && (high - low) >= 1)
+            foreach (int i in nums)
             {
-                if (target < nums[low] || target > nums[high])
-                    return -1;
+                arr[i + ship]++;
+                startIndex = Math.Min(i + ship, startIndex);
+                endIndex = Math.Max(i + ship, endIndex);
+            }
 
-                if (target == nums[low])
-                    return low;
-                if (target == nums[high])
-                    return high;
+            int allShip = 3000;
+            int shipTarget = target + allShip;
 
-                if (nums[i] == target)
-                {
-                    return i;
-                }
-                else if (nums[i] > target)
-                {
-                    high = i - 1;
-                    i = low + (high - low) / 2;
-                }
-                else
-                {
-                    low = i + 1;
+            int maxOf3 = 0;
+            int maxOf2 = 0;
+            //int maxOf1 = endIndex;
+            int needNumb = 3;
+            for (int i = endIndex; i >= startIndex && needNumb > 0; i--)
+            {
+                if (arr[i] == 0)
+                    continue;
 
-                    i = low + (high - low) / 2;
+                int j = arr[i];
+                while (needNumb > 0 && j > 0)
+                {
+                    maxOf3 += i;
+                    needNumb--;
+                    j--;
+
+                    if (needNumb == 1)
+                        maxOf2 = maxOf3;
                 }
             }
 
-            return -1;
+            //target >= sum of max3, just return maxOf3
+            if (shipTarget >= maxOf3)
+                return maxOf3 - allShip;
+
+            int minOf3 = 0;
+            int minOf2 = 0;
+            //int minOf1 = startIndex;
+            needNumb = 3;
+            for (int i = startIndex; i <= endIndex && needNumb > 0; i++)
+            {
+                if (arr[i] == 0)
+                    continue;
+
+                int j = arr[i];
+                while (needNumb > 0 && j > 0)
+                {
+                    minOf3 += i;
+                    needNumb--;
+                    j--;
+
+                    if (needNumb == 1)
+                        minOf2 = minOf3;
+                }
+            }
+
+            //target <= sum of min3
+            if (shipTarget <= minOf3)
+                return minOf3 - allShip;
+
+            int minDiff;
+            int goal = 0;
+
+            if (Math.Abs(maxOf3 - shipTarget) <= Math.Abs(minOf3 - shipTarget))
+            {
+                minDiff = maxOf3 - shipTarget;
+            }
+            else
+            {
+                minDiff = minOf3 - shipTarget;
+            }
+
+            //search from right or left
+            if (shipTarget >= allShip)
+            {
+                for (int i = endIndex; i >= startIndex; i--)
+                {
+                    if (arr[i] == 0)
+                        continue;
+
+                    int end2 = arr[i] >= 2 ? i : i - 1;
+
+                    for (int j = end2; j >= startIndex; j--)
+                    {
+                        if (arr[j] == 0)
+                            continue;
+
+                        //serach form minDiff=0
+                        //i + j + goal = minDiff + shipTarget;
+                        goal = shipTarget - i - j;
+                        if ((goal < startIndex && startIndex - goal >= Math.Abs(minDiff))
+                            || (goal > j && goal - j >= Math.Abs(minDiff)))
+                        {
+                            continue;
+                        }
+
+                        int len = 0;
+                        int k = 0;
+                        if (goal <= startIndex)
+                        {
+                            //search from start
+                            len = startIndex - goal;
+                            while (len < Math.Abs(minDiff))
+                            {
+                                k = goal + len;
+                                if (k >= startIndex && k <= j && arr[k] != 0)
+                                {
+                                    arr[i]--;
+                                    arr[j]--;
+                                    arr[k]--;
+
+                                    //check if valid 3 nums
+                                    if (arr[i] >= 0 && arr[j] >= 0 && arr[k] >= 0)
+                                    {
+                                        if (len == 0)
+                                            return target;
+
+                                        minDiff = len;
+
+                                        //remember to restore
+                                        arr[i]++;
+                                        arr[j]++;
+                                        arr[k]++;
+
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        arr[i]++;
+                                        arr[j]++;
+                                        arr[k]++;
+                                    }
+                                }
+
+                                len++;
+                            }
+                        }
+                        else if (goal >= j)
+                        {
+                            //search from end
+                            len = goal - j;
+
+                            while (len < Math.Abs(minDiff))
+                            {
+                                k = goal - len;
+                                if (k >= startIndex && k <= j && arr[k] != 0)
+                                {
+                                    arr[i]--;
+                                    arr[j]--;
+                                    arr[k]--;
+                                    if (arr[i] >= 0 && arr[j] >= 0 && arr[k] >= 0)
+                                    {
+                                        if (len == 0)
+                                            return target;
+
+                                        minDiff = -len;
+
+                                        arr[i]++;
+                                        arr[j]++;
+                                        arr[k]++;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        arr[i]++;
+                                        arr[j]++;
+                                        arr[k]++;
+                                    }
+                                }
+                                len++;
+                            }
+                        }
+                        else
+                        {
+                            //search from goal to both sides
+                            while ((((goal + len) <= j && (goal + len) >= startIndex) || ((goal - len) <= j && (goal - len) >= startIndex))
+                                    && len < Math.Abs(minDiff))
+                            {
+                                k = goal + len;
+
+                                if (k >= startIndex && k <= j && arr[k] != 0)
+                                {
+                                    arr[i]--;
+                                    arr[j]--;
+                                    arr[k]--;
+
+                                    //check if valid 3 nums
+                                    if (arr[i] >= 0 && arr[j] >= 0 && arr[k] >= 0)
+                                    {
+                                        if (len == 0)
+                                            return target;
+
+                                        minDiff = len;
+
+                                        //remember to restore
+                                        arr[i]++;
+                                        arr[j]++;
+                                        arr[k]++;
+
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        arr[i]++;
+                                        arr[j]++;
+                                        arr[k]++;
+                                    }
+                                }
+
+                                k = goal - len;
+                                if (k >= startIndex && k <= j && arr[k] != 0)
+                                {
+                                    arr[i]--;
+                                    arr[j]--;
+                                    arr[k]--;
+                                    if (arr[i] >= 0 && arr[j] >= 0 && arr[k] >= 0)
+                                    {
+                                        if (len == 0)
+                                            return target;
+
+                                        minDiff = -len;
+
+                                        arr[i]++;
+                                        arr[j]++;
+                                        arr[k]++;
+
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        arr[i]++;
+                                        arr[j]++;
+                                        arr[k]++;
+                                    }
+                                }
+
+                                len++;
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int i = startIndex; i <= endIndex; i++)
+                {
+                    if (arr[i] == 0)
+                        continue;
+
+                    int start2 = arr[i] >= 2 ? i : i + 1;
+
+                    for (int j = start2; j <= endIndex; j++)
+                    {
+                        if (arr[j] == 0)
+                            continue;
+
+                        goal = shipTarget - i - j;
+
+                        if ((goal < j && j - goal >= Math.Abs(minDiff))
+                            || (goal > endIndex && goal - endIndex >= Math.Abs(minDiff)))
+                        {
+                            continue;
+                        }
+
+                        int len = 0;
+                        int k = 0;
+
+                        if (goal <= j)
+                        {
+                            //search from start
+                            len = j - goal;
+                            while (len < Math.Abs(minDiff))
+                            {
+                                k = goal + len;
+                                if (k >= j && k <= endIndex && arr[k] != 0)
+                                {
+                                    arr[i]--;
+                                    arr[j]--;
+                                    arr[k]--;
+                                    if (arr[i] >= 0 && arr[j] >= 0 && arr[k] >= 0)
+                                    {
+                                        if (len == 0)
+                                            return target;
+
+                                        minDiff = len;
+
+                                        arr[i]++;
+                                        arr[j]++;
+                                        arr[k]++;
+
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        arr[i]++;
+                                        arr[j]++;
+                                        arr[k]++;
+                                    }
+                                }
+
+                                len++;
+                            }
+                        }
+                        else if (goal >= endIndex)
+                        {
+                            //search from end
+                            len = goal - endIndex;
+                            while (len < Math.Abs(minDiff))
+                            {
+                                k = goal - len;
+                                if (k >= j && k <= endIndex && arr[k] != 0)
+                                {
+                                    arr[i]--;
+                                    arr[j]--;
+                                    arr[k]--;
+                                    if (arr[i] >= 0 && arr[j] >= 0 && arr[k] >= 0)
+                                    {
+                                        if (len == 0)
+                                            return target;
+
+                                        minDiff = -len;
+
+                                        arr[i]++;
+                                        arr[j]++;
+                                        arr[k]++;
+
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        arr[i]++;
+                                        arr[j]++;
+                                        arr[k]++;
+                                    }
+                                }
+
+                                len++;
+                            }
+                        }
+                        else
+                        {
+                            len = 0;
+                            while ((((goal - len) >= j && (goal - len) <= endIndex) || ((goal + len) >= j && (goal + len) <= endIndex))
+                                    && len < Math.Abs(minDiff))
+                            {
+                                k = goal + len;
+
+                                if (k >= j && k <= endIndex && arr[k] != 0)
+                                {
+                                    arr[i]--;
+                                    arr[j]--;
+                                    arr[k]--;
+
+                                    //check if valid 3 nums
+                                    if (arr[i] >= 0 && arr[j] >= 0 && arr[k] >= 0)
+                                    {
+                                        if (len == 0)
+                                            return target;
+
+                                        minDiff = len;
+
+                                        //remember to restore
+                                        arr[i]++;
+                                        arr[j]++;
+                                        arr[k]++;
+
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        arr[i]++;
+                                        arr[j]++;
+                                        arr[k]++;
+                                    }
+                                }
+
+                                k = goal - len;
+                                if (k >= j && k <= endIndex && arr[k] != 0)
+                                {
+                                    arr[i]--;
+                                    arr[j]--;
+                                    arr[k]--;
+                                    if (arr[i] >= 0 && arr[j] >= 0 && arr[k] >= 0)
+                                    {
+                                        if (len == 0)
+                                            return target;
+
+                                        minDiff = -len;
+
+                                        arr[i]++;
+                                        arr[j]++;
+                                        arr[k]++;
+
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        arr[i]++;
+                                        arr[j]++;
+                                        arr[k]++;
+                                    }
+                                }
+
+                                len++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return minDiff + shipTarget - allShip;
         }
 
-        ///18. 4Sum
+        /// 18. 4Sum
         ///Given an array nums of n integers, return an array of all the unique
         ///quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:
         ///Input: nums = [2,2,2,2,2], target = 8
@@ -2200,7 +2588,6 @@ namespace LeetCodeAlgo
 
             var arr = s.ToArray();
 
-
             int len = 0;
             for (int i = 0; i < arr.Length; i++)
             {
@@ -2285,7 +2672,6 @@ namespace LeetCodeAlgo
                 if (arr[i + 1] >= '7' && arr[i + 1] <= '9')
                 {
                     return NumDecodings_Recursion(arr, i + 2);
-
                 }
                 else if (arr[i + 1] == '0')
                 {
@@ -2322,7 +2708,6 @@ namespace LeetCodeAlgo
 
             return dp;
         }
-
 
         /// 94. Binary Tree Inorder Traversal
         public IList<int> InorderTraversal(TreeNode root)
@@ -2402,33 +2787,7 @@ namespace LeetCodeAlgo
         /// which has exactly n nodes of unique values from 1 to n.
         public int NumTrees(int n)
         {
-
             return 0;
-        }
-
-        public int getFactorial(int n)
-        {
-            if (n == 0 || n == 1) return 1;
-
-            return n * getFactorial(n - 1);
-        }
-
-        public int getFactorial(int n, int count)
-        {
-            int result = 1;
-
-            while (count > 0 && n > 0)
-            {
-                result *= n;
-                n--;
-                count--;
-            }
-            return result;
-        }
-
-        public int getCombine(int n, int count)
-        {
-            return getFactorial(n, count) / getFactorial(count);
         }
 
         ///98. Validate Binary Search Tree
@@ -2439,19 +2798,18 @@ namespace LeetCodeAlgo
             return IsValidBST_Recursion(root);
         }
 
-        public bool IsValidBST_Recursion(TreeNode root, TreeNode left=null, TreeNode right = null)
+        public bool IsValidBST_Recursion(TreeNode root, TreeNode left = null, TreeNode right = null)
         {
             if (root == null)
                 return true;
 
-            if(left!=null && root.val<= left.val)
+            if (left != null && root.val <= left.val)
                 return false;
 
-            if(right!=null && root.val>= right.val)
-                return false ;
+            if (right != null && root.val >= right.val)
+                return false;
 
-            return IsValidBST_Recursion(root.left, left, root) && IsValidBST_Recursion(root.right,root, right);
+            return IsValidBST_Recursion(root.left, left, root) && IsValidBST_Recursion(root.right, root, right);
         }
-
     }
 }

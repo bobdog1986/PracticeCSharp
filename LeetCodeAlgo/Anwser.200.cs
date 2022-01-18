@@ -10,6 +10,7 @@ namespace LeetCodeAlgo
     {
         //202
         private List<int> happyList = new List<int>();
+
         public bool IsHappy(int n)
         {
             if (n == 1) return true;
@@ -18,6 +19,7 @@ namespace LeetCodeAlgo
 
             return IsHappy(GetDigitSquare(n));
         }
+
         public int GetDigitSquare(int n)
         {
             int result = 0;
@@ -30,12 +32,13 @@ namespace LeetCodeAlgo
             }
             return result;
         }
+
         //203. Remove Linked List Elements
         public ListNode RemoveElements(ListNode head, int val)
         {
-            while(head != null)
+            while (head != null)
             {
-                if(val == head.val)
+                if (val == head.val)
                 {
                     head = head.next;
                 }
@@ -48,9 +51,9 @@ namespace LeetCodeAlgo
             if (head == null)
                 return null;
 
-            var current=head;
+            var current = head;
 
-            while (current.next!= null)
+            while (current.next != null)
             {
                 if (current.next.val == val)
                 {
@@ -64,6 +67,7 @@ namespace LeetCodeAlgo
 
             return head;
         }
+
         //206. Reverse Linked List
 
         public ListNode ReverseList(ListNode head)
@@ -71,7 +75,7 @@ namespace LeetCodeAlgo
             if (head == null || head.next == null)
                 return head;
 
-            var stack=new Stack<ListNode>();
+            var stack = new Stack<ListNode>();
             while (head != null)
             {
                 var next = head.next;
@@ -85,15 +89,15 @@ namespace LeetCodeAlgo
 
             while (stack.Count > 0)
             {
-                var node=stack.Pop();
-                if(result == null)
+                var node = stack.Pop();
+                if (result == null)
                 {
                     result = node;
                     current = result;
                 }
                 else
                 {
-                    current.next= node;
+                    current.next = node;
                     current = node;
                 }
             }
@@ -109,12 +113,12 @@ namespace LeetCodeAlgo
             if (nums.Length == 1)
                 return nums[0];
 
-            int[] withoutFirst = new int[nums.Length-1];
+            int[] withoutFirst = new int[nums.Length - 1];
             for (int i = 0; i < nums.Length - 1; i++)
                 withoutFirst[i] = nums[i];
             int[] withoutLast = new int[nums.Length - 1];
             for (int i = 0; i < nums.Length - 1; i++)
-                withoutLast[i] = nums[i+1];
+                withoutLast[i] = nums[i + 1];
 
             //Return maximum of two results
             return Math.Max(Rob_Line(withoutFirst), Rob_Line(withoutLast));
@@ -144,8 +148,8 @@ namespace LeetCodeAlgo
         //217. Contains Duplicate
         public bool ContainsDuplicate(int[] nums)
         {
-            var dist= nums.Distinct();
-            return dist.Count()!=nums.Length;
+            var dist = nums.Distinct();
+            return dist.Count() != nums.Length;
         }
 
         ///226. Invert Binary Tree
@@ -173,13 +177,12 @@ namespace LeetCodeAlgo
             InvertTree_Recursion(node.right);
         }
 
-
         ///231. Power of Two
         ///Given an integer n, return true if it is a power of two.
 
         public bool IsPowerOfTwo(int n)
         {
-            if(n<=0)
+            if (n <= 0)
                 return false;
 
             while (n >= 1)
@@ -207,7 +210,8 @@ namespace LeetCodeAlgo
 
             return SerachMatrix(matrix, 0, matrix.GetLength(0), target);
         }
-        public bool SerachMatrix(int[,] matrix,int startRowIndex, int endColIndex, int target)
+
+        public bool SerachMatrix(int[,] matrix, int startRowIndex, int endColIndex, int target)
         {
             if (matrix == null) return false;
             int col = matrix.GetLength(0);
@@ -215,7 +219,7 @@ namespace LeetCodeAlgo
 
             for (int i = startRowIndex; i < row; i++)
             {
-                for(int j = 0; j < endColIndex; j++)
+                for (int j = 0; j < endColIndex; j++)
                 {
                     if (matrix[i, j] == target) return true;
                     if (matrix[i, j] > target) return SerachMatrix(matrix, i, j, target);
@@ -232,8 +236,7 @@ namespace LeetCodeAlgo
             TreeNode left = p.val < q.val ? p : q;
             TreeNode right = p.val < q.val ? q : p;
 
-            return LowestCommonAncestor_Recursion(root,left,right);
-
+            return LowestCommonAncestor_Recursion(root, left, right);
         }
 
         public TreeNode LowestCommonAncestor_Recursion(TreeNode root, TreeNode left, TreeNode right)
@@ -244,10 +247,10 @@ namespace LeetCodeAlgo
             if (left.val == root.val)
                 return left;
 
-            if(right.val == root.val)
+            if (right.val == root.val)
                 return right;
 
-            if(left.val <root.val && right.val < root.val)
+            if (left.val < root.val && right.val < root.val)
             {
                 return LowestCommonAncestor_Recursion(root.left, left, right);
             }
@@ -255,8 +258,8 @@ namespace LeetCodeAlgo
             {
                 return LowestCommonAncestor_Recursion(root.right, left, right);
             }
-
         }
+
         /// 242. Valid Anagram
 
         public bool IsAnagram(string s, string t)
@@ -276,7 +279,7 @@ namespace LeetCodeAlgo
                     return false;
                 }
             }
-            return arr2.Count==0;
+            return arr2.Count == 0;
         }
 
         //258
@@ -287,7 +290,7 @@ namespace LeetCodeAlgo
             int total = 0;
             while (num >= 10)
             {
-                total+= num % 10;
+                total += num % 10;
                 num /= 10;
             }
             total += num;
@@ -299,7 +302,7 @@ namespace LeetCodeAlgo
 
         public int FirstBadVersion(int n)
         {
-            return FirstBadVersion(1,n);
+            return FirstBadVersion(1, n);
         }
 
         public int FirstBadVersion(int start, int end)
@@ -328,23 +331,23 @@ namespace LeetCodeAlgo
         //283. Move Zeroes
         public void MoveZeroes(int[] nums)
         {
-            if(nums == null||nums.Length==0)
+            if (nums == null || nums.Length == 0)
                 return;
 
             int zeroCount = 0;
-            for(int i = 0; i < nums.Length-1; i++)
+            for (int i = 0; i < nums.Length - 1; i++)
             {
-                if (i + zeroCount >= nums.Length-1)
+                if (i + zeroCount >= nums.Length - 1)
                     break;
 
-                while(nums[i] == 0)
+                while (nums[i] == 0)
                 {
-                    for(int j = i;j < nums.Length - 1 -zeroCount; j++)
+                    for (int j = i; j < nums.Length - 1 - zeroCount; j++)
                     {
-                        nums[j] = nums[j+1];
+                        nums[j] = nums[j + 1];
                     }
 
-                    nums[nums.Length-1-zeroCount] = 0;
+                    nums[nums.Length - 1 - zeroCount] = 0;
 
                     zeroCount++;
 
@@ -363,18 +366,18 @@ namespace LeetCodeAlgo
         public bool WordPattern(string pattern, string s)
         {
             var carr = pattern.ToCharArray();
-            var words=s.Split(' ');
+            var words = s.Split(' ');
 
             if (carr.Length != words.Length)
                 return false;
 
-            Dictionary<char, string>  dict = new Dictionary<char, string>();
+            Dictionary<char, string> dict = new Dictionary<char, string>();
 
-            for(int i = 0; i < carr.Length; i++)
+            for (int i = 0; i < carr.Length; i++)
             {
                 if (dict.ContainsKey(carr[i]))
                 {
-                    if(dict[carr[i]]!= words[i])
+                    if (dict[carr[i]] != words[i])
                     {
                         return false;
                     }
@@ -391,7 +394,5 @@ namespace LeetCodeAlgo
 
             return true;
         }
-
-
     }
 }

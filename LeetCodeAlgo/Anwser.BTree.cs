@@ -234,7 +234,7 @@ namespace LeetCodeAlgo
                 while (nodes.Count > 0)
                 {
                     var node = nodes.Dequeue();
-                    list.Add((int)node.val);
+                    list.Add(node.val);
 
                     if (node.left != null)
                     {
@@ -399,9 +399,9 @@ namespace LeetCodeAlgo
         /// 112 HasPathSum, see other file
         /// Given the root of a binary tree and an integer targetSum,
         /// return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
-        public void HasPathSum_112() { }
+        public void HasPathSum_112()
+        { }
 
         ///
-
     }
 }

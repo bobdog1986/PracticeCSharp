@@ -18,10 +18,10 @@ namespace LeetCodeAlgo
             List<TreeNode> lefts = new List<TreeNode>();
             List<TreeNode> rights = new List<TreeNode>();
 
-            if(root.left != null)
+            if (root.left != null)
                 lefts.Add(root.left);
 
-            if(root.right != null)
+            if (root.right != null)
                 rights.Add(root.right);
 
             return IsSymmetric(lefts, rights);
@@ -38,12 +38,12 @@ namespace LeetCodeAlgo
             List<TreeNode> sub1 = new List<TreeNode>();
             List<TreeNode> sub2 = new List<TreeNode>();
 
-            for(int i = 0; i < lefts.Count; i++)
+            for (int i = 0; i < lefts.Count; i++)
             {
                 var left = lefts[i];
-                var right = rights[lefts.Count - 1-i];
+                var right = rights[lefts.Count - 1 - i];
 
-                if(left.val!=right.val)
+                if (left.val != right.val)
                     return false;
 
                 if (left.left == null && right.right != null
@@ -52,50 +52,49 @@ namespace LeetCodeAlgo
                     || left.right != null && right.left == null)
                     return false;
 
-                if(left.left!=null)
+                if (left.left != null)
                     sub1.Add(left.left);
-                if(left.right!=null)
-                    sub1.Add((TreeNode)left.right);
+                if (left.right != null)
+                    sub1.Add(left.right);
 
-                if(right.right!=null)
-                    sub2.Insert(0,(TreeNode)right.right);
-                if(right.left!=null)
+                if (right.right != null)
+                    sub2.Insert(0, right.right);
+                if (right.left != null)
                     sub2.Insert(0, right.left);
             }
 
-            return IsSymmetric(sub1,sub2);
+            return IsSymmetric(sub1, sub2);
         }
-
 
         /// 102. Binary Tree Level Order Traversal
         /// Given the root of a binary tree, return the level order traversal of its nodes' values.
         /// (i.e., from left to right, level by level).
         public IList<IList<int>> LevelOrder(TreeNode root)
-        { 
+        {
             var result = new List<IList<int>>();
             if (root == null)
                 return result;
 
-            var nodes=new List<TreeNode>() { root};
+            var nodes = new List<TreeNode>() { root };
 
-            while(nodes.Count > 0)
+            while (nodes.Count > 0)
             {
                 var subs = new List<TreeNode>();
-                var list=new List<int>();
-                foreach(TreeNode node in nodes)
+                var list = new List<int>();
+                foreach (TreeNode node in nodes)
                 {
                     if (node == null)
                         continue;
 
                     list.Add(node.val);
 
-                    if(node.left != null)
+                    if (node.left != null)
                         subs.Add(node.left);
-                    if(node.right != null)
+                    if (node.right != null)
                         subs.Add(node.right);
                 }
 
-                nodes=subs;
+                nodes = subs;
                 result.Add(list);
             }
 
@@ -108,25 +107,25 @@ namespace LeetCodeAlgo
         ///from the root node down to the farthest leaf node.
         public int MaxDepth(TreeNode root)
         {
-            if(root == null)
+            if (root == null)
                 return 0;
 
             int deep = 0;
-            var nodes = new List<TreeNode>() { root};
-            while(nodes.Count > 0)
+            var nodes = new List<TreeNode>() { root };
+            while (nodes.Count > 0)
             {
                 deep++;
                 var subs = new List<TreeNode>();
-                foreach(var node in nodes)
+                foreach (var node in nodes)
                 {
                     if (node == null)
                         continue;
 
-                    if(node.left != null)
-                        subs.Add((TreeNode)node.left);
+                    if (node.left != null)
+                        subs.Add(node.left);
 
-                    if(node.right!= null)
-                        subs.Add((TreeNode)node.right);
+                    if (node.right != null)
+                        subs.Add(node.right);
                 }
 
                 nodes = subs;
@@ -149,7 +148,7 @@ namespace LeetCodeAlgo
             int index = FindIndex(preorder[0], inorder);
             int[] leftPreorder = new int[index];
             int[] leftInorder = new int[index];
-            int[] rightPreorder = new int[inorder.Length - index-1];
+            int[] rightPreorder = new int[inorder.Length - index - 1];
             int[] rightInorder = new int[inorder.Length - index - 1];
 
             Array.Copy(inorder, 0, leftInorder, 0, index);
@@ -164,14 +163,15 @@ namespace LeetCodeAlgo
             return root;
         }
 
-        public int FindIndex(int find,int[] array)
+        public int FindIndex(int find, int[] array)
         {
-            for(int i = 0; i < array.Length; i++)
+            for (int i = 0; i < array.Length; i++)
             {
                 if (find == array[i]) return i;
             }
             throw new ArgumentOutOfRangeException();
         }
+
         //106
         //public TreeNode BuildTree(int[] inorder, int[] postorder)
         //{
@@ -239,8 +239,8 @@ namespace LeetCodeAlgo
                 return true;
 
             return false;
-
         }
+
         public Node Connect(Node root)
         {
             if (root == null)
@@ -248,11 +248,11 @@ namespace LeetCodeAlgo
 
             List<Node> list = new List<Node>();
             list.Add(root);
-            while (list.Count!=0)
+            while (list.Count != 0)
             {
                 List<Node> subs = new List<Node>();
 
-                bool hasSubs =list[0].left!= null;
+                bool hasSubs = list[0].left != null;
                 for (int i = 0; i < list.Count; i++)
                 {
                     list[i].next = i == list.Count - 1 ? null : list[i + 1];
@@ -267,8 +267,8 @@ namespace LeetCodeAlgo
             }
 
             return root;
-
         }
+
         ///118. Pascal's Triangle
         ///Given an integer numRows, return the first numRows of Pascal's triangle.
         ///    1
@@ -278,19 +278,19 @@ namespace LeetCodeAlgo
 
         public IList<IList<int>> Generate(int numRows)
         {
-            List<IList<int>> list=new List<IList<int>>();
+            List<IList<int>> list = new List<IList<int>>();
             int i = 1;
             list.Add(new List<int>() { 1 });
             i++;
-            while(i <= numRows)
+            while (i <= numRows)
             {
-                var list2=new List<int>();
+                var list2 = new List<int>();
                 int j = 1;
                 list2.Add(1);
                 j++;
                 while (j < i)
                 {
-                    list2.Add(list[i-1-1][j-1-1]+list[i-1-1][j-1]);
+                    list2.Add(list[i - 1 - 1][j - 1 - 1] + list[i - 1 - 1][j - 1]);
                     j++;
                 }
                 list2.Add(1);
@@ -306,7 +306,7 @@ namespace LeetCodeAlgo
         ///In Pascal's triangle, each number is the sum of the two numbers directly above it as shown:
         public IList<int> GetRow(int rowIndex)
         {
-            List<int> currentRow=new List<int>() { 1 };
+            List<int> currentRow = new List<int>() { 1 };
             int lastRowIndex = 0;
             while (lastRowIndex < rowIndex)
             {
@@ -314,13 +314,13 @@ namespace LeetCodeAlgo
                 int j = 0;
                 list2.Add(1);
                 j++;
-                while (j < lastRowIndex+1)
+                while (j < lastRowIndex + 1)
                 {
                     list2.Add(currentRow[j - 1] + currentRow[j]);
                     j++;
                 }
                 list2.Add(1);
-                currentRow=list2;
+                currentRow = list2;
                 lastRowIndex++;
             }
 
@@ -334,30 +334,30 @@ namespace LeetCodeAlgo
         /// 6 5 7   = 2 3 5
         public int MinimumTotal(IList<IList<int>> triangle)
         {
-            if(triangle == null)
+            if (triangle == null)
                 return 0;
 
             int level = 1;
             List<int> minList = new List<int>();
-            minList.Add(triangle[level-1][0]);
+            minList.Add(triangle[level - 1][0]);
 
             while (++level <= triangle.Count)
             {
                 List<int> subList = new List<int>();
 
-                for (int i=0; i < level; i++)
+                for (int i = 0; i < level; i++)
                 {
                     if (i == 0)
                     {
-                        subList.Add(triangle[level-1][0]+minList[0]);
+                        subList.Add(triangle[level - 1][0] + minList[0]);
                     }
-                    else if(i>0 && i < level - 1)
+                    else if (i > 0 && i < level - 1)
                     {
-                        subList.Add(Math.Min(triangle[level - 1][i] + minList[i-1], triangle[level - 1][i] + minList[i]));
+                        subList.Add(Math.Min(triangle[level - 1][i] + minList[i - 1], triangle[level - 1][i] + minList[i]));
                     }
                     else
                     {
-                        subList.Add(triangle[level - 1][level-1]+minList[level-1-1]);
+                        subList.Add(triangle[level - 1][level - 1] + minList[level - 1 - 1]);
                     }
                 }
 
@@ -367,15 +367,14 @@ namespace LeetCodeAlgo
             return minList.Min();
         }
 
-
         //121. Best Time to Buy and Sell Stock
 
         public int MaxProfit_121(int[] prices)
         {
-            if(prices == null || prices.Length<=1)
+            if (prices == null || prices.Length <= 1)
                 return 0;
 
-            if(prices.Length ==2)
+            if (prices.Length == 2)
             {
                 if (prices[0] >= prices[1])
                     return 0;
@@ -410,23 +409,23 @@ namespace LeetCodeAlgo
             int sum = 0;
             bool isHold = false;
             int buy = 0;
-            for (int i=0;i<prices.Length-1;i++)
+            for (int i = 0; i < prices.Length - 1; i++)
             {
                 if (isHold)
                 {
                     if (i == prices.Length - 2)
                     {
-                        sum+= Math.Max(prices[i + 1], prices[i]) - buy;
+                        sum += Math.Max(prices[i + 1], prices[i]) - buy;
                     }
                     else
                     {
-                        if(prices[i] <= prices[i + 1])
+                        if (prices[i] <= prices[i + 1])
                         {
                             continue;
                         }
                         else
                         {
-                            sum+=prices[i]-buy;
+                            sum += prices[i] - buy;
                             isHold = false;
                         }
                     }
@@ -447,7 +446,6 @@ namespace LeetCodeAlgo
 
                     isHold = true;
                     buy = prices[i];
-
                 }
             }
             return sum;
@@ -461,11 +459,11 @@ namespace LeetCodeAlgo
             int max = 1;
             int current = 1;
             int pre = nums[0];
-            for(int i = 1; i < nums.Length; i++)
+            for (int i = 1; i < nums.Length; i++)
             {
                 if (nums[i] <= pre + 1)
                 {
-                    if(nums[i]!=pre)current++;
+                    if (nums[i] != pre) current++;
                 }
                 else
                 {
@@ -486,14 +484,14 @@ namespace LeetCodeAlgo
 
         public int SingleNumber(int[] nums)
         {
-            if(nums.Length==1)
+            if (nums.Length == 1)
                 return nums[0];
 
             int a = nums[0];
 
-            for(int i = 1; i < nums.Length; i++)
+            for (int i = 1; i < nums.Length; i++)
             {
-                a^=nums[i];
+                a ^= nums[i];
             }
 
             return a;
@@ -515,21 +513,19 @@ namespace LeetCodeAlgo
             //}
 
             //return dict.ElementAt(0).Key;
-
         }
-
 
         //141. Linked List Cycle
 
         public bool HasCycle(ListNode head)
         {
-            if(head == null || head.next==null) return false;
+            if (head == null || head.next == null) return false;
 
             List<ListNode> list = new List<ListNode>();
 
-            while (head!=null)
+            while (head != null)
             {
-                if(list.IndexOf(head) == -1)
+                if (list.IndexOf(head) == -1)
                 {
                     list.Add(head);
                     head = head.next;
@@ -553,14 +549,14 @@ namespace LeetCodeAlgo
 
         public void PreorderTraversal(TreeNode node, IList<int> list)
         {
-            if(node == null)
+            if (node == null)
                 return;
 
             list.Add(node.val);
             PreorderTraversal(node.left, list);
             PreorderTraversal(node.right, list);
-
         }
+
         //145. Binary Tree Postorder Traversal
         public IList<int> PostorderTraversal(TreeNode root)
         {
@@ -568,6 +564,7 @@ namespace LeetCodeAlgo
             PostorderTraversal(root, result);
             return result;
         }
+
         public void PostorderTraversal(TreeNode node, IList<int> list)
         {
             if (node == null)
@@ -576,14 +573,14 @@ namespace LeetCodeAlgo
             PostorderTraversal(node.left, list);
             PostorderTraversal(node.right, list);
             list.Add(node.val);
-
         }
+
         //149
 
         public int MaxPoints(Point[] points)
         {
             if (points == null || points.Length == 0) return 0;
-            Dictionary<int,int> dict=new Dictionary<int, int>();
+            Dictionary<int, int> dict = new Dictionary<int, int>();
             Dictionary<int, int> dictY = new Dictionary<int, int>();
             foreach (var i in points)
             {
@@ -607,6 +604,7 @@ namespace LeetCodeAlgo
             }
             return Math.Max(dict.Values.Max(), dictY.Values.Max());
         }
+
         //152. Maximum Product Subarray
         public int MaxProduct(int[] nums)
         {
@@ -615,7 +613,6 @@ namespace LeetCodeAlgo
 
             for (int i = 1; i < n; i++)
             {
-
                 // Swapping min and max
                 if (nums[i] < 0)
                 {
@@ -624,11 +621,8 @@ namespace LeetCodeAlgo
                     min = temp;
                 }
 
-
-
                 max = Math.Max(nums[i], max * nums[i]);
                 min = Math.Min(nums[i], min * nums[i]);
-
 
                 ans = Math.Max(ans, max);
             }
@@ -652,8 +646,8 @@ namespace LeetCodeAlgo
             {
                 if (nums[i] == 0)
                 {
-                    max=Math.Max(max,0);
-                    max=Math.Max(max, GetMaxProduct(list, indexsOfNegative));
+                    max = Math.Max(max, 0);
+                    max = Math.Max(max, GetMaxProduct(list, indexsOfNegative));
 
                     list.Clear();
                     indexsOfNegative.Clear();
@@ -661,9 +655,9 @@ namespace LeetCodeAlgo
                 else
                 {
                     list.Add(nums[i]);
-                    if(nums[i] < 0)
+                    if (nums[i] < 0)
                     {
-                        indexsOfNegative.Add(list.Count-1);
+                        indexsOfNegative.Add(list.Count - 1);
                     }
                 }
             }
@@ -673,16 +667,16 @@ namespace LeetCodeAlgo
             return max;
         }
 
-        public int GetMaxProduct(List<int> list,List<int> indexsOfNegative=null)
+        public int GetMaxProduct(List<int> list, List<int> indexsOfNegative = null)
         {
             if (list.Count == 0)
                 return 0;
-            if(list.Count == 1)
+            if (list.Count == 1)
                 return list[0];
 
-            if (indexsOfNegative==null || indexsOfNegative.Count % 2 == 0)
+            if (indexsOfNegative == null || indexsOfNegative.Count % 2 == 0)
             {
-                return list.Aggregate((x,y)=>x*y);
+                return list.Aggregate((x, y) => x * y);
             }
             else
             {
@@ -790,12 +784,13 @@ namespace LeetCodeAlgo
 
                     if (numbers[i] + numbers[j] == target)
                     {
-                        return new int[2] { i+1, j+1 };
+                        return new int[2] { i + 1, j + 1 };
                     }
                 }
             }
             throw new ArgumentOutOfRangeException();
         }
+
         //174 not done
         public int CalculateMinimumHP(int[,] dungeon)
         {
@@ -808,9 +803,9 @@ namespace LeetCodeAlgo
 
             List<int> path = new List<int>();
 
-
-            return maxLost > 0?1:(maxLost+1);
+            return maxLost > 0 ? 1 : (maxLost + 1);
         }
+
         //187
         public IList<string> FindRepeatedDnaSequences(string s)
         {
@@ -866,22 +861,22 @@ namespace LeetCodeAlgo
 
         public void Rotate(int[] nums, int k)
         {
-            k=k % nums.Length;
+            k = k % nums.Length;
 
             if (k == 0) return;
 
             int[] temp = new int[k];
-            for(int i = 0; i < k; i++)
+            for (int i = 0; i < k; i++)
             {
-                temp[i] = nums[nums.Length-k+i];
+                temp[i] = nums[nums.Length - k + i];
             }
 
-            for(int i = nums.Length-1; i >k-1; i--)
+            for (int i = nums.Length - 1; i > k - 1; i--)
             {
-                nums[i] = nums[i-k];
+                nums[i] = nums[i - k];
             }
 
-            for(int i = 0;i < k; i++)
+            for (int i = 0; i < k; i++)
             {
                 nums[i] = temp[i];
             }
@@ -893,14 +888,14 @@ namespace LeetCodeAlgo
         ///Output:    964176192 (00111001011110000010100101000000)
         public uint reverseBits(uint n)
         {
-            if(n == 0) return 0;
+            if (n == 0) return 0;
 
             uint result = 0;
             uint a = uint.MaxValue / 2 + 1;
             uint c = 1;
-            while (a>0)
+            while (a > 0)
             {
-                uint b= n / a;
+                uint b = n / a;
                 if (b == 1)
                 {
                     n = n - a;
@@ -913,13 +908,14 @@ namespace LeetCodeAlgo
 
             return result;
         }
+
         /// 191. Number of 1 Bits
         /// eg. 5=101, return count of 1 = 2;
 
-        public int HammingWeight(uint n) 
+        public int HammingWeight(uint n)
         {
-            if(n == 0) return 0;
-            uint a = uint.MaxValue/2+1;
+            if (n == 0) return 0;
+            uint a = uint.MaxValue / 2 + 1;
 
             int count = 0;
             while (n > 0)
@@ -937,20 +933,20 @@ namespace LeetCodeAlgo
             return count;
         }
 
-    //198. House Robber
-    public int Rob_198(int[] nums)
+        //198. House Robber
+        public int Rob_198(int[] nums)
         {
             if (nums == null || nums.Length == 0)
                 return 0;
-            if(nums.Length == 1)
+            if (nums.Length == 1)
                 return nums[0];
 
             int[] dp = new int[nums.Length];
 
             dp[0] = nums[0];
-            dp[1] = Math.Max(nums[0],nums[1]);
+            dp[1] = Math.Max(nums[0], nums[1]);
 
-            for(int i = 2; i < nums.Length; i++)
+            for (int i = 2; i < nums.Length; i++)
             {
                 dp[i] = Math.Max(nums[i] + dp[i - 2], dp[i - 1]);
             }
