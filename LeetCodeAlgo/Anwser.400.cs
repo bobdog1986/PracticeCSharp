@@ -42,15 +42,42 @@ namespace LeetCodeAlgo
             Array.Copy(result.ToArray(), chars, result.Count);
             return result.Count;
         }
+
         public char GetSingleNumChar(int num)
         {
             return (char)(num + 0x30);
         }
+
         public char[] GetNumCharArray(int num)
         {
             return num.ToString().ToCharArray();
         }
-        //492
+
+        ///452. Minimum Number of Arrows to Burst Balloons
+        ///points.Length = Balloons number, Balloons horizontal -231 <= xstart < xend <= 231 - 1
+        public int FindMinArrowShots(int[][] points)
+        {
+            if (points.Length <= 1)
+                return points.Length;
+
+            var arr = points.OrderBy(p => p[1]).ToList();
+
+            var shot = 1;
+            int end = arr[0][1];
+
+            for (int i = 1; i < arr.Count; i++)
+            {
+                if (end < arr[i][0])
+                {
+                    end = arr[i][1];
+                    shot++;
+                }
+            }
+
+            return shot;
+        }
+
+        /// 492
         public int[] ConstructRectangle(int area)
         {
             int[] result = new int[2] { area, 1 };
@@ -67,6 +94,7 @@ namespace LeetCodeAlgo
             }
             return result;
         }
+
         //495
         public int FindPoisonedDuration(int[] timeSeries, int duration)
         {

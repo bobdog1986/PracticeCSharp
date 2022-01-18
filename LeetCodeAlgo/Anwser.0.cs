@@ -1608,9 +1608,9 @@ namespace LeetCodeAlgo
                 return nums[0] == target ? 0 : -1;
 
             int i = 0;
-            while (i <= nums.Length-1)
+            while (i <= nums.Length - 1)
             {
-                if(nums[i] == target)
+                if (nums[i] == target)
                     return i;
 
                 if (nums[i] < nums[0])
@@ -1638,10 +1638,10 @@ namespace LeetCodeAlgo
         public int[] SearchRange(int[] nums, int target)
         {
             int[] result = new int[] { -1, -1 };
-            if(nums.Length == 0)
+            if (nums.Length == 0)
                 return result;
 
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 if (nums[i] < target)
                 {
