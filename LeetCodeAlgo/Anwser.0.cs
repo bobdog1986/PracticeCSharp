@@ -2456,9 +2456,54 @@ namespace LeetCodeAlgo
             return null;
         }
 
-        //83. Remove Duplicates from Sorted List
-
+        ///82. Remove Duplicates from Sorted List II
+        /// remove all duplicates, [1,1,1,2,2,3]=>[3], [1,2,2,3]=>[1,3]
         public ListNode DeleteDuplicates(ListNode head)
+        {
+
+            ListNode target = null;
+            ListNode last = null;
+            ListNode node = head;
+
+            while (node != null && node.next!=null)
+            {
+                if (node.val==node.next.val)
+                {
+                    if (node == head)
+                    {
+                        target = node;
+                        while (node != null && node.val == target.val)
+                        {
+                            node = node.next;
+                        }
+
+                        head = node;
+                        //target = null;
+                        last = null;
+                    }
+                    else
+                    {
+                        target = node;
+                        while (node != null && node.val == target.val)
+                        {
+                            node = node.next;
+                        }
+                        last.next = node;
+                    }
+                }
+                else
+                {
+                    last = node;
+                    node = node.next;
+                    //target = node;
+                }
+            }
+
+            return head;
+        }
+        /// 83. Remove Duplicates from Sorted List
+
+        public ListNode DeleteDuplicates_83(ListNode head)
         {
             if (head == null || head.next == null)
                 return head;
