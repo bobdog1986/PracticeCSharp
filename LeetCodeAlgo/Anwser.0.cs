@@ -2273,110 +2273,63 @@ namespace LeetCodeAlgo
             return ClimbStairs_Recursion(n - 1) + ClimbStairs_Recursion(n - 2);
         }
 
-        //74. Search a 2D Matrix
+        ///74. Search a 2D Matrix
+        ///a value in an m x n matrix.
+        ///Integers in each row are sorted from left to right.
+        ///The first integer of each row is greater than the last integer of the previous row.
+
         public bool SearchMatrix(int[][] matrix, int target)
         {
-            int row = matrix.Length;
-            int col = matrix[0].Length;
+            int rowLen = matrix.Length;
+            int colLen = matrix[0].Length;
 
-            if (matrix[0][0] == target || matrix[row - 1][col - 1] == target)
-                return true;
-            if (matrix[0][0] > target || matrix[row - 1][col - 1] < target)
+            if(matrix[0][0]>target||matrix[rowLen-1][colLen-1]<target)
                 return false;
 
-            int a = 0;
-            int b = row - 1;
+            int row1 = 0;
+            int row2 = rowLen - 1;
+            int row = (row2 - row1) / 2;
 
-            int m = (a + b) / 2;
-            bool findRow = false;
-            while (m >= a && m <= b)
+            while (row1 <= row2 && row>=row1 && row<=row2)
             {
-                if (matrix[m][col - 1] == target)
+                if (matrix[row][colLen - 1] == target)
                 {
                     return true;
                 }
-                else if (matrix[m][col - 1] > target)
+                else if(matrix[row][colLen - 1] > target)
                 {
-                    if ((m > a))
-                    {
-                        if (matrix[m - 1][col - 1] == target)
-                        {
-                            return true;
-                        }
-                        else if (matrix[m - 1][col - 1] < target)
-                        {
-                            findRow = true;
-
-                            break;
-                        }
-                        else
-                        {
-                            b = m;
-                            m = (a + b) / 2;
-                        }
-                    }
-                    else
-                    {
-                        findRow = true;
-                        break;
-                    }
+                    row2 = row - 1;
+                    row = (row2 - row1) / 2 + row1;
                 }
                 else
                 {
-                    if ((m < b))
-                    {
-                        if (matrix[m + 1][col - 1] == target)
-                        {
-                            return true;
-                        }
-                        else if (matrix[m + 1][col - 1] > target)
-                        {
-                            findRow = true;
-                            m++;
-                            break;
-                        }
-                        else
-                        {
-                            a = m;
-                            m = (a + b) / 2;
-                        }
-                    }
-                    else
-                    {
-                        findRow = true;
-                        break;
-                    }
+                    row1 = row + 1;
+                    row = (row2 - row1) / 2 + row1;
                 }
             }
 
-            if (!findRow)
-                return false;
+            //find row
+            var arr = matrix[row];
 
-            if (matrix[m][col - 1] == target || matrix[m][0] == target)
-                return true;
+            int col1 = 0;
+            int col2 = colLen - 1;
+            int col = (col2 - col1) / 2;
 
-            int n = col - 1;
-            n = n / 2;
-
-            int x = 0;
-            int y = col - 1;
-
-            bool result = false;
-            while (n >= x && n <= y && (y - x > 1))
+            while (col1 <= col2 && col<=col2 && col>=col1)
             {
-                if (matrix[m][n] == target)
+                if (arr[col] == target)
                 {
                     return true;
                 }
-                else if (matrix[m][n] > target)
+                else if (arr[col] > target)
                 {
-                    y = n;
-                    n = (n - x) / 2;
+                    col2 = col - 1;
+                    col = (col2 - col1) / 2 + col1;
                 }
                 else
                 {
-                    x = n;
-                    n += (y - n) / 2;
+                    col1 = col + 1;
+                    col = (col2 - col1) / 2 + col1;
                 }
             }
 

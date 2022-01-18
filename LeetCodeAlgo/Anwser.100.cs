@@ -687,88 +687,44 @@ namespace LeetCodeAlgo
             }
         }
 
-        //wrong understand input is sorted nums
-        //public int MaxProduct(int[] nums)
-        //{
-        //    if(nums == null || nums.Length == 0)
-        //        return 0;
-        //    if(nums.Length == 1)
-        //        return nums[0];
+        /// 153. Find Minimum in Rotated Sorted Array
+        /// use binary search
+        public int FindMin(int[] nums)
+        {
+            if(nums.Length==1)
+                return nums[0];
 
-        //    int max = -10;
+            int start = 0;
+            int end = nums.Length - 1;
 
-        //    int start = nums[0];
-        //    int end = nums[0];
+            if(nums[start]<nums[end])
+                return nums[start];
 
-        //    for (int i = 0; i < nums.Length-1; i++)
-        //    {
-        //        if (nums[i] + 1 == nums[i + 1])
-        //        {
-        //            end = nums[i + 1];
-        //        }
-        //        else
-        //        {
-        //            max = Math.Max(max, GetMaxProductFromContinuous(start,end));
-        //            start = nums[i + 1];
-        //            end = nums[i + 1];
-        //        }
-        //    }
+            int mid = (end - start) / 2 + start;
 
-        //    max = Math.Max(max, GetMaxProductFromContinuous(start, end));
+            while (start<=end)
+            {
+                if(start==end)
+                    return nums[start];
 
-        //    return max;
-        //}
+                if (start + 1 == end)
+                    return Math.Min(nums[start], nums[end]);
 
-        //public int GetMaxProductFromContinuous(int start,int end)
-        //{
-        //    if (start == end)
-        //    {
-        //        return start;
-        //    }
-        //    else
-        //    {
-        //        if (start < 0 && end < 0)
-        //        {
-        //            if ((end - start + 1) % 2 == 1)
-        //            {
-        //                return Factorial(start, end-1);
-        //            }
-        //            else
-        //            {
-        //                return Factorial(start, end);
-        //            }
-        //        }
-        //        else if(start >0 && end > 0)
-        //        {
-        //            return Factorial(start, end);
-        //        }
-        //        else if(start <0 && end > 0)
-        //        {
-        //            return Math.Max(((-start) % 2 == 1 && start < -1) ? Factorial(start, -2) : Factorial(start, -1), Factorial(1, end));
-        //        }
-        //        else if (start == 0)
-        //        {
-        //            return Factorial(1, end);
-        //        }
-        //        else
-        //        {
-        //            return ((-start) % 2 == 1 && start < -1) ? Factorial(start, -2) : Factorial(start, -1);
-        //        }
-        //    }
-        //}
+                if (nums[end] < nums[mid])
+                {
+                    start = mid;
+                    mid= (end - start) / 2 + start;
+                }
+                else if(nums[mid] < nums[start])
+                {
+                    end = mid;
+                    mid = (end - start) / 2 + start;
+                }
+            }
 
-        //public int Factorial(int i, int j)
-        //{
-        //    int result = 1;
-        //    while (i <= j)
-        //    {
-        //        result *= i;
-        //        i++;
-        //    }
-        //    return result;
-        //}
+            return nums[start];
+        }
 
-        // 167 Two Sum II - Input Array Is Sorted
         public int[] TwoSumII(int[] numbers, int target)
         {
             for (int i = 0; i < numbers.Length - 1; i++)

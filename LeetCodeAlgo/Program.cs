@@ -22,8 +22,9 @@ namespace LeetCodeAlgo
             {
                 //new int[]{32768,65536},
                 //new int[]{32768,65536},
-                new int[]{-19,57,},
-                new int[]{-40,-5,},
+                new int[]{1,3,5,7},
+                new int[]{10,11,16,20},
+                new int[]{23,30,34,60},
                 //new int[]{6,5,7,},
                 //new int[]{0,0,1,0,1,1,1,0,1,1},
             };
@@ -33,30 +34,6 @@ namespace LeetCodeAlgo
                 //new int[] {6 , 8},    new int[]{9, 10},  new int[]{2, 9},
                 //new int[] {0 , 9},    new int[]{3, 9},   new int[]{0, 6},
                 //new int[]{2, 8},
-
-                //new int[]{int.MinValue, int.MaxValue},new int[]{int.MinValue, int.MaxValue},
-                //new int[]{int.MinValue+1, int.MaxValue-1},new int[]{int.MinValue+2, int.MaxValue-2},
-                //new int[]{int.MinValue+1, int.MaxValue-1},new int[]{int.MinValue+2, int.MaxValue-2},
-                //new int[]{int.MinValue+3, int.MinValue + 10},new int[]{int.MaxValue - 20, int.MaxValue-10},
-
-                //new int[]{-2147483646, -2147483645 },new int[]{2147483646, 2147483647 }
-
-                //4
-                //new int[]{4289383, 51220269},new int[]{81692777, 96329692},new int[]{57747793, 81986128},
-                //new int[]{19885386, 69645878},new int[]{96516649, 186158070},new int[]{25202362, 75692389},
-                //new int[]{83368690, 85888749},new int[]{44897763, 112411689},new int[]{65180540, 105563966},
-                //new int[]{4089172, 7544908 },
-
-                //[[35005211,56600579],[94702567,121658996],[36465782,97487312],[78722862,112387985],[45174067,113877202],
-                //[1513929,3493731],[15634022,51357080],[69133069,95031236],[59961393,148979849],[28175011,84653053]]
-                //3
-                //new int[]{35005211, 56600579},new int[]{94702567, 121658996},new int[]{36465782, 97487312},
-                //new int[]{78722862, 112387985},new int[]{45174067, 113877202},new int[]{1513929,3493731},
-                //new int[]{15634022,51357080},new int[]{69133069,95031236},new int[]{59961393,148979849},new int[]{28175011,84653053 },
-
-                //3
-                //new int[] { 1, 2 },   new int[]{3, 4},  new int[]{5, 6},new int[]{5,7}
-
                 //2
                 new int[] { 10, 16 },   new int[]{2, 8},  new int[]{1, 6},new int[]{7,12}
             };
@@ -76,7 +53,7 @@ namespace LeetCodeAlgo
             //new TreeNode(5, new TreeNode(4), new TreeNode(6)));
             //var result = anwser.NumDecodings("111111111111111111111111111111111111111111111");
 
-            var result = anwser.FindMinArrowShots(mat2);
+            var result = anwser.SearchMatrix(mat1,10);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
