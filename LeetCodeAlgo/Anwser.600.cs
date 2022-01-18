@@ -8,7 +8,42 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        //611
+        ///605. Can Place Flowers
+        ///flowers cannot be planted in adjacent plots.
+        ///[1,0,0,0,1], 0-empty, 1-planted, n=new flowers can be plant?
+        public bool CanPlaceFlowers(int[] flowerbed, int n)
+        {
+            if (n == 0)
+                return true;
+
+            for(int i = 0; i < flowerbed.Length; i++)
+            {
+                if (isMaxFlowersExceed(i, flowerbed.Length - 1, n))
+                    return false;
+
+                if (flowerbed[i] == 1 ||(i > 0 && flowerbed[i - 1] == 1) ||(i < flowerbed.Length - 1&& flowerbed[i + 1] == 1))
+                {
+                    continue;
+                }
+                else
+                {
+                    flowerbed[i] = 1;
+                    n--;
+                    if (n == 0)
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool isMaxFlowersExceed(int start, int end, int n)
+        {
+            int count = (end - start + 1);
+            return count % 2 == 1 ? n > count / 2 + 1 : n > count / 2;
+        }
+
+        /// 611
         public int TriangleNumber(int[] nums)
         {
             Array.Sort(nums);
