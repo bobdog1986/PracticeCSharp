@@ -1969,7 +1969,51 @@ namespace LeetCodeAlgo
             return dp;
         }
 
-        //56
+        ///56. Merge Intervals
+        ///Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals,
+        ///and return an array of the non-overlapping intervals that cover all the intervals in the input.
+        ///Input: intervals =  [[1,3],[2,6],[8,10],[15,18]]
+        ///Output: [[1,6],[8,10],[15,18]]
+        public int[][] Merge(int[][] intervals)
+        {
+            if(intervals.Length==1)
+                return intervals;
+
+            List<int[]> list = new List<int[]>();
+
+            //must convert to list, or exceed time limit
+            var mat = intervals.OrderBy(x => x[0]).ToList();
+
+            int[] last = null;
+            for(int i = 0; i < mat.Count; i++)
+            {
+                var current = mat[i];
+                if (last == null)
+                {
+                    last = current;
+                }
+                else
+                {
+                    if(last[1]< current[0])
+                    {
+                        list.Add(last);
+                        last = current;
+                    }
+                    else
+                    {
+                        last[0] = Math.Min(last[0], current[0]);
+                        last[1] = Math.Max(last[1], current[1]);
+                    }
+                }
+            }
+
+            if(last!=null)
+                list.Add(last);
+
+            return list.ToArray();
+        }
+
+
         public IList<Interval> Merge(IList<Interval> intervals)
         {
             if (intervals == null || intervals.Count <= 1) return intervals;
