@@ -134,7 +134,7 @@ namespace LeetCodeAlgo
             return deep;
         }
 
-        //105
+        ///105
         public TreeNode BuildTree(int[] preorder, int[] inorder)
         {
             if (preorder == null || preorder.Length == 0) return null;
@@ -499,7 +499,7 @@ namespace LeetCodeAlgo
             //return a;
         }
 
-        //141. Linked List Cycle
+        ///141. Linked List Cycle
 
         public bool HasCycle(ListNode head)
         {
@@ -522,7 +522,26 @@ namespace LeetCodeAlgo
             return false;
         }
 
-        ///144. Binary Tree Preorder Traversal
+        ///142. Linked List Cycle II
+        ///If there is no cycle, return null.
+        public ListNode DetectCycle(ListNode head)
+        {
+            List<ListNode> nodes = new List<ListNode>();
+
+            var current = head;
+
+            while (current != null)
+            {
+                var exist=nodes.FirstOrDefault(x => x == current);
+                if (exist!=null)
+                    return exist;
+
+                nodes.Add(current);
+                current = current.next;
+            }
+            return null;
+        }
+        /// 144. Binary Tree Preorder Traversal
 
         public IList<int> PreorderTraversal(TreeNode root)
         {
@@ -935,11 +954,10 @@ namespace LeetCodeAlgo
             return count;
         }
 
-        //198. House Robber
+        ///198. House Robber
+        ///cannot rob adjacent houses
         public int Rob_198(int[] nums)
         {
-            if (nums == null || nums.Length == 0)
-                return 0;
             if (nums.Length == 1)
                 return nums[0];
 

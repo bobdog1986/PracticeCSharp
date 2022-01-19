@@ -8,7 +8,7 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        //509. Fibonacci Number
+        ///509. Fibonacci Number
         public int Fib(int n)
         {
             if (n == 0)
@@ -20,7 +20,33 @@ namespace LeetCodeAlgo
                 return 1;
             }
 
-            return Fib(n - 1) + Fib(n - 2);
+            int dp = 0;
+            int a1 = 0;
+            int a2 = 1;
+
+            int i = 2;
+            while (i <= n)
+            {
+                dp = a1 + a2;
+                a1 = a2;
+                a2 = dp;
+                i++;
+            }
+
+            return dp;
+        }
+        public int Fib_Recursion(int n)
+        {
+            if (n == 0)
+            {
+                return 0;
+            }
+            if (n == 1)
+            {
+                return 1;
+            }
+
+            return Fib_Recursion(n - 1) + Fib_Recursion(n - 2);
         }
 
         //542. 01 Matrix

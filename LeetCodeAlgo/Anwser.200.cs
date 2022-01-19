@@ -105,7 +105,8 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        //213. House Robber II
+        ///213. House Robber II
+        ///All houses at this place are arranged in a circle. N-1 is next to 0
         public int Rob(int[] nums)
         {
             if (nums == null || nums.Length == 0)

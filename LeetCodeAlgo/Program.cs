@@ -53,7 +53,7 @@ namespace LeetCodeAlgo
             //new TreeNode(5, new TreeNode(4), new TreeNode(6)));
             //var result = anwser.NumDecodings("111111111111111111111111111111111111111111111");
 
-            var result = anwser.MajorityElement(arr1);
+            var result = anwser.ClimbStairs(3);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();

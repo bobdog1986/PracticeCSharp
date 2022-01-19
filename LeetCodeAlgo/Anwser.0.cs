@@ -2243,25 +2243,24 @@ namespace LeetCodeAlgo
         }
 
         ///70. Climbing Stairs
-        ///
+        ///Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
         public int ClimbStairs(int n)
         {
-            //bottom to up
             if (n == 0) return 0;
             if (n == 1) return 1;
             if (n == 2) return 2;
 
-            //dp , not recursion
-            int seed1 = 1;
-            int seed2 = 1;
-            for (int i = n - 2; i > 0; i--)
+            int dp1 = 1;
+            int dp2 = 2;
+            int dp = 0;
+            for (int i = 3; i <= n; i++)
             {
-                int temp = seed1;
-                seed1 = seed2;
-                seed2 = seed2 + temp;
+                dp = dp1 + dp2;
+                dp1 = dp2;
+                dp2 = dp;
             }
 
-            return seed1 + seed2;
+            return dp;
         }
 
         public int ClimbStairs_Recursion(int n)
