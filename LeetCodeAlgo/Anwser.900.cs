@@ -8,56 +8,39 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        //918. Maximum Sum Circular Subarray
+        ///918. Maximum Sum Circular Subarray
+        public int MaxSubarraySumCircular(int[] nums)
+        {
+            if (nums.Length == 1)
+                return nums[0];
 
-        //918 failed, time exceed
-        //public int MaxSubarraySumCircular(int[] nums)
-        //{
-        //    if(nums.Length == 1)
-        //        return nums[0];
+            int sum = nums[0];
+            int max = nums[0];
+            int allSum = nums[0];
+            for (int i = 1; i < nums.Length; i++)
+            {
+                sum = Math.Max(sum + nums[i], nums[i]);
+                max = Math.Max(sum, max);
+                allSum += nums[i];
+            }
 
-        //    if (nums.Length == 2)
-        //        return nums[0] > 0 && nums[1] > 0 ? nums[0] + nums[1] : Math.Max(nums[0], nums[1]);
+            if (max < 0)
+            {
+                return max;
+            }
 
-        //    int[] arr=new int[nums.Length*2-1];
-        //    for(int i=0; i<arr.Length;i++)
-        //        arr[i]=nums[i%nums.Length];
+            int sum_n = nums[0];
+            int max_n = nums[0];
+            for (int i = 1; i < nums.Length; i++)
+            {
+                sum_n = Math.Min(sum_n + nums[i], nums[i]);
+                max_n = Math.Min(sum_n, max_n);
+            }
 
-        //    int[] dp=new int[nums.Length];
-        //    for(int i = 0; i < dp.Length; i++)
-        //    {
-        //        dp[i] = GetMaxSumOfArray(arr, i, dp.Length);
-        //    }
+            return Math.Max(max, allSum - max_n);
+        }
 
-        //    return dp.Max();
-        //}
 
-        //public int GetMaxSumOfArray(int[] nums, int start, int length)
-        //{
-        //    int max = nums[start];
-
-        //    for(int i=start; i < length + start;i++)
-        //    {
-        //        if (nums[i]<=0)
-        //        {
-        //            max=Math.Max(max,nums[1]);
-        //        }
-        //        else
-        //        {
-        //            int sum=nums[i];
-        //            for(int j=i+1; j<length+start; j++)
-        //            {
-        //                if (sum <= 0)
-        //                    break;
-        //                sum+=nums[j];
-
-        //                max = Math.Max(max, sum);
-        //            }
-        //        }
-        //    }
-
-        //    return max;
-        //}
         /// 931. Minimum Falling Path Sum
         public int MinFallingPathSum(int[][] matrix)
         {

@@ -608,15 +608,18 @@ namespace LeetCodeAlgo
             return Math.Max(dict.Values.Max(), dictY.Values.Max());
         }
 
-        //152. Maximum Product Subarray
+        ///152. Maximum Product Subarray
+        ///Given an integer array nums, find a contiguous non-empty subarray within the array
+        ///that has the largest product, and return the product.
+        ///-10 <= nums[i] <= 10
         public int MaxProduct(int[] nums)
         {
-            int max = nums[0], min = nums[0], ans = nums[0];
-            int n = nums.Length;
+            int max = nums[0];
+            int min = nums[0];
+            int result = nums[0];
 
-            for (int i = 1; i < n; i++)
+            for (int i = 1; i < nums.Length; i++)
             {
-                // Swapping min and max
                 if (nums[i] < 0)
                 {
                     int temp = max;
@@ -626,11 +629,10 @@ namespace LeetCodeAlgo
 
                 max = Math.Max(nums[i], max * nums[i]);
                 min = Math.Min(nums[i], min * nums[i]);
-
-                ans = Math.Max(ans, max);
+                result = Math.Max(max, result);
             }
 
-            return ans;
+            return result;
         }
 
         public int MaxProduct_1(int[] nums)
