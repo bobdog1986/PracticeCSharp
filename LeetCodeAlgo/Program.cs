@@ -15,7 +15,7 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var arr1 = new int[] {2,2,2,2,2,2,1,1,1,1,1};
+            var arr1 = new int[] {2,2,2,1,1,1,0,0,0};
             //var arr2 = new int[] {-76, 3, 66, -32, 64, 2, -19, -8, -5, -93, 80, -5, -76, -78, 64, 2, 16};
             //var arr1 = new string[] { "acc", "aaa", "aaba" };
             var mat1 = new int[][]
@@ -52,15 +52,17 @@ namespace LeetCodeAlgo
             //new TreeNode(1, new TreeNode(0), new TreeNode(2)),
             //new TreeNode(5, new TreeNode(4), new TreeNode(6)));
             //var result = anwser.NumDecodings("111111111111111111111111111111111111111111111");
-
-            var result = anwser.BackspaceCompare("abcd","bbcd");
+            Console.WriteLine(String.Join(",", arr1));
+            anwser.SortColors(arr1);
+            // var result = anwser.SortColors(arr1);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
-            Console.WriteLine(String.Join(",", result));
+            //Console.WriteLine(String.Join(",", result));
+            Console.WriteLine(String.Join(",", arr1));
 
             //Console.WriteLine($"Result = {result}");
             //Console.WriteLine(result.val.ToString() + result.next.val);

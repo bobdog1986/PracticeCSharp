@@ -2335,7 +2335,44 @@ namespace LeetCodeAlgo
             return false;
         }
 
-        ///77. Combinations
+        ///75. Sort Colors
+        ///We will use the integers 0, 1, and 2 to represent the color red, white, and blue, respectively.
+        /// sort as 0->1->2
+        public void SortColors(int[] nums)
+        {
+            int i = 0;
+            int red = 0;
+            int white = 0;
+            int blue = 0;
+            int temp;
+            while (i < nums.Length - blue)
+            {
+                if(nums[i] == 0)
+                {
+                    if (i != red)
+                    {
+                        temp = nums[red];
+                        nums[red] = nums[i];
+                        nums[i] = temp;
+                    }
+                    red++;
+                    i++;
+                }
+                else if (nums[i] == 1)
+                {
+                    i++;
+                    white++;
+                }
+                else
+                {
+                    temp = nums[nums.Length - 1 - blue];
+                    nums[nums.Length - 1 - blue]=nums[i];
+                    nums[i] = temp;
+                    blue++;
+                }
+            }
+        }
+        /// 77. Combinations
         public IList<IList<int>> Combine(int n, int k)
         {
             if (n == 0)
