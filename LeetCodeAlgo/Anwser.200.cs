@@ -153,7 +153,73 @@ namespace LeetCodeAlgo
             return dist.Count() != nums.Length;
         }
 
-        ///226. Invert Binary Tree
+        ///221. Maximal Square
+        ///Given an m x n binary matrix filled with 0's and 1's,
+        ///find the largest square containing only 1's and return its area.
+        public int MaximalSquare(char[][] matrix)
+        {
+            //loop matrix from top to bottom, you can also try left to right
+            //store count of last '1'
+            int[] dp=new int[matrix[0].Length];
+
+            //max len of square
+            int len = 0;
+
+            foreach(var row in matrix)
+            {
+                for (int i = 0; i < dp.Length; i++)
+                {
+                    if (row[i] == '0')
+                    {
+                        dp[i] = 0;
+                    }
+                    else
+                    {
+                        dp[i]++;
+                    }
+                }
+
+                for (int i = 0; i < dp.Length; i++)
+                {
+                    if (dp[i] <= len)
+                        continue;
+
+                    //count of '1' on left side and right side
+                    int left = 0;
+                    int right = 0;
+                    //width = me(1) + left + right;
+                    int width = 1;
+
+                    //j to avoid to death loop
+                    int j = 0;
+                    int count = Math.Max(i, dp.Length - 1 - i);
+
+                    while (j < count && width <= dp[i] && (i - 1 - left >= 0 || i + 1 + right <= dp.Length - 1))
+                    {
+                        if(((i - 1 - left)<0 || dp[i - 1 - left] < dp[i])
+                            &&((i + 1 + right> dp.Length -1) || dp[i + 1 + right] < dp[i]))
+                        {
+                            break;
+                        }
+
+                        if (i - 1 - left >= 0 && dp[i - 1 - left] >= dp[i])
+                            left++;
+
+                        if (i + 1 + right <= dp.Length-1 && dp[i + 1 + right] >= dp[i])
+                            right++;
+
+                        width = 1 + left + right;
+
+                        j++;
+                    }
+
+                    len = Math.Max(Math.Min(width,dp[i]) , len);
+                }
+            }
+
+            return len * len;
+        }
+        /// 226. Invert Binary Tree
         ///Given the root of a binary tree, invert the tree, and return its root.
 
         public TreeNode InvertTree(TreeNode root)
