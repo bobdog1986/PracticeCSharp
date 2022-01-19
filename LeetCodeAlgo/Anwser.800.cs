@@ -8,7 +8,56 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        ///849. Maximize Distance to Closest Person
+        ///844. Backspace String Compare
+        ///Given two strings s and t, return true if they are equal when both are typed into empty text editors.
+        ///'#' means a backspace character.Note that after backspacing an empty text, the text will continue empty.
+        public bool BackspaceCompare(string s, string t)
+        {
+            var arr1=s.ToArray();
+            var arr2=t.ToArray();
+
+            Stack<char> stack1 = new Stack<char>();
+            Stack<char> stack2 = new Stack<char>();
+
+            for(int i = 0; i < arr1.Length; i++)
+            {
+                if (arr1[i] == '#')
+                {
+                    if(stack1.Count > 0)
+                        stack1.Pop();
+                }
+                else
+                {
+                    stack1.Push(arr1[i]);
+                }
+            }
+
+            for (int j = 0; j < arr2.Length; j++)
+            {
+                if (arr2[j] == '#')
+                {
+                    if (stack2.Count > 0)
+                        stack2.Pop();
+                }
+                else
+                {
+                    stack2.Push(arr2[j]);
+                }
+            }
+
+            if (stack1.Count != stack2.Count)
+                return false;
+            int count = stack1.Count;
+            for(int i = 0; i < count; i++)
+            {
+                if (stack1.Pop() != stack2.Pop())
+                    return false;
+            }
+
+            return true;
+
+        }
+        /// 849. Maximize Distance to Closest Person
         public int MaxDistToClosest(int[] seats)
         {
             int max = 1;
