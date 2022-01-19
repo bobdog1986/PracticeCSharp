@@ -120,7 +120,9 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        //728
+        ///706. Design HashMap, see MyHashMap
+
+        /// 728
         public IList<int> SelfDividingNumbers(int left, int right)
         {
             List<int> result = new List<int>();
