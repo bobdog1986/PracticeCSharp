@@ -22,9 +22,10 @@ namespace LeetCodeAlgo
             {
                 //new int[]{32768,65536},
                 //new int[]{32768,65536},
-                new int[]{1,2,3},
-                new int[]{4,5,6},
-                new int[]{7,8,9},
+                new int[]{1,3,1,2,3},
+                new int[]{1,5,3,1,3},
+                new int[]{4,2,3,1,3},
+                new int[]{4,2,3,1,3},
                 //new int[]{6,5,7,},
                 //new int[]{0,0,1,0,1,1,1,0,1,1},
             };
@@ -54,22 +55,22 @@ namespace LeetCodeAlgo
             //var result = anwser.NumDecodings("111111111111111111111111111111111111111111111");
             Console.WriteLine(String.Join(",", arr1));
             //anwser.SortColors(arr1);
-            var result = anwser.MatrixBlockSum(mat1,2);
+            var result = anwser.MinPathSum(mat1);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
-            //Console.WriteLine(String.Join(",", result));
+            Console.WriteLine(String.Join(",", result));
             //Console.WriteLine(String.Join(",", arr1));
 
             //Console.WriteLine($"Result = {result}");
             //Console.WriteLine(result.val.ToString() + result.next.val);
-            if (result.Length > 0)
-                Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
-            else
-                Console.WriteLine("Result count = 0");
+            //if (result.Length > 0)
+            //    Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+            //else
+            //    Console.WriteLine("Result count = 0");
             //Console.WriteLine(String.Join(",", arr1));
 
             Console.WriteLine("=========Finish!========");

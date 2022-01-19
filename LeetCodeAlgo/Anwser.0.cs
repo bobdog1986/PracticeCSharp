@@ -2079,7 +2079,243 @@ namespace LeetCodeAlgo
             return intervals;
         }
 
-        //65
+        ///64. Minimum Path Sum
+        ///Given a m x n grid filled with non-negative numbers,
+        ///find a path from top left to bottom right,
+        ///which minimizes the sum of all numbers along its path.
+        ///Note: You can only move either down or right at any point in time.
+        public int MinPathSum(int[][] grid)
+        {
+            int m = grid.Length, n = grid[0].Length;
+            var memo = new int[m + 1, n + 1];
+            for (int i = 2; i <= m; i++)
+                memo[i, 0] = int.MaxValue;
+            for (int i = 0; i <= n; i++)
+                memo[0, i] = int.MaxValue;
+            memo[1, 0] = 0;
+
+            for (int i = 1; i <= m; i++)
+            {
+                for (int j = 1; j <= n; j++)
+                {
+                    memo[i, j] = Math.Min(memo[i - 1, j], memo[i, j - 1]) + grid[i - 1][j - 1];
+                }
+            }
+            return memo[m, n];
+        }
+
+        public int MinPathSum_MyDp_Ugly(int[][] grid)
+        {
+            int i = 0;
+            int rowLen = grid.Length;
+            int colLen = grid[0].Length;
+            List<int> dp=new List<int>();
+
+            //r+c-1 times, everytime calculate all possible path dp values
+            int count = rowLen - 1 + colLen;
+            while (i< count)
+            {
+                if (i == 0)
+                {
+                    dp.Add(grid[0][0]);
+                }
+                else
+                {
+                    List<int> dp2=new List<int>();
+
+                    int dpLen=0;
+                    int startCol = 0;
+                    int startRow = 0;
+
+                    if (rowLen == colLen)
+                    {
+                        if (i < rowLen)
+                        {
+                            dpLen = i + 1;
+                            startCol = i;
+                            startRow = 0;
+                        }
+                        else
+                        {
+                            dpLen = rowLen - (i - (rowLen - 1));
+                            startCol = (colLen - 1);
+                            startRow = i - (rowLen - 1);
+                        }
+
+                    }
+                    else if (rowLen > colLen)
+                    {
+                        if (i < colLen)
+                        {
+                            dpLen = i + 1;
+                            startCol = i;
+                            startRow = 0;
+                        }
+                        else if (i < rowLen)
+                        {
+                            dpLen = colLen;
+                            startCol = colLen - 1;
+                            startRow = i - (colLen - 1);
+                        }
+                        else
+                        {
+                            dpLen = colLen - (i - (rowLen - 1));
+                            startCol = colLen - 1;
+                            startRow = i - (colLen - 1);
+                        }
+                    }
+                    else//rowLen<colLen
+                    {
+                        if (i < rowLen)
+                        {
+                            dpLen = i + 1;
+                            startCol = i;
+                            startRow = 0;
+                        }
+                        else if (i < colLen)
+                        {
+                            dpLen = rowLen;
+                            startCol = i;
+                            startRow = 0;
+                        }
+                        else
+                        {
+                            dpLen = rowLen - (i - (colLen - 1));
+                            startCol = colLen - 1;
+                            startRow = i - (colLen - 1);
+                        }
+                    }
+
+                    int j = 0;
+                    while(j < dpLen)
+                    {
+                        int y = startCol - j;
+                        int x = startRow + j;
+
+                        int a = 0;
+
+                        if (rowLen == colLen)
+                        {
+                            if (x == 0)
+                            {
+                                //first one
+                                a = grid[x][y] + dp[j];
+                            }
+                            else if (y == 0)
+                            {
+                                //last one
+                                a = grid[x][y] + dp[j - 1];
+                            }
+                            else
+                            {
+                                if (i < rowLen)
+                                {
+                                    a = Math.Min(grid[x][y] + dp[j - 1], grid[x][y] + dp[j]);
+                                }
+                                else
+                                {
+                                    a = Math.Min(grid[x][y] + dp[j + 1], grid[x][y] + dp[j]);
+                                }
+                            }
+                        }
+                        else if (rowLen > colLen)
+                        {
+                            if (dpLen > dp.Count)
+                            {
+                                if (x == 0)
+                                {
+                                    //first one, from up
+                                    a = grid[x][y] + dp[j];
+                                }
+                                else if (y == 0)
+                                {
+                                    //last one, from left
+                                    a = grid[x][y] + dp[j - 1];
+                                }
+                                else
+                                {
+                                    a = Math.Min(grid[x][y] + dp[j - 1], grid[x][y] + dp[j]);
+                                }
+                            }
+                            else if (dpLen == dp.Count)
+                            {
+                                if (y == 0)
+                                {
+                                    //last one, from left
+                                    a = grid[x][y] + dp[j];
+                                }
+                                else
+                                {
+                                    a = Math.Min(grid[x][y] + dp[j + 1], grid[x][y] + dp[j]);
+                                }
+                            }
+                            else
+                            {
+                                a = Math.Min(grid[x][y] + dp[j + 1], grid[x][y] + dp[j]);
+                            }
+                        }
+                        else
+                        {
+                            if (dpLen > dp.Count)
+                            {
+                                if (x == 0)
+                                {
+                                    a = grid[x][y] + dp[j];
+                                }
+                                else if (y == 0)
+                                {
+                                    a = grid[x][y] + dp[j - 1];
+                                }
+                                else
+                                {
+                                    a = Math.Min(grid[x][y] + dp[j - 1], grid[x][y] + dp[j]);
+                                }
+                            }
+                            else if (dpLen == dp.Count)
+                            {
+                                if (x == 0)
+                                {
+                                    a = grid[x][y] + dp[j];
+                                }
+                                else
+                                {
+                                    a = Math.Min(grid[x][y] + dp[j - 1], grid[x][y] + dp[j]);
+                                }
+                            }
+                            else
+                            {
+                                a = Math.Min(grid[x][y] + dp[j + 1], grid[x][y] + dp[j]);
+                            }
+                        }
+
+                        dp2.Add(a);
+                        j++;
+                    }
+                    dp = dp2;
+                }
+
+                i++;
+            }
+
+            return dp[0];
+        }
+
+        ///Recursion will time out
+        public int MinPathSum_Recursion(int[][] grid, int r, int c)
+        {
+            if (r == 0 && c == 0)
+                return grid[0][0];
+
+            if (r <= 0)
+                return grid[r][c] + MinPathSum_Recursion(grid,0, c - 1);
+
+            if(c<=0)
+                return grid[r][c] + MinPathSum_Recursion(grid, r-1, 0);
+
+            return Math.Min(grid[r][c] + MinPathSum_Recursion(grid, r, c - 1), grid[r][c] + MinPathSum_Recursion(grid, r - 1, c));
+        }
+
+        /// 65
         public bool IsNumber(string s)
         {
             if (string.IsNullOrEmpty(s)) return false;
