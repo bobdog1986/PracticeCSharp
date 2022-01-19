@@ -155,7 +155,37 @@ namespace LeetCodeAlgo
             return list3.ToArray();
         }
 
-        //994. Rotting Oranges
+        ///986. Interval List Intersections
+        ///The intersection of two closed intervals is a set of real numbers that are either empty or represented as a closed interval.
+        ///For example, the intersection of [1, 3] and [2, 4] is [2, 3].
+        public int[][] IntervalIntersection(int[][] firstList, int[][] secondList)
+        {
+            List<int[]> list = new List<int[]>();
+
+            if (firstList.Length == 0 || secondList.Length == 0)
+                return list.ToArray();
+
+            foreach(var first in firstList)
+            {
+                if (first[1] < secondList[0][0])
+                    continue;
+
+                if (first[0] > secondList[secondList.Length - 1][1])
+                    break;
+
+                foreach(var second in secondList)
+                {
+                    if (first[1] < second[0] || first[0] > second[1])
+                        continue;
+
+                    list.Add(new int[] { Math.Max(first[0],second[0]),Math.Min(first[1],second[1])});
+                }
+            }
+
+            return list.ToArray();
+
+        }
+        /// 994. Rotting Oranges
 
         public int OrangesRotting(int[][] grid)
         {
