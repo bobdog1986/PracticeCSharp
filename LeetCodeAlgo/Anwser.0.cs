@@ -873,6 +873,33 @@ namespace LeetCodeAlgo
         ///-1000 <= nums[i] <= 1000, len = [3,1000], -10000<=target<=10000
         public int ThreeSumClosest(int[] nums, int target)
         {
+            int closestSum = nums[0] + nums[1] + nums[2];
+            Array.Sort(nums);
+
+            // Go through nums
+            for (int i = 0; i < nums.Length - 2; i++)
+            {
+                // do 2sum modified
+                int right = nums.Length - 1;
+                int left = i + 1;
+                while (left < right)
+                {
+                    int sum = nums[i] + nums[left] + nums[right];
+                    if (sum == target)
+                        return sum;
+                    if (Math.Abs(target - sum) < Math.Abs(target - closestSum))
+                        closestSum = sum;
+                    if (sum > target)
+                        right--;
+                    else
+                        left++;
+                }
+            }
+            return closestSum;
+        }
+
+        public int ThreeSumClosest_My(int[] nums, int target)
+        {
             if (nums.Length == 3)
                 return nums[0] + nums[1] + nums[2];
 
@@ -1292,6 +1319,56 @@ namespace LeetCodeAlgo
             }
 
             return minDiff + shipTarget - allShip;
+        }
+
+        ///17. Letter Combinations of a Phone Number
+        ///digits[i] is a digit in the range['2', '9'].
+        /// 2- ABC, 3-DEF, 4-GHI, 5-JKL,6-MNO,7-PQRS,8-TUV 9-WXYZ
+        public IList<string> LetterCombinations(string digits)
+        {
+            Dictionary<char,List<char>> dict=new Dictionary<char, List<char>>();
+            dict.Add('2', new List<char>() { 'a', 'b', 'c' });
+            dict.Add('3', new List<char>() { 'd', 'e', 'f' });
+            dict.Add('4', new List<char>() { 'g', 'h', 'i' });
+            dict.Add('5', new List<char>() { 'j', 'k', 'l' });
+            dict.Add('6', new List<char>() { 'm', 'n', 'o' });
+            dict.Add('7', new List<char>() { 'p', 'q', 'r', 's' });
+            dict.Add('8', new List<char>() { 't', 'u', 'v' });
+            dict.Add('9', new List<char>() { 'w','x', 'y', 'z' });
+
+            var results=new List<List<char>>();
+            foreach(var d in digits)
+            {
+                if (results.Count == 0)
+                {
+                    List<List<char>> list=new List<List<char>>();
+
+                    foreach(char c in dict[d])
+                    {
+                        list.Add(new List<char> { c });
+                    }
+
+                    results = list;
+                }
+                else
+                {
+                    List<List<char>> list = new List<List<char>>();
+
+                    foreach (var l in results)
+                    {
+                        foreach(char c in dict[d])
+                        {
+                            var sub = new List<char>(l);
+                            sub.Add(c);
+                            list.Add(sub);
+                        }
+                    }
+
+                    results = list;
+                }
+            }
+
+            return results.Select(x=>string.Join("",x)).ToList();
         }
 
         /// 18. 4Sum
