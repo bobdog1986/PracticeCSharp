@@ -15,8 +15,11 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var arr1 = new int[] {2,2,2,1,1,1,0,0,0};
+            //var arr1 = new int[] {332484035, 524908576, 855865114, 632922376, 222257295, 690155293, 112677673, 679580077, 337406589, 290818316, 877337160, 901728858, 679284947, 688210097, 692137887, 718203285, 629455728, 941802184};
             //var arr2 = new int[] {-76, 3, 66, -32, 64, 2, -19, -8, -5, -93, 80, -5, -76, -78, 64, 2, 16};
+            var arr1 = new int[] { 312884470 };//{ 3,6,7,11 };
+            //var input1 = 823855818;
+            var input1 = 312884469;//result=23
             //var arr1 = new string[] { "acc", "aaa", "aaba" };
             var mat1 = new int[][]
             {
@@ -55,7 +58,7 @@ namespace LeetCodeAlgo
             //var result = anwser.NumDecodings("111111111111111111111111111111111111111111111");
             Console.WriteLine(String.Join(",", arr1));
             //anwser.SortColors(arr1);
-            var result = anwser.MinPathSum(mat1);
+            var result = anwser.MinEatingSpeed(arr1, input1);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();

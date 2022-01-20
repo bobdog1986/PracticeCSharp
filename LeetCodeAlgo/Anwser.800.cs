@@ -94,6 +94,33 @@ namespace LeetCodeAlgo
             return max;
         }
 
+        ///875. Koko Eating Bananas
+        ///There are n piles of bananas, the ith pile has piles[i] bananas.
+        ///The guards have gone and will come back in h hours.
+        ///Find min numb to eat all bananas in h hours. each time can only eat 1 index;
+        public int MinEatingSpeed(int[] piles, int h)
+        {
+            if (piles.Length == h)
+                return piles.Max();
+
+            int low = 1, high = 1000000000;
+            int mid = (low + high) / 2;
+            while (low <= high)
+            {
+                int sum = 0;
+                for (int i = 0; i < piles.Length; i++)
+                    sum += (int)Math.Ceiling(1.0 * piles[i] / mid);
+
+                if (sum > h)
+                    low = mid + 1;
+                else
+                    high = mid - 1;
+
+                mid = (low + high) / 2;
+            }
+            return low;
+        }
+
         /// 876. Middle of the Linked List
         public ListNode MiddleNode(ListNode head)
         {
