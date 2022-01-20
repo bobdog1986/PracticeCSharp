@@ -122,6 +122,34 @@ namespace LeetCodeAlgo
 
         ///706. Design HashMap, see MyHashMap
 
+        /// 713. Subarray Product Less Than K
+        /// Sliding-Window
+        public int NumSubarrayProductLessThanK(int[] nums, int k)
+        {
+            if (k <= 1)
+                return 0;
+
+            int ans = 0;
+            int product = 1;
+            int start = 0;
+            for(int i = 0; i < nums.Length; i++)
+            {
+                product*=nums[i];
+                while (product >= k && start <= i && start>=0)
+                {
+                    product = product / nums[start];
+                    start++;
+                }
+
+                if (product < k)
+                {
+                    ans += (i - start + 1);
+                }
+            }
+
+            return ans;
+        }
+
         /// 728
         public IList<int> SelfDividingNumbers(int left, int right)
         {

@@ -15,7 +15,7 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var arr1 = new int[] {2,2,2,1,1,1,0,0,0};
+            var arr1 = new int[] {57, 44, 92, 28, 66, 60, 37, 33, 52, 38, 29, 76, 8, 75, 22};
             //var arr1 = new int[] {1,2,3,4};
             //var arr1 = new int[] { 312884470 };//{ 3,6,7,11 };
             //var input1 = 823855818;
@@ -58,7 +58,7 @@ namespace LeetCodeAlgo
             //var result = anwser.NumDecodings("111111111111111111111111111111111111111111111");
             Console.WriteLine(String.Join(",", arr1));
             //anwser.SortColors(arr1);
-            var result = anwser.FindAnagrams("acdcaeccde", "c");
+            var result = anwser.NumSubarrayProductLessThanK(arr1, 18);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
