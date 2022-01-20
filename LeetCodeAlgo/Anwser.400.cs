@@ -14,16 +14,16 @@ namespace LeetCodeAlgo
         ///A subarray is a contiguous subsequence of the array.
         public int NumberOfArithmeticSlices(int[] nums)
         {
-            if(nums == null || nums.Length <=2)
+            if (nums == null || nums.Length <= 2)
                 return 0;
 
             int sum = 0;
 
-            for (int i= 0; i< nums.Length-2; i++)
+            for (int i = 0; i < nums.Length - 2; i++)
             {
-                int len = nums[i+1]-nums[i];
+                int len = nums[i + 1] - nums[i];
                 int count = 0;
-                while (i + count * 1 < nums.Length && nums[i + count * 1] ==nums[i]+count*len)
+                while (i + count * 1 < nums.Length && nums[i + count * 1] == nums[i] + count * len)
                 {
                     count++;
                 }
@@ -43,6 +43,133 @@ namespace LeetCodeAlgo
 
             return sum;
         }
+
+        /// 438. Find All Anagrams in a string
+        /// should use sliding window
+        public List<int> FindAnagrams(string s, string p)
+        {
+            if (p.Length > s.Length)
+                return new List<int>();
+            int left = 0, right = 0;
+            int[] arr = new int[26];
+            int[] target = new int[26];
+            List<int> al = new List<int>();
+
+            while (right < p.Length)
+            {
+                arr[s[right] - 'a']++;
+                target[p[right] - 'a']++;
+                right++;
+            }
+            right--;
+
+            while (right < s.Length)
+            {
+                bool isEqual = true;
+                for(int i = 0; i < 26; i++)
+                {
+                    if(arr[i] != target[i])
+                    {
+                        isEqual = false;
+                        break;
+                    }
+                }
+                if (isEqual)
+                    al.Add(left);
+
+                right++;
+                if (right < s.Length)
+                    arr[s[right] - 'a']++;
+
+                arr[s[left] - 'a']--;
+                left++;
+            }
+            return al;
+        }
+
+        public IList<int> FindAnagrams_My(string s, string p)
+        {
+            List<int> ans = new List<int>();
+
+            var arr1 = s.ToArray();
+            var arr2 = p.ToArray();
+
+            Dictionary<char, int> dict = new Dictionary<char, int>();
+            foreach (var i in arr2)
+            {
+                if (dict.ContainsKey(i))
+                {
+                    dict[i]++;
+                }
+                else
+                {
+                    dict.Add(i, 1);
+                }
+            }
+
+            Dictionary<char, List<int>> match = new Dictionary<char, List<int>>();
+
+            int len = 0;
+            int start = 0;
+            for (int i = 0; i < arr1.Length; i++)
+            {
+                if (arr2.Contains(arr1[i]))
+                {
+                    if (len == 0)
+                        start = i;
+
+                    if (match.ContainsKey(arr1[i]))
+                    {
+                        if (match[arr1[i]].Count < dict[arr1[i]])
+                        {
+                            match[arr1[i]].Add(i);
+                            len++;
+                        }
+                        else
+                        {
+                            int j = match[arr1[i]][0];
+                            foreach (var pair in match)
+                            {
+                                int k = pair.Value.RemoveAll(x => x <= j);
+                                len = len - k;
+                                start += k;
+                            }
+
+                            match[arr1[i]].Add(i);
+                            len++;
+                        }
+                    }
+                    else
+                    {
+                        match.Add(arr1[i], new List<int>() { i });
+                        len++;
+                    }
+
+                    if (len == arr2.Length)
+                    {
+                        ans.Add(start);
+                        foreach (var m in match)
+                        {
+                            if (m.Value.Contains(start))
+                            {
+                                m.Value.Remove(start);
+                                break;
+                            }
+                        }
+                        start++;
+                        len--;
+                    }
+                }
+                else
+                {
+                    match.Clear();
+                    len = 0;
+                }
+            }
+
+            return ans;
+        }
+
         /// 443
         public int Compress(char[] chars)
         {

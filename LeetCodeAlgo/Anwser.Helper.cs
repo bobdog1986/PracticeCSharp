@@ -80,5 +80,17 @@ using System.Threading.Tasks;
         {
             return getFactorial(n, count) / getFactorial(count);
         }
+
+        public void PrintListNode(ListNode listNode)
+        {
+            List<int> list = new List<int>();
+            while (listNode != null)
+            {
+                list.Add(listNode.val);
+                listNode = listNode.next;
+            }
+
+            Console.WriteLine($"ListNode is [{string.Join(",", list)}]");
+        }
     }
 }
