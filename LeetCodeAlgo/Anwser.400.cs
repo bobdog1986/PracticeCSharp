@@ -8,7 +8,42 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        //443
+        ///413. Arithmetic Slices
+        ///at least 3 nums with same distance, eg. [1,2,3,4], [1,1,1]
+        ///-1000 <= nums[i] <= 1000
+        ///A subarray is a contiguous subsequence of the array.
+        public int NumberOfArithmeticSlices(int[] nums)
+        {
+            if(nums == null || nums.Length <=2)
+                return 0;
+
+            int sum = 0;
+
+            for (int i= 0; i< nums.Length-2; i++)
+            {
+                int len = nums[i+1]-nums[i];
+                int count = 0;
+                while (i + count * 1 < nums.Length && nums[i + count * 1] ==nums[i]+count*len)
+                {
+                    count++;
+                }
+
+                if (count >= 3)
+                {
+                    int j = 3;
+                    while (j <= count)
+                    {
+                        sum += count - (j - 1);
+                        j++;
+                    }
+                }
+
+                i += count - 2;
+            }
+
+            return sum;
+        }
+        /// 443
         public int Compress(char[] chars)
         {
             if (chars.Length == 1) return chars.Length;
