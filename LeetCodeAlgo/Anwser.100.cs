@@ -476,6 +476,38 @@ namespace LeetCodeAlgo
             return max = Math.Max(current, max);
         }
 
+        /// 134. Gas Station
+        ///  Given two integer arrays gas and cost, return the starting gas station's index
+        ///  if you can travel around the circuit once in the clockwise direction,
+        ///  otherwise return -1. If there exists a solution, it is guaranteed to be unique
+        /// start/arrive at i-th, will get gas[i]; go to next will cost[i]
+
+        public int CanCompleteCircuit(int[] gas, int[] cost)
+        {
+            int ans = -1;
+
+            for (int i = 0; i < gas.Length; i++)
+            {
+                if (gas[i] == 0 || gas[i] < cost[i])
+                    continue;
+
+                int sum = gas[i] - cost[i];
+                int j = i == gas.Length - 1 ? 0 : i + 1;
+
+                while (j != i)
+                {
+                    sum = sum + gas[j] - cost[j];
+                    if (sum < 0)
+                        break;
+                    j = j == gas.Length - 1 ? 0 : j + 1;
+                }
+
+                if (j == i)
+                    return i;
+            }
+
+            return ans;
+        }
         /// 136. Single Number
         /// Given a non - empty array of integers nums, every element appears twice except for one.Find that single one.
         /// You must implement a solution with a linear runtime complexity and use only constant extra space.
