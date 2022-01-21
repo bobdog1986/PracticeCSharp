@@ -105,7 +105,36 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        ///213. House Robber II
+        ///209. Minimum Size Subarray Sum
+        ///return the minimal length of a contiguous subarray of which the sum >= target.
+        ///If there is no such subarray, return 0 instead.
+        public int MinSubArrayLen(int target, int[] nums)
+        {
+            int min = nums.Length+1;
+
+            for(int i = 0; i < nums.Length; i++)
+            {
+                int sum = 0;
+                int j = i;
+                while ( j < nums.Length && j-i+1<min)
+                {
+                    sum+=nums[j];
+
+                    if (sum >= target)
+                    {
+                        min = j - i + 1;
+                        break;
+                    }
+                    j++;
+                }
+
+                if (min == 1)
+                    return 1;
+            }
+
+            return min== nums.Length + 1?0:min;
+        }
+        /// 213. House Robber II
         ///All houses at this place are arranged in a circle. N-1 is next to 0
         public int Rob(int[] nums)
         {
