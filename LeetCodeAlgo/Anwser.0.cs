@@ -1450,7 +1450,35 @@ namespace LeetCodeAlgo
             }
         }
 
-        //53. Maximum Subarray
+        ///48. Rotate Image
+        ///You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
+        ///You have to rotate the image in-place, which means you have to modify the input 2D matrix directly.
+        ///DO NOT allocate another 2D matrix and do the rotation.
+        public void Rotate(int[][] matrix)
+        {
+            int[][] temp = new int[matrix.Length][];
+            for (int i = 0; i < temp.Length; i++)
+                temp[i]=new int[matrix[i].Length];
+
+            for(int i = 0;i < temp.Length; i++)
+            {
+                for (int j = 0; j < temp[i].Length; j++)
+                {
+                    temp[i][j] = matrix[temp.Length-1-j][i];
+                }
+            }
+
+
+            for (int i = 0; i < matrix.Length; i++)
+            {
+                for (int j = 0; j < matrix[i].Length; j++)
+                {
+                    matrix[i][j] = temp[i][j];
+                }
+            }
+
+        }
+        /// 53. Maximum Subarray
 
         public int MaxSubArray(int[] nums)
         {
