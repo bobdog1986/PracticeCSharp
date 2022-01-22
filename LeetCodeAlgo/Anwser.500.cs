@@ -231,7 +231,55 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        //557. Reverse Words in a String III
+        ///547. Number of Provinces
+        ///BFS/DFS, same to 200
+        public int FindCircleNum(int[][] isConnected)
+        {
+            int[] arr = new int[isConnected.Length];
+            for(int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = 1;
+            }
+            int ans = 0;
+            for (int i = 0; i < isConnected.Length; i++)
+            {
+                if (arr[i] == 0)
+                {
+                    continue;
+                }
+                else
+                {
+                    ans++;
+                    arr[i] = 0;
+                }
+
+                for (int j = 0; j < isConnected[i].Length; j++)
+                {
+                    if (i!=j && isConnected[i][j] == 1)
+                    {
+                        FindCircleNum_RemoveAllConnected(isConnected, arr, i, j);
+                    }
+                }
+            }
+            return ans;
+        }
+
+        public void FindCircleNum_RemoveAllConnected(int[][] isConnected,int[] arr, int r, int c)
+        {
+            if (arr[c] == 0)
+                return;
+
+            arr[c] = 0;
+
+            for (int j = 0; j < isConnected[c].Length; j++)
+            {
+                if (c != j && isConnected[c][j] == 1 )
+                {
+                    FindCircleNum_RemoveAllConnected(isConnected, arr, c, j);
+                }
+            }
+        }
+        /// 557. Reverse Words in a String III
         public string ReverseWords(string s)
         {
             var arr = s.Split(' ');
