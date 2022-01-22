@@ -44,6 +44,30 @@ namespace LeetCodeAlgo
             return sum;
         }
 
+        /// 435. Non-overlapping Intervals
+        /// there are some embeded intervals, use Math.Min()
+        public int EraseOverlapIntervals(int[][] intervals)
+        {
+            int ans=0;
+            var mat = intervals.OrderBy(x => x[0]).ToList();
+
+            int end = mat[0][1];
+
+            for(int i = 1; i < mat.Count; i++)
+            {
+                if (mat[i][0] < end)
+                {
+                    ans++;
+                    end = Math.Min(end, mat[i][1]);
+                }
+                else
+                {
+                    end=mat[i][1];
+                }
+            }
+
+            return ans;
+        }
         /// 438. Find All Anagrams in a string
         /// should use sliding window
         public List<int> FindAnagrams(string s, string p)

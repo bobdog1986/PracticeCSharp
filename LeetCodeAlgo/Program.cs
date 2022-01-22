@@ -23,12 +23,20 @@ namespace LeetCodeAlgo
             //var arr1 = new string[] { "acc", "aaa", "aaba" };
             var mat1 = new int[][]
             {
-                new int[]{1,4,7,11,15},
-                new int[]{2,5,8,12,19},
-                new int[]{3,6,9,16,22},
-                new int[]{10,13,14,17,24},
-                new int[]{18,21,23,26,30},
+                new int[]{-52, 31},
+                new int[]{-73, -26},
+                new int[]{82, 97},
+                new int[]{-65, -11},
+                new int[]{-62, -49},
+                new int[]{95, 99},
+                new int[]{58, 95},
+                new int[]{-31, 49},
+                new int[]{66, 98},
+                new int[]{-63, 2},
+                new int[]{30, 47},
+                new int[]{-40, -26 },
             };
+
             var grid1 = new char[][]
             {
                 //new char[]{'1','1','1'},
@@ -61,7 +69,7 @@ namespace LeetCodeAlgo
             //var result = anwser.NumDecodings("111111111111111111111111111111111111111111111");
             Console.WriteLine(String.Join(",", arr1));
             //anwser.SortColors(arr1);
-            var result = anwser.SearchMatrix(mat1,20);
+            var result = anwser.EraseOverlapIntervals(mat1);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
