@@ -23,9 +23,11 @@ namespace LeetCodeAlgo
             //var arr1 = new string[] { "acc", "aaa", "aaba" };
             var mat1 = new int[][]
             {
-                new int[]{1,1,0},
-                new int[]{1,1,0},
-                new int[]{0,0,1},
+                new int[]{1,4,7,11,15},
+                new int[]{2,5,8,12,19},
+                new int[]{3,6,9,16,22},
+                new int[]{10,13,14,17,24},
+                new int[]{18,21,23,26,30},
             };
             var grid1 = new char[][]
             {
@@ -59,22 +61,22 @@ namespace LeetCodeAlgo
             //var result = anwser.NumDecodings("111111111111111111111111111111111111111111111");
             Console.WriteLine(String.Join(",", arr1));
             //anwser.SortColors(arr1);
-            var result = anwser.GenerateMatrix(4);
+            var result = anwser.SearchMatrix(mat1,20);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
-            //Console.WriteLine(String.Join(",", result));
+            Console.WriteLine(String.Join(",", result));
             //Console.WriteLine(String.Join(",", arr1));
 
             //Console.WriteLine($"Result = {result}");
             //Console.WriteLine(result.val.ToString() + result.next.val);
-            if (result.Length > 0)
-                Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
-            else
-                Console.WriteLine("Result count = 0");
+            //if (result.Length > 0)
+            //    Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+            //else
+            //    Console.WriteLine("Result count = 0");
             //Console.WriteLine(String.Join(",", arr1));
 
             Console.WriteLine("=========Finish!========");

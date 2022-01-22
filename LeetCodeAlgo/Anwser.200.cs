@@ -580,6 +580,54 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///240. Search a 2D Matrix II
+        public bool SearchMatrix(int[][] matrix, int target)
+        {
+            int rowLen = matrix.Length;
+            int colLen = matrix[0].Length;
+
+            if (matrix[0][0] > target || matrix[rowLen - 1][colLen - 1] < target)
+                return false;
+
+            foreach(var arr in matrix)
+            {
+                if (arr[0] > target || arr[arr.Length - 1] < target)
+                    continue;
+
+                int col1 = 0;
+                int col2 = colLen - 1;
+                int col = (col2 - col1) / 2;
+
+                while (col1 <= col2 && col <= col2 && col >= col1)
+                {
+                    if (col1 == col2)
+                    {
+                        if(arr[col1]==target)
+                            return true;
+                        break;
+                    }
+
+                    if (arr[col] == target)
+                    {
+                        return true;
+                    }
+                    else if (arr[col] > target)
+                    {
+                        col2 = col - 1;
+                        col = (col2 - col1) / 2 + col1;
+                    }
+                    else
+                    {
+                        col1 = col + 1;
+                        col = (col2 - col1) / 2 + col1;
+                    }
+                }
+
+
+            }
+
+            return false;
+        }
         /// 242. Valid Anagram
 
         public bool IsAnagram(string s, string t)

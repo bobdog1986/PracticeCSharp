@@ -2261,7 +2261,7 @@ namespace LeetCodeAlgo
         ///Integers in each row are sorted from left to right.
         ///The first integer of each row is greater than the last integer of the previous row.
 
-        public bool SearchMatrix(int[][] matrix, int target)
+        public bool SearchMatrix_74(int[][] matrix, int target)
         {
             int rowLen = matrix.Length;
             int colLen = matrix[0].Length;
