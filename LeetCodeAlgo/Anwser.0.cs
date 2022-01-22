@@ -1690,7 +1690,100 @@ namespace LeetCodeAlgo
             return intervals;
         }
 
-        ///64. Minimum Path Sum
+        ///59. Spiral Matrix II
+        ///Given a positive integer n, generate an n x n matrix filled with elements from 1 to n2 in spiral order.
+        public int[][] GenerateMatrix(int n)
+        {
+            int[][] ans = new int[n][];
+            for (int i = 0; i < n; i++)
+                ans[i] = new int[n];
+
+            int j = 1;
+            int r = 0;
+            int c = 0;
+            int direct = 0;
+            int row1 = 0;
+            int row2 = n-1;
+            int col1 = 0;
+            int col2 = n - 1;
+
+            while (j <= n*n)
+            {
+                if (direct==0)
+                {
+                    ans[r][c] = j;
+
+                    if (c >= col2)
+                    {
+                        r++;
+                        row1++;
+                        direct++;
+                    }
+                    else
+                    {
+                        c++;
+                    }
+
+                }
+                else if(direct==1)
+                {
+                    ans[r][c] = j;
+
+                    if (r >=row2)
+                    {
+                        c--;
+                        col2--;
+                        direct++;
+                    }
+                    else
+                    {
+                        r++;
+
+                    }
+
+                }
+                else if(direct == 2)
+                {
+                    ans[r][c] = j;
+
+                    if (c <= col1)
+                    {
+                        r--;
+                        row2--;
+                        direct++;
+                    }
+                    else
+                    {
+                        c--;
+
+                    }
+                }
+                else if (direct == 3)
+                {
+                    ans[r][c] = j;
+
+                    if (r <= row1)
+                    {
+                        c++;
+                        col1++;
+                        direct=0;
+                    }
+                    else
+                    {
+                        r--;
+
+                    }
+
+                }
+
+                j++;
+
+            }
+            return ans;
+
+
+        }
+        /// 64. Minimum Path Sum
         ///Given a m x n grid filled with non-negative numbers,
         ///find a path from top left to bottom right,
         ///which minimizes the sum of all numbers along its path.
