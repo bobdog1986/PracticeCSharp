@@ -241,6 +241,9 @@ namespace LeetCodeAlgo
             return false;
         }
 
+        /// 117. Populating Next Right Pointers in Each Node II
+        /// Populate each next pointer to point to its next right node.
+        /// If there is no next right node, the next pointer should be set to NULL.
         public Node Connect(Node root)
         {
             if (root == null)
@@ -252,15 +255,13 @@ namespace LeetCodeAlgo
             {
                 List<Node> subs = new List<Node>();
 
-                bool hasSubs = list[0].left != null;
                 for (int i = 0; i < list.Count; i++)
                 {
                     list[i].next = i == list.Count - 1 ? null : list[i + 1];
-                    if (hasSubs)
-                    {
+                    if(list[i].left!=null)
                         subs.Add(list[i].left);
+                    if (list[i].right != null)
                         subs.Add(list[i].right);
-                    }
                 }
 
                 list = subs;
