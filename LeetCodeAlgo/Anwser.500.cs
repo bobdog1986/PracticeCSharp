@@ -369,5 +369,91 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+
+        ///572. Subtree of Another Tree
+        ///there may same values of nodes in root
+        public bool IsSubtree(TreeNode root, TreeNode subRoot)
+        {
+            var nodes= IsSubtree_Find(root, subRoot);
+            if (nodes == null || nodes.Count==0)
+                return false;
+
+            bool found = false;
+            foreach(var node in nodes)
+            {
+                found = IsSubtree_Compare(node, subRoot);
+                if (found)
+                    return true;
+            }
+
+            return found;
+        }
+
+        public IList<TreeNode> IsSubtree_Find(TreeNode root, TreeNode subRoot)
+        {
+            List<TreeNode> ans = new List<TreeNode>();
+
+            List<TreeNode> list = new List<TreeNode>() { root};
+            while (list.Count > 0)
+            {
+                List<TreeNode> subs = new List<TreeNode>();
+                foreach (var i in list)
+                {
+                    if (i.val == subRoot.val)
+                        ans.Add(i);
+
+                    if(i.left!=null)
+                        subs.Add(i.left);
+                    if (i.right != null)
+                        subs.Add(i.right);
+                }
+
+                list = subs;
+            }
+
+            return ans;
+        }
+
+        public bool IsSubtree_Compare(TreeNode root, TreeNode subRoot)
+        {
+            bool ans = true;
+            List<TreeNode> list = new List<TreeNode>() { root };
+            List<TreeNode> list2 = new List<TreeNode>() { subRoot };
+
+            while(list.Count>0 || list2.Count > 0)
+            {
+                if (list.Count != list2.Count)
+                    return false;
+
+                List<TreeNode> subs = new List<TreeNode>();
+                List<TreeNode> subs2 = new List<TreeNode>();
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i].val != list2[i].val)
+                        return false;
+
+                    if ((list[i].left == null && list2[i].left != null)
+                        || (list[i].left != null && list2[i].left == null)
+                        || (list[i].right == null && list2[i].right != null)
+                        || (list[i].right != null && list2[i].right == null))
+                        return false;
+
+                    if (list[i].left != null)
+                        subs.Add(list[i].left);
+                    if (list[i].right != null)
+                        subs.Add(list[i].right);
+
+                    if (list2[i].left != null)
+                        subs2.Add(list2[i].left);
+                    if (list2[i].right != null)
+                        subs2.Add(list2[i].right);
+                }
+
+                list = subs;
+                list2 = subs2;
+            }
+
+            return ans;
+        }
     }
 }
