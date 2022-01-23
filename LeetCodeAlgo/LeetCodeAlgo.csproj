@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Anwser.800.cs" />
     <Compile Include="Anwser.A1000.cs" />
+    <Compile Include="Anwser.A1200.cs" />
     <Compile Include="Anwser.A1300.cs" />
     <Compile Include="Anwser.BTree.cs" />
     <Compile Include="Anwser.A1100.cs" />
