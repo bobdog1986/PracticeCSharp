@@ -8,7 +8,46 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        ///413. Arithmetic Slices
+        ///409. Longest Palindrome
+        ///case sensitive, Aa is different
+        public int LongestPalindrome(string s)
+        {
+            if (s.Length <= 1)
+                return s.Length;
+
+            Dictionary<char,int> dict = new Dictionary<char,int>();
+
+            foreach(var c in s)
+            {
+                if (dict.ContainsKey(c))
+                {
+                    dict[c]++;
+                }
+                else
+                {
+                    dict.Add(c, 1);
+                }
+            }
+
+            int sumOfEven = 0;
+            int sumOfOdd = 0;
+
+            foreach(var d in dict)
+            {
+                sumOfEven += d.Value / 2;
+                sumOfOdd += d.Value % 2;
+            }
+
+            int ans = sumOfEven * 2;
+
+            if (sumOfOdd > 0)
+                ans++;
+
+
+            return ans;
+        }
+
+        /// 413. Arithmetic Slices
         ///at least 3 nums with same distance, eg. [1,2,3,4], [1,1,1]
         ///-1000 <= nums[i] <= 1000
         ///A subarray is a contiguous subsequence of the array.

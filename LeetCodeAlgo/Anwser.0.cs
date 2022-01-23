@@ -200,7 +200,7 @@ namespace LeetCodeAlgo
         ///5. Longest Palindromic Substring
         ///Given a string s, return the longest palindromic substring in s.
         ///Input: s = "babad" Output: "bab"
-        public string LongestPalindrome(string s)
+        public string LongestPalindrome_5(string s)
         {
             if (string.IsNullOrEmpty(s) || s.Length == 1)
                 return s;
