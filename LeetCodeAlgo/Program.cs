@@ -23,18 +23,9 @@ namespace LeetCodeAlgo
             //var arr1 = new string[] { "acc", "aaa", "aaba" };
             var mat1 = new int[][]
             {
-                new int[]{-52, 31},
-                new int[]{-73, -26},
-                new int[]{82, 97},
-                new int[]{-65, -11},
-                new int[]{-62, -49},
-                new int[]{95, 99},
-                new int[]{58, 95},
-                new int[]{-31, 49},
-                new int[]{66, 98},
-                new int[]{-63, 2},
-                new int[]{30, 47},
-                new int[]{-40, -26 },
+                new int[]{0, 0,0},
+                new int[]{1, 1,0},
+                new int[]{1, 1,0},
             };
 
             var grid1 = new char[][]
@@ -69,7 +60,7 @@ namespace LeetCodeAlgo
             //var result = anwser.NumDecodings("111111111111111111111111111111111111111111111");
             Console.WriteLine(String.Join(",", arr1));
             //anwser.SortColors(arr1);
-            var result = anwser.LongestPalindrome("bb");
+            var result = anwser.ShortestPathBinaryMatrix(mat1);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();

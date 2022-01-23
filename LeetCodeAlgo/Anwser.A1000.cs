@@ -22,5 +22,88 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
+        ///1091. Shortest Path in Binary Matrix
+        ///Given an n x n binary matrix grid, return the length of the shortest clear path in the matrix.
+        ///If there is no clear path, return -1.
+        ///8 direction
+        public int ShortestPathBinaryMatrix(int[][] grid)
+        {
+            int len=grid.Length;
+
+            if(len==1)
+                return grid[0][0]==0?1:-1;
+
+            if (grid[0][0] == 1 || grid[len - 1][len - 1] == 1)
+                return -1;
+
+            int[][] visit=new int[len][];
+
+            for(int i=0;i< len; i++)
+            {
+                visit[i] = new int[len];
+            }
+
+            int[][] dxy = new int[8][] {
+                new int[]{0,1}, new int[] {1, 0 },
+                new int[]{ 0,-1}, new int[] { -1, 0 },
+                new int[]{ 1,1 }, new int[]{ -1, -1 },
+                new int[]{ -1, 1 },new int[] { 1, -1 } };
+
+            List<int[]> list = new List<int[]>();
+
+            int step=0;
+
+            list.Add( new int[] { 0, 0 });
+            visit[0][0] = 1;
+            step++;
+
+            while (list.Count > 0)
+            {
+                List<int[]> sub = new List<int[]>();
+
+                foreach(var cell in list)
+                {
+                    int r = cell[0];
+                    int c = cell[1];
+
+                    foreach (var d in dxy)
+                    {
+                        int r1=r+d[0];
+                        int c1=c+d[1];
+
+                        if(r1>=0&&r1<=len-1 && c1 >= 0 && c1 <= len - 1)
+                        {
+                            if (r1 == len - 1 && c1 == len - 1)
+                                return step + 1;
+
+                            if (visit[r1][c1] == 1)
+                                continue;
+
+                            visit[r1][c1] = 1;
+
+                            if (grid[r1][c1] == 0)
+                            {
+                                sub.Add(new int[] { r1, c1, });
+                            }
+
+                        }
+
+
+                    }
+                }
+
+                list = sub;
+
+
+                step++;
+            }
+
+
+
+
+
+            return -1;
+        }
     }
 }
