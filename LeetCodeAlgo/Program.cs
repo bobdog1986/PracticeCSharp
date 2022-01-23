@@ -69,7 +69,7 @@ namespace LeetCodeAlgo
             //var result = anwser.NumDecodings("111111111111111111111111111111111111111111111");
             Console.WriteLine(String.Join(",", arr1));
             //anwser.SortColors(arr1);
-            var result = anwser.ProductExceptSelf(arr1);
+            var result = anwser.AddStrings("99999","1");
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();

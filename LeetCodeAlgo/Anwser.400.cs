@@ -44,6 +44,113 @@ namespace LeetCodeAlgo
             return sum;
         }
 
+        ///415. Add Strings
+        ///Given two non-negative integers, num1 and num2 represented as string, return the sum of num1 and num2 as a string.
+        // input maybe so big!!! cannot use any int/long type
+        public string AddStrings(string num1, string num2)
+        {
+            if (num1 == "0")
+                return num2;
+
+            if (num2 == "0")
+                return num1;
+
+
+            List<int> list1 = new List<int>();
+            List<int> list2 = new List<int>();
+
+            foreach(var c in num1)
+            {
+                list1.Insert(0, GetDigitFromChar(c));
+            }
+            foreach (var c in num2)
+            {
+                list2.Insert(0, GetDigitFromChar(c));
+            }
+
+            List<char> ans=new List<char>();
+            bool isCarry = false;
+
+            for(int i=0; i < list1.Count||i<list2.Count; i++)
+            {
+                int a = 0;
+                if (list1.Count > i)
+                    a = list1[i];
+
+                int b = 0;
+                if (list2.Count > i)
+                    b = list2[i];
+
+                int c = a + b;
+                if (isCarry)
+                    c++;
+
+                isCarry = c / 10 == 1;
+
+                ans.Insert(0, GetCharFormDigit(c%10));
+
+            }
+
+            if (isCarry)
+                ans.Insert(0,'1');
+
+            return String.Join("",ans);
+        }
+
+        public char GetCharFormDigit(int c)
+        {
+            if (c == 0)
+                return '0';
+            else if (c == 1)
+                return '1';
+            else if (c == 2)
+                return '2';
+            else if (c == 3)
+                return '3';
+            else if (c == 4)
+                return '4';
+            else if (c == 5)
+                return '5';
+            else if (c == 6)
+                return '6';
+            else if (c == 7)
+                return '7';
+            else if (c == 8)
+                return '8';
+            else if (c == 9)
+                return '9';
+            else
+                return ' ';
+        }
+
+        public int GetDigitFromChar(char c)
+        {
+
+            if (c == '0')
+                return 0;
+            else if (c == '1')
+                return 1;
+            else if (c == '2')
+                return 2;
+            else if (c == '3')
+                return 3;
+            else if (c == '4')
+                return 4;
+            else if (c == '5')
+                return 5;
+            else if (c == '6')
+                return 6;
+            else if (c == '7')
+                return 7;
+            else if (c == '8')
+                return 8;
+            else if (c == '9')
+                return 9;
+            else
+                return -1;
+
+        }
+
         /// 435. Non-overlapping Intervals
         /// there are some embeded intervals, use Math.Min()
         public int EraseOverlapIntervals(int[][] intervals)
