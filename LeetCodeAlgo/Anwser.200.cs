@@ -580,7 +580,35 @@ namespace LeetCodeAlgo
             }
         }
 
-        ///240. Search a 2D Matrix II
+        ///238. Product of Array Except Self
+        ///return an array such that answer[i] = product of all the elements of nums except nums[i].
+        ///O(n) time and without using the division operation.
+        public int[] ProductExceptSelf(int[] nums)
+        {
+            int[] ans = new int[nums.Length];
+
+            int[] left = new int[nums.Length];
+            int[] right = new int[nums.Length];
+
+            int product1 = 1;
+            int product2 = 1;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                left[i] = product1;
+                right[nums.Length - 1 - i] = product2;
+
+                product1 *= nums[i];
+                product2 *= nums[nums.Length - 1 - i];
+            }
+
+            for(int i = 0;i< nums.Length; i++)
+            {
+                ans[i]=left[i]*right[i];
+            }
+
+            return ans;
+        }
+        /// 240. Search a 2D Matrix II
         public bool SearchMatrix(int[][] matrix, int target)
         {
             int rowLen = matrix.Length;
