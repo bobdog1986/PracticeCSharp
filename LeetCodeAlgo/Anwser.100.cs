@@ -477,6 +477,96 @@ namespace LeetCodeAlgo
             return max = Math.Max(current, max);
         }
 
+        /// 130. Surrounded Regions
+        ///Given an m x n matrix board containing 'X' and 'O',
+        ///capture all regions that are 4-directionally surrounded by 'X'.
+        ///A region is captured by flipping all 'O's into 'X's in that surrounded region.
+        ///Tips: If 'O's connect to 4-direction edges , escape; or captured
+        public void Solve(char[][] board)
+        {
+
+            int rowLen=board.Length;
+            int colLen=board[0].Length;
+
+            if (rowLen <= 1 || colLen <= 1)
+                return;
+
+            bool[][] visit=new bool[rowLen][];
+            for(int i=0; i<rowLen; i++)
+            {
+                visit[i]=new bool[colLen];
+            }
+
+            int[][] dxy=new int[4][] { new int[] {0,1 }, new int[] { 1, 0 } , new int[] { -1, 0 } , new int[] { 0, -1 } };
+
+            for(int i=0;i<rowLen; i++)
+            {
+                for(int j=0;j<colLen; j++)
+                {
+                    if (visit[i][j])
+                        continue;
+
+                    visit[i][j] = true;
+
+                    if (board[i][j] == 'O')
+                    {
+                        List<int[]> list = new List<int[]>();
+
+                        List<int[]> currList = new List<int[]>();
+                        currList.Add(new int[] { i, j });
+
+                        bool capture = true;
+
+                        while(currList.Count>0 )
+                        {
+                            list.AddRange(currList);
+
+                            List<int[]> subList = new List<int[]>();
+
+                            foreach (var cell in list)
+                            {
+
+                                foreach(var d in dxy)
+                                {
+                                    int r = cell[0]+ d[0];
+                                    int c = cell[1]+ d[1];
+
+                                    if (r >= 0 && r <= rowLen - 1
+                                        && c >= 0 && c <= colLen - 1)
+                                    {
+                                        if (!visit[r][c])
+                                        {
+                                            visit[r][c] = true;
+
+                                            if (board[r][c] == 'O')
+                                            {
+                                                subList.Add(new int[]{ r, c });
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        capture = false;
+                                    }
+                                }
+                            }
+
+                            currList = subList;
+                        }
+
+                        if (capture)
+                        {
+                            foreach (var cell in list)
+                                board[cell[0]][cell[1]] = 'X';
+                        }
+
+                    }
+
+                }
+            }
+
+        }
+
         /// 134. Gas Station
         ///  Given two integer arrays gas and cost, return the starting gas station's index
         ///  if you can travel around the circuit once in the clockwise direction,
