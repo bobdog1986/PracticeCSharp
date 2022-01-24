@@ -69,7 +69,7 @@ namespace LeetCodeAlgo
             //    Console.WriteLine("Result count = 0");
 
             //anwser.Solve(grid1);
-            var result = anwser.IsSubsequence("axc","ahbgdc");
+            var result = anwser.UniquePaths(23,12);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();

@@ -1749,6 +1749,41 @@ namespace LeetCodeAlgo
 
 
         }
+        ///62. Unique Paths
+        ///Move from grid[0][0] to grid[m - 1][n - 1], each step can only move down or right.
+        ///A(m-1+n-1)/A(m-1)/A(n-1)
+        public int UniquePaths(int m, int n)
+        {
+            if (m == 1 || n == 1)
+                return 1;
+            int all = m - 1 + n - 1;
+
+            long ans = 1;
+            int j = 1;
+
+            int x = 2;
+            int y = 2;
+
+            while (j<=all)
+            {
+                ans *= j;
+                j++;
+
+                if (x <= m - 1 && ans%x==0)
+                {
+                    ans /= x;
+                    x++;
+                }
+
+                if (y<=n-1 && ans % y == 0)
+                {
+                    ans /= y;
+                    y++;
+                }
+            }
+
+            return (int)ans;
+        }
         /// 64. Minimum Path Sum
         ///Given a m x n grid filled with non-negative numbers,
         ///find a path from top left to bottom right,

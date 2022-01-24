@@ -53,5 +53,20 @@ namespace LeetCodeAlgo
             n = remainder;
             return Gcb(m, n);
         }
+
+        public long GcbLong(long m, long n)
+        {
+            if (m < 1 || n < 1)
+                return m > 0 ? m : n;
+            if (m == 1 || n == 1)
+                return 1;
+            if (m % n == 0)
+                return n;
+
+            long remainder = m % n;
+            m = n;
+            n = remainder;
+            return GcbLong(m, n);
+        }
     }
 }

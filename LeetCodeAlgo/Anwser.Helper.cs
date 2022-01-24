@@ -61,7 +61,6 @@ using System.Threading.Tasks;
             }
             return r;
         }
-
         public int getFactorial(int n, int count)
         {
             int r = 1;
