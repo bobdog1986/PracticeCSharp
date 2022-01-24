@@ -250,5 +250,46 @@ namespace LeetCodeAlgo
 
             return -1;
         }
+
+        ///392. Is Subsequence
+        ///Given two strings s and t, return true if s is a subsequence of t, or false otherwise.
+        ///A subsequence of a string is a new string that is formed from the original string by deleting some (can be none)
+        public bool IsSubsequence(string s, string t)
+        {
+            if(string.IsNullOrEmpty(s))
+                return true;
+
+            if (string.IsNullOrEmpty(t))
+                return false;
+
+            int sLen=s.Length;
+            int tLen=t.Length;
+
+            if (sLen > tLen)
+                return false;
+
+            for(int i = 0; i <=tLen-sLen; i++)
+            {
+                if (t[i] == s[0])
+                {
+                    int j = 1;
+                    int k = i + 1;
+                    while (j < s.Length && k<=tLen-(sLen-j) )
+                    {
+                        if(s[j] == t[k])
+                        {
+                            j++;
+                        }
+
+                        k++;
+                    }
+
+                    if (j==s.Length)
+                        return true;
+                }
+            }
+
+            return false;
+        }
     }
 }
