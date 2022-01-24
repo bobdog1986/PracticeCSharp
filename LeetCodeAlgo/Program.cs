@@ -15,7 +15,7 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var arr1 = new int[] { 1,2 ,3};
+            var arr1 = new int[] { 1,2 ,2};
             //var arr1 = new int[] { 1, 5, 0, 4, 1, 3 };
             //var arr1 = new int[] { 312884470 };//{ 3,6,7,11 };
             //var input1 = 823855818;
@@ -69,7 +69,7 @@ namespace LeetCodeAlgo
             //    Console.WriteLine("Result count = 0");
 
             //anwser.Solve(grid1);
-            var result = anwser.Subsets(arr1);
+            var result = anwser.SubsetsWithDup(arr1);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();

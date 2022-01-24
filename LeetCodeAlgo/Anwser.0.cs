@@ -2714,7 +2714,64 @@ namespace LeetCodeAlgo
             Console.WriteLine($"nums1 = {string.Join(",", nums1)}");
         }
 
-        ///91. Decode Ways
+        ///90. Subsets II
+        ///Given an integer array nums that may contain duplicates, return all possible subsets (the power set).
+        ///The solution set must not contain duplicate subsets. Return the solution in any order.
+
+        public IList<IList<int>> SubsetsWithDup(int[] nums)
+        {
+            var ans = new List<IList<int>>();
+
+            Array.Sort(nums);
+
+            ans.Add(new List<int>());
+
+            for (int n = 1; n <= nums.Length - 1; n++)
+            {
+                var llist = new List<IList<int>>();
+
+                SubsetsWithDup_Add(nums, 0, n, llist, ans);
+            }
+
+            ans.Add(nums);
+
+            return ans;
+        }
+
+        public void SubsetsWithDup_Add(int[] nums, int start, int number, IList<IList<int>> llist, IList<IList<int>> ans)
+        {
+            if (start >= nums.Length)
+                return;
+
+            llist = llist.Where(o => o.Count < number && o.Count + (nums.Length - start) >= number).ToList();
+
+            var subs = new List<IList<int>>();
+            foreach (var list in llist)
+            {
+                var sub = new List<int>(list);
+                sub.Add(nums[start]);
+
+                subs.Add(sub);
+            }
+            foreach (var sub in subs)
+            {
+                llist.Add(sub);
+            }
+
+            llist.Add(new List<int>() { nums[start] });
+
+            var targets = llist.Where(o => o.Count == number).ToList();
+
+            for(int i=0;i<targets.Count;i++)
+            {
+                if(ans.FirstOrDefault(x=>x.SequenceEqual(targets[i]))==null)
+                    ans.Add(targets[i]);
+            }
+
+            SubsetsWithDup_Add(nums, start + 1, number, llist, ans);
+        }
+
+        /// 91. Decode Ways
         ///A message containing letters from A-Z can be encoded into numbers using the following mapping:
         ///'A' -> "1", Z->26
         ///"AAJF" with the grouping (1 1 10 6)
