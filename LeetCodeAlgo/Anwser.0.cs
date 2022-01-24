@@ -2476,7 +2476,58 @@ namespace LeetCodeAlgo
             return null;
         }
 
-        ///82. Remove Duplicates from Sorted List II
+        ///78. Subsets
+        ///Given an integer array nums of unique elements, return all possible subsets (the power set).
+        public IList<IList<int>> Subsets(int[] nums)
+        {
+            var ans=new List<IList<int>>();
+
+            ans.Add(new List<int>());
+
+            for(int n=1; n <= nums.Length-1; n++)
+            {
+                var llist = new List<IList<int>>();
+
+                SubSets_Add(nums, 0, n, llist, ans);
+            }
+
+            ans.Add(nums);
+
+            return ans;
+        }
+
+        public void SubSets_Add(int[] nums,int start, int number, IList<IList<int>> llist, IList<IList<int>> ans)
+        {
+            if (start >= nums.Length)
+                return;
+
+            llist = llist.Where(o => o.Count < number && o.Count+(nums.Length-start)>=number ).ToList();
+
+            var subs = new List<IList<int>>();
+            foreach (var list in llist)
+            {
+                var sub = new List<int>(list);
+                sub.Add(nums[start]);
+
+                subs.Add(sub);
+            }
+            foreach(var sub in subs)
+            {
+                llist.Add(sub);
+            }
+
+            llist.Add(new List<int>() { nums[start] });
+
+            var targets = llist.Where(o => o.Count == number);
+            foreach(var t in targets)
+            {
+                ans.Add(t);
+            }
+
+            SubSets_Add(nums, start+1, number, llist, ans);
+        }
+
+        /// 82. Remove Duplicates from Sorted List II
         /// remove all duplicates, [1,1,1,2,2,3]=>[3], [1,2,2,3]=>[1,3]
         public ListNode DeleteDuplicates(ListNode head)
         {
