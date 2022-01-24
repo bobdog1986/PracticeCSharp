@@ -292,7 +292,52 @@ namespace LeetCodeAlgo
             return Math.Min(dp[cost.Length - 1], dp[cost.Length - 2]);
         }
 
-        ///784. Letter Case Permutation
+        ///763. Partition Labels
+        ///s consists of lowercase English letters.
+        public IList<int> PartitionLabels(string s)
+        {
+            if(s.Length==1)
+                return new List<int>() { 1 };
+
+            IList<int> ans = new List<int>();
+
+            Dictionary<char,List<int>> dict = new Dictionary<char,List<int>>();
+
+            for(int i = 0; i < s.Length; i++)
+            {
+                if (dict.ContainsKey(s[i]))
+                {
+                    dict[s[i]].Add(i);
+                }
+                else
+                {
+                    dict.Add(s[i], new List<int>() {i });
+                }
+            }
+
+            List<char> list=new List<char> ();
+            int len = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                if(!list.Contains(s[i]))
+                    list.Add(s[i]);
+
+                bool canPartition = !list.Any(c => dict[c].Any(x => x > i));
+
+                if (canPartition)
+                {
+                    list.Clear();
+
+                    int len2 = i + 1;
+                    ans.Add(len2 - len);
+                    len= len2;
+                }
+
+            }
+
+            return ans;
+        }
+        /// 784. Letter Case Permutation
         ///ref 77 Combines()
         ///Given a string s, you can transform every letter individually to be lowercase or uppercase to create another string.
         ///Return a list of all possible strings we could create.Return the output in any order.
