@@ -8,7 +8,34 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        ///334. Increasing Triplet Subsequence
+        ///322. Coin Change
+        ///1 <= coins[i] <= 2^31 - 1
+        ///0 <= amount <= 10000
+        public int CoinChange(int[] coins, int amount)
+        {
+            if (amount == 0)
+                return 0;
+
+            int[] dp = new int[amount + 1];
+            for (int i=0;i<dp.Length;i++)
+                dp[i] = 10000;
+
+            var coins2 = coins.ToList();
+            coins2.Sort((x,y) => y-x);
+            dp[0] = 0;
+            for (int i = 1; i <= amount; i++)
+            {
+                foreach (var coin in coins2)
+                {
+                    if (i - coin < 0)
+                        continue;
+
+                    dp[i] = Math.Min(dp[i], dp[i - coin] + 1);
+                }
+            }
+            return dp[amount] == 10000 ? -1 : dp[amount];
+        }
+        /// 334. Increasing Triplet Subsequence
         ///using greedy to find i<j<k, nums[i]<nums[j]<nums[k]
         public bool IncreasingTriplet(int[] nums)
         {

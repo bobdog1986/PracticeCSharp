@@ -16,12 +16,11 @@ namespace LeetCodeAlgo
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
             //var arr1 = new int[] { 1,2 ,2};
-            //var arr1 = new int[] { 1, 5, 0, 4, 1, 3 };
+            var arr1 = new int[] { 139, 442, 147, 461, 244, 225, 28, 378, 371 };
             //var arr1 = new int[] { 312884470 };//{ 3,6,7,11 };
-            //var input1 = 823855818;
-            var str1 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab";
-            var input1 = 312884469;//result=23
-            var arr1 = new string[] { "a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa" };
+            var input1 = 9914;
+            var str1 = "";
+            //var arr1 = new string[] { "a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa" };
             var mat1 = new int[][]
             {
                 new int[]{0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
@@ -96,7 +95,7 @@ namespace LeetCodeAlgo
             //    Console.WriteLine("Result count = 0");
 
             //anwser.Solve(grid1);
-            var result = anwser.WordBreak(str1,arr1.ToList());
+            var result = anwser.CoinChange(arr1,input1);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
