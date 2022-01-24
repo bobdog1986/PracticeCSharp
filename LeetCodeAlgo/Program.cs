@@ -63,28 +63,28 @@ namespace LeetCodeAlgo
             //new TreeNode(5, new TreeNode(4), new TreeNode(6)));
             //var result = anwser.NumDecodings("111111111111111111111111111111111111111111111");
             //Console.WriteLine(String.Join(",", arr1));
-            if (grid1.Length > 0)
-                Console.WriteLine(String.Join("\r\n", grid1.Select(o => String.Join(",", o))));
-            else
-                Console.WriteLine("Result count = 0");
+            //if (grid1.Length > 0)
+            //    Console.WriteLine(String.Join("\r\n", grid1.Select(o => String.Join(",", o))));
+            //else
+            //    Console.WriteLine("Result count = 0");
 
-            anwser.Solve(grid1);
-            //var result = anwser.Solve(grid1);
+            //anwser.Solve(grid1);
+            var result = anwser.DetectCapitalUse("leetcode");
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
-            //Console.WriteLine(String.Join(",", result));
+            Console.WriteLine(String.Join(",", result));
             //Console.WriteLine(String.Join(",", arr1));
 
             //Console.WriteLine($"Result = {result}");
             //Console.WriteLine(result.val.ToString() + result.next.val);
-            if (grid1.Length > 0)
-                Console.WriteLine(String.Join("\r\n", grid1.Select(o => String.Join(",", o))));
-            else
-                Console.WriteLine("Result count = 0");
+            //if (result.Length > 0)
+            //    Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+            //else
+            //    Console.WriteLine("Result count = 0");
             //Console.WriteLine(String.Join(",", arr1));
 
             Console.WriteLine("=========Finish!========");

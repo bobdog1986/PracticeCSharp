@@ -49,7 +49,42 @@ namespace LeetCodeAlgo
             return Fib_Recursion(n - 1) + Fib_Recursion(n - 2);
         }
 
-        //542. 01 Matrix
+        ///520. Detect Capital
+        ///3 pattern: all UpCase, all LowerCase, only first char UpCase others lower
+        ///Given a string word, return true if the usage of capitals in it is right.
+        public bool DetectCapitalUse(string word)
+        {
+            if(word.Length==1)
+                return true;
+
+            bool lastIsUpper = char.IsUpper(word[word.Length - 1]);
+
+            bool ans=true;
+
+            if (lastIsUpper)
+            {
+                for(int i =0;i< word.Length-1; i++)
+                {
+                    if (!char.IsUpper(word[i]))
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 1; i < word.Length - 1; i++)
+                {
+                    if (char.IsUpper(word[i]))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return ans;
+
+        }
+        /// 542. 01 Matrix
         public int[][] UpdateMatrix(int[][] mat)
         {
             int rowLen = mat.Length;
