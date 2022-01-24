@@ -351,5 +351,81 @@ namespace LeetCodeAlgo
             }
             return result;
         }
+
+        ///797. All Paths From Source to Target
+        ///only 0 to N-1
+        public IList<IList<int>> AllPathsSourceTarget(int[][] graph)
+        {
+            var ans=new List<IList<int>>();
+
+            int len=graph.Length;
+
+            //only 0 to N-1
+            for (int i=0; i<1;i++)
+            {
+                var curr = new List<IList<int>>();
+                var all = new List<IList<int>>();
+
+                var list =new List<int>() { i};
+
+                curr.Add(list);
+
+                while(curr.Count > 0)
+                {
+                    var sub = new List<IList<int>>();
+
+                    foreach(var item in curr)
+                    {
+                        var nexts = AllPathsSourceTarget_Add(graph, item);
+                        if(nexts.Count > 0)
+                        {
+                            foreach(var next in nexts)
+                            {
+                                if(next.Last() == len - 1)
+                                {
+                                    all.Add(next);
+                                }
+                                else
+                                {
+                                    sub.Add(next);
+                                }
+                            }
+                        }
+                    }
+
+                    curr = sub;
+                }
+
+
+                if (all.Count > 0)
+                {
+                    foreach (var j in all)
+                    {
+                        if(j.Last()==len-1)
+                            ans.Add(j);
+                    }
+                }
+            }
+
+            return ans;
+        }
+
+        public IList<IList<int>> AllPathsSourceTarget_Add(int[][] graph, IList<int> list)
+        {
+            var ans = new List<IList<int>>();
+
+            if(list.Count > 0 && graph[list.Last()].Length>0)
+            {
+                foreach(var j in graph[list.Last()])
+                {
+                    var sub = new List<int>(list);
+                    sub.Add(j);
+                    ans.Add(sub);
+                }
+            }
+
+            return ans;
+        }
+
     }
 }
