@@ -200,96 +200,62 @@ namespace LeetCodeAlgo
         ///5. Longest Palindromic Substring
         ///Given a string s, return the longest palindromic substring in s.
         ///Input: s = "babad" Output: "bab"
-        public string LongestPalindrome_5(string s)
+        public string LongestPalindrome(string s)
         {
             if (string.IsNullOrEmpty(s) || s.Length == 1)
                 return s;
 
-            if (s.Length == 1)
-                return s;
+            string ans=s.Substring(0,1);
+            int len = 1;
 
-            string result = s[s.Length / 2].ToString();
-
-            LongestPalindrome_Odd_Recursion(s, (s.Length - 1) / 2, ref result);
-            LongestPalindrome_Odd_Recursion(s, (s.Length + 1) / 2, ref result);
-
-            LongestPalindrome_Even_Recursion(s, (s.Length - 1) / 2, ref result);
-            LongestPalindrome_Even_Recursion(s, (s.Length + 1) / 2, ref result);
-
-            return result;
-        }
-
-        public void LongestPalindrome_Odd_Recursion(string s, int center, ref string result)
-        {
-            if (center <= 0 || center >= s.Length - 1)
-                return;
-
-            List<char> list = new List<char>() { s[center] };
-
-            for (int i = 1; i <= center && i <= s.Length - 1 - center; i++)
+            //find all aba pattern, loop only all possible index
+            for(int i = (len-1)/2 +1; i<s.Length && 2*(s.Length-1-i)+1>len; i++)
             {
-                if (s[center - i] == s[center + i])
+                int count = 0;
+                while (i - 1 - count >= 0 && i + 1 + count <= s.Length - 1)
                 {
-                    list.Add(s[center + i]);
-                    list.Insert(0, s[center - i]);
+                    if(s[i - 1 - count]==s[i + 1 + count])
+                    {
+                        count++;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
-                else
-                {
-                    if (list.Count > result.Length)
-                    {
-                        result = String.Join("", list);
-                    }
 
-                    if (center <= (s.Length - 1) / 2)
-                    {
-                        LongestPalindrome_Odd_Recursion(s, center - 1, ref result);
-                    }
-                    if (center >= (s.Length + 1) / 2)
-                    {
-                        LongestPalindrome_Odd_Recursion(s, center + 1, ref result);
-                    }
-                    break;
+                if (count + count + 1 > len)
+                {
+                    len = count + count + 1;
+                    ans = s.Substring((i - count), len);
                 }
             }
 
-            if (list.Count > result.Length)
+            //find all abba pattern, loop only all possible index
+            for (int i = len/2; i < s.Length - 1 && 2 * (s.Length - 1 - i) > len; i++)
             {
-                result = String.Join("", list);
-            }
-        }
-
-        public void LongestPalindrome_Even_Recursion(string s, int center, ref string result)
-        {
-            if (center < 0 || center > s.Length - 1)
-                return;
-
-            List<char> list = new List<char>();
-
-            for (int i = 0; i <= center && i <= s.Length - 1 - center - 1; i++)
-            {
-                if (s[center - i] == s[center + i + 1])
+                int count = 0;
+                while (i- count >= 0 && i + 1 + count <= s.Length - 1)
                 {
-                    list.Add(s[center + i + 1]);
-                    list.Insert(0, s[center - i]);
+                    if (s[i - count] == s[i + 1 + count])
+                    {
+                        count++;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
-                else
+
+                if (count + count  > len)
                 {
-                    if (center <= (s.Length - 1) / 2)
-                    {
-                        LongestPalindrome_Even_Recursion(s, center - 1, ref result);
-                    }
-                    if (center >= (s.Length + 1) / 2)
-                    {
-                        LongestPalindrome_Even_Recursion(s, center + 1, ref result);
-                    }
-                    break;
+                    len = count + count ;
+                    ans = s.Substring((i - count+1), len);
                 }
             }
 
-            if (list.Count > result.Length)
-            {
-                result = String.Join("", list);
-            }
+
+            return ans;
         }
 
         ///6. Zigzag Conversion

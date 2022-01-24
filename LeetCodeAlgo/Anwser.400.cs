@@ -10,7 +10,7 @@ namespace LeetCodeAlgo
     {
         ///409. Longest Palindrome
         ///case sensitive, Aa is different
-        public int LongestPalindrome(string s)
+        public int LongestPalindrome_409(string s)
         {
             if (s.Length <= 1)
                 return s.Length;

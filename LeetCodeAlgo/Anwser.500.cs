@@ -331,7 +331,26 @@ namespace LeetCodeAlgo
             return String.Join(" ", arr);
         }
 
-        //566. Reshape the Matrix
+        ///560. Subarray Sum Equals K, O(n^2)
+        ///Given an array of integers nums and an integer k, return the total number of continuous subarrays whose sum equals to k.
+        public int SubarraySum(int[] nums, int k)
+        {
+            int ans = 0;
+            for(int i = 0; i < nums.Length; i++)
+            {
+                int sum = 0;
+                int j = i;
+                while (j >= 0)
+                {
+                    sum+=nums[j];
+                    if (sum == k)
+                        ans++;
+                    j--;
+                }
+            }
+            return ans;
+        }
+        /// 566. Reshape the Matrix
         public int[][] MatrixReshape(int[][] mat, int r, int c)
         {
             int row = mat.Length;
