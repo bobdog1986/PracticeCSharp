@@ -622,8 +622,51 @@ namespace LeetCodeAlgo
             //return a;
         }
 
-        ///141. Linked List Cycle
-
+        ///139. Word Break
+        public bool WordBreak(string s, IList<string> wordDict)
+        {
+            var arr = s.ToArray();
+            List<int> list = new List<int> { 0 };
+            List<int> exist = new List<int> { 0 };
+            //wordDict = wordDict.OrderBy(x => -x.Length).ToList();
+            while (list.Count > 0)
+            {
+                List<int> next = new List<int>();
+                foreach(var i in list)
+                {
+                    for(int j = 0; j < wordDict.Count; j++)
+                    {
+                        if (arr.Length - i < wordDict[j].Length)
+                            continue;
+                        bool canBreak = true;
+                        int k = 0;
+                        while (k < wordDict[j].Length)
+                        {
+                            if (wordDict[j][k] != arr[i + k])
+                            {
+                                canBreak = false;
+                                break;
+                            }
+                            k++;
+                        }
+                        if (canBreak)
+                        {
+                            var idx = i + wordDict[j].Length;
+                            if (idx == arr.Length)
+                                return true;
+                            if (!exist.Contains(idx))
+                            {
+                                next.Add(idx);
+                                exist.Add(idx);
+                            }
+                        }
+                    }
+                }
+                list = next;
+            }
+            return false;
+        }
+        /// 141. Linked List Cycle
         public bool HasCycle(ListNode head)
         {
             if (head == null || head.next == null) return false;
