@@ -76,7 +76,38 @@ namespace LeetCodeAlgo
             return dp.Min();
         }
 
-        //977. Squares of a Sorted Array
+        ///941. Valid Mountain Array
+        ///len>=3, arr[i]> all [0,i-1],and [i+1,len-1]
+        public bool ValidMountainArray(int[] arr)
+        {
+            if (arr.Length < 3)
+                return false;
+
+            bool isClimbing = true;
+            for (int i = 1;i < arr.Length; i++)
+            {
+                if(arr[i] ==arr[i-1])
+                    return false;
+
+                if (isClimbing)
+                {
+                    if(arr[i] < arr[i - 1])
+                    {
+                        if (i == 1)
+                            return false;
+
+                        isClimbing = false;
+                    }
+                }
+                else
+                {
+                    if (arr[i] > arr[i - 1])
+                        return false;
+                }
+            }
+            return !isClimbing;
+        }
+        /// 977. Squares of a Sorted Array
 
         public int[] SortedSquares(int[] nums)
         {
