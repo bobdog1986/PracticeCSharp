@@ -1442,8 +1442,40 @@ namespace LeetCodeAlgo
             }
         }
 
-        /// 53. Maximum Subarray
+        ///49. Group Anagrams
+        public IList<IList<string>> GroupAnagrams(string[] strs)
+        {
+            var ans=new List<IList<string>>();
 
+            Dictionary<string,List<int>> dict = new Dictionary<string,List<int>>();
+
+            for(int i = 0;i < strs.Length; i++)
+            {
+                var word = string.Join("", strs[i].ToArray().OrderBy(c => c));
+
+                if (dict.ContainsKey(word))
+                {
+                    dict[word].Add(i);
+                }
+                else
+                {
+                    dict.Add(word, new List<int>() { i});
+                }
+            }
+
+            foreach(var list in dict.Values)
+            {
+                List<string> words = new List<string>();
+                foreach(var i in list)
+                {
+                    words.Add(strs[i]);
+                }
+                ans.Add(words);
+            }
+
+            return ans;
+        }
+        /// 53. Maximum Subarray
         public int MaxSubArray(int[] nums)
         {
             int sum = 0;
