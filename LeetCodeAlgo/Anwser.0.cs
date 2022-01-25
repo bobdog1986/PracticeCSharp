@@ -1130,6 +1130,35 @@ namespace LeetCodeAlgo
             return node1;
         }
 
+        ///24. Swap Nodes in Pairs
+        ///swap every two adjacent nodes and return its head. head = [1,2,3,4] => Output: [2,1,4,3]
+        public ListNode SwapPairs(ListNode head)
+        {
+            if(head == null || head.next==null )
+                return head;
+
+            var node = head;
+            //var pre=node.next;
+            var biNext = node.next.next;
+            var node1 = node;
+            var node2=node.next;
+            node1.next = biNext;
+            node2.next = node1;
+            var pre = node2.next;
+            head = node2;
+            node = biNext;
+            while (node != null && node.next!=null)
+            {
+                biNext = node.next.next;
+                pre.next = node.next;
+                pre.next.next = node;
+                node.next = biNext;
+                pre = node;
+                node = biNext;
+            }
+
+            return head;
+        }
         /// 26
         public int RemoveDuplicates(int[] nums)
         {
