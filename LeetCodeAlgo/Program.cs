@@ -16,7 +16,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
             var arr1 = new int[] { 1,1,1,3,3,5 };//[[],[],[]]
-            var input1 = 8;
+            var input1 = 3;
             var str1 = "2";
             var str2 = "3";
             //var arr1 = new string[] { "a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa" };
@@ -62,19 +62,19 @@ namespace LeetCodeAlgo
             //    Console.WriteLine("Result count = 0");
 
             //anwser.Solve(grid1);
-            var result = anwser.CombinationSum2(arr1,input1);
+            var result = anwser.GenerateParenthesis(input1);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
-            //Console.WriteLine(String.Join(",", result));
+            Console.WriteLine(String.Join(",", result));
             //Console.WriteLine(String.Join(",", arr1));
-            if (result.Count > 0)
-                Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
-            else
-                Console.WriteLine("!!!Result count = 0");
+            //if (result.Count > 0)
+            //    Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+            //else
+            //    Console.WriteLine("!!!Result count = 0");
             //Console.WriteLine($"Result = {result}");
             //Console.WriteLine(String.Join(",", arr1));
             Console.WriteLine("=========Finish!========");

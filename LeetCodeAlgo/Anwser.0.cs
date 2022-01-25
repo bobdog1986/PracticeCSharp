@@ -1046,7 +1046,56 @@ namespace LeetCodeAlgo
             return list;
         }
 
-        //26
+        ///22. Generate Parentheses ()
+        ///Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+        ///1 <= n <= 8, if n=3, return ["((()))","(()())","(())()","()(())","()()()"]
+        public IList<string> GenerateParenthesis(int n)
+        {
+            List<string> list = new List<string>();
+            int i = 1;
+            while (i <= n)
+            {
+                List<string> next = new List<string>();
+                if (list.Count == 0)
+                {
+                    next.Add("()");
+                }
+                else
+                {
+                    foreach(var l in list)
+                    {
+                        int j = 0;
+                        while (j < l.Length)
+                        {
+                            if (l[j] == '(' || (l[j - 1] == '(' && l[j] == ')'))
+                            {
+                                string str = l.Insert(j, "()");
+                                if (!next.Contains(str))
+                                    next.Add(str);
+                            }
+                            j++;
+                        }
+                    }
+                }
+                list = next;
+                i++;
+            }
+            return list;
+        }
+
+        public char[] getParenthesis(int n)
+        {
+            char[] ans = new char[n+n];
+            int i = 0;
+            while (i < n + n)
+            {
+                ans[i] = i < n ? '(' : ')';
+                i++;
+            }
+            return ans;
+        }
+
+        /// 26
         public int RemoveDuplicates(int[] nums)
         {
             int find = 0;

@@ -9,21 +9,14 @@ namespace LeetCodeAlgo
     public partial class Anwser
     {
         ///509. Fibonacci Number
+        ///0 <= n <= 30, F(0) = 0, F(1) = 1, F(n) = F(n - 1) + F(n - 2), for n > 1.
         public int Fib(int n)
         {
-            if (n == 0)
-            {
-                return 0;
-            }
-            if (n == 1)
-            {
-                return 1;
-            }
-
+            if (n <= 1)
+                return n;
             int dp = 0;
             int a1 = 0;
             int a2 = 1;
-
             int i = 2;
             while (i <= n)
             {
@@ -32,7 +25,6 @@ namespace LeetCodeAlgo
                 a2 = dp;
                 i++;
             }
-
             return dp;
         }
         public int Fib_Recursion(int n)
