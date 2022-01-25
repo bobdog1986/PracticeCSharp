@@ -1207,28 +1207,24 @@ namespace LeetCodeAlgo
             return head;
         }
 
-        ///26
+        ///26. Remove Duplicates from Sorted Array
         public int RemoveDuplicates(int[] nums)
         {
-            int find = 0;
-            for (int i = 0; i < nums.Length - 1;)
+            int[] arr = new int[201];
+            foreach (var i in nums)
+                arr[i + 100]++;
+            var count = arr.Where(x=>x!=0).Count();
+            int[] ans=new int[count];
+            int j = 0;
+            for (int i = 0; i < arr.Length; i++)
             {
-                if (nums[i] == nums[i + 1])
+                if (arr[i] != 0)
                 {
-                    Array.Copy(nums, i + 1, nums, i, nums.Length - i - 1 - find);
-
-                    find++;
+                    nums[j] = i - 100;
+                    j++;
                 }
-                else
-                {
-                    i++;
-                }
-                if (i + find >= nums.Length - 1) break;
             }
-
-            nums = nums.ToList().GetRange(0, nums.Length - find).ToArray();
-
-            return nums.Length;
+            return count;
         }
 
         //27
