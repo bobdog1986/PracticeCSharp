@@ -1159,7 +1159,55 @@ namespace LeetCodeAlgo
 
             return head;
         }
-        /// 26
+        ///25. Reverse Nodes in k-Group
+        public ListNode ReverseKGroup(ListNode head, int k)
+        {
+            if (k == 1)
+                return head;
+            ListNode pre = null;
+            ListNode node = head;
+            while (node != null)
+            {
+                int i = 0;
+                Stack<ListNode> stack=new Stack<ListNode> ();
+                while (i < k)
+                {
+                    if (node == null)
+                        break;
+                    stack.Push (node);
+                    node = node.next;
+                    i++;
+                }
+                if (i == k)
+                {
+                    ListNode subNode = stack.Pop();
+                    ListNode curr = subNode;
+                    while (stack.Count != 0)
+                    {
+                        var pop=stack.Pop();
+                        curr.next = pop;
+                        curr = curr.next;
+                    }
+                    curr.next = node;
+                    if(pre == null)
+                    {
+                        head= subNode;
+                    }
+                    else
+                    {
+                        pre.next = subNode;
+                    }
+                    pre = curr;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return head;
+        }
+
+        ///26
         public int RemoveDuplicates(int[] nums)
         {
             int find = 0;
