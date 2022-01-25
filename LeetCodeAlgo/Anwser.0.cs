@@ -1252,7 +1252,33 @@ namespace LeetCodeAlgo
             return nums.Length-count;
         }
 
-        //35. Search Insert Position
+        ///28. Implement strStr()
+        ///Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+        ///0 <= haystack.length, needle.length <= 5 * 10^4
+        public int StrStr(string haystack, string needle)
+        {
+            if (string.IsNullOrEmpty(needle))
+                return 0;
+
+            for(int i = 0; i < haystack.Length+1-needle.Length; i++)
+            {
+                if(haystack[i] == needle[0])
+                {
+                    int j = 1;
+                    while (j < needle.Length && i+j< haystack.Length)
+                    {
+                        if (needle[j] != haystack[i + j])
+                            break;
+                        j++;
+                    }
+
+                    if (j == needle.Length)
+                        return i;
+                }
+            }
+            return -1;
+        }
+        /// 35. Search Insert Position
 
         public int SearchInsert(int[] nums, int target)
         {
