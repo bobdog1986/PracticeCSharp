@@ -1082,17 +1082,52 @@ namespace LeetCodeAlgo
             }
             return list;
         }
-
-        public char[] getParenthesis(int n)
+        ///23. Merge k Sorted Lists
+        public ListNode MergeKLists(ListNode[] lists)
         {
-            char[] ans = new char[n+n];
-            int i = 0;
-            while (i < n + n)
+            if(lists == null||lists.Length==0)
+                return null;
+
+            var nodes = lists.Where(x => x != null).ToList();
+
+            if (nodes == null || nodes.Count == 0)
+                return null;
+
+            if (nodes.Count == 1)
+                return nodes[0];
+
+            return nodes.Aggregate((x,y)=>MergeKLists_Merge2(x,y));
+        }
+
+        public ListNode MergeKLists_Merge2(ListNode node1, ListNode node2)
+        {
+            while (node2 != null)
             {
-                ans[i] = i < n ? '(' : ')';
-                i++;
+                var next = node2.next;
+                if (node2.val <= node1.val)
+                {
+                    var temp = node1;
+                    node2.next = temp;
+                    node1 = node2;
+                }
+                else
+                {
+                    var node = node1;
+                    while(node != null)
+                    {
+                        if(node.val < node2.val && (node.next==null || node.next.val>=node2.val))
+                        {
+                            var temp=node.next;
+                            node.next = node2;
+                            node2.next = temp;
+                            break;
+                        }
+                        node = node.next;
+                    }
+                }
+                node2= next;
             }
-            return ans;
+            return node1;
         }
 
         /// 26
