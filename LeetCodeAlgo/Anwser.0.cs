@@ -1303,7 +1303,84 @@ namespace LeetCodeAlgo
             return new string(result.ToArray());
         }
 
-        ///43. Multiply Strings
+        ///39. Combination Sum
+        ///Given an array of distinct integers candidates and a target integer target,
+        ///return a list of all unique combinations of candidates where the chosen numbers sum to target.
+        ///The same number may be chosen from candidates an unlimited number of times.
+        ///count of return <= 150, 1 <= candidates[i] <= 200, 1 <= target <= 500
+        public IList<IList<int>> CombinationSum(int[] candidates, int target)
+        {
+            var ans = new List<IList<int>>();
+            var nums = candidates.OrderBy(x=>-x).ToList();
+            var llist = new List<IList<int>>();
+            bool first = true;
+            for (int i = 0; i < nums.Count; i++)
+            {
+                if (nums[i] > target)
+                    continue;
+                var next = new List<IList<int>>();
+                if (first)
+                {
+                    first= false;
+                    int n = target / nums[i];
+                    int m= target % nums[i];
+                    if (m == 0)
+                    {
+                        var comb=new List<int>();
+                        for (int j = 0; j < n; j++)
+                            comb.Add(nums[i]);
+                        ans.Add(comb);
+                        n--;
+                    }
+                    //remember add empty to next index
+                    int k = 0;
+                    while (k <= n)
+                    {
+                        var sub = new List<int>();
+                        for (int j = 0; j < k; j++)
+                            sub.Add(nums[i]);
+                        next.Add(sub);
+                        k++;
+                    }
+                }
+                else
+                {
+                    foreach(var list in llist)
+                    {
+                        int goal = target - list.Sum();
+                        if (goal < nums[i])
+                        {
+                            //add to next index
+                            next.Add(list);
+                            continue;
+                        }
+                        int n = goal / nums[i];
+                        int m = goal % nums[i];
+                        if (m == 0)
+                        {
+                            var comb = new List<int>(list);
+                            for (int j = 0; j < n; j++)
+                                comb.Add(nums[i]);
+                            ans.Add(comb);
+                            n--;
+                        }
+                        //remember add empty to next index
+                        int k = 0;
+                        while (k <= n)
+                        {
+                            var sub = new List<int>(list);
+                            for (int j = 0; j < k; j++)
+                                sub.Add(nums[i]);
+                            next.Add(sub);
+                            k++;
+                        }
+                    }
+                }
+                llist = next;
+            }
+            return ans;
+        }
+        /// 43. Multiply Strings
         ///Given two non-negative integers num1 and num2 represented as strings,
         ///return the product of num1 and num2, also represented as a string.
         public string Multiply(string num1, string num2)
