@@ -95,7 +95,7 @@ namespace LeetCodeAlgo
             //    Console.WriteLine("Result count = 0");
 
             //anwser.Solve(grid1);
-            var result = anwser.CoinChange(arr1,input1);
+            var result = anwser.IntegerBreak(58);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();

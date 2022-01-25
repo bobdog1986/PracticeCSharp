@@ -164,6 +164,20 @@ namespace LeetCodeAlgo
             return false;
         }
 
+        ///343. Integer Break
+        ///find 3 as many as possible, but no 1
+        public int IntegerBreak(int n)
+        {
+            if (n <= 3)
+                return n - 1;//1*(n-1)
+            int ans = 1;
+            while (n > 4)
+            {
+                ans *= 3;
+                n -= 3;
+            }
+            return ans*n;
+        }
         /// 344. Reverse String
         public void ReverseString(char[] s)
         {
