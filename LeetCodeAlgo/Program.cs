@@ -15,14 +15,17 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var arr1 = new int[] { 2 };
-            var input1 = 1;
+            var arr1 = new int[] { 1,1,1,3,3,5 };//[[],[],[]]
+            var input1 = 8;
             var str1 = "2";
             var str2 = "3";
             //var arr1 = new string[] { "a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa" };
             var mat1 = new int[][]
             {
-                new int[]{0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
+                //new int[]{0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
+                new int[]{1,1,1,5 },
+                new int[]{1,1,3,3 },
+                new int[]{3,5 },
             };
             var grid1 = new char[][]
             {
@@ -40,7 +43,8 @@ namespace LeetCodeAlgo
             };
             var listnode = new ListNode(1, new ListNode(1, new ListNode(3, null)));
             //anwser.PrintListNode(listnode);
-            //Console.WriteLine(String.Join("\r\n", mat1.Select(o => String.Join(",", o))));
+            Console.WriteLine("Correct Anwser should be : ");
+            Console.WriteLine(String.Join("\r\n", mat1.Select(o => String.Join(",", o))));
             //Console.WriteLine(string.Join(",", arr2));
             Stopwatch sw = new Stopwatch();
             Console.WriteLine("**************start watch ms*******");
@@ -58,7 +62,7 @@ namespace LeetCodeAlgo
             //    Console.WriteLine("Result count = 0");
 
             //anwser.Solve(grid1);
-            var result = anwser.CombinationSum(arr1,input1);
+            var result = anwser.CombinationSum2(arr1,input1);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();

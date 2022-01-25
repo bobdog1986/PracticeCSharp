@@ -1380,6 +1380,103 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+        ///40. Combination Sum II
+        ///Each number in candidates may only be used once in the combination.
+        public IList<IList<int>> CombinationSum2(int[] candidates, int target)
+        {
+            var ans = new List<IList<int>>();
+            var nums = candidates.OrderBy(x => -x).ToList();
+
+            Dictionary<int, List<int>> dict = new Dictionary<int, List<int>>();
+            for (int j = 0; j < nums.Count; j++)
+            {
+                if (dict.ContainsKey(nums[j]))
+                {
+                    dict[nums[j]].Add(j);
+                }
+                else
+                {
+                    dict.Add(nums[j], new List<int>() { j });
+                }
+            }
+
+            var llist = new List<IList<int>>();
+            bool first = true;
+            for (int i = 0; i < nums.Count; i++)
+            {
+                if (nums[i] > target)
+                    continue;
+                var next = new List<IList<int>>();
+                if (first)
+                {
+                    first = false;
+                    int n = target / nums[i];
+                    if (target== nums[i])
+                    {
+                        var comb = new List<int>() { nums[i] };
+                        ans.Add(comb);
+                        n--;
+                    }
+
+                    //remember add empty to next index
+                    int k = 0;
+                    while (k <= Math.Min(n, 1))
+                    {
+                        var sub = new List<int>();
+                        for (int j = 0; j < k; j++)
+                            sub.Add(nums[i]);
+                        next.Add(sub);
+                        k++;
+                    }
+                }
+                else
+                {
+                    foreach (var list in llist)
+                    {
+                        if (dict[nums[i]].Count > 1)
+                        {
+                            var idx = dict[nums[i]].IndexOf(i);
+                            int count = list.Where(x => x== nums[i]).Count();
+                            if (count != idx)
+                            {
+                                //add to next index
+                                next.Add(list);
+                                continue;
+                            }
+                        }
+
+                        int goal = target - list.Sum();
+                        if (goal < nums[i])
+                        {
+                            //add to next index
+                            next.Add(list);
+                            continue;
+                        }
+
+                        int n = goal / nums[i];
+                        if (goal == nums[i])
+                        {
+                            var comb = new List<int>(list);
+                            comb.Add(nums[i]);
+                            ans.Add(comb);
+                            n--;
+                        }
+                        //remember add empty to next index
+                        int k = 0;
+                        while (k <= Math.Min(n,1))
+                        {
+                            var sub = new List<int>(list);
+                            for (int j = 0; j < k; j++)
+                                sub.Add(nums[i]);
+                            next.Add(sub);
+                            k++;
+                        }
+                    }
+                }
+                llist = next;
+            }
+            return ans;
+        }
         /// 43. Multiply Strings
         ///Given two non-negative integers num1 and num2 represented as strings,
         ///return the product of num1 and num2, also represented as a string.
