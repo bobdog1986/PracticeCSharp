@@ -1227,27 +1227,29 @@ namespace LeetCodeAlgo
             return count;
         }
 
-        //27
+        ///27. Remove Element
+        ///Do not allocate extra space for another array.
+        ///You must do this by modifying the input array in-place with O(1) extra memory.
         public int RemoveElement(int[] nums, int val)
         {
-            int find = 0;
-            for (int i = 0; i < nums.Length;)
+            int count = 0;
+            for(int i=0; i<nums.Length-count; i++)
             {
-                if (nums[i] == val)
+                while (nums[i] == val)
                 {
-                    Array.Copy(nums, i + 1, nums, i, nums.Length - i - 1 - find);
-
-                    find++;
+                    count++;
+                    int k = 0;
+                    while(k< nums.Length -1-i)
+                    {
+                        nums[i+k] = nums[i +k+ 1];
+                        k++;
+                    }
+                    if (i >= nums.Length - count)
+                        break;
                 }
-                else
-                {
-                    i++;
-                }
-                if (i + find >= nums.Length) break;
             }
-            nums = nums.ToList().GetRange(0, nums.Length - find).ToArray();
 
-            return nums.Length;
+            return nums.Length-count;
         }
 
         //35. Search Insert Position
