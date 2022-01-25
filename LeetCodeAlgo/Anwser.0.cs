@@ -1416,68 +1416,118 @@ namespace LeetCodeAlgo
         }
 
         ///46. Permutations
-        ///1 <= nums.length <= 6
-        ///-10 <= nums[i] <= 10
+        ///1 <= nums.length <= 6, -10 <= nums[i] <= 10
         ///All the integers of nums are unique.
         public IList<IList<int>> Permute(int[] nums)
         {
-            if (nums == null || nums.Length == 0)
-                return null;
-
-            var result = new List<IList<int>>();
-
-            if (nums.Length == 1)
+            var ans = new List<IList<int>>();
+            for (int j = 0; j < nums.Length; j++)
             {
-                result.Add(nums.ToList());
-                return result;
+                var list = new List<int>();
+                list.Add(nums[j]);
+                ans.Add(list);
+            }
+            int i = 1;
+            while (i < nums.Length)
+            {
+                var next= new List<IList<int>>();
+
+                for (int k = 0; k < ans.Count; k++)
+                {
+                    for (int j = 0; j < nums.Length; j++)
+                    {
+                        if (ans[k].Contains(nums[j]))
+                            continue;
+
+                        var sub = new List<int>(ans[k]);
+                        sub.Add( nums[j]);
+                        next.Add(sub);
+                    }
+                }
+                ans = next;
+                i++;
             }
 
-            for (int i = 0; i < nums.Length; i++)
-            {
-                var list1 = new List<int>();
-                var list2 = new List<int>();
-
-                foreach (var n in nums)
-                    list2.Add(n);
-
-                list1.Add(nums[i]);
-                list2.RemoveAt(i);
-
-                Permute_Recurison(list1, list2, result);
-            }
-
-            return result;
+            return ans;
         }
 
-        public void Permute_Recurison(IList<int> head, IList<int> tail, IList<IList<int>> result)
+        ///47. Permutations II
+        ///1 <= nums.length <= 8, -10 <= nums[i] <= 10
+        ///Given a collection of numbers that might contain duplicates, return all possible unique permutations in any order.
+        public IList<IList<int>> PermuteUnique(int[] nums)
         {
-            if (tail == null || tail.Count == 0)
+            var idxList = new List<IList<int>>();
+
+            Dictionary<int,List<int>> dict = new Dictionary<int,List<int>>();
+
+            for(int j=0;j<nums.Length;j++)
             {
-                result.Add(head);
-                return;
-            }
-            else
-            {
-                for (int i = 0; i < tail.Count; i++)
+                if (dict.ContainsKey(nums[j]))
                 {
-                    var list1 = new List<int>();
-                    var list2 = new List<int>();
-
-                    foreach (var m in head)
-                        list1.Add(m);
-
-                    foreach (var n in tail)
-                        list2.Add(n);
-
-                    list1.Add(tail[i]);
-                    list2.RemoveAt(i);
-
-                    Permute_Recurison(list1, list2, result);
+                    dict[nums[j]].Add(j);
+                }
+                else
+                {
+                    dict.Add(nums[j], new List<int>() { j });
                 }
             }
-        }
 
-        ///48. Rotate Image
+            int i = 0;
+            while (i < nums.Length)
+            {
+                var next = new List<IList<int>>();
+
+                if (i == 0)
+                {
+                    for (int j = 0; j < nums.Length; j++)
+                    {
+                        if (dict[nums[j]].IndexOf(j) > 0)
+                            continue;
+                        next.Add(new List<int>() { j });
+                    }
+                }
+                else
+                {
+                    for (int k = 0; k < idxList.Count; k++)
+                    {
+                        for (int j = 0; j < nums.Length; j++)
+                        {
+                            if (idxList[k].Contains(j))
+                                continue;
+
+                            if (dict[nums[j]].Count > 1)
+                            {
+                                var idx = dict[nums[j]].IndexOf(j);
+                                int count = idxList[k].Where(x => dict[nums[j]].Contains(x)).Count();
+
+                                if (count != idx)
+                                    continue;
+                            }
+
+                            var sub = new List<int>(idxList[k]);
+                            sub.Add(j);
+                            next.Add(sub);
+                        }
+                    }
+                }
+
+                idxList = next;
+                i++;
+            }
+
+            var ans = new List<IList<int>>();
+
+            foreach(var list in idxList)
+            {
+                var data=new List<int>();
+                foreach(var j in list)
+                    data.Add(nums[j]);
+                ans.Add(data);
+            }
+
+            return ans;
+        }
+        /// 48. Rotate Image
         ///You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
         ///You have to rotate the image in-place, which means you have to modify the input 2D matrix directly.
         ///DO NOT allocate another 2D matrix and do the rotation.

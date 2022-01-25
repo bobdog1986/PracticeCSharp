@@ -91,5 +91,13 @@ using System.Threading.Tasks;
 
             Console.WriteLine($"ListNode is [{string.Join(",", list)}]");
         }
+
+        public int[] createArray(int len, int seed = int.MinValue)
+        {
+            int[] arr = new int[len];
+            for (int i = 0; i < arr.Length; i++)
+                arr[i] = seed;
+            return arr;
+        }
     }
 }
