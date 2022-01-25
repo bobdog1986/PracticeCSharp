@@ -65,34 +65,31 @@ namespace LeetCodeAlgo
             }
         }
 
-        char[][] _grid;
-        int m, n, cnt;
-        int[] dx = { 0, 1, 0, -1 };
-        int[] dy = { 1, 0, -1, 0 };
         private int NumIslands_1(char[][] grid)
         {
-            _grid = grid;
-            m = _grid.Length;
-            n = _grid[0].Length;
+            int[] dx = { 0, 1, 0, -1 };
+            int[] dy = { 1, 0, -1, 0 };
 
-            for (int i = 0; i < m; i++)
+            int ans = 0;
+
+            for (int i = 0; i < grid.Length; i++)
             {
-                for (int j = 0; j < n; j++)
+                for (int j = 0; j < grid[0].Length; j++)
                 {
-                    if (_grid[i][j] == '1')
+                    if (grid[i][j] == '1')
                     {
-                        cnt++;
-                        MarkVisited(i, j);
+                        ans++;
+                        MarkVisited(i, j, grid, dx, dy);
                     }
                 }
             }
-            return cnt;
+            return ans;
         }
 
-        private void MarkVisited(int r, int c)
+        private void MarkVisited(int r, int c, char[][] grid, int[] dx, int[] dy)
         {
             var q = new Queue<int[]>();
-            _grid[r][c] = '0';
+            grid[r][c] = '0';
             q.Enqueue(new int[] { r, c });
 
             while (q.Count > 0)
@@ -102,9 +99,11 @@ namespace LeetCodeAlgo
                 {
                     var nextRow = a[0] + dx[i];
                     var nextCol = a[1] + dy[i];
-                    if (nextRow >= 0 && nextRow < m && nextCol >= 0 && nextCol < n && _grid[nextRow][nextCol] == '1')
+                    if (nextRow >= 0 && nextRow < grid.Length
+                        && nextCol >= 0 && nextCol < grid[0].Length
+                        && grid[nextRow][nextCol] == '1')
                     {
-                        _grid[nextRow][nextCol] = '0';
+                        grid[nextRow][nextCol] = '0';
                         q.Enqueue(new int[] { nextRow, nextCol });
                     }
                 }

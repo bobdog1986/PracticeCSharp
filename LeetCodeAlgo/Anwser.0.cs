@@ -1303,7 +1303,69 @@ namespace LeetCodeAlgo
             return new string(result.ToArray());
         }
 
-        //45. Jump Game II
+        ///43. Multiply Strings
+        ///Given two non-negative integers num1 and num2 represented as strings,
+        ///return the product of num1 and num2, also represented as a string.
+        public string Multiply(string num1, string num2)
+        {
+            int[] digits1=new int[num1.Length];
+            for(int i = 0;i < digits1.Length; i++)
+            {
+                digits1[digits1.Length - 1 - i] = GetDigitFromChar( num1[i]);
+            }
+
+            int[] digits2=new int[num2.Length];
+            for (int i = 0; i < digits2.Length; i++)
+            {
+                digits2[digits2.Length - 1 - i] = GetDigitFromChar(num2[i]);
+            }
+
+            int[] result = new int[digits1.Length+digits2.Length];
+
+            int carry;
+
+            for (int i = 0;i< digits1.Length; i++)
+            {
+                for (int j = 0; j < digits2.Length; j++)
+                {
+                    result[i + j] += digits1[i] * digits2[j];
+                    carry = result[i + j] / 10;
+                    result[i+j] %=10;
+                    if (carry > 0)
+                    {
+                        result[i + j + 1] += carry;
+                        carry = 0;
+                    }
+                }
+            }
+
+            int len=result.Length;
+
+            int a = result.Length - 1;
+            while(a >= 1)
+            {
+                if (result[a] == 0)
+                {
+                    len--;
+                    a--;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+
+            char[] ans=new char[len];
+
+            for(int i = 0; i < len; i++)
+            {
+                ans[i]= GetCharFormDigit(result[len-1-i]);
+            }
+
+            return string.Join("",ans);
+        }
+        /// 45. Jump Game II
         public int Jump(int[] nums)
         {
             if (nums.Length == 1)
@@ -1443,6 +1505,7 @@ namespace LeetCodeAlgo
         }
 
         ///49. Group Anagrams
+        ///Given an array of strings strs, group the anagrams together. You can return the answer in any order.
         public IList<IList<string>> GroupAnagrams(string[] strs)
         {
             var ans=new List<IList<string>>();
