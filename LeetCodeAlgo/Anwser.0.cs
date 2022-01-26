@@ -1278,6 +1278,56 @@ namespace LeetCodeAlgo
             }
             return -1;
         }
+        ///29. Divide Two Integers
+        public int Divide(int dividend, int divisor)
+        {
+            if(dividend == 0)
+                return 0;
+            int ans = 0;
+
+            if (dividend > 0)
+            {
+                if(divisor > 0)
+                {
+                    while (dividend - divisor >=0 )
+                    {
+                        dividend -= divisor;
+                        ans++;
+                    }
+                }
+                else
+                {
+                    while (dividend + divisor >=0 )
+                    {
+                        dividend += divisor;
+                        ans--;
+                    }
+                }
+            }
+            else
+            {
+                if (divisor > 0)
+                {
+                    while (dividend + divisor <=0 )
+                    {
+                        dividend += divisor;
+                        ans--;
+                    }
+                }
+                else
+                {
+                    while (dividend - divisor <= 0)
+                    {
+                        dividend -= divisor;
+                        if(ans<int.MaxValue)
+                            ans++;
+                    }
+                }
+            }
+
+            return ans;
+
+        }
         /// 35. Search Insert Position
 
         public int SearchInsert(int[] nums, int target)
