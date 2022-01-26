@@ -1279,10 +1279,42 @@ namespace LeetCodeAlgo
             return -1;
         }
         ///29. Divide Two Integers
+        ///-2^31 <= dividend, divisor <= 2^31 - 1, divisor!=0
         public int Divide(int dividend, int divisor)
         {
             if(dividend == 0)
                 return 0;
+
+            if(divisor==1)
+                return dividend;
+
+            if (divisor == -1)
+            {
+                return dividend==int.MinValue?int.MaxValue:-dividend;
+            }
+
+            if (divisor == int.MinValue)
+            {
+                return dividend == int.MinValue ? 1 : 0;
+            }
+
+            if(divisor == int.MaxValue)
+            {
+                if (dividend <= int.MinValue+1 )
+                {
+                    return -1;
+                }
+                else if(dividend == int.MaxValue)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+
+
             int ans = 0;
 
             if (dividend > 0)
@@ -1328,6 +1360,71 @@ namespace LeetCodeAlgo
             return ans;
 
         }
+        ///30. Substring with Concatenation of All Words
+        ///return index of substring == all words, s = "barfoothefoobarman", words = ["foo","bar"], return [0,9]
+        ///1 <= s.length <= 104,1 <= words.length <= 5000,1 <= words[i].length <= 30, all lower-case letter
+        public IList<int> FindSubstring(string s, string[] words)
+        {
+            List<int> ans = new List<int>();
+            int len = words.Select(x => x.Length).Sum();
+            List<string> exists = new List<string>();
+            Dictionary<string,int> dict=new Dictionary<string,int>();
+            foreach (string word in words)
+            {
+                if (dict.ContainsKey(word))
+                {
+                    dict[word]++;
+                }
+                else
+                {
+                    dict.Add(word, 1);
+                }
+            }
+            for(int i = 0; i < s.Length+1-len; i++)
+            {
+                if (exists.Where(x => x == s.Substring(i, len)).Count() > 0)
+                {
+                    ans.Add(i);
+                    continue;
+                }
+                Dictionary<string, int> dict2 = new Dictionary<string, int>();
+                foreach(var d in dict)
+                    dict2.Add(d.Key, d.Value);
+
+                bool find = FindSubstring(s,words,i, dict2);
+                if (find)
+                {
+                    ans.Add(i);
+                    exists.Add(s.Substring(i,len));
+                }
+            }
+            return ans;
+        }
+        public bool FindSubstring(string s, string[] words, int index, Dictionary<string,int> dict)
+        {
+            if (words.Length == 0)
+                return true;
+            if (words.Length == 1)
+            {
+                return s.Substring(index, words[0].Length) == words[0];
+            }
+            var pools = dict.Where(x=>x.Value>0).Select(x=>x.Key).ToList();
+            var matchs = pools.Where(x => x == s.Substring(index, x.Length)).ToList();
+            if (matchs.Count > 0)
+            {
+                foreach (var match in matchs)
+                {
+                    List<string> list = new List<string>(words);
+                    list.Remove(match);
+                    dict[match]--;
+                    bool find = FindSubstring(s, list.ToArray(), index + match.Length, dict);
+                    if (find)
+                        return true;
+                }
+            }
+            return false;
+        }
+
         /// 35. Search Insert Position
 
         public int SearchInsert(int[] nums, int target)

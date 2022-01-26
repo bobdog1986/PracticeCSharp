@@ -15,11 +15,11 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var arr1 = new int[] { 0,1,2,2,3,0,4,2 };//[[],[],[]]
+            var arr1 = new int[] { 0, 1, 2, 2, 3, 0, 4, 2 };//[[],[],[]]
             var input1 = 3;
-            var str1 = "2";
+            var str1 = "ababababababab";
             var str2 = "3";
-            //var arr1 = new string[] { "a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa" };
+            var word1 = new string[] { "ab", "ab" };
             var mat1 = new int[][]
             {
                 //new int[]{0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
@@ -42,7 +42,7 @@ namespace LeetCodeAlgo
                 new int[] { 10, 16 },   new int[]{2, 8},  new int[]{1, 6},new int[]{7,12}
             };
             var listnode = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
-            anwser.PrintListNode(listnode);
+            //anwser.PrintListNode(listnode);
             Console.WriteLine("Correct Anwser should be : ");
             Console.WriteLine(String.Join("\r\n", mat1.Select(o => String.Join(",", o))));
             //Console.WriteLine(string.Join(",", arr2));
@@ -62,7 +62,7 @@ namespace LeetCodeAlgo
             //    Console.WriteLine("Result count = 0");
 
             //anwser.Solve(grid1);
-            var result = anwser.Divide(10,-3);
+            var result = anwser.FindSubstring(str1, word1);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
