@@ -56,5 +56,35 @@ namespace LeetCodeAlgo
             return result;
         }
 
+        ///1305. All Elements in Two Binary Search Trees
+        //two binary search trees root1 and root2, return a list containing all the integers from both trees sorted in ascending order.
+        public IList<int> GetAllElements(TreeNode root1, TreeNode root2)
+        {
+            List<int> ans = new List<int>();
+
+            List<TreeNode> list = new List<TreeNode>() { root1,root2 };
+            while(list.Count > 0)
+            {
+                List<TreeNode> next = new List<TreeNode>();
+
+                foreach(var node in list)
+                {
+                    if (node != null)
+                    {
+                        ans.Add(node.val);
+                        if(node.left != null)
+                            next.Add(node.left);
+                        if(node.right != null)
+                            next.Add(node.right);
+                    }
+                }
+
+                list = next;
+            }
+
+            ans.Sort();
+            return ans;
+        }
+
     }
 }
