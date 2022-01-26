@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace LeetCodeAlgo
 {
@@ -13,7 +9,7 @@ namespace LeetCodeAlgo
         ///eg. 123, 234, 3456,
         public IList<int> SequentialDigits(int low, int high)
         {
-            var ans=new List<int>();
+            var ans = new List<int>();
             int len1 = 1;
             int len2 = 1;
             int a = low;
@@ -31,17 +27,17 @@ namespace LeetCodeAlgo
                 b /= 10;
             }
 
-            for(int i =len1;i<=len2 && i<=9 ;i++)
+            for (int i = len1; i <= len2 && i <= 9; i++)
             {
                 int start = 1;
                 int end = 9;
 
                 if (i == len1)
                     start = a;
-                if(i==len2)
+                if (i == len2)
                     end = b;
 
-                for (int j = start; j <= 9 - i + 1 && j<=end ; j++)
+                for (int j = start; j <= 9 - i + 1 && j <= end; j++)
                 {
                     int val = 0;
                     int m = i;

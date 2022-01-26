@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
@@ -46,16 +43,16 @@ namespace LeetCodeAlgo
         ///Given a string word, return true if the usage of capitals in it is right.
         public bool DetectCapitalUse(string word)
         {
-            if(word.Length==1)
+            if (word.Length == 1)
                 return true;
 
             bool lastIsUpper = char.IsUpper(word[word.Length - 1]);
 
-            bool ans=true;
+            bool ans = true;
 
             if (lastIsUpper)
             {
-                for(int i =0;i< word.Length-1; i++)
+                for (int i = 0; i < word.Length - 1; i++)
                 {
                     if (!char.IsUpper(word[i]))
                     {
@@ -263,7 +260,7 @@ namespace LeetCodeAlgo
         public int FindCircleNum(int[][] isConnected)
         {
             int[] arr = new int[isConnected.Length];
-            for(int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
                 arr[i] = 1;
             }
@@ -282,7 +279,7 @@ namespace LeetCodeAlgo
 
                 for (int j = 0; j < isConnected[i].Length; j++)
                 {
-                    if (i!=j && isConnected[i][j] == 1)
+                    if (i != j && isConnected[i][j] == 1)
                     {
                         FindCircleNum_RemoveAllConnected(isConnected, arr, i, j);
                     }
@@ -291,7 +288,7 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        public void FindCircleNum_RemoveAllConnected(int[][] isConnected,int[] arr, int r, int c)
+        public void FindCircleNum_RemoveAllConnected(int[][] isConnected, int[] arr, int r, int c)
         {
             if (arr[c] == 0)
                 return;
@@ -300,7 +297,7 @@ namespace LeetCodeAlgo
 
             for (int j = 0; j < isConnected[c].Length; j++)
             {
-                if (c != j && isConnected[c][j] == 1 )
+                if (c != j && isConnected[c][j] == 1)
                 {
                     FindCircleNum_RemoveAllConnected(isConnected, arr, c, j);
                 }
@@ -317,10 +314,10 @@ namespace LeetCodeAlgo
             {
                 var carr = arr[i].ToCharArray();
                 ReverseString(carr);
-                arr[i] = String.Join("", carr);
+                arr[i] = string.Join("", carr);
             }
 
-            return String.Join(" ", arr);
+            return string.Join(" ", arr);
         }
 
         ///560. Subarray Sum Equals K, O(n^2)
@@ -328,13 +325,13 @@ namespace LeetCodeAlgo
         public int SubarraySum(int[] nums, int k)
         {
             int ans = 0;
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 int sum = 0;
                 int j = i;
                 while (j >= 0)
                 {
-                    sum+=nums[j];
+                    sum += nums[j];
                     if (sum == k)
                         ans++;
                     j--;
@@ -420,12 +417,12 @@ namespace LeetCodeAlgo
         ///there may same values of nodes in root
         public bool IsSubtree(TreeNode root, TreeNode subRoot)
         {
-            var nodes= IsSubtree_Find(root, subRoot);
-            if (nodes == null || nodes.Count==0)
+            var nodes = IsSubtree_Find(root, subRoot);
+            if (nodes == null || nodes.Count == 0)
                 return false;
 
             bool found = false;
-            foreach(var node in nodes)
+            foreach (var node in nodes)
             {
                 found = IsSubtree_Compare(node, subRoot);
                 if (found)
@@ -439,7 +436,7 @@ namespace LeetCodeAlgo
         {
             List<TreeNode> ans = new List<TreeNode>();
 
-            List<TreeNode> list = new List<TreeNode>() { root};
+            List<TreeNode> list = new List<TreeNode>() { root };
             while (list.Count > 0)
             {
                 List<TreeNode> subs = new List<TreeNode>();
@@ -448,7 +445,7 @@ namespace LeetCodeAlgo
                     if (i.val == subRoot.val)
                         ans.Add(i);
 
-                    if(i.left!=null)
+                    if (i.left != null)
                         subs.Add(i.left);
                     if (i.right != null)
                         subs.Add(i.right);
@@ -466,7 +463,7 @@ namespace LeetCodeAlgo
             List<TreeNode> list = new List<TreeNode>() { root };
             List<TreeNode> list2 = new List<TreeNode>() { subRoot };
 
-            while(list.Count>0 || list2.Count > 0)
+            while (list.Count > 0 || list2.Count > 0)
             {
                 if (list.Count != list2.Count)
                     return false;

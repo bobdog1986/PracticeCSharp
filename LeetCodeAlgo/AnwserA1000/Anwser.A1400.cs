@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
@@ -93,9 +90,10 @@ namespace LeetCodeAlgo
 
             //List<int> visitValueList = new List<int>() {  };
 
-            List<List<int>> allPath = new List<List<int>>();
-
-            allPath.Add(new List<int>() { 0 });
+            List<List<int>> allPath = new List<List<int>>
+            {
+                new List<int>() { 0 }
+            };
 
             while (true)
             {

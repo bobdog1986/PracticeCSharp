@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
-using System.Xml;
-using System.Xml.Linq;
+using System.Linq;
 
 namespace LeetCodeAlgo
 {
@@ -15,7 +10,7 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var arr1 = new int[] {1,3,2};//[[],[],[]]
+            var arr1 = new int[] { 1, 3, 2 };//[[],[],[]]
             var input1 = 3;
             var str1 = "))))())()()(()";
             var str2 = "3";
@@ -44,7 +39,7 @@ namespace LeetCodeAlgo
             var listnode = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
             //anwser.PrintListNode(listnode);
             Console.WriteLine("Correct Anwser should be : ");
-            Console.WriteLine(String.Join("\r\n", mat1.Select(o => String.Join(",", o))));
+            Console.WriteLine(string.Join("\r\n", mat1.Select(o => string.Join(",", o))));
             //Console.WriteLine(string.Join(",", arr2));
             Stopwatch sw = new Stopwatch();
             Console.WriteLine("**************start watch ms*******");
@@ -69,7 +64,7 @@ namespace LeetCodeAlgo
             Console.WriteLine();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
-            Console.WriteLine(String.Join(",", result));
+            Console.WriteLine(string.Join(",", result));
             //anwser.PrintListNode(result);
 
             //Console.WriteLine(String.Join(",", arr1));

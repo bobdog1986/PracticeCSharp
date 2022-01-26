@@ -8,9 +8,10 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>LeetCodeAlgo</RootNamespace>
     <AssemblyName>LeetCodeAlgo</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -42,25 +43,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Anwser.800.cs" />
-    <Compile Include="Anwser.A1000.cs" />
-    <Compile Include="Anwser.A1200.cs" />
-    <Compile Include="Anwser.A1300.cs" />
+    <Compile Include="Anwser500\Anwser.800.cs" />
+    <Compile Include="AnwserA1000\Anwser.A1000.cs" />
+    <Compile Include="AnwserA1000\Anwser.A1200.cs" />
+    <Compile Include="AnwserA1000\Anwser.A1300.cs" />
     <Compile Include="Anwser.BTree.cs" />
-    <Compile Include="Anwser.A1100.cs" />
-    <Compile Include="Anwser.500.cs" />
-    <Compile Include="Anwser.900.cs" />
-    <Compile Include="Anwser.0.cs" />
-    <Compile Include="Anwser.400.cs" />
-    <Compile Include="Anwser.100.cs" />
-    <Compile Include="Anwser.600.cs" />
-    <Compile Include="Anwser.300.cs" />
-    <Compile Include="Anwser.200.cs" />
-    <Compile Include="Anwser.A1400.cs" />
-    <Compile Include="Anwser.A1500.cs" />
-    <Compile Include="Anwser.A1800.cs" />
-    <Compile Include="Anwser.A2000.cs" />
-    <Compile Include="Anwser.A2100.cs" />
+    <Compile Include="AnwserA1000\Anwser.A1100.cs" />
+    <Compile Include="Anwser500\Anwser.500.cs" />
+    <Compile Include="Anwser500\Anwser.900.cs" />
+    <Compile Include="Anwser0\Anwser.000.cs" />
+    <Compile Include="Anwser0\Anwser.400.cs" />
+    <Compile Include="Anwser0\Anwser.100.cs" />
+    <Compile Include="Anwser500\Anwser.600.cs" />
+    <Compile Include="Anwser0\Anwser.300.cs" />
+    <Compile Include="Anwser0\Anwser.200.cs" />
+    <Compile Include="AnwserA1000\Anwser.A1400.cs" />
+    <Compile Include="AnwserA1500\Anwser.A1500.cs" />
+    <Compile Include="AnwserA1500\Anwser.A1800.cs" />
+    <Compile Include="AnwserA2000\Anwser.A2000.cs" />
+    <Compile Include="AnwserA2000\Anwser.A2100.cs" />
     <Compile Include="Anwser.Helper.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="MyStructs.cs" />
@@ -69,7 +70,8 @@
     <Compile Include="DataStructs.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Anwser.700.cs" />
+    <Compile Include="Anwser500\Anwser.700.cs" />
+    <Compile Include="Anwser0\Anwser.050.cs" />
     <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

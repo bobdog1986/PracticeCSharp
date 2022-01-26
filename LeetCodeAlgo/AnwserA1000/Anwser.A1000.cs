@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
@@ -29,17 +26,17 @@ namespace LeetCodeAlgo
         ///8 direction
         public int ShortestPathBinaryMatrix(int[][] grid)
         {
-            int len=grid.Length;
+            int len = grid.Length;
 
-            if(len==1)
-                return grid[0][0]==0?1:-1;
+            if (len == 1)
+                return grid[0][0] == 0 ? 1 : -1;
 
             if (grid[0][0] == 1 || grid[len - 1][len - 1] == 1)
                 return -1;
 
-            int[][] visit=new int[len][];
+            int[][] visit = new int[len][];
 
-            for(int i=0;i< len; i++)
+            for (int i = 0; i < len; i++)
             {
                 visit[i] = new int[len];
             }
@@ -52,9 +49,9 @@ namespace LeetCodeAlgo
 
             List<int[]> list = new List<int[]>();
 
-            int step=0;
+            int step = 0;
 
-            list.Add( new int[] { 0, 0 });
+            list.Add(new int[] { 0, 0 });
             visit[0][0] = 1;
             step++;
 
@@ -62,17 +59,17 @@ namespace LeetCodeAlgo
             {
                 List<int[]> sub = new List<int[]>();
 
-                foreach(var cell in list)
+                foreach (var cell in list)
                 {
                     int r = cell[0];
                     int c = cell[1];
 
                     foreach (var d in dxy)
                     {
-                        int r1=r+d[0];
-                        int c1=c+d[1];
+                        int r1 = r + d[0];
+                        int c1 = c + d[1];
 
-                        if(r1>=0&&r1<=len-1 && c1 >= 0 && c1 <= len - 1)
+                        if (r1 >= 0 && r1 <= len - 1 && c1 >= 0 && c1 <= len - 1)
                         {
                             if (r1 == len - 1 && c1 == len - 1)
                                 return step + 1;

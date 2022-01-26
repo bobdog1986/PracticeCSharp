@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
@@ -22,42 +20,42 @@ namespace LeetCodeAlgo
                     if (grid[i][j] == '1')
                     {
                         ans++;
-                        NumIslands_RemoveAllConnected(grid,i, j);
+                        NumIslands_RemoveAllConnected(grid, i, j);
                     }
                 }
             }
             return ans;
         }
 
-        public void NumIslands_RemoveAllConnected(char[][] grid,int r,int c)
+        public void NumIslands_RemoveAllConnected(char[][] grid, int r, int c)
         {
             grid[r][c] = '0';
             var q = new Queue<int[]>();
             q.Enqueue(new int[] { r, c });
-            while(q.Count > 0)
+            while (q.Count > 0)
             {
                 var a = q.Dequeue();
                 var up = new int[] { a[0] - 1, a[1] };
                 var down = new int[] { a[0] + 1, a[1] };
-                var left = new int[] { a[0], a[1]-1 };
-                var right = new int[] { a[0], a[1]+1 };
+                var left = new int[] { a[0], a[1] - 1 };
+                var right = new int[] { a[0], a[1] + 1 };
 
-                if(up[0]>=0 && grid[up[0]][up[1]] == '1')
+                if (up[0] >= 0 && grid[up[0]][up[1]] == '1')
                 {
                     grid[up[0]][up[1]] = '0';
                     q.Enqueue(up);
                 }
-                if (down[0]<=grid.Length- 1 && grid[down[0]][down[1]] == '1')
+                if (down[0] <= grid.Length - 1 && grid[down[0]][down[1]] == '1')
                 {
                     grid[down[0]][down[1]] = '0';
                     q.Enqueue(down);
                 }
-                if (left[1]>= 0 && grid[left[0]][left[1]] == '1')
+                if (left[1] >= 0 && grid[left[0]][left[1]] == '1')
                 {
                     grid[left[0]][left[1]] = '0';
                     q.Enqueue(left);
                 }
-                if (right[1]<=grid[0].Length- 1 && grid[right[0]][right[1]] == '1')
+                if (right[1] <= grid[0].Length - 1 && grid[right[0]][right[1]] == '1')
                 {
                     grid[right[0]][right[1]] = '0';
                     q.Enqueue(right);
@@ -165,7 +163,7 @@ namespace LeetCodeAlgo
                 List<int> list = new List<int>();
                 for (int j = 1; j < mat[i].Length; j++)
                 {
-                    if (j< mat[i].Length-1 && mat[i][j] == 1 && !exists.Contains(j))
+                    if (j < mat[i].Length - 1 && mat[i][j] == 1 && !exists.Contains(j))
                     {
                         list.Add(j);
                     }
@@ -177,7 +175,7 @@ namespace LeetCodeAlgo
                             var second = islands2.FirstOrDefault(x => x.Contains(list.Last() + 1));
                             if (first != null && second != null && first != second)
                             {
-                                foreach(var k in list)
+                                foreach (var k in list)
                                 {
                                     if (!first.Contains(k))
                                         first.Add(k);
@@ -219,7 +217,7 @@ namespace LeetCodeAlgo
                     }
                 }
 
-                islands = islands2.OrderBy(x=>x[0]).ToList();
+                islands = islands2.OrderBy(x => x[0]).ToList();
 
                 if (i == mat.Length - 2)
                 {
@@ -232,7 +230,7 @@ namespace LeetCodeAlgo
         }
 
         /// 202
-        private List<int> happyList = new List<int>();
+        private readonly List<int> happyList = new List<int>();
 
         public bool IsHappy(int n)
         {
@@ -333,15 +331,15 @@ namespace LeetCodeAlgo
         ///If there is no such subarray, return 0 instead.
         public int MinSubArrayLen(int target, int[] nums)
         {
-            int min = nums.Length+1;
+            int min = nums.Length + 1;
 
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 int sum = 0;
                 int j = i;
-                while ( j < nums.Length && j-i+1<min)
+                while (j < nums.Length && j - i + 1 < min)
                 {
-                    sum+=nums[j];
+                    sum += nums[j];
 
                     if (sum >= target)
                     {
@@ -355,7 +353,7 @@ namespace LeetCodeAlgo
                     return 1;
             }
 
-            return min== nums.Length + 1?0:min;
+            return min == nums.Length + 1 ? 0 : min;
         }
         /// 213. House Robber II
         ///All houses at this place are arranged in a circle. N-1 is next to 0
@@ -412,12 +410,12 @@ namespace LeetCodeAlgo
         {
             //loop matrix from top to bottom, you can also try left to right
             //store count of last '1'
-            int[] dp=new int[matrix[0].Length];
+            int[] dp = new int[matrix[0].Length];
 
             //max len of square
             int len = 0;
 
-            foreach(var row in matrix)
+            foreach (var row in matrix)
             {
                 for (int i = 0; i < dp.Length; i++)
                 {
@@ -448,8 +446,8 @@ namespace LeetCodeAlgo
 
                     while (j < count && width <= dp[i] && (i - 1 - left >= 0 || i + 1 + right <= dp.Length - 1))
                     {
-                        if(((i - 1 - left)<0 || dp[i - 1 - left] < dp[i])
-                            &&((i + 1 + right> dp.Length -1) || dp[i + 1 + right] < dp[i]))
+                        if (((i - 1 - left) < 0 || dp[i - 1 - left] < dp[i])
+                            && ((i + 1 + right > dp.Length - 1) || dp[i + 1 + right] < dp[i]))
                         {
                             break;
                         }
@@ -457,7 +455,7 @@ namespace LeetCodeAlgo
                         if (i - 1 - left >= 0 && dp[i - 1 - left] >= dp[i])
                             left++;
 
-                        if (i + 1 + right <= dp.Length-1 && dp[i + 1 + right] >= dp[i])
+                        if (i + 1 + right <= dp.Length - 1 && dp[i + 1 + right] >= dp[i])
                             right++;
 
                         width = 1 + left + right;
@@ -465,7 +463,7 @@ namespace LeetCodeAlgo
                         j++;
                     }
 
-                    len = Math.Max(Math.Min(width,dp[i]) , len);
+                    len = Math.Max(Math.Min(width, dp[i]), len);
                 }
             }
 
@@ -600,9 +598,9 @@ namespace LeetCodeAlgo
                 product2 *= nums[nums.Length - 1 - i];
             }
 
-            for(int i = 0;i< nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
-                ans[i]=left[i]*right[i];
+                ans[i] = left[i] * right[i];
             }
 
             return ans;
@@ -616,7 +614,7 @@ namespace LeetCodeAlgo
             if (matrix[0][0] > target || matrix[rowLen - 1][colLen - 1] < target)
                 return false;
 
-            foreach(var arr in matrix)
+            foreach (var arr in matrix)
             {
                 if (arr[0] > target || arr[arr.Length - 1] < target)
                     continue;
@@ -629,7 +627,7 @@ namespace LeetCodeAlgo
                 {
                     if (col1 == col2)
                     {
-                        if(arr[col1]==target)
+                        if (arr[col1] == target)
                             return true;
                         break;
                     }

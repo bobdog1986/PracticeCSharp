@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace LeetCodeAlgo
 {
@@ -12,8 +8,8 @@ namespace LeetCodeAlgo
         {
         }
 
-        private Stack<int> q1 = new Stack<int>();
-        private Stack<int> q2 = new Stack<int>();
+        private readonly Stack<int> q1 = new Stack<int>();
+        private readonly Stack<int> q2 = new Stack<int>();
 
         public void Push(int x)
         {
@@ -71,7 +67,7 @@ namespace LeetCodeAlgo
     /// </summary>
     public class MyHashMap
     {
-        private int[] map;
+        private readonly int[] map;
         private const int LEN = 1000001;
         public MyHashMap()
         {

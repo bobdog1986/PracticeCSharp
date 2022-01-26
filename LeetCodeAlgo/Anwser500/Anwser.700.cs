@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
 using System.Linq;
 
 namespace LeetCodeAlgo
@@ -132,10 +131,10 @@ namespace LeetCodeAlgo
             int ans = 0;
             int product = 1;
             int start = 0;
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
-                product*=nums[i];
-                while (product >= k && start <= i && start>=0)
+                product *= nums[i];
+                while (product >= k && start <= i && start >= 0)
                 {
                     product = product / nums[start];
                     start++;
@@ -296,14 +295,14 @@ namespace LeetCodeAlgo
         ///s consists of lowercase English letters.
         public IList<int> PartitionLabels(string s)
         {
-            if(s.Length==1)
+            if (s.Length == 1)
                 return new List<int>() { 1 };
 
             IList<int> ans = new List<int>();
 
-            Dictionary<char,List<int>> dict = new Dictionary<char,List<int>>();
+            Dictionary<char, List<int>> dict = new Dictionary<char, List<int>>();
 
-            for(int i = 0; i < s.Length; i++)
+            for (int i = 0; i < s.Length; i++)
             {
                 if (dict.ContainsKey(s[i]))
                 {
@@ -311,15 +310,15 @@ namespace LeetCodeAlgo
                 }
                 else
                 {
-                    dict.Add(s[i], new List<int>() {i });
+                    dict.Add(s[i], new List<int>() { i });
                 }
             }
 
-            List<char> list=new List<char> ();
+            List<char> list = new List<char>();
             int len = 0;
             for (int i = 0; i < s.Length; i++)
             {
-                if(!list.Contains(s[i]))
+                if (!list.Contains(s[i]))
                     list.Add(s[i]);
 
                 bool canPartition = !list.Any(c => dict[c].Any(x => x > i));
@@ -330,7 +329,7 @@ namespace LeetCodeAlgo
 
                     int len2 = i + 1;
                     ans.Add(len2 - len);
-                    len= len2;
+                    len = len2;
                 }
 
             }
@@ -365,8 +364,10 @@ namespace LeetCodeAlgo
             }
             else
             {
-                IList<IList<int>> combines = new List<IList<int>>();
-                combines.Add(new List<int>());
+                IList<IList<int>> combines = new List<IList<int>>
+                {
+                    new List<int>()
+                };
                 for (int i = 1; i <= carrIndexs.Count; i++)
                 {
                     var comb2 = Combine(carrIndexs.Count, i);
@@ -401,32 +402,32 @@ namespace LeetCodeAlgo
         ///only 0 to N-1
         public IList<IList<int>> AllPathsSourceTarget(int[][] graph)
         {
-            var ans=new List<IList<int>>();
+            var ans = new List<IList<int>>();
 
-            int len=graph.Length;
+            int len = graph.Length;
 
             //only 0 to N-1
-            for (int i=0; i<1;i++)
+            for (int i = 0; i < 1; i++)
             {
                 var curr = new List<IList<int>>();
                 var all = new List<IList<int>>();
 
-                var list =new List<int>() { i};
+                var list = new List<int>() { i };
 
                 curr.Add(list);
 
-                while(curr.Count > 0)
+                while (curr.Count > 0)
                 {
                     var sub = new List<IList<int>>();
 
-                    foreach(var item in curr)
+                    foreach (var item in curr)
                     {
                         var nexts = AllPathsSourceTarget_Add(graph, item);
-                        if(nexts.Count > 0)
+                        if (nexts.Count > 0)
                         {
-                            foreach(var next in nexts)
+                            foreach (var next in nexts)
                             {
-                                if(next.Last() == len - 1)
+                                if (next.Last() == len - 1)
                                 {
                                     all.Add(next);
                                 }
@@ -446,7 +447,7 @@ namespace LeetCodeAlgo
                 {
                     foreach (var j in all)
                     {
-                        if(j.Last()==len-1)
+                        if (j.Last() == len - 1)
                             ans.Add(j);
                     }
                 }
@@ -459,12 +460,14 @@ namespace LeetCodeAlgo
         {
             var ans = new List<IList<int>>();
 
-            if(list.Count > 0 && graph[list.Last()].Length>0)
+            if (list.Count > 0 && graph[list.Last()].Length > 0)
             {
-                foreach(var j in graph[list.Last()])
+                foreach (var j in graph[list.Last()])
                 {
-                    var sub = new List<int>(list);
-                    sub.Add(j);
+                    var sub = new List<int>(list)
+                    {
+                        j
+                    };
                     ans.Add(sub);
                 }
             }

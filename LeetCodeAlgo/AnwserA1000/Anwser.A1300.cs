@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
@@ -20,9 +17,9 @@ namespace LeetCodeAlgo
 
             int[] colSum = new int[colLen];
 
-            for(int i=0; i< rowLen; i++)
+            for (int i = 0; i < rowLen; i++)
             {
-                for(int j=0; j< colLen; j++)
+                for (int j = 0; j < colLen; j++)
                 {
                     if (i == 0)
                     {
@@ -41,12 +38,12 @@ namespace LeetCodeAlgo
 
                 }
 
-                for (int j=0; j< colLen; j++)
+                for (int j = 0; j < colLen; j++)
                 {
                     int sum = 0;
-                    for(int c = Math.Max(0,j-k); c<=j+k && c< colLen; c++)
+                    for (int c = Math.Max(0, j - k); c <= j + k && c < colLen; c++)
                     {
-                        sum+=colSum[c];
+                        sum += colSum[c];
                     }
                     result[i][j] = sum;
                 }
@@ -62,19 +59,19 @@ namespace LeetCodeAlgo
         {
             List<int> ans = new List<int>();
 
-            List<TreeNode> list = new List<TreeNode>() { root1,root2 };
-            while(list.Count > 0)
+            List<TreeNode> list = new List<TreeNode>() { root1, root2 };
+            while (list.Count > 0)
             {
                 List<TreeNode> next = new List<TreeNode>();
 
-                foreach(var node in list)
+                foreach (var node in list)
                 {
                     if (node != null)
                     {
                         ans.Add(node.val);
-                        if(node.left != null)
+                        if (node.left != null)
                             next.Add(node.left);
-                        if(node.right != null)
+                        if (node.right != null)
                             next.Add(node.right);
                     }
                 }

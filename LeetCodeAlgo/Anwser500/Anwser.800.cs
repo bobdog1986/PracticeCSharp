@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
@@ -13,17 +11,17 @@ namespace LeetCodeAlgo
         ///'#' means a backspace character.Note that after backspacing an empty text, the text will continue empty.
         public bool BackspaceCompare(string s, string t)
         {
-            var arr1=s.ToArray();
-            var arr2=t.ToArray();
+            var arr1 = s.ToArray();
+            var arr2 = t.ToArray();
 
             Stack<char> stack1 = new Stack<char>();
             Stack<char> stack2 = new Stack<char>();
 
-            for(int i = 0; i < arr1.Length; i++)
+            for (int i = 0; i < arr1.Length; i++)
             {
                 if (arr1[i] == '#')
                 {
-                    if(stack1.Count > 0)
+                    if (stack1.Count > 0)
                         stack1.Pop();
                 }
                 else
@@ -48,7 +46,7 @@ namespace LeetCodeAlgo
             if (stack1.Count != stack2.Count)
                 return false;
             int count = stack1.Count;
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 if (stack1.Pop() != stack2.Pop())
                     return false;

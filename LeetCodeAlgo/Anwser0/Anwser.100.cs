@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
@@ -249,8 +247,10 @@ namespace LeetCodeAlgo
             if (root == null)
                 return null;
 
-            List<Node> list = new List<Node>();
-            list.Add(root);
+            List<Node> list = new List<Node>
+            {
+                root
+            };
             while (list.Count != 0)
             {
                 List<Node> subs = new List<Node>();
@@ -258,7 +258,7 @@ namespace LeetCodeAlgo
                 for (int i = 0; i < list.Count; i++)
                 {
                     list[i].next = i == list.Count - 1 ? null : list[i + 1];
-                    if(list[i].left!=null)
+                    if (list[i].left != null)
                         subs.Add(list[i].left);
                     if (list[i].right != null)
                         subs.Add(list[i].right);
@@ -339,8 +339,10 @@ namespace LeetCodeAlgo
                 return 0;
 
             int level = 1;
-            List<int> minList = new List<int>();
-            minList.Add(triangle[level - 1][0]);
+            List<int> minList = new List<int>
+            {
+                triangle[level - 1][0]
+            };
 
             while (++level <= triangle.Count)
             {
@@ -485,23 +487,23 @@ namespace LeetCodeAlgo
         public void Solve(char[][] board)
         {
 
-            int rowLen=board.Length;
-            int colLen=board[0].Length;
+            int rowLen = board.Length;
+            int colLen = board[0].Length;
 
             if (rowLen <= 1 || colLen <= 1)
                 return;
 
-            bool[][] visit=new bool[rowLen][];
-            for(int i=0; i<rowLen; i++)
+            bool[][] visit = new bool[rowLen][];
+            for (int i = 0; i < rowLen; i++)
             {
-                visit[i]=new bool[colLen];
+                visit[i] = new bool[colLen];
             }
 
-            int[][] dxy=new int[4][] { new int[] {0,1 }, new int[] { 1, 0 } , new int[] { -1, 0 } , new int[] { 0, -1 } };
+            int[][] dxy = new int[4][] { new int[] { 0, 1 }, new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, -1 } };
 
-            for(int i=0;i<rowLen; i++)
+            for (int i = 0; i < rowLen; i++)
             {
-                for(int j=0;j<colLen; j++)
+                for (int j = 0; j < colLen; j++)
                 {
                     if (visit[i][j])
                         continue;
@@ -512,12 +514,14 @@ namespace LeetCodeAlgo
                     {
                         List<int[]> list = new List<int[]>();
 
-                        List<int[]> currList = new List<int[]>();
-                        currList.Add(new int[] { i, j });
+                        List<int[]> currList = new List<int[]>
+                        {
+                            new int[] { i, j }
+                        };
 
                         bool capture = true;
 
-                        while(currList.Count>0 )
+                        while (currList.Count > 0)
                         {
                             list.AddRange(currList);
 
@@ -526,10 +530,10 @@ namespace LeetCodeAlgo
                             foreach (var cell in list)
                             {
 
-                                foreach(var d in dxy)
+                                foreach (var d in dxy)
                                 {
-                                    int r = cell[0]+ d[0];
-                                    int c = cell[1]+ d[1];
+                                    int r = cell[0] + d[0];
+                                    int c = cell[1] + d[1];
 
                                     if (r >= 0 && r <= rowLen - 1
                                         && c >= 0 && c <= colLen - 1)
@@ -540,7 +544,7 @@ namespace LeetCodeAlgo
 
                                             if (board[r][c] == 'O')
                                             {
-                                                subList.Add(new int[]{ r, c });
+                                                subList.Add(new int[] { r, c });
                                             }
                                         }
                                     }
@@ -632,9 +636,9 @@ namespace LeetCodeAlgo
             while (list.Count > 0)
             {
                 List<int> next = new List<int>();
-                foreach(var i in list)
+                foreach (var i in list)
                 {
-                    for(int j = 0; j < wordDict.Count; j++)
+                    for (int j = 0; j < wordDict.Count; j++)
                     {
                         if (arr.Length - i < wordDict[j].Length)
                             continue;
@@ -698,8 +702,8 @@ namespace LeetCodeAlgo
 
             while (current != null)
             {
-                var exist=nodes.FirstOrDefault(x => x == current);
-                if (exist!=null)
+                var exist = nodes.FirstOrDefault(x => x == current);
+                if (exist != null)
                     return exist;
 
                 nodes.Add(current);
@@ -862,20 +866,20 @@ namespace LeetCodeAlgo
         /// use binary search
         public int FindMin(int[] nums)
         {
-            if(nums.Length==1)
+            if (nums.Length == 1)
                 return nums[0];
 
             int start = 0;
             int end = nums.Length - 1;
 
-            if(nums[start]<nums[end])
+            if (nums[start] < nums[end])
                 return nums[start];
 
             int mid = (end - start) / 2 + start;
 
-            while (start<=end)
+            while (start <= end)
             {
-                if(start==end)
+                if (start == end)
                     return nums[start];
 
                 if (start + 1 == end)
@@ -884,9 +888,9 @@ namespace LeetCodeAlgo
                 if (nums[end] < nums[mid])
                 {
                     start = mid;
-                    mid= (end - start) / 2 + start;
+                    mid = (end - start) / 2 + start;
                 }
-                else if(nums[mid] < nums[start])
+                else if (nums[mid] < nums[start])
                 {
                     end = mid;
                     mid = (end - start) / 2 + start;
@@ -901,15 +905,15 @@ namespace LeetCodeAlgo
         ///nums[-1] = nums[n] = int.Min
         public int FindPeakElement(int[] nums)
         {
-            if(nums.Length==1)
+            if (nums.Length == 1)
                 return 0;
 
             bool left, right;
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
-                left= i == 0 || nums[i] > nums[i - 1];
+                left = i == 0 || nums[i] > nums[i - 1];
                 right = i == nums.Length - 1 || nums[i] > nums[i + 1];
-                if (left&&right)
+                if (left && right)
                 {
                     return i;
                 }
@@ -960,10 +964,10 @@ namespace LeetCodeAlgo
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
 
-            int half = nums.Length % 2 == 1 ? nums.Length/2+1 : nums.Length / 2;
+            int half = nums.Length % 2 == 1 ? nums.Length / 2 + 1 : nums.Length / 2;
 
             //int time = 1;
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 if (dict.ContainsKey(nums[i]))
                 {
@@ -975,7 +979,7 @@ namespace LeetCodeAlgo
                 }
             }
 
-            var major=dict.Where(x => x.Value>=half).ToList();
+            var major = dict.Where(x => x.Value >= half).ToList();
             if (major == null)
                 return -1;
             return major[0].Key;

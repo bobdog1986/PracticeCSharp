@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
@@ -17,11 +15,11 @@ namespace LeetCodeAlgo
                 return 0;
 
             int[] dp = new int[amount + 1];
-            for (int i=0;i<dp.Length;i++)
+            for (int i = 0; i < dp.Length; i++)
                 dp[i] = 10000;
 
             var coins2 = coins.ToList();
-            coins2.Sort((x,y) => y-x);
+            coins2.Sort((x, y) => y - x);
             dp[0] = 0;
             for (int i = 1; i <= amount; i++)
             {
@@ -43,7 +41,7 @@ namespace LeetCodeAlgo
                 return false;
 
             int start = 0;
-            while (start < nums.Length-1)
+            while (start < nums.Length - 1)
             {
                 if (nums[start + 1] <= nums[start])
                     start++;
@@ -51,7 +49,7 @@ namespace LeetCodeAlgo
                     break;
             }
 
-            if (start>nums.Length-3)
+            if (start > nums.Length - 3)
                 return false;
 
             int end = nums.Length - 1;
@@ -95,7 +93,7 @@ namespace LeetCodeAlgo
                             {
                                 int nextXIndex = -1;
                                 int minOfNextX = nums[k];
-                                for(int m=0; m<listX.Count; m++)
+                                for (int m = 0; m < listX.Count; m++)
                                 {
                                     if (nums[listX[m]] < minOfNextX)
                                     {
@@ -131,7 +129,7 @@ namespace LeetCodeAlgo
                                 int minOfNextX = nums[i];
                                 for (int m = 0; m < listX.Count; m++)
                                 {
-                                    if (nums[listX[m]] <= minOfNextX && nums[listX[m]]< nums[k])
+                                    if (nums[listX[m]] <= minOfNextX && nums[listX[m]] < nums[k])
                                     {
                                         nextXIndex = listX[m];
                                         minOfNextX = nums[nextXIndex];
@@ -176,7 +174,7 @@ namespace LeetCodeAlgo
                 ans *= 3;
                 n -= 3;
             }
-            return ans*n;
+            return ans * n;
         }
         /// 344. Reverse String
         public void ReverseString(char[] s)
@@ -297,27 +295,27 @@ namespace LeetCodeAlgo
         ///A subsequence of a string is a new string that is formed from the original string by deleting some (can be none)
         public bool IsSubsequence(string s, string t)
         {
-            if(string.IsNullOrEmpty(s))
+            if (string.IsNullOrEmpty(s))
                 return true;
 
             if (string.IsNullOrEmpty(t))
                 return false;
 
-            int sLen=s.Length;
-            int tLen=t.Length;
+            int sLen = s.Length;
+            int tLen = t.Length;
 
             if (sLen > tLen)
                 return false;
 
-            for(int i = 0; i <=tLen-sLen; i++)
+            for (int i = 0; i <= tLen - sLen; i++)
             {
                 if (t[i] == s[0])
                 {
                     int j = 1;
                     int k = i + 1;
-                    while (j < s.Length && k<=tLen-(sLen-j) )
+                    while (j < s.Length && k <= tLen - (sLen - j))
                     {
-                        if(s[j] == t[k])
+                        if (s[j] == t[k])
                         {
                             j++;
                         }
@@ -325,7 +323,7 @@ namespace LeetCodeAlgo
                         k++;
                     }
 
-                    if (j==s.Length)
+                    if (j == s.Length)
                         return true;
                 }
             }

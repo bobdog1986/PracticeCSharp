@@ -1,9 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 ﻿namespace LeetCodeAlgo
 {
     public partial class Anwser
@@ -21,7 +15,7 @@ using System.Threading.Tasks;
             int a3 = 1;
             int dp = 0;
             int i = 3;
-            while (i<=n)
+            while (i <= n)
             {
                 dp = a1 + a2 + a3;
                 a1 = a2;

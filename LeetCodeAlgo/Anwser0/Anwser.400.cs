@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
@@ -15,9 +13,9 @@ namespace LeetCodeAlgo
             if (s.Length <= 1)
                 return s.Length;
 
-            Dictionary<char,int> dict = new Dictionary<char,int>();
+            Dictionary<char, int> dict = new Dictionary<char, int>();
 
-            foreach(var c in s)
+            foreach (var c in s)
             {
                 if (dict.ContainsKey(c))
                 {
@@ -32,7 +30,7 @@ namespace LeetCodeAlgo
             int sumOfEven = 0;
             int sumOfOdd = 0;
 
-            foreach(var d in dict)
+            foreach (var d in dict)
             {
                 sumOfEven += d.Value / 2;
                 sumOfOdd += d.Value % 2;
@@ -42,7 +40,6 @@ namespace LeetCodeAlgo
 
             if (sumOfOdd > 0)
                 ans++;
-
 
             return ans;
         }
@@ -94,23 +91,22 @@ namespace LeetCodeAlgo
             if (num2 == "0")
                 return num1;
 
-
             List<int> list1 = new List<int>();
             List<int> list2 = new List<int>();
 
-            foreach(var c in num1)
+            foreach (var c in num1)
             {
-                list1.Insert(0, GetDigitFromChar(c));
+                list1.Insert(0, getDigit(c));
             }
             foreach (var c in num2)
             {
-                list2.Insert(0, GetDigitFromChar(c));
+                list2.Insert(0, getDigit(c));
             }
 
-            List<char> ans=new List<char>();
+            List<char> ans = new List<char>();
             bool isCarry = false;
 
-            for(int i=0; i < list1.Count||i<list2.Count; i++)
+            for (int i = 0; i < list1.Count || i < list2.Count; i++)
             {
                 int a = 0;
                 if (list1.Count > i)
@@ -126,80 +122,35 @@ namespace LeetCodeAlgo
 
                 isCarry = c / 10 == 1;
 
-                ans.Insert(0, GetCharFormDigit(c%10));
-
+                ans.Insert(0, getChar(c % 10));
             }
 
             if (isCarry)
-                ans.Insert(0,'1');
+                ans.Insert(0, '1');
 
-            return String.Join("",ans);
+            return string.Join("", ans);
         }
 
-        public char GetCharFormDigit(int c)
+        public char getChar(int c)
         {
-            if (c == 0)
-                return '0';
-            else if (c == 1)
-                return '1';
-            else if (c == 2)
-                return '2';
-            else if (c == 3)
-                return '3';
-            else if (c == 4)
-                return '4';
-            else if (c == 5)
-                return '5';
-            else if (c == 6)
-                return '6';
-            else if (c == 7)
-                return '7';
-            else if (c == 8)
-                return '8';
-            else if (c == 9)
-                return '9';
-            else
-                return ' ';
+            return (char)(c + '0');
         }
 
-        public int GetDigitFromChar(char c)
+        public int getDigit(char c)
         {
-
-            if (c == '0')
-                return 0;
-            else if (c == '1')
-                return 1;
-            else if (c == '2')
-                return 2;
-            else if (c == '3')
-                return 3;
-            else if (c == '4')
-                return 4;
-            else if (c == '5')
-                return 5;
-            else if (c == '6')
-                return 6;
-            else if (c == '7')
-                return 7;
-            else if (c == '8')
-                return 8;
-            else if (c == '9')
-                return 9;
-            else
-                return -1;
-
+            return c - '0';
         }
 
         /// 435. Non-overlapping Intervals
         /// there are some embeded intervals, use Math.Min()
         public int EraseOverlapIntervals(int[][] intervals)
         {
-            int ans=0;
+            int ans = 0;
             var mat = intervals.OrderBy(x => x[0]).ToList();
 
             int end = mat[0][1];
 
-            for(int i = 1; i < mat.Count; i++)
+            for (int i = 1; i < mat.Count; i++)
             {
                 if (mat[i][0] < end)
                 {
@@ -208,12 +159,13 @@ namespace LeetCodeAlgo
                 }
                 else
                 {
-                    end=mat[i][1];
+                    end = mat[i][1];
                 }
             }
 
             return ans;
         }
+
         /// 438. Find All Anagrams in a string
         /// should use sliding window
         public List<int> FindAnagrams(string s, string p)
@@ -236,9 +188,9 @@ namespace LeetCodeAlgo
             while (right < s.Length)
             {
                 bool isEqual = true;
-                for(int i = 0; i < 26; i++)
+                for (int i = 0; i < 26; i++)
                 {
-                    if(arr[i] != target[i])
+                    if (arr[i] != target[i])
                     {
                         isEqual = false;
                         break;

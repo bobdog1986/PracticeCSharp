@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
@@ -16,12 +14,12 @@ namespace LeetCodeAlgo
             if (n == 0)
                 return true;
 
-            for(int i = 0; i < flowerbed.Length; i++)
+            for (int i = 0; i < flowerbed.Length; i++)
             {
                 if (isMaxFlowersExceed(i, flowerbed.Length - 1, n))
                     return false;
 
-                if (flowerbed[i] == 1 ||(i > 0 && flowerbed[i - 1] == 1) ||(i < flowerbed.Length - 1&& flowerbed[i + 1] == 1))
+                if (flowerbed[i] == 1 || (i > 0 && flowerbed[i - 1] == 1) || (i < flowerbed.Length - 1 && flowerbed[i + 1] == 1))
                 {
                     continue;
                 }
@@ -81,8 +79,10 @@ namespace LeetCodeAlgo
             if (root1 == null && root2 == null)
                 return null;
 
-            var result = new TreeNode();
-            result.val = (root1 != null ? root1.val : 0) + (root2 != null ? root2.val : 0);
+            var result = new TreeNode
+            {
+                val = (root1 != null ? root1.val : 0) + (root2 != null ? root2.val : 0)
+            };
 
             if (root1 == null)
             {

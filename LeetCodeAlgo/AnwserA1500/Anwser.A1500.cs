@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
@@ -66,7 +62,7 @@ namespace LeetCodeAlgo
                         }
                         else
                         {
-                            var temp =Math.Max(Math.Max(count - negStart - 1, negStart),Math.Max(count-negEnd-1,negEnd));
+                            var temp = Math.Max(Math.Max(count - negStart - 1, negStart), Math.Max(count - negEnd - 1, negEnd));
                             max = Math.Max(max, temp);
                         }
                     }

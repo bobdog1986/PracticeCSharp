@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
@@ -84,14 +82,14 @@ namespace LeetCodeAlgo
                 return false;
 
             bool isClimbing = true;
-            for (int i = 1;i < arr.Length; i++)
+            for (int i = 1; i < arr.Length; i++)
             {
-                if(arr[i] ==arr[i-1])
+                if (arr[i] == arr[i - 1])
                     return false;
 
                 if (isClimbing)
                 {
-                    if(arr[i] < arr[i - 1])
+                    if (arr[i] < arr[i - 1])
                     {
                         if (i == 1)
                             return false;
@@ -179,7 +177,7 @@ namespace LeetCodeAlgo
             if (firstList.Length == 0 || secondList.Length == 0)
                 return list.ToArray();
 
-            foreach(var first in firstList)
+            foreach (var first in firstList)
             {
                 if (first[1] < secondList[0][0])
                     continue;
@@ -187,12 +185,12 @@ namespace LeetCodeAlgo
                 if (first[0] > secondList[secondList.Length - 1][1])
                     break;
 
-                foreach(var second in secondList)
+                foreach (var second in secondList)
                 {
                     if (first[1] < second[0] || first[0] > second[1])
                         continue;
 
-                    list.Add(new int[] { Math.Max(first[0],second[0]),Math.Min(first[1],second[1])});
+                    list.Add(new int[] { Math.Max(first[0], second[0]), Math.Min(first[1], second[1]) });
                 }
             }
 

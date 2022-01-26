@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
@@ -145,8 +142,10 @@ namespace LeetCodeAlgo
             if (root == null)
                 return new List<int>();
 
-            var list = new List<int>();
-            list.Add(root.val);
+            var list = new List<int>
+            {
+                root.val
+            };
             PreorderTraversal_Recursion_Add(root.left, list);
             PreorderTraversal_Recursion_Add(root.right, list);
 
