@@ -1424,7 +1424,49 @@ namespace LeetCodeAlgo
             }
             return false;
         }
+        ///31. Next Permutation
+        ///For example, the next permutation of arr = [1,2,3] is [1,3,2].
+        ///Find last num that nums[i+1]>nums[i], then find the last nums[j]>nums[i],
+        ///if cannot find num, is the last sequence, then sort() it;
+        public void NextPermutation(int[] nums)
+        {
+            if (nums.Length == 1)
+                return;
+            int i = 0;
+            //Find first no in nums which is smaller than its previous no.
+            for (i = nums.Length - 1; i > 0; i--)
+            {
+                if (nums[i - 1] < nums[i])
+                    break;
+            }
+            if (i != 0)
+            {
+                //Find first greater than i-1 and swap i-1 and j
+                for (int j = nums.Length - 1; j >= i; j--)
+                {
+                    if (nums[i - 1] < nums[j])
+                    {
+                        //swap
+                        int temp = nums[i - 1];
+                        nums[i - 1] = nums[j];
+                        nums[j] = temp;
+                        break;
+                    }
+                }
+            }
+            //why????  reverse everything from i to end
+            reverse(nums, i, nums.Length - 1);
+        }
 
+        public void reverse(int[] nums, int start, int end)
+        {
+            for (int i = start, j = end; i < j; i++, j--)
+            {
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }
         /// 35. Search Insert Position
 
         public int SearchInsert(int[] nums, int target)

@@ -15,7 +15,7 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var arr1 = new int[] { 0, 1, 2, 2, 3, 0, 4, 2 };//[[],[],[]]
+            var arr1 = new int[] {1,3,2};//[[],[],[]]
             var input1 = 3;
             var str1 = "ababababababab";
             var str2 = "3";
@@ -61,15 +61,15 @@ namespace LeetCodeAlgo
             //else
             //    Console.WriteLine("Result count = 0");
 
-            //anwser.Solve(grid1);
-            var result = anwser.FindSubstring(str1, word1);
+            anwser.NextPermutation(arr1);
+            //var result = anwser.NextPermutation(arr1);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
-            Console.WriteLine(String.Join(",", result));
+            //Console.WriteLine(String.Join(",", result));
             //anwser.PrintListNode(result);
 
             //Console.WriteLine(String.Join(",", arr1));

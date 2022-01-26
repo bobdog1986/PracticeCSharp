@@ -995,55 +995,33 @@ namespace LeetCodeAlgo
             return maxLost > 0 ? 1 : (maxLost + 1);
         }
 
-        //187
+        ///187. Repeated DNA Sequences
+        ///return all the 10-letter-long sequences (substrings) that occur more than once
         public IList<string> FindRepeatedDnaSequences(string s)
         {
-            Dictionary<string, int> dna = new Dictionary<string, int>();
-            List<string> repeat = new List<string>();
-            if (string.IsNullOrEmpty(s)) return repeat;
-            if (s.Length <= 10) return repeat;
+            List<string> ans = new List<string>();
+
+            if (string.IsNullOrEmpty(s)) return ans;
+            if (s.Length <= 10) return ans;
+
+            Dictionary<string, int> dict = new Dictionary<string, int>();
 
             for (int i = 0; i < s.Length - 10 + 1; i++)
             {
                 string str = s.Substring(i, 10);
-                if (dna.ContainsKey(str))
+                if (dict.ContainsKey(str))
                 {
-                    dna[str]++;
+                    dict[str]++;
                 }
                 else
                 {
-                    dna.Add(str, 1);
+                    dict.Add(str, 1);
                 }
             }
 
-            repeat = dna.Where(o => o.Value > 1).Select(o => o.Key).ToList();
+            ans = dict.Where(o => o.Value > 1).Select(o => o.Key).ToList();
 
-            return repeat;
-
-            /*
-            List<string> all = new List<string>();
-            List<string> repeat = new List<string>();
-
-            if (string.IsNullOrEmpty(s)) return repeat;
-            if (s.Length <= 10) return repeat;
-
-            for (int i = 0; i < s.Length - 10 + 1; i++)
-            {
-                string str = s.Substring(i, 10);
-                if (all.Contains(str))
-                {
-                    if (!repeat.Contains(str))
-                    {
-                        repeat.Add(str);
-                    }
-                }
-                else
-                {
-                    all.Add(str);
-                }
-            }
-
-            return repeat;*/
+            return ans;
         }
 
         //189. Rotate Array
