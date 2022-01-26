@@ -3238,6 +3238,77 @@ namespace LeetCodeAlgo
             SubSets_Add(nums, start + 1, number, llist, ans);
         }
 
+        ///79. Word Search
+        ///Given an m x n grid of characters board and a string word, return true if word exists in the grid.
+        public bool Exist(char[][] board, string word)
+        {
+            var rLen = board.Length;
+            var cLen = board[0].Length;
+            var visit = createVisitArray(rLen, cLen);
+            return Exist(board,visit,0,0,word,0);
+        }
+        int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
+        public bool Exist(char[][] board,bool[][] visit, int r, int c,string word, int index)
+        {
+            if (index >= word.Length)
+                return true;
+            var rLen = board.Length;
+            var cLen = board[0].Length;
+            if (index==0)
+            {
+                for(int i = 0; i < rLen; i++)
+                {
+                    for(var j = 0; j < cLen; j++)
+                    {
+                        if (board[i][j] == word[index])
+                        {
+                            var arr = createVisitArray(rLen, cLen);
+                            arr[i][j] = true;
+                            bool result = Exist(board, arr, i, j, word, index + 1);
+                            if (result)
+                                return true;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (var t in dxy4)
+                {
+                    int row = r + t[0];
+                    int col = c + t[1];
+                    if (row >= 0 && row < rLen && col >= 0 && col < cLen
+                        && !visit[row][col] && board[row][col]==word[index])
+                    {
+                        var arr = createVisitArray(rLen, cLen,visit);
+                        arr[row][col] = true;
+                        bool result = Exist(board, arr, row, col, word, index+1);
+                        if (result)
+                            return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool[][] createVisitArray(int r, int c, bool[][] copy = null)
+        {
+            bool[][] ans = new bool[r][];
+            for (int i = 0; i < r; i++)
+                ans[i] = new bool[c];
+            if(copy != null)
+            {
+                for (int i = 0;i < r; i++)
+                {
+                    for(int j = 0;j < c; j++)
+                    {
+                        ans[i][j] = copy[i][j];
+                    }
+                }
+            }
+            return ans;
+        }
+
         /// 82. Remove Duplicates from Sorted List II
         /// remove all duplicates, [1,1,1,2,2,3]=>[3], [1,2,2,3]=>[1,3]
         public ListNode DeleteDuplicates(ListNode head)
