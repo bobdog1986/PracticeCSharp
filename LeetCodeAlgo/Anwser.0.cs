@@ -1467,6 +1467,66 @@ namespace LeetCodeAlgo
                 nums[j] = temp;
             }
         }
+        ///32. Longest Valid Parentheses
+        ///Given a string containing just the characters '(' and ')',
+        ///find the length of the longest valid (well-formed) parentheses substring.
+        public int LongestValidParentheses(string s)
+        {
+            if (s.Length <= 1)
+                return 0;
+            int maxLen = 0;
+            Stack<char> stack = new Stack<char>();
+            for (int i = 0; i < s.Length-1- maxLen; i++)
+            {
+                if(s[i] == '(')
+                {
+                    int j = i;
+                    int len = 0;
+                    int count = 0;
+                    stack.Clear();
+                    while (j < s.Length)
+                    {
+                        if (s[j] == '(')
+                        {
+                            stack.Push(s[j]);
+                        }
+                        else
+                        {
+                            if (stack.Count == 0)
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                var c = stack.Pop();
+                                if(c == '(')
+                                {
+                                    if(stack.Count == 0)
+                                    {
+                                        count++;
+                                        len += 2 * count;
+                                        count = 0;
+                                    }
+                                    else
+                                    {
+                                        count++;
+                                    }
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        j++;
+                    }
+                    if(stack.Count == 0)
+                        i += len;
+                    maxLen =Math.Max(maxLen, len);
+                }
+            }
+            return maxLen;
+        }
         /// 35. Search Insert Position
 
         public int SearchInsert(int[] nums, int target)

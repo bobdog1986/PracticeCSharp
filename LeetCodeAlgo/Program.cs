@@ -17,7 +17,7 @@ namespace LeetCodeAlgo
             var anwser = new Anwser();
             var arr1 = new int[] {1,3,2};//[[],[],[]]
             var input1 = 3;
-            var str1 = "ababababababab";
+            var str1 = "))))())()()(()";
             var str2 = "3";
             var word1 = new string[] { "ab", "ab" };
             var mat1 = new int[][]
@@ -61,15 +61,15 @@ namespace LeetCodeAlgo
             //else
             //    Console.WriteLine("Result count = 0");
 
-            anwser.NextPermutation(arr1);
-            //var result = anwser.NextPermutation(arr1);
+            //anwser.LongestValidParentheses(str1);
+            var result = anwser.LongestValidParentheses(str1);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
-            //Console.WriteLine(String.Join(",", result));
+            Console.WriteLine(String.Join(",", result));
             //anwser.PrintListNode(result);
 
             //Console.WriteLine(String.Join(",", arr1));
