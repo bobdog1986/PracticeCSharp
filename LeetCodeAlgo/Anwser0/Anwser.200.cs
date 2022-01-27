@@ -63,51 +63,6 @@ namespace LeetCodeAlgo
             }
         }
 
-        private int NumIslands_1(char[][] grid)
-        {
-            int[] dx = { 0, 1, 0, -1 };
-            int[] dy = { 1, 0, -1, 0 };
-
-            int ans = 0;
-
-            for (int i = 0; i < grid.Length; i++)
-            {
-                for (int j = 0; j < grid[0].Length; j++)
-                {
-                    if (grid[i][j] == '1')
-                    {
-                        ans++;
-                        MarkVisited(i, j, grid, dx, dy);
-                    }
-                }
-            }
-            return ans;
-        }
-
-        private void MarkVisited(int r, int c, char[][] grid, int[] dx, int[] dy)
-        {
-            var q = new Queue<int[]>();
-            grid[r][c] = '0';
-            q.Enqueue(new int[] { r, c });
-
-            while (q.Count > 0)
-            {
-                var a = q.Dequeue();
-                for (int i = 0; i < 4; i++)
-                {
-                    var nextRow = a[0] + dx[i];
-                    var nextCol = a[1] + dy[i];
-                    if (nextRow >= 0 && nextRow < grid.Length
-                        && nextCol >= 0 && nextCol < grid[0].Length
-                        && grid[nextRow][nextCol] == '1')
-                    {
-                        grid[nextRow][nextCol] = '0';
-                        q.Enqueue(new int[] { nextRow, nextCol });
-                    }
-                }
-            }
-        }
-
         private int NumIslands_MyUgly(char[][] grid)
         {
             int ans = 0;
@@ -389,8 +344,7 @@ namespace LeetCodeAlgo
 
             for (int i = 2; i < nums.Length; i++)
             {
-                int a = nums[i] + dp[i - 2];
-                dp[i] = Math.Max(a, dp[i - 1]);
+                dp[i] = Math.Max(nums[i] + dp[i - 2], dp[i - 1]);
             }
 
             return dp[nums.Length - 1];

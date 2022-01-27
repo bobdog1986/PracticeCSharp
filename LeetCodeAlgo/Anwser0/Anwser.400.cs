@@ -141,6 +141,23 @@ namespace LeetCodeAlgo
             return c - '0';
         }
 
+        ///421. Maximum XOR of Two Numbers in an Array
+        ///return the maximum result of nums[i] XOR nums[j], where 0 <= i <= j < n.
+        public int FindMaximumXOR(int[] nums)
+        {
+            int ans = 0;
+
+            for(int i = 0;i < nums.Length-1; i++)
+            {
+                for(int j = i+1; j < nums.Length; j++)
+                {
+                    ans = Math.Max(ans, nums[i] ^ nums[j]);
+                }
+            }
+            return ans;
+        }
+
+
         /// 435. Non-overlapping Intervals
         /// there are some embeded intervals, use Math.Min()
         public int EraseOverlapIntervals(int[][] intervals)

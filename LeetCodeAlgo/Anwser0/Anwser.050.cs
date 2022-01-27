@@ -28,20 +28,19 @@ namespace LeetCodeAlgo
             return max;
         }
 
-        //55. Jump Game
+        ///55. Jump Game
+        ///start at 0-index,nums[i] maximum jump length at that position.
+        //Return true if you can reach the last index, or false otherwise.
         public bool CanJump(int[] nums)
         {
             if (nums.Length == 1)
                 return true;
             if (nums.Length == 2)
                 return nums[0] > 0;
-
             bool[] dp = new bool[nums.Length];
-
             int i = nums.Length - 1;
             dp[i] = true;
             i--;
-
             while (i >= 0)
             {
                 if (nums[i] == 0)
@@ -59,10 +58,8 @@ namespace LeetCodeAlgo
                             break;
                         }
                     }
-
                     dp[i] = has;
                 }
-
                 i--;
             }
             return dp[0];

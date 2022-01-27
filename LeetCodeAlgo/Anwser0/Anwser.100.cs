@@ -900,7 +900,56 @@ namespace LeetCodeAlgo
             return nums[start];
         }
 
-        ///162. Find Peak Element
+
+        ///160. Intersection of Two Linked Lists
+        ///return the node at which the two lists intersect. If not, return null.
+        public ListNode GetIntersectionNode(ListNode headA, ListNode headB)
+        {
+            var node1 = headA;
+            var node2 = headB;
+
+            int len1 = 0;
+            int len2 = 0;
+            while(node1 != null)
+            {
+                node1 = node1.next;
+                len1++;
+            }
+            while (node2 != null)
+            {
+                node2 = node2.next;
+                len2++;
+            }
+
+            node1 = headA;
+            node2 = headB;
+
+            if(len1 > len2)
+            {
+                while (len1 > len2)
+                {
+                    node1=node1.next;
+                    len1--;
+                }
+            }
+            else if (len1 < len2)
+            {
+                while (len1 < len2)
+                {
+                    node2 = node2.next;
+                    len2--;
+                }
+            }
+
+            while (node1 != node2)
+            {
+                node1 = node1.next;
+                node2 = node2.next;
+            }
+
+            return node1;
+        }
+        /// 162. Find Peak Element
         ///return the index to any of the peaks which greater than its neighbors.
         ///nums[-1] = nums[n] = int.Min
         public int FindPeakElement(int[] nums)
