@@ -500,7 +500,44 @@ namespace LeetCodeAlgo
             return sum;
         }
 
-        //128
+        ///125. Valid Palindrome
+        ///after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters,
+        ///a-z, A-Z, 0-9
+        public bool IsPalindrome(string s)
+        {
+            Stack<char> stack = new Stack<char>();
+
+            for(int i=0; i<s.Length; i++)
+            {
+                if ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= '0' && s[i] <= '9'))
+                {
+                    stack.Push(s[i]);
+                }
+                else if(s[i] >= 'A' && s[i] <= 'Z')
+                {
+                    stack.Push((char)(s[i]+32));
+                }
+            }
+
+            if (stack.Count == 0)
+                return true;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= '0' && s[i] <= '9'))
+                {
+                    if (s[i] != stack.Pop())
+                        return false;
+                }
+                else if (s[i] >= 'A' && s[i] <= 'Z')
+                {
+                    if ((char)(s[i] + 32) != stack.Pop())
+                        return false;
+                }
+            }
+            return true;
+        }
+        /// 128
         public int LongestConsecutive(int[] nums)
         {
             if (nums == null || nums.Length == 0) return 0;

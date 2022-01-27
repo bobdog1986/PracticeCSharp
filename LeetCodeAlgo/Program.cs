@@ -15,7 +15,7 @@ namespace LeetCodeAlgo
             var val1 = -2;
             var val2 = 2;
             var str1 = "))((";
-            var str2 = "3";
+            var str2 = "race a car";
             var word1 = new string[] { "ab", "ab" };
             var mat1 = new int[][]
             {
@@ -60,7 +60,7 @@ namespace LeetCodeAlgo
 
             //anwser.LongestValidParentheses(str1);
 
-            var result = anwser.SpiralOrder(mat1);
+            var result = anwser.IsPalindrome(str2);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
