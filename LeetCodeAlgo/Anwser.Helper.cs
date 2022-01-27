@@ -8,8 +8,16 @@ namespace LeetCodeAlgo
         /// <summary>
         /// find target in array from [left,right], return index or -1
         /// </summary>
-        public int binarySearch(int[] nums, int left, int right, int target)
+        public int binarySearch(int[] nums, int target, int left=-1, int right=-1)
         {
+            if (left == -1)
+                left = 0;
+            if (right == -1)
+                right = nums.Length - 1;
+
+            if (left < 0 || left >= nums.Length || right < 0 || right >= nums.Length)
+                throw new ArgumentOutOfRangeException("Index Out of Array");
+
             if (left == right && nums[left] == target)
                 return left;
 

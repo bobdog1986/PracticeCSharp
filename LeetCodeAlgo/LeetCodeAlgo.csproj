@@ -64,7 +64,7 @@
     <Compile Include="AnwserA2000\Anwser.A2100.cs" />
     <Compile Include="Anwser.Helper.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="MyStructs.cs" />
+    <Compile Include="Anwser.MyStructs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataStructs.cs" />
