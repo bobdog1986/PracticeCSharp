@@ -293,7 +293,27 @@ namespace LeetCodeAlgo
             return intervals;
         }
 
-        ///59. Spiral Matrix II
+        ///58. Length of Last Word
+        public int LengthOfLastWord(string s)
+        {
+            int ans = 0;
+            for(int i=s.Length-1; i>=0; i--)
+            {
+                if(s[i] ==' ')
+                {
+                    if (ans == 0)
+                        continue;
+                    else
+                        break;
+                }
+                else
+                {
+                    ans++;
+                }
+            }
+            return ans;
+        }
+        /// 59. Spiral Matrix II
         ///Given a positive integer n, generate an n x n matrix filled with elements from 1 to n2 in spiral order.
         public int[][] GenerateMatrix(int n)
         {
