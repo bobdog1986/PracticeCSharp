@@ -52,17 +52,13 @@ namespace LeetCodeAlgo
         {
             if (nums == null || nums.Length <= 2)
                 return 0;
-
             int sum = 0;
-
             for (int i = 0; i < nums.Length - 2; i++)
             {
                 int len = nums[i + 1] - nums[i];
                 int count = 0;
                 while (i + count * 1 < nums.Length && nums[i + count * 1] == nums[i] + count * len)
-                {
                     count++;
-                }
 
                 if (count >= 3)
                 {
@@ -73,10 +69,8 @@ namespace LeetCodeAlgo
                         j++;
                     }
                 }
-
                 i += count - 2;
             }
-
             return sum;
         }
 

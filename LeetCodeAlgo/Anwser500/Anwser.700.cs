@@ -236,12 +236,13 @@ namespace LeetCodeAlgo
             return image;
         }
 
-        //740. Delete and Earn
+        ///740. Delete and Earn
+        ///eat nums[i] will earn all nums[i] but delete nums[i]+1 and nums[i]-1, return the max of Earn
+        ///1 <= nums[i] <= 10^4
         public int DeleteAndEarn(int[] nums)
         {
             int[] arr = new int[10001];
             int[] dp = new int[10001];
-
             int max = 0;
             int min = 10000;
             for (int i = 0; i < nums.Length; i++)
@@ -250,17 +251,12 @@ namespace LeetCodeAlgo
                 max = Math.Max(max, nums[i]);
                 min = Math.Min(min, nums[i]);
             }
-
             if (max == min)
-            {
                 return arr[max] * max;
-            }
 
             int j = min;
-
             dp[j] = arr[j] * j;
             dp[j + 1] = Math.Max(dp[j], arr[j + 1] * (j + 1));
-
             j += 2;
             while (j <= max)
             {

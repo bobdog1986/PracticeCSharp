@@ -6,7 +6,131 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
+        ///300. Longest Increasing Subsequence
+        ///by deleting some or no elements without changing the order of the remaining elements.
+        ///eg. [0,3,1,6,2,2,7].=>[0,1,2,7] , 1<=n<=2500, try Time Complexity O(n log(n))
+        public int LengthOfLIS(int[] nums)
+        {
+            if(nums.Length==1)
+                return 1;
+            Console.WriteLine($"Inputs count ={nums.Length} : "+String.Join(",",nums));
+            List<List<int>> matrix =new List<List<int>>();
 
+            int loop = 1;
+            for(int i=0; i<nums.Length; i++)
+            {
+                Console.WriteLine($"====Loop {loop}== element at {i} = {nums[i]} ==");
+                string pre = "";
+
+                for (int m = 0; m < matrix.Count; m++)
+                {
+                    Console.WriteLine($"Line: {m} = " + pre + string.Join(",", matrix[m]));
+                    pre += pre;
+                }
+
+                if (matrix.Count == 0)
+                {
+                    matrix.Add(new List<int>() { nums[i]});
+                }
+                else
+                {
+                    bool canAppend = false;
+                    for(int j=0;j<matrix.Count;j++)
+                    {
+                        if (nums[i] > matrix[j].Last())
+                        {
+                            matrix[j].Add(nums[i]);
+                            canAppend = true;
+                        }
+                        else if(nums[i] == matrix[j].Last())
+                        {
+                            canAppend = true;
+                        }
+                        else
+                        {
+                            if(matrix[j].Count == 1)
+                            {
+                                matrix[j][0]=nums[i];
+                                canAppend = true;
+                            }
+                            else if(matrix[j].Count >= 2)
+                            {
+                                if (matrix[j][matrix[j].Count - 2] < nums[i])
+                                {
+                                    matrix[j][matrix[j].Count - 1] = nums[i];
+                                    canAppend = true;
+                                }
+                            }
+                            else
+                            {
+                                //
+                            }
+                        }
+                    }
+
+                    if (!canAppend)
+                    {
+                        matrix.Add(new List<int> { nums[i] });
+                    }
+                }
+
+                List<List<int>> nextMatrix = new List<List<int>>();
+                for(int j = 0; j < matrix.Count; j++)
+                {
+                    if (j == 0)
+                    {
+                        nextMatrix.Add(matrix[j]);
+                    }
+                    else
+                    {
+                        bool canAppend = true;
+                        for(int k = 0; k < j; k++)
+                        {
+                            if (matrix[k].Count > matrix[j].Count)
+                            {
+                                if (matrix[j][0] > matrix[k][matrix[k].Count - matrix[j].Count - 1])
+                                {
+                                    matrix[k].RemoveRange(matrix[k].Count - matrix[j].Count, matrix[j].Count);
+                                    matrix[k].AddRange(matrix[j]);
+                                    canAppend = false;
+                                }
+                            }
+                            else
+                            {
+                                if (matrix[j][0] < matrix[k][0])
+                                {
+                                    matrix[k] = matrix[j];
+                                    canAppend = false;
+                                }
+                            }
+
+                        }
+
+                            nextMatrix.Add(matrix[j]);
+
+                    }
+                }
+
+                matrix = nextMatrix.OrderBy(x=>-x.Count).ToList();
+
+                Console.WriteLine($"====After insert is ==");
+                pre = "";
+
+                for (int m = 0; m < matrix.Count; m++)
+                {
+                    Console.WriteLine($"Line: {m} = " + pre + string.Join(",", matrix[m]));
+                    pre += pre;
+                }
+
+                Console.WriteLine();
+                //Console.WriteLine();
+                loop++;
+            }
+
+
+            Console.WriteLine($"result = " + string.Join(",", matrix[0]));
+            return matrix[0].Count;
+        }
         ///322. Coin Change
         ///1 <= coins[i] <= 2^31 - 1
         ///0 <= amount <= 10000

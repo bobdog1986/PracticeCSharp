@@ -12,14 +12,17 @@ namespace LeetCodeAlgo
         /// 2 <= nums.length <= 10^4, -10^9 <= nums[i] <= 10^9, -10^9 <= target <= 10^9
         public int[] TwoSum(int[] nums, int target)
         {
-            for (int i = 0; i < nums.Length - 1; i++)
+            Dictionary<int ,int> dict=new Dictionary<int, int>();
+            for (int i = 0; i < nums.Length; i++)
             {
-                for (int j = i + 1; j < nums.Length; j++)
+                if (dict.ContainsKey(target - nums[i]))
                 {
-                    if (nums[i] + nums[j] == target)
-                    {
-                        return new int[2] { i, j };
-                    }
+                    return new int[2] { i, dict[target - nums[i]] };
+                }
+                else
+                {
+                    if (!dict.ContainsKey(nums[i]))
+                        dict.Add(nums[i], i);
                 }
             }
             return null;
@@ -2019,13 +2022,10 @@ namespace LeetCodeAlgo
                         }
                     }
                 }
-
                 i--;
             }
-
             return dp[0];
         }
-
         ///46. Permutations
         ///1 <= nums.length <= 6, -10 <= nums[i] <= 10
         ///All the integers of nums are unique.
@@ -2065,7 +2065,6 @@ namespace LeetCodeAlgo
 
             return ans;
         }
-
         ///47. Permutations II
         ///1 <= nums.length <= 8, -10 <= nums[i] <= 10
         ///Given a collection of numbers that might contain duplicates, return all possible unique permutations in any order.
@@ -2170,7 +2169,6 @@ namespace LeetCodeAlgo
                 }
             }
         }
-
         ///49. Group Anagrams
         ///Given an array of strings strs, group the anagrams together. You can return the answer in any order.
         public IList<IList<string>> GroupAnagrams(string[] strs)

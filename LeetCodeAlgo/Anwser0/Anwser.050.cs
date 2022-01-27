@@ -27,6 +27,86 @@ namespace LeetCodeAlgo
 
             return max;
         }
+        ///54. Spiral Matrix
+        ///Given an m x n matrix, return all elements of the matrix in spiral order.
+        public IList<int> SpiralOrder(int[][] matrix)
+        {
+            var ans=new List<int>();
+            var rLen = matrix.Length;
+            var cLen=matrix[0].Length;
+            if (rLen == 1)
+                return matrix[0].ToList();
+            if(cLen == 1)
+            {
+                foreach (var x in matrix)
+                    ans.Add(x[0]);
+                return ans;
+            }
+
+            int direct = 0;
+            int r = 0;
+            int c = 0;
+            int row1 = 0;
+            int row2 = rLen-1;
+            int col1 = 0;
+            int col2 = cLen-1;
+            for (int i = 0; i < rLen * cLen; i++)
+            {
+                if(direct == 0)
+                {
+                    ans.Add(matrix[r][c]);
+                    c++;
+                    if (c > col2)
+                    {
+                        direct = 1;
+                        row1++;
+                        r++;
+                        c--;
+                    }
+                }
+                else if(direct == 1)
+                {
+                    ans.Add(matrix[r][c]);
+                    r++;
+                    if (r > row2)
+                    {
+                        direct = 2;
+                        col2--;
+                        r--;
+                        c--;
+                    }
+                }
+                else if(direct == 2)
+                {
+                    ans.Add(matrix[r][c]);
+                    c--;
+                    if (c < col1)
+                    {
+                        direct = 3;
+                        row2--;
+                        r--;
+                        c++;
+                    }
+                }
+                else
+                {
+                    ans.Add(matrix[r][c]);
+                    r--;
+                    if (r < row1)
+                    {
+                        direct = 0;
+                        col1++;
+                        r++;
+                        c++;
+                    }
+                }
+            }
+
+
+            return ans;
+
+        }
+
 
         ///55. Jump Game
         ///start at 0-index,nums[i] maximum jump length at that position.
@@ -306,31 +386,25 @@ namespace LeetCodeAlgo
             if (m == 1 || n == 1)
                 return 1;
             int all = m - 1 + n - 1;
-
             long ans = 1;
             int j = 1;
-
             int x = 2;
             int y = 2;
-
             while (j <= all)
             {
                 ans *= j;
                 j++;
-
                 if (x <= m - 1 && ans % x == 0)
                 {
                     ans /= x;
                     x++;
                 }
-
                 if (y <= n - 1 && ans % y == 0)
                 {
                     ans /= y;
                     y++;
                 }
             }
-
             return (int)ans;
         }
 
@@ -1465,7 +1539,6 @@ namespace LeetCodeAlgo
         ///'A' -> "1", Z->26
         ///"AAJF" with the grouping (1 1 10 6)
         ///"KJF" with the grouping(11 10 6)
-
         public int NumDecodings(string s)
         {
             if (string.IsNullOrEmpty(s) || s.Length == 0)
