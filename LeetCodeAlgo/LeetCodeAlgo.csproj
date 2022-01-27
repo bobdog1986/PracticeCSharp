@@ -51,7 +51,7 @@
     <Compile Include="AnwserA1000\Anwser.A1100.cs" />
     <Compile Include="Anwser500\Anwser.500.cs" />
     <Compile Include="Anwser500\Anwser.900.cs" />
-    <Compile Include="Anwser0\Anwser.000.cs" />
+    <Compile Include="Anwser0\Anwser.0.cs" />
     <Compile Include="Anwser0\Anwser.400.cs" />
     <Compile Include="Anwser0\Anwser.100.cs" />
     <Compile Include="Anwser500\Anwser.600.cs" />

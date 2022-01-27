@@ -1230,7 +1230,6 @@ namespace LeetCodeAlgo
             ListNode target = null;
             ListNode last = null;
             ListNode node = head;
-
             while (node != null && node.next != null)
             {
                 if (node.val == node.next.val)
@@ -1239,21 +1238,15 @@ namespace LeetCodeAlgo
                     {
                         target = node;
                         while (node != null && node.val == target.val)
-                        {
                             node = node.next;
-                        }
-
                         head = node;
-                        //target = null;
                         last = null;
                     }
                     else
                     {
                         target = node;
                         while (node != null && node.val == target.val)
-                        {
                             node = node.next;
-                        }
                         last.next = node;
                     }
                 }
@@ -1261,10 +1254,8 @@ namespace LeetCodeAlgo
                 {
                     last = node;
                     node = node.next;
-                    //target = node;
                 }
             }
-
             return head;
         }
 

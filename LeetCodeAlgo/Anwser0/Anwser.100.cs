@@ -711,8 +711,43 @@ namespace LeetCodeAlgo
             }
             return null;
         }
+        ///143. Reorder List
+        ///Reorder the list: 1->2->3->4 to 1->4->2->3, 1->2->3->4->5 to 1->5->2->4->3
+        public void ReorderList(ListNode head)
+        {
+            Stack<ListNode> stack = new Stack<ListNode>();
+            var node=head;
+            while(node != null)
+            {
+                stack.Push(node);
+                node=node.next;
+            }
+            int i=stack.Count;
+            node = head;
+            if (i <= 2)
+                return;
+            while (i > 0)
+            {
+                var next = node.next;
+                var pop=stack.Pop();
+                pop.next = next;
+                node.next = pop;
+                //last = pop;
+                node= next;
+                i-=2;
+                if (i == 2)
+                {
+                    node.next.next = null;
+                    break;
+                }
+                if (i == 1)
+                {
+                    node.next = null;
+                    break;
+                }
+            }
+        }
         /// 144. Binary Tree Preorder Traversal
-
         public IList<int> PreorderTraversal(TreeNode root)
         {
             var result = new List<int>();
