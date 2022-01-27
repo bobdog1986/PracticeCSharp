@@ -33,6 +33,25 @@ namespace LeetCodeAlgo
             }
             return dp[amount] == 10000 ? -1 : dp[amount];
         }
+        ///327. Count of Range Sum --- not pass
+        ///return the number of range sums that lie in [lower, upper] inclusive.
+
+        public int CountRangeSum(int[] nums, int lower, int upper)
+        {
+            int ans = 0;
+            for(int i = 0; i < nums.Length; i++)
+            {
+                long sum = 0;
+                int j = i;
+                while(j++ < nums.Length)
+                {
+                    sum += nums[j];
+                    if (sum >= lower && sum <= upper)
+                        ans++;
+                }
+            }
+            return ans;
+        }
         /// 334. Increasing Triplet Subsequence
         ///using greedy to find i<j<k, nums[i]<nums[j]<nums[k]
         public bool IncreasingTriplet(int[] nums)

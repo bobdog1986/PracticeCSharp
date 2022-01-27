@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Anwser500\Anwser.700.cs" />
     <Compile Include="Anwser0\Anwser.050.cs" />
+    <Compile Include="AnwserA1500\Anwser.A1900.cs" />
     <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

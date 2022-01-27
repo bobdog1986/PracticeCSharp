@@ -10,8 +10,9 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var arr1 = new int[] { 1, 3, 2 };//[[],[],[]]
-            var input1 = 3;
+            var arr1 = new int[] { -2, 5, -1 };//[[],[],[]]
+            var val1 = -2;
+            var val2 = 2;
             var str1 = "))))())()()(()";
             var str2 = "3";
             var word1 = new string[] { "ab", "ab" };
@@ -57,7 +58,7 @@ namespace LeetCodeAlgo
             //    Console.WriteLine("Result count = 0");
 
             //anwser.LongestValidParentheses(str1);
-            var result = anwser.LongestValidParentheses(str1);
+            var result = anwser.CountGoodNumbers(100000000);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
