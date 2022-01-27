@@ -61,6 +61,7 @@
     <Compile Include="AnwserA1500\Anwser.A1500.cs" />
     <Compile Include="AnwserA1500\Anwser.A1800.cs" />
     <Compile Include="AnwserA2000\Anwser.A2000.cs" />
+    <Compile Include="AnwserA2000\Anwser.A2022.cs" />
     <Compile Include="AnwserA2000\Anwser.A2100.cs" />
     <Compile Include="Anwser.Helper.cs" />
     <Compile Include="Extensions.cs" />
