@@ -6,7 +6,53 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        ///101. Symmetric Tree
+        ///100. Same Tree
+        public bool IsSameTree(TreeNode p, TreeNode q)
+        {
+            if (p == null && q == null)
+                return true;
+            if (p == null || q == null)
+                return false;
+
+            List<TreeNode> list1 = new List<TreeNode>() { p};
+            List<TreeNode> list2 = new List<TreeNode>() { q};
+
+            while(list1.Count>0|| list2.Count > 0)
+            {
+                if (list1.Count != list2.Count)
+                    return false;
+
+                List<TreeNode> next1 = new List<TreeNode>();
+                List<TreeNode> next2 = new List<TreeNode>();
+                for (int i=0; i<list1.Count; i++)
+                {
+                    if (list1[i].val != list2[i].val)
+                        return false;
+
+                    if ((list1[i].left == null && list2[i].left != null)
+                        || (list1[i].left != null && list2[i].left == null)
+                        || (list1[i].right == null && list2[i].right != null)
+                        || (list1[i].right != null && list2[i].right == null))
+                        return false;
+
+                    if (list1[i].left != null)
+                    {
+                        next1.Add(list1[i].left);
+                        next2.Add(list2[i].left);
+                    }
+                    if (list1[i].right != null)
+                    {
+                        next1.Add(list1[i].right);
+                        next2.Add(list2[i].right);
+                    }
+                }
+
+                list1 = next1;
+                list2 = next2;
+            }
+            return true;
+        }
+        /// 101. Symmetric Tree
         ///Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
         public bool IsSymmetric(TreeNode root)
         {
