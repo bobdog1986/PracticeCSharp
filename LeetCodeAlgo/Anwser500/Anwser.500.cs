@@ -505,7 +505,7 @@ namespace LeetCodeAlgo
         ///return the minimum number of steps required to make word1 and word2 the same.
         ///In one step, you can delete exactly one character in either string.
         ///1 <= word1.length, word2.length <= 500, only lower case english
-        public int MinDistance(string word1, string word2)
+        public int MinDistance_583(string word1, string word2)
         {
             int[][] dp = new int[word1.Length + 1][];
             for(int i = 0; i < dp.Length; i++)

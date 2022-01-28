@@ -929,7 +929,53 @@ namespace LeetCodeAlgo
             return ClimbStairs_Recursion(n - 1) + ClimbStairs_Recursion(n - 2);
         }
 
-        ///74. Search a 2D Matrix
+        ///72. Edit Distance
+        ///Given two strings word1 and word2, return the minimum number of operations required to convert word1 to word2.
+        ///Insert/Delete/Replace a character
+
+        public int MinDistance(string word1, string word2)
+        {
+            //insert is same to delete
+            var len1 = word1.Length;
+            var len2=word2.Length;
+            if (len1 == 0 || len2 == 0)
+                return Math.Max(len1, len2);
+
+            int[][] dp = new int[len1 + 1][];
+            for (int i = 0; i < dp.Length; i++)
+            {
+                dp[i] = new int[len2 + 1];
+            }
+
+            for (int i = 1; i <= len1; i++)
+            {
+                dp[i][0] = i;
+            }
+            for (int j = 1; j <= len2; j++)
+            {
+                dp[0][j] = j;
+            }
+
+            for (int i = 1; i <= len1; i++)
+            {
+                for (int j = 1; j <= len2; j++)
+                {
+                    if (word1[i - 1] == word2[j - 1])
+                    {
+                        dp[i][j] = dp[i - 1][j - 1];
+                    }
+                    else
+                    {
+                        //replace=dp[i - 1][j - 1]+1, delete = dp[i - 1][j])+1, insert = dp[i][j - 1]+1
+                        dp[i][j] = Math.Min(dp[i - 1][j - 1], Math.Min(dp[i][j - 1], dp[i - 1][j])) + 1;
+                    }
+                }
+            }
+
+            return dp[len1][len2];
+
+        }
+        /// 74. Search a 2D Matrix
         ///a value in an m x n matrix.
         ///Integers in each row are sorted from left to right.
         ///The first integer of each row is greater than the last integer of the previous row.
