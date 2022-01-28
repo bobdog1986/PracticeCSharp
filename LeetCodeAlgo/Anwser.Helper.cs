@@ -85,7 +85,7 @@ namespace LeetCodeAlgo
             return getFactorial(n, count) / getFactorial(count);
         }
 
-        public void PrintListNode(ListNode listNode)
+        public void printListNode(ListNode listNode)
         {
             List<int> list = new List<int>();
             while (listNode != null)
@@ -104,5 +104,40 @@ namespace LeetCodeAlgo
                 arr[i] = seed;
             return arr;
         }
+
+        /// <summary>
+        /// 找出最大公约数
+        /// </summary>
+        public int Gcb(int m, int n)
+        {
+            if (m < 1 || n < 1)
+                return m > 0 ? m : n;
+            if (m == 1 || n == 1)
+                return 1;
+            if (m % n == 0)
+                return n;
+
+            int remainder = m % n;
+            m = n;
+            n = remainder;
+            return Gcb(m, n);
+        }
+
+        public long GcbLong(long m, long n)
+        {
+            if (m < 1 || n < 1)
+                return m > 0 ? m : n;
+            if (m == 1 || n == 1)
+                return 1;
+            if (m % n == 0)
+                return n;
+
+            long remainder = m % n;
+            m = n;
+            n = remainder;
+            return GcbLong(m, n);
+        }
+
+
     }
 }

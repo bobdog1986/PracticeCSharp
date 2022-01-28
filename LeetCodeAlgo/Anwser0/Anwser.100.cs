@@ -298,16 +298,13 @@ namespace LeetCodeAlgo
         {
             if (node == null)
                 return;
-
             list.Add(node.val);
-
             if (node.left == null && node.right == null)
             {
                 if (list.Sum() == targetSum)
                     ans.Add(list);
                 return;
             }
-
             PathSum_Recursion(node.left, targetSum, new List<int>(list), ans);
             PathSum_Recursion(node.right, targetSum, new List<int>(list), ans);
         }

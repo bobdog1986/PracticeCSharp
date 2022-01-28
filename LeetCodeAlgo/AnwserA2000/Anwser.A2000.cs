@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System;
+using System.Linq;
 
 namespace LeetCodeAlgo
 {
@@ -18,7 +20,6 @@ namespace LeetCodeAlgo
                 else
                     pairs.Add(key, 1);
             }
-
             foreach (var pair in pairs)
             {
                 if (pair.Value > 1)
@@ -29,40 +30,31 @@ namespace LeetCodeAlgo
             return sum;
         }
 
-        /// <summary>
-        /// 找出最大公约数
-        /// </summary>
-        /// <param name="m"></param>
-        /// <param name="n"></param>
-        /// <returns></returns>
-        public int Gcb(int m, int n)
+        ///2006. Count Number of Pairs With Absolute Difference K
+        ///return the number of pairs (i, j) where i < j such that |nums[i] - nums[j]| == k.
+        ///1 <= k <= 99, 1 <= nums[i] <= 100, 1 <= nums.length <= 200
+        public int CountKDifference(int[] nums, int k)
         {
-            if (m < 1 || n < 1)
-                return m > 0 ? m : n;
-            if (m == 1 || n == 1)
-                return 1;
-            if (m % n == 0)
-                return n;
-
-            int remainder = m % n;
-            m = n;
-            n = remainder;
-            return Gcb(m, n);
-        }
-
-        public long GcbLong(long m, long n)
-        {
-            if (m < 1 || n < 1)
-                return m > 0 ? m : n;
-            if (m == 1 || n == 1)
-                return 1;
-            if (m % n == 0)
-                return n;
-
-            long remainder = m % n;
-            m = n;
-            n = remainder;
-            return GcbLong(m, n);
+            if (nums.Length <= 1)
+                return 0;
+            int[] arr=new int[101];
+            int start = 100;
+            int end = 1;
+            foreach(var num in nums)
+            {
+                arr[num]++;
+                start = Math.Min(start, num);
+                end= Math.Max(end, num);
+            }
+            int ans = 0;
+            for (int i = start; i <= end - k; i++)
+            {
+                if(arr[i] > 0 && arr[i + k] > 0)
+                {
+                    ans += arr[i] * arr[i + k];
+                }
+            }
+            return ans;
         }
     }
 }
