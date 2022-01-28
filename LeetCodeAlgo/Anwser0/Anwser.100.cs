@@ -256,14 +256,14 @@ namespace LeetCodeAlgo
             if (root == null)
                 return false;
 
-            var result = LoopPathSum(root, 0, targetSum);
+            var result = HasPathSum_Recursion(root, 0, targetSum);
             if (result)
                 return true;
 
             return false;
         }
 
-        public bool LoopPathSum(TreeNode node, int sum, int targetSum)
+        public bool HasPathSum_Recursion(TreeNode node, int sum, int targetSum)
         {
             if (node == null)
                 return false;
@@ -275,14 +275,41 @@ namespace LeetCodeAlgo
                 return true;
             }
 
-            var resultLeft = LoopPathSum(node.left, sum, targetSum);
+            var resultLeft = HasPathSum_Recursion(node.left, sum, targetSum);
             if (resultLeft)
                 return true;
-            var resultRight = LoopPathSum(node.right, sum, targetSum);
+            var resultRight = HasPathSum_Recursion(node.right, sum, targetSum);
             if (resultRight)
                 return true;
 
             return false;
+        }
+
+        ///113. Path Sum II
+        ///return all root-to-leaf paths where the sum of the node values in the path equals targetSum
+        public IList<IList<int>> PathSum(TreeNode root, int targetSum)
+        {
+            var ans=new List<IList<int>>();
+            PathSum_Recursion(root, targetSum, new List<int>(), ans);
+            return ans;
+        }
+
+        public void PathSum_Recursion(TreeNode node, int targetSum, IList<int> list, IList<IList<int>> ans)
+        {
+            if (node == null)
+                return;
+
+            list.Add(node.val);
+
+            if (node.left == null && node.right == null)
+            {
+                if (list.Sum() == targetSum)
+                    ans.Add(list);
+                return;
+            }
+
+            PathSum_Recursion(node.left, targetSum, new List<int>(list), ans);
+            PathSum_Recursion(node.right, targetSum, new List<int>(list), ans);
         }
 
         /// 117. Populating Next Right Pointers in Each Node II
