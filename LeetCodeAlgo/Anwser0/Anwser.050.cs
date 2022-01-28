@@ -145,45 +145,6 @@ namespace LeetCodeAlgo
             return dp[0];
         }
 
-        public bool[] GetCanJumpArray(int[] nums)
-        {
-            if (nums.Length == 1)
-                return new bool[] { true };
-            if (nums.Length == 2)
-                return new bool[] { true, true };
-
-            bool[] dp = new bool[nums.Length];
-
-            int i = nums.Length - 1;
-            dp[i] = true;
-            i--;
-
-            while (i >= 0)
-            {
-                if (nums[i] == 0)
-                {
-                    dp[i] = false;
-                }
-                else
-                {
-                    bool has = false;
-                    for (int j = 1; j <= nums[i]; j++)
-                    {
-                        if (i + j <= nums.Length - 1 && dp[i + j])
-                        {
-                            has = true;
-                            break;
-                        }
-                    }
-
-                    dp[i] = has;
-                }
-
-                i--;
-            }
-            return dp;
-        }
-
         ///56. Merge Intervals
         ///Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals,
         ///and return an array of the non-overlapping intervals that cover all the intervals in the input.
@@ -1255,13 +1216,14 @@ namespace LeetCodeAlgo
             return Exist(board, visit, 0, 0, word, 0);
         }
 
-        private readonly int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
         public bool Exist(char[][] board, bool[][] visit, int r, int c, string word, int index)
         {
             if (index >= word.Length)
                 return true;
             var rLen = board.Length;
             var cLen = board[0].Length;
+            int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
+
             if (index == 0)
             {
                 for (int i = 0; i < rLen; i++)

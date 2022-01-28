@@ -20,170 +20,56 @@ namespace LeetCodeAlgo
                     if (grid[i][j] == '1')
                     {
                         ans++;
-                        NumIslands_RemoveAllConnected(grid, i, j);
+                        NumIslands_DFS(grid, i, j);
                     }
                 }
             }
             return ans;
         }
 
-        public void NumIslands_RemoveAllConnected(char[][] grid, int r, int c)
+        public void NumIslands_DFS(char[][] grid, int r, int c)
         {
             grid[r][c] = '0';
             var q = new Queue<int[]>();
             q.Enqueue(new int[] { r, c });
+            int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
+
             while (q.Count > 0)
             {
                 var a = q.Dequeue();
-                var up = new int[] { a[0] - 1, a[1] };
-                var down = new int[] { a[0] + 1, a[1] };
-                var left = new int[] { a[0], a[1] - 1 };
-                var right = new int[] { a[0], a[1] + 1 };
+                foreach(var d in dxy4)
+                {
+                    int row = a[0] + d[0];
+                    int col = a[1] + d[1];
 
-                if (up[0] >= 0 && grid[up[0]][up[1]] == '1')
-                {
-                    grid[up[0]][up[1]] = '0';
-                    q.Enqueue(up);
-                }
-                if (down[0] <= grid.Length - 1 && grid[down[0]][down[1]] == '1')
-                {
-                    grid[down[0]][down[1]] = '0';
-                    q.Enqueue(down);
-                }
-                if (left[1] >= 0 && grid[left[0]][left[1]] == '1')
-                {
-                    grid[left[0]][left[1]] = '0';
-                    q.Enqueue(left);
-                }
-                if (right[1] <= grid[0].Length - 1 && grid[right[0]][right[1]] == '1')
-                {
-                    grid[right[0]][right[1]] = '0';
-                    q.Enqueue(right);
+                    if(row>=0 && row< grid.Length && col>=0 && col< grid[0].Length)
+                    {
+                        if(grid[row][col] == '1')
+                        {
+                            grid[row][col] = '0';
+                            q.Enqueue(new int[] {row,col });
+                        }
+                    }
                 }
             }
         }
-
-        private int NumIslands_MyUgly(char[][] grid)
+        ///201. Bitwise AND of Numbers Range
+        ///[left, right], return the bitwise AND of all numbers in this range, inclusive.
+        public int RangeBitwiseAnd(int left, int right)
         {
-            int ans = 0;
-
-            int[][] mat = new int[grid.Length + 2][];
-            for (int i = 0; i < mat.Length; i++)
+            if (left == 0)
+                return 0;
+            //we can always find two nums that left_1000 and left_0111, will cause lower bits to 0
+            //so, only keep high bits; eg. [1,2]->0, [1,3]->0,[2->3]->2
+            int moveFactor = 0;
+            while (left != right)
             {
-                mat[i] = new int[grid[0].Length + 2];
-                if (i > 0 && i < mat.Length - 1)
-                {
-                    for (int j = 1; j < mat[0].Length - 1; j++)
-                    {
-                        mat[i][j] = grid[i - 1][j - 1] == '1' ? 1 : 0;
-                    }
-                }
+                left >>= 1;
+                right >>= 1;
+                moveFactor ++;
             }
-
-            List<List<int>> islands = new List<List<int>>();
-
-            for (int i = 1; i < mat.Length - 1; i++)
-            {
-                List<List<int>> islands2 = new List<List<int>>();
-                foreach (var sub in islands)
-                {
-                    bool found = true;
-                    List<int> sub2 = new List<int>();
-                    foreach (var j in sub)
-                    {
-                        if (mat[i][j] != 0)
-                        {
-                            found = false;
-                            sub2.Add(j);
-                        }
-                    }
-
-                    if (found)
-                    {
-                        ans++;
-                    }
-                    else
-                    {
-                        islands2.Add(sub2);
-                    }
-                }
-
-                List<int> exists = new List<int>();
-                foreach (var island in islands2)
-                {
-                    exists.AddRange(island);
-                }
-
-
-                List<int> list = new List<int>();
-                for (int j = 1; j < mat[i].Length; j++)
-                {
-                    if (j < mat[i].Length - 1 && mat[i][j] == 1 && !exists.Contains(j))
-                    {
-                        list.Add(j);
-                    }
-                    else
-                    {
-                        if (list.Count > 0)
-                        {
-                            var first = islands2.FirstOrDefault(x => x.Contains(list[0] - 1));
-                            var second = islands2.FirstOrDefault(x => x.Contains(list.Last() + 1));
-                            if (first != null && second != null && first != second)
-                            {
-                                foreach (var k in list)
-                                {
-                                    if (!first.Contains(k))
-                                        first.Add(k);
-
-                                    foreach (var j2 in second)
-                                    {
-                                        if (!first.Contains(j2))
-                                            first.Add(j2);
-                                    }
-
-                                    first.Sort();
-                                    islands2.Remove(second);
-                                }
-                            }
-                            else if (first != null)
-                            {
-                                foreach (var k in list)
-                                {
-                                    if (!first.Contains(k))
-                                        first.Add(k);
-                                }
-                                first.Sort();
-                            }
-                            else if (second != null)
-                            {
-                                foreach (var k in list)
-                                {
-                                    if (!second.Contains(k))
-                                        second.Add(k);
-                                }
-                                second.Sort();
-                            }
-                            else
-                            {
-                                islands2.Add(new List<int>(list));
-                            }
-                            list = new List<int>();
-                        }
-                    }
-                }
-
-                islands = islands2.OrderBy(x => x[0]).ToList();
-
-                if (i == mat.Length - 2)
-                {
-                    ans += islands.Count;
-                    break;
-                }
-            }
-
-            return ans;
+            return left << moveFactor;
         }
-
         /// 202
         private readonly List<int> happyList = new List<int>();
 

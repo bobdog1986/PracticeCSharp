@@ -11,15 +11,16 @@ namespace LeetCodeAlgo
         ///eg. [0,3,1,6,2,2,7].=>[0,1,2,7] , 1<=n<=2500, try Time Complexity O(n log(n))
         public int LengthOfLIS(int[] nums)
         {
-            if(nums.Length==1)
+            if (nums.Length == 1)
                 return 1;
-            Console.WriteLine($"Inputs count ={nums.Length} : "+String.Join(",",nums));
-            List<List<int>> matrix =new List<List<int>>();
+            //Console.WriteLine($"Inputs count ={nums.Length} : " + String.Join(",", nums));
+            List<List<int>> matrix = new List<List<int>>();
+            matrix.Add(new List<int>() { nums[0] });
 
             int loop = 1;
-            for(int i=0; i<nums.Length; i++)
+            for (int i = 1; i < nums.Length; i++)
             {
-                Console.WriteLine($"====Loop {loop}== element at {i} = {nums[i]} ==");
+                Console.WriteLine($"====Loop {loop}== element at index {i} = {nums[i]} ==");
                 string pre = "";
 
                 for (int m = 0; m < matrix.Count; m++)
@@ -28,90 +29,77 @@ namespace LeetCodeAlgo
                     pre += pre;
                 }
 
-                if (matrix.Count == 0)
+                bool isAdded = false;
+                for (int j = 0; j < matrix.Count; j++)
                 {
-                    matrix.Add(new List<int>() { nums[i]});
-                }
-                else
-                {
-                    bool canAppend = false;
-                    for(int j=0;j<matrix.Count;j++)
+                    if (nums[i] > matrix[j].Last())
                     {
-                        if (nums[i] > matrix[j].Last())
-                        {
-                            matrix[j].Add(nums[i]);
-                            canAppend = true;
-                        }
-                        else if(nums[i] == matrix[j].Last())
-                        {
-                            canAppend = true;
-                        }
-                        else
-                        {
-                            if(matrix[j].Count == 1)
-                            {
-                                matrix[j][0]=nums[i];
-                                canAppend = true;
-                            }
-                            else if(matrix[j].Count >= 2)
-                            {
-                                if (matrix[j][matrix[j].Count - 2] < nums[i])
-                                {
-                                    matrix[j][matrix[j].Count - 1] = nums[i];
-                                    canAppend = true;
-                                }
-                            }
-                            else
-                            {
-                                //
-                            }
-                        }
+                        matrix[j].Add(nums[i]);
+                        isAdded = true;
                     }
-
-                    if (!canAppend)
+                    else if (nums[i] == matrix[j].Last())
                     {
-                        matrix.Add(new List<int> { nums[i] });
-                    }
-                }
-
-                List<List<int>> nextMatrix = new List<List<int>>();
-                for(int j = 0; j < matrix.Count; j++)
-                {
-                    if (j == 0)
-                    {
-                        nextMatrix.Add(matrix[j]);
+                        isAdded = true;
                     }
                     else
                     {
-                        bool canAppend = true;
-                        for(int k = 0; k < j; k++)
+                        if (matrix[j].Count == 1)
                         {
-                            if (matrix[k].Count > matrix[j].Count)
-                            {
-                                if (matrix[j][0] > matrix[k][matrix[k].Count - matrix[j].Count - 1])
-                                {
-                                    matrix[k].RemoveRange(matrix[k].Count - matrix[j].Count, matrix[j].Count);
-                                    matrix[k].AddRange(matrix[j]);
-                                    canAppend = false;
-                                }
-                            }
-                            else
-                            {
-                                if (matrix[j][0] < matrix[k][0])
-                                {
-                                    matrix[k] = matrix[j];
-                                    canAppend = false;
-                                }
-                            }
-
+                            matrix[j][0] = nums[i];
+                            isAdded = true;
                         }
-
-                            nextMatrix.Add(matrix[j]);
-
+                        else if (matrix[j].Count >= 2)
+                        {
+                            if (matrix[j][matrix[j].Count - 2] < nums[i])
+                            {
+                                matrix[j][matrix[j].Count - 1] = nums[i];
+                                isAdded = true;
+                            }
+                            else if (matrix[j][matrix[j].Count - 2] == nums[i])
+                            {
+                                isAdded = true;
+                            }
+                        }
                     }
                 }
 
-                matrix = nextMatrix.OrderBy(x=>-x.Count).ToList();
+                if (!isAdded)
+                {
+                    matrix.Add(new List<int> { nums[i] });
+                }
+
+                List<List<int>> nextMatrix = new List<List<int>>();
+                for (int j = 0; j < matrix.Count; j++)
+                {
+                    bool canAppend = true;
+                    int k = 0;
+                    if (j>0)
+                    {
+                        if (matrix[k].Count > matrix[j].Count)
+                        {
+                            if (matrix[j][0] > matrix[k][matrix[k].Count - matrix[j].Count - 1])
+                            {
+                                matrix[k].RemoveRange(matrix[k].Count - matrix[j].Count, matrix[j].Count);
+                                matrix[k].AddRange(matrix[j]);
+                                canAppend = false;
+                            }
+                        }
+                        else if (matrix[k].Count == matrix[j].Count)
+                        {
+                            matrix[k] = matrix[j];
+                            canAppend = false;
+                        }
+                        else
+                        {
+                            matrix[k] = matrix[j];
+                            canAppend = false;
+                        }
+
+                    }
+
+                    if (canAppend)
+                        nextMatrix.Add(matrix[j]);
+                }
 
                 Console.WriteLine($"====After insert is ==");
                 pre = "";
@@ -121,16 +109,15 @@ namespace LeetCodeAlgo
                     Console.WriteLine($"Line: {m} = " + pre + string.Join(",", matrix[m]));
                     pre += pre;
                 }
-
+                matrix = nextMatrix;
                 Console.WriteLine();
-                //Console.WriteLine();
                 loop++;
             }
-
 
             Console.WriteLine($"result = " + string.Join(",", matrix[0]));
             return matrix[0].Count;
         }
+
         ///322. Coin Change
         ///1 <= coins[i] <= 2^31 - 1
         ///0 <= amount <= 10000
@@ -158,17 +145,18 @@ namespace LeetCodeAlgo
             }
             return dp[amount] == 10000 ? -1 : dp[amount];
         }
+
         ///327. Count of Range Sum --- not pass
         ///return the number of range sums that lie in [lower, upper] inclusive.
 
         public int CountRangeSum(int[] nums, int lower, int upper)
         {
             int ans = 0;
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 long sum = 0;
                 int j = i;
-                while(j++ < nums.Length)
+                while (j++ < nums.Length)
                 {
                     sum += nums[j];
                     if (sum >= lower && sum <= upper)
@@ -177,6 +165,7 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
         /// 334. Increasing Triplet Subsequence
         ///using greedy to find i<j<k, nums[i]<nums[j]<nums[k]
         public bool IncreasingTriplet(int[] nums)
@@ -232,7 +221,6 @@ namespace LeetCodeAlgo
 
                         if (nums[k] <= nums[i])
                         {
-
                             if (listX.Count > 0)
                             {
                                 int nextXIndex = -1;
@@ -253,7 +241,6 @@ namespace LeetCodeAlgo
                                     listX.Clear();
                                     continue;
                                 }
-
                             }
 
                             listX.Add(k);
@@ -287,7 +274,6 @@ namespace LeetCodeAlgo
                                     listX.Clear();
                                     continue;
                                 }
-
                             }
 
                             //listX.Add(k);
@@ -320,6 +306,7 @@ namespace LeetCodeAlgo
             }
             return ans * n;
         }
+
         /// 344. Reverse String
         public void ReverseString(char[] s)
         {

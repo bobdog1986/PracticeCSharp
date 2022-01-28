@@ -1979,52 +1979,24 @@ namespace LeetCodeAlgo
 
             return string.Join("", ans);
         }
-        /// 45. Jump Game II
+        /// 45. Jump Game II, using greedy
         public int Jump(int[] nums)
         {
-            if (nums.Length == 1)
-                return 0;
-            if (nums.Length == 2)
-                return 1;
-
-            bool[] canDp = GetCanJumpArray(nums);
-            int[] dp = new int[nums.Length];
-
-            int i = nums.Length - 1;
-            dp[i] = 0;
-            i--;
-
-            while (i >= 0)
+            int position = nums.Length - 1;
+            int steps = 0;
+            while (position != 0)
             {
-                if (canDp[i] == false)
+                for (int j = 0; j < position; j++)
                 {
-                    dp[i] = 0;
-                }
-                else
-                {
-                    for (int j = nums[i]; j >= 1; j--)
+                    if (nums[j] >= position - j)
                     {
-                        if (i + j >= nums.Length - 1)
-                        {
-                            dp[i] = 1;
-                            break;
-                        }
-                        else if (canDp[i + j])
-                        {
-                            if (dp[i] == 0)
-                            {
-                                dp[i] = Math.Min(nums.Length - 1, 1 + dp[i + j]);
-                            }
-                            else
-                            {
-                                dp[i] = Math.Min(dp[i], 1 + dp[i + j]);
-                            }
-                        }
+                        position = j;
+                        steps++;
+                        break;
                     }
                 }
-                i--;
             }
-            return dp[0];
+            return steps;
         }
         ///46. Permutations
         ///1 <= nums.length <= 6, -10 <= nums[i] <= 10

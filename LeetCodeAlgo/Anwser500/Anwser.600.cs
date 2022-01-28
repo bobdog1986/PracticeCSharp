@@ -124,6 +124,13 @@ namespace LeetCodeAlgo
             return FindTarget(root.left, k, list) || FindTarget(root.right, k, list);
         }
 
+        ///673. Number of Longest Increasing Subsequence
+        ///eturn the number of longest increasing subsequences. [1,3,5,4,7]->[1, 3, 4, 7] and [1, 3, 5, 7]. return 2
+        public int FindNumberOfLIS(int[] nums)
+        {
+
+            return 0;
+        }
         /// 695. Max Area of Island
 
         public int MaxAreaOfIsland(int[][] grid)
