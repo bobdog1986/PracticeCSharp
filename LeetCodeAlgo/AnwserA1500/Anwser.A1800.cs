@@ -63,6 +63,34 @@ namespace LeetCodeAlgo
             return result;
         }
 
+        ///1823. Find the Winner of the Circular Game
+        public int FindTheWinner(int n, int k)
+        {
+            List<int> list = new List<int>();
+            for(int i=1;i<=n;i++)
+                list.Add(i);
 
+            int start = 0;
+
+            while (list.Count > 1)
+            {
+                int steps = (k-1) % list.Count;
+                int loss = start + steps;
+                if(loss>=list.Count)
+                    loss-=list.Count;
+                if (loss <list.Count-1)
+                {
+                    list.RemoveAt(loss);
+                    start = loss;
+                }
+                else
+                {
+                    list.RemoveAt(loss);
+                    start = 0;
+                }
+            }
+
+            return list[0];
+        }
     }
 }

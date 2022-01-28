@@ -75,7 +75,7 @@ namespace LeetCodeAlgo
 
             //anwser.LongestValidParentheses(str1);
 
-            var result = anwser.MinDistance(str1, str2);
+            var result = anwser.FindTheWinner(6, 5);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
