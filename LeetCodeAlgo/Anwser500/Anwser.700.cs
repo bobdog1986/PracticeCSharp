@@ -121,6 +121,9 @@ namespace LeetCodeAlgo
 
         ///706. Design HashMap, see MyHashMap
 
+        ///707. Design Linked List, see MyLinkedList
+
+
         /// 713. Subarray Product Less Than K
         /// Sliding-Window
         public int NumSubarrayProductLessThanK(int[] nums, int k)
