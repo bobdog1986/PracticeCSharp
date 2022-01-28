@@ -11,111 +11,7 @@ namespace LeetCodeAlgo
         ///eg. [0,3,1,6,2,2,7].=>[0,1,2,7] , 1<=n<=2500, try Time Complexity O(n log(n))
         public int LengthOfLIS(int[] nums)
         {
-            if (nums.Length == 1)
-                return 1;
-            //Console.WriteLine($"Inputs count ={nums.Length} : " + String.Join(",", nums));
-            List<List<int>> matrix = new List<List<int>>();
-            matrix.Add(new List<int>() { nums[0] });
-
-            int loop = 1;
-            for (int i = 1; i < nums.Length; i++)
-            {
-                Console.WriteLine($"====Loop {loop}== element at index {i} = {nums[i]} ==");
-                string pre = "";
-
-                for (int m = 0; m < matrix.Count; m++)
-                {
-                    Console.WriteLine($"Line: {m} = " + pre + string.Join(",", matrix[m]));
-                    pre += pre;
-                }
-
-                bool isAdded = false;
-                for (int j = 0; j < matrix.Count; j++)
-                {
-                    if (nums[i] > matrix[j].Last())
-                    {
-                        matrix[j].Add(nums[i]);
-                        isAdded = true;
-                    }
-                    else if (nums[i] == matrix[j].Last())
-                    {
-                        isAdded = true;
-                    }
-                    else
-                    {
-                        if (matrix[j].Count == 1)
-                        {
-                            matrix[j][0] = nums[i];
-                            isAdded = true;
-                        }
-                        else if (matrix[j].Count >= 2)
-                        {
-                            if (matrix[j][matrix[j].Count - 2] < nums[i])
-                            {
-                                matrix[j][matrix[j].Count - 1] = nums[i];
-                                isAdded = true;
-                            }
-                            else if (matrix[j][matrix[j].Count - 2] == nums[i])
-                            {
-                                isAdded = true;
-                            }
-                        }
-                    }
-                }
-
-                if (!isAdded)
-                {
-                    matrix.Add(new List<int> { nums[i] });
-                }
-
-                List<List<int>> nextMatrix = new List<List<int>>();
-                for (int j = 0; j < matrix.Count; j++)
-                {
-                    bool canAppend = true;
-                    int k = 0;
-                    if (j>0)
-                    {
-                        if (matrix[k].Count > matrix[j].Count)
-                        {
-                            if (matrix[j][0] > matrix[k][matrix[k].Count - matrix[j].Count - 1])
-                            {
-                                matrix[k].RemoveRange(matrix[k].Count - matrix[j].Count, matrix[j].Count);
-                                matrix[k].AddRange(matrix[j]);
-                                canAppend = false;
-                            }
-                        }
-                        else if (matrix[k].Count == matrix[j].Count)
-                        {
-                            matrix[k] = matrix[j];
-                            canAppend = false;
-                        }
-                        else
-                        {
-                            matrix[k] = matrix[j];
-                            canAppend = false;
-                        }
-
-                    }
-
-                    if (canAppend)
-                        nextMatrix.Add(matrix[j]);
-                }
-
-                Console.WriteLine($"====After insert is ==");
-                pre = "";
-
-                for (int m = 0; m < matrix.Count; m++)
-                {
-                    Console.WriteLine($"Line: {m} = " + pre + string.Join(",", matrix[m]));
-                    pre += pre;
-                }
-                matrix = nextMatrix;
-                Console.WriteLine();
-                loop++;
-            }
-
-            Console.WriteLine($"result = " + string.Join(",", matrix[0]));
-            return matrix[0].Count;
+            return 0;
         }
 
         ///322. Coin Change
@@ -394,7 +290,9 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        //387. First Unique Character in a String
+        ///384. Shuffle an Array, see Solution_384_Shuffle
+
+        /// 387. First Unique Character in a String
 
         public int FirstUniqChar(string s)
         {
