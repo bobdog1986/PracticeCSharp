@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Collections;
 
 namespace LeetCodeAlgo
 {
@@ -498,5 +500,24 @@ namespace LeetCodeAlgo
 
             return ans;
         }
+
+        ///583. Delete Operation for Two Strings
+        ///return the minimum number of steps required to make word1 and word2 the same.
+        ///In one step, you can delete exactly one character in either string.
+        ///1 <= word1.length, word2.length <= 500, only lower case english
+        public int MinDistance(string word1, string word2)
+        {
+            int[][] dp = new int[word1.Length + 1][];
+            for(int i = 0; i < dp.Length; i++)
+                dp[i] = new int[word2.Length + 1];
+
+            //find how many matches
+            for (int i = 1; i < dp.Length; i++)
+                for (int j = 1; j < dp[0].Length; j++)
+                    dp[i][j] = word1[i - 1] == word2[j - 1] ? dp[i - 1][j - 1] + 1 : Math.Max(dp[i - 1][j], dp[i][j - 1]);
+            return word1.Length + word2.Length - 2 * dp[word1.Length][word2.Length];
+        }
+
+
     }
 }

@@ -29,8 +29,8 @@ namespace LeetCodeAlgo
                 832, -483, -237, 235, 893, -336, 452, -526, 372, -418, 356, 325, -180, 134, -698 };
             var val1 = -2;
             var val2 = 2;
-            var str1 = "))((";
-            var str2 = "race a car";
+            var str1 = "intention";
+            var str2 = "execution";
             var word1 = new string[] { "ab", "ab" };
             var mat1 = new int[][]
             {
@@ -75,7 +75,7 @@ namespace LeetCodeAlgo
 
             //anwser.LongestValidParentheses(str1);
 
-            var result = anwser.LengthOfLIS(arr1);
+            var result = anwser.MinDistance(str1, str2);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
