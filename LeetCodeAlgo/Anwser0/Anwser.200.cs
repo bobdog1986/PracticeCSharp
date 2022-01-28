@@ -196,6 +196,8 @@ namespace LeetCodeAlgo
 
             return min == nums.Length + 1 ? 0 : min;
         }
+        ///211. Design Add and Search Words Data Structure, see WordDictionary
+
         /// 213. House Robber II
         ///All houses at this place are arranged in a circle. N-1 is next to 0
         public int Rob(int[] nums)
