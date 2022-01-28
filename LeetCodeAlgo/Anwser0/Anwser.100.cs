@@ -246,8 +246,32 @@ namespace LeetCodeAlgo
         //    return root;
         //}
 
-        //116. Populating Next Right Pointers in Each Node
 
+        ///108. Convert Sorted Array to Binary Search Tree
+        public TreeNode SortedArrayToBST(int[] nums)
+        {
+            Array.Sort(nums);
+            return SortedArrayToBST_Recursion(nums, 0, nums.Length - 1);
+        }
+
+        public TreeNode SortedArrayToBST_Recursion(int[] nums, int start, int end)
+        {
+            if (start > end)
+                return null;
+            if (start == end)
+                return new TreeNode(nums[start]);
+            var mid = (start + end) / 2;
+            var node = new TreeNode(nums[mid]);
+            if (mid - 1 >= start)
+            {
+                node.left = SortedArrayToBST_Recursion(nums, start, mid - 1);
+            }
+            if (mid + 1 <= end)
+            {
+                node.right = SortedArrayToBST_Recursion(nums, mid + 1, end);
+            }
+            return node;
+        }
         /// 112. Path Sum
         /// Given the root of a binary tree and an integer targetSum,
         /// return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
