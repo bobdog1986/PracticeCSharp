@@ -7,6 +7,7 @@ namespace LeetCodeAlgo
     public partial class Anwser
     {
         /// 53. Maximum Subarray
+        /// find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
         public int MaxSubArray(int[] nums)
         {
             int sum = 0;
@@ -1406,7 +1407,33 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        //88. Merge Sorted Array
+        ///84. Largest Rectangle in Histogram -- not done
+        ///heights representing the histogram's bar height where the width of each bar is 1,
+        ///return the area of the largest rectangle in the histogram.
+        /// 0<= height <=10000, heights.Length>=1
+        public int LargestRectangleArea(int[] heights)
+        {
+
+            int[] dp=new int[heights.Length];
+
+            int start = 0;
+            int end = 0;
+            int minHeight = heights[0];
+            int curr = (end-start+1)* minHeight;
+            int max = 0;
+            max=Math.Max(max, curr);
+
+            for (int i = 1; i < heights.Length; i++)
+            {
+            }
+
+
+
+
+            return max;
+
+        }
+        /// 88. Merge Sorted Array
         public void Merge(int[] nums1, int m, int[] nums2, int n)
         {
             if (nums1 == null || nums1.Length == 0 || m == 0)

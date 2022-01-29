@@ -124,6 +124,24 @@ namespace LeetCodeAlgo
         ///707. Design Linked List, see MyLinkedList
 
 
+        ///717. 1-bit and 2-bit Characters
+        ///The first character can be represented by one bit 0.
+        ///The second character can be represented by two bits (10 or 11).
+        ///Given a binary array bits that ends with 0, return true if the last character must be a one-bit character.
+        ///1 <= bits.length <= 1000
+        public bool IsOneBitCharacter(int[] bits)
+        {
+            bool odd = true;
+            for(int i = bits.Length - 2; i >= 0; i--)
+            {
+                if (odd && bits[i] == 0)
+                    return true;
+                if (!odd && bits[i] == 0)
+                    return false;
+                odd = !odd;
+            }
+            return odd;
+        }
         /// 713. Subarray Product Less Than K
         /// Sliding-Window
         public int NumSubarrayProductLessThanK(int[] nums, int k)

@@ -7,18 +7,19 @@ namespace LeetCodeAlgo
     public partial class Anwser
     {
         ///918. Maximum Sum Circular Subarray
+        ///Kadane algorithm, find max-of-positive and min-of-negtive, return max-of-positive or Sum()- min-of-neg
         public int MaxSubarraySumCircular(int[] nums)
         {
             if (nums.Length == 1)
                 return nums[0];
 
-            int sum = nums[0];
+            int sumOfPositive = nums[0];
             int max = nums[0];
             int allSum = nums[0];
             for (int i = 1; i < nums.Length; i++)
             {
-                sum = Math.Max(sum + nums[i], nums[i]);
-                max = Math.Max(sum, max);
+                sumOfPositive = Math.Max(sumOfPositive + nums[i], nums[i]);
+                max = Math.Max(sumOfPositive, max);
                 allSum += nums[i];
             }
 
@@ -27,15 +28,15 @@ namespace LeetCodeAlgo
                 return max;
             }
 
-            int sum_n = nums[0];
-            int max_n = nums[0];
+            int sumOfNegative = nums[0];
+            int min = nums[0];
             for (int i = 1; i < nums.Length; i++)
             {
-                sum_n = Math.Min(sum_n + nums[i], nums[i]);
-                max_n = Math.Min(sum_n, max_n);
+                sumOfNegative = Math.Min(sumOfNegative + nums[i], nums[i]);
+                min = Math.Min(sumOfNegative, min);
             }
 
-            return Math.Max(max, allSum - max_n);
+            return Math.Max(max, allSum - min);
         }
 
 
