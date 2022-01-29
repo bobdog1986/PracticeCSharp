@@ -287,7 +287,17 @@ namespace LeetCodeAlgo
             return dp[max];
         }
 
-        ///746. Min Cost Climbing Stairs
+        ///744. Find Smallest Letter Greater Than Target
+        public char NextGreatestLetter(char[] letters, char target)
+        {
+            foreach (char letter in letters)
+            {
+                if(letter > target)
+                    return letter;
+            }
+            return letters.Last();
+        }
+        /// 746. Min Cost Climbing Stairs
         ///cost[i] is the cost of ith step on a staircase.
         ///You can either start from the step with index 0, or the step with index 1
         ///target stair is N-th, out of arr
