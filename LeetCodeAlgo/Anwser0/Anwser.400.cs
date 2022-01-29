@@ -390,65 +390,19 @@ namespace LeetCodeAlgo
                 int next = (i + nums[i])%nums.Length;
                 if(next<0)
                     next+=nums.Length;
-                while (j<nums.Length)
+                while (j++<nums.Length)
                 {
-                    if (forward)
-                    {
-                        if (nums[next] > 0)
-                        {
-                            if (list.Contains(next)&&next!=list.Last())
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                if (visit[next])
-                                {
-                                    break;
-                                }
-                                else
-                                {
-                                    list.Add(next);
-                                    visit[next] = true;
-                                    next = (next + nums[next]) % nums.Length;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        if (nums[next] < 0)
-                        {
-                            if (list.Contains(next) && next != list.Last())
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                if (visit[next])
-                                {
-                                    break;
-                                }
-                                else
-                                {
-                                    list.Add(next);
-                                    visit[next] = true;
-                                    next = (next + nums[next]) % nums.Length;
-                                    if (next < 0)
-                                        next += nums.Length;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                    j++;
+                    if ((forward && nums[next] < 0) || (!forward && nums[next] > 0))
+                        break;
+                    if (list.Contains(next) && next != list.Last())
+                        return true;
+                    if (visit[next])
+                        break;
+                    list.Add(next);
+                    visit[next] = true;
+                    next = (next + nums[next]) % nums.Length;
+                    if (next < 0)
+                        next += nums.Length;
                 }
             }
             return false;

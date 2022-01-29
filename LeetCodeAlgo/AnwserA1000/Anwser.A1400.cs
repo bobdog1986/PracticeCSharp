@@ -26,6 +26,27 @@ namespace LeetCodeAlgo
             return max;
         }
 
-        ///
+        ///1448. Count Good Nodes in Binary Tree
+        ///a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X.
+        public int GoodNodes(TreeNode root)
+        {
+            if (root == null)
+                return 0;
+            int ans = 1;
+            int max = root.val;
+            GoodNodes_Recursion(root.left, max, ref ans);
+            GoodNodes_Recursion(root.right, max, ref ans);
+            return ans;
+        }
+        public void GoodNodes_Recursion(TreeNode node,int max, ref int ans)
+        {
+            if (node == null)
+                return;
+            if (node.val >= max)
+                ans++;
+            max = Math.Max(node.val, max);
+            GoodNodes_Recursion(node.left, max, ref ans);
+            GoodNodes_Recursion(node.right, max, ref ans);
+        }
     }
 }
