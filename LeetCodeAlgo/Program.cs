@@ -27,7 +27,7 @@ namespace LeetCodeAlgo
                 201, 706, 570, -659, 174, 637, -293, 736, -735, 377, -687, -962, 768, 430, 576, 160,
                 577, -329, 175, 51, 699, -113, 950, -364, 383, 5, 748, -250, -644, -576, -227, 603,
                 832, -483, -237, 235, 893, -336, 452, -526, 372, -418, 356, 325, -180, 134, -698 };
-            var arr2 = new int[] { -1,2 };
+            var arr2 = new int[] { -1, 2 };
             var val1 = -2;
             var val2 = 2;
             var str1 = "intention";
@@ -42,14 +42,41 @@ namespace LeetCodeAlgo
             };
             var grid1 = new char[][]
             {
-                new char[]{ 'X', 'O','X','X'},
-                new char[]{ 'X', 'O','O','X'},
-                new char[]{ 'X', 'X','O','X'},
-                new char[]{ 'X', 'O','X','X'},
+                //new char[]{ 'X', 'O','X','X'},
+                //new char[]{ 'X', 'O','O','X'},
+                //new char[]{ 'X', 'X','O','X'},
+                //new char[]{ 'X', 'O','X','X'},
+                //soduko testcase 1
+                new char[]{'.', '.', '9', '7', '4', '8', '.', '.', '.'},
+                new char[]{'7', '.', '.', '.', '.', '.', '.', '.', '.'},
+                new char[]{'.', '2', '.', '1', '.', '9', '.', '.', '.'},
+                new char[]{'.', '.', '7', '.', '.', '.', '2', '4', '.'},
+                new char[]{'.', '6', '4', '.', '1', '.', '5', '9', '.'},
+                new char[]{'.', '9', '8', '.', '.', '.', '3', '.', '.'},
+                new char[]{'.', '.', '.', '8', '.', '3', '.', '2', '.'},
+                new char[]{'.', '.', '.', '.', '.', '.', '.', '.', '6'},
+                new char[]{'.', '.', '.', '2', '7', '5', '9', '.', '.'},
 
                 //new char[]{'1','1','1'},
                 //new char[]{'1','1','1'},
             };
+
+            var grid2 = new char[][]
+            {
+                //soduko sample 1
+                new char[]{'5','3','.','.','7','.','.','.','.'},
+                new char[]{'6','.','.','1','9','5','.','.','.'},
+                new char[]{'.','9','8','.','.','.','.','6','.'},
+                new char[]{'8','.','.','.','6','.','.','.','3'},
+                new char[]{'4','.','.','8','.','3','.','.','1'},
+                new char[]{'7','.','.','.','2','.','.','.','6'},
+                new char[]{'.','6','.','.','.','.','2','8','.'},
+                new char[]{'.','.','.','4','1','9','.','.','5'},
+                new char[]{'.','.','.','.','8','.','.','7','9'},
+                //new char[]{'0','0','0'},
+                //new char[]{'1','1','1'},
+            };
+
             var mat2 = new int[][] {
                 //new int[] { 3, 9 },   new int[]{7, 12},  new int[]{3, 8},
                 new int[] { 10, 16 },   new int[]{2, 8},  new int[]{1, 6},new int[]{7,12}
@@ -74,16 +101,16 @@ namespace LeetCodeAlgo
             //else
             //    Console.WriteLine("Result count = 0");
 
-            //anwser.LongestValidParentheses(str1);
+            anwser.SolveSudoku(grid1);
 
-            var result = anwser.CircularArrayLoop(arr2);
+            //var result = anwser.CircularArrayLoop(arr2);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
-            Console.WriteLine(string.Join(",", result));
+            //Console.WriteLine(string.Join(",", result));
             //anwser.PrintListNode(result);
 
             //Console.WriteLine(String.Join(",", arr1));

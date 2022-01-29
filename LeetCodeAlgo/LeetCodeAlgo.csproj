@@ -69,6 +69,7 @@
     <Compile Include="MyStructs\MyMinStack.cs" />
     <Compile Include="MyStructs\MyQueue.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="MyStructs\RandomizedSet.cs" />
     <Compile Include="MyStructs\Shuffle.cs" />
     <Compile Include="MyStructs\WordDictionary.cs" />
     <Compile Include="Program.cs" />

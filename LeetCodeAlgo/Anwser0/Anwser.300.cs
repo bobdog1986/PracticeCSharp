@@ -269,7 +269,9 @@ namespace LeetCodeAlgo
             return num == 0;
         }
 
-        //383. Ransom Note
+        ///380. Insert Delete GetRandom O(1), see RandomizedSet
+
+        /// 383. Ransom Note
         public bool CanConstruct(string ransomNote, string magazine)
         {
             var arr1 = ransomNote.ToArray().ToList();
