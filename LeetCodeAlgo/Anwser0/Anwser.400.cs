@@ -372,6 +372,87 @@ namespace LeetCodeAlgo
             return shot;
         }
 
+        ///457. Circular Array Loop
+        ///If nums[i]>0, move nums[i] steps forward, If nums[i]<0 move nums[i] steps backward.
+        ///Every nums[seq[j]] is either all positive or all negative.
+        ///Return true if there is a cycle in nums, or false otherwise.
+        public bool CircularArrayLoop(int[] nums)
+        {
+            bool[] visit=new bool[nums.Length];
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if (visit[i])
+                    continue;
+                bool forward=nums[i]>0;
+                visit[i]=true;
+                List<int> list=new List<int>() { i};
+                int j=0;
+                int next = (i + nums[i])%nums.Length;
+                if(next<0)
+                    next+=nums.Length;
+                while (j<nums.Length)
+                {
+                    if (forward)
+                    {
+                        if (nums[next] > 0)
+                        {
+                            if (list.Contains(next)&&next!=list.Last())
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                if (visit[next])
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    list.Add(next);
+                                    visit[next] = true;
+                                    next = (next + nums[next]) % nums.Length;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if (nums[next] < 0)
+                        {
+                            if (list.Contains(next) && next != list.Last())
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                if (visit[next])
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    list.Add(next);
+                                    visit[next] = true;
+                                    next = (next + nums[next]) % nums.Length;
+                                    if (next < 0)
+                                        next += nums.Length;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    j++;
+                }
+            }
+            return false;
+        }
         /// 492
         public int[] ConstructRectangle(int area)
         {
