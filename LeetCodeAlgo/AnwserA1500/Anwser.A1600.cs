@@ -33,5 +33,11 @@ namespace LeetCodeAlgo
 
             return len == -1 ? -1 : nums.Length - len;
         }
+        ///1672.Richest Customer Wealth
+
+        public int MaximumWealth(int[][] accounts)
+        {
+            return accounts.Select(x => x.Sum()).Max();
+        }
     }
 }

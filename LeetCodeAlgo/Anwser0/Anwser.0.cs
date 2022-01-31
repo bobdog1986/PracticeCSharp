@@ -1172,6 +1172,7 @@ namespace LeetCodeAlgo
             {
                 int i = 0;
                 Stack<ListNode> stack = new Stack<ListNode>();
+                //stack nodes to reverse
                 while (i < k)
                 {
                     if (node == null)
@@ -1180,6 +1181,7 @@ namespace LeetCodeAlgo
                     node = node.next;
                     i++;
                 }
+                //if can reverse
                 if (i == k)
                 {
                     ListNode subNode = stack.Pop();
@@ -1191,6 +1193,7 @@ namespace LeetCodeAlgo
                         curr = curr.next;
                     }
                     curr.next = node;
+                    //if first loop, update head
                     if (pre == null)
                     {
                         head = subNode;
@@ -1203,6 +1206,7 @@ namespace LeetCodeAlgo
                 }
                 else
                 {
+                    //if not enough nodes to reverse
                     break;
                 }
             }

@@ -758,12 +758,13 @@ namespace LeetCodeAlgo
         }
 
         ///139. Word Break
+        ///return true if s can be segmented into a space-separated sequence of one or more dictionary words.
+        ///Note that the same word in the dictionary may be reused multiple times in the segmentation.
         public bool WordBreak(string s, IList<string> wordDict)
         {
             var arr = s.ToArray();
             List<int> list = new List<int> { 0 };
             List<int> exist = new List<int> { 0 };
-            //wordDict = wordDict.OrderBy(x => -x.Length).ToList();
             while (list.Count > 0)
             {
                 List<int> next = new List<int>();
@@ -947,7 +948,7 @@ namespace LeetCodeAlgo
         ///152. Maximum Product Subarray
         ///Given an integer array nums, find a contiguous non-empty subarray within the array
         ///that has the largest product, and return the product.
-        ///-10 <= nums[i] <= 10
+        ///-10 <= nums[i] <= 10, 1 <= nums.length <= 2 * 10^4
         public int MaxProduct(int[] nums)
         {
             int max = nums[0];
@@ -969,63 +970,6 @@ namespace LeetCodeAlgo
             }
 
             return result;
-        }
-
-        public int MaxProduct_1(int[] nums)
-        {
-            if (nums == null || nums.Length == 0)
-                return 0;
-            if (nums.Length == 1)
-                return nums[0];
-
-            int max = -10;
-
-            List<int> list = new List<int>();
-            List<int> indexsOfNegative = new List<int>();
-
-            for (int i = 0; i < nums.Length; i++)
-            {
-                if (nums[i] == 0)
-                {
-                    max = Math.Max(max, 0);
-                    max = Math.Max(max, GetMaxProduct(list, indexsOfNegative));
-
-                    list.Clear();
-                    indexsOfNegative.Clear();
-                }
-                else
-                {
-                    list.Add(nums[i]);
-                    if (nums[i] < 0)
-                    {
-                        indexsOfNegative.Add(list.Count - 1);
-                    }
-                }
-            }
-
-            max = Math.Max(max, GetMaxProduct(list, indexsOfNegative));
-
-            return max;
-        }
-
-        public int GetMaxProduct(List<int> list, List<int> indexsOfNegative = null)
-        {
-            if (list.Count == 0)
-                return 0;
-            if (list.Count == 1)
-                return list[0];
-
-            if (indexsOfNegative == null || indexsOfNegative.Count % 2 == 0)
-            {
-                return list.Aggregate((x, y) => x * y);
-            }
-            else
-            {
-                return Math.Max(
-                    GetMaxProduct(list.GetRange(indexsOfNegative[0] + 1, list.Count - indexsOfNegative[0] - 1)),
-                    GetMaxProduct(list.GetRange(0, indexsOfNegative[indexsOfNegative.Count - 1]))
-                    );
-            }
         }
 
         /// 153. Find Minimum in Rotated Sorted Array
@@ -1244,29 +1188,20 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        //189. Rotate Array
-
+        ///189. Rotate Array
+        ///Given an array, rotate the array to the right by k steps, where k is non-negative.
+        ///Input: nums = [1,2,3,4,5,6,7], k = 3, Output: [5,6,7,1,2,3,4]
         public void Rotate(int[] nums, int k)
         {
             k = k % nums.Length;
-
             if (k == 0) return;
-
             int[] temp = new int[k];
             for (int i = 0; i < k; i++)
-            {
                 temp[i] = nums[nums.Length - k + i];
-            }
-
             for (int i = nums.Length - 1; i > k - 1; i--)
-            {
                 nums[i] = nums[i - k];
-            }
-
             for (int i = 0; i < k; i++)
-            {
                 nums[i] = temp[i];
-            }
         }
 
         ///190. Reverse Bits
