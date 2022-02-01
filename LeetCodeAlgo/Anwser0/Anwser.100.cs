@@ -145,6 +145,47 @@ namespace LeetCodeAlgo
             return result;
         }
 
+        ///103. Binary Tree Zigzag Level Order Traversal
+        ///return the zigzag level order traversal of its nodes' values.
+        ///(i.e., from left to right, then right to left for the next level and alternate between).
+        public IList<IList<int>> ZigzagLevelOrder(TreeNode root)
+        {
+            var ans=new List<IList<int>>();
+            if (root == null)
+                return ans;
+
+            var nodes=new List<TreeNode>() { root};
+            bool forward = true;
+            while (nodes.Count > 0)
+            {
+                var nexts = new List<TreeNode>();
+                var vals = new List<int>();
+
+                foreach(var node in nodes)
+                {
+                    vals.Add(node.val);
+                    if (forward)
+                    {
+                        if (node.left != null)
+                            nexts.Insert(0, node.left);
+                        if (node.right != null)
+                            nexts.Insert(0, node.right);
+                    }
+                    else
+                    {
+                        if (node.right != null)
+                            nexts.Insert(0, node.right);
+                        if (node.left != null)
+                            nexts.Insert(0, node.left);
+                    }
+                }
+                forward = !forward;
+                nodes = nexts;
+                ans.Add(vals);
+            }
+            return ans;
+        }
+
         /// 104. Maximum Depth of Binary Tree
         /// Given the root of a binary tree, return its maximum depth.
         ///A binary tree's maximum depth is the number of nodes along the longest path
@@ -178,40 +219,45 @@ namespace LeetCodeAlgo
             return deep;
         }
 
-        ///105
+        ///105. Construct Binary Tree from Preorder and Inorder Traversal
         public TreeNode BuildTree(int[] preorder, int[] inorder)
         {
-            if (preorder == null || preorder.Length == 0) return null;
+            return BuildTree(preorder, inorder, 0, preorder.Length - 1, 0, preorder.Length - 1);
+        }
+        public TreeNode BuildTree(int[] preorder, int[] inorder, int preLeft, int preRight, int inLeft, int inRight)
+        {
+            if (preLeft > preRight||inLeft>inRight)
+                return null;
 
-            if (preorder.Length == 1)
+            if(preLeft == preRight || inLeft == inRight)
             {
-                return new TreeNode(preorder[0]);
+                return new TreeNode(preorder[preLeft]);
             }
 
-            TreeNode root = new TreeNode(preorder[0]);
-            int index = FindIndex(preorder[0], inorder);
-            int[] leftPreorder = new int[index];
-            int[] leftInorder = new int[index];
-            int[] rightPreorder = new int[inorder.Length - index - 1];
-            int[] rightInorder = new int[inorder.Length - index - 1];
+            TreeNode node = new TreeNode(preorder[preLeft]);
+            var index = FindIndex(preorder[preLeft], inorder, inLeft,inRight);
+            var countLeft = index - inLeft;
+            var countRight = inRight-index;
 
-            Array.Copy(inorder, 0, leftInorder, 0, index);
-            Array.Copy(inorder, index + 1, rightInorder, 0, inorder.Length - index - 1);
+            if (countLeft > 0)
+            {
+                node.left = BuildTree(preorder, inorder, preLeft + 1, preLeft + 1+countLeft-1, inLeft, index - 1);
+            }
 
-            Array.Copy(preorder, 1, leftPreorder, 0, index);
-            Array.Copy(preorder, index + 1, rightPreorder, 0, inorder.Length - index - 1);
-
-            root.left = BuildTree(leftPreorder, leftInorder);
-            root.right = BuildTree(rightPreorder, rightInorder);
-
-            return root;
+            if (countRight > 0)
+            {
+                node.right = BuildTree(preorder, inorder,
+                    preLeft + 1 + countLeft - 1+1, preLeft + 1 + countLeft - 1 + 1 + countRight-1,
+                    index+1, inRight);
+            }
+            return node;
         }
 
-        public int FindIndex(int find, int[] array)
+        public int FindIndex(int target, int[] array, int start, int end)
         {
-            for (int i = 0; i < array.Length; i++)
+            for (int i = start; i <= end; i++)
             {
-                if (find == array[i]) return i;
+                if (target == array[i]) return i;
             }
             throw new ArgumentOutOfRangeException();
         }
@@ -1010,7 +1056,7 @@ namespace LeetCodeAlgo
             return nums[start];
         }
 
-        ///155. Min Stack , see MinStack in MyStructs.cs
+        ///155. Min Stack , see MinStack
 
         ///160. Intersection of Two Linked Lists
         ///return the node at which the two lists intersect. If not, return null.
