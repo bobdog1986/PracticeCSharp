@@ -124,7 +124,31 @@ namespace LeetCodeAlgo
         ///707. Design Linked List, see MyLinkedList
 
 
-        ///717. 1-bit and 2-bit Characters
+        ///714. Best Time to Buy and Sell Stock with Transaction Fee
+        ///https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/discuss/108870/Most-consistent-ways-of-dealing-with-the-series-of-stock-problems
+        public int MaxProfit(int[] prices, int fee)
+        {
+            int len = prices.Length;
+            if (len <= 1)
+                return 0;
+
+            //buy[i]: Max profit till index i. The series of transaction is ending with a buy.
+            //sell[i]: Max profit till index i.The series of transaction is ending with a sell.
+            int[] sell = new int[len];
+            int[] buy = new int[len];
+            //buy[i] = Math.Max(buy[i - 1], sell[i - 2] - prices[i]);
+            //sell[i] = Math.Max(sell[i - 1], buy[i - 1] + prices[i]);
+
+            buy[0] = -prices[0];
+            sell[0] = 0;
+            for (int i = 1; i < len; i++)
+            {
+                buy[i] = Math.Max(buy[i - 1], sell[i - 1] - prices[i]);
+                sell[i] = Math.Max(sell[i - 1], buy[i - 1] + prices[i]-fee);
+            }
+            return sell[len - 1];
+        }
+        /// 717. 1-bit and 2-bit Characters
         ///The first character can be represented by one bit 0.
         ///The second character can be represented by two bits (10 or 11).
         ///Given a binary array bits that ends with 0, return true if the last character must be a one-bit character.
