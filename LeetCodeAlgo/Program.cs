@@ -13,7 +13,7 @@ namespace LeetCodeAlgo
             //var arr1 = new int[] { 5, 7, -24, 12, 13, 2, 3, 12, 5, 6, 35 };//[[],[],[]] should 6
             //var arr1 = new int[] { -813, 82, -728, -966, -35, 446, -608, -554, -411, 987, -354, -700, -34, 395, -977, 544, -330, 596 };//10
             //should 25
-            var arr1 = new int[] { 2,2,2,2,2 };
+            var arr1 = new int[] { 1, 3, 5, 4, 7 };
             var arr2 = new int[] { -1, 2 };
             var val1 = -2;
             var val2 = 2;

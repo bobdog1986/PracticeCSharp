@@ -7,6 +7,7 @@ namespace LeetCodeAlgo
     public partial class Anwser
     {
         ///300. Longest Increasing Subsequence
+        /// https://en.wikipedia.org/wiki/Longest_increasing_subsequence
         ///Patient Sort
         ///by deleting some or no elements without changing the order of the remaining elements.
         ///eg. [0,3,1,6,2,2,7].=>[0,1,2,7] , 1<=n<=2500, try Time Complexity O(n log(n))

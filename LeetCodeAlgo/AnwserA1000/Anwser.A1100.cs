@@ -1,4 +1,8 @@
-﻿namespace LeetCodeAlgo
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
@@ -33,6 +37,34 @@
             if (n == 2)
                 return 1;
             return Tribonacci_Recursion(n - 3) + Tribonacci_Recursion(n - 2) + Tribonacci_Recursion(n - 1);
+        }
+
+        ///1143. Longest Common Subsequence
+        ///return the length of their longest common subsequence. If there is no common subsequence, return 0.
+        public int LongestCommonSubsequence(string text1, string text2)
+        {
+            int len1=text1.Length;
+            int len2=text2.Length;
+            int[][] dp=new int[len1+1][];
+            for(int i=0;i<dp.Length;i++)
+                dp[i]=new int[len2+1];
+
+            for(int i = 0; i < len1; i++)
+            {
+                for(int j=0;j<len2; j++)
+                {
+                    if (text1[i] == text2[j])
+                    {
+                        dp[i + 1][j + 1] = 1 + dp[i][j];
+                    }
+                    else
+                    {
+                        dp[i + 1][j + 1] = Math.Max(dp[i][j + 1], dp[i + 1][j]);
+                    }
+                }
+            }
+
+            return dp.Last().Last();
         }
     }
 }

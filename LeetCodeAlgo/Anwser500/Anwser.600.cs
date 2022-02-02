@@ -124,12 +124,38 @@ namespace LeetCodeAlgo
             return FindTarget(root.left, k, list) || FindTarget(root.right, k, list);
         }
 
-        ///673. Number of Longest Increasing Subsequence
-        ///eturn the number of longest increasing subsequences. [1,3,5,4,7]->[1, 3, 4, 7] and [1, 3, 5, 7]. return 2
+        ///673. Number of Longest Increasing Subsequence - not understand
+        ///return the number of longest increasing subsequences. [1,3,5,4,7]->[1, 3, 4, 7] and [1, 3, 5, 7]. return 2
         public int FindNumberOfLIS(int[] nums)
         {
-
-            return 0;
+            int ans = 0, max_len = 0;
+            int[] len = new int[nums.Length];
+            int[] cnt = new int[nums.Length];
+            for (int i = 0; i < nums.Length; i++)
+            {
+                len[i] = cnt[i] = 1;
+                for (int j = 0; j < i; j++)
+                {
+                    if (nums[i] > nums[j])
+                    {
+                        if (len[i] == len[j] + 1)
+                            cnt[i] += cnt[j];
+                        if (len[i] < len[j] + 1)
+                        {
+                            len[i] = len[j] + 1;
+                            cnt[i] = cnt[j];
+                        }
+                    }
+                }
+                if (max_len == len[i])
+                    ans += cnt[i];
+                if (max_len < len[i])
+                {
+                    max_len = len[i];
+                    ans = cnt[i];
+                }
+            }
+            return ans;
         }
         /// 695. Max Area of Island
 
