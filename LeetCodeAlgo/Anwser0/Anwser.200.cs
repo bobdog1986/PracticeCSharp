@@ -533,7 +533,8 @@ namespace LeetCodeAlgo
             return AddDigits(total);
         }
 
-        //278. First Bad Version
+        ///
+        /// 278. First Bad Version
 
         public int FirstBadVersion(int n)
         {

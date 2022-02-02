@@ -960,34 +960,95 @@ namespace LeetCodeAlgo
             list.Add(node.val);
         }
 
-        ///149
-
-        public int MaxPoints(Point[] points)
+        ///149. Max Points on a Line
+        ///return the maximum number of points that lie on the same straight line.
+        ///1 <= points.length <= 300, -10^4 <= xi, yi <= 10^4, All the points are unique.
+        public int MaxPoints(int[][] points)
         {
-            if (points == null || points.Length == 0) return 0;
-            Dictionary<int, int> dict = new Dictionary<int, int>();
-            Dictionary<int, int> dictY = new Dictionary<int, int>();
-            foreach (var i in points)
+            if (points.Length <= 2)
+                return points.Length;
+
+            Dictionary<string, List<int>> dict = new Dictionary<string, List<int>>();
+            Dictionary<int, List<int>> dictX = new Dictionary<int, List<int>>();
+            //Dictionary<int, List<int>> dictY = new Dictionary<int, List<int>>();
+
+            for (int i = 0; i < points.Length; i++)
             {
-                if (dict.ContainsKey(i.x))
+                if (i == 0)
                 {
-                    dict[i.x]++;
-                }
-                else
-                {
-                    dict[i.x] = 1;
+                    dictX.Add(points[i][0], new List<int>() { i});
+                    continue;
                 }
 
-                if (dictY.ContainsKey(i.y))
+                List<string> findKeys = new List<string>();
+                foreach(var d in dict.Keys)
                 {
-                    dictY[i.y]++;
+                    var strs = d.Split(',');
+                    var a = double.Parse( strs[0]);
+                    var b = double.Parse(strs[1]);
+
+                    if (points[i][0] * a + b == points[i][1])
+                    {
+                        findKeys.Add(d);
+                    }
+                }
+
+                List<int> skips = new List<int>();
+                foreach (var findKey in findKeys)
+                {
+                    skips.AddRange(dict[findKey]);
+                    dict[findKey].Add(i);
+                }
+
+                for (int j = 0; j < i; j++)
+                {
+                    if (skips.Contains(j))
+                        continue;
+
+                    if (points[i][0] == points[j][0])
+                        continue;
+
+                    var a = 1.0 * (points[i][1] - points[j][1]) / (points[i][0] - points[j][0]);
+                    var b = 1.0 * (points[j][1]* points[i][0] - points[j][0]* points[i][1]) / (points[i][0] - points[j][0]);
+
+                    string key = $"{a},{b}";
+
+                    if (!dict.ContainsKey(key))
+                    {
+                        dict.Add(key, new List<int> { j, i });
+                    }
+                    else
+                    {
+                        if(!dict[key].Contains(i))
+                            dict[key].Add(i);
+                        if (!dict[key].Contains(j))
+                            dict[key].Add(j);
+                    }
+                }
+
+                if (dictX.ContainsKey(points[i][0]))
+                {
+                    dictX[points[i][0]].Add(i);
                 }
                 else
                 {
-                    dictY[i.y] = 1;
+                    dictX.Add(points[i][0], new List<int>() { i });
                 }
             }
-            return Math.Max(dict.Values.Max(), dictY.Values.Max());
+
+            int count1 = 0;
+            if (dict.Count > 0)
+            {
+                var list1 = dict.Values.OrderBy(x => -x.Count).ToList();
+                count1 = list1[0].Count;
+            }
+            int count2 = 0;
+            if (dictX.Count > 0)
+            {
+                var list2 = dictX.Values.OrderBy(x => -x.Count).ToList();
+                count2 = list2[0].Count;
+            }
+            return Math.Max(count1,count2);
         }
     }
 }
