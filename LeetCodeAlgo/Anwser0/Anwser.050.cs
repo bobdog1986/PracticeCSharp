@@ -1646,19 +1646,15 @@ namespace LeetCodeAlgo
                 return;
             InorderTraversal_Recursion(node.left, list);
             list.Add(node.val);
-
             InorderTraversal_Recursion(node.right, list);
         }
 
         public IList<int> InorderTraversal_Iteration(TreeNode root)
         {
             List<int> values = new List<int>();
-
             if (root == null) return values;
-
             Stack<TreeNode> stack = new Stack<TreeNode>();
             TreeNode node = root;
-
             while (node != null || stack.Any())
             {
                 if (node != null)
