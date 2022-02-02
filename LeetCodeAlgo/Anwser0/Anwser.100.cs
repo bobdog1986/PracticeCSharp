@@ -1301,6 +1301,7 @@ namespace LeetCodeAlgo
         }
 
         ///198. House Robber, cannot rob adjacent houses
+        ///The number of nodes in the tree is in the range [0, 100].
         public int Rob_198(int[] nums)
         {
             if (nums.Length == 1)
@@ -1311,6 +1312,30 @@ namespace LeetCodeAlgo
             for (int i = 2; i < nums.Length; i++)
                 dp[i] = Math.Max(nums[i] + dp[i - 2], dp[i - 1]);
             return dp[nums.Length - 1];
+        }
+
+        ///199. Binary Tree Right Side View
+        ///return the right side values of the nodes you can see ordered from top to bottom.
+        public IList<int> RightSideView(TreeNode root)
+        {
+            var ans = new List<int>();
+            if (root == null)
+                return ans;
+            List<TreeNode> nodes = new List<TreeNode>() { root };
+            while (nodes.Count > 0)
+            {
+                ans.Add(nodes.Last().val);
+                List<TreeNode> nexts = new List<TreeNode>();
+                foreach (var node in nodes)
+                {
+                    if (node.left != null)
+                        nexts.Add(node.left);
+                    if (node.right != null)
+                        nexts.Add(node.right);
+                }
+                nodes = nexts;
+            }
+            return ans;
         }
     }
 }
