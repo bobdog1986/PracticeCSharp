@@ -7,14 +7,42 @@ namespace LeetCodeAlgo
     public partial class Anwser
     {
         ///300. Longest Increasing Subsequence
+        ///Patient Sort
         ///by deleting some or no elements without changing the order of the remaining elements.
         ///eg. [0,3,1,6,2,2,7].=>[0,1,2,7] , 1<=n<=2500, try Time Complexity O(n log(n))
+        ///-10000 <= nums[i] <= 10000
         public int LengthOfLIS(int[] nums)
         {
+            int[] tails = new int[nums.Length];
+            int size = 0;
+            foreach (var x in nums)
+            {
+                int i = 0, j = size;
+                while (i != j)
+                {
+                    int m = (i + j) / 2;
+                    if (tails[m] < x)
+                        i = m + 1;
+                    else
+                        j = m;
+                }
+                tails[i] = x;
+                if (i == size)
+                    size++;
+            }
+            return size;
+        }
+
+        ///309. Best Time to Buy and Sell Stock with Cooldown
+        public int MaxProfit(int[] prices)
+        {
+            if (prices == null || prices.Length <= 1)
+                return 0;
+
             return 0;
         }
 
-        ///322. Coin Change
+        /// 322. Coin Change
         ///1 <= coins[i] <= 2^31 - 1
         ///0 <= amount <= 10000
         public int CoinChange(int[] coins, int amount)

@@ -178,15 +178,18 @@ namespace LeetCodeAlgo
         }
 
         /// 438. Find All Anagrams in a string
+        /// Input: s = "cbaebabacd", p = "abc", Output: [0,6]
+        /// The substring with start index = 0 is "cba", which is an anagram of "abc".
+        /// The substring with start index = 6 is "bac", which is an anagram of "abc".
         /// should use sliding window
         public List<int> FindAnagrams(string s, string p)
         {
+            var ans= new List<int>();
             if (p.Length > s.Length)
-                return new List<int>();
+                return ans;
             int left = 0, right = 0;
             int[] arr = new int[26];
             int[] target = new int[26];
-            List<int> al = new List<int>();
 
             while (right < p.Length)
             {
@@ -208,7 +211,7 @@ namespace LeetCodeAlgo
                     }
                 }
                 if (isEqual)
-                    al.Add(left);
+                    ans.Add(left);
 
                 right++;
                 if (right < s.Length)
@@ -217,7 +220,7 @@ namespace LeetCodeAlgo
                 arr[s[left] - 'a']--;
                 left++;
             }
-            return al;
+            return ans;
         }
 
         public IList<int> FindAnagrams_My(string s, string p)

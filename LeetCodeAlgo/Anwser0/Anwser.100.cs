@@ -510,8 +510,8 @@ namespace LeetCodeAlgo
             return minList.Min();
         }
 
-        ///121. Best Time to Buy and Sell Stock
-        public int MaxProfit_121(int[] prices)
+        ///121. Best Time to Buy and Sell Stock - trade 1 time
+        public int MaxProfit_121_OnlyOneTrade(int[] prices)
         {
             if (prices == null || prices.Length <= 1)
                 return 0;
@@ -534,9 +534,8 @@ namespace LeetCodeAlgo
             return maxProfit;
         }
 
-        ///122. Best Time to Buy and Sell Stock II
-        ///total max sum ,can trade many times
-        public int MaxProfit(int[] prices)
+        ///122. Best Time to Buy and Sell Stock II - can trade many times
+        public int MaxProfit_122_TradeManyTimes(int[] prices)
         {
             if (prices == null || prices.Length <= 1)
                 return 0;

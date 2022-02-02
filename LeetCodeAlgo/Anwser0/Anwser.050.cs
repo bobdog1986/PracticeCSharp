@@ -32,12 +32,12 @@ namespace LeetCodeAlgo
         ///Given an m x n matrix, return all elements of the matrix in spiral order.
         public IList<int> SpiralOrder(int[][] matrix)
         {
-            var ans=new List<int>();
+            var ans = new List<int>();
             var rLen = matrix.Length;
-            var cLen=matrix[0].Length;
+            var cLen = matrix[0].Length;
             if (rLen == 1)
                 return matrix[0].ToList();
-            if(cLen == 1)
+            if (cLen == 1)
             {
                 foreach (var x in matrix)
                     ans.Add(x[0]);
@@ -48,12 +48,12 @@ namespace LeetCodeAlgo
             int r = 0;
             int c = 0;
             int row1 = 0;
-            int row2 = rLen-1;
+            int row2 = rLen - 1;
             int col1 = 0;
-            int col2 = cLen-1;
+            int col2 = cLen - 1;
             for (int i = 0; i < rLen * cLen; i++)
             {
-                if(direct == 0)
+                if (direct == 0)
                 {
                     ans.Add(matrix[r][c]);
                     c++;
@@ -65,7 +65,7 @@ namespace LeetCodeAlgo
                         c--;
                     }
                 }
-                else if(direct == 1)
+                else if (direct == 1)
                 {
                     ans.Add(matrix[r][c]);
                     r++;
@@ -77,7 +77,7 @@ namespace LeetCodeAlgo
                         c--;
                     }
                 }
-                else if(direct == 2)
+                else if (direct == 2)
                 {
                     ans.Add(matrix[r][c]);
                     c--;
@@ -258,9 +258,9 @@ namespace LeetCodeAlgo
         public int LengthOfLastWord(string s)
         {
             int ans = 0;
-            for(int i=s.Length-1; i>=0; i--)
+            for (int i = s.Length - 1; i >= 0; i--)
             {
-                if(s[i] ==' ')
+                if (s[i] == ' ')
                 {
                     if (ans == 0)
                         continue;
@@ -937,7 +937,7 @@ namespace LeetCodeAlgo
         {
             //insert is same to delete
             var len1 = word1.Length;
-            var len2=word2.Length;
+            var len2 = word2.Length;
             if (len1 == 0 || len2 == 0)
                 return Math.Max(len1, len2);
 
@@ -1414,14 +1414,14 @@ namespace LeetCodeAlgo
         public int LargestRectangleArea(int[] heights)
         {
 
-            int[] dp=new int[heights.Length];
+            int[] dp = new int[heights.Length];
 
             int start = 0;
             int end = 0;
             int minHeight = heights[0];
-            int curr = (end-start+1)* minHeight;
+            int curr = (end - start + 1) * minHeight;
             int max = 0;
-            max=Math.Max(max, curr);
+            max = Math.Max(max, curr);
 
             for (int i = 1; i < heights.Length; i++)
             {
@@ -1589,139 +1589,47 @@ namespace LeetCodeAlgo
 
         /// 91. Decode Ways
         ///A message containing letters from A-Z can be encoded into numbers using the following mapping:
-        ///'A' -> "1", Z->26
+        ///'A' -> "1", Z->26, 1 <= s.length <= 100
         ///"AAJF" with the grouping (1 1 10 6)
         ///"KJF" with the grouping(11 10 6)
         public int NumDecodings(string s)
         {
-            if (string.IsNullOrEmpty(s) || s.Length == 0)
-                return 0;
             if (s[0] == '0')
-                return 0;
-            if (s.Length == 1)
-                return 1;
-
-            var arr = s.ToArray();
-
-            int len = 0;
-            for (int i = 0; i < arr.Length; i++)
             {
-                if (arr[i] == '1' || arr[i] == '2')
+                return 0;
+            }
+
+            int[] waysToDecode = new int[s.Length + 1];
+            waysToDecode[0] = 1;
+            waysToDecode[1] = 1;
+            for (int i = 1; i < s.Length; i++)
+            {
+                int curr = s[i] - '0';
+                int prev = s[i-1]- '0';
+
+                // can't make progress, return 0
+                if (prev == 0 && curr == 0 || (curr == 0 && (prev * 10 + curr > 26)))
                 {
-                    len++;
+                    return 0;
                 }
+                // can't use the previous value, so can only get to this state from the previous
+                else if (prev == 0 || (prev * 10 + curr) > 26)
+                {
+                    waysToDecode[i + 1] = waysToDecode[i];
+                }
+                // can't use current state, can only get to this state from i - 1 state
+                else if (curr == 0)
+                {
+                    waysToDecode[i + 1] = waysToDecode[i - 1];
+                }
+                // can get to this state from the previous two states
                 else
                 {
+                    waysToDecode[i + 1] = waysToDecode[i] + waysToDecode[i - 1];
                 }
             }
 
-            if (len == arr.Length)
-                return NumDecodings_Only1or2(len);
-
-            return NumDecodings_Recursion(arr, 0);
-        }
-
-        public int NumDecodings_Recursion(char[] arr, int start)
-        {
-            if (arr == null || arr.Length == 0)
-                return 0;
-
-            if (start < 0 || start >= arr.Length)
-                return 0;
-
-            int i = start;
-
-            if (arr[i] == '0')
-                return 0;
-
-            if (i == arr.Length - 1)
-                return 1;
-
-            if (i == arr.Length - 2)
-            {
-                if (arr[i] == '1')
-                {
-                    if (arr[i + 1] == '0')
-                    {
-                        return 1;
-                    }
-                    else
-                    {
-                        return 2;
-                    }
-                }
-                else if (arr[i] == '2')
-                {
-                    if (arr[i + 1] == '0')
-                    {
-                        return 1;
-                    }
-                    else if (arr[i + 1] >= '7' && arr[i + 1] <= '9')
-                    {
-                        return 1;
-                    }
-                    else
-                    {
-                        return 2;
-                    }
-                }
-                else
-                {
-                    return arr[i + 1] == '0' ? 0 : 1;
-                }
-            }
-
-            if (arr[i] == '1')
-            {
-                if (arr[i + 1] == '0')
-                {
-                    return NumDecodings_Recursion(arr, i + 2);
-                }
-                else
-                {
-                    return NumDecodings_Recursion(arr, i + 1) + NumDecodings_Recursion(arr, i + 2);
-                }
-            }
-            else if (arr[i] == '2')
-            {
-                if (arr[i + 1] >= '7' && arr[i + 1] <= '9')
-                {
-                    return NumDecodings_Recursion(arr, i + 2);
-                }
-                else if (arr[i + 1] == '0')
-                {
-                    return NumDecodings_Recursion(arr, i + 2);
-                }
-                else
-                {
-                    return NumDecodings_Recursion(arr, i + 1) + NumDecodings_Recursion(arr, i + 2);
-                }
-            }
-            else
-            {
-                return NumDecodings_Recursion(arr, i + 1);
-            }
-        }
-
-        public int NumDecodings_Only1or2(int n)
-        {
-            //Resursion will timeout
-            if (n == 1)
-                return 1;
-            if (n == 2)
-                return 2;
-
-            int dp1 = 1;
-            int dp2 = 2;
-            int dp = dp1 + dp2;
-            for (int i = 3; i <= n; i++)
-            {
-                dp = dp1 + dp2;
-                dp1 = dp2;
-                dp2 = dp;
-            }
-
-            return dp;
+            return waysToDecode[waysToDecode.Length - 1];
         }
 
         /// 94. Binary Tree Inorder Traversal

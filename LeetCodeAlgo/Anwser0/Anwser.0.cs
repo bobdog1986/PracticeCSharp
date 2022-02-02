@@ -12,7 +12,7 @@ namespace LeetCodeAlgo
         /// 2 <= nums.length <= 10^4, -10^9 <= nums[i] <= 10^9, -10^9 <= target <= 10^9
         public int[] TwoSum(int[] nums, int target)
         {
-            Dictionary<int ,int> dict=new Dictionary<int, int>();
+            Dictionary<int, int> dict = new Dictionary<int, int>();
             for (int i = 0; i < nums.Length; i++)
             {
                 if (dict.ContainsKey(target - nums[i]))
@@ -1084,6 +1084,7 @@ namespace LeetCodeAlgo
             }
             return list;
         }
+
         ///23. Merge k Sorted Lists
         public ListNode MergeKLists(ListNode[] lists)
         {
@@ -1161,6 +1162,7 @@ namespace LeetCodeAlgo
 
             return head;
         }
+
         ///25. Reverse Nodes in k-Group
         public ListNode ReverseKGroup(ListNode head, int k)
         {
@@ -1284,6 +1286,7 @@ namespace LeetCodeAlgo
             }
             return -1;
         }
+
         ///29. Divide Two Integers
         ///-2^31 <= dividend, divisor <= 2^31 - 1, divisor!=0
         public int Divide(int dividend, int divisor)
@@ -1319,7 +1322,6 @@ namespace LeetCodeAlgo
                     return 0;
                 }
             }
-
 
             int ans = 0;
 
@@ -1364,8 +1366,8 @@ namespace LeetCodeAlgo
             }
 
             return ans;
-
         }
+
         ///30. Substring with Concatenation of All Words
         ///return index of substring == all words, s = "barfoothefoobarman", words = ["foo","bar"], return [0,9]
         ///1 <= s.length <= 104,1 <= words.length <= 5000,1 <= words[i].length <= 30, all lower-case letter
@@ -1406,6 +1408,7 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
         public bool FindSubstring(string s, string[] words, int index, Dictionary<string, int> dict)
         {
             if (words.Length == 0)
@@ -1430,6 +1433,7 @@ namespace LeetCodeAlgo
             }
             return false;
         }
+
         ///31. Next Permutation
         ///For example, the next permutation of arr = [1,2,3] is [1,3,2].
         ///Find last num that nums[i+1]>nums[i], then find the last nums[j]>nums[i],
@@ -1473,6 +1477,7 @@ namespace LeetCodeAlgo
                 nums[j] = temp;
             }
         }
+
         ///32. Longest Valid Parentheses
         ///Given a string containing just the characters '(' and ')',
         ///find the length of the longest valid (well-formed) parentheses substring.
@@ -1533,6 +1538,7 @@ namespace LeetCodeAlgo
             }
             return maxLen;
         }
+
         /// 35. Search Insert Position
 
         public int SearchInsert(int[] nums, int target)
@@ -1885,6 +1891,7 @@ namespace LeetCodeAlgo
                 return 0;
             }
         }
+
         /// 38. Count and Say
         ///countAndSay(n) is the way you would "say" the digit string from countAndSay(n-1),countAndSay(1) = "1"
         ///eg. countAndSay(2)=say 'one' '1'= 11,countAndSay(3)=two '1' =21, countAndSay(3)=one '2' one '1'=1211
@@ -2004,6 +2011,7 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
         ///40. Combination Sum II
         ///Each number in candidates may only be used once in the combination.
         public IList<IList<int>> CombinationSum2(int[] candidates, int target)
@@ -2103,6 +2111,17 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
+        /// 41. First Missing Positive-not done
+        /// Given an unsorted integer array nums, return the smallest missing positive integer. O(n) time
+        /// 1 <= nums.length <= 5 * 10^5
+
+        public int FirstMissingPositive(int[] nums)
+        {
+
+            return 0;
+        }
+
         /// 43. Multiply Strings
         ///Given two non-negative integers num1 and num2 represented as strings,
         ///return the product of num1 and num2, also represented as a string.
@@ -2155,7 +2174,6 @@ namespace LeetCodeAlgo
                 }
             }
 
-
             char[] ans = new char[len];
 
             for (int i = 0; i < len; i++)
@@ -2165,6 +2183,7 @@ namespace LeetCodeAlgo
 
             return string.Join("", ans);
         }
+
         /// 45. Jump Game II, using greedy
         public int Jump(int[] nums)
         {
@@ -2184,6 +2203,7 @@ namespace LeetCodeAlgo
             }
             return steps;
         }
+
         ///46. Permutations
         ///1 <= nums.length <= 6, -10 <= nums[i] <= 10
         ///All the integers of nums are unique.
@@ -2223,6 +2243,7 @@ namespace LeetCodeAlgo
 
             return ans;
         }
+
         ///47. Permutations II
         ///1 <= nums.length <= 8, -10 <= nums[i] <= 10
         ///Given a collection of numbers that might contain duplicates, return all possible unique permutations in any order.
@@ -2301,6 +2322,7 @@ namespace LeetCodeAlgo
 
             return ans;
         }
+
         /// 48. Rotate Image
         ///You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
         ///You have to rotate the image in-place, which means you have to modify the input 2D matrix directly.
@@ -2327,6 +2349,7 @@ namespace LeetCodeAlgo
                 }
             }
         }
+
         ///49. Group Anagrams
         ///Given an array of strings strs, group the anagrams together. You can return the answer in any order.
         public IList<IList<string>> GroupAnagrams(string[] strs)
@@ -2361,6 +2384,5 @@ namespace LeetCodeAlgo
 
             return ans;
         }
-
     }
 }
