@@ -2121,7 +2121,20 @@ namespace LeetCodeAlgo
 
             return 0;
         }
+        ///42. Trapping Rain Water
+        ///Given n non-negative integers representing an elevation map where the width of each bar is 1,
+        ///compute how much water it can trap after raining.
+        ///0 <= height[i] <= 10^5, 1 <= height.Length <= 2 * 10^4
 
+        public int Trap(int[] height)
+        {
+            int ans = 0;
+
+
+
+
+            return ans;
+        }
         /// 43. Multiply Strings
         ///Given two non-negative integers num1 and num2 represented as strings,
         ///return the product of num1 and num2, also represented as a string.

@@ -35,12 +35,32 @@ namespace LeetCodeAlgo
         }
 
         ///309. Best Time to Buy and Sell Stock with Cooldown
+        ///After you sell your stock, you cannot buy stock on the next day (i.e., cooldown one day).
+        ///0 <= prices[i] <= 1000, 1<=length<=5000
         public int MaxProfit(int[] prices)
         {
-            if (prices == null || prices.Length <= 1)
+            int len = prices.Length;
+            if (len <=1)
                 return 0;
 
-            return 0;
+            //buy[i]: Max profit till index i. The series of transaction is ending with a buy.
+            //sell[i]: Max profit till index i.The series of transaction is ending with a sell.
+            int[] sell = new int[len];
+            int[] buy = new int[len];
+            //buy[i] = Math.Max(buy[i - 1], sell[i - 2] - prices[i]);
+            //sell[i] = Math.Max(sell[i - 1], buy[i - 1] + prices[i]);
+
+            buy[0] = -prices[0];
+            buy[1] = Math.Max(buy[0], -prices[1]);
+            sell[0] = 0;
+            sell[1] = Math.Max(sell[0], buy[0] + prices[1]);
+
+            for (int i = 2; i < len; i++)
+            {
+                buy[i] = Math.Max(buy[i - 1], sell[i - 2] - prices[i]);
+                sell[i] = Math.Max(sell[i - 1], buy[i - 1] + prices[i]);
+            }
+            return sell[len - 1];
         }
 
         /// 322. Coin Change

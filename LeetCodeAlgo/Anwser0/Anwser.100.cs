@@ -575,19 +575,19 @@ namespace LeetCodeAlgo
                 else
                 {
                     if (prices[i] >= prices[i + 1])
-                        continue;
-
-                    if (i == prices.Length - 2)
                     {
-                        if (prices[i] < prices[i + 1])
+                        continue;
+                    }
+                    else
+                    {
+                        if (i == prices.Length - 2)
                         {
                             sum += prices[i + 1] - prices[i];
+                            break;
                         }
-                        break;
+                        isHold = true;
+                        buy = prices[i];
                     }
-
-                    isHold = true;
-                    buy = prices[i];
                 }
             }
             return sum;
