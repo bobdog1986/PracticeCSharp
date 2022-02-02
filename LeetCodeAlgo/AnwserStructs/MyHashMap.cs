@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.MyStructs
+namespace LeetCodeAlgo.AnwserStructs
 {
     /// 706. Design HashMap
     public class MyHashMap
