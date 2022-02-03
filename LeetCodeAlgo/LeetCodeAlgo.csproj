@@ -48,6 +48,7 @@
     <Compile Include="Anwser0\Anwser.350.cs" />
     <Compile Include="Anwser0\Anwser.450.cs" />
     <Compile Include="Anwser500\Anwser.800.cs" />
+    <Compile Include="Anwser500\Anwser.950.cs" />
     <Compile Include="AnwserA1000\Anwser.A1000.cs" />
     <Compile Include="AnwserA1000\Anwser.A1200.cs" />
     <Compile Include="AnwserA1000\Anwser.A1300.cs" />
