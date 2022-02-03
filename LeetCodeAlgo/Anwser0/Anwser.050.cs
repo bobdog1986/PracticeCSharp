@@ -154,12 +154,8 @@ namespace LeetCodeAlgo
         {
             if (intervals.Length == 1)
                 return intervals;
-
             List<int[]> list = new List<int[]>();
-
-            //must convert to list, or exceed time limit
             var mat = intervals.OrderBy(x => x[0]).ToList();
-
             int[] last = null;
             for (int i = 0; i < mat.Count; i++)
             {
@@ -182,10 +178,8 @@ namespace LeetCodeAlgo
                     }
                 }
             }
-
             if (last != null)
                 list.Add(last);
-
             return list.ToArray();
         }
 

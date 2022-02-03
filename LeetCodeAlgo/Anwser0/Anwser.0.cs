@@ -703,7 +703,6 @@ namespace LeetCodeAlgo
 
             int right = 0;
             int left = 0;
-
             foreach (int i in nums)
             {
                 if (i == 0)

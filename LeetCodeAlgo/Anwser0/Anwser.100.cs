@@ -784,22 +784,9 @@ namespace LeetCodeAlgo
         /// You must implement a solution with a linear runtime complexity and use only constant extra space.
         /// Input: nums = [2,2,1]
         /// Output: 1
-
         public int SingleNumber(int[] nums)
         {
             return nums.Aggregate((x, y) => x ^ y);
-
-            //if (nums.Length == 1)
-            //    return nums[0];
-
-            //int a = nums[0];
-
-            //for (int i = 1; i < nums.Length; i++)
-            //{
-            //    a ^= nums[i];
-            //}
-
-            //return a;
         }
 
         ///139. Word Break
@@ -874,15 +861,12 @@ namespace LeetCodeAlgo
         public ListNode DetectCycle(ListNode head)
         {
             List<ListNode> nodes = new List<ListNode>();
-
             var current = head;
-
             while (current != null)
             {
                 var exist = nodes.FirstOrDefault(x => x == current);
                 if (exist != null)
                     return exist;
-
                 nodes.Add(current);
                 current = current.next;
             }
