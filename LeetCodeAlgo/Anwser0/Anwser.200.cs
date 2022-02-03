@@ -419,16 +419,15 @@ namespace LeetCodeAlgo
 
         ///235. Lowest Common Ancestor of a Binary Search Tree
         ///Given a binary search tree (BST), find the lowest common ancestor (LCA) of two given nodes in the BST.
-
-        public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+        public TreeNode LowestCommonAncestor_235BST(TreeNode root, TreeNode p, TreeNode q)
         {
             TreeNode left = p.val < q.val ? p : q;
             TreeNode right = p.val < q.val ? q : p;
 
-            return LowestCommonAncestor_Recursion(root, left, right);
+            return LowestCommonAncestor_235BST_Recursion(root, left, right);
         }
 
-        public TreeNode LowestCommonAncestor_Recursion(TreeNode root, TreeNode left, TreeNode right)
+        public TreeNode LowestCommonAncestor_235BST_Recursion(TreeNode root, TreeNode left, TreeNode right)
         {
             if (left.val < root.val && right.val > root.val)
                 return root;
@@ -441,15 +440,30 @@ namespace LeetCodeAlgo
 
             if (left.val < root.val && right.val < root.val)
             {
-                return LowestCommonAncestor_Recursion(root.left, left, right);
+                return LowestCommonAncestor_235BST_Recursion(root.left, left, right);
             }
             else
             {
-                return LowestCommonAncestor_Recursion(root.right, left, right);
+                return LowestCommonAncestor_235BST_Recursion(root.right, left, right);
             }
         }
 
-        ///238. Product of Array Except Self
+        ///236. Lowest Common Ancestor of a Binary Tree - NOT BST
+        ///Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+        public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+        {
+            if (root == null)
+                return null;
+            if (root.val == p.val || root.val == q.val)
+                return root;
+            var left = LowestCommonAncestor(root.left, p, q);
+            var right = LowestCommonAncestor(root.right, p, q);
+            if (left != null && right != null)
+                return root;
+            return left ?? right;
+        }
+
+        /// 238. Product of Array Except Self
         ///return an array such that answer[i] = product of all the elements of nums except nums[i].
         ///O(n) time and without using the division operation.
         public int[] ProductExceptSelf(int[] nums)

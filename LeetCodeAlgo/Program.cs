@@ -79,8 +79,12 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
-            var tree = new TreeNode(0,
-                new TreeNode(-1), null);
+            var tree1 = new TreeNode(3,
+                new TreeNode(5, new TreeNode(6), new TreeNode(2, new TreeNode(7), new TreeNode(4))),
+                new TreeNode(1, new TreeNode(0), new TreeNode(8)));
+            var tree2 = new TreeNode(7);
+            var tree3 = new TreeNode(6);
+
             //        var tree = new TreeNode(3,
             //new TreeNode(1, new TreeNode(0), new TreeNode(2)),
             //new TreeNode(5, new TreeNode(4), new TreeNode(6)));
@@ -93,14 +97,14 @@ namespace LeetCodeAlgo
 
             //anwser.SolveSudoku(grid1);
 
-            var result = anwser.MaxPoints(mat1);
+            var result = anwser.LowestCommonAncestor(tree1,tree2,tree3);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
-            Console.WriteLine(string.Join(",", result));
+            Console.WriteLine(string.Join(",", result.val));
             //anwser.PrintListNode(result);
 
             //Console.WriteLine(String.Join(",", arr1));
