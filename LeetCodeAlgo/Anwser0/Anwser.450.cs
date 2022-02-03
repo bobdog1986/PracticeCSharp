@@ -47,7 +47,26 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///452. Minimum Number of Arrows to Burst Balloons
+        ///451. Sort Characters By Frequency
+        ///Given a string s, sort it in decreasing order based on the frequency of the characters.
+        ///The frequency of a character is the number of times it appears in the string.
+        public string FrequencySort(string s)
+        {
+            Dictionary<char, List<char>> dict = new Dictionary<char, List<char>>();
+            foreach(var c in s)
+            {
+                if (dict.ContainsKey(c))
+                {
+                    dict[c].Add(c);
+                }
+                else
+                {
+                    dict.Add(c, new List<char>() { c});
+                }
+            }
+            return String.Join("", dict.OrderBy(x=>-x.Value.Count).Select(x=> string.Join("", x.Value)));
+        }
+        /// 452. Minimum Number of Arrows to Burst Balloons
         ///points.Length = Balloons number, Balloons horizontal -231 <= xstart < xend <= 231 - 1
         public int FindMinArrowShots(int[][] points)
         {
