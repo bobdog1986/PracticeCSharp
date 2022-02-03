@@ -6,7 +6,33 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        ///844. Backspace String Compare
+        ///841. Keys and Rooms
+        ///Given an array rooms where rooms[i] is the set of keys that you can obtain if you visited room i,
+        ///return true if you can visit all the rooms, or false otherwise.
+        public bool CanVisitAllRooms(IList<IList<int>> rooms)
+        {
+            int count = rooms.Count;
+            int[] arr=new int[count];
+            arr[0] = 1;
+            count--;
+            List<int> list=new List<int>(rooms[0]);
+            while(list.Count > 0 && count>0)
+            {
+                List<int> next = new List<int>();
+                foreach (var key in list)
+                {
+                    if (arr[key] == 0)
+                    {
+                        arr[key] = 1;
+                        count--;
+                        next.AddRange(rooms[key]);
+                    }
+                }
+                list = next;
+            }
+            return count==0;
+        }
+        /// 844. Backspace String Compare
         ///Given two strings s and t, return true if they are equal when both are typed into empty text editors.
         ///'#' means a backspace character.Note that after backspacing an empty text, the text will continue empty.
         public bool BackspaceCompare(string s, string t)
