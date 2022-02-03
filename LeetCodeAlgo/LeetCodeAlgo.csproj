@@ -69,6 +69,7 @@
     <Compile Include="AnwserA2000\Anwser.A2100.cs" />
     <Compile Include="Anwser.Helper.cs" />
     <Compile Include="AnwserStructs\BSTIterator.cs" />
+    <Compile Include="AnwserStructs\Codec.cs" />
     <Compile Include="AnwserStructs\MyHashMap.cs" />
     <Compile Include="AnwserStructs\MyLinkedList.cs" />
     <Compile Include="AnwserStructs\MinStack.cs" />
