@@ -238,7 +238,15 @@ namespace LeetCodeAlgo
             return dp[nums.Length - 1];
         }
 
-        //217. Contains Duplicate
+        ///215. Kth Largest Element in an Array
+        ///return the kth largest element in the array.
+        ///-10^4 <= nums[i] <= 10^4
+        public int FindKthLargest(int[] nums, int k)
+        {
+            Array.Sort(nums);
+            return nums[nums.Length - k];
+        }
+        /// 217. Contains Duplicate
         public bool ContainsDuplicate(int[] nums)
         {
             var dist = nums.Distinct();
