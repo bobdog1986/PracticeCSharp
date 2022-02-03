@@ -71,7 +71,42 @@ namespace LeetCodeAlgo
             return shot;
         }
 
-        ///457. Circular Array Loop
+        ///454. 4Sum II -- O(n^4) --> O(n^2), using Dictionary
+        ///Given four integer arrays nums1, nums2, nums3, and nums4 all of length n,
+        ///return the number of tuples (i, j, k, l) such that:nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
+        public int FourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4)
+        {
+            int ans = 0;
+            Dictionary<int, int> dictSumOf34 = new Dictionary<int, int>();
+            for(int i = 0; i < nums3.Length; i++)
+            {
+                for(int j=0;j<nums4.Length; j++)
+                {
+                    int sum=nums3[i]+nums4[j];
+                    if (dictSumOf34.ContainsKey(sum))
+                    {
+                        dictSumOf34[sum]++;
+                    }
+                    else
+                    {
+                        dictSumOf34.Add(sum, 1);
+                    }
+                }
+            }
+            for (int i = 0; i < nums1.Length; i++)
+            {
+                for (int j = 0; j < nums2.Length; j++)
+                {
+                    int sum = nums1[i] + nums2[j];
+                    if (dictSumOf34.ContainsKey(-sum))
+                    {
+                        ans+= dictSumOf34[-sum];
+                    }
+                }
+            }
+            return ans;
+        }
+        /// 457. Circular Array Loop
         ///If nums[i]>0, move nums[i] steps forward, If nums[i]<0 move nums[i] steps backward.
         ///Every nums[seq[j]] is either all positive or all negative.
         ///Return true if there is a cycle in nums, or false otherwise.

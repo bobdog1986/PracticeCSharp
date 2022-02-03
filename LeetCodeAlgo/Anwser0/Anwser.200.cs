@@ -448,7 +448,7 @@ namespace LeetCodeAlgo
             }
         }
 
-        ///236. Lowest Common Ancestor of a Binary Tree - NOT BST
+        ///236. Lowest Common Ancestor of a Binary Tree - NOT BST, using Recursion
         ///Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
         public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
         {
