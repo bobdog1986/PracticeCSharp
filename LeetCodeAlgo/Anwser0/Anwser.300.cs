@@ -267,5 +267,25 @@ namespace LeetCodeAlgo
                 s[s.Length - 1 - i] = temp;
             }
         }
+
+        ///347. Top K Frequent Elements
+        ///return the k most frequent elements. You may return the answer in any order.
+        public int[] TopKFrequent(int[] nums, int k)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach (var n in nums)
+            {
+                if (dict.ContainsKey(n))
+                {
+                    dict[n]++;
+                }
+                else
+                {
+                    dict.Add(n, 1);
+                }
+            }
+
+            return dict.OrderBy(x => -x.Value).Take(k).Select(x => x.Key).ToArray();
+        }
     }
 }
