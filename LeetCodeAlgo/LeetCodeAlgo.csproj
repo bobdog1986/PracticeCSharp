@@ -63,6 +63,7 @@
     <Compile Include="Anwser0\Anwser.300.cs" />
     <Compile Include="Anwser0\Anwser.200.cs" />
     <Compile Include="AnwserA1000\Anwser.A1400.cs" />
+    <Compile Include="AnwserA1500\Anwser.1550.cs" />
     <Compile Include="AnwserA1500\Anwser.A1600.cs" />
     <Compile Include="AnwserA1500\Anwser.A1500.cs" />
     <Compile Include="AnwserA1500\Anwser.A1800.cs" />
