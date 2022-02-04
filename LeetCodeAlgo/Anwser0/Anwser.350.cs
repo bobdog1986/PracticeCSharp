@@ -58,7 +58,13 @@ namespace LeetCodeAlgo.Anwser0
             return num == 0;
         }
 
-        ///380. Insert Delete GetRandom O(1), see RandomizedSet
+        ///376. Wiggle Subsequence
+        public int WiggleMaxLength(int[] nums)
+        {
+            return 0;
+
+        }
+        /// 380. Insert Delete GetRandom O(1), see RandomizedSet
 
         /// 383. Ransom Note
         public bool CanConstruct(string ransomNote, string magazine)

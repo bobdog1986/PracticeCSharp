@@ -460,21 +460,21 @@ namespace LeetCodeAlgo
         public int MinPathSum(int[][] grid)
         {
             int m = grid.Length, n = grid[0].Length;
-            var memo = new int[m + 1, n + 1];
+            var dp = new int[m + 1, n + 1];
             for (int i = 2; i <= m; i++)
-                memo[i, 0] = int.MaxValue;
+                dp[i, 0] = int.MaxValue;
             for (int i = 0; i <= n; i++)
-                memo[0, i] = int.MaxValue;
-            memo[1, 0] = 0;
+                dp[0, i] = int.MaxValue;
+            dp[1, 0] = 0;
 
             for (int i = 1; i <= m; i++)
             {
                 for (int j = 1; j <= n; j++)
                 {
-                    memo[i, j] = Math.Min(memo[i - 1, j], memo[i, j - 1]) + grid[i - 1][j - 1];
+                    dp[i, j] = Math.Min(dp[i - 1, j], dp[i, j - 1]) + grid[i - 1][j - 1];
                 }
             }
-            return memo[m, n];
+            return dp[m, n];
         }
 
         public int MinPathSum_MyDp_Ugly(int[][] grid)

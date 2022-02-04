@@ -40,8 +40,32 @@ namespace LeetCodeAlgo
             return Fib_Recursion(n - 1) + Fib_Recursion(n - 2);
         }
 
-        ///
-        /// 
+        ///516. Longest Palindromic Subsequence
+        ///Given a string s, find the longest palindromic subsequence's length in s.
+        ///A subsequence is a sequence that can be derived from another sequence
+        ///by deleting some or no elements without changing the order of the remaining elements.
+        public int LongestPalindromeSubseq(string s)
+        {
+            int[,] dp = new int[s.Length,s.Length];
+
+            for (int i = s.Length - 1; i >= 0; i--)
+            {
+                dp[i,i] = 1;
+                for (int j = i + 1; j < s.Length; j++)
+                {
+                    if (s[i] == s[j])
+                    {
+                        dp[i,j] = dp[i + 1,j - 1] + 2;
+                    }
+                    else
+                    {
+                        dp[i,j] = Math.Max(dp[i + 1,j], dp[i,j - 1]);
+                    }
+                }
+            }
+            return dp[0,s.Length - 1];
+        }
+
         /// 520. Detect Capital
         ///3 pattern: all UpCase, all LowerCase, only first char UpCase others lower
         ///Given a string word, return true if the usage of capitals in it is right.
@@ -77,6 +101,42 @@ namespace LeetCodeAlgo
             return ans;
 
         }
+        ///525. Contiguous Array
+        ///Given a binary array nums, return the maximum length of a contiguous subarray with an equal number of 0 and 1.
+        ///1 <= nums.length <= 105
+        ///nums[i] is either 0 or 1.
+        public int FindMaxLength(int[] nums)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            int sum = 0;
+            //assume 0 is -1, then find diff of index between two dict[sum]
+            //dict[0] should inited as -1, because [0,1] will add dict[0]-index1,
+            dict.Add(0, -1);
+            int max = 0;
+            for (int i=0; i<nums.Length; i++)
+            {
+                //assume 0 is -1, then find diff of index between two dict[sum]
+                if (nums[i] == 0)
+                {
+                    sum -= 1;
+                }
+                else
+                {
+                    sum += 1;
+                }
+
+                if (dict.ContainsKey(sum))
+                {
+                    max = Math.Max(max, i - dict[sum]);
+                }
+                else
+                {
+                    dict.Add(sum, i);
+                }
+            }
+            return max;
+        }
+
         /// 542. 01 Matrix
         /// Given an m x n binary matrix mat, return the distance of the nearest 0 for each cell.
         /// The distance between two adjacent cells is 1.
