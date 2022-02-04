@@ -24,9 +24,32 @@ namespace LeetCodeAlgo
             return AddDigits(total);
         }
 
-        ///
+        ///264. Ugly Number II - NOT mine
+        /// An ugly number is a positive integer whose prime factors are limited to 2, 3, and 5.
+        /// Given an integer n, return the nth ugly number.
+        /// (1) 1×2, 2×2, 3×2, 4×2, 5×2, …
+        /// (2) 1×3, 2×3, 3×3, 4×3, 5×3, …
+        /// (3) 1×5, 2×5, 3×5, 4×5, 5×5, …
+        public int NthUglyNumber(int n)
+        {
+            int[] ugly = new int[n];
+            ugly[0] = 1;
+            int index2 = 0, index3 = 0, index5 = 0;
+            int factor2 = 2, factor3 = 3, factor5 = 5;
+            for (int i = 1; i < n; i++)
+            {
+                int min = Math.Min(Math.Min(factor2, factor3), factor5);
+                ugly[i] = min;
+                if (factor2 == min)
+                    factor2 = 2 * ugly[++index2];
+                if (factor3 == min)
+                    factor3 = 3 * ugly[++index3];
+                if (factor5 == min)
+                    factor5 = 5 * ugly[++index5];
+            }
+            return ugly[n - 1];
+        }
         /// 278. First Bad Version
-
         public int FirstBadVersion(int n)
         {
             return FirstBadVersion(1, n);
