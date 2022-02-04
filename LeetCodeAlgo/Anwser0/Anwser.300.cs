@@ -34,7 +34,9 @@ namespace LeetCodeAlgo
             return size;
         }
 
-        ///309. Best Time to Buy and Sell Stock with Cooldown
+        ///304. Range Sum Query 2D - Immutable, see NumMatrix
+
+        /// 309. Best Time to Buy and Sell Stock with Cooldown
         ///After you sell your stock, you cannot buy stock on the next day (i.e., cooldown one day).
         ///0 <= prices[i] <= 1000, 1<=length<=5000
         public int MaxProfit(int[] prices)

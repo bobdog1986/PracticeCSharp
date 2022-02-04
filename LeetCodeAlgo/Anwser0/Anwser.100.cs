@@ -416,7 +416,6 @@ namespace LeetCodeAlgo
         ///   1 1
         ///  1 2 1
         /// 1 3 3 1
-
         public IList<IList<int>> Generate(int numRows)
         {
             List<IList<int>> list = new List<IList<int>>();
@@ -472,7 +471,7 @@ namespace LeetCodeAlgo
         ///Given a triangle array, return the minimum path sum from top to bottom.
         ///   2
         ///  3 4
-        /// 6 5 7   = 2 3 5
+        /// 6 5 7   => 2 3 5
         public int MinimumTotal(IList<IList<int>> triangle)
         {
             if (triangle == null)

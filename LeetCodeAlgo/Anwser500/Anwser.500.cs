@@ -40,7 +40,9 @@ namespace LeetCodeAlgo
             return Fib_Recursion(n - 1) + Fib_Recursion(n - 2);
         }
 
-        ///520. Detect Capital
+        ///
+        /// 
+        /// 520. Detect Capital
         ///3 pattern: all UpCase, all LowerCase, only first char UpCase others lower
         ///Given a string word, return true if the usage of capitals in it is right.
         public bool DetectCapitalUse(string word)

@@ -76,6 +76,7 @@
     <Compile Include="AnwserStructs\MyLinkedList.cs" />
     <Compile Include="AnwserStructs\MinStack.cs" />
     <Compile Include="AnwserStructs\MyQueue.cs" />
+    <Compile Include="AnwserStructs\NumMatrix.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="AnwserStructs\RandomizedSet.cs" />
     <Compile Include="AnwserStructs\Shuffle.cs" />

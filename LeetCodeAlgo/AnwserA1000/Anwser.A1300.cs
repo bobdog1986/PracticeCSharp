@@ -39,6 +39,8 @@ namespace LeetCodeAlgo
         }
 
         ///1314. Matrix Block Sum
+        ///return a matrix answer where each answer[i][j] is the sum of all elements mat[r][c] for:
+        ///i - k <= r <= i + k,j - k <= c <= j + k, and(r, c) is a valid position in the matrix.
         public int[][] MatrixBlockSum(int[][] mat, int k)
         {
             int rowLen = mat.Length;
