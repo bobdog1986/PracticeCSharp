@@ -5,9 +5,7 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        /// <summary>
         /// find target in array from [left,right], return index or -1
-        /// </summary>
         public int binarySearch(int[] nums, int target, int left=-1, int right=-1)
         {
             if (left == -1)
@@ -97,6 +95,19 @@ namespace LeetCodeAlgo
             Console.WriteLine($"ListNode is [{string.Join(",", list)}]");
         }
 
+        public ListNode buildListNode(int[] arr)
+        {
+            ListNode head = new ListNode(arr[0]);
+            var current = head;
+            for(int i = 1; i < arr.Length; i++)
+            {
+                current.next = new ListNode(arr[i]);
+                current = current.next;
+            }
+
+            return head;
+        }
+
         public int[] createArray(int len, int seed = int.MinValue)
         {
             int[] arr = new int[len];
@@ -105,9 +116,7 @@ namespace LeetCodeAlgo
             return arr;
         }
 
-        /// <summary>
         /// 找出最大公约数
-        /// </summary>
         public int Gcb(int m, int n)
         {
             if (m < 1 || n < 1)

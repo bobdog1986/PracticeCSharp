@@ -28,15 +28,8 @@ namespace LeetCodeAlgo
         }
         public int Fib_Recursion(int n)
         {
-            if (n == 0)
-            {
-                return 0;
-            }
-            if (n == 1)
-            {
-                return 1;
-            }
-
+            if (n == 0) return 0;
+            if (n == 1) return 1;
             return Fib_Recursion(n - 1) + Fib_Recursion(n - 2);
         }
 

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace LeetCodeAlgo
 {
-    internal class Program
+    public class Program
     {
         private static void Main(string[] args)
         {
@@ -71,7 +71,7 @@ namespace LeetCodeAlgo
                 //new int[] { 3, 9 },   new int[]{7, 12},  new int[]{3, 8},
                 new int[] { 10, 16 },   new int[]{2, 8},  new int[]{1, 6},new int[]{7,12}
             };
-            var listnode = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
+            var listnode = anwser.buildListNode(new int[] { 1, 3, 2, -3, -2, 5, 5, -5, 1});
             //anwser.PrintListNode(listnode);
             Console.WriteLine("Correct Anwser should be : ");
             Console.WriteLine(string.Join("\r\n", mat1.Select(o => string.Join(",", o))));
@@ -97,15 +97,15 @@ namespace LeetCodeAlgo
 
             //anwser.SolveSudoku(grid1);
 
-            var result = anwser.LowestCommonAncestor(tree1,tree2,tree3);
+            var result = anwser.RemoveZeroSumSublists(listnode);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
-            Console.WriteLine(string.Join(",", result.val));
-            //anwser.PrintListNode(result);
+            //Console.WriteLine(string.Join(",", result.val));
+            anwser.printListNode(result);
 
             //Console.WriteLine(String.Join(",", arr1));
             //if (result.Count > 0)
