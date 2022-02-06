@@ -70,7 +70,11 @@ namespace LeetCodeAlgo
             }
             return left << moveFactor;
         }
-        /// 202
+        /// 202. Happy Number
+        /// Starting with any positive integer, replace the number by the sum of the squares of its digits.
+        /// Repeat the process until the number==1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
+        /// Those numbers for which this process ends in 1 are happy.
+        /// Return true if n is a happy number, and false if not.
         private readonly List<int> happyList = new List<int>();
 
         public bool IsHappy(int n)

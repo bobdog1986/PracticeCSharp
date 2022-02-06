@@ -43,19 +43,16 @@ namespace LeetCodeAlgo
         {
             int[] beTrustedArr = new int[n+1];
             int[] trustArr = new int[n+1];
-
             foreach(var t in trust)
             {
                 beTrustedArr[t[1]]++;
                 trustArr[t[0]]++;
             }
-
             for(int i = 1; i <= n; i++)
             {
                 if(beTrustedArr[i]==n-1 && trustArr[i]==0)
                     return i;
             }
-
             return -1;
         }
     }

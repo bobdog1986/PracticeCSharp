@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LeetCodeAlgo
 {
@@ -83,30 +84,7 @@ namespace LeetCodeAlgo
             return getFactorial(n, count) / getFactorial(count);
         }
 
-        public void printListNode(ListNode listNode)
-        {
-            List<int> list = new List<int>();
-            while (listNode != null)
-            {
-                list.Add(listNode.val);
-                listNode = listNode.next;
-            }
 
-            Console.WriteLine($"ListNode is [{string.Join(",", list)}]");
-        }
-
-        public ListNode buildListNode(int[] arr)
-        {
-            ListNode head = new ListNode(arr[0]);
-            var current = head;
-            for(int i = 1; i < arr.Length; i++)
-            {
-                current.next = new ListNode(arr[i]);
-                current = current.next;
-            }
-
-            return head;
-        }
 
         public int[] createArray(int len, int seed = int.MinValue)
         {
@@ -148,5 +126,189 @@ namespace LeetCodeAlgo
         }
 
 
+        ///ListNode, build and print
+        public void printListNode(ListNode listNode)
+        {
+            List<int> list = new List<int>();
+            while (listNode != null)
+            {
+                list.Add(listNode.val);
+                listNode = listNode.next;
+            }
+
+            Console.WriteLine($"ListNode is [{string.Join(",", list)}]");
+        }
+
+        public ListNode buildListNode(int[] arr)
+        {
+            ListNode head = new ListNode(arr[0]);
+            var current = head;
+            for (int i = 1; i < arr.Length; i++)
+            {
+                current.next = new ListNode(arr[i]);
+                current = current.next;
+            }
+
+            return head;
+        }
+
+        // Encodes a tree to a single string. eg. 1,2,3,,,4,5, Null will be ""
+        public string serializeTree(TreeNode root, int invalid=1000001)
+        {
+            if (root == null)
+                return string.Empty;
+
+            List<int> ans = new List<int>();
+            List<TreeNode> nodes = new List<TreeNode>() { root };
+            while (nodes.Count > 0)
+            {
+                int count = 0;
+                List<TreeNode> nexts = new List<TreeNode>();
+                foreach (TreeNode node in nodes)
+                {
+                    if (node != null)
+                    {
+                        ans.Add(node.val);
+                        if (node.left != null)
+                            count++;
+                        if (node.right != null)
+                            count++;
+                        nexts.Add(node.left);
+                        nexts.Add(node.right);
+
+                    }
+                    else
+                    {
+                        ans.Add(invalid);
+                        //too many nodes in list, will out of memory
+                        //nexts.Add(null);
+                        //nexts.Add(null);
+                    }
+                }
+                nodes = nexts;
+                if (count == 0)
+                    break;
+            }
+
+            var str = string.Join(",", ans);
+            return str.Replace("1001", "");
+        }
+        public void printTree(TreeNode root)
+        {
+            if (root == null)
+            {
+                Console.WriteLine("!!!Tree is null");
+                return;
+            }
+            List<List<TreeNode>> allLevels = new List<List<TreeNode>>();
+            List<TreeNode> nodes = new List<TreeNode>() { root };
+            allLevels.Add(nodes);
+            while (nodes.Count > 0)
+            {
+                int count = 0;
+                List<TreeNode> nexts = new List<TreeNode>();
+                foreach (TreeNode node in nodes)
+                {
+                    if (node != null)
+                    {
+                        if (node.left != null)
+                            count++;
+                        if (node.right != null)
+                            count++;
+                        nexts.Add(node.left);
+                        nexts.Add(node.right);
+
+                    }
+                    else
+                    {
+                        nexts.Add(null);
+                        nexts.Add(null);
+                    }
+                }
+                nodes = nexts;
+
+                if (count == 0)
+                    break;
+                allLevels.Add(nodes);
+            }
+
+            int align1 = 64;
+            int align2 = 64;
+            int deep = 1;
+            for(int i = 0; i < allLevels.Count; i++)
+            {
+                var strs = allLevels[i].Select(x => x == null ? "null" : x.val.ToString()).
+                    Select(s => String.Format("{0,"+$"{-align2}"+"}", String.Format("{0," + ((align2 + s.Length) / 2).ToString() + "}", s)));
+
+                var str1 = string.Join("", strs);
+
+                var str2= String.Format("{0,"+$"{-align1-(deep-1)}"+"}",
+                String.Format("{0," + ((align1+(deep-1) + str1.Length) / 2).ToString() + "}", str1));
+
+                Console.WriteLine(str2);
+                //deep *= 2;
+                align2 /= 2;
+            }
+
+
+        }
+
+        // Decodes your encoded data to tree.
+        public TreeNode deserializeTree(string data)
+        {
+            if (string.IsNullOrEmpty(data))
+                return null;
+
+            data = data.Replace("null", "").Replace("-", "").Replace(" ", "");
+            var arr = data.Split(',').Select(x => x == string.Empty ? 1001 : int.Parse(x)).ToList();
+            int i = 0;
+            var root = new TreeNode(arr[i]);
+            List<TreeNode> list = new List<TreeNode>() { root };
+            i++;
+            while (i < arr.Count)
+            {
+                List<TreeNode> next = new List<TreeNode>();
+                foreach (var node in list)
+                {
+                    if (node == null)
+                    {
+                        i += 2;
+                        next.Add(null);
+                        next.Add(null);
+                    }
+                    else
+                    {
+                        if (arr[i] > 1000)
+                        {
+                            node.left = null;
+                            //too many nodes in list, will out of memory
+                            //next.Add(null);
+                            i++;
+                        }
+                        else
+                        {
+                            node.left = new TreeNode(arr[i]);
+                            next.Add(node.left);
+                            i++;
+                        }
+                        if (arr[i] > 1000)
+                        {
+                            node.right = null;
+                            //too many nodes in list, will out of memory
+                            //next.Add(null);
+                            i++;
+                        }
+                        else
+                        {
+                            node.right = new TreeNode(arr[i]);
+                            next.Add(node.right);
+                            i++;
+                        }
+                    }
+                }
+                list = next;
+            }
+            return root;
+        }
     }
 }
