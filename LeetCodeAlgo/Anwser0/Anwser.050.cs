@@ -1318,6 +1318,30 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        /// 80. Remove Duplicates from Sorted Array II
+        /// nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once.
+        /// -10^4 <= nums[i] <= 10^4
+        public int RemoveDuplicates(int[] nums)
+        {
+            int ship = 10000;
+            int[] arr=new int[ship+ship+1];
+            foreach (var n in nums)
+                arr[n + ship]++;
+            int i = 0;
+            for(int j=0; j < arr.Length; j++)
+            {
+                if (arr[j] == 0)
+                    continue;
+                arr[j] = arr[j] > 2 ? 2 : arr[j];
+                while (arr[j] > 0)
+                {
+                    nums[i]=j-ship;
+                    i++;
+                    arr[j]--;
+                }
+            }
+            return i;
+        }
         /// 82. Remove Duplicates from Sorted List II
         /// remove all duplicates, [1,1,1,2,2,3]=>[3], [1,2,2,3]=>[1,3]
         public ListNode DeleteDuplicates(ListNode head)

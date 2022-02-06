@@ -1163,6 +1163,7 @@ namespace LeetCodeAlgo
         }
 
         ///25. Reverse Nodes in k-Group
+        ///
         public ListNode ReverseKGroup(ListNode head, int k)
         {
             if (k == 1)
@@ -1215,7 +1216,8 @@ namespace LeetCodeAlgo
         }
 
         ///26. Remove Duplicates from Sorted Array
-        public int RemoveDuplicates(int[] nums)
+        ///nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once.
+        public int RemoveDuplicates_25_OnlyOnce(int[] nums)
         {
             int[] arr = new int[201];
             foreach (var i in nums)
