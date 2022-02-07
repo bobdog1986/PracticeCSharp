@@ -506,8 +506,7 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        /// ### Two Pointers
-        /// 11. Container With Most Water
+        /// 11. Container With Most Water, ### Two Pointers
         /// max value of (j-i)*min(arr[i],arr[j])
         public int MaxArea(int[] height)
         {

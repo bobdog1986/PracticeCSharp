@@ -46,8 +46,7 @@ namespace LeetCodeAlgo
             return max;
         }
 
-        /// ### Prefix Sum
-        /// 560. Subarray Sum Equals K
+        /// 560. Subarray Sum Equals K ,### Prefix Sum
         ///Given an array of integers nums and an integer k, return the total number of continuous subarrays whose sum equals to k.
         public int SubarraySum(int[] nums, int k)
         {
