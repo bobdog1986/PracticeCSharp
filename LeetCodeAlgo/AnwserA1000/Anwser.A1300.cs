@@ -38,7 +38,23 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///1314. Matrix Block Sum
+        ///1313. Decompress Run-Length Encoded List
+        ///Consider each adjacent pair of elements[freq, val] = [nums[2 * i], nums[2 * i + 1]](with i >= 0).
+        /// Return the decompressed list.
+        public int[] DecompressRLElist(int[] nums)
+        {
+            var ans=new List<int>();
+            for(int i = 0; i < nums.Length; i = i + 2)
+            {
+                int j = nums[i];
+                while (j-- > 0)
+                {
+                    ans.Add(nums[i + 1]);
+                }
+            }
+            return ans.ToArray();
+        }
+        /// 1314. Matrix Block Sum
         ///return a matrix answer where each answer[i][j] is the sum of all elements mat[r][c] for:
         ///i - k <= r <= i + k,j - k <= c <= j + k, and(r, c) is a valid position in the matrix.
         public int[][] MatrixBlockSum(int[][] mat, int k)
