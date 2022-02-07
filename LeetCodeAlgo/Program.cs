@@ -58,7 +58,7 @@ namespace LeetCodeAlgo
                 //new char[]{'0','0','0'},
             };
 
-            //var listnode = anwser.buildListNode(new int[] { 1, 3, 2, -3, -2, 5, 5, -5, 1});
+            var listnode = anwser.buildListNode(new int[] { -10,-3,0,5,9});
             //anwser.PrintListNode(listnode);
             //Console.WriteLine("Correct Anwser should be : ");
             //Console.WriteLine(string.Join("\r\n", mat1.Select(o => string.Join(",", o))));
@@ -79,7 +79,7 @@ namespace LeetCodeAlgo
 
             //anwser.SolveSudoku(grid1);
 
-            var result = anwser.CanPartitionKSubsets(arr1,6);
+            var result = anwser.SortedListToBST(listnode);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();

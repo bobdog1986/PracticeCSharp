@@ -318,7 +318,54 @@ namespace LeetCodeAlgo
             }
             return node;
         }
-        ///110. Balanced Binary Tree
+        ///109. Convert Sorted List to Binary Search Tree
+        ///Given the head of a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
+        ///a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
+        public TreeNode SortedListToBST(ListNode head)
+        {
+            if (head == null)
+                return null;
+            return SortedListToBST(head, 0);
+        }
+
+        public TreeNode SortedListToBST(ListNode head, int count)
+        {
+            if (count == 0)
+            {
+                var node = head;
+                while(node != null)
+                {
+                    count++;
+                    node = node.next;
+                }
+            }
+
+            if (count == 1)
+            {
+                return new TreeNode(head.val);
+            }
+            else if(count == 2)
+            {
+                return new TreeNode(head.next.val,new TreeNode(head.val));
+            }
+            else if(count ==3)
+            {
+                return new TreeNode(head.next.val, new TreeNode(head.val), new TreeNode(head.next.next.val));
+            }
+            else
+            {
+                var mid = count / 2;
+                var node = head;
+                while (mid > 0)
+                {
+                    node=node.next;
+                    mid--;
+                }
+                return new TreeNode(node.val, SortedListToBST(head, count / 2), SortedListToBST(node.next, count - count / 2 - 1));
+            }
+        }
+
+        /// 110. Balanced Binary Tree
         ///Given a binary tree, determine if it is height-balanced.
         ///a binary tree in which the left and right subtrees of every node differ in height by no more than 1.
         public bool IsBalanced(TreeNode root)
