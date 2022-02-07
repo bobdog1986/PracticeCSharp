@@ -71,5 +71,87 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
+        ///2024. Maximize the Confusion of an Exam, ###Sliding Window ,### Binary Search
+        ///See 424. Longest Repeating Character Replacement
+        ///Change the answer key for any question to 'T' or 'F' (i.e., set answerKey[i] to 'T' or 'F').
+        ///Return the maximum number of consecutive 'T's or 'F's in the answer key after performing the operation at most k times.
+        ///n == answerKey.length, 1 <= n <= 5 * 10^4, answerKey[i] is either 'T' or 'F', 1 <= k <= n
+        public int MaxConsecutiveAnswers(string answerKey, int k)
+        {
+            int maxfreq = 0;
+            int left = 0;
+            int[] arr = new int[26];
+            for (int i = 0; i < answerKey.Length; i++)
+            {
+                maxfreq = Math.Max(maxfreq, ++arr[answerKey[i] - 'A']);
+                if (i - left + 1 > maxfreq + k)
+                {
+                    arr[answerKey[left] - 'A']--;
+                    left++;
+                }
+            }
+            return answerKey.Length - left;
+        }
+
+        public int MaxConsecutiveAnswers_BinarySearch(string answerKey, int k)
+        {
+            int n=answerKey.Length;
+            if (n == k)
+                return n;
+
+            List<int[]> list=new List<int[]>();
+            int countT = 0;
+            int countF = 0;
+            list.Add(new int[] { 0, 0 });
+            for (int i = 0; i < n; i++)
+            {
+                if(answerKey[i] == 'T')
+                {
+                    countT++;
+                }
+                else
+                {
+                    countF++;
+                }
+                list.Add(new int[] { countT, countF });
+            }
+
+            int left = k+1;
+            int right = n;
+
+            int mid = (left + right + 1) / 2;
+
+            while (left < right)
+            {
+                bool exist = false;
+                for(int i = 0; i < n-mid+1; i++)
+                {
+                    var a = list[i];
+                    var b = list[i + mid];
+
+                    int count1 = b[0] - a[0];
+                    int count2 = b[1] - a[1];
+                    if(count1+k>=mid || count2 + k >= mid)
+                    {
+                        exist = true;
+                        break;
+                    }
+                }
+
+                if (exist)
+                {
+                    left = mid;
+                    mid= (left + right + 1) / 2;
+                }
+                else
+                {
+                    right= mid-1;
+                    mid = (left + right + 1) / 2;
+                }
+            }
+
+            return left;
+        }
     }
 }
