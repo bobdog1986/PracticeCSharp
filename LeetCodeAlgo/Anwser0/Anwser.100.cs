@@ -879,12 +879,34 @@ namespace LeetCodeAlgo
         /// You must implement a solution with a linear runtime complexity and use only constant extra space.
         /// Input: nums = [2,2,1]
         /// Output: 1
-        public int SingleNumber(int[] nums)
+        public int SingleNumber_136(int[] nums)
         {
             return nums.Aggregate((x, y) => x ^ y);
         }
 
-        ///139. Word Break
+        ///137. Single Number II
+        ///Given an integer array nums where every element appears three times except for one, which appears exactly once.
+        ///Find the single element and return it.
+        ///1 <= nums.length <= 3 * 10^4,-2^31 <= nums[i] <= 2^31 - 1
+        public int SingleNumber(int[] nums)
+        {
+            Dictionary<int,int> dict=new Dictionary<int, int>();
+            foreach(var n in nums)
+            {
+                if (dict.ContainsKey(n))
+                {
+                    dict[n]++;
+                }
+                else
+                {
+                    dict.Add(n, 1);
+                }
+            }
+            var ans = dict.FirstOrDefault(x => x.Value != 3).Key;
+            return ans;
+        }
+
+        /// 139. Word Break
         ///return true if s can be segmented into a space-separated sequence of one or more dictionary words.
         ///Note that the same word in the dictionary may be reused multiple times in the segmentation.
         public bool WordBreak(string s, IList<string> wordDict)
