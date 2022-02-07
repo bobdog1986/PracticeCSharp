@@ -171,33 +171,26 @@ namespace LeetCodeAlgo
             return result;
         }
 
+        /// ###Prefix Sum
         ///209. Minimum Size Subarray Sum
         ///return the minimal length of a contiguous subarray of which the sum >= target.
         ///If there is no such subarray, return 0 instead.
         public int MinSubArrayLen(int target, int[] nums)
         {
             int min = nums.Length + 1;
-
+            int sum = 0;
+            int left = 0;
             for (int i = 0; i < nums.Length; i++)
             {
-                int sum = 0;
-                int j = i;
-                while (j < nums.Length && j - i + 1 < min)
+                sum+=nums[i];
+                while (sum >= target)
                 {
-                    sum += nums[j];
-
-                    if (sum >= target)
-                    {
-                        min = j - i + 1;
-                        break;
-                    }
-                    j++;
+                    int len = i - left + 1;
+                    min = Math.Min(min, len);
+                    sum -= nums[left];
+                    left++;
                 }
-
-                if (min == 1)
-                    return 1;
             }
-
             return min == nums.Length + 1 ? 0 : min;
         }
         ///211. Design Add and Search Words Data Structure, see WordDictionary

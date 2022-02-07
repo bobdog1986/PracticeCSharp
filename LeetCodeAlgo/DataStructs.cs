@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace LeetCodeAlgo
 {
@@ -79,6 +81,25 @@ namespace LeetCodeAlgo
             left = _left;
             right = _right;
             next = _next;
+        }
+    }
+
+    public class N_ary
+    {
+        public int val;
+        public IList<N_ary> children;
+
+        public N_ary() { }
+
+        public N_ary(int _val)
+        {
+            val = _val;
+        }
+
+        public N_ary(int _val, IList<N_ary> _children)
+        {
+            val = _val;
+            children = _children;
         }
     }
 }
