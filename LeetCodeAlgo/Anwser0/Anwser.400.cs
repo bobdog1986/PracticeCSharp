@@ -151,6 +151,39 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///424. Longest Repeating Character Replacement, ### Siding Window
+        ///You can choose any character of the string and change it to any other uppercase English character at most k times.
+        ///Return the length of the longest substring containing the same letter you can get after performing the above operations.
+        ///1 <= s.length <= 10^5, 0 <= k <= s.length, s consists of only uppercase English letters.
+        public int CharacterReplacement(string s, int k)
+        {
+            if (k == s.Length)
+                return k;
+
+            int ans = k;
+            int count = 0;
+            int[] arr=new int[26];
+            int left = 0;
+            int max = 0;
+            for(int i = 0; i < s.Length; i++)
+            {
+                arr[s[i] - 'A']++;
+                count++;
+                max = arr.Max();
+                if (max + k >= count)
+                {
+                    ans = Math.Max(ans, count);
+                }
+                else
+                {
+                    arr[s[left] - 'A']--;
+                    left++;
+                    count--;
+                }
+            }
+            return ans;
+        }
+
         /// 435. Non-overlapping Intervals
         /// there are some embeded intervals, use Math.Min()
         public int EraseOverlapIntervals(int[][] intervals)
