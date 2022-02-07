@@ -347,40 +347,23 @@ namespace LeetCodeAlgo
         {
             if (root == null)
                 return deep;
-            if(root.left == null && root.right == null)
+
+            int leftDeep = IsBalanced_Deep(root.left, deep + 1);
+            int rightDeep = IsBalanced_Deep(root.right, deep + 1);
+
+            if (leftDeep == -1 || rightDeep == -1)
             {
-                return deep + 1;
-            }
-            if (root.left == null)
-            {
-                if (root.right.left != null || root.right.right != null)
-                    return -1;
-                return IsBalanced_Deep(root.right, deep+1);
-            }
-            else if (root.right == null)
-            {
-                if (root.left.left != null || root.left.right != null)
-                    return -1;
-                return IsBalanced_Deep(root.left, deep + 1);
+                return -1;
             }
             else
             {
-                var leftDeep = IsBalanced_Deep(root.left, deep + 1);
-                var rightDeep = IsBalanced_Deep(root.right, deep + 1);
-                if (leftDeep == -1 || rightDeep == -1)
+                if (leftDeep - rightDeep >= -1 && leftDeep - rightDeep <= 1)
                 {
-                    return -1;
+                    return Math.Max(leftDeep, rightDeep);
                 }
                 else
                 {
-                    if (leftDeep - rightDeep >= -1 && leftDeep - rightDeep <= 1)
-                    {
-                        return Math.Max(leftDeep,rightDeep);
-                    }
-                    else
-                    {
-                        return -1;
-                    }
+                    return -1;
                 }
             }
         }

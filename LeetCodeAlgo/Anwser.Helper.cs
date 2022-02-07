@@ -84,8 +84,6 @@ namespace LeetCodeAlgo
             return getFactorial(n, count) / getFactorial(count);
         }
 
-
-
         public int[] createArray(int len, int seed = int.MinValue)
         {
             int[] arr = new int[len];
@@ -124,7 +122,6 @@ namespace LeetCodeAlgo
             n = remainder;
             return GcbLong(m, n);
         }
-
 
         ///ListNode, build and print
         public void printListNode(ListNode listNode)

@@ -1324,23 +1324,28 @@ namespace LeetCodeAlgo
         public int RemoveDuplicates(int[] nums)
         {
             int ship = 10000;
-            int[] arr=new int[ship+ship+1];
-            foreach (var n in nums)
-                arr[n + ship]++;
-            int i = 0;
-            for(int j=0; j < arr.Length; j++)
+            int repeat = 2;
+            int[] arr = new int[ship * 2 + 1];
+            foreach (var i in nums)
+                arr[i + ship]++;
+            int count = 0;
+            int skipCount = 0;
+            for (int i = 0; i < arr.Length; i++)
             {
-                if (arr[j] == 0)
+                if (count + skipCount == arr.Length)
+                    break;
+                if (arr[i] == 0)
                     continue;
-                arr[j] = arr[j] > 2 ? 2 : arr[j];
-                while (arr[j] > 0)
+                skipCount += arr[i] - repeat;
+                int j = arr[i] > repeat ? repeat : arr[i];
+                while (j > 0)
                 {
-                    nums[i]=j-ship;
-                    i++;
-                    arr[j]--;
+                    nums[count] = i - ship;
+                    count++;
+                    j--;
                 }
             }
-            return i;
+            return count;
         }
         /// 82. Remove Duplicates from Sorted List II
         /// remove all duplicates, [1,1,1,2,2,3]=>[3], [1,2,2,3]=>[1,3]

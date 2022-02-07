@@ -1216,21 +1216,32 @@ namespace LeetCodeAlgo
         }
 
         ///26. Remove Duplicates from Sorted Array
-        ///nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once.
+        ///nums sorted in non-decreasing order, remove the duplicates that each unique element appears only once.
+        ///-100 <= nums[i] <= 100
         public int RemoveDuplicates_25_OnlyOnce(int[] nums)
         {
-            int[] arr = new int[201];
+            int ship = 100;
+            int repeat = 1;
+            int[] arr = new int[ship*2+1];
             foreach (var i in nums)
-                arr[i + 100]++;
-            var count = arr.Where(x => x != 0).Count();
-            int[] ans = new int[count];
-            int j = 0;
+                arr[i + ship]++;
+            int count = 0;
+            int skipCount = 0;
             for (int i = 0; i < arr.Length; i++)
             {
-                if (arr[i] != 0)
+                if (count + skipCount == arr.Length)
+                    break;
+
+                if (arr[i] == 0)
+                    continue;
+
+                skipCount += arr[i] - repeat;
+                int j = arr[i]> repeat?repeat: arr[i];
+                while(j > 0)
                 {
-                    nums[j] = i - 100;
-                    j++;
+                    nums[count] = i - ship;
+                    count++;
+                    j--;
                 }
             }
             return count;
@@ -1710,7 +1721,7 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        /// 37. Sudoku Solver
+        /// 37. Sudoku Solver -- part done, cannot pass any hard mode testcase
         public void SolveSudoku(char[][] board)
         {
             List<List<int>> rowMatrix = new List<List<int>>();
