@@ -191,56 +191,54 @@ namespace LeetCodeAlgo
         {
             if (s.Length <= 1)
                 return s;
-
             string ans = s.Substring(0, 1);
             int len = 1;
-
-            //find all aba pattern, loop only all possible index
-            for (int i = (len - 1) / 2 + 1; i < s.Length && 2 * (s.Length - 1 - i) + 1 > len; i++)
+            for (int i = 0; i < s.Length; i++)
             {
-                int count = 0;
-                while (i - 1 - count >= 0 && i + 1 + count <= s.Length - 1)
+                //find all aba pattern, loop only all possible index
+                if (i >= (len - 1) / 2 + 1 && 2 * (s.Length - 1 - i) + 1 > len)
                 {
-                    if (s[i - 1 - count] == s[i + 1 + count])
+                    int count = 0;
+                    while (i - 1 - count >= 0 && i + 1 + count <= s.Length - 1)
                     {
-                        count++;
+                        if (s[i - 1 - count] == s[i + 1 + count])
+                        {
+                            count++;
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
-                    else
+                    if (count + count + 1 > len)
                     {
-                        break;
+                        len = count + count + 1;
+                        ans = s.Substring((i - count), len);
                     }
                 }
 
-                if (count + count + 1 > len)
+                //find all abba pattern, loop only all possible index
+                if (i>= len / 2 && i < s.Length - 1 && 2 * (s.Length - 1 - i) > len)
                 {
-                    len = count + count + 1;
-                    ans = s.Substring((i - count), len);
+                    int count = 0;
+                    while (i - count >= 0 && i + 1 + count <= s.Length - 1)
+                    {
+                        if (s[i - count] == s[i + 1 + count])
+                        {
+                            count++;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    if (count + count > len)
+                    {
+                        len = count + count;
+                        ans = s.Substring((i - count + 1), len);
+                    }
                 }
             }
-
-            //find all abba pattern, loop only all possible index
-            for (int i = len / 2; i < s.Length - 1 && 2 * (s.Length - 1 - i) > len; i++)
-            {
-                int count = 0;
-                while (i - count >= 0 && i + 1 + count <= s.Length - 1)
-                {
-                    if (s[i - count] == s[i + 1 + count])
-                    {
-                        count++;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-
-                if (count + count > len)
-                {
-                    len = count + count;
-                    ans = s.Substring((i - count + 1), len);
-                }
-            }
-
             return ans;
         }
 
@@ -488,7 +486,7 @@ namespace LeetCodeAlgo
                             {
                                 //
                             }
-                            else if((patterns.Last()==".*"|| pat == ".*") && patterns.Last().Last()=='*'&& pat.Last() == '*')
+                            else if((patterns.Last()==".*"||(pat == ".*" && patterns.Last().Last()=='*')))
                             {
                                 patterns[patterns.Count-1] = ".*";
                             }
@@ -544,8 +542,10 @@ namespace LeetCodeAlgo
         {
             for (int i = 0;i < patterns.Count; i++)
             {
+                //matched
                 if (s.Length == strictStr.Length && strictStr.Length == 0)
                     return true;
+                //no possible match
                 if(s.Length< strictStr.Length)
                     return false;
 
@@ -562,117 +562,122 @@ namespace LeetCodeAlgo
                 }
                 else
                 {
-                    //from tail to head
-                    int j = 0;
-                    int k = 0;
-                    while (j < s.Length && k < strictStr.Length)
+                    if (strictStr.Length > 0)
                     {
-                        if (s[s.Length - 1 - j] == strictStr[strictStr.Length - 1 - k]
-                            || strictStr[strictStr.Length - 1 - k] == '.')
+                        //find all possible start index
+                        List<int> foundList = new List<int>();
+                        for (int j = 0; j < s.Length; j++)
                         {
-                            k++;
-                            j++;
+                            if (foundList.Contains(j))
+                                continue;
+                            int m = j;
+                            int start = -1;
+                            int k = 0;
+                            while (m < s.Length && k < strictStr.Length)
+                            {
+                                if (s[m] == strictStr[k] || strictStr[k] == '.')
+                                {
+                                    if (start == -1)
+                                    {
+                                        start = m;
+                                    }
+                                    k++;
+                                    m++;
+                                }
+                                else
+                                {
+                                    m++;
+                                }
+                            }
+                            if (k == strictStr.Length)
+                            {
+                                if (!foundList.Contains(start))
+                                {
+                                    foundList.Add(start);
+                                }
+                                j = start;
+                            }
+                        }
+                        //cannot match
+                        if (foundList.Count == 0)
+                            return false;
+                        if (patterns[i] == ".*")
+                        {
+                            s = s.Substring(foundList.Last());
                         }
                         else
                         {
-                            j++;
+                            int l = 0;
+                            for (; l < s.Length; l++)
+                            {
+                                if (s[l] != patterns[i][0])
+                                    break;
+                            }
+                            if (l >= foundList.Last())
+                            {
+                                //find the best anwser
+                                s = s.Substring(foundList.Last());
+                            }
+                            else if (l > 0)
+                            {
+                                //try all possible indexes
+                                //a*,a or a*,.a, donot disable next strict
+                                if (foundList.Count == 1)
+                                {
+                                    l = Math.Min(l, foundList[0]);
+                                    s = s.Substring(l);
+                                }
+                                else
+                                {
+                                    foreach (var next in foundList)
+                                    {
+                                        if (next > l)
+                                            continue;
+                                        var str = s.Substring(next);
+                                        List<string> subPats = new List<string>();
+                                        for (int m = i + 1; m < patterns.Count; m++)
+                                        {
+                                            subPats.Add(patterns[m]);
+                                        }
+                                        if (IsMatch_CompareAll(str, subPats, strictStr))
+                                            return true;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                //l==0, s=s
+                            }
                         }
-                    }
-
-                    bool found = k == strictStr.Length;
-                    if (!found)
-                        return false;
-
-                    if (patterns[i]== ".*")
-                    {
-                        s = s.Substring(s.Length - j);
                     }
                     else
                     {
+                        //remove as many as possible
+                        //strictStr.Length == 0;
+                        int n = i;
+                        while(n < patterns.Count)
+                        {
+                            if (patterns[n] == ".*")
+                                return true;
+                            n++;
+                        }
+
                         int l = 0;
                         for (; l < s.Length; l++)
                         {
                             if (s[l] != patterns[i][0])
                                 break;
                         }
-
-                        if(l>= s.Length - j)
-                        {
-                            s = s.Substring(s.Length - j);
-                        }
-                        else if(l>0)
-                        {
-                            //a*,a or a*,.a, donot disable next strict
-                            List<int> allnexts = new List<int>();
-                            if (strictStr.Length >0)
-                            {
-                                for(int m = 0; m < s.Length; m++)
-                                {
-                                    j = m;
-                                    k = 0;
-                                    int start = -1;
-                                    while(j<s.Length && k < strictStr.Length)
-                                    {
-                                        if (s[j] == strictStr[k] || strictStr[k] == '.')
-                                        {
-                                            if (start == -1)
-                                                start = j;
-                                            k++;
-                                            j++;
-                                        }
-                                        else
-                                        {
-                                            j++;
-                                        }
-                                    }
-
-                                    if(k== strictStr.Length)
-                                    {
-                                        if(start!=-1 && start<=l)
-                                            allnexts.Add(start);
-                                    }
-                                }
-
-                            }
-                            if (allnexts.Count == 0)
-                            {
-                                s = s.Substring(l);
-                            }
-                            else if(allnexts.Count == 1)
-                            {
-                                l = Math.Min(l, allnexts[0]);
-                                s = s.Substring(l);
-                            }
-                            else
-                            {
-                                foreach(var next in allnexts)
-                                {
-                                    //l = Math.Min(l, next);
-                                    var str = s.Substring(next);
-
-                                    List<string> subPats = new List<string>();
-                                    for(int m = i + 1; m < patterns.Count; m++)
-                                    {
-                                        subPats.Add(patterns[m]);
-                                    }
-
-                                    if (IsMatch_CompareAll(str, subPats, strictStr))
-                                        return true;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            //l==0, s=s
-                        }
+                        if (l == s.Length)
+                            return true;
+                        s = s.Substring(l);
                     }
                 }
             }
             return strictStr.Length == 0 && s.Length == 0;
         }
 
-
-        /// 11. Container With Most Water, ### Two Pointers
+        /// 11. Container With Most Water, #Two Pointers
         /// max value of (j-i)*min(arr[i],arr[j])
         public int MaxArea(int[] height)
         {
@@ -804,47 +809,39 @@ namespace LeetCodeAlgo
         /// find the longest common prefix string amongst an array of strings.
         /// Input: strs = ["flower","flow","flight"]
         /// Output: "fl"
+        /// 1 <= strs.length <= 200, 0 <= strs[i].length <= 200
         public string LongestCommonPrefix(string[] strs)
         {
             if (strs.Length == 1)
-                return strs[0].Length == 0 ? string.Empty : strs[0];
-
-            string result = strs[0];
-
-            for (int i = 1; i < strs.Length; i++)
+                return strs[0];
+            var ans = new List<char>();
+            for(int i = 0;i < strs[0].Length; i++)
             {
-                result = LongestCommonPrefix(result, strs[i]);
-                if (string.IsNullOrEmpty(result))
-                    return string.Empty;
-            }
-
-            return result;
-        }
-
-        public string LongestCommonPrefix(string str1, string str2)
-        {
-            if (string.IsNullOrEmpty(str1) || string.IsNullOrEmpty(str2))
-                return string.Empty;
-
-            List<char> list = new List<char>();
-
-            for (int i = 0; i < str1.Length && i < str2.Length; i++)
-            {
-                if (str1[i] == str2[i])
+                bool exit = false;
+                char c = strs[0][i];
+                for(int j=1;j<strs.Length;j++)
                 {
-                    list.Add(str1[i]);
+                    if (strs[j].Length <= i|| strs[j][i]!=c)
+                    {
+                        exit = true;
+                        break;
+                    }
                 }
-                else
+                if (exit)
                 {
                     break;
                 }
+                else
+                {
+                    ans.Add(c);
+                }
             }
-
-            return list.Count > 0 ? string.Join("", list) : string.Empty;
+            return string.Join("",ans);
         }
 
         ///15. 3Sum
         ///nums[i] + nums[j] + nums[k] == 0. no duplicate values
+        ///0 <= nums.length <= 3000, -10^5 <= nums[i] <= 10^5
         public IList<IList<int>> ThreeSum(int[] nums)
         {
             if (nums == null || nums.Length <= 2)

@@ -63,7 +63,58 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        ///1823. Find the Winner of the Circular Game
+        ///1818. Minimum Absolute Sum Difference
+        ///You are given two positive integer arrays nums1 and nums2, both of length n.
+        ///Return the minimum absolute sum of |nums1[i] - nums2[i]| after replacing at most one element in the array nums1.
+        ///return it modulo 109 + 7. 1 <= nums1[i], nums2[i] <= 10&5, 1 <= n <= 105
+        public int MinAbsoluteSumDiff(int[] nums1, int[] nums2)
+        {
+            int[] arr = new int[100001];
+            int left = 100000;
+            int right = 1;
+            foreach(var i in nums1)
+            {
+                arr[i]++;
+                left = Math.Min(left, i);
+                right = Math.Max(right, i);
+            }
+            int max = 0;
+            long sum = 0;
+            for(int i=0;i<nums1.Length; i++)
+            {
+                int abs=nums1[i]>= nums2[i]? nums1[i] - nums2[i]: nums2[i] - nums1[i];
+                sum += abs;
+
+                int j = nums2[i];
+                if (arr[j] > 0)
+                {
+                    //len=0, we can minus the whole abs
+                    max = Math.Max(max, abs);
+                }
+                else
+                {
+                    //len is the closest nums1 element to nums2[i]
+                    int len = 1;
+                    while ((j - len >= left || j + len <= right) && len<abs)
+                    {
+                        if((j - len >= left && arr[j - len]>0 )
+                            ||(j + len <= right && arr[j + len] > 0))
+                        {
+                            break;
+                        }
+                        len++;
+                    }
+                    if((j - len >= left || j + len <= right) && len < abs)
+                    {
+                        max = Math.Max(max, abs-len);
+                    }
+                }
+            }
+
+            sum -= max;
+            return (int)(sum%1000000007);
+        }
+        /// 1823. Find the Winner of the Circular Game
         public int FindTheWinner(int n, int k)
         {
             List<int> list = new List<int>();
