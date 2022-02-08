@@ -79,7 +79,7 @@ namespace LeetCodeAlgo
 
             //anwser.SolveSudoku(grid1);
 
-            var result = anwser.SortedListToBST(listnode);
+            var result = anwser.LengthOfLongestSubstring("loddktdji");
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();

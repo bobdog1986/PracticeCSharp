@@ -6,7 +6,7 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        /// 1. Two Sum
+        /// 1. Two Sum, #HashMap, #Two Pointers
         /// return indices of the two numbers such that they add up to target.
         /// each input would have exactly one solution, and you may not use the same element twice.
         /// 2 <= nums.length <= 10^4, -10^9 <= nums[i] <= 10^9, -10^9 <= target <= 10^9
@@ -17,7 +17,7 @@ namespace LeetCodeAlgo
             {
                 if (dict.ContainsKey(target - nums[i]))
                 {
-                    return new int[2] { i, dict[target - nums[i]] };
+                    return new int[2] { dict[target - nums[i]], i };
                 }
                 else
                 {
@@ -99,53 +99,42 @@ namespace LeetCodeAlgo
             return root;
         }
 
-        /// 3. Longest Substring Without Repeating Characters
+        /// 3. Longest Substring Without Repeating Characters, #HashMap
         /// Given a string s, find the length of the longest substring without repeating characters.
         public int LengthOfLongestSubstring(string s)
         {
-            if (string.IsNullOrEmpty(s))
-                return 0;
-            if (s.Length == 1)
-                return 1;
-
+            if (s.Length <= 1)
+                return s.Length;
             int max = 1;
             int len = 0;
-            List<char> list = new List<char>();
+            Dictionary<int, int> dict = new Dictionary<int, int>();
             for (int i = 0; i < s.Length; i++)
             {
                 char c = s[i];
-                if (list.Contains(c))
+                if (dict.ContainsKey(c))
                 {
-                    max = Math.Max(max, len);
-                    //list.Clear();
-                    var a = list.IndexOf(c);
-                    if (a == list.Count - 1)
+                    if(dict[c] != -1)
                     {
-                        list.Clear();
-                        list.Add(c);
-                        len = 1;
-                    }
-                    else
-                    {
-                        while (a >= 0)
+                        int j = dict[c];
+                        foreach (var key in dict.Keys.ToList())
                         {
-                            list.RemoveAt(0);
-                            a--;
-                            len--;
+                            if (dict[key]!=-1 && dict[key] <= j)
+                            {
+                                dict[key] = -1;
+                                len--;
+                            }
                         }
-                        list.Add(c);
-                        len++;
                     }
+                    dict[c] = i;
+                    len++;
                 }
                 else
                 {
+                    dict.Add(c,i);
                     len++;
-                    list.Add(c);
                 }
+                max = Math.Max(max, len);
             }
-
-            max = Math.Max(max, len);
-
             return max;
         }
 
@@ -200,7 +189,7 @@ namespace LeetCodeAlgo
         ///Input: s = "babad" Output: "bab"
         public string LongestPalindrome(string s)
         {
-            if (string.IsNullOrEmpty(s) || s.Length == 1)
+            if (s.Length <= 1)
                 return s;
 
             string ans = s.Substring(0, 1);
@@ -271,7 +260,6 @@ namespace LeetCodeAlgo
             while (true)
             {
                 int sum1 = zagCount * zagLen;
-
                 if (s.Length <= sum1)
                 {
                     break;
@@ -336,7 +324,7 @@ namespace LeetCodeAlgo
                 }
             }
 
-            return string.Join("", list);
+            return new string(list.ToArray());
         }
 
         ///7. Reverse Integer
@@ -372,31 +360,31 @@ namespace LeetCodeAlgo
 
         /// 8. String to Integer (atoi)
         ///Implement the myAtoi(string s) function, which converts a string to a int (similar to C/C++'s atoi function).
-        ///Constraints:
-        ///0 <= s.length <= 200
-        ///s consists of English letters(lower-case and upper-case), digits(0-9), ' ', '+', '-', and '.'.
+        ///0 <= s.length <= 200, s consists of English letters(lower-case and upper-case), digits(0-9), ' ', '+', '-', and '.'.
         public int MyAtoi(string s)
         {
             if (string.IsNullOrEmpty(s))
                 return 0;
             s = s.Trim();
-
             if (string.IsNullOrEmpty(s))
                 return 0;
-
             List<char> list = new List<char>();
             int sign = 0;
             for (int i = 0; i < s.Length; i++)
             {
                 if (char.IsDigit(s[i]))
                 {
+                    //skip head '0', only keep one '0'
+                    if (list.Count == 1 && list[0] == '0')
+                    {
+                        list.RemoveAt(0);
+                    }
                     list.Add(s[i]);
                 }
                 else
                 {
                     if (list.Count > 0)
                         break;
-
                     if (s[i] == '+' && sign == 0)
                     {
                         sign = 1;
@@ -411,23 +399,6 @@ namespace LeetCodeAlgo
                     }
                 }
             }
-
-            //remove head 0
-            while (true)
-            {
-                if (list.Count == 0)
-                    break;
-
-                if (list[0] == '0')
-                {
-                    list.RemoveAt(0);
-                }
-                else
-                {
-                    break;
-                }
-            }
-
             if (list.Count > 0)
             {
                 long ll;
@@ -439,25 +410,20 @@ namespace LeetCodeAlgo
                 {
                     return sign == -1 ? int.MinValue : int.MaxValue;
                 }
-
                 if (sign == -1)
                 {
-                    ll = 0 - ll;
-
+                    ll = - ll;
                     if (ll <= int.MinValue)
                         ll = int.MinValue;
-
                     return (int)ll;
                 }
                 else
                 {
                     if (ll >= int.MaxValue)
                         ll = int.MaxValue;
-
                     return (int)ll;
                 }
             }
-
             return 0;
         }
 
@@ -467,42 +433,36 @@ namespace LeetCodeAlgo
         /// -121 is not
         public bool IsPalindrome(int x)
         {
-            if (x < 0)
-                return false;
-
-            if (x < 10)
-                return true;
-
-            int len = 0;
+            if (x < 0) return false;
+            if (x < 10) return true;
+            if (x % 10 == 0)return false;
             int n = x;
-            int m = 0;
             List<int> digits = new List<int>();
             while (n > 0)
             {
-                len++;
-                m = n % 10;
-
+                digits.Add(n % 10);
                 n = n / 10;
-                digits.Add(m);
             }
-
-            if (len % 2 == 1)
+            int ans = 0;
+            int k = 1;
+            for(int i=digits.Count-1; i >= 0; i--)
             {
-                for (int i = 1; i <= (len - 1) / 2; i++)
+                ans+=digits[i]*k;
+                k *= 10;
+            }
+            return ans==x;
+        }
+
+            {
                 {
-                    if (digits[(len - 1) / 2 - i] != digits[(len - 1) / 2 + i])
-                        return false;
                 }
             }
             else
             {
-                for (int i = 0; i < len / 2; i++)
                 {
-                    if (digits[(len - 1) / 2 - i] != digits[(len + 1) / 2 + i])
                         return false;
                 }
             }
-
             return true;
         }
 

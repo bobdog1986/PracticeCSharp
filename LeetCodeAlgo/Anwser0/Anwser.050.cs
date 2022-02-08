@@ -268,6 +268,7 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
         /// 59. Spiral Matrix II
         ///Given a positive integer n, generate an n x n matrix filled with elements from 1 to n2 in spiral order.
         public int[][] GenerateMatrix(int n)
@@ -353,104 +354,47 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///62. Unique Paths
+        ///62. Unique Paths, #DP
         ///Move from grid[0][0] to grid[m - 1][n - 1], each step can only move down or right.
         ///A(m-1+n-1)/A(m-1)/A(n-1)
         public int UniquePaths(int m, int n)
         {
-            if (m == 1 || n == 1)
-                return 1;
-            int all = m - 1 + n - 1;
-            long ans = 1;
-            int j = 1;
-            int x = 2;
-            int y = 2;
-            while (j <= all)
-            {
-                ans *= j;
-                j++;
-                if (x <= m - 1 && ans % x == 0)
-                {
-                    ans /= x;
-                    x++;
-                }
-                if (y <= n - 1 && ans % y == 0)
-                {
-                    ans /= y;
-                    y++;
-                }
-            }
-            return (int)ans;
+            int[,] dp=new int[m,n];
+            for(int i=0; i<m; i++)
+                for(int j=0; j<n; j++)
+                    dp[i,j]=1;
+
+            for (int i = 1; i < m; i++)
+                for (int j = 1; j < n; j++)
+                    dp[i, j] = dp[i - 1, j] + dp[i, j - 1];
+
+            return dp[m - 1, n - 1];
+
         }
 
-        ///63. Unique Paths II
-        ///An obstacle and space is marked as 1 and 0 respectively in the grid.
+        ///63. Unique Paths II, #DP
+        /// Move from grid[0][0] to grid[m - 1][n - 1], each step can only move down or right.
+        /// An obstacle and space is marked as 1 and 0 respectively in the grid.
         public int UniquePathsWithObstacles(int[][] obstacleGrid)
         {
-            int rLen = obstacleGrid.Length;
-            int cLen = obstacleGrid[0].Length;
+            var grid=obstacleGrid;
 
-            if (obstacleGrid[0][0] == 1
-                || obstacleGrid[rLen - 1][cLen - 1] == 1)
-                return 0;
+            int r = grid.Length;
+            int c = grid[0].Length;
 
-            if (rLen == 1 && cLen == 1)
-            {
-                return obstacleGrid[0][0] == 0 ? 1 : 0;
-            }
-            int[][] dp = new int[rLen][];
-            for (int i = 0; i < rLen; i++)
-            {
-                dp[i] = new int[cLen];
-            }
+            int[,] dp = new int[r, c];
+            dp[0, 0] = grid[0][0] == 0 ? 1 : 0;
+            for(int i = 1;i < r; i++)
+                dp[i, 0] = grid[i][0] == 0 ? dp[i - 1, 0] : 0;
 
-            dp[0][0] = 1;
+            for (int j = 1; j < c; j++)
+                dp[0, j] = grid[0][j] == 0 ? dp[0, j - 1] : 0;
 
-            for (int i = 0; i < rLen; i++)
-            {
-                for (int j = 0; j < cLen; j++)
-                {
-                    if (i == 0)
-                    {
-                        if (j == 0)
-                        {
-                            //
-                        }
-                        else
-                        {
-                            if (obstacleGrid[i][j] == 1)
-                            {
-                                dp[i][j] = 0;
+            for (int i = 1; i < r; i++)
+                for (int j = 1; j < c; j++)
+                    dp[i, j] = grid[i][j] == 0 ? dp[i-1,j]+dp[i,j-1] : 0;
 
-                            }
-                            else
-                            {
-                                dp[i][j] = dp[i][j - 1];
-                            }
-                        }
-
-                    }
-                    else
-                    {
-                        if (obstacleGrid[i][j] == 1)
-                        {
-                            dp[i][j] = 0;
-                        }
-                        else
-                        {
-                            dp[i][j] += dp[i - 1][j];
-
-                            if (j > 0)
-                            {
-                                dp[i][j] += dp[i][j - 1];
-                            }
-                        }
-                    }
-                }
-            }
-
-
-            return dp[rLen - 1][cLen - 1];
+            return dp[r - 1,c - 1];
         }
         ///64. Minimum Path Sum
         ///Given a m x n grid filled with non-negative numbers,

@@ -8,11 +8,11 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        //258
+        /// 258. Add Digits
+        ///Given an integer num, repeatedly add all its digits until the result has only one digit, and return it.
         public int AddDigits(int num)
         {
             if (num < 10) return num;
-
             int total = 0;
             while (num >= 10)
             {
@@ -20,7 +20,6 @@ namespace LeetCodeAlgo
                 num /= 10;
             }
             total += num;
-
             return AddDigits(total);
         }
 
