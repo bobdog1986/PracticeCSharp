@@ -49,6 +49,68 @@ namespace LeetCodeAlgo
 
             return string.Join("", arr.Where(x => x != ' '));
         }
+        ///1254. Number of Closed Islands, #DFS
+        ///Given a 2D grid consists of 0s (land) and 1s (water).
+        ///An island is a maximal 4-directionally connected group of 0s and
+        ///a closed island is an island totally (all left, top, right, bottom) surrounded by 1s.
+        ///Return the number of closed islands.
+        public int ClosedIsland(int[][] grid)
+        {
+            int ans = 0;
+            int rowLen=grid.Length;
+            int colLen=grid[0].Length;
+            bool[,] visit=new bool[rowLen,colLen];
+            int[][] dxy = new int[4][] { new int[] {-1,0 }, new int[] { 1, 0 }, new int[] { 0, -1 }, new int[] { 0, 1 } };
+            List<int[]> points=new List<int[]>();
+            for(int i = 1; i < rowLen - 1; i++)
+            {
+                for(int j = 1; j < colLen - 1; j++)
+                {
+                    if (visit[i, j]) continue;
+                    if (grid[i][j] == 1) continue;
+
+                    bool isClose = true;
+                    points=new List<int[]>();
+                    points.Add(new int[] { i, j });
+                    while (points.Count > 0)
+                    {
+                        List<int[]> nexts = new List<int[]>();
+                        foreach(var p in points)
+                        {
+                            var row = p[0];
+                            var col = p[1];
+                            if (row == 0 || row == rowLen - 1 || col == 0 || col == colLen - 1)
+                            {
+                                isClose = false;
+                            }
+                            if (visit[row, col]) continue;
+                            visit[row, col] = true;
+                            if(grid[i][j] == 0)
+                            {
+                                foreach (var d in dxy)
+                                {
+                                    var r = row + d[0];
+                                    var c = col + d[1];
+                                    if (r < 0 || r >= rowLen || c < 0 || c >= colLen)
+                                    {
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        if(grid[r][c] == 0 && !visit[r, c])
+                                            nexts.Add(new int[] { r, c });
+                                    }
+                                }
+                            }
+                        }
+                        points = nexts;
+                    }
+                    if (isClose)
+                        ans++;
+                }
+            }
+            return ans;
+        }
         /// 1291. Sequential Digits
         ///An integer has sequential digits if and only if each digit in the number is one more than the previous digit.
         ///eg. 123, 234, 3456,

@@ -95,18 +95,15 @@ namespace LeetCodeAlgo
                 {
                     //len is the closest nums1 element to nums2[i]
                     int len = 1;
-                    while ((j - len >= left || j + len <= right) && len<abs)
+                    while ((j - len >= left || j + len <= right) && len<abs && (abs-len>max))
                     {
                         if((j - len >= left && arr[j - len]>0 )
                             ||(j + len <= right && arr[j + len] > 0))
                         {
+                            max = abs - len;
                             break;
                         }
                         len++;
-                    }
-                    if((j - len >= left || j + len <= right) && len < abs)
-                    {
-                        max = Math.Max(max, abs-len);
                     }
                 }
             }
