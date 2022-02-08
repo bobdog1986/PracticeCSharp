@@ -78,8 +78,16 @@ namespace LeetCodeAlgo
             //    Console.WriteLine("Result count = 0");
 
             //anwser.SolveSudoku(grid1);
-
-            var result = anwser.LengthOfLongestSubstring("loddktdji");
+            ////var result = anwser.IsMatch("aab","c*a*b");
+            ////var result = anwser.IsMatch("aaa","ab*ac*a");
+            ////var result = anwser.IsMatch("abbbaabccbaabacab","ab*b*b*bc*ac*.*bb*");
+            var result = anwser.IsMatch("aasdfasdfasdfasdfas","aasdf.*asdf.*asdf.*asdf.*s");
+            ////var result = anwser.IsMatch("cbaacacaaccbaabcb","c*b*b*.*ac*.*bc*a*");
+            ////var result = anwser.IsMatch("baabbbaccbccacacc","c*..b*a*a.*a..*c");
+            ////var result = anwser.IsMatch("bbcacbabbcbaaccabc","b*a*a*.c*bb*b*.*.*");
+            ////var result = anwser.IsMatch("baacabacbbcababcbbc","b*a.*b*..a*c*.*");
+            ////var result = anwser.IsMatch("acaabbaccbbacaabbbb","a*.*b*.*a*aa*a*");
+            ////var result = anwser.IsMatch("mississippi", "mis*is*p*.");
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();

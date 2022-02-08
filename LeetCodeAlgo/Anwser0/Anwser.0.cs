@@ -453,18 +453,224 @@ namespace LeetCodeAlgo
             return ans==x;
         }
 
+        ///10. Regular Expression Matching
+        ///Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*'
+        ///'.' Matches any single character​​​​, '*' Matches zero or more of the preceding element.
+        ///1 <= s.length <= 20, 1 <= p.length <= 30,
+        ///s contains only lowercase English letters.p contains only lowercase English letters, '.', and '*'.
+        ///It is guaranteed for each appearance of the character '*', there will be a previous valid character to match.
+        public bool IsMatch(string s, string p)
+        {
+            if (p.Contains('*'))
             {
+                List<string> patterns = new List<string>();
+                int count = p.Where(x=>x=='*').Count();
+                string lastStrictPattern = string.Empty;
+                string strictStr = "";
+                foreach(var i in p.Split('*'))
                 {
+                    if (i.Length == 0)
+                        continue;
+                    if (count > 0)
+                    {
+                        if (i.Length > 1)
+                        {
+                            //add strict pattern, eg. "abc", "a.c"
+                            var str = i.Substring(0, i.Length - 1);
+                            patterns.Add(str);
+                            strictStr = strictStr + str;
+                        }
+                        //add mutable pattern, eg. "a*" or ".*"
+                        var pat = new string(new char[] { i.Last(), '*' });
+                        if (patterns.Count > 0)
+                        {
+                            if (pat == patterns.Last())
+                            {
+                                //
+                            }
+                            else if((patterns.Last()==".*"|| pat == ".*") && patterns.Last().Last()=='*'&& pat.Last() == '*')
+                            {
+                                patterns[patterns.Count-1] = ".*";
+                            }
+                            else
+                            {
+                                patterns.Add(pat);
+
+                            }
+                        }
+                        else
+                        {
+                            patterns.Add(pat);
+                        }
+                        count--;
+                    }
+                    else
+                    {
+                        //last strict one, no '*'
+                        lastStrictPattern = i;
+                    }
                 }
+                //if exist tail strict str, check and remove it
+                if (lastStrictPattern.Length > 0)
+                {
+                    if (s.Length < lastStrictPattern.Length)
+                        return false;
+                    var str = s.Substring(s.Length - lastStrictPattern.Length);
+                    if (!IsMatch_StrictCompare(str, lastStrictPattern))
+                        return false;
+                    s = s.Substring(0, s.Length - lastStrictPattern.Length);
+                }
+                return IsMatch_CompareAll(s, patterns, strictStr);
             }
             else
             {
-                {
-                        return false;
-                }
+                return IsMatch_StrictCompare(s,p);
+            }
+        }
+
+        public bool IsMatch_StrictCompare(string s, string p)
+        {
+            if (s.Length != p.Length)
+                return false;
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] != p[i] && p[i] != '.')
+                    return false;
             }
             return true;
         }
+
+        public bool IsMatch_CompareAll(string s, IList<string> patterns, string strictStr)
+        {
+            for (int i = 0;i < patterns.Count; i++)
+            {
+                if (s.Length == strictStr.Length && strictStr.Length == 0)
+                    return true;
+                if(s.Length< strictStr.Length)
+                    return false;
+
+                if (s.Length == strictStr.Length || patterns[i].Last() != '*')
+                {
+                    if (patterns[i].Last() == '*')
+                        continue;
+                    //must strict compare
+                    string str = s.Substring(0, patterns[i].Length);
+                    if (!IsMatch_StrictCompare(str, patterns[i]))
+                        return false;
+                    s = s.Substring(patterns[i].Length);
+                    strictStr = strictStr.Substring(patterns[i].Length);
+                }
+                else
+                {
+                    //from tail to head
+                    int j = 0;
+                    int k = 0;
+                    while (j < s.Length && k < strictStr.Length)
+                    {
+                        if (s[s.Length - 1 - j] == strictStr[strictStr.Length - 1 - k]
+                            || strictStr[strictStr.Length - 1 - k] == '.')
+                        {
+                            k++;
+                            j++;
+                        }
+                        else
+                        {
+                            j++;
+                        }
+                    }
+
+                    bool found = k == strictStr.Length;
+                    if (!found)
+                        return false;
+
+                    if (patterns[i]== ".*")
+                    {
+                        s = s.Substring(s.Length - j);
+                    }
+                    else
+                    {
+                        int l = 0;
+                        for (; l < s.Length; l++)
+                        {
+                            if (s[l] != patterns[i][0])
+                                break;
+                        }
+
+                        if(l>= s.Length - j)
+                        {
+                            s = s.Substring(s.Length - j);
+                        }
+                        else if(l>0)
+                        {
+                            //a*,a or a*,.a, donot disable next strict
+                            List<int> allnexts = new List<int>();
+                            if (strictStr.Length >0)
+                            {
+                                for(int m = 0; m < s.Length; m++)
+                                {
+                                    j = m;
+                                    k = 0;
+                                    int start = -1;
+                                    while(j<s.Length && k < strictStr.Length)
+                                    {
+                                        if (s[j] == strictStr[k] || strictStr[k] == '.')
+                                        {
+                                            if (start == -1)
+                                                start = j;
+                                            k++;
+                                            j++;
+                                        }
+                                        else
+                                        {
+                                            j++;
+                                        }
+                                    }
+
+                                    if(k== strictStr.Length)
+                                    {
+                                        if(start!=-1 && start<=l)
+                                            allnexts.Add(start);
+                                    }
+                                }
+
+                            }
+                            if (allnexts.Count == 0)
+                            {
+                                s = s.Substring(l);
+                            }
+                            else if(allnexts.Count == 1)
+                            {
+                                l = Math.Min(l, allnexts[0]);
+                                s = s.Substring(l);
+                            }
+                            else
+                            {
+                                foreach(var next in allnexts)
+                                {
+                                    //l = Math.Min(l, next);
+                                    var str = s.Substring(next);
+
+                                    List<string> subPats = new List<string>();
+                                    for(int m = i + 1; m < patterns.Count; m++)
+                                    {
+                                        subPats.Add(patterns[m]);
+                                    }
+
+                                    if (IsMatch_CompareAll(str, subPats, strictStr))
+                                        return true;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //l==0, s=s
+                        }
+                    }
+                }
+            }
+            return strictStr.Length == 0 && s.Length == 0;
+        }
+
 
         /// 11. Container With Most Water, ### Two Pointers
         /// max value of (j-i)*min(arr[i],arr[j])
