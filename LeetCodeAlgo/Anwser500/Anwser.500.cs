@@ -132,20 +132,16 @@ namespace LeetCodeAlgo
 
         ///532. K-diff Pairs in an Array, #HashMap
         ///Given an array of integers nums and an integer k, return the number of unique k-diff pairs in the array.
-        ///0 <= i < j < length, |nums[i] - nums[j]| == k, -107 <= nums[i] <= 107, 0 <= k <= 107
+        /// |nums[i] - nums[j]| == k, -10^7 <= nums[i] <= 10^7, 0 <= k <= 10^7
         public int FindPairs(int[] nums, int k)
         {
             Dictionary<int,int> dict= new Dictionary<int,int>();
             foreach(var n in nums)
             {
                 if (dict.ContainsKey(n))
-                {
                     dict[n]++;
-                }
                 else
-                {
                     dict.Add(n, 1);
-                }
             }
             int ans = 0;
             if (k == 0)
@@ -165,31 +161,6 @@ namespace LeetCodeAlgo
                         break;
                     if (dict.ContainsKey(key + k))
                         ans++;
-                }
-            }
-            return ans;
-        }
-
-        public int FindPairs_On2(int[] nums, int k)
-        {
-            int ans = 0;
-            if (nums.Length == 1)
-                return ans;
-            Dictionary<int,int> dict= new Dictionary<int,int>();
-            for(int i=0; i < nums.Length-1; i++)
-            {
-                for(int j=i+1; j < nums.Length; j++)
-                {
-                    int sum = nums[i]-nums[j];
-                    if (sum == k || sum + k == 0)
-                    {
-                        int left=Math.Min(nums[i], nums[j]);
-                        if (!dict.ContainsKey(left))
-                        {
-                            ans++;
-                            dict.Add(left, i);
-                        }
-                    }
                 }
             }
             return ans;

@@ -2499,45 +2499,38 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        /// 48. Rotate Image
+        /// 48. Rotate Image, #Array, #Matrix
         ///You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
         ///You have to rotate the image in-place, which means you have to modify the input 2D matrix directly.
-        ///DO NOT allocate another 2D matrix and do the rotation.
+        ///|1|2|3| --> |7|4|1|
+        ///|4|5|6| --> |8|5|2|
+        ///|7|8|9| --> |9|6|3|
         public void Rotate(int[][] matrix)
         {
-            int[][] temp = new int[matrix.Length][];
-            for (int i = 0; i < temp.Length; i++)
-                temp[i] = new int[matrix[i].Length];
+            int rowLen=matrix.Length;
+            int colLen=matrix[0].Length;
+            int[,] cache = new int[rowLen,colLen];
 
-            for (int i = 0; i < temp.Length; i++)
-            {
-                for (int j = 0; j < temp[i].Length; j++)
-                {
-                    temp[i][j] = matrix[temp.Length - 1 - j][i];
-                }
-            }
+            for (int i = 0; i < rowLen; i++)
+                for (int j = 0; j < colLen; j++)
+                    cache[i,j] = matrix[rowLen - 1 - j][i];
 
-            for (int i = 0; i < matrix.Length; i++)
-            {
-                for (int j = 0; j < matrix[i].Length; j++)
-                {
-                    matrix[i][j] = temp[i][j];
-                }
-            }
+            for (int i = 0; i < rowLen; i++)
+                for (int j = 0; j < colLen; j++)
+                    matrix[i][j] = cache[i,j];
         }
 
-        ///49. Group Anagrams
-        ///Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+        ///49. Group Anagrams, #HashMap
+        ///Given an array of strings strs, group the anagrams together.
+        ///An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase,
+        ///eg. ["ate","eat","tea"]
         public IList<IList<string>> GroupAnagrams(string[] strs)
         {
             var ans = new List<IList<string>>();
-
             Dictionary<string, List<int>> dict = new Dictionary<string, List<int>>();
-
             for (int i = 0; i < strs.Length; i++)
             {
                 var word = string.Join("", strs[i].ToArray().OrderBy(c => c));
-
                 if (dict.ContainsKey(word))
                 {
                     dict[word].Add(i);
@@ -2547,17 +2540,11 @@ namespace LeetCodeAlgo
                     dict.Add(word, new List<int>() { i });
                 }
             }
-
             foreach (var list in dict.Values)
             {
-                List<string> words = new List<string>();
-                foreach (var i in list)
-                {
-                    words.Add(strs[i]);
-                }
+                var words = list.Select(x => strs[x]).ToList();
                 ans.Add(words);
             }
-
             return ans;
         }
     }
