@@ -250,41 +250,34 @@ namespace LeetCodeAlgo
             return dist.Count() != nums.Length;
         }
 
-        ///221. Maximal Square
+        ///221. Maximal Square, #DP
         ///Given an m x n binary matrix filled with 0's and 1's,
         ///find the largest square containing only 1's and return its area.
         public int MaximalSquare(char[][] matrix)
         {
+            int rowLen=matrix.Length;
+            int colLen=matrix[0].Length;
             //loop matrix from top to bottom, you can also try left to right
             //store count of last '1'
-            int[] dp = new int[matrix[0].Length];
-
+            int[] dp = new int[colLen];
             //max len of square
             int len = 0;
-
             foreach (var row in matrix)
             {
-                for (int i = 0; i < dp.Length; i++)
+                for (int i = 0; i < colLen; i++)
                 {
-                    if (row[i] == '0')
-                    {
-                        dp[i] = 0;
-                    }
-                    else
-                    {
-                        dp[i]++;
-                    }
+                    //max count of '1' on vertical direction
+                    dp[i] = row[i] == '0' ? 0 : dp[i] + 1;
                 }
 
-                for (int i = 0; i < dp.Length; i++)
+                for (int i = 0; i < colLen; i++)
                 {
                     if (dp[i] <= len)
                         continue;
-
                     //count of '1' on left side and right side
                     int left = 0;
                     int right = 0;
-                    //width = me(1) + left + right;
+                    //width = me(1) + left + right, max count of '1' on horizontal direction
                     int width = 1;
 
                     //j to avoid to death loop
