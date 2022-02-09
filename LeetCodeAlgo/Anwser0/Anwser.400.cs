@@ -44,34 +44,27 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        /// 413. Arithmetic Slices
+        /// 413. Arithmetic Slices, #DP
         ///at least 3 nums with same distance, eg. [1,2,3,4], [1,1,1]
         ///-1000 <= nums[i] <= 1000
         ///A subarray is a contiguous subsequence of the array.
-        public int NumberOfArithmeticSlices(int[] nums)
+        public int NumberOfArithmeticSlices_413(int[] nums)
         {
-            if (nums == null || nums.Length <= 2)
-                return 0;
-            int sum = 0;
-            for (int i = 0; i < nums.Length - 2; i++)
+            int ans = 0;
+            int dp = 0;
+            for (int i = 2; i < nums.Length; i++)
             {
-                int len = nums[i + 1] - nums[i];
-                int count = 0;
-                while (i + count * 1 < nums.Length && nums[i + count * 1] == nums[i] + count * len)
-                    count++;
-
-                if (count >= 3)
+                if(nums[i] - nums[i - 1] == nums[i - 1] - nums[i - 2])
                 {
-                    int j = 3;
-                    while (j <= count)
-                    {
-                        sum += count - (j - 1);
-                        j++;
-                    }
+                    dp++;
+                    ans += dp;
                 }
-                i += count - 2;
+                else
+                {
+                    dp = 0;
+                }
             }
-            return sum;
+            return ans;
         }
 
         ///415. Add Strings
@@ -380,6 +373,16 @@ namespace LeetCodeAlgo
             return num.ToString().ToCharArray();
         }
 
+        ///446. Arithmetic Slices II - Subsequence, #DP
+        ///at least 3 nums with same distance, eg. [1,2,3,4], [1,1,1]
+        ///1  <= nums.length <= 1000, -2^31 <= nums[i] <= 2^31 - 1
+        ///Subsequence may not continuous
+        public int NumberOfArithmeticSlices(int[] nums)
+        {
+            int ans = 0;
+
+            return ans;
+        }
 
     }
 }

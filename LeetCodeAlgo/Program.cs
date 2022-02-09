@@ -12,7 +12,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
             //var arr1 = new int[] { 5, 7, -24, 12, 13, 2, 3, 12, 5, 6, 35 };//[[},new int[]{],[]] should 6
-            var arr1 = new int[] { 3,1,4,1,5};
+            var arr1 = new int[] { 1,2,3,3,1};
             var arr2 = new int[] { -1, 2 };
             int k = 2;
             var val1 = -2;
@@ -81,7 +81,7 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             ////var result = anwser.IsMatch("baabbbaccbccacacc","c*..b*a*a.*a..*c");
             ////var result = anwser.IsMatch("bbcacbabbcbaaccabc","b*a*a*.c*bb*b*.*.*");
-            var result = anwser.NthMagicalNumber(5,2,3);
+            var result = anwser.Check(arr1);
             //var result = anwser.getFactorial(20);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();

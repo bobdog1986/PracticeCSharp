@@ -173,7 +173,7 @@ namespace LeetCodeAlgo
             return head;
         }
 
-        ///878. Nth Magical Number, #BinarySearch
+        ///878. Nth Magical Number, #Binary Search
         ///A positive integer is magical if it is divisible by either a or b.
         ///Given the three integers n, a, and b, return the nth magical number.
         ///return it modulo 10^9 + 7. 1 <= n <= 10^9, 2 <= a, b <= 4 * 10^4
@@ -184,6 +184,7 @@ namespace LeetCodeAlgo
 
             long low = 0;
             long high = (long)n * Math.Min(a, b);
+            //high will alway >=n, increase low and decrease high to the edge!
             while (low < high)
             {
                 long mid = low + (high - low) / 2;
@@ -193,7 +194,6 @@ namespace LeetCodeAlgo
                     high = mid;
             }
 
-            //why not need module low with a, b???
             return (int)(low % mod);
         }
 
