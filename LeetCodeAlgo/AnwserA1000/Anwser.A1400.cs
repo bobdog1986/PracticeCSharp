@@ -6,7 +6,57 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        ///1422. Maximum Score After Splitting a String
+        ///1417. Reformat The String
+        ///You are given an alphanumeric string s. Only lowercase English letters and digits.
+        ///1 letter follow 1 digit , or reverse
+        ///Return the reformatted string or return an empty string if it is impossible to reformat the string.
+        public string Reformat(string s)
+        {
+            List<char> ans = new List<char>();
+            List<char> letters = new List<char>();
+            List<char> digits = new List<char>();
+
+            foreach(var c in s)
+            {
+                if(c>='0'&&c<='9')
+                    digits.Add(c);
+                else
+                    letters.Add(c);
+            }
+            if (letters.Count > digits.Count + 1 || digits.Count > letters.Count + 1)
+                return string.Empty;
+            if(letters.Count > digits.Count)
+            {
+                int i = 0;
+                for (; i< digits.Count; i++)
+                {
+                    ans.Add(letters[i]);
+                    ans.Add(digits[i]);
+                }
+                ans.Add(letters[i]);
+            }
+            else if(letters.Count < digits.Count)
+            {
+                int i = 0;
+                for (; i < letters.Count; i++)
+                {
+                    ans.Add(digits[i]);
+                    ans.Add(letters[i]);
+                }
+                ans.Add(digits[i]);
+            }
+            else
+            {
+                int i = 0;
+                for (; i < letters.Count; i++)
+                {
+                    ans.Add(digits[i]);
+                    ans.Add(letters[i]);
+                }
+            }
+            return string.Join("", ans);
+        }
+        /// 1422. Maximum Score After Splitting a String
         ///Split to 2 string,score is the number of zeros in the left + the number of ones in the right substring.
         public int MaxScore(string s)
         {

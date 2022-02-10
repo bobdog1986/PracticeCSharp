@@ -46,45 +46,29 @@ namespace LeetCodeAlgo
             return max;
         }
 
-        /// 560. Subarray Sum Equals K ,### Prefix Sum
+        /// 560. Subarray Sum Equals K ,###Prefix Sum
         ///Given an array of integers nums and an integer k, return the total number of continuous subarrays whose sum equals to k.
         public int SubarraySum(int[] nums, int k)
         {
-            Dictionary<int,List<int>> dict=new Dictionary<int, List<int>>();
+            Dictionary<int,int> dict=new Dictionary<int, int>();
             int ans = 0;
             int sum = 0;
-            for(int i = 0;i < nums.Length; i++)
+            dict.Add(0, 1);
+            for (int i = 0;i < nums.Length; i++)
             {
                 sum +=nums[i];
+                if (dict.ContainsKey(sum - k))
+                {
+                    ans += dict[sum - k];
+                }
+
                 if (dict.ContainsKey(sum))
                 {
-                    dict[sum].Add(i);
+                    dict[sum]++;
                 }
                 else
                 {
-                    dict.Add(sum, new List<int>() { i});
-                }
-
-                if (sum == k)
-                    ans++;
-
-                if (k == 0)
-                {
-                    if (dict.ContainsKey(sum - k))
-                    {
-                        foreach (var j in dict[sum - k])
-                        {
-                            if (i > j)
-                                ans++;
-                        }
-                    }
-                }
-                else
-                {
-                    if (dict.ContainsKey(sum - k))
-                    {
-                        ans+=dict[sum - k].Count;
-                    }
+                    dict.Add(sum, 1);
                 }
             }
             return ans;

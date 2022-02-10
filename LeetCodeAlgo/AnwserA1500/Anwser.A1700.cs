@@ -20,7 +20,6 @@ namespace LeetCodeAlgo
             var rowLen = grid.Length;
             var colLen = grid[0].Length;
             var ans=new int[colLen];
-            int index = 0;
             for(int i = 0; i < colLen; i++)
             {
                 int col = i;
@@ -44,7 +43,7 @@ namespace LeetCodeAlgo
                         row++;
                     }
                 }
-                ans[index++] = col;
+                ans[i] = col;
             }
             return ans;
         }
