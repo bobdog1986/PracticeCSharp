@@ -99,7 +99,28 @@ namespace LeetCodeAlgo
             GoodNodes_Recursion(node.right, max, ref ans);
         }
 
-        ///1482. Minimum Number of Days to Make m Bouquets , ### Binary Search
+        ///1464. Maximum Product of Two Elements in an Array
+        ///Return the maximum value of (nums[i]-1)*(nums[j]-1).
+        ///2 <= nums.length <= 500, 1 <= nums[i] <= 10^3
+        public int MaxProduct(int[] nums)
+        {
+            int max1 = Math.Max(nums[0], nums[1]);
+            int max2 = Math.Min(nums[0], nums[1]);
+            for(int i = 2; i < nums.Length; i++)
+            {
+                if (nums[i] >= max1)
+                {
+                    max2 = max1;
+                    max1 = nums[i];
+                }
+                else if (nums[i] > max2)
+                {
+                    max2 = nums[i];
+                }
+            }
+            return (max1 - 1) * (max2 - 1);
+        }
+        /// 1482. Minimum Number of Days to Make m Bouquets , ### Binary Search
         ///You want to make m bouquets. To make a bouquet, you need to use k adjacent flowers from the garden.
         ///The garden consists of n flowers, the ith flower will bloom in the bloomDay[i] and then can be used in exactly one bouquet.
         ///Return the minimum number of days you need to wait to be able to make m bouquets from the garden.
