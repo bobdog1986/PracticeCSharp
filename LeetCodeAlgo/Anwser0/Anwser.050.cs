@@ -666,45 +666,33 @@ namespace LeetCodeAlgo
         ///Insert/Delete/Replace a character
         public int MinDistance(string word1, string word2)
         {
-            //insert is same to delete
-            var len1 = word1.Length;
-            var len2 = word2.Length;
-            if (len1 == 0 || len2 == 0)
-                return Math.Max(len1, len2);
-
-            int[][] dp = new int[len1 + 1][];
-            for (int i = 0; i < dp.Length; i++)
+            var rowLen = word1.Length;
+            var colLen = word2.Length;
+            int[,] dp = new int[rowLen + 1, colLen + 1];
+            for (int i = 1; i <= rowLen; i++)
             {
-                dp[i] = new int[len2 + 1];
+                dp[i,0] = i;
             }
-
-            for (int i = 1; i <= len1; i++)
+            for (int j = 1; j <= colLen; j++)
             {
-                dp[i][0] = i;
+                dp[0,j] = j;
             }
-            for (int j = 1; j <= len2; j++)
+            for (int i = 1; i <= rowLen; i++)
             {
-                dp[0][j] = j;
-            }
-
-            for (int i = 1; i <= len1; i++)
-            {
-                for (int j = 1; j <= len2; j++)
+                for (int j = 1; j <= colLen; j++)
                 {
                     if (word1[i - 1] == word2[j - 1])
                     {
-                        dp[i][j] = dp[i - 1][j - 1];
+                        dp[i,j] = dp[i - 1,j - 1];
                     }
                     else
                     {
                         //replace=dp[i - 1][j - 1]+1, delete = dp[i - 1][j])+1, insert = dp[i][j - 1]+1
-                        dp[i][j] = Math.Min(dp[i - 1][j - 1], Math.Min(dp[i][j - 1], dp[i - 1][j])) + 1;
+                        dp[i,j] = Math.Min(dp[i - 1,j - 1], Math.Min(dp[i,j - 1], dp[i - 1,j])) + 1;
                     }
                 }
             }
-
-            return dp[len1][len2];
-
+            return dp[rowLen,colLen];
         }
         /// 74. Search a 2D Matrix
         ///a value in an m x n matrix.

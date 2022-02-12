@@ -12,7 +12,7 @@ namespace LeetCodeAlgo
         ///Given an integer array nums, find a contiguous non-empty subarray within the array
         ///that has the largest product, and return the product.
         ///-10 <= nums[i] <= 10, 1 <= nums.length <= 2 * 10^4
-        public int MaxProduct(int[] nums)
+        public int MaxProduct_152(int[] nums)
         {
             int max = nums[0];
             int min = nums[0];

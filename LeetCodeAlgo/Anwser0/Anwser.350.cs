@@ -59,9 +59,39 @@ namespace LeetCodeAlgo
         }
 
         ///376. Wiggle Subsequence
+        ///A wiggle sequence is a sequence where the differences between numbers strictly alternate between positive and negative.
+        ///For example, [1, 7, 4, 9, 2, 5] is a wiggle sequence because the differences (6, -3, 5, -7, 3) alternate between positive and negative.
+        ///Given an integer array nums, return the length of the longest wiggle subsequence of nums.
         public int WiggleMaxLength(int[] nums)
         {
-            return 0;
+            int pos = nums[0];
+            int posSign = 1;
+
+            int neg = nums[0];
+            int negSign = -1;
+
+            int max1 = 1;
+            int max2 = 1;
+
+            for(int i=1; i<nums.Length; i++)
+            {
+                if ((posSign == 1 && nums[i] < pos)
+                    || (posSign == -1 && nums[i] > pos))
+                {
+                    max1++;
+                    posSign = -posSign;
+                }
+                pos = nums[i];
+
+                if ((negSign == 1 && nums[i] < neg)
+                    || (negSign == -1 && nums[i] > neg))
+                {
+                    max2++;
+                    negSign = -negSign;
+                }
+                neg = nums[i];
+            }
+            return Math.Max(max1,max2);
         }
 
         ///380. Insert Delete GetRandom O(1), see RandomizedSet

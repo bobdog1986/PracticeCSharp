@@ -97,54 +97,28 @@ namespace LeetCodeAlgo
             return list.ToArray();
         }
 
-        //567. Permutation in String
-
+        ///567. Permutation in String
+        ///Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise.
+        //Input: s1 = "ab", s2 = "eidbaooo", Output: true, 1 <= s1.length, s2.length <= 104
         public bool CheckInclusion(string s1, string s2)
         {
-            if (s1.Length == 1)
-                return s2.Contains(s1);
-
-            int[] arr1 = new int[26];
-
-            foreach (var c in s1)
+            int[] arr1=new int[26];
+            foreach (var c1 in s1)
+                arr1[c1 - 'a']++;
+            for(int i = 0; i < s2.Length-s1.Length+1; i++)
             {
-                arr1[c - 'a']++;
-            }
-
-            for (int i = 0; i <= s2.Length - s1.Length; i++)
-            {
-                if (arr1[s2[i] - 'a'] != 0)
+                int[] arr2=new int[26];
+                for(int j=0;j<s1.Length; j++)
                 {
-                    int[] arr2 = new int[26];
-
-                    int j = 0;
-                    while (j <= s1.Length - 1)
-                    {
-                        arr2[(s2[i + j] - 'a')]++;
-                        j++;
-                    }
-
-                    if (IsTwoArrayEqual(arr1, arr2))
+                    var k = s2[j+i] - 'a';
+                    arr2[k]++;
+                    if (arr2[k] > arr1[k])
+                        break;
+                    if(j== s1.Length-1)
                         return true;
                 }
             }
-
             return false;
-        }
-
-        public bool IsTwoArrayEqual(int[] arr1, int[] arr2)
-        {
-            if (arr2.Length != arr1.Length)
-                return false;
-
-            int i = 0;
-            while (i < arr1.Length)
-            {
-                if (arr1[i] != arr2[i])
-                    return false;
-                i++;
-            }
-            return true;
         }
 
         ///572. Subtree of Another Tree
