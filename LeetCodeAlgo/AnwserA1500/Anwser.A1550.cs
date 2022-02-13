@@ -28,5 +28,31 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
+        ///1576. Replace All ?'s to Avoid Consecutive Repeating Characters
+        /// replace ? to not same as previous or next char
+        public string ModifyString(string s)
+        {
+            var arr = s.ToCharArray();
+            for(int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] == '?')
+                {
+                    var c = 'a';
+                    while (c <= 'z')
+                    {
+                        //if not same as previous or next char, update it
+                        if ((i == 0 || arr[i - 1]!=c)
+                            &&(i==arr.Length-1||arr[i+1]=='?'|| arr[i + 1] != c))
+                        {
+                            arr[i] = c;
+                            break;
+                        }
+                        c++;
+                    }
+                }
+            }
+            return String.Join("", arr);
+        }
     }
 }
