@@ -12,14 +12,14 @@ namespace LeetCodeAlgo
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
             //var arr1 = new int[] { 5, 7, -24, 12, 13, 2, 3, 12, 5, 6, 35 };//[[},new int[]{],[]] should 6
-            var arr1 = new int[] { 1,2,3,3,1};
+            var arr1 = new int[] { 1,2,5};
             var arr2 = new int[] { -1, 2 };
             int k = 2;
-            var val1 = -2;
+            var val1 = 5;
             var val2 = 2;
             var str1 = "111111111111111111111111111111111111111111111";
             var str2 = "execution";
-            var word1 = new string[] { "ab", "ab" };
+            var word1 = new string[] { "hot", "dot", "dog", "lot", "log", "cog" };
             var mat1 = new int[][]
             {
                 //new int[]{0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
@@ -82,7 +82,7 @@ namespace LeetCodeAlgo
             ////var result = anwser.IsMatch("baabbbaccbccacacc","c*..b*a*a.*a..*c");
             ////var result = anwser.IsMatch("bbcacbabbcbaaccabc","b*a*a*.c*bb*b*.*.*");
             //var result = anwser.Check(arr1);
-            var result = anwser.Reformat("ab123");
+            var result = anwser.Change(val1, arr1);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();

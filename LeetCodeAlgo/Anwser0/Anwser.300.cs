@@ -65,32 +65,29 @@ namespace LeetCodeAlgo
             return sell[len - 1];
         }
 
-        /// 322. Coin Change
-        ///1 <= coins[i] <= 2^31 - 1
-        ///0 <= amount <= 10000
+        /// 322. Coin Change, #DP
+        ///array coins representing coins of different denominations and an integer amount representing a total amount of money.
+        ///Return the fewest number of coins that you need to make up that amount. Or return -1. can reuse each kind of coin.
+        ///1 <= coins[i] <= 2^31 - 1, 0 <= amount <= 10000
         public int CoinChange(int[] coins, int amount)
         {
             if (amount == 0)
                 return 0;
-
             int[] dp = new int[amount + 1];
             for (int i = 0; i < dp.Length; i++)
-                dp[i] = 10000;
-
-            var coins2 = coins.ToList();
-            coins2.Sort((x, y) => y - x);
-            dp[0] = 0;
-            for (int i = 1; i <= amount; i++)
+                dp[i] = 10001;
+            Array.Sort(coins);
+            dp[amount] = 0;
+            for (int i = amount; i>=0; i--)
             {
-                foreach (var coin in coins2)
+                for (int j=coins.Length-1;j>=0;j--)
                 {
-                    if (i - coin < 0)
+                    if (i - coins[j] < 0)
                         continue;
-
-                    dp[i] = Math.Min(dp[i], dp[i - coin] + 1);
+                    dp[i - coins[j]] = Math.Min(dp[i - coins[j]], dp[i] + 1);
                 }
             }
-            return dp[amount] == 10000 ? -1 : dp[amount];
+            return dp[0] == 10001 ? -1 : dp[0];
         }
 
         ///327. Count of Range Sum --- not pass

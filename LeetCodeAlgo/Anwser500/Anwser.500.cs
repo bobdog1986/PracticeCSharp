@@ -59,6 +59,24 @@ namespace LeetCodeAlgo
             return dp[0,s.Length - 1];
         }
 
+        ///518. Coin Change 2, #DP
+        ///Return the number of combinations that make up that amount.
+        ///If that amount of money cannot be made up by any combination of the coins, return 0.
+        public int Change(int amount, int[] coins)
+        {
+            int[] dp = new int[amount + 1];
+            dp[0] = 1;
+            foreach (var coin in coins)
+            {
+                for (int i = coin; i <= amount; i++)
+                {
+                    dp[i] += dp[i - coin];
+                }
+            }
+            return dp[amount];
+        }
+
+
         /// 520. Detect Capital
         ///3 pattern: all UpCase, all LowerCase, only first char UpCase others lower
         ///Given a string word, return true if the usage of capitals in it is right.

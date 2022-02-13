@@ -58,7 +58,7 @@ namespace LeetCodeAlgo
             return num == 0;
         }
 
-        ///376. Wiggle Subsequence
+        ///376. Wiggle Subsequence, #DP
         ///A wiggle sequence is a sequence where the differences between numbers strictly alternate between positive and negative.
         ///For example, [1, 7, 4, 9, 2, 5] is a wiggle sequence because the differences (6, -3, 5, -7, 3) alternate between positive and negative.
         ///Given an integer array nums, return the length of the longest wiggle subsequence of nums.

@@ -916,58 +916,40 @@ namespace LeetCodeAlgo
             return null;
         }
 
-        ///78. Subsets
+        ///78. Subsets - Unique nums, #Backtracking?
         ///Given an integer array nums of unique elements, return all possible subsets (the power set).
         public IList<IList<int>> Subsets(int[] nums)
         {
-            var ans = new List<IList<int>>
-            {
-                new List<int>()
-            };
-
-            for (int n = 1; n <= nums.Length - 1; n++)
-            {
-                var llist = new List<IList<int>>();
-
-                SubSets_Add(nums, 0, n, llist, ans);
-            }
-
-            ans.Add(nums);
-
+            Array.Sort(nums);
+            Dictionary<string,int> exist=new Dictionary<string,int>();
+            var ans = new List<IList<int>>();
+            var list = new List<int>();
+            SubSets_Add(nums, 0, list, ans, exist);
             return ans;
         }
 
-        public void SubSets_Add(int[] nums, int start, int number, IList<IList<int>> llist, IList<IList<int>> ans)
+        public void SubSets_Add(int[] nums, int start, IList<int> list, IList<IList<int>> ans, IDictionary<string,int> exist)
         {
             if (start >= nums.Length)
                 return;
+            var sub1 = new List<int>(list);
+            sub1.Add(nums[start]);
+            var sub2 = new List<int>(list);
 
-            llist = llist.Where(o => o.Count < number && o.Count + (nums.Length - start) >= number).ToList();
-
-            var subs = new List<IList<int>>();
-            foreach (var list in llist)
+            var key1 = string.Join("_", sub1);
+            if(!exist.ContainsKey(key1))
             {
-                var sub = new List<int>(list)
-                {
-                    nums[start]
-                };
-
-                subs.Add(sub);
+                exist.Add(key1, 1);
+                ans.Add(sub1);
             }
-            foreach (var sub in subs)
+            var key2 = string.Join("_", sub2);
+            if (!exist.ContainsKey(key2))
             {
-                llist.Add(sub);
+                exist.Add(key2, 1);
+                ans.Add(sub2);
             }
-
-            llist.Add(new List<int>() { nums[start] });
-
-            var targets = llist.Where(o => o.Count == number);
-            foreach (var t in targets)
-            {
-                ans.Add(t);
-            }
-
-            SubSets_Add(nums, start + 1, number, llist, ans);
+            SubSets_Add(nums, start + 1, sub1, ans, exist);
+            SubSets_Add(nums, start + 1, sub2, ans, exist);
         }
 
         ///79. Word Search
