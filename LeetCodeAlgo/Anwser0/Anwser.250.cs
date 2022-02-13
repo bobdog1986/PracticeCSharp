@@ -77,7 +77,26 @@ namespace LeetCodeAlgo
             return (n >= bad);
         }
 
-        //283. Move Zeroes
+        ///279. Perfect Squares, #DP
+        ///Given an integer n, return the least number of perfect square numbers that sum to n.
+        ///A perfect square is an integer that is the square of an integer;
+        public int NumSquares(int n)
+        {
+            int[] dp = new int[n + 1];
+            for (int i = 1; i <= n; i++)
+                dp[i] = int.MaxValue;
+
+            for (int i = 1; i <= n; i++)
+            {
+                for (int j = 1; j * j <= i; j++)
+                {
+                    dp[i] = Math.Min(dp[i], dp[i - j * j] + 1);
+                }
+            }
+            return dp[n];
+        }
+
+        /// 283. Move Zeroes
         public void MoveZeroes(int[] nums)
         {
             if (nums == null || nums.Length == 0)
