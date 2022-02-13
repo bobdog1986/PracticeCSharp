@@ -6,7 +6,35 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        ///841. Keys and Rooms
+        ///830. Positions of Large Groups
+        ///A group is considered large if it has 3 or more characters.
+        ///Return the intervals of every large group sorted in increasing order by start index.
+        public IList<IList<int>> LargeGroupPositions(string s)
+        {
+            var ans=new List<IList<int>>();
+            int count = 1;
+            for(int i=1; i<s.Length; i++)
+            {
+                if (s[i] == s[i - 1])
+                {
+                    count++;
+                }
+                else
+                {
+                    if (count >= 3)
+                    {
+                        ans.Add(new List<int>() { i-count,i-1});
+                    }
+                    count = 1;
+                }
+            }
+            if (count >= 3)
+            {
+                ans.Add(new List<int>() { s.Length - count, s.Length - 1 });
+            }
+            return ans;
+        }
+        /// 841. Keys and Rooms
         ///Given an array rooms where rooms[i] is the set of keys that you can obtain if you visited room i,
         ///return true if you can visit all the rooms, or false otherwise.
         public bool CanVisitAllRooms(IList<IList<int>> rooms)
