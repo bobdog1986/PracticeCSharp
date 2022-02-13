@@ -94,7 +94,25 @@ namespace LeetCodeAlgo
             return Math.Max(max1,max2);
         }
 
-        ///380. Insert Delete GetRandom O(1), see RandomizedSet
+        ///377. Combination Sum IV -Permutation , #DP
+        ///Given an array of distinct integers nums and a target integer target,
+        ///return the number of possible combinations that add up to target.
+        public int CombinationSum4(int[] nums, int target)
+        {
+            //Array.Sort(nums);
+            int[] dp=new int[target+1];
+            dp[0] = 1;
+            for(int sum = 0; sum <= target; sum++)
+            {
+                foreach (var n in nums)
+                {
+                    dp[sum] += sum - n >= 0 ? dp[sum - n] : 0;
+                }
+            }
+            return dp.Last();
+        }
+
+        /// 380. Insert Delete GetRandom O(1), see RandomizedSet
 
         ///383. Ransom Note
         public bool CanConstruct(string ransomNote, string magazine)
