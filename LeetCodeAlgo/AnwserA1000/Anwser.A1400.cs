@@ -81,18 +81,14 @@ namespace LeetCodeAlgo
         public bool KLengthApart(int[] nums, int k)
         {
             var ans = true;
-            int distance = k;
+            int last = -k-1;
             for(int i = 0; i < nums.Length; i++)
             {
                 if (nums[i] == 1)
                 {
-                    if(distance<k)
+                    if(i- last <=k)
                         return false;
-                    distance = 0;
-                }
-                else
-                {
-                    distance++;
+                    last = i;
                 }
             }
             return ans;
