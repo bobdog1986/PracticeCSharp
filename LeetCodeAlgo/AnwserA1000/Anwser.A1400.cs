@@ -76,7 +76,28 @@ namespace LeetCodeAlgo
             return max;
         }
 
-        ///1448. Count Good Nodes in Binary Tree
+        ///1437. Check If All 1's Are at Least Length K Places Away
+        ///Given an binary array nums and an integer k, return true if all 1's are at least k places away from each other
+        public bool KLengthApart(int[] nums, int k)
+        {
+            var ans = true;
+            int distance = k;
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] == 1)
+                {
+                    if(distance<k)
+                        return false;
+                    distance = 0;
+                }
+                else
+                {
+                    distance++;
+                }
+            }
+            return ans;
+        }
+        /// 1448. Count Good Nodes in Binary Tree
         ///a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X.
         public int GoodNodes(TreeNode root)
         {
