@@ -99,7 +99,6 @@ namespace LeetCodeAlgo
         ///return the number of possible combinations that add up to target.
         public int CombinationSum4(int[] nums, int target)
         {
-            //Array.Sort(nums);
             int[] dp=new int[target+1];
             dp[0] = 1;
             for(int sum = 0; sum <= target; sum++)

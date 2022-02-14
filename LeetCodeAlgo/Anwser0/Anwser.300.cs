@@ -236,9 +236,22 @@ namespace LeetCodeAlgo
             return false;
         }
 
-        ///343. Integer Break
-        ///find 3 as many as possible, but no 1
+        ///343. Integer Break, #DP
+        ///find 3 as many as possible, but no 1; 2 <= n <= 58
         public int IntegerBreak(int n)
+        {
+            int[] dp = new int[n + 1];
+            dp[1] = 1;
+            for (int i = 2; i <= n; i++)
+            {
+                for (int j = 1; j <= i / 2; j++)
+                {
+                    dp[i] = Math.Max(dp[i], Math.Max(j, dp[j]) * Math.Max(i - j, dp[i - j]));
+                }
+            }
+            return dp[n];
+        }
+        public int IntegerBreak_Math(int n)
         {
             if (n <= 3)
                 return n - 1;//1*(n-1)
