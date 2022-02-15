@@ -1047,39 +1047,29 @@ namespace LeetCodeAlgo
 
         ///19. Remove Nth Node From End of List
         ///Given the head of a linked list, remove the nth node from the end of the list and return its head.
+        ///1 <= n <= size, 1 <= size <= 30
         public ListNode RemoveNthFromEnd(ListNode head, int n)
         {
-            if (head == null || head.next == null)
-                return null;
-            int count = GetListNodeCount(head);
-            if (n == count)
-                return head.next;
-
-            var node1 = GetListNode(head, count - n - 1);
-            node1.next = node1.next.next;
-
-            return head;
-        }
-
-        public ListNode GetListNode(ListNode listNode, int index)
-        {
-            while (index > 0)
-            {
-                listNode = listNode.next;
-                index--;
-            }
-            return listNode;
-        }
-
-        public int GetListNodeCount(ListNode listnode)
-        {
             int count = 0;
-            while (listnode != null)
+            var node = head;
+            while (node != null)
             {
                 count++;
-                listnode = listnode.next;
+                node = node.next;
             }
-            return count;
+            if (count <= 1)
+                return null;
+            if (n == count)
+                return head.next;
+            node = head;
+            int index = count - n - 1;
+            while (index > 0)
+            {
+                node = node.next;
+                index--;
+            }
+            node.next = node.next.next;
+            return head;
         }
 
         ///20. Valid Parentheses
@@ -1119,56 +1109,53 @@ namespace LeetCodeAlgo
             return stack.Count == 0;
         }
 
-        ///21. Merge Two Sorted Lists
-        ///Merge the two lists in a one sorted list. The list should be made by splicing together the nodes of the first two lists.
+        ///21. Merge Two Sorted Lists, #Two Pointers
+        ///Merge two sorted list in a one sorted list.Return the head
         public ListNode MergeTwoLists(ListNode list1, ListNode list2)
         {
             if (list1 == null || list2 == null)
                 return list1 ?? list2;
 
-            ListNode list = null;
-
+            ListNode head = null;
             if (list1.val <= list2.val)
             {
-                list = list1;
+                head = list1;
                 list1 = list1.next;
             }
             else
             {
-                list = list2;
+                head = list2;
                 list2 = list2.next;
             }
-            ListNode last = list;
-
+            ListNode prev = head;
             while (list1 != null || list2 != null)
             {
                 if (list1 == null)
                 {
-                    last.next = list2;
+                    prev.next = list2;
                     break;
                 }
                 else if (list2 == null)
                 {
-                    last.next = list1;
+                    prev.next = list1;
                     break;
                 }
                 else
                 {
                     if (list1.val <= list2.val)
                     {
-                        last.next = list1;
+                        prev.next = list1;
                         list1 = list1.next;
                     }
                     else
                     {
-                        last.next = list2;
+                        prev.next = list2;
                         list2 = list2.next;
                     }
-
-                    last = last.next;
+                    prev = prev.next;
                 }
             }
-            return list;
+            return head;
         }
 
         ///22. Generate Parentheses ()

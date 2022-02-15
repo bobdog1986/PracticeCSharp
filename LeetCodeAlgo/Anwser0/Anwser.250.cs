@@ -48,33 +48,30 @@ namespace LeetCodeAlgo
             }
             return ugly[n - 1];
         }
-        /// 278. First Bad Version
+        /// 278. First Bad Version, #Binary Search
+        /// 1 <= bad <= n <= 2^31 - 1
         public int FirstBadVersion(int n)
         {
-            return FirstBadVersion(1, n);
+            int left = 1;
+            int right = n;
+            while(left< right)
+            {
+                int mid = left + (right - left) / 2;
+                if (IsBadVersion(mid))
+                {
+                    right = mid;
+                }
+                else
+                {
+                    left = mid + 1;
+                }
+            }
+            return left;
         }
 
-        public int FirstBadVersion(int start, int end)
+        public bool IsBadVersion(int n)//API provides by leetcode
         {
-            if (start == end) return start;
-
-            int num = end - start + 1;
-            int mid = num / 2 + start - 1;
-
-            if (IsBadVersion(mid))
-            {
-                return FirstBadVersion(start, mid);
-            }
-            else
-            {
-                return FirstBadVersion(mid + 1, end);
-            }
-        }
-
-        public bool IsBadVersion(int n)
-        {
-            int bad = 10;
-            return (n >= bad);
+            return (n >= 1702766719);
         }
 
         ///279. Perfect Squares, #DP

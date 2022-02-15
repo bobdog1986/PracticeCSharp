@@ -618,25 +618,22 @@ namespace LeetCodeAlgo
             return (int)r;
         }
 
-        ///70. Climbing Stairs
+        ///70. Climbing Stairs, #DP
         ///Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+        ///1 <= n <= 45
         public int ClimbStairs(int n)
         {
-            if (n == 0) return 0;
             if (n == 1) return 1;
             if (n == 2) return 2;
-
-            int dp1 = 1;
-            int dp2 = 2;
-            int dp = 0;
+            int prev = 1;
+            int curr = 2;
             for (int i = 3; i <= n; i++)
             {
-                dp = dp1 + dp2;
-                dp1 = dp2;
-                dp2 = dp;
+                int temp = prev + curr;
+                prev = curr;
+                curr = temp;
             }
-
-            return dp;
+            return curr;
         }
 
         public int ClimbStairs_Recursion(int n)
@@ -1151,98 +1148,36 @@ namespace LeetCodeAlgo
 
         }
         /// 88. Merge Sorted Array
+        /// nums1.length = m + n, nums2.length == n , 0 <= m, n <= 200, 1 <= m + n <= 200
         public void Merge(int[] nums1, int m, int[] nums2, int n)
         {
-            if (nums1 == null || nums1.Length == 0 || m == 0)
+            int[] cache=new int[m+n];
+            int i = 0;
+            int j = 0;
+            while(i +j <m+n)
             {
-                if (nums2 == null || nums2.Length == 0 || n == 0)
+                if (i == m)
                 {
-                    //
+                    cache[i + j] = nums2[j++];
+                }
+                else if (j == n)
+                {
+                    cache[i + j] = nums1[i++];
                 }
                 else
                 {
-                    for (int a = 0; a < nums1.Length; a++)
+                    if (nums1[i] <= nums2[j])
                     {
-                        if (a < m + n)
-                        {
-                            nums1[a] = nums2[a];
-                        }
-                        else
-                        {
-                            nums1[a] = 0;
-                        }
+                        cache[i + j] = nums1[i++];
+                    }
+                    else
+                    {
+                        cache[i + j] = nums2[j++];
                     }
                 }
             }
-            else
-            {
-                if (nums2 == null || nums2.Length == 0 || n == 0)
-                {
-                    for (int a = 0; a < nums1.Length; a++)
-                    {
-                        if (a < m + n)
-                        {
-                            nums1[a] = nums1[a];
-                        }
-                        else
-                        {
-                            nums1[a] = 0;
-                        }
-                    }
-                }
-                else
-                {
-                    int[] result = new int[m + n];
-                    int k = 0;
-                    int j = 0;
-                    int i = 0;
-                    while (i < m && j < n)
-                    {
-                        if (nums1[i] <= nums2[j])
-                        {
-                            result[k] = nums1[i];
-                            k++;
-                            i++;
-                        }
-                        else
-                        {
-                            result[k] = nums2[j];
-                            k++;
-                            j++;
-                        }
-                    }
-
-                    while (k < m + n)
-                    {
-                        if (i < m)
-                        {
-                            result[k] = nums1[i];
-                            k++;
-                            i++;
-                        }
-
-                        if (j < n)
-                        {
-                            result[k] = nums2[j];
-                            k++;
-                            j++;
-                        }
-                    }
-
-                    for (int a = 0; a < nums1.Length; a++)
-                    {
-                        if (a < k)
-                        {
-                            nums1[a] = result[a];
-                        }
-                        else
-                        {
-                            nums1[a] = 0;
-                        }
-                    }
-                }
-            }
-            Console.WriteLine($"nums1 = {string.Join(",", nums1)}");
+            for(int k=0; k<nums1.Length; k++)
+                nums1[k] = cache[k];
         }
 
         ///90. Subsets II
@@ -1440,23 +1375,17 @@ namespace LeetCodeAlgo
 
         ///98. Validate Binary Search Tree
         /// left.val<=Node.Val<=right.val
-
         public bool IsValidBST(TreeNode root)
         {
             return IsValidBST_Recursion(root);
         }
-
         public bool IsValidBST_Recursion(TreeNode root, TreeNode left = null, TreeNode right = null)
         {
             if (root == null)
                 return true;
-
-            if (left != null && root.val <= left.val)
+            if ((left != null && root.val <= left.val)
+                ||(right != null && root.val >= right.val))
                 return false;
-
-            if (right != null && root.val >= right.val)
-                return false;
-
             return IsValidBST_Recursion(root.left, left, root) && IsValidBST_Recursion(root.right, root, right);
         }
     }

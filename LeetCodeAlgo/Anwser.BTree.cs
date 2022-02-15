@@ -296,103 +296,10 @@ namespace LeetCodeAlgo
             }
         }
 
-        private bool isSymm = true;
-
-        public bool IsSymmetric_1(TreeNode root)
+        ///101. Symmetric Tree
+        public bool IsSymmetric_101(TreeNode root)
         {
-            if (root == null)
-                return isSymm;
-
-            //IsSymmetric(root.left,root.right);
-
-            List<TreeNode> leftNodes = new List<TreeNode>();
-            List<TreeNode> rightNodes = new List<TreeNode>();
-            if (root.left != null) leftNodes.Add(root.left);
-            if (root.right != null) rightNodes.Add(root.right);
-
-            while (true)
-            {
-                if (!isSymm)
-                    break;
-
-                if (leftNodes.Count == 0 && rightNodes.Count == 0)
-                    break;
-
-                if (leftNodes.Count != rightNodes.Count)
-                {
-                    isSymm = false;
-                    break;
-                }
-
-                List<TreeNode> subLeftNodes = new List<TreeNode>();
-                List<TreeNode> subRigthNodes = new List<TreeNode>();
-                for (int i = 0; i < leftNodes.Count; i++)
-                {
-                    if (leftNodes[i].val != rightNodes[i].val)
-                    {
-                        isSymm = false;
-                        break;
-                    }
-
-                    if (leftNodes[i].left == null && rightNodes[i].right != null)
-                    {
-                        isSymm = false;
-                        break;
-                    }
-
-                    if (leftNodes[i].right == null && rightNodes[i].left != null)
-                    {
-                        isSymm = false;
-                        break;
-                    }
-
-                    if (leftNodes[i].left != null && rightNodes[i].right == null)
-                    {
-                        isSymm = false;
-                        break;
-                    }
-
-                    if (leftNodes[i].right != null && rightNodes[i].left == null)
-                    {
-                        isSymm = false;
-                        break;
-                    }
-
-                    if (leftNodes[i].left != null) subLeftNodes.Add(leftNodes[i].left);
-                    if (leftNodes[i].right != null) subLeftNodes.Add(leftNodes[i].right);
-                    if (rightNodes[i].right != null) subRigthNodes.Add(rightNodes[i].right);
-                    if (rightNodes[i].left != null) subRigthNodes.Add(rightNodes[i].left);
-                }
-
-                leftNodes = subLeftNodes;
-                rightNodes = subRigthNodes;
-            }
-
-            return isSymm;
-        }
-
-        public void IsSymmetric(TreeNode left, TreeNode right)
-        {
-            if (!isSymm)
-                return;
-
-            if (left == null && right == null)
-                return;
-
-            if (left == null || right == null)
-            {
-                isSymm = false;
-                return;
-            }
-
-            if (left.val != right.val)
-            {
-                isSymm = false;
-                return;
-            }
-
-            IsSymmetric(left.left, right.right);
-            IsSymmetric(left.right, right.left);
+            return true;
         }
 
         /// 112 HasPathSum, see other file

@@ -56,58 +56,18 @@ namespace LeetCodeAlgo
         ///Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
         public bool IsSymmetric(TreeNode root)
         {
-            if (root == null)
-                return true;
-
-            List<TreeNode> lefts = new List<TreeNode>();
-            List<TreeNode> rights = new List<TreeNode>();
-
-            if (root.left != null)
-                lefts.Add(root.left);
-
-            if (root.right != null)
-                rights.Add(root.right);
-
-            return IsSymmetric(lefts, rights);
+            return root == null || IsSymmetric(root.left, root.right);
         }
 
-        public bool IsSymmetric(IList<TreeNode> lefts, IList<TreeNode> rights)
+        public bool IsSymmetric(TreeNode left, TreeNode right)
         {
-            if (lefts.Count == 0 && rights.Count == 0)
+            if (left == null && right == null)
                 return true;
-
-            if (lefts.Count != rights.Count)
+            if (left == null || right == null)
                 return false;
-
-            List<TreeNode> sub1 = new List<TreeNode>();
-            List<TreeNode> sub2 = new List<TreeNode>();
-
-            for (int i = 0; i < lefts.Count; i++)
-            {
-                var left = lefts[i];
-                var right = rights[lefts.Count - 1 - i];
-
-                if (left.val != right.val)
-                    return false;
-
-                if (left.left == null && right.right != null
-                    || left.left != null && right.right == null
-                    || left.right == null && right.left != null
-                    || left.right != null && right.left == null)
-                    return false;
-
-                if (left.left != null)
-                    sub1.Add(left.left);
-                if (left.right != null)
-                    sub1.Add(left.right);
-
-                if (right.right != null)
-                    sub2.Insert(0, right.right);
-                if (right.left != null)
-                    sub2.Insert(0, right.left);
-            }
-
-            return IsSymmetric(sub1, sub2);
+            if (left.val != right.val)
+                return false;
+            return IsSymmetric(left.left, right.right) && IsSymmetric(left.right, right.left);
         }
 
         /// 102. Binary Tree Level Order Traversal
@@ -115,12 +75,10 @@ namespace LeetCodeAlgo
         /// (i.e., from left to right, level by level).
         public IList<IList<int>> LevelOrder(TreeNode root)
         {
-            var result = new List<IList<int>>();
+            var ans = new List<IList<int>>();
             if (root == null)
-                return result;
-
+                return ans;
             var nodes = new List<TreeNode>() { root };
-
             while (nodes.Count > 0)
             {
                 var subs = new List<TreeNode>();
@@ -129,20 +87,16 @@ namespace LeetCodeAlgo
                 {
                     if (node == null)
                         continue;
-
                     list.Add(node.val);
-
                     if (node.left != null)
                         subs.Add(node.left);
                     if (node.right != null)
                         subs.Add(node.right);
                 }
-
                 nodes = subs;
-                result.Add(list);
+                ans.Add(list);
             }
-
-            return result;
+            return ans;
         }
 
         ///103. Binary Tree Zigzag Level Order Traversal
@@ -194,29 +148,24 @@ namespace LeetCodeAlgo
         {
             if (root == null)
                 return 0;
-
-            int deep = 0;
+            int deepth = 0;
             var nodes = new List<TreeNode>() { root };
             while (nodes.Count > 0)
             {
-                deep++;
+                deepth++;
                 var subs = new List<TreeNode>();
                 foreach (var node in nodes)
                 {
                     if (node == null)
                         continue;
-
                     if (node.left != null)
                         subs.Add(node.left);
-
                     if (node.right != null)
                         subs.Add(node.right);
                 }
-
                 nodes = subs;
             }
-
-            return deep;
+            return deepth;
         }
 
         ///105. Construct Binary Tree from Preorder and Inorder Traversal
@@ -630,53 +579,12 @@ namespace LeetCodeAlgo
         }
 
         ///122. Best Time to Buy and Sell Stock II - can trade many times
+        ///1 <= prices.length <= 10^5, 0 <= prices[i] <= 10^4
         public int MaxProfit_122_TradeManyTimes(int[] prices)
         {
-            if (prices == null || prices.Length <= 1)
-                return 0;
-
             int sum = 0;
             bool isHold = false;
             int buy = 0;
-            for (int i = 0; i < prices.Length - 1; i++)
-            {
-                if (isHold)
-                {
-                    if (i == prices.Length - 2)
-                    {
-                        sum += Math.Max(prices[i + 1], prices[i]) - buy;
-                    }
-                    else
-                    {
-                        if (prices[i] <= prices[i + 1])
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            sum += prices[i] - buy;
-                            isHold = false;
-                        }
-                    }
-                }
-                else
-                {
-                    if (prices[i] >= prices[i + 1])
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        if (i == prices.Length - 2)
-                        {
-                            sum += prices[i + 1] - prices[i];
-                            break;
-                        }
-                        isHold = true;
-                        buy = prices[i];
-                    }
-                }
-            }
             return sum;
         }
 
@@ -956,43 +864,62 @@ namespace LeetCodeAlgo
             }
             return false;
         }
-        /// 141. Linked List Cycle
+
+        /// 141. Linked List Cycle, #Two Pointers ->O(1) space
+        /// Return true if there is a cycle in the linked list. Otherwise, return false.
         public bool HasCycle(ListNode head)
         {
-            if (head == null || head.next == null) return false;
-
-            List<ListNode> list = new List<ListNode>();
-
-            while (head != null)
+            ListNode walker = head;
+            ListNode runner = head;
+            //if there is any cycle, runner will never end, then meet walker
+            //walkerLen =  (lenBeforeCycle + lenInCycle)
+            //runnerLen =  2* (lenBeforeCycle + lenInCycle)
+            //runnerlen - walkerLen = lenBeforeCycle + lenInCycle = N* cycleLen
+            while (runner.next != null && runner.next.next != null)
             {
-                if (list.IndexOf(head) == -1)
-                {
-                    list.Add(head);
-                    head = head.next;
-                }
-                else
-                {
-                    return true;
-                }
+                walker = walker.next;
+                runner = runner.next.next;
+                if (walker == runner) return true;
             }
             return false;
         }
 
-        ///142. Linked List Cycle II
+        ///142. Linked List Cycle II, #Two Pointers ->O(1) space
         ///If there is no cycle, return null.
         public ListNode DetectCycle(ListNode head)
         {
-            List<ListNode> nodes = new List<ListNode>();
-            var current = head;
-            while (current != null)
+            ListNode walker = head;
+            ListNode runner = head;
+            //if there is any cycle, runner will never end, then meet walker
+            //walkerLen =  (lenBeforeCycle + lenInCycle)
+            //runnerLen =  2* (lenBeforeCycle + lenInCycle)
+            //runnerlen - walkerLen = lenBeforeCycle + lenInCycle = N* cycleLen
+            while (runner.next != null && runner.next.next != null)
             {
-                var exist = nodes.FirstOrDefault(x => x == current);
-                if (exist != null)
-                    return exist;
-                nodes.Add(current);
-                current = current.next;
+                walker = walker.next;
+                runner = runner.next.next;
+                if (walker == runner)
+                    break;
             }
-            return null;
+            if (runner == null || runner.next == null)
+            {
+                return null;
+            }
+            else
+            {
+                //it will multiple of cycle length because it have to run cycle n-times till when slow will be equal to fast.
+                // so it will be always some multiple of cycle for fast pointer.
+                // nodeLen = lenBeforeCycle + X*cycleLen, if node is begin
+                // walkerLen = N* cycleLen + lenBeforeCycle + X*cycleLen = lenBeforeCycle + lenInCycle + lenBeforeCycle + X*cycleLen
+                // after N*cycleLen, they will meet
+                var node = head;
+                while (node != walker)
+                {
+                    node = node.next;
+                    walker = walker.next;
+                }
+                return node;
+            }
         }
         ///143. Reorder List
         ///Reorder the list: 1->2->3->4 to 1->4->2->3, 1->2->3->4->5 to 1->5->2->4->3

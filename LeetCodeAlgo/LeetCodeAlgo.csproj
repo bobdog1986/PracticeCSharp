@@ -53,6 +53,7 @@
     <Compile Include="Anwser500\Anwser.950.cs" />
     <Compile Include="AnwserA1000\Anwser.A1000.cs" />
     <Compile Include="AnwserA1000\Anwser.A1200.cs" />
+    <Compile Include="AnwserA1000\Anwser.A1250.cs" />
     <Compile Include="AnwserA1000\Anwser.A1300.cs" />
     <Compile Include="Anwser.BTree.cs" />
     <Compile Include="AnwserA1000\Anwser.A1100.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="AnwserA1500\Anwser.A1700.cs" />
     <Compile Include="AnwserA1500\Anwser.A1750.cs" />
     <Compile Include="AnwserA1500\Anwser.A1800.cs" />
+    <Compile Include="AnwserA1500\Anwser.A1850.cs" />
     <Compile Include="AnwserA2000\Anwser.A2000.cs" />
     <Compile Include="AnwserA2000\Anwser.A2100.cs" />
     <Compile Include="Anwser.Helper.cs" />

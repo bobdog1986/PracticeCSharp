@@ -134,41 +134,26 @@ namespace LeetCodeAlgo
             return head;
         }
 
-        //206. Reverse Linked List
-
+        ///206. Reverse Linked List
+        ///Given the head of a singly linked list, reverse the list, and return the reversed list.
+        ///The number of nodes in the list is the range [0, 5000].
         public ListNode ReverseList(ListNode head)
         {
-            if (head == null || head.next == null)
-                return head;
-
-            var stack = new Stack<ListNode>();
-            while (head != null)
+            if (head == null)
+                return null;
+            List<ListNode> list = new List<ListNode>();
+            var node = head;
+            while (node != null)
             {
-                var next = head.next;
-                head.next = null;
-                stack.Push(head);
-                head = next;
+                list.Add(node);
+                node = node.next;
             }
-
-            ListNode result = null;
-            ListNode current = null;
-
-            while (stack.Count > 0)
+            for(int i = list.Count - 1; i > 0; i--)
             {
-                var node = stack.Pop();
-                if (result == null)
-                {
-                    result = node;
-                    current = result;
-                }
-                else
-                {
-                    current.next = node;
-                    current = node;
-                }
+                list[i].next= list[i-1];
             }
-
-            return result;
+            list[0].next = null;
+            return list.Last();
         }
 
         ///209. Minimum Size Subarray Sum ,#Prefix Sum
@@ -421,7 +406,25 @@ namespace LeetCodeAlgo
             return false;
         }
 
-        ///235. Lowest Common Ancestor of a Binary Search Tree
+        ///234. Palindrome Linked List
+        ///Given the head of a singly linked list, return true if it is a palindrome.
+        public bool IsPalindrome(ListNode head)
+        {
+            List<int> list = new List<int>();
+            while(head != null)
+            {
+                list.Add(head.val);
+                head = head.next;
+            }
+            for(int i=0; i<list.Count/2; i++)
+            {
+                if (list[i] != list[list.Count - 1 - i])
+                    return false;
+            }
+            return true;
+        }
+
+        /// 235. Lowest Common Ancestor of a Binary Search Tree
         ///Given a binary search tree (BST), find the lowest common ancestor (LCA) of two given nodes in the BST.
         public TreeNode LowestCommonAncestor_235BST(TreeNode root, TreeNode p, TreeNode q)
         {
