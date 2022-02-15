@@ -265,16 +265,12 @@ namespace LeetCodeAlgo
         }
 
         /// 344. Reverse String
+        /// You must do this by modifying the input array in-place with O(1) extra memory.
         public void ReverseString(char[] s)
         {
-            if (s == null || s.Length <= 1)
-                return;
-
-            int half = s.Length / 2;
-            char temp;
-            for (int i = 0; i < half; i++)
+            for (int i = 0; i < s.Length / 2; i++)
             {
-                temp = s[i];
+                char temp = s[i];
                 s[i] = s[s.Length - 1 - i];
                 s[s.Length - 1 - i] = temp;
             }

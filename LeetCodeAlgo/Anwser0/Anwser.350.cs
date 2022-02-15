@@ -8,27 +8,53 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        ///350. Intersection of Two Arrays II
+        ///350. Intersection of Two Arrays II, #Two Pointers, #HashMap
+        ///Given two integer arrays nums1 and nums2, return an array of their intersection.
+        ///Each element in the result must appear as many times as it shows in both arrays and you may return the result in any order.
         public int[] Intersect(int[] nums1, int[] nums2)
         {
+            Dictionary<int, int> dict1 = new Dictionary<int, int>();
+            foreach(var n in nums1)
+            {
+                if(dict1.ContainsKey(n))
+                    dict1[n]++;
+                else
+                    dict1.Add(n, 1);
+            }
+            Dictionary<int, int> dict2 = new Dictionary<int, int>();
+            foreach (var n in nums2)
+            {
+                if (dict2.ContainsKey(n))
+                    dict2[n]++;
+                else
+                    dict2.Add(n, 1);
+            }
+            var ans=new List<int>();
+            foreach(var key in dict1.Keys)
+            {
+                if (!dict2.ContainsKey(key))
+                    continue;
+                int i = 0;
+                int count = Math.Min(dict1[key], dict2[key]);
+                while (i++< count)
+                    ans.Add(key);
+            }
+            return ans.ToArray();
+        }
+        public int[] Intersect_350_TwoPointers(int[] nums1, int[] nums2)
+        {
+
+            var ans = new List<int>();
+            //O(n)= mlogm+nlogn+(m+n)
             Array.Sort(nums1);
             Array.Sort(nums2);
-
-            if (nums1.Length < nums2.Length)
-            {
-                var temp = nums1;
-                nums1 = nums2;
-                nums2 = temp;
-            }
-
-            List<int> result = new List<int>();
             int i = 0;
             int j = 0;
             while (i < nums1.Length && j < nums2.Length)
             {
                 if (nums1[i] == nums2[j])
                 {
-                    result.Add(nums1[i]);
+                    ans.Add(nums1[i]);
                     i++;
                     j++;
                 }
@@ -41,8 +67,7 @@ namespace LeetCodeAlgo
                     i++;
                 }
             }
-
-            return result.ToArray();
+            return ans.ToArray();
         }
 
         ///367 not pass
@@ -137,29 +162,22 @@ namespace LeetCodeAlgo
         ///384. Shuffle an Array, see Solution_384_Shuffle
 
         ///387. First Unique Character in a String
-
+        ///find the first non-repeating character in it and return its index. If it does not exist, return -1.
         public int FirstUniqChar(string s)
         {
-            Dictionary<char, int> dic = new Dictionary<char, int>();
-
+            Dictionary<char, int> dict = new Dictionary<char, int>();
             for (int i = 0; i < s.Length; i++)
             {
-                if (dic.ContainsKey(s[i]))
-                {
-                    dic[s[i]] = -1;
-                }
+                if (dict.ContainsKey(s[i]))
+                    dict[s[i]]=-1;
                 else
-                {
-                    dic.Add(s[i], i);
-                }
+                    dict.Add(s[i],i);
             }
-
-            foreach (var i in dic.Values)
+            foreach (var key in dict.Keys)
             {
-                if (i != -1)
-                    return i;
+                if (dict[key] != -1)
+                    return dict[key];
             }
-
             return -1;
         }
 

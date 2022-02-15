@@ -331,28 +331,20 @@ namespace LeetCodeAlgo
         ///Assume the environment does not allow you to store 64-bit integers (signed or unsigned).
         public int Reverse(int x)
         {
-            if (x == 0) return 0;
-
-            bool isNeg = false;
+            if (x == 0 || x==int.MinValue)
+                return 0;
+            bool isNeg = x < 0;
             if (x < 0)
-            {
-                isNeg = true;
-                if (x == int.MinValue)
-                    return 0;
                 x = -x;
-            }
-
             int result = 0;
             while (x > 0)
             {
                 if (result > (int.MaxValue / 10))
                     return 0;
-
                 result *= 10;
                 result += x % 10;
                 x = x / 10;
             }
-
             return isNeg ? -result : result;
         }
 
@@ -361,33 +353,43 @@ namespace LeetCodeAlgo
         ///0 <= s.length <= 200, s consists of English letters(lower-case and upper-case), digits(0-9), ' ', '+', '-', and '.'.
         public int MyAtoi(string s)
         {
-            if (string.IsNullOrEmpty(s))
-                return 0;
             s = s.Trim();
-            if (string.IsNullOrEmpty(s))
-                return 0;
-            List<char> list = new List<char>();
-            int sign = 0;
+            int? sign = null;
+            int ans = 0;
+            bool valid = false;
+            bool isOverFlow = false;
             for (int i = 0; i < s.Length; i++)
             {
                 if (char.IsDigit(s[i]))
                 {
-                    //skip head '0', only keep one '0'
-                    if (list.Count == 1 && list[0] == '0')
+                    if (isOverFlow)
+                        continue;
+
+                    if (!valid)
+                        valid=true;
+                    int d = (s[i] - '0');
+
+                    if (sign == -1)
                     {
-                        list.RemoveAt(0);
+                        if (ans > int.MaxValue / 10 || int.MinValue + ans * 10 > -d)
+                            isOverFlow = true;
                     }
-                    list.Add(s[i]);
+                    else
+                    {
+                        if (ans > int.MaxValue / 10 || int.MaxValue - ans * 10 < d)
+                            isOverFlow = true;
+                    }
+                    ans = ans * 10 + d;
                 }
                 else
                 {
-                    if (list.Count > 0)
+                    if (valid)
                         break;
-                    if (s[i] == '+' && sign == 0)
+                    if (s[i] == '+' && sign == null)
                     {
                         sign = 1;
                     }
-                    else if (s[i] == '-' && sign == 0)
+                    else if (s[i] == '-' && sign == null)
                     {
                         sign = -1;
                     }
@@ -397,32 +399,10 @@ namespace LeetCodeAlgo
                     }
                 }
             }
-            if (list.Count > 0)
-            {
-                long ll;
-                try
-                {
-                    ll = long.Parse(string.Join("", list));
-                }
-                catch (Exception ex)
-                {
-                    return sign == -1 ? int.MinValue : int.MaxValue;
-                }
-                if (sign == -1)
-                {
-                    ll = - ll;
-                    if (ll <= int.MinValue)
-                        ll = int.MinValue;
-                    return (int)ll;
-                }
-                else
-                {
-                    if (ll >= int.MaxValue)
-                        ll = int.MaxValue;
-                    return (int)ll;
-                }
-            }
-            return 0;
+
+            return !valid ? 0
+                        : sign == -1 ? (isOverFlow ? int.MinValue : -ans)
+                                    : (isOverFlow ? int.MaxValue : ans);
         }
 
         ///9. Palindrome Number
@@ -806,37 +786,30 @@ namespace LeetCodeAlgo
         }
 
         ///14. Longest Common Prefix
-        /// find the longest common prefix string amongst an array of strings.
         /// Input: strs = ["flower","flow","flight"]
         /// Output: "fl"
         /// 1 <= strs.length <= 200, 0 <= strs[i].length <= 200
         public string LongestCommonPrefix(string[] strs)
         {
-            if (strs.Length == 1)
-                return strs[0];
             var ans = new List<char>();
             for(int i = 0;i < strs[0].Length; i++)
             {
-                bool exit = false;
+                bool fail = false;
                 char c = strs[0][i];
                 for(int j=1;j<strs.Length;j++)
                 {
                     if (strs[j].Length <= i|| strs[j][i]!=c)
                     {
-                        exit = true;
+                        fail = true;
                         break;
                     }
                 }
-                if (exit)
-                {
+                if (fail)
                     break;
-                }
                 else
-                {
                     ans.Add(c);
-                }
             }
-            return string.Join("",ans);
+            return new string(ans.ToArray());
         }
 
         ///15. 3Sum
@@ -1366,36 +1339,49 @@ namespace LeetCodeAlgo
             return head;
         }
 
-        ///26. Remove Duplicates from Sorted Array
+        ///26. Remove Duplicates from Sorted Array, #HashMap
         ///nums sorted in non-decreasing order, remove the duplicates that each unique element appears only once.
         ///-100 <= nums[i] <= 100
         public int RemoveDuplicates_25_OnlyOnce(int[] nums)
         {
-            int ship = 100;
-            int repeat = 1;
-            int[] arr = new int[ship*2+1];
-            foreach (var i in nums)
-                arr[i + ship]++;
-            int count = 0;
-            int skipCount = 0;
-            for (int i = 0; i < arr.Length; i++)
+            Dictionary<int,int> dict=new Dictionary<int,int>();
+            foreach(var n in nums)
             {
-                if (count + skipCount == arr.Length)
-                    break;
-
-                if (arr[i] == 0)
-                    continue;
-
-                skipCount += arr[i] - repeat;
-                int j = arr[i]> repeat?repeat: arr[i];
-                while(j > 0)
-                {
-                    nums[count] = i - ship;
-                    count++;
-                    j--;
-                }
+                if(!dict.ContainsKey(n))
+                    dict.Add(n,1);
             }
-            return count;
+
+            var keys=dict.Keys.ToList();
+            for (int i = 0; i < keys.Count; i++)
+                nums[i] = keys[i];
+
+            return keys.Count;
+
+            //int ship = 100;
+            //int repeat = 1;
+            //int[] arr = new int[ship*2+1];
+            //foreach (var i in nums)
+            //    arr[i + ship]++;
+            //int count = 0;
+            //int skipCount = 0;
+            //for (int i = 0; i < arr.Length; i++)
+            //{
+            //    if (count + skipCount == arr.Length)
+            //        break;
+
+            //    if (arr[i] == 0)
+            //        continue;
+
+            //    skipCount += arr[i] - repeat;
+            //    int j = arr[i]> repeat?repeat: arr[i];
+            //    while(j > 0)
+            //    {
+            //        nums[count] = i - ship;
+            //        count++;
+            //        j--;
+            //    }
+            //}
+            //return count;
         }
 
         ///27. Remove Element
@@ -1428,24 +1414,17 @@ namespace LeetCodeAlgo
         ///0 <= haystack.length, needle.length <= 5 * 10^4
         public int StrStr(string haystack, string needle)
         {
-            if (string.IsNullOrEmpty(needle))
-                return 0;
-
-            for (int i = 0; i < haystack.Length + 1 - needle.Length; i++)
+            for (int i = 0; i < haystack.Length - needle.Length+1; i++)
             {
-                if (haystack[i] == needle[0])
+                int j = 0;
+                while (j < needle.Length)
                 {
-                    int j = 1;
-                    while (j < needle.Length && i + j < haystack.Length)
-                    {
-                        if (needle[j] != haystack[i + j])
-                            break;
-                        j++;
-                    }
-
-                    if (j == needle.Length)
-                        return i;
+                    if (needle[j] != haystack[i + j])
+                        break;
+                    j++;
                 }
+                if (j == needle.Length)
+                    return i;
             }
             return -1;
         }
@@ -1830,37 +1809,24 @@ namespace LeetCodeAlgo
         }
 
         /// 36. Valid Sudoku
-
         public bool IsValidSudoku(char[][] board)
         {
-            int[][] arrRow = new int[9][];
-            int[][] arrCol = new int[9][];
-            int[][] arrBlock = new int[9][];
-
-            for (int i = 0; i < 9; i++)
-            {
-                arrRow[i] = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-                arrCol[i] = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-                arrBlock[i] = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            }
-
+            int[,] arrRow = new int[9,9];
+            int[,] arrCol = new int[9,9];
+            int[,] arrBlock = new int[9,9];
             for (int i = 0; i < board.Length; i++)
             {
                 for (int j = 0; j < board[i].Length; j++)
                 {
-                    char v = board[i][j];
-                    if (v == '.')
-                    {
+                    if (board[i][j] == '.')
                         continue;
-                    }
-
-                    int k = v - '1';
-
-                    if (arrRow[i][k] == 0 && arrCol[j][k] == 0 && arrBlock[i / 3 * 3 + j / 3][k] == 0)
+                    int k = board[i][j] - '1';
+                    int cell = i / 3 * 3 + j / 3;
+                    if (arrRow[i,k] == 0 && arrCol[j,k] == 0 && arrBlock[cell, k] == 0)
                     {
-                        arrRow[i][k] = 1;
-                        arrCol[j][k] = 1;
-                        arrBlock[i / 3 * 3 + j / 3][k] = 1;
+                        arrRow[i,k] = 1;
+                        arrCol[j,k] = 1;
+                        arrBlock[cell, k] = 1;
                     }
                     else
                     {
@@ -1868,7 +1834,6 @@ namespace LeetCodeAlgo
                     }
                 }
             }
-
             return true;
         }
 
@@ -2284,7 +2249,7 @@ namespace LeetCodeAlgo
 
             return 0;
         }
-        ///42. Trapping Rain Water, #DP
+        ///42. Trapping Rain Water, #Two Pointers
         ///Given n non-negative integers representing an elevation map where the width of each bar is 1,
         ///compute how much water it can trap after raining.
         ///0 <= height[i] <= 10^5, 1 <= height.Length <= 2 * 10^4
@@ -2294,55 +2259,37 @@ namespace LeetCodeAlgo
             {
                 return 0;
             }
-            int left = 0; int right = height.Length - 1; // Pointers to both ends of the array.
+            int left = 0; int right = height.Length - 1;
             int maxLeft = 0; int maxRight = 0;
 
             int totalWater = 0;
             while (left < right)
             {
-                // Water could, potentially, fill everything from left to right, if there is nothing in between.
                 if (height[left] < height[right])
                 {
-                    // If the current elevation is greater than the previous maximum, water cannot occupy that point at all.
-                    // However, we do know that everything from maxLeft to the current index, has been optimally filled, as we've
-                    // been adding water to the brim of the last maxLeft.
                     if (height[left] >= maxLeft)
                     {
-                        // So, we say we've found a new maximum, and look to see how much water we can fill from this point on.
                         maxLeft = height[left];
-                        // If we've yet to find a maximum, we know that we can fill the current point with water up to the previous
-                        // maximum, as any more will overflow it. We also subtract the current height, as that is the elevation the
-                        // ground will be at.
                     }
                     else
                     {
                         totalWater += maxLeft - height[left];
                     }
-                    // Increment left, we'll now look at the next point.
                     left++;
-                    // If the height at the left is NOT greater than height at the right, we cannot fill from left to right without over-
-                    // flowing; however, we do know that we could potentially fill from right to left, if there is nothing in between.
                 }
                 else
                 {
-                    // Similarly to above, we see that we've found a height greater than the max, and cannot fill it whatsoever, but
-                    // everything before is optimally filled
                     if (height[right] >= maxRight)
                     {
-                        // We can say we've found a new maximum and move on.  
                         maxRight = height[right];
-                        // If we haven't found a greater elevation, we can fill the current elevation with maxRight - height[right]
-                        // water.
                     }
                     else
                     {
                         totalWater += maxRight - height[right];
                     }
-                    // Decrement left, we'll look at the next point.
                     right--;
                 }
             }
-            // Return the sum we've been adding to.
             return totalWater;
         }
         /// 43. Multiply Strings

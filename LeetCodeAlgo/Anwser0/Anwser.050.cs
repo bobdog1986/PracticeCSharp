@@ -468,47 +468,34 @@ namespace LeetCodeAlgo
         }
 
         ///66. Plus One
-        /// 0-index is the highest bit
+        /// 0-index is the highest bit, Increment the large integer by one and return the resulting array of digits.
         ///Input: digits = [1,2,3]
         ///Output: [1,2,4]
-
         public int[] PlusOne(int[] digits)
         {
-            if (digits == null || digits.Length == 0)
-                return new int[] { 1 };
-
             int i = digits.Length - 1;
             while (i >= 0)
             {
-                if (digits[i] != 9)
+                if(digits[i] < 9 || i==0 )
                 {
                     digits[i]++;
-                    return digits;
+                    break;
                 }
                 else
                 {
-                    if (0 == i)
-                    {
-                        digits[i]++;
-                        break;
-                    }
-                    else
-                    {
-                        digits[i] = 0;
-                    }
+                    digits[i] = 0;
                 }
-
                 i--;
             }
-
             if (digits[0] == 10)
             {
-                digits = new int[digits.Length + 1];
-                digits[0] = 1;
+                var list=new List<int>(digits);
+                list[0] %= 10;
+                list.Insert(0, 1);
+                digits = list.ToArray();
             }
             return digits;
         }
-
         /// 67. Add Binary
         /// Given two binary strings a and b, return their sum as a binary string.
         ///1 <= a.length, b.length <= 104, no leading zero

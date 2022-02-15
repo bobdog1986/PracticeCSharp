@@ -635,14 +635,6 @@ namespace LeetCodeAlgo
             if (prices == null || prices.Length <= 1)
                 return 0;
 
-            if (prices.Length == 2)
-            {
-                if (prices[0] >= prices[1])
-                    return 0;
-                else
-                    return prices[1] - prices[0];
-            }
-
             int sum = 0;
             bool isHold = false;
             int buy = 0;
@@ -688,43 +680,51 @@ namespace LeetCodeAlgo
             return sum;
         }
 
-        ///125. Valid Palindrome
+        ///125. Valid Palindrome, #Two Pointers
         ///after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters,
         ///a-z, A-Z, 0-9
         public bool IsPalindrome(string s)
         {
-            Stack<char> stack = new Stack<char>();
-
-            for(int i=0; i<s.Length; i++)
+            List<char> list = new List<char>();
+            foreach (var c in s)
             {
-                if ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= '0' && s[i] <= '9'))
-                {
-                    stack.Push(s[i]);
-                }
-                else if(s[i] >= 'A' && s[i] <= 'Z')
-                {
-                    stack.Push((char)(s[i]+32));
-                }
+                if (char.IsLetter(c))
+                    list.Add(char.ToLower(c));
+                if (char.IsDigit(c))
+                    list.Add(c);
             }
-
-            if (stack.Count == 0)
-                return true;
-
-            for (int i = 0; i < s.Length; i++)
+            for (int i = 0; i < list.Count / 2; i++)
             {
-                if ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= '0' && s[i] <= '9'))
-                {
-                    if (s[i] != stack.Pop())
-                        return false;
-                }
-                else if (s[i] >= 'A' && s[i] <= 'Z')
-                {
-                    if ((char)(s[i] + 32) != stack.Pop())
-                        return false;
-                }
+                if (list[i] != list[list.Count - 1 - i])
+                    return false;
             }
             return true;
         }
+
+        public bool IsPalindrome_TwoPointers(string s)
+        {
+            int left = 0;
+            int right = s.Length - 1;
+            while (left < right)
+            {
+                while (left < right && !char.IsLetterOrDigit(s[left]))
+                {
+                    left++;
+                }
+                while (left < right && !char.IsLetterOrDigit(s[right]))
+                {
+                    right--;
+                }
+                if (left < right && char.ToLower(s[left]) != char.ToLower(s[right]))
+                {
+                    return false;
+                }
+                left++;
+                right--;
+            }
+            return true;
+        }
+
         /// 127. Word Ladder
         /// A transformation sequence from word beginWord to word endWord using a dictionary wordList
         /// is a sequence of words beginWord -> s1 -> s2 -> ... -> sk such that:
@@ -882,20 +882,17 @@ namespace LeetCodeAlgo
 
             return ans;
         }
-        /// 136. Single Number
+        /// 136. Single Number, #HashMap
         /// Given a non - empty array of integers nums, every element appears twice except for one.Find that single one.
         /// You must implement a solution with a linear runtime complexity and use only constant extra space.
-        /// Input: nums = [2,2,1]
-        /// Output: 1
         public int SingleNumber_136(int[] nums)
         {
             return nums.Aggregate((x, y) => x ^ y);
         }
 
-        ///137. Single Number II
+        ///137. Single Number II, #HashMap
         ///Given an integer array nums where every element appears three times except for one, which appears exactly once.
         ///Find the single element and return it.
-        ///1 <= nums.length <= 3 * 10^4,-2^31 <= nums[i] <= 2^31 - 1
         public int SingleNumber(int[] nums)
         {
             Dictionary<int,int> dict=new Dictionary<int, int>();

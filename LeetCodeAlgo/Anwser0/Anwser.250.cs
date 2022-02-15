@@ -97,34 +97,20 @@ namespace LeetCodeAlgo
         }
 
         /// 283. Move Zeroes
+        /// move all 0's to the end of it while maintaining the relative order of the non-zero elements.
         public void MoveZeroes(int[] nums)
         {
-            if (nums == null || nums.Length == 0)
-                return;
-
-            int zeroCount = 0;
-            for (int i = 0; i < nums.Length - 1; i++)
+            int i = 0;
+            int[] temp=new int[nums.Length];
+            foreach(var n in nums)
             {
-                if (i + zeroCount >= nums.Length - 1)
-                    break;
-
-                while (nums[i] == 0)
-                {
-                    for (int j = i; j < nums.Length - 1 - zeroCount; j++)
-                    {
-                        nums[j] = nums[j + 1];
-                    }
-
-                    nums[nums.Length - 1 - zeroCount] = 0;
-
-                    zeroCount++;
-
-                    if (i + zeroCount >= nums.Length - 1)
-                        break;
-                }
+                if(n != 0)
+                    temp[i++] = n;
             }
-
-            Console.WriteLine($"zer0Count = {zeroCount}");
+            for (int j=0;j < nums.Length; j++)
+            {
+                nums[j] = j < i ? temp[j] : 0;
+            }
         }
 
         ///290. Word Pattern

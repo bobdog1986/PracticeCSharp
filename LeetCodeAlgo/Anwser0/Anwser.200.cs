@@ -242,11 +242,18 @@ namespace LeetCodeAlgo
             Array.Sort(nums);
             return nums[nums.Length - k];
         }
-        /// 217. Contains Duplicate
+        /// 217. Contains Duplicate, #HashMap
         public bool ContainsDuplicate(int[] nums)
         {
-            var dist = nums.Distinct();
-            return dist.Count() != nums.Length;
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach(var n in nums)
+            {
+                if (dict.ContainsKey(n))
+                    dict[n]++;
+                else
+                    dict.Add(n, 1);
+            }
+            return dict.Values.Max()>1;
         }
 
         ///221. Maximal Square, #DP
@@ -460,6 +467,25 @@ namespace LeetCodeAlgo
             return left ?? right;
         }
 
+        ///237. Delete Node in a Linked List
+        ///Write a function to delete a node in a singly-linked list.
+        ///You will not be given access to the head of the list, instead you will be given access to the node to be deleted directly.
+        public void DeleteNode(ListNode node)
+        {
+            ListNode last = null;
+            ListNode curr = node;
+            while(curr != null)
+            {
+                if(curr.next == null)
+                {
+                    last.next = null;
+                    break;
+                }
+                curr.val = curr.next.val;
+                last = curr;
+                curr = curr.next;
+            }
+        }
         /// 238. Product of Array Except Self
         ///return an array such that answer[i] = product of all the elements of nums except nums[i].
         ///O(n) time and without using the division operation.
@@ -537,25 +563,23 @@ namespace LeetCodeAlgo
             return false;
         }
         /// 242. Valid Anagram
-
+        /// Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+        /// An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, same length
+        /// Input: s = "anagram", t = "nagaram" =>Output: true
         public bool IsAnagram(string s, string t)
         {
-            var arr1 = s.ToArray().ToList();
-            var arr2 = t.ToArray().ToList();
-            while (arr1.Count > 0)
+            if (s.Length != t.Length)
+                return false;
+            int[] arr = new int[26];
+            foreach (var c in s)
+                arr[c - 'a']++;
+            foreach(var c in t)
             {
-                var j = arr2.IndexOf(arr1[0]);
-                if (j >= 0)
-                {
-                    arr1.RemoveAt(0);
-                    arr2.RemoveAt(j);
-                }
-                else
-                {
+                if (arr[c - 'a'] == 0)
                     return false;
-                }
+                arr[c - 'a']--;
             }
-            return arr2.Count == 0;
+            return true;
         }
 
 

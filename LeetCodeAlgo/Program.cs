@@ -17,7 +17,7 @@ namespace LeetCodeAlgo
             int k = 2;
             var val1 = 5;
             var val2 = 2;
-            var str1 = "qa";
+            var str1 = "A man, a plan, a canal: Panama";
             var str2 = "sq";
             var word1 = new string[] { "ABC", "ACB", "ABC", "ACB", "ACB" };
             var mat1 = new int[][]
@@ -81,7 +81,7 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             ////var result = anwser.IsMatch("baabbbaccbccacacc","c*..b*a*a.*a..*c");
             ////var result = anwser.IsMatch("bbcacbabbcbaaccabc","b*a*a*.c*bb*b*.*.*");
-            var result = anwser.Trap(arr1);
+            var result = anwser.IsPalindrome(str1);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();
