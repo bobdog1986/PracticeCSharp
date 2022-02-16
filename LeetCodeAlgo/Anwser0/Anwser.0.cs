@@ -101,38 +101,33 @@ namespace LeetCodeAlgo
 
         /// 3. Longest Substring Without Repeating Characters, #HashMap
         /// Given a string s, find the length of the longest substring without repeating characters.
+        /// s consists of English letters, digits, symbols and spaces.
         public int LengthOfLongestSubstring(string s)
         {
             if (s.Length <= 1)
                 return s.Length;
             int max = 1;
             int len = 0;
-            Dictionary<int, int> dict = new Dictionary<int, int>();
+            int[] arr=new int[128];
+            for (int i = 0; i < arr.Length; i++)
+                arr[i] = -1;
             for (int i = 0; i < s.Length; i++)
             {
-                char c = s[i];
-                if (dict.ContainsKey(c))
+                int j = s[i];
+                if (arr[j] != -1)
                 {
-                    if(dict[c] != -1)
+                    int start = arr[j];
+                    for (int k = 0; k < arr.Length && len > 0; k++)
                     {
-                        int j = dict[c];
-                        foreach (var key in dict.Keys.ToList())
+                        if (arr[k] != -1 && arr[k] <= start)
                         {
-                            if (dict[key]!=-1 && dict[key] <= j)
-                            {
-                                dict[key] = -1;
-                                len--;
-                            }
+                            arr[k] = -1;
+                            len--;
                         }
                     }
-                    dict[c] = i;
-                    len++;
                 }
-                else
-                {
-                    dict.Add(c,i);
-                    len++;
-                }
+                arr[j] = i;
+                len++;
                 max = Math.Max(max, len);
             }
             return max;
@@ -191,8 +186,8 @@ namespace LeetCodeAlgo
         {
             if (s.Length <= 1)
                 return s;
-            string ans = s.Substring(0, 1);
-            int len = 1;
+            string ans =string.Empty;
+            int len = 0;
             for (int i = 0; i < s.Length; i++)
             {
                 //find all aba pattern, loop only all possible index
@@ -878,53 +873,30 @@ namespace LeetCodeAlgo
         /// 2- ABC, 3-DEF, 4-GHI, 5-JKL,6-MNO,7-PQRS,8-TUV 9-WXYZ
         public IList<string> LetterCombinations(string digits)
         {
-            Dictionary<char, List<char>> dict = new Dictionary<char, List<char>>
+            if (digits.Length == 0)
+                return new List<string>();
+            Dictionary<char, string> dict = new Dictionary<char, string>
             {
-                { '2', new List<char>() { 'a', 'b', 'c' } },
-                { '3', new List<char>() { 'd', 'e', 'f' } },
-                { '4', new List<char>() { 'g', 'h', 'i' } },
-                { '5', new List<char>() { 'j', 'k', 'l' } },
-                { '6', new List<char>() { 'm', 'n', 'o' } },
-                { '7', new List<char>() { 'p', 'q', 'r', 's' } },
-                { '8', new List<char>() { 't', 'u', 'v' } },
-                { '9', new List<char>() { 'w', 'x', 'y', 'z' } }
+                { '2', "abc" } ,
+                { '3', "def" } ,
+                { '4', "ghi" } ,
+                { '5', "jkl" } ,
+                { '6', "mno" } ,
+                { '7', "pqrs" } ,
+                { '8', "tuv" } ,
+                { '9', "wxyz" } ,
             };
-
-            var results = new List<List<char>>();
+            var ans = new List<List<char>>();
+            ans.Add(new List<char>());
             foreach (var d in digits)
             {
-                if (results.Count == 0)
-                {
-                    List<List<char>> list = new List<List<char>>();
-
+                List<List<char>> list = new List<List<char>>();
+                foreach (var l in ans)
                     foreach (char c in dict[d])
-                    {
-                        list.Add(new List<char> { c });
-                    }
-
-                    results = list;
-                }
-                else
-                {
-                    List<List<char>> list = new List<List<char>>();
-
-                    foreach (var l in results)
-                    {
-                        foreach (char c in dict[d])
-                        {
-                            var sub = new List<char>(l)
-                            {
-                                c
-                            };
-                            list.Add(sub);
-                        }
-                    }
-
-                    results = list;
-                }
+                        list.Add(new List<char>(l) { c });
+                ans = list;
             }
-
-            return results.Select(x => string.Join("", x)).ToList();
+            return ans.Select(x => new string(x.ToArray())).ToList();
         }
 
         /// 18. 4Sum
@@ -948,22 +920,18 @@ namespace LeetCodeAlgo
                         continue;
 
                     var sum = nums[i] + nums[j];
-
                     int left = j + 1;
                     int right = len - 1;
-
                     while (left < right)
                     {
                         var t = nums[left] + nums[right] + sum;
-
                         if (t == target)
                         {
                             result.Add(new List<int> { nums[i], nums[j], nums[left], nums[right] });
-                            while (left < len - 1 && nums[left] == nums[left + 1])
+                            while (left<right && nums[left] == nums[left + 1])
                                 left++;
-                            while (right > 0 && nums[right] == nums[right - 1])
+                            while (left < right && nums[right] == nums[right - 1])
                                 right--;
-
                             left++;
                             right--;
                         }

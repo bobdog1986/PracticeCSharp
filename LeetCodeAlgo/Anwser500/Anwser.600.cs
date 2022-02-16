@@ -103,7 +103,23 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        ///653. Two Sum IV - Input is a BST
+        ///621. Task Scheduler
+        ///1 <= task.length <= 10^4, tasks[i] is upper-case English letter.
+        public int LeastInterval(char[] tasks, int n)
+        {
+            int ans = tasks.Length;
+            if (n == 0) return ans;
+
+            int[] arr=new int[26];
+            foreach (var t in tasks)
+                arr[t - 'A']++;
+
+
+
+            return ans;
+
+        }
+        /// 653. Two Sum IV - Input is a BST
         ///return true if there exist two elements in the BST such that sum = target.
 
         public bool FindTarget(TreeNode root, int k)

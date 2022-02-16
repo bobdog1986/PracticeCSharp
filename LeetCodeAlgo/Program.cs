@@ -17,7 +17,7 @@ namespace LeetCodeAlgo
             int k = 2;
             var val1 = 5;
             var val2 = 2;
-            var str1 = "A man, a plan, a canal: Panama";
+            var str1 = "AAABBB";
             var str2 = "sq";
             var word1 = new string[] { "ABC", "ACB", "ABC", "ACB", "ACB" };
             var mat1 = new int[][]
@@ -82,7 +82,7 @@ namespace LeetCodeAlgo
             ////var result = anwser.IsMatch("baabbbaccbccacacc","c*..b*a*a.*a..*c");
             ////var result = anwser.IsMatch("bbcacbabbcbaaccabc","b*a*a*.c*bb*b*.*.*");
             uint uintVal=0b10000000_00000000_00000000_00000000;
-            var result = anwser.reverseBits(uintVal);
+            var result = anwser.LeastInterval(str1.ToArray(),2);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();

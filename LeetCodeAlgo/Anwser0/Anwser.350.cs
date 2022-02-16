@@ -139,23 +139,15 @@ namespace LeetCodeAlgo
         /// 380. Insert Delete GetRandom O(1), see RandomizedSet
 
         ///383. Ransom Note
+        ///Given two strings ransomNote and magazine, return true if ransomNote can be constructed from magazine and false otherwise.
+        ///Each letter in magazine can only be used once in ransomNote.
         public bool CanConstruct(string ransomNote, string magazine)
         {
-            var arr1 = ransomNote.ToArray().ToList();
-            var arr2 = magazine.ToArray().ToList();
-            while (arr1.Count > 0)
-            {
-                var j = arr2.IndexOf(arr1[0]);
-                if (j >= 0)
-                {
-                    arr1.RemoveAt(0);
-                    arr2.RemoveAt(j);
-                }
-                else
-                {
-                    return false;
-                }
-            }
+            int[] arr = new int[26];
+            foreach (var c in magazine)
+                arr[c - 'a']++;
+            foreach(var c in ransomNote)
+                if (arr[c - 'a']-- == 0) return false;
             return true;
         }
 
