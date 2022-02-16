@@ -90,7 +90,21 @@ namespace LeetCodeAlgo
             return dp[0] == 10001 ? -1 : dp[0];
         }
 
-        ///327. Count of Range Sum --- not pass
+        ///326. Power of Three
+        ///Given an integer n, return true if it is a power of three. Otherwise, return false.
+        ///An integer n is a power of three, if there exists an integer x such that n == 3x.
+        public bool IsPowerOfThree(int n)
+        {
+            while (n >= 3)
+            {
+                if (n % 3 != 0)
+                    return false;
+                n /= 3;
+            }
+            return n == 1;
+        }
+
+        /// 327. Count of Range Sum --- not pass
         ///return the number of range sums that lie in [lower, upper] inclusive.
 
         public int CountRangeSum(int[] nums, int lower, int upper)
