@@ -1076,36 +1076,18 @@ namespace LeetCodeAlgo
         ///Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
         public bool IsValid(string s)
         {
-            if (string.IsNullOrEmpty(s))
-                return false;
-
             Stack<char> stack = new Stack<char>();
             foreach (var c in s)
             {
-                if (c == '[' || c == '{' || c == '(')
-                {
-                    stack.Push(c);
-                }
-
+                if (c == '[') stack.Push(']');
+                if (c == '(') stack.Push(')');
+                if (c == '{') stack.Push('}');
                 if (c == ']' || c == '}' || c == ')')
                 {
-                    if (stack.Count == 0)
+                    if (stack.Count == 0 || c != stack.Pop())
                         return false;
-
-                    var a = stack.Pop();
-
-                    if (a == '[' && c == ']'
-                        || a == '(' && c == ')'
-                        || a == '{' && c == '}')
-                    {
-                    }
-                    else
-                    {
-                        return false;
-                    }
                 }
             }
-
             return stack.Count == 0;
         }
 

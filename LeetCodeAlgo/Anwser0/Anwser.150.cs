@@ -267,28 +267,17 @@ namespace LeetCodeAlgo
 
         ///190. Reverse Bits
         ///Reverse bits of a given 32 bits unsigned integer.
-        ///Input: n =            00000010100101000001111010011100
-        ///Output:    964176192 (00111001011110000010100101000000)
         public uint reverseBits(uint n)
         {
             if (n == 0) return 0;
-
             uint result = 0;
-            uint a = uint.MaxValue / 2 + 1;
-            uint c = 1;
-            while (a > 0)
+            for (int i = 0; i < 32; i++)
             {
-                uint b = n / a;
-                if (b == 1)
-                {
-                    n = n - a;
-
-                    result += c;
-                }
-                a = a / 2;
-                c = c * 2;
+                result <<= 1;
+                if ((n & 1) == 1)
+                    result++;
+                n >>= 1;
             }
-
             return result;
         }
 

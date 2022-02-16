@@ -482,7 +482,6 @@ namespace LeetCodeAlgo
                 list.Add(list2);
                 i++;
             }
-
             return list;
         }
 

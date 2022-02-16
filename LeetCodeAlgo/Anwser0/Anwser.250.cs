@@ -48,6 +48,21 @@ namespace LeetCodeAlgo
             }
             return ugly[n - 1];
         }
+        ///268. Missing Number
+        ///Given an array nums containing n distinct numbers in the range [0, n],
+        ///return the only number in the range that is missing from the array.
+        public int MissingNumber(int[] nums)
+        {
+            bool[] arr=new bool[nums.Length + 1];
+            foreach(var num in nums)
+                arr[num] = true;
+            for (int i=0; i < arr.Length; i++)
+            {
+                if(!arr[i])
+                    return i;
+            }
+            return -1;
+        }
         /// 278. First Bad Version, #Binary Search
         /// 1 <= bad <= n <= 2^31 - 1
         public int FirstBadVersion(int n)
