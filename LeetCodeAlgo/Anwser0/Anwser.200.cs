@@ -134,7 +134,26 @@ namespace LeetCodeAlgo
             return head;
         }
 
-        ///206. Reverse Linked List
+        ///204. Count Primes
+        ///Given an integer n, return the number of prime numbers that are strictly less than n.
+        public int CountPrimes(int n)
+        {
+            bool[] notPrime = new bool[n];
+            int count = 0;
+            for (int i = 2; i < n; i++)
+            {
+                if (notPrime[i] == false)
+                {
+                    count++;
+                    for (int j = 2; i * j < n; j++)
+                    {
+                        notPrime[i * j] = true;
+                    }
+                }
+            }
+            return count;
+        }
+        /// 206. Reverse Linked List
         ///Given the head of a singly linked list, reverse the list, and return the reversed list.
         ///The number of nodes in the list is the range [0, 5000].
         public ListNode ReverseList(ListNode head)
