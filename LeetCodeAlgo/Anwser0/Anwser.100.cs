@@ -583,8 +583,45 @@ namespace LeetCodeAlgo
         public int MaxProfit_122_TradeManyTimes(int[] prices)
         {
             int sum = 0;
-            bool isHold = false;
-            int buy = 0;
+            bool isHold = true;
+            int buy = prices[0];
+
+            for(int i = 1; i < prices.Length; i++)
+            {
+                if (isHold)
+                {
+                    if (i < prices.Length - 1 )
+                    {
+
+                        if (prices[i] < buy)
+                        {
+                            buy = prices[i];
+                        }
+                        else
+                        {
+                            if (prices[i] > prices[i + 1])
+                            {
+                                if (prices[i] > buy)
+                                {
+                                    isHold = false;
+                                    sum += prices[i] - buy;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if(prices[i] > buy)
+                            sum+=prices[i]-buy;
+                    }
+
+                }
+                else
+                {
+                    buy=prices[i];
+                    isHold = true;
+                }
+            }
             return sum;
         }
 

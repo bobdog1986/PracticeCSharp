@@ -44,6 +44,34 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///412. Fizz Buzz
+        ///Given an integer n, return a string array answer (1-indexed) where:
+        ///answer[i] == "FizzBuzz" if i is divisible by 3 and 5.
+        ///answer[i] == "Fizz" if i is divisible by 3.
+        ///answer[i] == "Buzz" if i is divisible by 5.
+        ///answer[i] == i(as a string) if none of the above conditions are true.
+        public IList<string> FizzBuzz(int n)
+        {
+            var ans = new string[n];
+            for (int i = 1; i <= n; i++)
+            {
+                ans[i - 1] = i.ToString();
+            }
+            for (int i = 3-1; i < n; i += 3)
+            {
+                ans[i] = "Fizz";
+            }
+            for (int i = 5-1; i < n; i += 5)
+            {
+                ans[i] = "Buzz";
+            }
+            for (int i = 15-1; i < n; i += 15)
+            {
+                ans[i] = "FizzBuzz";
+            }
+            return ans;
+        }
+
         /// 413. Arithmetic Slices, #DP
         ///at least 3 nums with same distance, eg. [1,2,3,4], [1,1,1]
         ///-1000 <= nums[i] <= 1000
@@ -54,7 +82,7 @@ namespace LeetCodeAlgo
             int dp = 0;
             for (int i = 2; i < nums.Length; i++)
             {
-                if(nums[i] - nums[i - 1] == nums[i - 1] - nums[i - 2])
+                if (nums[i] - nums[i - 1] == nums[i - 1] - nums[i - 2])
                 {
                     dp++;
                     ans += dp;
@@ -134,9 +162,9 @@ namespace LeetCodeAlgo
         {
             int ans = 0;
 
-            for(int i = 0;i < nums.Length-1; i++)
+            for (int i = 0; i < nums.Length - 1; i++)
             {
-                for(int j = i+1; j < nums.Length; j++)
+                for (int j = i + 1; j < nums.Length; j++)
                 {
                     ans = Math.Max(ans, nums[i] ^ nums[j]);
                 }
@@ -155,10 +183,10 @@ namespace LeetCodeAlgo
 
             int ans = k;
             int count = 0;
-            int[] arr=new int[26];
+            int[] arr = new int[26];
             int left = 0;
             int max = 0;
-            for(int i = 0; i < s.Length; i++)
+            for (int i = 0; i < s.Length; i++)
             {
                 arr[s[i] - 'A']++;
                 count++;
@@ -206,7 +234,7 @@ namespace LeetCodeAlgo
         /// should use sliding window
         public List<int> FindAnagrams(string s, string p)
         {
-            var ans= new List<int>();
+            var ans = new List<int>();
             if (p.Length > s.Length)
                 return ans;
             int left = 0, right = 0;
@@ -383,6 +411,5 @@ namespace LeetCodeAlgo
 
             return ans;
         }
-
     }
 }

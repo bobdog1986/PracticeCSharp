@@ -6,13 +6,12 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        /// 53. Maximum Subarray
+        /// 53. Maximum Subarray, #DP
         /// find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
         public int MaxSubArray(int[] nums)
         {
             int sum = 0;
-            int max = nums.Max();
-
+            int max = nums[0];
             for (int i = 0; i < nums.Length; i++)
             {
                 sum += nums[i];
@@ -25,8 +24,8 @@ namespace LeetCodeAlgo
                     max = Math.Max(max, sum);
                 }
             }
-
-            return max;
+            //if all negtive num ,return nums.Max()
+            return max > 0 ? max : nums.Max();
         }
         ///54. Spiral Matrix
         ///Given an m x n matrix, return all elements of the matrix in spiral order.
