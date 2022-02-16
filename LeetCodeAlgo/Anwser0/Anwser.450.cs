@@ -160,6 +160,22 @@ namespace LeetCodeAlgo
             }
             return false;
         }
+        ///461. Hamming Distance
+        ///return the Hamming distance between two integers, is the number of positions at which the corresponding bits are different.
+        public int HammingDistance(int x, int y)
+        {
+            int count = 0;
+            while(x!=0 && y != 0)
+            {
+                if ((x & 1) != (y & 1))
+                {
+                    count++;
+                }
+                x>>= 1;
+                y>>= 1;
+            }
+            return count;
+        }
         /// 492
         public int[] ConstructRectangle(int area)
         {
