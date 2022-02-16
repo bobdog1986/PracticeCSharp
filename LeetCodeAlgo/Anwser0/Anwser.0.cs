@@ -817,98 +817,30 @@ namespace LeetCodeAlgo
         ///0 <= nums.length <= 3000, -10^5 <= nums[i] <= 10^5
         public IList<IList<int>> ThreeSum(int[] nums)
         {
-            if (nums == null || nums.Length <= 2)
-                return new List<IList<int>>();
-
-            var llist = new List<IList<int>>();
-
-            int[] pos = new int[100001];
-            int[] neg = new int[100001];
-
-            int right = 0;
-            int left = 0;
-            foreach (int i in nums)
+            Array.Sort(nums);
+            var ans=new List<IList<int>>();
+            for(int i = 0; i < nums.Length-2; i++)
             {
-                if (i == 0)
+                if (i == 0 || (i > 0 && nums[i] != nums[i - 1]))
                 {
-                    pos[0]++;
-                }
-                else if (i > 0)
-                {
-                    pos[i]++;
-                    right = Math.Max(right, i);
-                }
-                else
-                {
-                    neg[-i]++;
-                    left = Math.Max(left, -i);
-                }
-            }
-
-            if (pos[0] >= 3)
-            {
-                llist.Add(new List<int> { 0, 0, 0 });
-            }
-
-            if (pos[0] >= 1)
-            {
-                for (int i = 1; i <= right; i++)
-                {
-                    if (pos[i] > 0 && neg[i] > 0)
+                    int left = i + 1;
+                    int right = nums.Length - 1;
+                    int sum = 0 - nums[i];
+                    while (left < right)
                     {
-                        llist.Add(new List<int> { -i, 0, i });
+                        if (nums[left] + nums[right] == sum)
+                        {
+                            ans.Add( new List<int> { nums[i], nums[left], nums[right] });
+                            while (left < right && nums[left] == nums[left + 1]) left++;
+                            while (left < right && nums[right] == nums[right - 1]) right--;
+                            left++; right--;
+                        }
+                        else if (nums[left] + nums[right] < sum) left++;
+                        else right--;
                     }
                 }
             }
-
-            for (int i = 1; i <= right; i++)
-            {
-                if (pos[i] == 0)
-                    continue;
-                for (int j = 1; j <= left; j++)
-                {
-                    if (i == j)
-                        continue;
-                    if (neg[j] == 0)
-                        continue;
-
-                    var target = j - i;
-                    if (target > 0)
-                    {
-                        if (pos[target] == 0)
-                            continue;
-
-                        if (target == i && pos[i] <= 1)
-                            continue;
-
-                        //already added
-                        if (target < i)
-                            continue;
-
-                        llist.Add(new List<int> { -j, i, target });
-                    }
-                    else if (target < 0)
-                    {
-                        if (neg[-target] == 0)
-                            continue;
-
-                        if (-target == j && neg[j] <= 1)
-                            continue;
-
-                        //already added
-                        if (-target < j)
-                            continue;
-
-                        llist.Add(new List<int> { target, -j, i });
-                    }
-                    else
-                    {
-                        //no zero
-                    }
-                }
-            }
-
-            return llist;
+            return ans;
         }
 
         ///16. 3Sum Closest

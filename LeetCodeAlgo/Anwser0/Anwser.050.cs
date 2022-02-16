@@ -677,6 +677,42 @@ namespace LeetCodeAlgo
             }
             return dp[rowLen,colLen];
         }
+        /// 73. Set Matrix Zeroes, #DFS
+        ///Given an m x n integer matrix matrix, if an element is 0, set its entire row and column to 0's.
+        public void SetZeroes(int[][] matrix)
+        {
+            int rowLen = matrix.Length;
+            int colLen = matrix[0].Length;
+            bool[,] visit = new bool[rowLen, colLen];
+            for(int i = 0; i < rowLen; i++)
+            {
+                for(int j = 0; j < colLen; j++)
+                {
+                    if (visit[i, j]) continue;
+                    if(matrix[i][j] == 0)
+                    {
+                        visit[i, j] = true;
+                        for (int m=0;m<colLen; m++)
+                        {
+                            if (!visit[i, m] && matrix[i][m] != 0)
+                            {
+                                matrix[i][m] = 0;
+                                visit[i, m] = true;
+                            }
+                        }
+                        for(int n = 0; n < rowLen; n++)
+                        {
+                            if (!visit[n, j] && matrix[n][j] != 0)
+                            {
+                                matrix[n][j] = 0;
+                                visit[n, j] = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         /// 74. Search a 2D Matrix
         ///a value in an m x n matrix.
         ///Integers in each row are sorted from left to right.
