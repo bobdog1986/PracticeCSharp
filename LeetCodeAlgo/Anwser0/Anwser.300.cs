@@ -106,7 +106,6 @@ namespace LeetCodeAlgo
 
         /// 327. Count of Range Sum --- not pass
         ///return the number of range sums that lie in [lower, upper] inclusive.
-
         public int CountRangeSum(int[] nums, int lower, int upper)
         {
             int ans = 0;
@@ -124,16 +123,87 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        /// 334. Increasing Triplet Subsequence
+        ///328. Odd Even Linked List
+        ///group all the nodes with odd indices together followed by the nodes with even indices, then return.
+        //The first node is considered odd, and the second node is even, and so on.
+        //You must solve the problem in O(1) extra space complexity and O(n) time complexity.
+        ///head = [1,2,3,4,5] -> Output: [1,3,5,2,4], 0<=n<=10^4
+        public ListNode OddEvenList(ListNode head)
+        {
+            ListNode oddsHead = null;
+            ListNode evensHead = null;
+            ListNode currOdd = null;
+            ListNode currEven = null;
+
+            bool isOdd = true;
+            var node = head;
+            while(node != null)
+            {
+                if (isOdd)
+                {
+                    if(currOdd == null)
+                    {
+                        oddsHead = node;
+                        currOdd = node;
+                    }
+                    else
+                    {
+                        currOdd.next = node;
+                        currOdd=node;
+                    }
+                }
+                else
+                {
+                    if (currEven == null)
+                    {
+                        evensHead = node;
+                        currEven = node;
+                    }
+                    else
+                    {
+                        currEven.next = node;
+                        currEven = node;
+                    }
+                }
+                isOdd = !isOdd;
+                node = node.next;
+            }
+            if(currOdd != null)
+                currOdd.next = evensHead;
+            if(currEven!=null)
+                currEven.next = null;
+
+            return oddsHead;
+        }
+        /// 334. Increasing Triplet Subsequence, #Greedy
         ///using greedy to find i<j<k, nums[i]<nums[j]<nums[k]
         public bool IncreasingTriplet(int[] nums)
         {
-            if (nums.Length <= 2)
-                return false;
-
-
-
-
+            // start with two largest values, update them until find a num > both of them
+            int small = int.MaxValue;
+            int big = int.MaxValue;
+            foreach (var n in nums)
+            {
+                if (n > big)
+                {
+                    //find a num > than the big
+                    return true;
+                }
+                else
+                {
+                    if(n<= small)
+                    {
+                        //even when big has valid value(<int.Max), we still need update small for updating the big in future
+                        //this will not change the big,  so if we found n>big in future, this algo still work
+                        small = n;
+                    }
+                    else
+                    {
+                        //find n <= big && >small, then update the big
+                        big = n;
+                    }
+                }
+            }
             return false;
         }
 

@@ -12,7 +12,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
             //var arr1 = new int[] { 5, 7, -24, 12, 13, 2, 3, 12, 5, 6, 35 };//[[},new int[]{],[]] should 6
-            var arr1 = new int[] {7,1,5,3,6,4};
+            var arr1 = new int[] {2,-1,1,2,2};
             var arr2 = new int[] { -1, 2 };
             int k = 2;
             var val1 = 5;
@@ -59,8 +59,8 @@ namespace LeetCodeAlgo
                 //new char[]{'0','0','0'},
             };
 
-            var listnode = anwser.buildListNode(new int[] { -10,-3,0,5,9});
-            //anwser.PrintListNode(listnode);
+            var listnode = anwser.buildListNode(new int[] {1,2,3,4 });
+            anwser.printListNode(listnode);
             //Console.WriteLine("Correct Anwser should be : ");
             //Console.WriteLine(string.Join("\r\n", mat1.Select(o => string.Join(",", o))));
             //Console.WriteLine(string.Join(",", arr2));
@@ -82,14 +82,14 @@ namespace LeetCodeAlgo
             ////var result = anwser.IsMatch("baabbbaccbccacacc","c*..b*a*a.*a..*c");
             ////var result = anwser.IsMatch("bbcacbabbcbaaccabc","b*a*a*.c*bb*b*.*.*");
             uint uintVal=0b10000000_00000000_00000000_00000000;
-            var result = anwser.LeastInterval(str1.ToArray(),2);
+            var result = anwser.OddEvenList(listnode);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
             //Console.WriteLine(string.Join(",", result.val));
-            //anwser.printListNode(result);
+            anwser.printListNode(result);
             Console.WriteLine($"Result = {result}");
 
             //Console.WriteLine(String.Join(",", arr1));

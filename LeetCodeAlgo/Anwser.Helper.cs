@@ -124,10 +124,15 @@ namespace LeetCodeAlgo
         }
 
         ///ListNode, build and print
-        public void printListNode(ListNode listNode)
+        public void printListNode(ListNode listNode, int maxLen = 20)
         {
+            if (listNode == null)
+            {
+                Console.WriteLine("ListNode is []");
+                return;
+            }
             List<int> list = new List<int>();
-            while (listNode != null)
+            while (listNode != null && list.Count<=maxLen)
             {
                 list.Add(listNode.val);
                 listNode = listNode.next;
@@ -138,6 +143,12 @@ namespace LeetCodeAlgo
 
         public ListNode buildListNode(int[] arr)
         {
+            if(arr==null || arr.Length == 0)
+            {
+                Console.WriteLine("buildListNode() input length =0");
+                return null;
+            }
+
             ListNode head = new ListNode(arr[0]);
             var current = head;
             for (int i = 1; i < arr.Length; i++)

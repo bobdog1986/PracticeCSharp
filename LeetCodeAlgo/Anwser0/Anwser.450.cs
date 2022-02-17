@@ -138,21 +138,27 @@ namespace LeetCodeAlgo
                     continue;
                 bool forward = nums[i] > 0;
                 visit[i] = true;
-                List<int> list = new List<int>() { i };
+
+                bool[] currVisit=new bool[nums.Length];
+                currVisit[i] = true;
+                int lastVisit = i;
+
                 int j = 0;
                 int next = (i + nums[i]) % nums.Length;
                 if (next < 0)
                     next += nums.Length;
+
                 while (j++ < nums.Length)
                 {
                     if ((forward && nums[next] < 0) || (!forward && nums[next] > 0))
                         break;
-                    if (list.Contains(next) && next != list.Last())
+                    if (currVisit[next] && next != lastVisit)
                         return true;
                     if (visit[next])
                         break;
-                    list.Add(next);
                     visit[next] = true;
+                    currVisit[next] = true;
+                    lastVisit = next;
                     next = (next + nums[next]) % nums.Length;
                     if (next < 0)
                         next += nums.Length;

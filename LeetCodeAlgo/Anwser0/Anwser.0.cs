@@ -90,12 +90,8 @@ namespace LeetCodeAlgo
                     current = node;
                 }
             }
-
             if (carry)
-            {
                 current.next = new ListNode(1);
-            }
-
             return root;
         }
 
@@ -1889,7 +1885,7 @@ namespace LeetCodeAlgo
             }
         }
 
-        /// 38. Count and Say
+        /// 38. Count and Say, #DP
         ///countAndSay(n) is the way you would "say" the digit string from countAndSay(n-1),countAndSay(1) = "1"
         ///eg. countAndSay(2)=say 'one' '1'= 11,countAndSay(3)=two '1' =21, countAndSay(3)=one '2' one '1'=1211
         public string CountAndSay(int n)
@@ -1916,7 +1912,7 @@ namespace LeetCodeAlgo
                 {
                     if (count != 0)
                     {
-                        ans.Add(getChar(count));
+                        ans.Add((char)(count + '0'));
                         ans.Add(c);
                     }
                     count = 1;
@@ -1925,7 +1921,7 @@ namespace LeetCodeAlgo
             }
             if (count != 0)
             {
-                ans.Add(getChar(count));
+                ans.Add((char)(count + '0'));
                 ans.Add(c);
             }
             return string.Join("", ans);
