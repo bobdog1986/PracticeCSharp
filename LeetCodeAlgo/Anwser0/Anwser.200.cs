@@ -13,46 +13,48 @@ namespace LeetCodeAlgo
         public int NumIslands(char[][] grid)
         {
             int ans = 0;
-            for (int i = 0; i < grid.Length; i++)
+            int rowlen = grid.Length;
+            int colLen = grid[0].Length;
+            int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
+            var queue = new Queue<int[]>();
+            for (int i = 0; i < rowlen; i++)
             {
-                for (int j = 0; j < grid[i].Length; j++)
+                for (int j = 0; j < colLen; j++)
                 {
                     if (grid[i][j] == '1')
                     {
                         ans++;
-                        NumIslands_DFS(grid, i, j);
+                        queue.Clear();
+                        queue.Enqueue(new int[] { i, j });
+                        while(queue.Count > 0)
+                        {
+                            var node=queue.Dequeue();
+                            var row = node[0];
+                            var col = node[1];
+
+                            if (grid[row][col] == '1')
+                            {
+                                grid[row][col] = '0';
+                                foreach (var d in dxy4)
+                                {
+                                    int r = row + d[0];
+                                    int c = col + d[1];
+                                    if (r >= 0 && r < rowlen && c >= 0 && c < colLen)
+                                    {
+                                        if (grid[r][c] == '1')
+                                        {
+                                            queue.Enqueue(new int[] { r, c });
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
             return ans;
         }
 
-        public void NumIslands_DFS(char[][] grid, int r, int c)
-        {
-            grid[r][c] = '0';
-            var q = new Queue<int[]>();
-            q.Enqueue(new int[] { r, c });
-            int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
-
-            while (q.Count > 0)
-            {
-                var a = q.Dequeue();
-                foreach(var d in dxy4)
-                {
-                    int row = a[0] + d[0];
-                    int col = a[1] + d[1];
-
-                    if(row>=0 && row< grid.Length && col>=0 && col< grid[0].Length)
-                    {
-                        if(grid[row][col] == '1')
-                        {
-                            grid[row][col] = '0';
-                            q.Enqueue(new int[] {row,col });
-                        }
-                    }
-                }
-            }
-        }
         ///201. Bitwise AND of Numbers Range
         ///[left, right], return the bitwise AND of all numbers in this range, inclusive.
         public int RangeBitwiseAnd(int left, int right)
@@ -536,7 +538,7 @@ namespace LeetCodeAlgo
 
             return ans;
         }
-        /// 240. Search a 2D Matrix II
+        /// 240. Search a 2D Matrix II, #Binary Search
         public bool SearchMatrix(int[][] matrix, int target)
         {
             int rowLen = matrix.Length;

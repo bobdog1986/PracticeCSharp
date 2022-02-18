@@ -6,28 +6,26 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        ///300. Longest Increasing Subsequence
-        /// https://en.wikipedia.org/wiki/Longest_increasing_subsequence
-        ///Patient Sort
+        ///300. Longest Increasing Subsequence, #DP
+        /// Patient Sort, https://en.wikipedia.org/wiki/Longest_increasing_subsequence
         ///by deleting some or no elements without changing the order of the remaining elements.
         ///eg. [0,3,1,6,2,2,7].=>[0,1,2,7] , 1<=n<=2500, try Time Complexity O(n log(n))
-        ///-10000 <= nums[i] <= 10000
         public int LengthOfLIS(int[] nums)
         {
             int[] tails = new int[nums.Length];
             int size = 0;
-            foreach (var x in nums)
+            foreach (var n in nums)
             {
                 int i = 0, j = size;
                 while (i != j)
                 {
                     int m = (i + j) / 2;
-                    if (tails[m] < x)
+                    if (tails[m] < n)
                         i = m + 1;
                     else
                         j = m;
                 }
-                tails[i] = x;
+                tails[i] = n;
                 if (i == size)
                     size++;
             }
@@ -255,15 +253,10 @@ namespace LeetCodeAlgo
             foreach (var n in nums)
             {
                 if (dict.ContainsKey(n))
-                {
                     dict[n]++;
-                }
                 else
-                {
                     dict.Add(n, 1);
-                }
             }
-
             return dict.OrderBy(x => -x.Value).Take(k).Select(x => x.Key).ToArray();
         }
     }

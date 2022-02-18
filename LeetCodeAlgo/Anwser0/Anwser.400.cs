@@ -6,7 +6,47 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        ///409. Longest Palindrome
+        ///402. Remove K Digits
+        ///a non-negative integer num, and an integer k, return the smallest possible integer after removing k digits from num.
+        ///1 <= k <= num.length <= 105
+        ///num consists of only digits.
+        ///num does not have any leading zeros except for the zero itself.
+        public string RemoveKdigits(string num, int k)
+        {
+            if (k == num.Length) return "0";
+
+            var digits = num.ToArray().ToList();
+            int i = 0;
+            while (i++ < k)
+            {
+                int j = 0;
+                while (j < digits.Count)
+                {
+                    if (j == digits.Count - 1 || digits[j] > digits[j + 1])
+                    {
+                        digits.RemoveAt(j);
+                        break;
+                    }
+                    j++;
+                }
+            }
+
+            i = 0;
+            int count = digits.Count;
+            while (i++ < count)
+            {
+                if (digits.Count > 0 && digits[0] == '0')
+                {
+                    digits.RemoveAt(0);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return digits.Count == 0 ? "0" : new string(digits.ToArray());
+        }
+        /// 409. Longest Palindrome
         ///case sensitive, Aa is different
         public int LongestPalindrome_409(string s)
         {

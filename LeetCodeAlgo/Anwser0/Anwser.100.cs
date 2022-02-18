@@ -424,14 +424,14 @@ namespace LeetCodeAlgo
             PathSum_Recursion(node.right, targetSum, new List<int>(list), ans);
         }
 
-        /// 117. Populating Next Right Pointers in Each Node II
-        /// Populate each next pointer to point to its next right node.
-        /// If there is no next right node, the next pointer should be set to NULL.
-        public Node Connect(Node root)
+        /// 116. Populating Next Right Pointers in Each Node
+        /// You are given a perfect binary tree where all leaves are on the same level
+        /// Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+        /// Initially, all next pointers are set to NULL.
+        public Node Connect_116(Node root)
         {
             if (root == null)
                 return null;
-
             List<Node> list = new List<Node>
             {
                 root
@@ -439,7 +439,6 @@ namespace LeetCodeAlgo
             while (list.Count != 0)
             {
                 List<Node> subs = new List<Node>();
-
                 for (int i = 0; i < list.Count; i++)
                 {
                     list[i].next = i == list.Count - 1 ? null : list[i + 1];
@@ -448,7 +447,34 @@ namespace LeetCodeAlgo
                     if (list[i].right != null)
                         subs.Add(list[i].right);
                 }
+                list = subs;
+            }
 
+            return root;
+        }
+
+        /// 117. Populating Next Right Pointers in Each Node II
+        /// Populate each next pointer to point to its next right node.
+        /// If there is no next right node, the next pointer should be set to NULL.
+        public Node Connect(Node root)
+        {
+            if (root == null)
+                return null;
+            List<Node> list = new List<Node>
+            {
+                root
+            };
+            while (list.Count != 0)
+            {
+                List<Node> subs = new List<Node>();
+                for (int i = 0; i < list.Count; i++)
+                {
+                    list[i].next = i == list.Count - 1 ? null : list[i + 1];
+                    if (list[i].left != null)
+                        subs.Add(list[i].left);
+                    if (list[i].right != null)
+                        subs.Add(list[i].right);
+                }
                 list = subs;
             }
 

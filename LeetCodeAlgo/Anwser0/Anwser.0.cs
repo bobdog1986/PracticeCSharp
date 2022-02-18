@@ -104,7 +104,7 @@ namespace LeetCodeAlgo
                 return s.Length;
             int max = 1;
             int len = 0;
-            int[] arr=new int[128];
+            int[] arr = new int[128];
             for (int i = 0; i < arr.Length; i++)
                 arr[i] = -1;
             for (int i = 0; i < s.Length; i++)
@@ -182,7 +182,7 @@ namespace LeetCodeAlgo
         {
             if (s.Length <= 1)
                 return s;
-            string ans =string.Empty;
+            string ans = string.Empty;
             int len = 0;
             for (int i = 0; i < s.Length; i++)
             {
@@ -209,7 +209,7 @@ namespace LeetCodeAlgo
                 }
 
                 //find all abba pattern, loop only all possible index
-                if (i>= len / 2 && i < s.Length - 1 && 2 * (s.Length - 1 - i) > len)
+                if (i >= len / 2 && i < s.Length - 1 && 2 * (s.Length - 1 - i) > len)
                 {
                     int count = 0;
                     while (i - count >= 0 && i + 1 + count <= s.Length - 1)
@@ -322,7 +322,7 @@ namespace LeetCodeAlgo
         ///Assume the environment does not allow you to store 64-bit integers (signed or unsigned).
         public int Reverse(int x)
         {
-            if (x == 0 || x==int.MinValue)
+            if (x == 0 || x == int.MinValue)
                 return 0;
             bool isNeg = x < 0;
             if (x < 0)
@@ -357,7 +357,7 @@ namespace LeetCodeAlgo
                         continue;
 
                     if (!valid)
-                        valid=true;
+                        valid = true;
                     int d = (s[i] - '0');
 
                     if (sign == -1)
@@ -404,7 +404,7 @@ namespace LeetCodeAlgo
         {
             if (x < 0) return false;
             if (x < 10) return true;
-            if (x % 10 == 0)return false;
+            if (x % 10 == 0) return false;
             int n = x;
             List<int> digits = new List<int>();
             while (n > 0)
@@ -414,12 +414,12 @@ namespace LeetCodeAlgo
             }
             int ans = 0;
             int k = 1;
-            for(int i=digits.Count-1; i >= 0; i--)
+            for (int i = digits.Count - 1; i >= 0; i--)
             {
-                ans+=digits[i]*k;
+                ans += digits[i] * k;
                 k *= 10;
             }
-            return ans==x;
+            return ans == x;
         }
 
         ///10. Regular Expression Matching
@@ -433,10 +433,10 @@ namespace LeetCodeAlgo
             if (p.Contains('*'))
             {
                 List<string> patterns = new List<string>();
-                int count = p.Where(x=>x=='*').Count();
+                int count = p.Where(x => x == '*').Count();
                 string lastStrictPattern = string.Empty;
                 string strictStr = "";
-                foreach(var i in p.Split('*'))
+                foreach (var i in p.Split('*'))
                 {
                     if (i.Length == 0)
                         continue;
@@ -457,14 +457,13 @@ namespace LeetCodeAlgo
                             {
                                 //
                             }
-                            else if((patterns.Last()==".*"||(pat == ".*" && patterns.Last().Last()=='*')))
+                            else if ((patterns.Last() == ".*" || (pat == ".*" && patterns.Last().Last() == '*')))
                             {
-                                patterns[patterns.Count-1] = ".*";
+                                patterns[patterns.Count - 1] = ".*";
                             }
                             else
                             {
                                 patterns.Add(pat);
-
                             }
                         }
                         else
@@ -493,7 +492,7 @@ namespace LeetCodeAlgo
             }
             else
             {
-                return IsMatch_StrictCompare(s,p);
+                return IsMatch_StrictCompare(s, p);
             }
         }
 
@@ -511,13 +510,13 @@ namespace LeetCodeAlgo
 
         public bool IsMatch_CompareAll(string s, IList<string> patterns, string strictStr)
         {
-            for (int i = 0;i < patterns.Count; i++)
+            for (int i = 0; i < patterns.Count; i++)
             {
                 //matched
                 if (s.Length == strictStr.Length && strictStr.Length == 0)
                     return true;
                 //no possible match
-                if(s.Length< strictStr.Length)
+                if (s.Length < strictStr.Length)
                     return false;
 
                 if (s.Length == strictStr.Length || patterns[i].Last() != '*')
@@ -626,7 +625,7 @@ namespace LeetCodeAlgo
                         //remove as many as possible
                         //strictStr.Length == 0;
                         int n = i;
-                        while(n < patterns.Count)
+                        while (n < patterns.Count)
                         {
                             if (patterns[n] == ".*")
                                 return true;
@@ -680,6 +679,7 @@ namespace LeetCodeAlgo
             }
             return max;
         }
+
         public int MaxArea_HeadToEnd(int[] height)
         {
             int max = 0;
@@ -783,13 +783,13 @@ namespace LeetCodeAlgo
         public string LongestCommonPrefix(string[] strs)
         {
             var ans = new List<char>();
-            for(int i = 0;i < strs[0].Length; i++)
+            for (int i = 0; i < strs[0].Length; i++)
             {
                 bool fail = false;
                 char c = strs[0][i];
-                for(int j=1;j<strs.Length;j++)
+                for (int j = 1; j < strs.Length; j++)
                 {
-                    if (strs[j].Length <= i|| strs[j][i]!=c)
+                    if (strs[j].Length <= i || strs[j][i] != c)
                     {
                         fail = true;
                         break;
@@ -809,8 +809,8 @@ namespace LeetCodeAlgo
         public IList<IList<int>> ThreeSum(int[] nums)
         {
             Array.Sort(nums);
-            var ans=new List<IList<int>>();
-            for(int i = 0; i < nums.Length-2; i++)
+            var ans = new List<IList<int>>();
+            for (int i = 0; i < nums.Length - 2; i++)
             {
                 if (i == 0 || (i > 0 && nums[i] != nums[i - 1]))
                 {
@@ -821,7 +821,7 @@ namespace LeetCodeAlgo
                     {
                         if (nums[left] + nums[right] == sum)
                         {
-                            ans.Add( new List<int> { nums[i], nums[left], nums[right] });
+                            ans.Add(new List<int> { nums[i], nums[left], nums[right] });
                             while (left < right && nums[left] == nums[left + 1]) left++;
                             while (left < right && nums[right] == nums[right - 1]) right--;
                             left++; right--;
@@ -864,7 +864,7 @@ namespace LeetCodeAlgo
             return closestSum;
         }
 
-        ///17. Letter Combinations of a Phone Number
+        ///17. Letter Combinations of a Phone Number, #Backtracking
         ///digits[i] is a digit in the range['2', '9'].
         /// 2- ABC, 3-DEF, 4-GHI, 5-JKL,6-MNO,7-PQRS,8-TUV 9-WXYZ
         public IList<string> LetterCombinations(string digits)
@@ -887,9 +887,9 @@ namespace LeetCodeAlgo
             foreach (var d in digits)
             {
                 List<List<char>> list = new List<List<char>>();
-                foreach (var l in ans)
+                foreach (var entry in ans)
                     foreach (char c in dict[d])
-                        list.Add(new List<char>(l) { c });
+                        list.Add(new List<char>(entry) { c });
                 ans = list;
             }
             return ans.Select(x => new string(x.ToArray())).ToList();
@@ -924,7 +924,7 @@ namespace LeetCodeAlgo
                         if (t == target)
                         {
                             result.Add(new List<int> { nums[i], nums[j], nums[left], nums[right] });
-                            while (left<right && nums[left] == nums[left + 1])
+                            while (left < right && nums[left] == nums[left + 1])
                                 left++;
                             while (left < right && nums[right] == nums[right - 1])
                                 right--;
@@ -1039,38 +1039,29 @@ namespace LeetCodeAlgo
         ///22. Generate Parentheses ()
         ///Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
         ///1 <= n <= 8, if n=3, return ["((()))","(()())","(())()","()(())","()()()"]
-        public IList<string> GenerateParenthesis(int n)
+
+        public List<String> GenerateParenthesis(int n)
         {
-            List<string> list = new List<string>();
-            int i = 1;
-            while (i <= n)
+            List<string> ans = new List<string>();
+            GenerateParenthesis_Backtracking(ans, "", 0, 0, n);
+            return ans;
+        }
+
+        public void GenerateParenthesis_Backtracking(IList<string> list, string str, int left, int right, int count)
+        {
+            if (left == count && right == count)
             {
-                List<string> next = new List<string>();
-                if (list.Count == 0)
-                {
-                    next.Add("()");
-                }
-                else
-                {
-                    foreach (var l in list)
-                    {
-                        int j = 0;
-                        while (j < l.Length)
-                        {
-                            if (l[j] == '(' || (l[j - 1] == '(' && l[j] == ')'))
-                            {
-                                string str = l.Insert(j, "()");
-                                if (!next.Contains(str))
-                                    next.Add(str);
-                            }
-                            j++;
-                        }
-                    }
-                }
-                list = next;
-                i++;
+                list.Add(str);
+                return;
             }
-            return list;
+            if (left < count)
+            {
+                GenerateParenthesis_Backtracking(list, str+"(", left+1, right, count);
+            }
+            if (right < left)
+            {
+                GenerateParenthesis_Backtracking(list, str + ")", left, right + 1, count);
+            }
         }
 
         ///23. Merge k Sorted Lists
@@ -1209,14 +1200,14 @@ namespace LeetCodeAlgo
         ///-100 <= nums[i] <= 100
         public int RemoveDuplicates_25_OnlyOnce(int[] nums)
         {
-            Dictionary<int,int> dict=new Dictionary<int,int>();
-            foreach(var n in nums)
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach (var n in nums)
             {
-                if(!dict.ContainsKey(n))
-                    dict.Add(n,1);
+                if (!dict.ContainsKey(n))
+                    dict.Add(n, 1);
             }
 
-            var keys=dict.Keys.ToList();
+            var keys = dict.Keys.ToList();
             for (int i = 0; i < keys.Count; i++)
                 nums[i] = keys[i];
 
@@ -1279,7 +1270,7 @@ namespace LeetCodeAlgo
         ///0 <= haystack.length, needle.length <= 5 * 10^4
         public int StrStr(string haystack, string needle)
         {
-            for (int i = 0; i < haystack.Length - needle.Length+1; i++)
+            for (int i = 0; i < haystack.Length - needle.Length + 1; i++)
             {
                 int j = 0;
                 while (j < needle.Length)
@@ -1605,15 +1596,11 @@ namespace LeetCodeAlgo
         /// return the index of target if it is in nums or -1
         public int Search(int[] nums, int target)
         {
-            if (nums.Length == 1)
-                return nums[0] == target ? 0 : -1;
-
             int i = 0;
             while (i <= nums.Length - 1)
             {
                 if (nums[i] == target)
                     return i;
-
                 if (nums[i] < nums[0])
                 {
                     //rotated
@@ -1627,47 +1614,52 @@ namespace LeetCodeAlgo
                         return -1;
                     }
                 }
-
                 i++;
             }
-
             return -1;
         }
 
-        /// 34. Find First and Last Position of Element in Sorted Array
+        /// 34. Find First and Last Position of Element in Sorted Array, #Binary Search
         ///[5,7,7,8,8,10], target = 8, return [3,4], if not found return [-1,-1]
         public int[] SearchRange(int[] nums, int target)
         {
             int[] result = new int[] { -1, -1 };
-            if (nums.Length == 0)
-                return result;
-
-            for (int i = 0; i < nums.Length; i++)
+            int left = 0;
+            int right= nums.Length - 1;
+            int found = -1;
+            while (left <= right)
             {
-                if (nums[i] < target)
-                {
-                    continue;
-                }
-                else if (nums[i] == target)
-                {
-                    if (result[0] == -1)
-                    {
-                        result[0] = i;
+                int mid=(left+ right)/2;
 
-                        if (result[1] == -1)
-                        {
-                            result[1] = i;
-                        }
-                    }
-                    else
-                    {
-                        result[1] = i;
-                    }
+                if(nums[mid] == target)
+                {
+                    found = mid;
+                    break;
+                }
+                else if(nums[mid] > target)
+                {
+                    right = mid-1;
                 }
                 else
                 {
-                    break;
+                    left = mid + 1;
                 }
+            }
+
+            if (found != -1)
+            {
+                int start = found;
+                while (start>0 && nums[start-1]==target)
+                {
+                    start--;
+                }
+
+                int end = found;
+                while (end <nums.Length-1 && nums[end + 1] == target)
+                {
+                    end++;
+                }
+                return new int[] { start, end };
             }
 
             return result;
@@ -1676,9 +1668,9 @@ namespace LeetCodeAlgo
         /// 36. Valid Sudoku
         public bool IsValidSudoku(char[][] board)
         {
-            int[,] arrRow = new int[9,9];
-            int[,] arrCol = new int[9,9];
-            int[,] arrBlock = new int[9,9];
+            int[,] arrRow = new int[9, 9];
+            int[,] arrCol = new int[9, 9];
+            int[,] arrBlock = new int[9, 9];
             for (int i = 0; i < board.Length; i++)
             {
                 for (int j = 0; j < board[i].Length; j++)
@@ -1687,10 +1679,10 @@ namespace LeetCodeAlgo
                         continue;
                     int k = board[i][j] - '1';
                     int cell = i / 3 * 3 + j / 3;
-                    if (arrRow[i,k] == 0 && arrCol[j,k] == 0 && arrBlock[cell, k] == 0)
+                    if (arrRow[i, k] == 0 && arrCol[j, k] == 0 && arrBlock[cell, k] == 0)
                     {
-                        arrRow[i,k] = 1;
-                        arrCol[j,k] = 1;
+                        arrRow[i, k] = 1;
+                        arrCol[j, k] = 1;
                         arrBlock[cell, k] = 1;
                     }
                     else
@@ -2111,9 +2103,9 @@ namespace LeetCodeAlgo
 
         public int FirstMissingPositive(int[] nums)
         {
-
             return 0;
         }
+
         ///42. Trapping Rain Water, #Two Pointers
         ///Given n non-negative integers representing an elevation map where the width of each bar is 1,
         ///compute how much water it can trap after raining.
@@ -2157,6 +2149,7 @@ namespace LeetCodeAlgo
             }
             return totalWater;
         }
+
         /// 43. Multiply Strings
         ///Given two non-negative integers num1 and num2 represented as strings,
         ///return the product of num1 and num2, also represented as a string.
@@ -2239,44 +2232,37 @@ namespace LeetCodeAlgo
             return steps;
         }
 
-        ///46. Permutations
+        ///46. Permutations, #Backtracking
         ///1 <= nums.length <= 6, -10 <= nums[i] <= 10
         ///All the integers of nums are unique.
         public IList<IList<int>> Permute(int[] nums)
         {
             var ans = new List<IList<int>>();
-            for (int j = 0; j < nums.Length; j++)
-            {
-                var list = new List<int>
-                {
-                    nums[j]
-                };
-                ans.Add(list);
-            }
-            int i = 1;
-            while (i < nums.Length)
-            {
-                var next = new List<IList<int>>();
 
-                for (int k = 0; k < ans.Count; k++)
-                {
-                    for (int j = 0; j < nums.Length; j++)
-                    {
-                        if (ans[k].Contains(nums[j]))
-                            continue;
-
-                        var sub = new List<int>(ans[k])
-                        {
-                            nums[j]
-                        };
-                        next.Add(sub);
-                    }
-                }
-                ans = next;
-                i++;
-            }
-
+            var list = new List<int>();
+            bool[] visit=new bool[nums.Length];
+            Permute_Backtracking(ans, list, nums, visit, 0);
             return ans;
+        }
+
+        public void Permute_Backtracking(IList<IList<int>> ans, IList<int> list, int[] nums, bool[] visit, int count)
+        {
+            if(count == nums.Length)
+            {
+                ans.Add(list);
+                return;
+            }
+
+            for(int i = 0; i < visit.Length; i++)
+            {
+                if (visit[i]) continue;
+                var nextVisit=new bool[visit.Length];
+                Array.Copy(visit, nextVisit, visit.Length);
+                nextVisit[i] = true;
+
+                var nextList=new List<int>(list) { nums[i]};
+                Permute_Backtracking(ans, nextList, nums, nextVisit, count + 1);
+            }
         }
 
         ///47. Permutations II
@@ -2366,17 +2352,17 @@ namespace LeetCodeAlgo
         ///|7|8|9| --> |9|6|3|
         public void Rotate(int[][] matrix)
         {
-            int rowLen=matrix.Length;
-            int colLen=matrix[0].Length;
-            int[,] cache = new int[rowLen,colLen];
+            int rowLen = matrix.Length;
+            int colLen = matrix[0].Length;
+            int[,] cache = new int[rowLen, colLen];
 
             for (int i = 0; i < rowLen; i++)
                 for (int j = 0; j < colLen; j++)
-                    cache[i,j] = matrix[rowLen - 1 - j][i];
+                    cache[i, j] = matrix[rowLen - 1 - j][i];
 
             for (int i = 0; i < rowLen; i++)
                 for (int j = 0; j < colLen; j++)
-                    matrix[i][j] = cache[i,j];
+                    matrix[i][j] = cache[i, j];
         }
 
         ///49. Group Anagrams, #HashMap

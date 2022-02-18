@@ -107,41 +107,28 @@ namespace LeetCodeAlgo
 
         }
 
-        ///55. Jump Game
+        ///55. Jump Game, #DP
         ///start at 0-index,nums[i] maximum jump length at that position.
         //Return true if you can reach the last index, or false otherwise.
         public bool CanJump(int[] nums)
         {
-            if (nums.Length == 1)
-                return true;
-            if (nums.Length == 2)
-                return nums[0] > 0;
             bool[] dp = new bool[nums.Length];
-            int i = nums.Length - 1;
-            dp[i] = true;
-            i--;
-            while (i >= 0)
+            dp[0] = true;
+            for (int i = 0; i < nums.Length - 1; i++)
             {
-                if (nums[i] == 0)
+                if (dp[i] && nums[i] > 0)
                 {
-                    dp[i] = false;
-                }
-                else
-                {
-                    bool has = false;
-                    for (int j = 1; j <= nums[i]; j++)
+                    int j = 1;
+                    if (i + nums[i] >= nums.Length - 1)
+                        return true;
+                    while (j <= nums[i])
                     {
-                        if (i + j <= nums.Length - 1 && dp[i + j])
-                        {
-                            has = true;
-                            break;
-                        }
+                        dp[i + j] = true;
+                        j++;
                     }
-                    dp[i] = has;
                 }
-                i--;
             }
-            return dp[0];
+            return dp.Last();
         }
 
         ///56. Merge Intervals
@@ -935,7 +922,7 @@ namespace LeetCodeAlgo
             return null;
         }
 
-        ///78. Subsets - Unique nums, #Backtracking?
+        ///78. Subsets - Unique nums, #Backtracking
         ///Given an integer array nums of unique elements, return all possible subsets (the power set).
         public IList<IList<int>> Subsets(int[] nums)
         {
@@ -943,11 +930,11 @@ namespace LeetCodeAlgo
             Dictionary<string,int> exist=new Dictionary<string,int>();
             var ans = new List<IList<int>>();
             var list = new List<int>();
-            SubSets_Add(nums, 0, list, ans, exist);
+            SubSets_Backtracking(nums, 0, list, ans, exist);
             return ans;
         }
 
-        public void SubSets_Add(int[] nums, int start, IList<int> list, IList<IList<int>> ans, IDictionary<string,int> exist)
+        public void SubSets_Backtracking(int[] nums, int start, IList<int> list, IList<IList<int>> ans, IDictionary<string,int> exist)
         {
             if (start >= nums.Length)
                 return;
@@ -967,11 +954,11 @@ namespace LeetCodeAlgo
                 exist.Add(key2, 1);
                 ans.Add(sub2);
             }
-            SubSets_Add(nums, start + 1, sub1, ans, exist);
-            SubSets_Add(nums, start + 1, sub2, ans, exist);
+            SubSets_Backtracking(nums, start + 1, sub1, ans, exist);
+            SubSets_Backtracking(nums, start + 1, sub2, ans, exist);
         }
 
-        ///79. Word Search
+        ///79. Word Search, #Backtracking
         ///Given an m x n grid of characters board and a string word, return true if word exists in the grid.
         public bool Exist(char[][] board, string word)
         {

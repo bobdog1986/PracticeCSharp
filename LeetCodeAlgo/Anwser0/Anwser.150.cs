@@ -75,7 +75,7 @@ namespace LeetCodeAlgo
 
         ///155. Min Stack , see MinStack
 
-        ///160. Intersection of Two Linked Lists
+        ///160. Intersection of Two Linked Lists, #Two Pointers
         ///return the node at which the two lists intersect. If not, return null.
         public ListNode GetIntersectionNode(ListNode headA, ListNode headB)
         {
@@ -129,32 +129,19 @@ namespace LeetCodeAlgo
         ///nums[-1] = nums[n] = int.Min
         public int FindPeakElement(int[] nums)
         {
-            if (nums.Length == 1)
-                return 0;
-
-            bool left, right;
             for (int i = 0; i < nums.Length; i++)
             {
-                left = i == 0 || nums[i] > nums[i - 1];
-                right = i == nums.Length - 1 || nums[i] > nums[i + 1];
+                bool left = i == 0 || nums[i] > nums[i - 1];
+                bool right = i == nums.Length - 1 || nums[i] > nums[i + 1];
                 if (left && right)
                 {
                     return i;
                 }
-                //else if(left)
-                //{
-                //    ;
-                //}
                 else if (right)
                 {
                     i++;
                 }
-                //else
-                //{
-                //    i++;
-                //}
             }
-
             return 0;
         }
 
