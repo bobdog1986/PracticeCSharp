@@ -6,6 +6,22 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
+        ///50. Pow(x, n)
+        ///Implement pow(x, n), which calculates x raised to the power n (i.e., x^n).
+        ///-100.0 < x < 100.0, -2^31 <= n <= 2^31-1, -10^4 <= x^n <= 10^4
+        public double MyPow(double x, int n)
+        {
+            if (n == 0) return 1;
+            long m = n;
+            if (m < 0)
+            {
+                m = -m;
+                x = 1 / x;
+            }
+            if (m == 1) return x;
+            return (m % 2 == 0) ? MyPow(x * x,(int)( m / 2)) : x * MyPow(x * x, (int)(m / 2));
+        }
+
         /// 53. Maximum Subarray, #DP
         /// find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
         public int MaxSubArray(int[] nums)
