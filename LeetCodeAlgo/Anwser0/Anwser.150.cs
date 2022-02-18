@@ -190,34 +190,37 @@ namespace LeetCodeAlgo
             return major[0].Key;
         }
 
-        ///172. Factorial Trailing Zeroes
+        ///171. Excel Sheet Column Number
+        ///return its corresponding column number.
+        public int TitleToNumber(string columnTitle)
+        {
+            int ans = 0;
+            int m = 1;
+            for(int i = columnTitle.Length - 1; i >= 0; i--)
+            {
+                ans += m * (columnTitle[i] - 'A' + 1);
+                m *= 26;
+            }
+            return ans;
+        }
+
+        /// 172. Factorial Trailing Zeroes
         ///Given an integer n, return the number of trailing zeroes in n!.
         ///0 <= n <= 10^4
         public int TrailingZeroes(int n)
         {
-            var a = getFactorial(n);
-            Console.WriteLine($"factorial of {n} is {a}");
+            //Step 1: 10 = 2*5, so every xxx5 will find a xxx2, that xxx5*xxx2 will add 1 tail zero
+            //Step 2: 100 = 2*5 * 2*5 = 4*25, so every xxx25 will find a xxx4 that add 2 tail zeros, but one was already counted in step 1
+            //...
+            //Step N: 10^n = 2^n * 5^n, so every xxx5^n will find a xxx2^n that add n tail zeros, but n-1 were counted in step n-1
             int ans = 0;
-            while (a > 0)
+            while (n > 0)
             {
-                if (a % 10 == 0)
-                {
-                    ans++;
-                }
-                else
-                {
-                    break;
-                }
-                a /= 10;
+                ans += n / 5;
+                n /= 5;
             }
-            Console.WriteLine($"TrailingZeroes of {n} is {ans}");
-
             return ans;
         }
-
-
-
-
         /// 173. Binary Search Tree Iterator, see BSTIterator
 
         /// 174 not done
