@@ -926,67 +926,49 @@ namespace LeetCodeAlgo
         ///Given an integer array nums of unique elements, return all possible subsets (the power set).
         public IList<IList<int>> Subsets(int[] nums)
         {
-            Array.Sort(nums);
-            Dictionary<string,int> exist=new Dictionary<string,int>();
             var ans = new List<IList<int>>();
             var list = new List<int>();
-            SubSets_Backtracking(nums, 0, list, ans, exist);
+            SubSets_Backtracking(nums, 0, list, ans);
             return ans;
         }
 
-        public void SubSets_Backtracking(int[] nums, int start, IList<int> list, IList<IList<int>> ans, IDictionary<string,int> exist)
+        public void SubSets_Backtracking(int[] nums, int start, IList<int> list, IList<IList<int>> ans)
         {
-            if (start >= nums.Length)
+            if (start == nums.Length)
+            {
+                ans.Add(list);
                 return;
-            var sub1 = new List<int>(list);
-            sub1.Add(nums[start]);
-            var sub2 = new List<int>(list);
-
-            var key1 = string.Join("_", sub1);
-            if(!exist.ContainsKey(key1))
-            {
-                exist.Add(key1, 1);
-                ans.Add(sub1);
             }
-            var key2 = string.Join("_", sub2);
-            if (!exist.ContainsKey(key2))
-            {
-                exist.Add(key2, 1);
-                ans.Add(sub2);
-            }
-            SubSets_Backtracking(nums, start + 1, sub1, ans, exist);
-            SubSets_Backtracking(nums, start + 1, sub2, ans, exist);
+            SubSets_Backtracking(nums, start + 1, new List<int>(list), ans);
+            SubSets_Backtracking(nums, start + 1, new List<int>(list) { nums[start]}, ans);
         }
 
-        ///79. Word Search, #Backtracking
+        ///79. Word Search, #Backtracking, #DFS
         ///Given an m x n grid of characters board and a string word, return true if word exists in the grid.
         public bool Exist(char[][] board, string word)
         {
-            var rLen = board.Length;
-            var cLen = board[0].Length;
-            var visit = createVisitArray(rLen, cLen);
-            return Exist(board, visit, 0, 0, word, 0);
+            return Exist_Backtracking(board, null, 0, 0, word, 0);
         }
 
-        public bool Exist(char[][] board, bool[][] visit, int r, int c, string word, int index)
+        public bool Exist_Backtracking(char[][] board, bool[] visit, int r, int c, string word, int index)
         {
-            if (index >= word.Length)
+            if (index == word.Length)
                 return true;
-            var rLen = board.Length;
-            var cLen = board[0].Length;
+            var rowLen = board.Length;
+            var colLen = board[0].Length;
             int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
 
             if (index == 0)
             {
-                for (int i = 0; i < rLen; i++)
+                for (int i = 0; i < rowLen; i++)
                 {
-                    for (var j = 0; j < cLen; j++)
+                    for (var j = 0; j < colLen; j++)
                     {
                         if (board[i][j] == word[index])
                         {
-                            var arr = createVisitArray(rLen, cLen);
-                            arr[i][j] = true;
-                            bool result = Exist(board, arr, i, j, word, index + 1);
+                            var nextVisit = new bool[rowLen * colLen];
+                            nextVisit[i*colLen+j] = true;
+                            bool result = Exist_Backtracking(board, nextVisit, i, j, word, index + 1);
                             if (result)
                                 return true;
                         }
@@ -999,36 +981,18 @@ namespace LeetCodeAlgo
                 {
                     int row = r + t[0];
                     int col = c + t[1];
-                    if (row >= 0 && row < rLen && col >= 0 && col < cLen
-                        && !visit[row][col] && board[row][col] == word[index])
+                    if (row >= 0 && row < rowLen && col >= 0 && col < colLen
+                        && !visit[row*colLen+ col] && board[row][col] == word[index])
                     {
-                        var arr = createVisitArray(rLen, cLen, visit);
-                        arr[row][col] = true;
-                        bool result = Exist(board, arr, row, col, word, index + 1);
+                        var nextVisit = new List<bool>(visit).ToArray();
+                        nextVisit[row * colLen + col] = true;
+                        bool result = Exist_Backtracking(board, nextVisit, row, col, word, index + 1);
                         if (result)
                             return true;
                     }
                 }
             }
             return false;
-        }
-
-        public bool[][] createVisitArray(int r, int c, bool[][] copy = null)
-        {
-            bool[][] ans = new bool[r][];
-            for (int i = 0; i < r; i++)
-                ans[i] = new bool[c];
-            if (copy != null)
-            {
-                for (int i = 0; i < r; i++)
-                {
-                    for (int j = 0; j < c; j++)
-                    {
-                        ans[i][j] = copy[i][j];
-                    }
-                }
-            }
-            return ans;
         }
 
         /// 80. Remove Duplicates from Sorted Array II

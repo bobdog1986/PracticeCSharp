@@ -190,7 +190,35 @@ namespace LeetCodeAlgo
             return major[0].Key;
         }
 
-        ///173. Binary Search Tree Iterator, see BSTIterator
+        ///172. Factorial Trailing Zeroes
+        ///Given an integer n, return the number of trailing zeroes in n!.
+        ///0 <= n <= 10^4
+        public int TrailingZeroes(int n)
+        {
+            var a = getFactorial(n);
+            Console.WriteLine($"factorial of {n} is {a}");
+            int ans = 0;
+            while (a > 0)
+            {
+                if (a % 10 == 0)
+                {
+                    ans++;
+                }
+                else
+                {
+                    break;
+                }
+                a /= 10;
+            }
+            Console.WriteLine($"TrailingZeroes of {n} is {ans}");
+
+            return ans;
+        }
+
+
+
+
+        /// 173. Binary Search Tree Iterator, see BSTIterator
 
         /// 174 not done
         public int CalculateMinimumHP(int[,] dungeon)

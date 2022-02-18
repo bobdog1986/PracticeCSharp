@@ -8,28 +8,44 @@ namespace LeetCodeAlgo
     {
         ///300. Longest Increasing Subsequence, #DP
         /// Patient Sort, https://en.wikipedia.org/wiki/Longest_increasing_subsequence
-        ///by deleting some or no elements without changing the order of the remaining elements.
-        ///eg. [0,3,1,6,2,2,7].=>[0,1,2,7] , 1<=n<=2500, try Time Complexity O(n log(n))
+        ///return the longest length , by deleting some or no elements without changing the order.
+        ///eg. [0,3,1,6,4,4,7].=>[0,1,4,7] or [0,3,4,6] or [0,1,6,7], O(n log(n))
         public int LengthOfLIS(int[] nums)
         {
-            int[] tails = new int[nums.Length];
-            int size = 0;
-            foreach (var n in nums)
+            var ans =new List<int>() { nums[0]};
+            for(int i = 1; i < nums.Length; i++)
             {
-                int i = 0, j = size;
-                while (i != j)
+                if (nums[i] > ans.Last())
                 {
-                    int m = (i + j) / 2;
-                    if (tails[m] < n)
-                        i = m + 1;
-                    else
-                        j = m;
+                    ans.Add(nums[i]);
                 }
-                tails[i] = n;
-                if (i == size)
-                    size++;
+                else
+                {
+                    //a litter same like =>Q 334. Increasing Triplet Subsequence
+                    //replace the correct index, still get the correct ans
+                    LengthOfLIS_BinaryReplace(ans, nums[i]);
+                }
             }
-            return size;
+            return ans.Count;
+        }
+
+        public void LengthOfLIS_BinaryReplace(IList<int> list, int num)
+        {
+            int left = 0;
+            int right = list.Count - 1;
+            while (left < right)
+            {
+                int mid = (left + right) / 2;
+                if(list[mid] < num)
+                {
+                    left = mid + 1;
+                }
+                else
+                {
+                    right = mid;
+                }
+            }
+            list[right] = num;
         }
 
         ///304. Range Sum Query 2D - Immutable, see NumMatrix

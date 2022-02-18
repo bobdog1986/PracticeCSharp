@@ -11,8 +11,8 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            //var arr1 = new int[] { 5, 7, -24, 12, 13, 2, 3, 12, 5, 6, 35 };//[[},new int[]{],[]] should 6
-            var arr1 = new int[] {3,2,1};
+            //var arr1 = new int[] { 5, 7, -24, 12, 13, 2, 3, 12, 5, 6, 35 };
+            var arr1 = new int[] { 1, 2, 7, 8, 3, 4, 5, 9, 0 };
             var arr2 = new int[] { -1, 2 };
             int k = 2;
             var val1 = 5;
@@ -20,9 +20,10 @@ namespace LeetCodeAlgo
             var str1 = "AAABBB";
             var str2 = "sq";
             var word1 = new string[] { "ABC", "ACB", "ABC", "ACB", "ACB" };
+            var word2 = new string[] { "ABC", "ACB", "ABC", "ACB", "ACB" };
             var mat1 = new int[][]
             {
-                //new int[]{0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
+                new int[]{0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
             };
             var mat2 = new int[][] {
                 //new int[] { 3, 9 },   new int[]{7, 12},  new int[]{3, 8},
@@ -43,7 +44,6 @@ namespace LeetCodeAlgo
                 new char[]{'.', '.', '.', '2', '7', '5', '9', '.', '.'},
                 //new char[]{'1','1','1'},
             };
-
             var grid2 = new char[][]
             {
                 //soduko sample 1
@@ -63,14 +63,13 @@ namespace LeetCodeAlgo
             //anwser.printListNode(listnode);
             //Console.WriteLine("Correct Anwser should be : ");
             //Console.WriteLine(string.Join("\r\n", mat1.Select(o => string.Join(",", o))));
-            //Console.WriteLine(string.Join(",", arr2));
             Stopwatch sw = new Stopwatch();
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
-            //string treeStr = "1,2,2,3,null,null,3,4,null,null,null,null,null,null,4";
-            //var tree3 = anwser.deserializeTree(treeStr);
-            ////var str3= anwser.serializeTree(tree3);
-            //anwser.printTree(tree3);
+            //string bTreeStr = "1,2,2,3,null,null,3,4,null,null,null,null,null,null,4";
+            //var treeNode = anwser.deserializeTree(bTreeStr);
+            ////var treeStr= anwser.serializeTree(treeNode);
+            //anwser.printTree(treeNode);
 
             //Console.WriteLine(String.Join(",", arr1));
             //if (grid1.Length > 0)
@@ -80,12 +79,14 @@ namespace LeetCodeAlgo
 
             //anwser.SolveSudoku(grid1);
             ////var result = anwser.IsMatch("baabbbaccbccacacc","c*..b*a*a.*a..*c");
-            ////var result = anwser.IsMatch("bbcacbabbcbaaccabc","b*a*a*.c*bb*b*.*.*");
-            uint uintVal=0b10000000_00000000_00000000_00000000;
-            var result = anwser.RemoveKdigits("10001",1);
+            uint uintVal =0b10000000_00000000_00000000_00000000;
+            var result = anwser.TrailingZeroes(7);
+            anwser.TrailingZeroes(8);
+            anwser.TrailingZeroes(9);
+            anwser.TrailingZeroes(10);
+            anwser.TrailingZeroes(14);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
-            Console.WriteLine();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
             //Console.WriteLine(string.Join(",", result.val));

@@ -886,11 +886,11 @@ namespace LeetCodeAlgo
             ans.Add(new List<char>());
             foreach (var d in digits)
             {
-                List<List<char>> list = new List<List<char>>();
+                List<List<char>> next = new List<List<char>>();
                 foreach (var entry in ans)
                     foreach (char c in dict[d])
-                        list.Add(new List<char>(entry) { c });
-                ans = list;
+                        next.Add(new List<char>(entry) { c });
+                ans = next;
             }
             return ans.Select(x => new string(x.ToArray())).ToList();
         }
@@ -1036,17 +1036,16 @@ namespace LeetCodeAlgo
             return head;
         }
 
-        ///22. Generate Parentheses ()
+        ///22. Generate Parentheses, #Backtracking
         ///Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
         ///1 <= n <= 8, if n=3, return ["((()))","(()())","(())()","()(())","()()()"]
-
         public List<String> GenerateParenthesis(int n)
         {
             List<string> ans = new List<string>();
             GenerateParenthesis_Backtracking(ans, "", 0, 0, n);
             return ans;
         }
-
+        ///string is immutable , best for this question
         public void GenerateParenthesis_Backtracking(IList<string> list, string str, int left, int right, int count)
         {
             if (left == count && right == count)
@@ -1056,7 +1055,7 @@ namespace LeetCodeAlgo
             }
             if (left < count)
             {
-                GenerateParenthesis_Backtracking(list, str+"(", left+1, right, count);
+                GenerateParenthesis_Backtracking(list, str + "(", left + 1, right, count);
             }
             if (right < left)
             {
@@ -2238,7 +2237,6 @@ namespace LeetCodeAlgo
         public IList<IList<int>> Permute(int[] nums)
         {
             var ans = new List<IList<int>>();
-
             var list = new List<int>();
             bool[] visit=new bool[nums.Length];
             Permute_Backtracking(ans, list, nums, visit, 0);
@@ -2252,14 +2250,12 @@ namespace LeetCodeAlgo
                 ans.Add(list);
                 return;
             }
-
             for(int i = 0; i < visit.Length; i++)
             {
                 if (visit[i]) continue;
                 var nextVisit=new bool[visit.Length];
                 Array.Copy(visit, nextVisit, visit.Length);
                 nextVisit[i] = true;
-
                 var nextList=new List<int>(list) { nums[i]};
                 Permute_Backtracking(ans, nextList, nums, nextVisit, count + 1);
             }

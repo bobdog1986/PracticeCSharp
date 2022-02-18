@@ -75,17 +75,20 @@ namespace LeetCodeAlgo
         /// 202. Happy Number
         /// Starting with any positive integer, replace the number by the sum of the squares of its digits.
         /// Repeat the process until the number==1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
-        /// Those numbers for which this process ends in 1 are happy.
-        /// Return true if n is a happy number, and false if not.
-        private readonly List<int> happyList = new List<int>();
-
+        /// Those numbers for which this process ends in 1 are happy. Return true if n is a happy number, and false if not.
         public bool IsHappy(int n)
         {
-            if (n == 1) return true;
-            if (happyList.Contains(n)) return false;
-            happyList.Add(n);
+            Dictionary<int,int> dict=new Dictionary<int, int>();
+            return IsHappy(n,dict);
+        }
 
-            return IsHappy(GetDigitSquare(n));
+        public bool IsHappy(int n , Dictionary<int,int> dict)
+        {
+            if (n == 1) return true;
+            if (dict.ContainsKey(n))
+                return false;
+            dict.Add(n, 1);
+            return IsHappy(GetDigitSquare(n), dict);
         }
 
         public int GetDigitSquare(int n)
