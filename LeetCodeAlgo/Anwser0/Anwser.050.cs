@@ -611,15 +611,38 @@ namespace LeetCodeAlgo
             return string.Join("", result);
         }
 
-        //69
+        ///69. Sqrt(x), #Binary Search
+        ///Given a non-negative integer x, compute and return the square root of x.
+        ///Since the return type is an integer, the decimal digits are truncated, and only the integer part of the result is returned.
+
         public int MySqrt(int x)
+        {
+            //int.MaxValue. 2147483647
+            long left = 0;
+            long right = 50000;
+            while (left <= right)
+            {
+                long mid = (left + right) / 2;
+                if (left == mid)
+                    break;
+                if (mid * mid > x)
+                {
+                    right = mid;
+                }
+                else
+                {
+                    left = mid;
+                }
+            }
+            return (int)left;
+        }
+        public int MySqrt_Math(int x)
         {
             long r = x;
             while (r * r > x)
                 r = (r + x / r) / 2;
             return (int)r;
         }
-
         ///70. Climbing Stairs, #DP
         ///Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
         ///1 <= n <= 45

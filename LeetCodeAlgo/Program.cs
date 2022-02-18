@@ -80,11 +80,7 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             ////var result = anwser.IsMatch("baabbbaccbccacacc","c*..b*a*a.*a..*c");
             uint uintVal =0b10000000_00000000_00000000_00000000;
-            var result = anwser.TrailingZeroes(7);
-            anwser.TrailingZeroes(8);
-            anwser.TrailingZeroes(9);
-            anwser.TrailingZeroes(10);
-            anwser.TrailingZeroes(14);
+            var result = anwser.MySqrt(1);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
