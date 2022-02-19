@@ -19,7 +19,7 @@ namespace LeetCodeAlgo
             var val2 = 2;
             var str1 = "AAABBB";
             var str2 = "sq";
-            var word1 = new string[] { "ABC", "ACB", "ABC", "ACB", "ACB" };
+            var word1 = new string[] { "3", "1", "-"};
             var word2 = new string[] { "ABC", "ACB", "ABC", "ACB", "ACB" };
             var mat1 = new int[][]
             {
@@ -80,7 +80,7 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             ////var result = anwser.IsMatch("baabbbaccbccacacc","c*..b*a*a.*a..*c");
             uint uintVal =0b10000000_00000000_00000000_00000000;
-            var result = anwser.GetSum(-1,1);
+            var result = anwser.EvalRPN(word1);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

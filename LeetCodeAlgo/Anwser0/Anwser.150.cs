@@ -8,6 +8,33 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
+        ///150. Evaluate Reverse Polish Notation
+        public int EvalRPN(string[] tokens)
+        {
+            Stack<int> stack =new Stack<int> ();
+            int ans = 0;
+            foreach(var str in tokens)
+            {
+                if (str == "+"|| str == "-" || str == "*" || str =="/")
+                {
+                    var b=stack.Pop ();
+                    var a=stack.Pop ();
+                    if (str == "+") ans = a +b ;
+                    else if(str == "-") ans = a - b;
+                    else if(str == "*") ans = a * b;
+                    else if(str == "/") ans = a/b;
+                    stack.Push (ans);
+                }
+                else
+                {
+                    stack.Push (int.Parse(str));
+                }
+            }
+            if(stack.Count > 0)
+                return stack.Pop ();
+            return ans;
+
+        }
         ///152. Maximum Product Subarray
         ///Given an integer array nums, find a contiguous non-empty subarray within the array
         ///that has the largest product, and return the product.
