@@ -2053,13 +2053,21 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        /// 41. First Missing Positive-not done
+        /// 41. First Missing Positive
         /// Given an unsorted integer array nums, return the smallest missing positive integer. O(n) time
-        /// 1 <= nums.length <= 5 * 10^5
-
+        /// 1 <= nums.length <= 5 * 10^5, -2^31 <= nums[i] <= 2^31 - 1
         public int FirstMissingPositive(int[] nums)
         {
-            return 0;
+            int[] arr=new int[nums.Length+1];
+            foreach(var n in nums)
+            {
+                if (n > 0 && n<=nums.Length) arr[n]++;
+            }
+            for(int i = 1; i < arr.Length; i++)
+            {
+                if (arr[i] == 0) return i;
+            }
+            return nums.Length+1;
         }
 
         ///42. Trapping Rain Water, #Two Pointers
