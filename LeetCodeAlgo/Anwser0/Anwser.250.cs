@@ -125,7 +125,59 @@ namespace LeetCodeAlgo
             }
         }
 
-        ///290. Word Pattern
+        ///289. Game of Life
+        /// For 1, count of 1 in hor,ver , dragonal is 2 or 3 =>1
+        /// For 0, count of 1 in hor,ver , dragonal is 3 =>1
+        public void GameOfLife(int[][] board)
+        {
+            int rowLen= board.Length;
+            int colLen= board[0].Length;
+            bool[,] matrix=new bool[rowLen, colLen];
+
+            for(int i = 0; i < rowLen; i++)
+            {
+                for(int j = 0; j < colLen; j++)
+                {
+                    int count = 0;
+                    if (i > 0)
+                    {
+                        if (j > 0)
+                            count += board[i-1][j - 1];
+                        count += board[i-1][j];
+                        if (j < colLen - 1)
+                            count += board[i-1][j + 1];
+                    }
+
+                    if (j > 0)
+                        count += board[i][j - 1];
+                    if (j < colLen - 1)
+                        count += board[i][j + 1];
+
+                    if (i < rowLen - 1)
+                    {
+                        if (j > 0)
+                            count += board[i + 1][j - 1];
+                        count += board[i+1][j];
+                        if (j < colLen - 1)
+                            count += board[i + 1][j + 1];
+                    }
+
+                    if(board[i][j] == 0)
+                    {
+                        matrix[i, j] = count == 3;
+                    }
+                    else
+                    {
+                        matrix[i, j] = count == 2 || count == 3;
+                    }
+                }
+            }
+
+            for(int i = 0; i < rowLen; i++)
+                for (int j = 0; j < colLen; j++)
+                    board[i][j] = matrix[i, j] ? 1 : 0;
+        }
+        /// 290. Word Pattern
         ///Given a pattern and a string s, find if s follows the same pattern.
         ///pattern = "abba", s = "dog cat cat dog", return true
         ///pattern = "abba", s = "dog dog dog dog", return false
