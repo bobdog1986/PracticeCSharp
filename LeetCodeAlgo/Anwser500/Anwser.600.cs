@@ -107,17 +107,27 @@ namespace LeetCodeAlgo
         ///1 <= task.length <= 10^4, tasks[i] is upper-case English letter.
         public int LeastInterval(char[] tasks, int n)
         {
-            int ans = tasks.Length;
-            if (n == 0) return ans;
-
-            int[] arr=new int[26];
-            foreach (var t in tasks)
+            if (n <= 0) { return tasks.Length; }
+            int[] arr = new int[26];
+            foreach (char t in tasks)
+            {
                 arr[t - 'A']++;
-
-
-
-            return ans;
-
+            }
+            Array.Sort(arr);
+            // count is the number of appending numbers in last "round"
+            int count = 0;
+            for (int i = 25; i >= 0; i--)
+            {
+                if (arr[i] == arr[25])
+                {
+                    count++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return Math.Max(tasks.Length, (arr[25] - 1) * (n + 1) + count);
         }
         /// 653. Two Sum IV - Input is a BST
         ///return true if there exist two elements in the BST such that sum = target.
