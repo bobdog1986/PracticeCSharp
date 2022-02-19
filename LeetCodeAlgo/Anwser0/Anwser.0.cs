@@ -1288,81 +1288,38 @@ namespace LeetCodeAlgo
         ///-2^31 <= dividend, divisor <= 2^31 - 1, divisor!=0
         public int Divide(int dividend, int divisor)
         {
-            if (dividend == 0)
-                return 0;
+            if (dividend == 0) return 0;
+            if (dividend == int.MinValue && divisor == -1)
+                return int.MaxValue;
 
-            if (divisor == 1)
-                return dividend;
-
-            if (divisor == -1)
-            {
-                return dividend == int.MinValue ? int.MaxValue : -dividend;
-            }
-
-            if (divisor == int.MinValue)
-            {
-                return dividend == int.MinValue ? 1 : 0;
-            }
-
+            if (divisor == 1) return dividend;
+            if (divisor == -1) return -dividend;
+            if (divisor == int.MinValue) return dividend == int.MinValue ? 1 : 0;
             if (divisor == int.MaxValue)
             {
-                if (dividend <= int.MinValue + 1)
-                {
-                    return -1;
-                }
-                else if (dividend == int.MaxValue)
-                {
-                    return 1;
-                }
-                else
-                {
-                    return 0;
-                }
+                if (dividend == int.MaxValue) return 1;
+                if (dividend <= int.MinValue + 1) return -1;
+                return 0;
             }
 
             int ans = 0;
-
-            if (dividend > 0)
+            int sign = dividend > 0 ^ divisor > 0 ? -1 : 1;
+            long did = Math.Abs((long)dividend);
+            long div = Math.Abs((long)divisor);
+            // 15/3 = 15/12 + 3/3, 12=3<<2, ans+=1<<2=4, ans+=1<<0=1,
+            while (did >= div)
             {
-                if (divisor > 0)
+                long temp = div;
+                long m = 1;
+                while (temp << 1 <= did && m != 1 << 30)
                 {
-                    while (dividend - divisor >= 0)
-                    {
-                        dividend -= divisor;
-                        ans++;
-                    }
+                    temp <<= 1;
+                    m <<= 1;
                 }
-                else
-                {
-                    while (dividend + divisor >= 0)
-                    {
-                        dividend += divisor;
-                        ans--;
-                    }
-                }
+                did -= temp;
+                ans += (int)m;
             }
-            else
-            {
-                if (divisor > 0)
-                {
-                    while (dividend + divisor <= 0)
-                    {
-                        dividend += divisor;
-                        ans--;
-                    }
-                }
-                else
-                {
-                    while (dividend - divisor <= 0)
-                    {
-                        dividend -= divisor;
-                        if (ans < int.MaxValue)
-                            ans++;
-                    }
-                }
-            }
-
-            return ans;
+            return sign == 1 ? ans : -ans;
         }
 
         ///30. Substring with Concatenation of All Words

@@ -166,6 +166,48 @@ namespace LeetCodeAlgo
             }
             throw new ArgumentOutOfRangeException();
         }
+        ///166. Fraction to Recurring Decimal
+        ///Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.
+        ///If the fractional part is repeating, enclose the repeating part in parentheses.
+        ///If multiple answers are possible, return any of them.
+        ///It is guaranteed that the length of the answer string is less than 104 for all the given inputs.
+        public string FractionToDecimal(int numerator, int denominator)
+        {
+            if (numerator == 0) return "0";
+            StringBuilder ans = new StringBuilder();
+            // "+" or "-"
+            ans.Append(((numerator > 0) ^ (denominator > 0)) ? "-" : "");
+            long num = Math.Abs((long)numerator);
+            long deno = Math.Abs((long)denominator);
+
+            // integral part
+            ans.Append(num / deno);
+            num %= deno;
+            if (num == 0)
+                return ans.ToString();
+
+            // fractional part
+            ans.Append(".");
+            Dictionary<long, int> dict = new Dictionary<long, int>();
+            dict.Add(num, ans.Length);
+            while (num != 0)
+            {
+                num *= 10;
+                ans.Append(num / deno);
+                num %= deno;
+                if (dict.ContainsKey(num))
+                {
+                    ans.Insert(dict[num], "(");
+                    ans.Append(")");
+                    break;
+                }
+                else
+                {
+                    dict.Add(num, ans.Length);
+                }
+            }
+            return ans.ToString();
+        }
 
         ///169. Majority Element
         ///The majority element is the element that appears more than n/2 times.
