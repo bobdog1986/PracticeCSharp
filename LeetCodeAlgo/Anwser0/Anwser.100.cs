@@ -703,29 +703,68 @@ namespace LeetCodeAlgo
         /// return the number of words in the shortest transformation sequence from beginWord to endWord, or 0 if no such sequence exists.
         /// 1 <= beginWord.length <= 10, beginWord != endWord
 
-        /// 128
+        /// 128. Longest Consecutive Sequence
+        /// Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence. O(n) time.
+        /// 0 <= nums.length <= 105, -10^9 <= nums[i] <= 10^9
         public int LongestConsecutive(int[] nums)
         {
-            if (nums == null || nums.Length == 0) return 0;
+            if (nums.Length <= 1) return nums.Length;
             Array.Sort(nums);
             int max = 1;
-            int current = 1;
+            int count = 1;
             int pre = nums[0];
             for (int i = 1; i < nums.Length; i++)
             {
                 if (nums[i] <= pre + 1)
                 {
-                    if (nums[i] != pre) current++;
+                    if (nums[i] != pre) count++;
                 }
                 else
                 {
-                    max = Math.Max(current, max);
-                    current = 1;
+                    max = Math.Max(count, max);
+                    count = 1;
                 }
                 pre = nums[i];
             }
+            return Math.Max(count, max);
+        }
 
-            return max = Math.Max(current, max);
+        public int LongestConsecutive_HashMap_O_n(int[] nums)
+        {
+            int res = 0;
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach (int n in nums)
+            {
+                if (!dict.ContainsKey(n))
+                {
+                    int left = (dict.ContainsKey(n - 1)) ? dict[n - 1] : 0;
+                    int right = (dict.ContainsKey(n + 1)) ? dict[n + 1] : 0;
+                    int sum = left + right + 1;
+                    dict.Add(n, sum);
+                    // keep track of the max length
+                    res = Math.Max(res, sum);
+                    // extend the length to the boundary(s)
+                    // of the sequence
+                    // will do nothing if n has no neighbors
+                    if(dict.ContainsKey(n - left))
+                    {
+                        dict[n - left]=sum;
+                    }
+                    else
+                    {
+                        dict.Add(n - left, sum);
+                    }
+                    if (dict.ContainsKey(n + right))
+                    {
+                        dict[n + right] = sum;
+                    }
+                    else
+                    {
+                        dict.Add(n + right, sum);
+                    }
+                }
+            }
+            return res;
         }
 
         /// 130. Surrounded Regions

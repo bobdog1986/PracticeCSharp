@@ -125,7 +125,21 @@ namespace LeetCodeAlgo
             }
         }
 
-        ///289. Game of Life
+        ///287. Find the Duplicate Number
+        ///Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive.
+        ///There is only one repeated number in nums, return this repeated number.
+        public int FindDuplicate(int[] nums)
+        {
+            int[] arr=new int[nums.Length+1];
+            foreach(var n in nums)
+            {
+                if (arr[n] == 1) return n;
+                arr[n] = 1;
+            }
+            return 0;
+        }
+
+        /// 289. Game of Life
         /// For 1, count of 1 in hor,ver , dragonal is 2 or 3 =>1
         /// For 0, count of 1 in hor,ver , dragonal is 3 =>1
         public void GameOfLife(int[][] board)
