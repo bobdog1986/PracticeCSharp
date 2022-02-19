@@ -90,8 +90,25 @@ namespace LeetCodeAlgo
         {
             int ans = 0;
             int bit = 1;
+            bool carry = false;
+            //check every bit 1 or 0
+            for(int i=0; i < 32; i++)
+            {
+                bool left = (a & bit) !=0;
+                bool right = (b & bit) != 0;
+                int count = 0;
+                if (left) count++;
+                if(right) count++;
+                if (carry) count++;
+                carry = count >=2;
+                bool add = (count % 2) == 1;
+                if (add)
+                {
+                    ans |= bit;
+                }
+                bit <<= 1;
+            }
             return ans;
-
         }
         /// 376. Wiggle Subsequence, #DP
         ///A wiggle sequence is a sequence where the differences between numbers strictly alternate between positive and negative.
