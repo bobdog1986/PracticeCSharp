@@ -26,9 +26,9 @@ namespace LeetCodeAlgo
                         ans++;
                         queue.Clear();
                         queue.Enqueue(new int[] { i, j });
-                        while(queue.Count > 0)
+                        while (queue.Count > 0)
                         {
-                            var node=queue.Dequeue();
+                            var node = queue.Dequeue();
                             var row = node[0];
                             var col = node[1];
 
@@ -68,21 +68,22 @@ namespace LeetCodeAlgo
             {
                 left >>= 1;
                 right >>= 1;
-                moveFactor ++;
+                moveFactor++;
             }
             return left << moveFactor;
         }
+
         /// 202. Happy Number
         /// Starting with any positive integer, replace the number by the sum of the squares of its digits.
         /// Repeat the process until the number==1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
         /// Those numbers for which this process ends in 1 are happy. Return true if n is a happy number, and false if not.
         public bool IsHappy(int n)
         {
-            Dictionary<int,int> dict=new Dictionary<int, int>();
-            return IsHappy(n,dict);
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            return IsHappy(n, dict);
         }
 
-        public bool IsHappy(int n , Dictionary<int,int> dict)
+        public bool IsHappy(int n, Dictionary<int, int> dict)
         {
             if (n == 1) return true;
             if (dict.ContainsKey(n))
@@ -158,6 +159,7 @@ namespace LeetCodeAlgo
             }
             return count;
         }
+
         /// 206. Reverse Linked List
         ///Given the head of a singly linked list, reverse the list, and return the reversed list.
         ///The number of nodes in the list is the range [0, 5000].
@@ -172,9 +174,9 @@ namespace LeetCodeAlgo
                 list.Add(node);
                 node = node.next;
             }
-            for(int i = list.Count - 1; i > 0; i--)
+            for (int i = list.Count - 1; i > 0; i--)
             {
-                list[i].next= list[i-1];
+                list[i].next = list[i - 1];
             }
             list[0].next = null;
             return list.Last();
@@ -190,7 +192,7 @@ namespace LeetCodeAlgo
             int left = 0;
             for (int i = 0; i < nums.Length; i++)
             {
-                sum+=nums[i];
+                sum += nums[i];
                 while (sum >= target)
                 {
                     int len = i - left + 1;
@@ -201,6 +203,7 @@ namespace LeetCodeAlgo
             }
             return min == nums.Length + 1 ? 0 : min;
         }
+
         ///211. Design Add and Search Words Data Structure, see WordDictionary
 
         /// 213. House Robber II
@@ -251,18 +254,19 @@ namespace LeetCodeAlgo
             Array.Sort(nums);
             return nums[nums.Length - k];
         }
+
         /// 217. Contains Duplicate, #HashMap
         public bool ContainsDuplicate(int[] nums)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
-            foreach(var n in nums)
+            foreach (var n in nums)
             {
                 if (dict.ContainsKey(n))
                     dict[n]++;
                 else
                     dict.Add(n, 1);
             }
-            return dict.Values.Max()>1;
+            return dict.Values.Max() > 1;
         }
 
         ///221. Maximal Square, #DP
@@ -270,8 +274,8 @@ namespace LeetCodeAlgo
         ///find the largest square containing only 1's and return its area.
         public int MaximalSquare(char[][] matrix)
         {
-            int rowLen=matrix.Length;
-            int colLen=matrix[0].Length;
+            int rowLen = matrix.Length;
+            int colLen = matrix[0].Length;
             //loop matrix from top to bottom, you can also try left to right
             //store count of last '1'
             int[] dp = new int[colLen];
@@ -324,6 +328,7 @@ namespace LeetCodeAlgo
 
             return len * len;
         }
+
         /// 226. Invert Binary Tree
         ///Given the root of a binary tree, invert the tree, and return its root.
 
@@ -349,7 +354,63 @@ namespace LeetCodeAlgo
             InvertTree_Recursion(node.right);
         }
 
-        ///230. Kth Smallest Element in a BST
+        ///227. Basic Calculator II
+        ///1 <= s.length <= 3 * 10^5,non-negative integers in the range [0, 2^31 - 1].
+        ///s consists of integers and operators ('+', '-', '*', '/') separated by some number of spaces.
+        public int Calculate(string s)
+        {
+            List<int> list = new List<int>();
+            int num = 0;
+            char sign = '+';
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (char.IsDigit(s[i]))
+                {
+                    num = num * 10 + s[i] - '0';
+                }
+                else if(s[i]!=' ')
+                {
+                    if (sign == '-')
+                    {
+                        list.Add(-num);
+                    }
+                    if (sign == '+')
+                    {
+                        list.Add(num);
+                    }
+                    if (sign == '*')
+                    {
+                        list[list.Count-1]*= num;
+                    }
+                    if (sign == '/')
+                    {
+                        list[list.Count - 1] /= num;
+                    }
+                    sign = s[i];
+                    num = 0;
+                }
+            }
+
+            if (sign == '-')
+            {
+                list.Add(-num);
+            }
+            if (sign == '+')
+            {
+                list.Add(num);
+            }
+            if (sign == '*')
+            {
+                list[list.Count - 1] *= num;
+            }
+            if (sign == '/')
+            {
+                list[list.Count - 1] /= num;
+            }
+            return list.Count == 0 ? 0 : list.Sum();
+        }
+
+        /// 230. Kth Smallest Element in a BST
         ///copy from InorderTraversal_Iteration()
         public int KthSmallest(TreeNode root, int k)
         {
@@ -377,8 +438,9 @@ namespace LeetCodeAlgo
                 }
             }
             //need happen
-            return values[k-1];
+            return values[k - 1];
         }
+
         /// 231. Power of Two
         ///Given an integer n, return true if it is a power of two.
 
@@ -435,12 +497,12 @@ namespace LeetCodeAlgo
         public bool IsPalindrome(ListNode head)
         {
             List<int> list = new List<int>();
-            while(head != null)
+            while (head != null)
             {
                 list.Add(head.val);
                 head = head.next;
             }
-            for(int i=0; i<list.Count/2; i++)
+            for (int i = 0; i < list.Count / 2; i++)
             {
                 if (list[i] != list[list.Count - 1 - i])
                     return false;
@@ -501,9 +563,9 @@ namespace LeetCodeAlgo
         {
             ListNode last = null;
             ListNode curr = node;
-            while(curr != null)
+            while (curr != null)
             {
-                if(curr.next == null)
+                if (curr.next == null)
                 {
                     last.next = null;
                     break;
@@ -513,6 +575,7 @@ namespace LeetCodeAlgo
                 curr = curr.next;
             }
         }
+
         /// 238. Product of Array Except Self
         ///return an array such that answer[i] = product of all the elements of nums except nums[i].
         ///O(n) time and without using the division operation.
@@ -541,6 +604,7 @@ namespace LeetCodeAlgo
 
             return ans;
         }
+
         /// 240. Search a 2D Matrix II, #Binary Search
         public bool SearchMatrix(int[][] matrix, int target)
         {
@@ -583,12 +647,11 @@ namespace LeetCodeAlgo
                         col = (col2 - col1) / 2 + col1;
                     }
                 }
-
-
             }
 
             return false;
         }
+
         /// 242. Valid Anagram
         /// Given two strings s and t, return true if t is an anagram of s, and false otherwise.
         /// An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, same length
@@ -600,7 +663,7 @@ namespace LeetCodeAlgo
             int[] arr = new int[26];
             foreach (var c in s)
                 arr[c - 'a']++;
-            foreach(var c in t)
+            foreach (var c in t)
             {
                 if (arr[c - 'a'] == 0)
                     return false;
@@ -608,7 +671,5 @@ namespace LeetCodeAlgo
             }
             return true;
         }
-
-
     }
 }
