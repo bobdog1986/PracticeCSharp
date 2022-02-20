@@ -71,7 +71,46 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
-        ///1290. Convert Binary Number in a Linked List to Integer
+        ///1288. Remove Covered Intervals
+        ///Given an array intervals where intervals[i] = [li, ri] represent the interval [li, ri),
+        ///remove all intervals that are covered by another interval in the list.
+        ///The interval [a, b) is covered by the interval [c, d) if and only if c <= a and b <= d.
+        ///Return the number of remaining intervals.
+        ///0 <= li <= ri <= 10^5
+        public int RemoveCoveredIntervals(int[][] intervals)
+        {
+            int ans = 0, left = -1, right = -1;
+            var list = intervals.OrderBy(x => x[0]).ToList();
+            foreach (var v in list)
+            {
+                if (v[0] == left)
+                {
+                    //update the right
+                    right = Math.Max(right, v[1]);
+                }
+                else//v[0] > left
+                {
+                    if(v[1] > right)
+                    {
+                        ans++;
+                        left = v[0];
+                        right = v[1];
+                    }
+                    else
+                    {
+                        //merged
+                    }
+                }
+                //if (v[0] > left && v[1] > right)
+                //{
+                //    left = v[0];
+                //    ans++;
+                //}
+                //right = Math.Max(right, v[1]);
+            }
+            return ans;
+        }
+        /// 1290. Convert Binary Number in a Linked List to Integer
         ///The value of each node in the linked list is either 0 or 1. The linked list holds the binary representation of a number.
         ///Return the decimal value of the number in the linked list.
         ///Number of nodes will not exceed 30.
