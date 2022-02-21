@@ -695,13 +695,59 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        /// 127. Word Ladder
+        /// 127. Word Ladder, #Graph, #BFS, 
         /// A transformation sequence from word beginWord to word endWord using a dictionary wordList
         /// is a sequence of words beginWord -> s1 -> s2 -> ... -> sk such that:
         /// Every adjacent pair of words differs by a single letter.
         /// Note that beginWord does not need to be in wordList, endWord = wordlist.Last()
-        /// return the number of words in the shortest transformation sequence from beginWord to endWord, or 0 if no such sequence exists.
+        /// return the number of words in the shortest transformation sequence from beginWord to endWord, or 0 if not exists.
         /// 1 <= beginWord.length <= 10, beginWord != endWord
+        public int LadderLength(string beginWord, string endWord, IList<string> wordList)
+        {
+            if (!wordList.Contains(endWord)) return 0;
+            int depth = 0;
+            Dictionary<string, int> dict = new Dictionary<string, int>();
+            List<string> list = new List<string>() { beginWord };
+            dict.Add(beginWord, 0);
+            while (list.Count > 0)
+            {
+                depth++;
+                List<string> next = new List<string>();
+                var canVisitWords = wordList.Where(x => !dict.ContainsKey(x)).ToList();
+                if (canVisitWords.Count == 0) return 0;
+                foreach(var curr in list)
+                {
+                    foreach(var word in canVisitWords)
+                    {
+                        if (LadderLength_CanMove(curr, word))
+                        {
+                            if (word == endWord) return depth+1;
+                            if (dict.ContainsKey(word)) continue;
+                            dict.Add(word, 1);
+                            next.Add(word);
+                        }
+                    }
+                }
+                list = next;
+                if (list.Count == 0) return 0;
+            }
+            return depth;
+        }
+
+        public bool LadderLength_CanMove(string curr, string next)
+        {
+            int diff = 0;
+            for(int i = 0; i < curr.Length; i++)
+            {
+                if (curr[i] != next[i])
+                {
+                    diff++;
+                }
+                if (diff > 1) return false;
+            }
+            return diff == 1;
+        }
+
 
         /// 128. Longest Consecutive Sequence
         /// Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence. O(n) time.
@@ -857,6 +903,82 @@ namespace LeetCodeAlgo
                 }
             }
 
+        }
+
+        ///131. Palindrome Partitioning
+        ///Given a string s, partition s such that every substring of the partition is a palindrome.
+        ///Return all possible palindrome partitioning of s.
+        ///A palindrome string is a string that reads the same backward as forward.
+        ///1 <= s.length <= 16, lowercase
+        public IList<IList<string>> Partition(string s)
+        {
+            return Partition_BackTracking(s, new Dictionary<string, int>());
+        }
+
+        public IList<IList<string>> Partition_BackTracking(string s, Dictionary<string, int> dict)
+        {
+            var ans=new List<IList<string>>();
+            //s itself
+            bool itself = true;
+            for(int j = 0; j < s.Length / 2; j++)
+            {
+                if(s[j] != s[s.Length - 1 - j])
+                {
+                    itself = false;
+                    break;
+                }
+            }
+
+            if (itself)
+            {
+                ans.Add(new List<string>() { s});
+            }
+
+            for(int i=1;i<s.Length; i++)
+            {
+                if (Partition_CanDo(s, 0, s.Length - 1, i))
+                {
+                    var head = Partition(s.Substring(0, i));
+                    var tail= Partition(s.Substring(i));
+
+                    foreach(var h in head)
+                    {
+                        foreach(var t in tail)
+                        {
+                            var list=new List<string>();
+                            list.AddRange(h);
+                            list.AddRange(t);
+                            var key = string.Join(",", list);
+                            if (!dict.ContainsKey(key))
+                            {
+                                ans.Add(list);
+                                dict.Add(key, 1);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return ans;
+        }
+
+        public bool Partition_CanDo(string s, int start, int end, int index)
+        {
+            if (index == start || index > end) return false;
+
+            int i = 0;
+            for(; index -1- i > start + i; i++)
+            {
+                if (s[start + i] != s[index -1- i]) return false;
+            }
+
+            i = 0;
+            for (; end - i > index + i; i++)
+            {
+                if (s[index+ i] != s[end - i]) return false;
+            }
+
+            return true;
         }
 
         /// 134. Gas Station

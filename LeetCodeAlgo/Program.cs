@@ -17,9 +17,9 @@ namespace LeetCodeAlgo
             int k = 2;
             var val1 = 5;
             var val2 = 2;
-            var str1 = "cabwefgewcwaefgcf";
-            var str2 = "cae";
-            var word1 = new string[] { "3", "1", "-"};
+            var str1 = "hot";
+            var str2 = "dog";
+            var word1 = new string[] { "hot", "dog"};
             var word2 = new string[] { "ABC", "ACB", "ABC", "ACB", "ACB" };
             var mat1 = new int[][]
             {
@@ -60,7 +60,7 @@ namespace LeetCodeAlgo
             };
 
             var listnode = anwser.buildListNode(new int[] {4,3,2,1 });
-            anwser.printListNode(listnode);
+            //anwser.printListNode(listnode);
             //Console.WriteLine("Correct Anwser should be : ");
             //Console.WriteLine(string.Join("\r\n", mat1.Select(o => string.Join(",", o))));
             Stopwatch sw = new Stopwatch();
@@ -80,7 +80,7 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             ////var result = anwser.IsMatch("baabbbaccbccacacc","c*..b*a*a.*a..*c");
             uint uintVal =0b10000000_00000000_00000000_00000000;
-            var result = anwser.LargestNumber(arr1);
+            var result = anwser.LadderLength(str1,str2,word1);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
