@@ -241,7 +241,7 @@ namespace LeetCodeAlgo
         public int MajorityElement(int[] nums)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
-            int half = nums.Length % 2 == 1 ? nums.Length / 2 + 1 : nums.Length / 2;
+            int half = nums.Length / 2 + 1;
             for (int i = 0; i < nums.Length; i++)
             {
                 if (dict.ContainsKey(nums[i]))
@@ -252,11 +252,9 @@ namespace LeetCodeAlgo
                 {
                     dict.Add(nums[i], 1);
                 }
+                if (dict[nums[i]] >= half) return nums[i];
             }
-            var major = dict.Where(x => x.Value >= half).ToList();
-            if (major == null)
-                return -1;
-            return major[0].Key;
+            return -1;
         }
 
         ///171. Excel Sheet Column Number

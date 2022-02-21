@@ -605,6 +605,75 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///239. Sliding Window Maximum
+        ///You are given an array of integers nums, there is a sliding window of size k which is moving from the very left of the array to the very right.
+        ///You can only see the k numbers in the window. Each time the sliding window moves right by one position.
+        ///Return the max sliding window. -10^4 <= nums[i] <= 10^4
+        public int[] MaxSlidingWindow(int[] nums, int k)
+        {
+            //O(n)= O(N)
+            int[] max_left = new int[nums.Length];
+            int[] max_right = new int[nums.Length];
+            //split nums to (len/k) * k-len window,
+            //calculate max from both of left and right sides
+            max_left[0] = nums[0];
+            max_right[nums.Length - 1] = nums[nums.Length -1];
+            for (int i = 1; i < nums.Length; i++)
+            {
+                max_left[i] = (i % k == 0) ? nums[i] : Math.Max(max_left[i - 1], nums[i]);
+                int j = nums.Length - i - 1;
+                max_right[j] = (j % k == 0) ? nums[j] : Math.Max(max_right[j + 1], nums[j]);
+            }
+            int[] ans = new int[nums.Length - k + 1];
+            for (int i = 0, j = 0; i + k <= nums.Length; i++)
+            {
+                ans[j++] = Math.Max(max_right[i], max_left[i + k - 1]);
+            }
+            return ans;
+        }
+
+        //O(n)= O(Nk)
+        public int[] MaxSlidingWindow_My(int[] nums, int k)
+        {
+            int[] ans = new int[nums.Length - k + 1];
+            int index = -1;
+            int max = -10000;
+            for(int i = 0; i < nums.Length-k+1; i++)
+            {
+                if (i > 0)
+                {
+                    //new tail
+                    if(nums[i+k-1] >= max)
+                    {
+                        max = nums[i + k - 1];
+                        index = i + k - 1;
+                        ans[i] = max;
+                        continue;
+                    }
+                    else
+                    {
+                        if (index > i - 1)
+                        {
+                            ans[i] = max;
+                            continue;
+                        }
+                    }
+                }
+
+                max = -10000;
+                for(int j = i; j < k+i; j++)
+                {
+                    if (nums[j] >= max)
+                    {
+                        max=nums[j];
+                        index = j;
+                    }
+                }
+                ans[i] = max;
+            }
+
+            return ans;
+        }
         /// 240. Search a 2D Matrix II, #Binary Search
         public bool SearchMatrix(int[][] matrix, int target)
         {
