@@ -671,7 +671,6 @@ namespace LeetCodeAlgo
                 }
                 ans[i] = max;
             }
-
             return ans;
         }
         /// 240. Search a 2D Matrix II, #Binary Search

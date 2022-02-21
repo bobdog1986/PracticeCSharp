@@ -840,6 +840,74 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///76. Minimum Window Substring
+        ///Given two strings s and t of lengths m and n respectively
+        ///return "" or the minimum window substring of s such that every character in t (including duplicates) is included in the window.
+        public string MinWindow(string s, string t)
+        {
+            if(s.Length<t.Length)return String.Empty;
+
+            int[] arrT = new int[26 + 32];//'a'-'A'=32
+            int[] arrS = new int[26 + 32];
+            for (int i=0;i<t.Length;i++)
+            {
+                arrT[t[i] - 'A']++;
+                arrS[s[i] - 'A']++;
+            }
+
+            int len = t.Length;
+            int min = s.Length + 1;
+            string ans = string.Empty;
+            for(int i = t.Length-1; i < s.Length; i++)
+            {
+                if (i == t.Length - 1)
+                {
+                }
+                else
+                {
+                    arrS[s[i] - 'A']++;
+                    len++;
+
+                    int j = i - len + 1;
+                    while (j <= i)
+                    {
+                        if (arrS[s[j] - 'A']>0 && arrS[s[j]-'A']>arrT[s[j] - 'A'])
+                        {
+                            arrS[s[j] - 'A']--;
+                            len--;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                        j++;
+                    }
+                }
+
+                bool failed = false;
+                for(int k = 0; k < arrT.Length; k++)
+                {
+                    if(arrT[k]>0 && arrT[k] > arrS[k])
+                    {
+                        failed = true;
+                        break;
+                    }
+                }
+
+                if (!failed)
+                {
+                    if (len < min)
+                    {
+                        min = len;
+                        ans = s.Substring(i - len + 1, len);
+                        if (len == t.Length)
+                            return ans;
+                    }
+                }
+            }
+            return min>s.Length ? string.Empty: ans;
+        }
+
         /// 77. Combinations
         public IList<IList<int>> Combine(int n, int k)
         {
