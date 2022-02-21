@@ -1322,7 +1322,7 @@ namespace LeetCodeAlgo
                 foreach(var d in dict.Keys)
                 {
                     var strs = d.Split(',');
-                    var a = double.Parse( strs[0]);
+                    var a = double.Parse(strs[0]);
                     var b = double.Parse(strs[1]);
 
                     if (points[i][0] * a + b == points[i][1])
@@ -1377,14 +1377,13 @@ namespace LeetCodeAlgo
             int count1 = 0;
             if (dict.Count > 0)
             {
-                var list1 = dict.Values.OrderBy(x => -x.Count).ToList();
-                count1 = list1[0].Count;
+                count1 = dict.Values.Select(x => x.Count).Max();
             }
+
             int count2 = 0;
             if (dictX.Count > 0)
             {
-                var list2 = dictX.Values.OrderBy(x => -x.Count).ToList();
-                count2 = list2[0].Count;
+                count2 = dictX.Values.Select(x => x.Count).Max();
             }
             return Math.Max(count1,count2);
         }

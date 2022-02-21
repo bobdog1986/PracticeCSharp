@@ -305,7 +305,31 @@ namespace LeetCodeAlgo
             return maxLost > 0 ? 1 : (maxLost + 1);
         }
 
-        ///187. Repeated DNA Sequences
+        ///179. Largest Number
+        ///Given a list of non-negative integers nums, arrange them such that they form the largest number and return it.
+        ///Since the result may be very large, so you need to return a string instead of an integer.
+        public string LargestNumber(int[] nums)
+        {
+            string ans = string.Empty;
+            Array.Sort(nums, (x, y) =>
+            {
+                return -LargestNumber_Compare(x, y);
+            });
+
+            foreach (var n in nums)
+            {
+                if (ans == "0" && n == 0) continue;
+                ans += n.ToString();
+            }
+            return ans;
+        }
+        public int LargestNumber_Compare(int x, int y)
+        {
+            string a = $"{x}{y}";
+            string b = $"{y}{x}";
+            return a.CompareTo(b);
+        }
+        /// 187. Repeated DNA Sequences
         ///return all the 10-letter-long sequences (substrings) that occur more than once
         public IList<string> FindRepeatedDnaSequences(string s)
         {
