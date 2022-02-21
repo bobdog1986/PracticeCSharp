@@ -428,17 +428,17 @@ namespace LeetCodeAlgo
         /// You are given a perfect binary tree where all leaves are on the same level
         /// Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
         /// Initially, all next pointers are set to NULL.
-        public Node Connect_116(Node root)
+        public Node1 Connect_116(Node1 root)
         {
             if (root == null)
                 return null;
-            List<Node> list = new List<Node>
+            List<Node1> list = new List<Node1>
             {
                 root
             };
             while (list.Count != 0)
             {
-                List<Node> subs = new List<Node>();
+                List<Node1> subs = new List<Node1>();
                 for (int i = 0; i < list.Count; i++)
                 {
                     list[i].next = i == list.Count - 1 ? null : list[i + 1];
@@ -456,17 +456,17 @@ namespace LeetCodeAlgo
         /// 117. Populating Next Right Pointers in Each Node II
         /// Populate each next pointer to point to its next right node.
         /// If there is no next right node, the next pointer should be set to NULL.
-        public Node Connect(Node root)
+        public Node1 Connect(Node1 root)
         {
             if (root == null)
                 return null;
-            List<Node> list = new List<Node>
+            List<Node1> list = new List<Node1>
             {
                 root
             };
             while (list.Count != 0)
             {
-                List<Node> subs = new List<Node>();
+                List<Node1> subs = new List<Node1>();
                 for (int i = 0; i < list.Count; i++)
                 {
                     list[i].next = i == list.Count - 1 ? null : list[i + 1];
@@ -920,6 +920,137 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///138. Copy List with Random Pointer
+        ///Random may pointer to itself
+        public RandomNode CopyRandomList_My(RandomNode head)
+        {
+            if (head == null) return null;
+            RandomNode brand = null;
+            RandomNode tail = null;
+
+            List<RandomNode> inputs = new List<RandomNode>();
+            List<RandomNode> list = new List<RandomNode>();
+            var node = head;
+            while (node != null)
+            {
+                if(brand == null)
+                {
+                    brand = new RandomNode(node.val);
+                    tail = brand;
+
+                    inputs.Add(node);
+                    list.Add(tail);
+
+                    if (node.random == null)
+                    {
+                        tail.random = null;
+                    }
+                    else
+                    {
+                        var rIndex = inputs.IndexOf(node.random);
+                        if (rIndex == -1)
+                        {
+                            tail.random = new RandomNode(node.random.val);
+                            list.Add(tail.random);
+                            inputs.Add(node.random);
+                        }
+                        else
+                        {
+                            tail.random = list[rIndex];
+                        }
+                    }
+                }
+                else
+                {
+                    var index = inputs.IndexOf(node);
+                    if (index == -1)
+                    {
+                        tail.next =new RandomNode(node.val);
+                        tail = tail.next;
+                        list.Add(tail);
+                        inputs.Add(node);
+                    }
+                    else
+                    {
+                        tail.next = list[index];
+                        tail = tail.next;
+                    }
+
+                    if (node.random == null)
+                    {
+                        tail.random = null;
+                    }
+                    else
+                    {
+                        var rIndex = inputs.IndexOf(node.random);
+                        if(rIndex == -1)
+                        {
+                            tail.random = new RandomNode(node.random.val);
+                            list.Add(tail.random);
+                            inputs.Add(node.random);
+                        }
+                        else
+                        {
+                            tail.random=list[rIndex];
+                        }
+                    }
+                }
+                node = node.next;
+            }
+
+            return brand;
+        }
+
+        public RandomNode CopyRandomList(RandomNode head)
+        {
+            RandomNode iter = head, next;
+
+            // First round: make copy of each node,
+            // and link them together side-by-side in a single list.
+            while (iter != null)
+            {
+                next = iter.next;
+
+                RandomNode copy1 = new RandomNode(iter.val);
+                iter.next = copy1;
+                copy1.next = next;
+
+                iter = next;
+            }
+
+            // Second round: assign random pointers for the copy nodes.
+            iter = head;
+            while (iter != null)
+            {
+                if (iter.random != null)
+                {
+                    iter.next.random = iter.random.next;
+                }
+                iter = iter.next.next;
+            }
+
+            // Third round: restore the original list, and extract the copy list.
+            iter = head;
+            RandomNode pseudoHead = new RandomNode(0);
+            RandomNode copy, copyIter = pseudoHead;
+
+            while (iter != null)
+            {
+                next = iter.next.next;
+
+                // extract the copy
+                copy = iter.next;
+                copyIter.next = copy;
+                copyIter = copy;
+
+                // restore the original list
+                iter.next = next;
+
+                iter = next;
+            }
+
+            return pseudoHead.next;
+        }
         /// 139. Word Break
         ///return true if s can be segmented into a space-separated sequence of one or more dictionary words.
         ///Note that the same word in the dictionary may be reused multiple times in the segmentation.

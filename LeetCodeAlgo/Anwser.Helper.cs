@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace LeetCodeAlgo
 {
@@ -139,6 +140,42 @@ namespace LeetCodeAlgo
             }
 
             Console.WriteLine($"ListNode is [{string.Join(",", list)}]");
+        }
+
+        public void printRandomNode(RandomNode node, int maxLen = 20)
+        {
+            if (node == null)
+            {
+                Console.WriteLine("node is []");
+                return;
+            }
+            List<int> list = new List<int>();
+            List<RandomNode> rList = new List<RandomNode>();
+            while (node != null && list.Count <= maxLen)
+            {
+                list.Add(node.val);
+                rList.Add(node.random);
+                node = node.next;
+            }
+
+            Console.WriteLine($"Node is [{string.Join(",", list)}]");
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Rand is [");
+            foreach(var n in rList)
+            {
+                if(n == null)
+                {
+                    sb.Append("-,");
+                }
+                else
+                {
+                    sb.Append(n.val+",");
+                }
+            }
+            sb.Append("]");
+            Console.WriteLine(sb.ToString());
+
         }
 
         public ListNode buildListNode(int[] arr)
