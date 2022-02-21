@@ -1094,7 +1094,80 @@ namespace LeetCodeAlgo
             list.Add(node.val);
         }
 
-        ///149. Max Points on a Line
+        ///148. Sort List
+        ///Given the head of a linked list, return the list after sorting it in ascending order.
+        ///O(n logn) time and O(1) memory
+        public ListNode SortList(ListNode head)
+        {
+            if (head == null) return null;
+            ListNode ans = null;
+            ListNode tail = null;
+
+            var node = head;
+            while (node != null)
+            {
+                if (ans == null)
+                {
+                    ans = node;
+                    tail = node;
+
+                    node = node.next;
+                    tail.next = null;
+                }
+                else
+                {
+                    if(node.val <= ans.val)
+                    {
+                        var next = node.next;
+
+                        node.next = ans;
+                        ans = node;
+
+                        node = next;
+                    }
+                    else
+                    {
+                        if(node.val>= tail.val)
+                        {
+                            tail.next = node;
+                            tail = node;
+
+                            node = node.next;
+                        }
+                        else
+                        {
+                            var curr = ans.next;
+                            var prev = ans;
+                            while(curr != null)
+                            {
+                                if(curr.val >= node.val)
+                                {
+                                    break;
+                                }
+                                prev = curr;
+                                curr = curr.next;
+                            }
+
+                            var next = node.next;
+
+                            node.next = curr;
+                            prev.next = node;
+
+                            node = next;
+
+                        }
+                    }
+
+
+                }
+
+            }
+
+            tail.next = null;
+            return ans;
+        }
+
+        /// 149. Max Points on a Line
         ///return the maximum number of points that lie on the same straight line.
         ///1 <= points.length <= 300, -10^4 <= xi, yi <= 10^4, All the points are unique.
         public int MaxPoints(int[][] points)
