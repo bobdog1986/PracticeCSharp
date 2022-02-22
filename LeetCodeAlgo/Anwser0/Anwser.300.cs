@@ -189,6 +189,79 @@ namespace LeetCodeAlgo
 
             return oddsHead;
         }
+        ///329. Longest Increasing Path in a Matrix, #BFS
+        ///Given an m x n integers matrix, return the length of the longest increasing path in matrix.
+        ///From each cell, you can either move in four directions: left, right, up, or down.You may not move diagonally or move outside the boundary (i.e., wrap-around is not allowed).
+        public int LongestIncreasingPath(int[][] matrix)
+        {
+            int ans = 1;
+
+            int rowLen = matrix.Length;
+            int colLen = matrix[0].Length;
+            int[][] dp = new int[rowLen][];
+            for (int i = 0; i < rowLen; i++)
+                dp[i] = new int[colLen];
+
+            int[][] dxy = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
+            int len = 1;
+            List<int[]> list = new List<int[]>();
+            for (int i = 0; i < rowLen; i++)
+            {
+                for (int j = 0; j < colLen; j++)
+                {
+                    int neighboor = 0;
+                    foreach (var d in dxy)
+                    {
+                        int r = i + d[0];
+                        int c = j + d[1];
+                        if (r >= 0 && r < rowLen && c >= 0 && c < colLen)
+                        {
+                            if (matrix[r][c] < matrix[i][j])
+                            {
+                                neighboor++;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (neighboor == 0)
+                    {
+                        dp[i][j] = len;
+                        list.Add(new int[] { i,j});
+                    }
+                }
+            }
+
+            while(list.Count > 0)
+            {
+                len++;
+                List<int[]> next = new List<int[]>();
+                Dictionary<int, int> dict = new Dictionary<int, int>();
+                foreach(var cell in list)
+                {
+                    foreach (var d in dxy)
+                    {
+                        int r = cell[0] + d[0];
+                        int c = cell[1] + d[1];
+                        if (r >= 0 && r < rowLen && c >= 0 && c < colLen)
+                        {
+                            if (matrix[r][c] > matrix[cell[0]][cell[1]])
+                            {
+                                dp[r][c] = len;
+                                ans = len;
+                                if(!dict.ContainsKey(r * 1000 + c))
+                                {
+                                    next.Add(new int[] { r, c });
+                                    dict.Add(r * 1000 + c, 1);
+                                }
+                            }
+                        }
+                    }
+                }
+                list = next;
+            }
+            return ans;
+        }
         /// 334. Increasing Triplet Subsequence, #Greedy
         ///using greedy to find i<j<k, nums[i]<nums[j]<nums[k]
         public bool IncreasingTriplet(int[] nums)

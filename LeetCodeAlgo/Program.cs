@@ -23,7 +23,25 @@ namespace LeetCodeAlgo
             var word2 = new string[] { "ABC", "ACB", "ABC", "ACB", "ACB" };
             var mat1 = new int[][]
             {
-                new int[]{0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
+                new int[]{9  ,  9,   4 },
+                new int[]{6  ,  6,    8},
+                new int[]{2  ,  1,    1},
+
+                //new int[]{0  ,  1,    2,   3,   4,   5,   6,   7,   8,   9    },
+                //new int[]{19 ,  18,  17,  16,  15,  14,  13,  12,  11,  10   },
+                //new int[]{20 ,  21,  22,  23,  24,  25,  26,  27,  28,  29   },
+                //new int[]{39 ,  38,  37,  36,  35,  34,  33,  32,  31,  30   },
+                //new int[]{40 ,  41,  42,  43,  44,  45,  46,  47,  48,  49   },
+                //new int[]{59 ,  58,  57,  56,  55,  54,  53,  52,  51,  50  },
+                //new int[]{60 ,  61,  62,  63,  64,  65,  66,  67,  68,  69  },
+                //new int[]{79 ,  78,  77,  76,  75,  74,  73,  72,  71,  70   },
+                //new int[]{80 ,  81,  82,  83,  84,  85,  86,  87,  88,  89  },
+                //new int[]{99 ,  98,  97,  96,  95,  94,  93,  92,  91,  90 },
+                //new int[]{100, 101, 102, 103, 104, 105, 106, 107, 108, 109 },
+                //new int[]{119, 118, 117, 116, 115, 114, 113, 112, 111, 110 },
+                //new int[]{120, 121, 122, 123, 124, 125, 126, 127, 128, 129 },
+                //new int[]{139, 138, 137, 136, 135, 134, 133, 132, 131, 130 },
+                //new int[]{0  ,   0,   0,   0,   0,   0,   0,   0,   0,   0  },
             };
             var mat2 = new int[][] {
                 //new int[] { 3, 9 },   new int[]{7, 12},  new int[]{3, 8},
@@ -80,7 +98,7 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             ////var result = anwser.IsMatch("baabbbaccbccacacc","c*..b*a*a.*a..*c");
             uint uintVal =0b10000000_00000000_00000000_00000000;
-            var result = anwser.FindOrder(val1,mat2);
+            var result = anwser.LongestIncreasingPath(mat1);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
