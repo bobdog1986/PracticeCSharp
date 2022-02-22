@@ -182,7 +182,40 @@ namespace LeetCodeAlgo
             return list.Last();
         }
 
-        ///209. Minimum Size Subarray Sum ,#Prefix Sum
+        ///207. Course Schedule, #Graph
+        ///You are given an array prerequisites where prerequisites[i] = [ai, bi]
+        ///indicates that you must take course bi first if you want to take course ai.
+        ///Return true if you can finish all courses. Otherwise, return false.
+        public bool CanFinish(int numCourses, int[][] prerequisites)
+        {
+            var ans = true;
+            int len = numCourses;
+            bool[,] visit=new bool[len, len];
+            foreach(var p in prerequisites)
+            {
+                if (p[0] == p[1]) return false;
+                if (visit[p[1], p[0]]) return false;
+                visit[p[0], p[1]] = true;
+
+                for (int i = 0; i < len; i++)
+                {
+                    if(visit[p[1], i])
+                    {
+                        if (visit[i, p[0]]) return false;
+                        for(int j = 0; j < len; j++)
+                        {
+                            if (visit[i, j]) visit[p[0], j] = true;
+                        }
+                    }
+
+                    //update
+                    if (visit[i, p[0]]) visit[i, p[1]] = true;
+                }
+
+            }
+            return ans;
+        }
+        /// 209. Minimum Size Subarray Sum ,#Prefix Sum
         ///return the minimal length of a contiguous subarray of which the sum >= target.
         ///If there is no such subarray, return 0 instead.
         public int MinSubArrayLen(int target, int[] nums)

@@ -368,7 +368,7 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        ///547. Number of Provinces
+        ///547. Number of Provinces, #DFS
         ///BFS/DFS, same to 200
         public int FindCircleNum(int[][] isConnected)
         {
@@ -405,9 +405,7 @@ namespace LeetCodeAlgo
         {
             if (arr[c] == 0)
                 return;
-
             arr[c] = 0;
-
             for (int j = 0; j < isConnected[c].Length; j++)
             {
                 if (c != j && isConnected[c][j] == 1)
@@ -416,8 +414,6 @@ namespace LeetCodeAlgo
                 }
             }
         }
-
-
 
     }
 }

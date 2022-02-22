@@ -650,7 +650,7 @@ namespace LeetCodeAlgo
             return sum;
         }
 
-        ///124. Binary Tree Maximum Path Sum
+        ///124. Binary Tree Maximum Path Sum, #Backtracking
         ///A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them.
         ///A node can only appear in the sequence at most once. Note that the path does not need to pass through the root.
         ///The path sum of a path is the sum of the node's values in the path.
@@ -658,11 +658,27 @@ namespace LeetCodeAlgo
         ///The number of nodes in the tree is in the range [1, 3 * 104]., -1000 <= Node.val <= 1000
         public int MaxPathSum(TreeNode root)
         {
+            int ans = int.MinValue;
+            MaxPathSum_BackTracking(root, ref ans);
+            return ans;
+        }
+        public int MaxPathSum_BackTracking(TreeNode root, ref int ans)
+        {
+            if (root == null) return 0;
+            int left = Math.Max(0, MaxPathSum_BackTracking(root.left, ref ans));
+            int right = Math.Max(0, MaxPathSum_BackTracking(root.right, ref ans));
+            ans = Math.Max(ans, root.val + left + right);
+            return Math.Max(root.val + left, root.val + right);
+        }
+
+        public int MaxPathSum_LevelOrder(TreeNode root)
+        {
+            int ans = int.MinValue;
             //level order
             List<TreeNode> allNodes = new List<TreeNode>() { };
-            //int[0] max, int[1] maxOfEdge
+            //int[0] max- the max value of this node, can contain left or right or both or none(just itself)
+            //int[1] maxOfEdge-can only contain left or right or none ,will be used by parent node
             Dictionary<TreeNode,int[]> dict =new Dictionary<TreeNode, int[]>();
-
             List<TreeNode> list=new List<TreeNode>() { root};
             while(list.Count>0)
             {
@@ -678,38 +694,21 @@ namespace LeetCodeAlgo
                 }
                 list = next;
             }
-
             for(int i=allNodes.Count-1; i>=0; i--)
             {
                 var curr = allNodes[i];
-                if (curr.left == null&&curr.right==null)
-                {
-                    dict.Add(curr, new int[] { curr.val, curr.val });
-                }
-                else if(curr.left == null)
-                {
-                    var max = Math.Max(curr.val, curr.val + dict[curr.right][1]);
-                    var maxOfEdge = Math.Max(curr.val, curr.val + dict[curr.right][1]);
-                    dict.Add(curr, new int[] { max, maxOfEdge });
-
-                }
-                else if (curr.right == null)
-                {
-                    var max = Math.Max(curr.val, curr.val + dict[curr.left][1]);
-                    var maxOfEdge = Math.Max(curr.val, curr.val + dict[curr.left][1]);
-                    dict.Add(curr, new int[] { max, maxOfEdge });
-                }
-                else
-                {
-                    var max = Math.Max(curr.val,
-                                    Math.Max( curr.val + dict[curr.left][1],
-                                        Math.Max( curr.val + dict[curr.right][1], curr.val + dict[curr.left][1] + dict[curr.right][1])));
-                    var maxOfEdge = Math.Max(curr.val,
-                                        Math.Max(curr.val + dict[curr.left][1], curr.val + dict[curr.right][1]));
-                    dict.Add(curr, new int[] { max, maxOfEdge });
-                }
+                int leftMaxOfEdge = curr.left == null ? 0 : dict[curr.left][1];
+                int rightMaxOfEdge = curr.right == null ? 0 : dict[curr.right][1];
+                var max = Math.Max(curr.val,
+                            Math.Max(curr.val + leftMaxOfEdge,
+                                Math.Max(curr.val + rightMaxOfEdge, curr.val + leftMaxOfEdge + rightMaxOfEdge)));
+                var maxOfEdge = Math.Max(curr.val,
+                                    Math.Max(curr.val + leftMaxOfEdge, curr.val + rightMaxOfEdge));
+                dict.Add(curr, new int[] { max, maxOfEdge });
+                ans = Math.Max(ans, Math.Max(max, maxOfEdge));
             }
-            return dict.Values.Select(x => Math.Max(x[0], x[1])).Max();
+            return ans;
+            //return dict.Values.Select(x => Math.Max(x[0], x[1])).Max();
         }
 
         /// 125. Valid Palindrome, #Two Pointers
