@@ -15,7 +15,7 @@ namespace LeetCodeAlgo
             var arr1 = new int[] { 432,43243 };
             var arr2 = new int[] { -1, 2 };
             int k = 2;
-            var val1 = 3;
+            var val1 = 4;
             var val2 = 2;
             var str1 = "hot";
             var str2 = "dog";
@@ -27,7 +27,7 @@ namespace LeetCodeAlgo
             };
             var mat2 = new int[][] {
                 //new int[] { 3, 9 },   new int[]{7, 12},  new int[]{3, 8},
-                new int[] { 1,0 },   new int[]{0,2},  new int[]{2,1}
+                new int[] { 1,0 },   new int[]{2,0},  new int[]{3,1},new int[]{3,2},
             };
             var grid1 = new char[][]
             {
@@ -80,7 +80,7 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             ////var result = anwser.IsMatch("baabbbaccbccacacc","c*..b*a*a.*a..*c");
             uint uintVal =0b10000000_00000000_00000000_00000000;
-            var result = anwser.CanFinish(val1,mat2);
+            var result = anwser.FindOrder(val1,mat2);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

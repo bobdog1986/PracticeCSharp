@@ -237,7 +237,50 @@ namespace LeetCodeAlgo
             return min == nums.Length + 1 ? 0 : min;
         }
 
-        ///211. Design Add and Search Words Data Structure, see WordDictionary
+        ///210. Course Schedule II, #Graph
+        ///Return the ordering of courses you should take to finish all courses.
+        ///If there are many valid answers, return any of them. If it is impossible to finish all courses, return an empty array.
+        public int[] FindOrder(int numCourses, int[][] prerequisites)
+        {
+            if (numCourses == 0) return null;
+            // Convert graph presentation from edges to indegree of adjacent list.
+            int[] indegree = new int[numCourses];
+            int[] order = new int[numCourses];
+            int index = 0;
+            for (int i = 0; i < prerequisites.Length; i++) // Indegree - how many prerequisites are needed.
+                indegree[prerequisites[i][0]]++;
+
+            Queue<int> queue = new Queue<int>();
+            for (int i = 0; i < numCourses; i++)
+                if (indegree[i] == 0)
+                {
+                    // Add the course to the order because it has no prerequisites.
+                    order[index++] = i;
+                    queue.Enqueue(i);
+                }
+
+            // How many courses don't need prerequisites.
+            while (queue.Count>0)
+            {
+                int prerequisite = queue.Dequeue(); // Already finished this prerequisite course.
+                for (int i = 0; i < prerequisites.Length; i++)
+                {
+                    if (prerequisites[i][1] == prerequisite)
+                    {
+                        indegree[prerequisites[i][0]]--;
+                        if (indegree[prerequisites[i][0]] == 0)
+                        {
+                            // If indegree is zero, then add the course to the order.
+                            order[index++] = prerequisites[i][0];
+                            queue.Enqueue(prerequisites[i][0]);
+                        }
+                    }
+                }
+            }
+
+            return (index == numCourses) ? order : new int[0];
+        }
+        /// 211. Design Add and Search Words Data Structure, see WordDictionary
 
         /// 213. House Robber II
         ///All houses at this place are arranged in a circle. N-1 is next to 0
