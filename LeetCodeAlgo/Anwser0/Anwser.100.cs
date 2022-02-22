@@ -966,79 +966,47 @@ namespace LeetCodeAlgo
 
         }
 
-        ///131. Palindrome Partitioning
+        ///131. Palindrome Partitioning, #Backtracking
         ///Given a string s, partition s such that every substring of the partition is a palindrome.
         ///Return all possible palindrome partitioning of s.
         ///A palindrome string is a string that reads the same backward as forward.
         ///1 <= s.length <= 16, lowercase
         public IList<IList<string>> Partition(string s)
         {
-            return Partition_BackTracking(s, new Dictionary<string, int>());
-        }
-
-        public IList<IList<string>> Partition_BackTracking(string s, Dictionary<string, int> dict)
-        {
             var ans=new List<IList<string>>();
-            //s itself
-            bool itself = true;
-            for(int j = 0; j < s.Length / 2; j++)
-            {
-                if(s[j] != s[s.Length - 1 - j])
-                {
-                    itself = false;
-                    break;
-                }
-            }
-
-            if (itself)
-            {
-                ans.Add(new List<string>() { s});
-            }
-
-            for(int i=1;i<s.Length; i++)
-            {
-                if (Partition_CanDo(s, 0, s.Length - 1, i))
-                {
-                    var head = Partition(s.Substring(0, i));
-                    var tail= Partition(s.Substring(i));
-
-                    foreach(var h in head)
-                    {
-                        foreach(var t in tail)
-                        {
-                            var list=new List<string>();
-                            list.AddRange(h);
-                            list.AddRange(t);
-                            var key = string.Join(",", list);
-                            if (!dict.ContainsKey(key))
-                            {
-                                ans.Add(list);
-                                dict.Add(key, 1);
-                            }
-                        }
-                    }
-                }
-            }
-
+            var list = new List<string>();
+            Partition_BackTracking(s, list, ans);
             return ans;
         }
 
-        public bool Partition_CanDo(string s, int start, int end, int index)
+        public void Partition_BackTracking(string s, IList<string> list, IList<IList<string>> ans)
         {
-            if (index == start || index > end) return false;
+            for(int i=0; i<s.Length-1; i++)
+            {
+                var str=s.Substring(0,i+1);
+                if (Partition_IsPalindrome(str))
+                {
+                    var sub = s.Substring(i + 1);
+                    var nextList = new List<string>(list) { str };
+                    Partition_BackTracking(sub, nextList, ans);
+                }
+            }
 
+            if (Partition_IsPalindrome(s))
+            {
+                var nextList = new List<string>(list) { s };
+                ans.Add(nextList);
+            }
+        }
+
+        public bool Partition_IsPalindrome(string str)
+        {
             int i = 0;
-            for(; index -1- i > start + i; i++)
+            while (i < str.Length / 2)
             {
-                if (s[start + i] != s[index -1- i]) return false;
+                if (str[i] != str[str.Length - 1 - i]) return false;
+                i++;
             }
-
-            i = 0;
-            for (; end - i > index + i; i++)
-            {
-                if (s[index+ i] != s[end - i]) return false;
-            }
-
             return true;
         }
 
