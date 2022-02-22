@@ -66,10 +66,10 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
-            //string bTreeStr = "1,2,2,3,null,null,3,4,null,null,null,null,null,null,4";
-            //var treeNode = anwser.deserializeTree(bTreeStr);
+            string bTreeStr = "1,2,3";
+            var treeNode = anwser.deserializeTree(bTreeStr);
             ////var treeStr= anwser.serializeTree(treeNode);
-            //anwser.printTree(treeNode);
+            anwser.printTree(treeNode);
 
             //Console.WriteLine(String.Join(",", arr1));
             //if (grid1.Length > 0)
@@ -80,7 +80,7 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             ////var result = anwser.IsMatch("baabbbaccbccacacc","c*..b*a*a.*a..*c");
             uint uintVal =0b10000000_00000000_00000000_00000000;
-            var result = anwser.LadderLength(str1,str2,word1);
+            var result = anwser.MaxPathSum(treeNode);
             //var result2 = anwser.IsSameAfterReversals(0);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
