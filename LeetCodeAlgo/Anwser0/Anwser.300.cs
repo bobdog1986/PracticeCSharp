@@ -79,6 +79,38 @@ namespace LeetCodeAlgo
             return sell[len - 1];
         }
 
+        ///315. Count of Smaller Numbers After Self - need fast
+        ///You are given an integer array nums and you have to return a new counts array.
+        ///The counts array has the property where counts[i] is the number of smaller elements to the right of nums[i].
+        ///-10^4 <= nums[i] <= 10^4
+        public IList<int> CountSmaller(int[] nums)
+        {
+            int ship = 10000;
+            var arr = new int[2 * ship+1];
+            int left = 2*ship;
+            int right = 0;
+            foreach (var n in nums)
+            {
+                arr[n + ship]++;
+                left=Math.Min(left, n + ship);
+                right=Math.Max(right, n + ship);
+            }
+            var ans = new List<int>();
+            for (int i=0; i < nums.Length; i++)
+            {
+                int count = 0;
+                int j = nums[i] + ship - 1;
+                while (j >= left)
+                {
+                    count += arr[j];
+                    j--;
+                }
+                ans.Add(count);
+                arr[nums[i] + ship]--;
+            }
+            return ans;
+        }
+
         /// 322. Coin Change, #DP
         ///array coins representing coins of different denominations and an integer amount representing a total amount of money.
         ///Return the fewest number of coins that you need to make up that amount. Or return -1. can reuse each kind of coin.
