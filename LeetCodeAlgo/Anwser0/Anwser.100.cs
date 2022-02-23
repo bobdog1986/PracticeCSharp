@@ -1010,6 +1010,46 @@ namespace LeetCodeAlgo
             return true;
         }
 
+        ///133. Clone Graph, #Graph, #DFS
+        ///Given a reference of a node in a connected undirected graph.
+        ///Return a deep copy(clone) of the graph.
+        ///Each node in the graph contains a value(int) and a list(List[Node]) of its neighbors.
+        public Node_Neighbors CloneGraph(Node_Neighbors node)
+        {
+            if (node == null) return null;
+            Node_Neighbors ans = null;
+            Dictionary<Node_Neighbors,int> dict= new Dictionary<Node_Neighbors, int>();
+            List<Node_Neighbors> list= new List<Node_Neighbors>();
+            ans=new Node_Neighbors(node.val);
+            dict.Add(node, list.Count);
+            list.Add(ans);
+            ans.neighbors = CloneGraph_Recursion(node.neighbors, dict, list);
+            return ans;
+        }
+
+        public IList<Node_Neighbors> CloneGraph_Recursion(IList<Node_Neighbors> neighbors, IDictionary<Node_Neighbors, int> dict, IList<Node_Neighbors> list)
+        {
+            if (neighbors == null) return null;
+            if(neighbors.Count==0) return new List<Node_Neighbors>();
+            var ans=new List<Node_Neighbors>();
+            foreach(var node in neighbors)
+            {
+                if (dict.ContainsKey(node))
+                {
+                    ans.Add(list[dict[node]]);
+                }
+                else
+                {
+                    dict.Add(node, list.Count);
+                    var clone = new Node_Neighbors(node.val);
+                    list.Add(clone);
+                    ans.Add(clone);
+                    clone.neighbors = CloneGraph_Recursion(node.neighbors, dict, list);
+                }
+            }
+            return ans;
+        }
+
         /// 134. Gas Station
         ///  Given two integer arrays gas and cost, return the starting gas station's index
         ///  if you can travel around the circuit once in the clockwise direction,

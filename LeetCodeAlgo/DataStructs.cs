@@ -116,4 +116,29 @@ namespace LeetCodeAlgo
             children = _children;
         }
     }
+
+    ///133. Clone Graph , Definition for a Node.
+    public class Node_Neighbors
+    {
+        public int val;
+        public IList<Node_Neighbors> neighbors;
+
+        public Node_Neighbors()
+        {
+            val = 0;
+            neighbors = new List<Node_Neighbors>();
+        }
+
+        public Node_Neighbors(int _val)
+        {
+            val = _val;
+            neighbors = new List<Node_Neighbors>();
+        }
+
+        public Node_Neighbors(int _val, List<Node_Neighbors> _neighbors)
+        {
+            val = _val;
+            neighbors = _neighbors;
+        }
+    }
 }
