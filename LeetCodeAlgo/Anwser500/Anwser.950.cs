@@ -35,6 +35,106 @@ namespace LeetCodeAlgo
             }
             return ans.ToArray();
         }
+        ///966. Vowel Spellchecker
+        ///Given a wordlist, we want to implement a spellchecker that converts a query word into a correct word.
+        public string[] Spellchecker(string[] wordlist, string[] queries)
+        {
+            var ans=new List<string>();
+
+            Dictionary<char, int> map = new Dictionary<char, int>()
+            {
+                {'a', 0},{'e', 0},{'i', 0},{'o', 0},{'u', 0},
+                {'A', 0}, {'E', 0}, {'I', 0}, {'O', 0}, {'U', 0},
+            };
+
+            //Capitalization hashmap
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            //Vowel Errors hashmap
+            Dictionary<int, Dictionary<string, Dictionary<string, string>>> vowelDict
+                = new Dictionary<int, Dictionary<string, Dictionary<string, string>>>();
+
+            foreach (var word in wordlist)
+            {
+                //store to Capitalization hashmap
+                if (!dict.ContainsKey(word))
+                    dict.Add(word, word);
+                var capWord = word.ToUpper();
+                if(!dict.ContainsKey(capWord))
+                    dict.Add(capWord, word);
+
+                //two parts, Vowel idnexes and other letters
+                List<int> list = new List<int>();
+                List<char> others = new List<char>();
+                for(int i=0;i< word.Length;i++)
+                {
+                    if (map.ContainsKey(word[i]))
+                        list.Add(i);
+                    else
+                        others.Add(word[i]);
+                }
+
+                if (list.Count > 0)
+                {
+                    //using Length as 1st level key
+                    if (!vowelDict.ContainsKey(word.Length))
+                        vowelDict.Add(word.Length,new Dictionary<string, Dictionary<string, string>>());
+                    var indexStr = string.Join("_", list);
+
+                    //using indexStr string join "_" as 2nd level key
+                    if (!vowelDict[word.Length].ContainsKey(indexStr))
+                        vowelDict[word.Length].Add(indexStr, new Dictionary<string, string>());
+
+                    //using otherStr as 3rd level key
+                    var otherStr = new string(others.ToArray()).ToUpper();
+                    if(!vowelDict[word.Length][indexStr].ContainsKey(otherStr))
+                        vowelDict[word.Length][indexStr].Add(otherStr,word);
+                }
+            }
+
+            foreach(var query in queries)
+            {
+                if (dict.ContainsKey(query))
+                {
+                    ans.Add(dict[query]);
+                }
+                else if (dict.ContainsKey(query.ToUpper()))
+                {
+                    ans.Add(dict[query.ToUpper()]);
+                }
+                else
+                {
+                    List<int> list = new List<int>();
+                    List<char> others = new List<char>();
+                    for (int i = 0; i < query.Length; i++)
+                    {
+                        if (map.ContainsKey(query[i]))
+                            list.Add(i);
+                        else
+                            others.Add(query[i]);
+                    }
+                    if (list.Count >0 && vowelDict.ContainsKey(query.Length))
+                    {
+                        var indexStr = string.Join("_", list);
+                        var otherStr = new string(others.ToArray()).ToUpper();
+                        if (vowelDict[query.Length].ContainsKey(indexStr)
+                            && vowelDict[query.Length][indexStr].ContainsKey(otherStr))
+                        {
+                            ans.Add(vowelDict[query.Length][indexStr][otherStr]);
+                        }
+                        else
+                        {
+                            ans.Add(string.Empty);
+                        }
+                    }
+                    else
+                    {
+                        ans.Add(string.Empty);
+                    }
+                }
+            }
+            return ans.ToArray();
+        }
+
         /// 997. Find the Town Judge
         ///In a town, there are n people labeled from 1 to n. There is a rumor that one of these people is secretly the town judge.
         ///The town judge trusts nobody.Everybody (except for the town judge) trusts the town judge.
