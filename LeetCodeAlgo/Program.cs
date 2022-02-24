@@ -86,7 +86,7 @@ namespace LeetCodeAlgo
 
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
-            var result = anwser.IsMatch(str1, str2);
+            var result = anwser.CountBalls(1,100000);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");

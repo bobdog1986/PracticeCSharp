@@ -47,40 +47,34 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
-        /// 1752. Check if Array Is Sorted and Rotated
-        ///Given an array nums, return true if the array sorted in non-decreasing order, then rotated some
-        ///[1,2,3,3,4],[2,3,4,1],[3,4,5,1,2]=>true, [2,1,3,4]=>false
-        public bool Check_1752(int[] nums)
+        ///1742. Maximum Number of Balls in a Box
+        ///For example, the ball number 321 will be put in the box number 3 + 2 + 1 = 6 and
+        ///the ball number 10 will be put in the box number 1 + 0 = 1.
+        ///Given two integers lowLimit and highLimit, return the number of balls in the box with the most balls.
+        public int CountBalls(int lowLimit, int highLimit)
         {
-            bool ans = true;
-            bool isRotate = false;
-            for(int i = 1; i < nums.Length; i++)
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            int ans = 0;
+            for(int i = lowLimit; i <= highLimit; i++)
             {
-                if (nums[i] < nums[i - 1])
-                {
-                    if (isRotate)
-                        return false;
-                    isRotate = true;
-                }
+                var boxIndex = CountBalls_GetBoxIndex(i);
+                if (dict.ContainsKey(boxIndex))
+                    dict[boxIndex]++;
+                else
+                    dict.Add(boxIndex, 1);
+                ans = Math.Max(ans, dict[boxIndex]);
             }
-
-            if (isRotate)
-            {
-                if (nums.Last() > nums.FirstOrDefault())
-                {
-                    ans = false;
-                }
-            }
-            else
-            {
-                if (nums.Last() < nums.FirstOrDefault())
-                {
-                    ans = false;
-                }
-            }
-
             return ans;
         }
-
+        public int CountBalls_GetBoxIndex(int ball)
+        {
+            int ans = 0;
+            while (ball > 0)
+            {
+                ans += ball % 10;
+                ball /= 10;
+            }
+            return ans;
+        }
     }
 }
