@@ -1423,69 +1423,22 @@ namespace LeetCodeAlgo
         {
             if (head == null) return null;
             ListNode ans = null;
-            ListNode tail = null;
-
             var node = head;
-            while (node != null)
+            List<ListNode> list=new List<ListNode> ();
+            while(node != null)
             {
-                if (ans == null)
-                {
-                    ans = node;
-                    tail = node;
-
-                    node = node.next;
-                    tail.next = null;
-                }
-                else
-                {
-                    if(node.val <= ans.val)
-                    {
-                        var next = node.next;
-
-                        node.next = ans;
-                        ans = node;
-
-                        node = next;
-                    }
-                    else
-                    {
-                        if(node.val>= tail.val)
-                        {
-                            tail.next = node;
-                            tail = node;
-
-                            node = node.next;
-                        }
-                        else
-                        {
-                            var curr = ans.next;
-                            var prev = ans;
-                            while(curr != null)
-                            {
-                                if(curr.val >= node.val)
-                                {
-                                    break;
-                                }
-                                prev = curr;
-                                curr = curr.next;
-                            }
-
-                            var next = node.next;
-
-                            node.next = curr;
-                            prev.next = node;
-
-                            node = next;
-
-                        }
-                    }
-
-
-                }
-
+                list.Add (node);
+                node = node.next;
             }
-
-            tail.next = null;
+            list.Sort((x, y) =>
+            {
+                return x.val - y.val;
+            });
+            ans = list[0];
+            for(int i = 0; i < list.Count; i++)
+            {
+                list[i].next = i < list.Count - 1 ? list[i + 1] : null;
+            }
             return ans;
         }
 

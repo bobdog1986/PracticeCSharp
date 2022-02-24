@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
+using System.Text;
 
 namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        ///300. Longest Increasing Subsequence, #DP
-        /// Patient Sort, https://en.wikipedia.org/wiki/Longest_increasing_subsequence
-        ///return the longest length , by deleting some or no elements without changing the order.
+        ///300. Longest Increasing Subsequence, #DP, #Binaray Search, #Patience Sort
+        /// Patience Sort, https://en.wikipedia.org/wiki/Longest_increasing_subsequence
+        ///return the longest length ,by deleting some or no elements without changing the order.
         ///eg. [0,3,1,6,4,4,7].=>[0,1,4,7] or [0,3,4,6] or [0,1,6,7], O(n log(n))
         public int LengthOfLIS(int[] nums)
         {
@@ -46,6 +48,140 @@ namespace LeetCodeAlgo
                 }
             }
             list[right] = num;
+        }
+        ///301. Remove Invalid Parentheses, #Backtracking
+        ///s contain letter and '(' and ')', remove the minimum number of invalid parentheses.
+        ///Return all the possible results. You may return the answer in any order.
+        public IList<string> RemoveInvalidParentheses(string s)
+        {
+            List<string> ans = new List<string>();
+            //trim all invalid ')' from head and '(' from tail
+            s = RemoveInvalidParentheses_TrimHeadAndTail(s);
+            //if no need to remove any char
+            if (RemoveInvalidParentheses_IsValid(s))
+            {
+                ans.Add(s);
+                return ans;
+            }
+
+            int removeLeftCount = 0;
+            int removeRightCount = 0;
+            List<int> leftIndexes = new List<int>();
+            List<int> rightIndexes = new List<int>();
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == '(')
+                {
+                    leftIndexes.Add(i);
+                    removeLeftCount++;
+                }
+                else if (s[i] == ')')
+                {
+                    rightIndexes.Add(i);
+                    if (removeLeftCount == 0) { removeRightCount++; }
+                    else { removeLeftCount--; }
+                }
+            }
+
+            Dictionary<string, int> dict = new Dictionary<string, int>();
+            //using backtracking to get all combines that remove n of '(' or ')'
+
+            List<List<int>> combines=new List<List<int>>();
+            if (removeRightCount == 0)
+            {
+                RemoveInvalidParentheses_Backtracking(leftIndexes, new List<int>(), removeLeftCount, 0, combines);
+            }
+            else if (removeLeftCount == 0)
+            {
+                RemoveInvalidParentheses_Backtracking(rightIndexes, new List<int>(), removeRightCount, 0, combines);
+            }
+            else
+            {
+                List<List<int>> combinesLeft = new List<List<int>>();
+                RemoveInvalidParentheses_Backtracking(leftIndexes, new List<int>(), removeLeftCount, 0, combinesLeft);
+                List<List<int>> combinesRight = new List<List<int>>();
+                RemoveInvalidParentheses_Backtracking(rightIndexes, new List<int>(), removeRightCount, 0, combinesRight);
+                combines = RemoveInvalidParentheses_GetCombines(combinesLeft, combinesRight);
+            }
+
+            foreach (var combine in combines)
+            {
+                List<char> list1 = new List<char>();
+                for (int i = 0; i < s.Length; i++)
+                    if (!combine.Contains(i)) { list1.Add(s[i]); }
+
+                var str = new string(list1.ToArray());
+                if (!dict.ContainsKey(str) && RemoveInvalidParentheses_IsValid(str))
+                    dict.Add(str, 1);
+            }
+
+            return dict.Keys.ToList();
+        }
+        public List<List<int>> RemoveInvalidParentheses_GetCombines(List<List<int>> leftCombines, List<List<int>> rightCombines)
+        {
+            var ans=new List<List<int>>();
+            foreach(var left in leftCombines)
+            {
+                foreach(var right in rightCombines)
+                {
+                    var list=new List<int>(left);
+                    list.AddRange(right);
+                    ans.Add(list);
+                }
+            }
+            return ans;
+        }
+
+        public string RemoveInvalidParentheses_TrimHeadAndTail(string s)
+        {
+            Dictionary<int, int> invalidMap = new Dictionary<int, int>();
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == ')') invalidMap.Add(i, 1);
+                else if (s[i] == '(') break;
+            }
+            for (int i = s.Length - 1; i >= 0; i--)
+            {
+                if (s[i] == '(') invalidMap.Add(i, 1);
+                else if (s[i] == ')') break;
+            }
+            List<char> valids = new List<char>();
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (!invalidMap.ContainsKey(i)) valids.Add(s[i]);
+            }
+            return new string(valids.ToArray());
+        }
+        public bool RemoveInvalidParentheses_IsValid(string s)
+        {
+            if(s.Length == 0) return true;
+            int count = 0;
+            foreach(var c in s)
+            {
+                if (c == '(') { count++; }
+                else if(c == ')')
+                {
+                    if (count == 0) return false;
+                    count--;
+                }
+            }
+            return count == 0;
+        }
+        public void RemoveInvalidParentheses_Backtracking(List<int> indexes,List<int> list, int count,int start, List<List<int>> combines)
+        {
+            if (indexes.Count-start < count)
+            {
+                return;
+            }
+            else
+            {
+                for (int i = start; i < indexes.Count-count+1; i++)
+                {
+                    var nextList = new List<int>(list) { indexes[i] };
+                    if (count == 1) { combines.Add(nextList); }
+                    else { RemoveInvalidParentheses_Backtracking(indexes, nextList, count - 1, i + 1, combines); }
+                }
+            }
         }
 
         ///304. Range Sum Query 2D - Immutable, see NumMatrix
