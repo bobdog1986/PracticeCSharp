@@ -83,9 +83,7 @@ namespace LeetCodeAlgo
                 }
             }
 
-            Dictionary<string, int> dict = new Dictionary<string, int>();
             //using backtracking to get all combines that remove n of '(' or ')'
-
             List<List<int>> combines=new List<List<int>>();
             if (removeRightCount == 0)
             {
@@ -103,7 +101,7 @@ namespace LeetCodeAlgo
                 RemoveInvalidParentheses_Backtracking(rightIndexes, new List<int>(), removeRightCount, 0, combinesRight);
                 combines = RemoveInvalidParentheses_GetCombines(combinesLeft, combinesRight);
             }
-
+            Dictionary<string, int> dict = new Dictionary<string, int>();
             foreach (var combine in combines)
             {
                 List<char> list1 = new List<char>();
@@ -114,7 +112,6 @@ namespace LeetCodeAlgo
                 if (!dict.ContainsKey(str) && RemoveInvalidParentheses_IsValid(str))
                     dict.Add(str, 1);
             }
-
             return dict.Keys.ToList();
         }
         public List<List<int>> RemoveInvalidParentheses_GetCombines(List<List<int>> leftCombines, List<List<int>> rightCombines)
@@ -131,7 +128,6 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
-
         public string RemoveInvalidParentheses_TrimHeadAndTail(string s)
         {
             Dictionary<int, int> invalidMap = new Dictionary<int, int>();

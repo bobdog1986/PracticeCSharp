@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
+using System.Text;
 
 namespace LeetCodeAlgo
 {
@@ -428,7 +430,7 @@ namespace LeetCodeAlgo
         ///1 <= s.length <= 20, 1 <= p.length <= 30,
         ///s contains only lowercase English letters.p contains only lowercase English letters, '.', and '*'.
         ///It is guaranteed for each appearance of the character '*', there will be a previous valid character to match.
-        public bool IsMatch(string s, string p)
+        public bool IsMatch_10(string s, string p)
         {
             if (p.Contains('*'))
             {
@@ -2174,6 +2176,47 @@ namespace LeetCodeAlgo
             }
 
             return string.Join("", ans);
+        }
+
+        ///44. Wildcard Matching
+        ///Given an input string (s) and a pattern(p), implement wildcard pattern matching with support for '?' and '*' where:
+        ///'?' Matches any single character. '*' Matches any sequence of characters (including the empty sequence).
+        ///0 <= s.length, p.length <= 2000.
+        public bool IsMatch_1(string s, string p)
+        {
+            int sCount = 0, pCount = 0, match = 0, starIdx = -1;
+            while (sCount < s.Length)
+            {
+                // advancing both pointers
+                if (pCount < p.Length && (p[pCount] == '?' || s[sCount] == p[pCount]))
+                {
+                    sCount++;
+                    pCount++;
+                }
+                // * found, only advancing pattern pointer
+                else if (pCount < p.Length && p[pCount] == '*')
+                {
+                    starIdx = pCount;
+                    match = sCount;
+                    pCount++;
+                }
+                // last pattern pointer was *, advancing string pointer
+                else if (starIdx != -1)
+                {
+                    pCount = starIdx + 1;
+                    match++;
+                    sCount = match;
+                }
+                //current pattern pointer is not star, last patter pointer was not *
+                //characters do not match
+                else return false;
+            }
+
+            //check for remaining characters in pattern
+            while (pCount < p.Length && p[pCount] == '*')
+                pCount++;
+
+            return pCount == p.Length;
         }
 
         /// 45. Jump Game II, using greedy

@@ -18,8 +18,12 @@ namespace LeetCodeAlgo
             var val2 = 2;
             ///uint uintVal =0b10000000_00000000_00000000_00000000;
             //var str1 = "())(((()m)(";
-            var str1 = "()())()";
-            var str2 = "dog";
+            var str1 = "abbabaaabbabbaababbabbbbbabbbabbbabaaaaababababbbabababaabbababaabbbbbbaaaabababbbaabbbbaabbbbababababbaabbaababaabbbababababbbbaaabbbbbabaaaabbababbbbaababaabbababbbbbababbbabaaaaaaaabbbbbaabaaababaaaabb";
+            var str2 = "**aa*****ba*a*bb**aa*ab****a*aaaaaa***a*aaaa**bbabb*b*b**aaaaaaaaa*a********ba*bbb***a*ba*bb*bb**a*b*bb";
+            //var str1 = "aaabbbaabaaaaababaabaaabbabbbbbbbbaabababbabbbaaaaba";
+            //var str2 = "a*******b";
+            //var str1 = "abcabczzzde";
+            //var str2 = "*abc???de*";
             var word1 = new string[] { "hot", "dog"};
             var word2 = new string[] { "ABC", "ACB", "ABC", "ACB", "ACB" };
             var mat1 = new int[][]
@@ -81,8 +85,8 @@ namespace LeetCodeAlgo
             //    Console.WriteLine("Result count = 0");
 
             //anwser.SolveSudoku(grid1);
-            Console.WriteLine("input string is = "+ str1);
-            var result = anwser.RemoveInvalidParentheses(str1);
+            //Console.WriteLine("input string is = "+ str1);
+            var result = anwser.IsMatch(str1, str2);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
@@ -92,10 +96,10 @@ namespace LeetCodeAlgo
 
             //Console.WriteLine(String.Join(",", arr1));
 
-            if (result.Count > 0)
-                Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
-            else
-                Console.WriteLine("!!!Result count = 0");
+            //if (result.Count > 0)
+            //    Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+            //else
+            //    Console.WriteLine("!!!Result count = 0");
 
             Console.WriteLine("=========Finish!========");
             Console.ReadLine();
