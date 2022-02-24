@@ -8,7 +8,45 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        ///973. K Closest Points to Origin
+        ///968. Binary Tree Cameras, #Greedy, #DFS
+        ///You are given the root of a binary tree. We install cameras on the tree nodes
+        ///where each camera at a node can monitor its parent, itself, and its immediate children.
+        ///Return the minimum number of cameras needed to monitor all nodes of the tree.
+        public int MinCameraCover(TreeNode root)
+        {
+            int ans = 0;
+            var leftLevel = MinCameraCover_Recursion(root.left, ref ans);
+            var rightLevel = MinCameraCover_Recursion(root.right, ref ans);
+            if(leftLevel == 0 || rightLevel == 0 || (leftLevel == 2 && rightLevel == 2))
+            {
+                ans++;
+            }
+            return ans;
+        }
+
+        public int MinCameraCover_Recursion(TreeNode node, ref int ans)
+        {
+            if(node == null) return 2;
+            if(node.left==null && node.right==null) return 0;
+
+            var leftVal = MinCameraCover_Recursion(node.left, ref ans);
+            var rightVal = MinCameraCover_Recursion(node.right, ref ans);
+            if (leftVal == 0 || rightVal ==0)
+            {
+                ans++;
+                return 1;
+            }
+            else if(leftVal == 1 || rightVal ==1)
+            {
+                return 2;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        /// 973. K Closest Points to Origin
         ///return the k closest points to the origin (0, 0).
         public int[][] KClosest(int[][] points, int k)
         {

@@ -73,9 +73,9 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
-            //string bTreeStr = "1,2,3";
-            //var treeNode = anwser.deserializeTree(bTreeStr);
-            //anwser.printTree(treeNode);
+            string bTreeStr = "0,0,null,null,0,0,null,null,0,0,null";
+            var treeNode = anwser.deserializeTree(bTreeStr);
+            anwser.printTree(treeNode);
 
             //Console.WriteLine(String.Join(",", arr1));
 
@@ -86,7 +86,7 @@ namespace LeetCodeAlgo
 
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
-            var result = anwser.CountBalls(1,100000);
+            var result = anwser.MinCameraCover(treeNode);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
