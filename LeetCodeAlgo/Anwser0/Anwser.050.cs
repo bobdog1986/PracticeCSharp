@@ -67,7 +67,43 @@ namespace LeetCodeAlgo
                 }
                 if (canAttack) continue;
                 var next=new List<int>(list) { i};
-                SolveNQueens(next, n - 1, len, ans);
+                SolveNQueens_BackTracking(next, n - 1, len, ans);
+            }
+        }
+
+        ///52. N-Queens II,  #Backtracking
+        ///The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.
+        ///Given an integer n, return the number of distinct solutions to the n-queens puzzle.
+        public int TotalNQueens(int n)
+        {
+            int ans = 0;
+            var list = new List<int>();
+            TotalNQueens_Backtracking(list, n, n, ref ans);
+            return ans;
+
+        }
+        public void TotalNQueens_Backtracking(IList<int> list, int n, int len, ref int ans)
+        {
+            if (n == 0)
+            {
+                ans++;
+                return;
+            }
+            for (int i = 0; i < len; i++)
+            {
+                bool canAttack = false; ;
+                for (int j = 0; j < list.Count; j++)
+                {
+                    var queen = list[j];
+                    if (queen == i || Math.Abs(queen - i) == Math.Abs(list.Count - j))
+                    {
+                        canAttack = true;
+                        break;
+                    }
+                }
+                if (canAttack) continue;
+                var next = new List<int>(list) { i };
+                TotalNQueens_Backtracking(next, n - 1, len, ref ans);
             }
         }
 
