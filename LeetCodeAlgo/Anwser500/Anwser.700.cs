@@ -71,52 +71,34 @@ namespace LeetCodeAlgo
             return root;
         }
 
-        /// 704. Binary Search  O(log n)
-        ///Given an array of integers nums which is sorted in ascending order,
-        ///and an integer target, write a function to search target in nums.
+        /// 704. Binary Search  O(log n), #Binaray Search
+        ///Given an array of integers nums which is sorted in ascending order,and an integer target
         ///If target exists, then return its index.Otherwise, return -1.
-        ///All the integers in nums are unique.
+        ///All the integers in nums are unique. 1 <= nums.length <= 104, -104 < nums[i], target < 104
         public int Search_704(int[] nums, int target)
         {
-            if (nums == null || nums.Length == 0)
-                return 0;
-            if (nums.Length == 1 && nums[0] == target)
-                return 0;
-
-            int i = nums.Length / 2;
             int low = 0;
             int high = nums.Length - 1;
-
-            int result = -1;
-
-            while (i >= low && i <= high && (high - low) >= 1)
+            while (low<=high)
             {
-                if (target < nums[low] || target > nums[high])
-                    return -1;
+                if (target < nums[low] || target > nums[high]) return -1;
+                if (target == nums[low]) return low;
+                if (target == nums[high]) return high;
 
-                if (target == nums[low])
-                    return low;
-                if (target == nums[high])
-                    return high;
-
-                if (nums[i] == target)
+                int mid = low + (high - low) / 2;
+                if (nums[mid] == target) { return mid; }
+                else if (nums[mid] > target)
                 {
-                    return i;
-                }
-                else if (nums[i] > target)
-                {
-                    high = i - 1;
-                    i = low + (high - low) / 2;
+                    high = mid - 1;
+                    mid = low + (high - low) / 2;
                 }
                 else
                 {
-                    low = i + 1;
-
-                    i = low + (high - low) / 2;
+                    low = mid + 1;
+                    mid = low + (high - low) / 2;
                 }
             }
-
-            return result;
+            return -1;
         }
 
         ///706. Design HashMap, see MyHashMap
