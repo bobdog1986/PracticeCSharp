@@ -244,10 +244,59 @@ namespace LeetCodeAlgo
             return new Interval(Math.Min(current.start, next.start), Math.Max(current.end, next.end));
         }
 
-        //57 not pass
-        public IList<Interval> Insert(IList<Interval> intervals, Interval newInterval)
+        ///57. Insert Interval
+        ///non-overlapping intervals intervals represent the start and the end of the ith interval sorted in ascending order by start
+        ///0 <= start <= end <= 10^5
+        public int[][] Insert(int[][] intervals, int[] newInterval)
         {
-            return intervals;
+            var ans=new List<int[]>();
+            int start = -1, end = -1;
+            bool hasAdd = false;
+            foreach(var curr in intervals)
+            {
+                if (hasAdd)
+                {
+                    ans.Add(curr);
+                }
+                else
+                {
+                    int left = start == -1 ? newInterval[0] : start;
+                    int right = end == -1 ? newInterval[1] : end;
+
+                    if (curr[1] < newInterval[0])
+                    {
+                        //add left no joint
+                        ans.Add(curr);
+                    }
+                    else if(curr[0] > right)
+                    {
+                        ans.Add(new int[] { left, right });
+                        hasAdd = true;
+                        ans.Add(curr);
+                    }
+                    else
+                    {
+                        start = Math.Min(left, curr[0]);
+                        end = Math.Max(right, curr[1]);
+                    }
+                }
+            }
+
+            if (!hasAdd)
+            {
+                int left = start == -1 ? newInterval[0] : start;
+                int right = end == -1 ? newInterval[1] : end;
+                if (intervals.Length==0 || intervals[0][0] > right)
+                {
+                    ans.Insert(0, new int[] { left, right });
+                }
+                else
+                {
+                    ans.Add(new int[] { left, right });
+                }
+            }
+
+            return ans.ToArray();
         }
 
         ///58. Length of Last Word

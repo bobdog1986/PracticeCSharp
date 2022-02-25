@@ -11,7 +11,7 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var arr1 = new int[] { 5,2,6,1};
+            var arr1 = new int[] { 4,8};
             var arr2 = new int[] { -1, 2 };
             int k = 2;
             var val1 = 4;
@@ -33,7 +33,7 @@ namespace LeetCodeAlgo
             };
             var mat2 = new int[][] {
                 //new int[] { 3, 9 },   new int[]{7, 12},  new int[]{3, 8},
-                new int[] { 1,0 },   new int[]{2,0},  new int[]{3,1},new int[]{3,2},
+                new int[] { 1,2 },   new int[]{3,5},  new int[]{6,7},new int[]{8,10},new int[]{12,16}
             };
             var grid1 = new char[][]
             {
@@ -73,9 +73,9 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
-            string bTreeStr = "0,0,null,null,0,0,null,null,0,0,null";
-            var treeNode = anwser.deserializeTree(bTreeStr);
-            anwser.printTree(treeNode);
+            //string bTreeStr = "0,0,null,null,0,0,null,null,0,0,null";
+            //var treeNode = anwser.deserializeTree(bTreeStr);
+            //anwser.printTree(treeNode);
 
             //Console.WriteLine(String.Join(",", arr1));
 
@@ -86,7 +86,7 @@ namespace LeetCodeAlgo
 
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
-            var result = anwser.MinCameraCover(treeNode);
+            var result = anwser.Insert(mat2,arr1);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
@@ -96,10 +96,10 @@ namespace LeetCodeAlgo
 
             //Console.WriteLine(String.Join(",", arr1));
 
-            //if (result.Count > 0)
-            //    Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
-            //else
-            //    Console.WriteLine("!!!Result count = 0");
+            if (result.Count() > 0)
+                Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+            else
+                Console.WriteLine("!!!Result count = 0");
 
             Console.WriteLine("=========Finish!========");
             Console.ReadLine();
