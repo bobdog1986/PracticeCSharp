@@ -194,6 +194,55 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///725. Split Linked List in Parts
+        ///The number of nodes in the list is in the range [0, 1000]. 1 <= k <= 50
+        public ListNode[] SplitListToParts(ListNode head, int k)
+        {
+            var ans = new ListNode[k];
+            int count = 0;
+            var node = head;
+            while (node != null)
+            {
+                count++;
+                node = node.next;
+            }
+
+            if (count == 0 || k==1)
+            {
+                ans[0] = head;
+            }
+            else
+            {
+                int len= count / k;
+                int plusIndex= count - len * k;
+                node=head;
+                for(int i= 0; i < ans.Length; i++)
+                {
+                    int num = len;
+                    if (i < plusIndex) num++;
+                    int j = 0;
+                    ListNode currHead = null;
+                    ListNode currTail = null;
+                    while (j++ < num)
+                    {
+                        if (currHead == null)
+                        {
+                            currHead = node;
+                            currTail = node;
+                        }
+                        else
+                        {
+                            currTail.next = node;
+                            currTail=currTail.next;
+                        }
+                        node=node.next;
+                    }
+                    if(currTail != null)currTail.next = null;
+                    ans[i]=currHead;
+                }
+            }
+            return ans;
+        }
         /// 728
         public IList<int> SelfDividingNumbers(int left, int right)
         {

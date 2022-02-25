@@ -65,7 +65,7 @@ namespace LeetCodeAlgo
                 //new char[]{'0','0','0'},
             };
 
-            var listnode = anwser.buildListNode(new int[] { 1, 2, 3, 4,5 });
+            var listnode = anwser.buildListNode(new int[] { 1, 2, 3});
             anwser.printListNode(listnode);
 
             //Console.WriteLine("Correct Anwser should be : ");
@@ -86,13 +86,13 @@ namespace LeetCodeAlgo
 
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
-            var result = anwser.RotateRight(listnode,7);
+            var result = anwser.SplitListToParts(listnode,3);
             //var result = anwser.GetPermutation(3,4);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
             //Console.WriteLine(string.Join(",", result.val));
-            anwser.printListNode(result);
+            //anwser.printListNode(result);
             Console.WriteLine($"Result = {result}");
 
             //Console.WriteLine(String.Join(",", arr1));
