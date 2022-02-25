@@ -86,7 +86,7 @@ namespace LeetCodeAlgo
 
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
-            var result = anwser.TestGetPermutation();
+            var result = anwser.SolveNQueens(2);
             //var result = anwser.GetPermutation(3,4);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
@@ -97,10 +97,11 @@ namespace LeetCodeAlgo
 
             //Console.WriteLine(String.Join(",", arr1));
 
-            //if (result.Count() > 0)
-            //    Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
-            //else
-            //    Console.WriteLine("!!!Result count = 0");
+            if (result.Count() > 0)
+                Console.WriteLine(String.Join("\r\n\r\n", result.Select(o => String.Join("\r\n", o))));
+                //Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+            else
+                Console.WriteLine("!!!Result count = 0");
 
             Console.WriteLine("=========Finish!========");
             Console.ReadLine();

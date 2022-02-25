@@ -22,6 +22,55 @@ namespace LeetCodeAlgo
             return (m % 2 == 0) ? MyPow(x * x,(int)( m / 2)) : x * MyPow(x * x, (int)(m / 2));
         }
 
+        ///51. N-Queens, #Backtracking
+        ///The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.
+        ///Given an integer n, return all distinct solutions to the n-queens puzzle. You may return the answer in any order.
+        public IList<IList<string>> SolveNQueens(int n)
+        {
+            var ans=new List<IList<string>>();
+            var list = new List<int>();
+            SolveNQueens_BackTracking(list, n,n, ans);
+            return ans;
+        }
+
+        public void SolveNQueens_BackTracking(IList<int> list, int n, int len, IList<IList<string>> ans)
+        {
+            if (n == 0)
+            {
+                List<string> seq=new List<string>();
+                foreach(var i in list)
+                {
+                    string s = "";
+                    int j = 0;
+                    while (j < len)
+                    {
+                        s += j == i ? "Q" : ".";
+                        j++;
+                    }
+                    seq.Add(s);
+                }
+                ans.Add(seq);
+                return;
+            }
+
+            for(int i = 0; i < len; i++)
+            {
+                bool canAttack = false;;
+                for (int j = 0; j < list.Count; j++)
+                {
+                    var queen = list[j];
+                    if (queen == i || Math.Abs(queen - i) == Math.Abs(list.Count - j))
+                    {
+                        canAttack = true;
+                        break;
+                    }
+                }
+                if (canAttack) continue;
+                var next=new List<int>(list) { i};
+                SolveNQueens(next, n - 1, len, ans);
+            }
+        }
+
         /// 53. Maximum Subarray, #DP
         /// find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
         public int MaxSubArray(int[] nums)
@@ -414,19 +463,19 @@ namespace LeetCodeAlgo
             List<int> digits=new List<int>();
             for(int i=1;i<=n;i++)
                 digits.Add(i);
-
             List<int> ans=new List<int>();
-
             int x = n;
             while (x >= 1)
             {
                 if (k == 1)
                 {
+                    //k==1, add all digits as current sequence
                     ans.AddRange(digits);
                     break;
                 }
                 else if(k== getFactorial(x))
                 {
+                    //k==n!, add all digits as reversed sequence
                     digits.Reverse();
                     ans.AddRange(digits);
                     break;
@@ -435,6 +484,7 @@ namespace LeetCodeAlgo
                 var nextFactor = getFactorial(x - 1);
                 if(k<= nextFactor)
                 {
+                    //add digits[0], then call next loop
                     ans.Add(digits[0]);
                     digits.RemoveAt(0);
                 }
@@ -447,7 +497,6 @@ namespace LeetCodeAlgo
                     digits.RemoveAt(index);
                     k -=nextFactor* index;
                 }
-
                 x--;
             }
 
@@ -463,9 +512,9 @@ namespace LeetCodeAlgo
                 var r = GetPermutation(n, i);
                 Console.WriteLine($"n={n},k={i}, seq = {r}");
             }
-
             return "";
         }
+
 
         /// 62. Unique Paths, #DP
         ///Move from grid[0][0] to grid[m - 1][n - 1], each step can only move down or right.
