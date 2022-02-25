@@ -552,6 +552,40 @@ namespace LeetCodeAlgo
         }
 
 
+        ///61. Rotate List
+        ///Given the head of a linked list, rotate the list to the right by k places.
+        public ListNode RotateRight(ListNode head, int k)
+        {
+            if (head == null) return head;
+            ListNode ans = null;
+            ListNode tail = null;
+            ListNode rotateTail = null;
+            var node = head;
+            int count=0;
+            while (node != null)
+            {
+                if(node.next==null)
+                    tail = node;
+                node = node.next;
+                count++;
+            }
+            k %=count;
+            if (k == 0) return head;
+
+            node = head;
+            int i = count - k;//if rotate left,set i=k;
+            while (i-- > 0)
+            {
+                if (i == 0)rotateTail = node;
+                node = node.next;
+            }
+
+            ans = node;
+            tail.next = head;
+            rotateTail.next = null;
+            return ans;
+        }
+
         /// 62. Unique Paths, #DP
         ///Move from grid[0][0] to grid[m - 1][n - 1], each step can only move down or right.
         ///A(m-1+n-1)/A(m-1)/A(n-1)

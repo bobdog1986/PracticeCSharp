@@ -65,8 +65,8 @@ namespace LeetCodeAlgo
                 //new char[]{'0','0','0'},
             };
 
-            //var listnode = anwser.buildListNode(new int[] {4,3,2,1 });
-            //anwser.printListNode(listnode);
+            var listnode = anwser.buildListNode(new int[] { 1, 2, 3, 4,5 });
+            anwser.printListNode(listnode);
 
             //Console.WriteLine("Correct Anwser should be : ");
             //Console.WriteLine(string.Join("\r\n", mat1.Select(o => string.Join(",", o))));
@@ -86,22 +86,22 @@ namespace LeetCodeAlgo
 
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
-            var result = anwser.SolveNQueens(2);
+            var result = anwser.RotateRight(listnode,7);
             //var result = anwser.GetPermutation(3,4);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
             //Console.WriteLine(string.Join(",", result.val));
-            //anwser.printListNode(result);
+            anwser.printListNode(result);
             Console.WriteLine($"Result = {result}");
 
             //Console.WriteLine(String.Join(",", arr1));
 
-            if (result.Count() > 0)
-                Console.WriteLine(String.Join("\r\n\r\n", result.Select(o => String.Join("\r\n", o))));
-                //Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
-            else
-                Console.WriteLine("!!!Result count = 0");
+            //if (result.Count() > 0)
+            //    Console.WriteLine(String.Join("\r\n\r\n", result.Select(o => String.Join("\r\n", o))));
+            //    //Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+            //else
+            //    Console.WriteLine("!!!Result count = 0");
 
             Console.WriteLine("=========Finish!========");
             Console.ReadLine();
