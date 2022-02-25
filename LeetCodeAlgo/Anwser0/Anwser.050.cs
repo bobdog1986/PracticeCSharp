@@ -405,7 +405,69 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///62. Unique Paths, #DP
+        ///60. Permutation Sequence
+        ///The set [1, 2, 3, ..., n] contains a total of n! unique permutations.
+        ///Given n and k, return the kth permutation sequence.
+        ///1 <= n <= 9, 1 <= k <= n!
+        public string GetPermutation(int n, int k)
+        {
+            List<int> digits=new List<int>();
+            for(int i=1;i<=n;i++)
+                digits.Add(i);
+
+            List<int> ans=new List<int>();
+
+            int x = n;
+            while (x >= 1)
+            {
+                if (k == 1)
+                {
+                    ans.AddRange(digits);
+                    break;
+                }
+                else if(k== getFactorial(x))
+                {
+                    digits.Reverse();
+                    ans.AddRange(digits);
+                    break;
+                }
+
+                var nextFactor = getFactorial(x - 1);
+                if(k<= nextFactor)
+                {
+                    ans.Add(digits[0]);
+                    digits.RemoveAt(0);
+                }
+                else
+                {
+                    var index = k / nextFactor;
+                    var mod = k % nextFactor;
+                    if (mod == 0) index--;
+                    ans.Add(digits[index]);
+                    digits.RemoveAt(index);
+                    k -=nextFactor* index;
+                }
+
+                x--;
+            }
+
+            return String.Join("",ans);
+        }
+
+        public string TestGetPermutation()
+        {
+            int n = 4;
+            var k = getFactorial(n);
+            for(int i = 1; i <= k; i++)
+            {
+                var r = GetPermutation(n, i);
+                Console.WriteLine($"n={n},k={i}, seq = {r}");
+            }
+
+            return "";
+        }
+
+        /// 62. Unique Paths, #DP
         ///Move from grid[0][0] to grid[m - 1][n - 1], each step can only move down or right.
         ///A(m-1+n-1)/A(m-1)/A(n-1)
         public int UniquePaths(int m, int n)
