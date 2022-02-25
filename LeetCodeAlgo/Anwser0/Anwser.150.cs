@@ -193,7 +193,36 @@ namespace LeetCodeAlgo
             }
             throw new ArgumentOutOfRangeException();
         }
-        ///166. Fraction to Recurring Decimal
+        ///165. Compare Version Numbers
+        ///If version1<version2, return -1. If version1 > version2, return 1. Otherwise, return 0.
+        public int CompareVersion(string version1, string version2)
+        {
+            var list1 = version1.Split('.').Select(x => int.Parse(x)).ToList();
+            var list2 = version2.Split('.').Select(x => int.Parse(x)).ToList();
+
+            for (int i = 0; i<list1.Count && i<list2.Count; i++)
+            {
+                if(list1[i] > list2[i]) return 1;
+                else if (list1[i] < list2[i]) return -1;
+            }
+
+            if (list1.Count > list2.Count)
+            {
+                for (int i = list2.Count; i < list1.Count; i++)
+                {
+                    if (list1[i] > 0) return 1;
+                }
+            }
+            else if (list1.Count < list2.Count)
+            {
+                for (int i = list1.Count; i < list2.Count; i++)
+                {
+                    if (list2[i] > 0) return -1;
+                }
+            }
+            return 0;
+        }
+        /// 166. Fraction to Recurring Decimal
         ///Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.
         ///If the fractional part is repeating, enclose the repeating part in parentheses.
         ///If multiple answers are possible, return any of them.
