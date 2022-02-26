@@ -900,7 +900,30 @@ namespace LeetCodeAlgo
             return ClimbStairs_Recursion(n - 1) + ClimbStairs_Recursion(n - 2);
         }
 
-        ///72. Edit Distance
+        ///71. Simplify Path
+        ///Given a string path, which is an absolute path (starting with a slash '/') to a file
+        ///or directory in a Unix-style file system,convert it to the simplified canonical path.
+        public string SimplifyPath(string path)
+        {
+            List<string> list = new List<string> ();
+            var paths=path.Split('/').Where(s => s.Length > 0 && s!="." ).ToList();
+            foreach (var dir in paths)
+            {
+                if(dir == "..")
+                {
+                    if (list.Count > 0)
+                        list.RemoveAt(list.Count - 1);
+                }
+                else
+                {
+                    list.Add(dir);
+                }
+            }
+            string ans = string.Empty;
+            foreach (var dir in list) ans += "/" + dir;
+            return ans==string.Empty ? "/" : ans;
+        }
+        /// 72. Edit Distance
         ///Given two strings word1 and word2, return the minimum number of operations required to convert word1 to word2.
         ///Insert/Delete/Replace a character
         public int MinDistance(string word1, string word2)
