@@ -345,7 +345,48 @@ namespace LeetCodeAlgo
             return dict.Values.Max() > 1;
         }
 
-        ///221. Maximal Square, #DP
+        ///219. Contains Duplicate II
+        ///Given an integer array nums and an integer k, return true if nums[i] == nums[j] and abs(i - j) <= k.
+        ///1 <= nums.length <= 10^5,0 <= k <= 10^5
+        public bool ContainsNearbyDuplicate(int[] nums, int k)
+        {
+            if (nums.Length == 1 || k == 0) return false;
+            Dictionary<int,int> dict=new Dictionary<int, int>();
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if (dict.ContainsKey(nums[i])) { dict[nums[i]]++; }
+                else { dict.Add(nums[i], 1); }
+                if (dict[nums[i]] > 1) return true;
+                if (i >= k) dict[nums[i - k]]--;
+            }
+            return false;
+        }
+
+        /// 220. Contains Duplicate III -- not pass,  time out
+        /// return true if abs(nums[i] - nums[j]) <= t and abs(i - j) <= k.
+        ///  1 <= nums.length <= 2 * 10^4,0 <= k <= 10^4, 0 <= t <= 2^31 - 1
+        public bool ContainsNearbyAlmostDuplicate(int[] nums, int k, int t)
+        {
+            if (nums.Length == 1 || k == 0) return false;
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int left = nums[i] < int.MinValue + t ? int.MinValue : nums[i] - t;
+                int right = nums[i] > int.MaxValue - t ? int.MaxValue : nums[i] + t;
+
+                var keys=dict.Keys.Where(x=>x>=left && x<=right).ToList();
+                foreach(var key in keys)
+                    if (dict[key] > 0) return true;
+
+                if (dict.ContainsKey(nums[i])) dict[nums[i]]++;
+                else dict.Add(nums[i], 1);
+
+                if (i >= k) dict[nums[i - k]]--;
+            }
+            return false;
+        }
+
+        /// 221. Maximal Square, #DP
         ///Given an m x n binary matrix filled with 0's and 1's,
         ///find the largest square containing only 1's and return its area.
         public int MaximalSquare(char[][] matrix)

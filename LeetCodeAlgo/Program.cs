@@ -11,14 +11,14 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var arr1 = new int[] { 4,8};
+            var arr1 = new int[] { 2147483640, 2147483641};
             var arr2 = new int[] { -1, 2 };
             int k = 2;
-            var val1 = 4;
-            var val2 = 2;
+            var val1 = 1;
+            var val2 = 100;
             ///uint uintVal =0b10000000_00000000_00000000_00000000;
             //var str1 = "())(((()m)(";
-            var str1 = "abbabaaabbabbaababbabbbbbabbbabbbabaaaaababababbbabababaabbababaabbbbbbaaaabababbbaabbbbaabbbbababababbaabbaababaabbbababababbbbaaabbbbbabaaaabbababbbbaababaabbababbbbbababbbabaaaaaaaabbbbbaabaaababaaaabb";
+            var str1 = @"/a/./b/../../c/";
             var str2 = "**aa*****ba*a*bb**aa*ab****a*aaaaaa***a*aaaa**bbabb*b*b**aaaaaaaaa*a********ba*bbb***a*ba*bb*bb**a*b*bb";
             //var str1 = "aaabbbaabaaaaababaabaaabbabbbbbbbbaabababbabbbaaaaba";
             //var str2 = "a*******b";
@@ -65,10 +65,10 @@ namespace LeetCodeAlgo
                 //new char[]{'0','0','0'},
             };
 
-            var listnode1 = anwser.buildListNode(new int[] { 0, 1, 2, 3, 4, 5 });
-            anwser.printListNode(listnode1);
-            var listnode2 = anwser.buildListNode(new int[] { 1000000, 1000001, 1000002 });
-            anwser.printListNode(listnode2);
+            //var listnode1 = anwser.buildListNode(new int[] { 0, 1, 2, 3, 4, 5 });
+            //anwser.printListNode(listnode1);
+            //var listnode2 = anwser.buildListNode(new int[] { 1000000, 1000001, 1000002 });
+            //anwser.printListNode(listnode2);
 
             //Console.WriteLine("Correct Anwser should be : ");
             //Console.WriteLine(string.Join("\r\n", mat1.Select(o => string.Join(",", o))));
@@ -88,13 +88,13 @@ namespace LeetCodeAlgo
 
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
-            var result = anwser.MergeInBetween(listnode1,3, 4,listnode2);
+            var result = anwser.ContainsNearbyAlmostDuplicate(arr1,val1,val2);
             //var result = anwser.GetPermutation(3,4);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
             //Console.WriteLine(string.Join(",", result.val));
-            anwser.printListNode(result);
+            //anwser.printListNode(result);
             Console.WriteLine($"Result = {result}");
 
             //Console.WriteLine(String.Join(",", arr1));
