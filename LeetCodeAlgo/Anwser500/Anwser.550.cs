@@ -225,7 +225,7 @@ namespace LeetCodeAlgo
         }
 
         ///599. Minimum Index Sum of Two Lists
-        /// find out their common interest with the least list index sum. 
+        /// find out their common interest with the least list index sum.
         public string[] FindRestaurant(string[] list1, string[] list2)
         {
             Dictionary<int, List<string>> dict = new Dictionary<int, List<string>>();
