@@ -1552,7 +1552,7 @@ namespace LeetCodeAlgo
         /// original array [1,2,3,4,5] sorted in ascending order (with distinct values).
         /// then possibly rotated to eg. [3,4,5,1,2]
         /// return the index of target if it is in nums or -1
-        public int Search(int[] nums, int target)
+        public int Search_33(int[] nums, int target)
         {
             int i = 0;
             while (i <= nums.Length - 1)

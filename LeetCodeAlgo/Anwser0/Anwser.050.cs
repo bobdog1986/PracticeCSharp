@@ -19,7 +19,7 @@ namespace LeetCodeAlgo
                 x = 1 / x;
             }
             if (m == 1) return x;
-            return (m % 2 == 0) ? MyPow(x * x,(int)( m / 2)) : x * MyPow(x * x, (int)(m / 2));
+            return (m % 2 == 0) ? MyPow(x * x, (int)(m / 2)) : x * MyPow(x * x, (int)(m / 2));
         }
 
         ///51. N-Queens, #Backtracking
@@ -27,9 +27,9 @@ namespace LeetCodeAlgo
         ///Given an integer n, return all distinct solutions to the n-queens puzzle. You may return the answer in any order.
         public IList<IList<string>> SolveNQueens(int n)
         {
-            var ans=new List<IList<string>>();
+            var ans = new List<IList<string>>();
             var list = new List<int>();
-            SolveNQueens_BackTracking(list, n,n, ans);
+            SolveNQueens_BackTracking(list, n, n, ans);
             return ans;
         }
 
@@ -37,8 +37,8 @@ namespace LeetCodeAlgo
         {
             if (n == 0)
             {
-                List<string> seq=new List<string>();
-                foreach(var i in list)
+                List<string> seq = new List<string>();
+                foreach (var i in list)
                 {
                     string s = "";
                     int j = 0;
@@ -53,9 +53,9 @@ namespace LeetCodeAlgo
                 return;
             }
 
-            for(int i = 0; i < len; i++)
+            for (int i = 0; i < len; i++)
             {
-                bool canAttack = false;;
+                bool canAttack = false; ;
                 for (int j = 0; j < list.Count; j++)
                 {
                     var queen = list[j];
@@ -66,7 +66,7 @@ namespace LeetCodeAlgo
                     }
                 }
                 if (canAttack) continue;
-                var next=new List<int>(list) { i};
+                var next = new List<int>(list) { i };
                 SolveNQueens_BackTracking(next, n - 1, len, ans);
             }
         }
@@ -334,10 +334,10 @@ namespace LeetCodeAlgo
         ///0 <= start <= end <= 10^5
         public int[][] Insert(int[][] intervals, int[] newInterval)
         {
-            var ans=new List<int[]>();
+            var ans = new List<int[]>();
             int start = -1, end = -1;
             bool hasAdd = false;
-            foreach(var curr in intervals)
+            foreach (var curr in intervals)
             {
                 if (hasAdd)
                 {
@@ -353,7 +353,7 @@ namespace LeetCodeAlgo
                         //add left no joint
                         ans.Add(curr);
                     }
-                    else if(curr[0] > right)
+                    else if (curr[0] > right)
                     {
                         ans.Add(new int[] { left, right });
                         hasAdd = true;
@@ -371,7 +371,7 @@ namespace LeetCodeAlgo
             {
                 int left = start == -1 ? newInterval[0] : start;
                 int right = end == -1 ? newInterval[1] : end;
-                if (intervals.Length==0 || intervals[0][0] > right)
+                if (intervals.Length == 0 || intervals[0][0] > right)
                 {
                     ans.Insert(0, new int[] { left, right });
                 }
@@ -496,10 +496,10 @@ namespace LeetCodeAlgo
         ///1 <= n <= 9, 1 <= k <= n!
         public string GetPermutation(int n, int k)
         {
-            List<int> digits=new List<int>();
-            for(int i=1;i<=n;i++)
+            List<int> digits = new List<int>();
+            for (int i = 1; i <= n; i++)
                 digits.Add(i);
-            List<int> ans=new List<int>();
+            List<int> ans = new List<int>();
             int x = n;
             while (x >= 1)
             {
@@ -509,7 +509,7 @@ namespace LeetCodeAlgo
                     ans.AddRange(digits);
                     break;
                 }
-                else if(k== getFactorial(x))
+                else if (k == getFactorial(x))
                 {
                     //k==n!, add all digits as reversed sequence
                     digits.Reverse();
@@ -518,7 +518,7 @@ namespace LeetCodeAlgo
                 }
 
                 var nextFactor = getFactorial(x - 1);
-                if(k<= nextFactor)
+                if (k <= nextFactor)
                 {
                     //add digits[0], then call next loop
                     ans.Add(digits[0]);
@@ -531,19 +531,19 @@ namespace LeetCodeAlgo
                     if (mod == 0) index--;
                     ans.Add(digits[index]);
                     digits.RemoveAt(index);
-                    k -=nextFactor* index;
+                    k -= nextFactor * index;
                 }
                 x--;
             }
 
-            return String.Join("",ans);
+            return String.Join("", ans);
         }
 
         public string TestGetPermutation()
         {
             int n = 4;
             var k = getFactorial(n);
-            for(int i = 1; i <= k; i++)
+            for (int i = 1; i <= k; i++)
             {
                 var r = GetPermutation(n, i);
                 Console.WriteLine($"n={n},k={i}, seq = {r}");
@@ -561,22 +561,22 @@ namespace LeetCodeAlgo
             ListNode tail = null;
             ListNode rotateTail = null;
             var node = head;
-            int count=0;
+            int count = 0;
             while (node != null)
             {
-                if(node.next==null)
+                if (node.next == null)
                     tail = node;
                 node = node.next;
                 count++;
             }
-            k %=count;
+            k %= count;
             if (k == 0) return head;
 
             node = head;
             int i = count - k;//if rotate left,set i=k;
             while (i-- > 0)
             {
-                if (i == 0)rotateTail = node;
+                if (i == 0) rotateTail = node;
                 node = node.next;
             }
 
@@ -591,10 +591,10 @@ namespace LeetCodeAlgo
         ///A(m-1+n-1)/A(m-1)/A(n-1)
         public int UniquePaths(int m, int n)
         {
-            int[,] dp=new int[m,n];
-            for(int i=0; i<m; i++)
-                for(int j=0; j<n; j++)
-                    dp[i,j]=1;
+            int[,] dp = new int[m, n];
+            for (int i = 0; i < m; i++)
+                for (int j = 0; j < n; j++)
+                    dp[i, j] = 1;
 
             for (int i = 1; i < m; i++)
                 for (int j = 1; j < n; j++)
@@ -609,14 +609,14 @@ namespace LeetCodeAlgo
         /// An obstacle and space is marked as 1 and 0 respectively in the grid.
         public int UniquePathsWithObstacles(int[][] obstacleGrid)
         {
-            var grid=obstacleGrid;
+            var grid = obstacleGrid;
 
             int r = grid.Length;
             int c = grid[0].Length;
 
             int[,] dp = new int[r, c];
             dp[0, 0] = grid[0][0] == 0 ? 1 : 0;
-            for(int i = 1;i < r; i++)
+            for (int i = 1; i < r; i++)
                 dp[i, 0] = grid[i][0] == 0 ? dp[i - 1, 0] : 0;
 
             for (int j = 1; j < c; j++)
@@ -624,9 +624,9 @@ namespace LeetCodeAlgo
 
             for (int i = 1; i < r; i++)
                 for (int j = 1; j < c; j++)
-                    dp[i, j] = grid[i][j] == 0 ? dp[i-1,j]+dp[i,j-1] : 0;
+                    dp[i, j] = grid[i][j] == 0 ? dp[i - 1, j] + dp[i, j - 1] : 0;
 
-            return dp[r - 1,c - 1];
+            return dp[r - 1, c - 1];
         }
         ///64. Minimum Path Sum, #DP
         ///Given a m x n grid filled with non-negative numbers,find a path from top left to bottom right,
@@ -646,7 +646,7 @@ namespace LeetCodeAlgo
                 {
                     if (i == 1 && j == 1)
                     {
-                        dp[i,j]=grid[i-1][j-1];
+                        dp[i, j] = grid[i - 1][j - 1];
                     }
                     else
                     {
@@ -708,7 +708,7 @@ namespace LeetCodeAlgo
             int i = digits.Length - 1;
             while (i >= 0)
             {
-                if(digits[i] < 9 || i==0 )
+                if (digits[i] < 9 || i == 0)
                 {
                     digits[i]++;
                     break;
@@ -721,7 +721,7 @@ namespace LeetCodeAlgo
             }
             if (digits[0] == 10)
             {
-                var list=new List<int>(digits);
+                var list = new List<int>(digits);
                 list[0] %= 10;
                 list.Insert(0, 1);
                 digits = list.ToArray();
@@ -905,11 +905,11 @@ namespace LeetCodeAlgo
         ///or directory in a Unix-style file system,convert it to the simplified canonical path.
         public string SimplifyPath(string path)
         {
-            List<string> list = new List<string> ();
-            var paths=path.Split('/').Where(s => s.Length > 0 && s!="." ).ToList();
+            List<string> list = new List<string>();
+            var paths = path.Split('/').Where(s => s.Length > 0 && s != ".").ToList();
             foreach (var dir in paths)
             {
-                if(dir == "..")
+                if (dir == "..")
                 {
                     if (list.Count > 0)
                         list.RemoveAt(list.Count - 1);
@@ -921,7 +921,7 @@ namespace LeetCodeAlgo
             }
             string ans = string.Empty;
             foreach (var dir in list) ans += "/" + dir;
-            return ans==string.Empty ? "/" : ans;
+            return ans == string.Empty ? "/" : ans;
         }
         /// 72. Edit Distance
         ///Given two strings word1 and word2, return the minimum number of operations required to convert word1 to word2.
@@ -933,11 +933,11 @@ namespace LeetCodeAlgo
             int[,] dp = new int[rowLen + 1, colLen + 1];
             for (int i = 1; i <= rowLen; i++)
             {
-                dp[i,0] = i;
+                dp[i, 0] = i;
             }
             for (int j = 1; j <= colLen; j++)
             {
-                dp[0,j] = j;
+                dp[0, j] = j;
             }
             for (int i = 1; i <= rowLen; i++)
             {
@@ -945,16 +945,16 @@ namespace LeetCodeAlgo
                 {
                     if (word1[i - 1] == word2[j - 1])
                     {
-                        dp[i,j] = dp[i - 1,j - 1];
+                        dp[i, j] = dp[i - 1, j - 1];
                     }
                     else
                     {
                         //replace=dp[i - 1][j - 1]+1, delete = dp[i - 1][j])+1, insert = dp[i][j - 1]+1
-                        dp[i,j] = Math.Min(dp[i - 1,j - 1], Math.Min(dp[i,j - 1], dp[i - 1,j])) + 1;
+                        dp[i, j] = Math.Min(dp[i - 1, j - 1], Math.Min(dp[i, j - 1], dp[i - 1, j])) + 1;
                     }
                 }
             }
-            return dp[rowLen,colLen];
+            return dp[rowLen, colLen];
         }
         /// 73. Set Matrix Zeroes, #DFS
         ///Given an m x n integer matrix matrix, if an element is 0, set its entire row and column to 0's.
@@ -963,15 +963,15 @@ namespace LeetCodeAlgo
             int rowLen = matrix.Length;
             int colLen = matrix[0].Length;
             bool[,] visit = new bool[rowLen, colLen];
-            for(int i = 0; i < rowLen; i++)
+            for (int i = 0; i < rowLen; i++)
             {
-                for(int j = 0; j < colLen; j++)
+                for (int j = 0; j < colLen; j++)
                 {
                     if (visit[i, j]) continue;
-                    if(matrix[i][j] == 0)
+                    if (matrix[i][j] == 0)
                     {
                         visit[i, j] = true;
-                        for (int m=0;m<colLen; m++)
+                        for (int m = 0; m < colLen; m++)
                         {
                             if (!visit[i, m] && matrix[i][m] != 0)
                             {
@@ -979,7 +979,7 @@ namespace LeetCodeAlgo
                                 visit[i, m] = true;
                             }
                         }
-                        for(int n = 0; n < rowLen; n++)
+                        for (int n = 0; n < rowLen; n++)
                         {
                             if (!visit[n, j] && matrix[n][j] != 0)
                             {
@@ -1098,11 +1098,11 @@ namespace LeetCodeAlgo
         ///return "" or the minimum window substring of s such that every character in t (including duplicates) is included in the window.
         public string MinWindow(string s, string t)
         {
-            if(s.Length<t.Length)return String.Empty;
+            if (s.Length < t.Length) return String.Empty;
 
             int[] arrT = new int[26 + 32];//'a'-'A'=32
             int[] arrS = new int[26 + 32];
-            for (int i=0;i<t.Length;i++)
+            for (int i = 0; i < t.Length; i++)
             {
                 arrT[t[i] - 'A']++;
                 arrS[s[i] - 'A']++;
@@ -1111,7 +1111,7 @@ namespace LeetCodeAlgo
             int len = t.Length;
             int min = s.Length + 1;
             string ans = string.Empty;
-            for(int i = t.Length-1; i < s.Length; i++)
+            for (int i = t.Length - 1; i < s.Length; i++)
             {
                 if (i == t.Length - 1)
                 {
@@ -1124,7 +1124,7 @@ namespace LeetCodeAlgo
                     int j = i - len + 1;
                     while (j <= i)
                     {
-                        if (arrS[s[j] - 'A']>0 && arrS[s[j]-'A']>arrT[s[j] - 'A'])
+                        if (arrS[s[j] - 'A'] > 0 && arrS[s[j] - 'A'] > arrT[s[j] - 'A'])
                         {
                             arrS[s[j] - 'A']--;
                             len--;
@@ -1138,9 +1138,9 @@ namespace LeetCodeAlgo
                 }
 
                 bool failed = false;
-                for(int k = 0; k < arrT.Length; k++)
+                for (int k = 0; k < arrT.Length; k++)
                 {
-                    if(arrT[k]>0 && arrT[k] > arrS[k])
+                    if (arrT[k] > 0 && arrT[k] > arrS[k])
                     {
                         failed = true;
                         break;
@@ -1158,7 +1158,7 @@ namespace LeetCodeAlgo
                     }
                 }
             }
-            return min>s.Length ? string.Empty: ans;
+            return min > s.Length ? string.Empty : ans;
         }
 
         /// 77. Combinations
@@ -1300,7 +1300,7 @@ namespace LeetCodeAlgo
                 return;
             }
             SubSets_Backtracking(nums, start + 1, new List<int>(list), ans);
-            SubSets_Backtracking(nums, start + 1, new List<int>(list) { nums[start]}, ans);
+            SubSets_Backtracking(nums, start + 1, new List<int>(list) { nums[start] }, ans);
         }
 
         ///79. Word Search, #Backtracking, #DFS
@@ -1327,7 +1327,7 @@ namespace LeetCodeAlgo
                         if (board[i][j] == word[index])
                         {
                             var nextVisit = new bool[rowLen * colLen];
-                            nextVisit[i*colLen+j] = true;
+                            nextVisit[i * colLen + j] = true;
                             bool result = Exist_Backtracking(board, nextVisit, i, j, word, index + 1);
                             if (result)
                                 return true;
@@ -1342,7 +1342,7 @@ namespace LeetCodeAlgo
                     int row = r + t[0];
                     int col = c + t[1];
                     if (row >= 0 && row < rowLen && col >= 0 && col < colLen
-                        && !visit[row*colLen+ col] && board[row][col] == word[index])
+                        && !visit[row * colLen + col] && board[row][col] == word[index])
                     {
                         var nextVisit = new List<bool>(visit).ToArray();
                         nextVisit[row * colLen + col] = true;
@@ -1383,6 +1383,28 @@ namespace LeetCodeAlgo
                 }
             }
             return count;
+        }
+
+        ///81. Search in Rotated Sorted Array II
+        ///There is an integer array nums sorted in non-decreasing order (not necessarily with distinct values).
+        ///Given the array nums after the rotation, return true if target is in nums, or false if it is not in nums.
+
+        public bool Search_81(int[] nums, int target)
+        {
+            int i = 0;
+            while (i <= nums.Length - 1)
+            {
+                if (nums[i] == target)
+                    return true;
+                if (nums[i] < nums[0])
+                {
+                    //rotated
+                    if (target > nums[0]) { return false; }
+                    if (target < nums[i]) { return false; }
+                }
+                i++;
+            }
+            return false;
         }
         /// 82. Remove Duplicates from Sorted List II
         /// remove all duplicates, [1,1,1,2,2,3]=>[3], [1,2,2,3]=>[1,3]

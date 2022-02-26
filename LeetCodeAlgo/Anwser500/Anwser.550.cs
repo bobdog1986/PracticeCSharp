@@ -223,5 +223,46 @@ namespace LeetCodeAlgo
                     dp[i][j] = word1[i - 1] == word2[j - 1] ? dp[i - 1][j - 1] + 1 : Math.Max(dp[i - 1][j], dp[i][j - 1]);
             return word1.Length + word2.Length - 2 * dp[word1.Length][word2.Length];
         }
+
+        ///599. Minimum Index Sum of Two Lists
+        /// find out their common interest with the least list index sum. 
+        public string[] FindRestaurant(string[] list1, string[] list2)
+        {
+            Dictionary<int, List<string>> dict = new Dictionary<int, List<string>>();
+            Dictionary<string, int> map1 = new Dictionary<string, int>();
+            Dictionary<string, int> map2 = new Dictionary<string, int>();
+            for (int i = 0; i < list1.Length || i < list2.Length; i++)
+            {
+                if (i < list1.Length)
+                {
+                    if (!map1.ContainsKey(list1[i])) map1.Add(list1[i], i);
+                }
+                if (i < list2.Length)
+                {
+                    if (!map2.ContainsKey(list2[i])) map2.Add(list2[i], i);
+                }
+                if(i < list1.Length)
+                {
+                    if (map2.ContainsKey(list1[i]))
+                    {
+                        var index = map2[list1[i]] + i;
+                        if (!dict.ContainsKey(index)) dict.Add(index, new List<string>());
+                        if(!dict[index].Contains(list1[i]))
+                            dict[index].Add(list1[i]);
+                    }
+                }
+                if (i < list2.Length)
+                {
+                    if (map1.ContainsKey(list2[i]))
+                    {
+                        var index = map1[list2[i]] + i;
+                        if (!dict.ContainsKey(index)) dict.Add(index, new List<string>());
+                        if (!dict[index].Contains(list2[i]))
+                            dict[index].Add(list2[i]);
+                    }
+                }
+            }
+            return dict.Count == 0 ? new string[0] : dict[dict.Keys.Min()].ToArray();
+        }
     }
 }
