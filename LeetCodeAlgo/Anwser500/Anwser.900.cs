@@ -76,7 +76,64 @@ namespace LeetCodeAlgo
             return dp.Min();
         }
 
-        ///941. Valid Mountain Array
+        ///934. Shortest Bridge, #DFS
+        ///You are given an n x n binary matrix grid where 1 represents land and 0 represents water.
+        ///An island is a 4-directionally connected group of 1's not connected to any other 1's. There are exactly two islands in grid.
+        ///You may change 0's to 1's to connect the two islands to form one island. Return the smallest number of 0's to connect 2 islands
+        public int ShortestBridge(int[][] grid)
+        {
+            List<int[]> list1 = new List<int[]>();
+            List<int[]> list2 = new List<int[]>();
+            int[][] dxy = new int[4][] { new int[] { -1, 0 }, new int[] { 1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 } };
+            for (int i = 0; i < grid.Length; i++)
+            {
+                for (int j = 0; j < grid[i].Length; j++)
+                {
+                    if (grid[i][j] == 0) continue;
+                    List<int[]> curr = new List<int[]>();
+                    List<int[]> visits = new List<int[]>() { new int[] {i,j } };
+                    grid[i][j] = 0;
+                    while (visits.Count > 0)
+                    {
+                        curr.AddRange(visits);
+                        List<int[]> nexts = new List<int[]>();
+                        foreach(var v in visits)
+                        {
+                            foreach (var d in dxy)
+                            {
+                                int r = v[0] + d[0];
+                                int c = v[1] + d[1];
+                                if(r>=0&&r<grid.Length && c>=0&&c<grid[i].Length && grid[r][c] == 1)
+                                {
+                                    grid[r][c] = 0;
+                                    nexts.Add(new int[] { r, c });
+                                }
+                            }
+                        }
+                        visits = nexts;
+                    }
+                    if (list1.Count == 0) { list1 = curr; }
+                    else { list2 = curr; }
+                }
+                if (list2.Count > 0) break;
+            }
+            int min = int.MaxValue;
+            foreach (var i in list1)
+            {
+                foreach (var j in list2)
+                {
+                    int len=int.MaxValue;
+                    if (i[0] == j[0]) len = Math.Abs(i[1] - j[1])-1;
+                    else if(i[1] == j[1]) len = Math.Abs(i[0] - j[0])-1;
+                    else len = Math.Abs(i[1] - j[1]) - 1 + Math.Abs(i[0] - j[0]);
+                    min = Math.Min(min, len);
+                    if (min == 1) return min;
+                }
+            }
+            return min;
+        }
+
+        /// 941. Valid Mountain Array
         ///len>=3, arr[i]> all [0,i-1],and [i+1,len-1]
         public bool ValidMountainArray(int[] arr)
         {
