@@ -24,6 +24,31 @@ namespace LeetCodeAlgo
                 if (x > 3 || x < -3) return false;
             return true;
         }
+        ///2085. Count Common Words With One Occurrence
+        ///return the number of strings that appear exactly once in each of the two arrays.
+        public int CountWords(string[] words1, string[] words2)
+        {
+            Dictionary<string, int> dict1 = new Dictionary<string, int>();
+            Dictionary<string, int> dict2 = new Dictionary<string, int>();
+            foreach(var w1 in words1)
+            {
+                if (dict1.ContainsKey(w1)) dict1[w1]++;
+                else dict1.Add(w1,1);
+            }
+            foreach (var w2 in words2)
+            {
+                if (dict2.ContainsKey(w2)) dict2[w2]++;
+                else dict2.Add(w2, 1);
+            }
+            var keys1=dict1.Where(x=>x.Value==1).Select(x=>x.Key).ToList();
+            int count = 0;
+            foreach(var key in keys1)
+            {
+                if (dict2.ContainsKey(key) && dict2[key] == 1) count++;
+            }
+            return count;
+        }
+
         /// 2086. Minimum Number of Buckets Required to Collect Rainwater from Houses
         ///H is house, . is space
         ///The rainwater from a house at index i is collected if a bucket is placed at index i - 1 and/or index i + 1.
