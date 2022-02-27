@@ -331,6 +331,33 @@ namespace LeetCodeAlgo
             return nums[nums.Length - k];
         }
 
+        ///216. Combination Sum III, #Backtracking
+        ///Find all valid combinations of k numbers that sum up to n :
+        ///Only numbers 1 through 9 are used.And Each number is used at most once.
+        ///Return a list of all possible valid combinations.
+        public IList<IList<int>> CombinationSum3(int k, int n)
+        {
+            var ans =new List<IList<int>>();
+            var list=new List<int>();
+            var arr=new List<int>() { 1,2,3,4,5,6,7,8,9};
+            CombinationSum3(k, n, list, arr, ans);
+            return ans;
+        }
+
+        public void CombinationSum3(int k, int n , IList<int> list, IList<int> arr,IList<IList<int>> ans)
+        {
+            if (n == 0 && k==0) ans.Add(list);
+            if (n < 0 || k < 0) return;
+            foreach(var i in arr)
+            {
+                if (i <= n)
+                {
+                    var nextArr = arr.Where(x => x > i).ToList();
+                    var nextList = new List<int>(list) { i };
+                    CombinationSum3(k - 1, n - i, nextList, nextArr, ans);
+                }
+            }
+        }
         /// 217. Contains Duplicate, #HashMap
         public bool ContainsDuplicate(int[] nums)
         {
