@@ -245,6 +245,29 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///429. N-ary Tree Level Order Traversal
+        ///Given an n-ary tree, return the level order traversal of its nodes' values.
+        public IList<IList<int>> LevelOrder(Node root)
+        {
+            var ans=new List<IList<int>>();
+            var nodes=new List<Node>() { root};
+            while(nodes.Count > 0)
+            {
+                var next = new List<Node>();
+                var list = new List<int>();
+                foreach(var n in nodes)
+                {
+                    if (n == null) continue;
+                    list.Add(n.val);
+                    next.AddRange(n.children);
+                }
+                if(list.Count>0)ans.Add(list);
+                nodes = next;
+            }
+            return ans;
+        }
+
+
         /// 435. Non-overlapping Intervals
         /// there are some embeded intervals, use Math.Min()
         public int EraseOverlapIntervals(int[][] intervals)

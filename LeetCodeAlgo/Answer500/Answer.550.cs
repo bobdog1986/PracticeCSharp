@@ -243,6 +243,24 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///590. N-ary Tree Postorder Traversal
+        ///Given the root of an n-ary tree, return the postorder traversal of its nodes' values.
+        public IList<int> Postorder(Node root)
+        {
+            var ans = new List<int>();
+            PostorderNaryTree(root, ans);
+            return ans;
+        }
+
+        public void PostorderNaryTree(Node node, IList<int> ans)
+        {
+            if (node == null) return;
+            foreach (var child in node.children)
+            {
+                if (child != null) PostorderNaryTree(child, ans);
+            }
+            ans.Add(node.val);
+        }
         /// 599. Minimum Index Sum of Two Lists
         /// find out their common interest with the least list index sum.
         public string[] FindRestaurant(string[] list1, string[] list2)
