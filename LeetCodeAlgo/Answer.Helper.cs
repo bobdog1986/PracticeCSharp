@@ -138,8 +138,9 @@ namespace LeetCodeAlgo
                 list.Add(listNode.val);
                 listNode = listNode.next;
             }
-
-            Console.WriteLine($"ListNode is [{string.Join(",", list)}]");
+            var str = $"ListNode is [{string.Join(",", list)}";
+            str+= listNode == null ? "]" : "......]";
+            Console.WriteLine(str);
         }
 
         public void printRandomNode(RandomNode node, int maxLen = 20)

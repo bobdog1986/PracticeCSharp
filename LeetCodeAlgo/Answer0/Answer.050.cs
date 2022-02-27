@@ -1753,6 +1753,67 @@ namespace LeetCodeAlgo
             return waysToDecode[waysToDecode.Length - 1];
         }
 
+        ///92. Reverse Linked List II
+        ///Given the head of a singly linked list and two integers left and right where left <= right,
+        ///reverse the nodes of the list from position left to position right, and return the reversed list.
+
+        public ListNode ReverseBetween(ListNode head, int left, int right)
+        {
+            ListNode ans = null;
+            ListNode tail = null;
+            ListNode prev = null;
+
+            var node = head;
+            int len = 0;
+            List<ListNode> list = new List<ListNode>();
+            while(node != null)
+            {
+                len++;
+                if (len == left)
+                {
+                    if (len == 1)
+                    {
+                        ans = null;
+                        tail = null;
+                    }
+                    else
+                    {
+                        ans = head;
+                        tail = prev;
+                    }
+                }
+
+                if (len >= left)
+                {
+                    list.Add(node);
+                }
+
+                if(len == right)
+                {
+                    var next = node.next;
+
+                    for(int i = list.Count - 1; i >= 1; i--)
+                    {
+                        list[i].next = list[i-1];
+                    }
+                    list[0].next = next;
+                    if (tail == null)
+                    {
+                        ans = list.Last();
+                    }
+                    else
+                    {
+                        //ans = head;
+                        tail.next = list.Last();
+                    }
+                    break;
+                }
+                prev = node;
+                node = node.next;
+            }
+
+            return ans;
+        }
         /// 94. Binary Tree Inorder Traversal
         public IList<int> InorderTraversal(TreeNode root)
         {
