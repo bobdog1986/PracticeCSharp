@@ -180,7 +180,9 @@ namespace LeetCodeAlgo
             }
         }
 
-        ///304. Range Sum Query 2D - Immutable, see NumMatrix
+        ///303. Range Sum Query - Immutable, see NumArray
+
+        /// 304. Range Sum Query 2D - Immutable, see NumMatrix
 
         /// 309. Best Time to Buy and Sell Stock with Cooldown
         ///After you sell your stock, you cannot buy stock on the next day (i.e., cooldown one day).
