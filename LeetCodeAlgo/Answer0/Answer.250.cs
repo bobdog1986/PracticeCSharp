@@ -251,7 +251,14 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        ///297. Serialize and Deserialize Binary Tree, see Codec
+        ///292. Nim Game
+        ///Given n, the number of stones in the heap, return true if you can win the game
+        ///assuming both you and your friend play optimally, otherwise return false.
+        public bool CanWinNim(int n)
+        {
+            return n%4!=0;
+        }
+        /// 297. Serialize and Deserialize Binary Tree, see Codec
 
     }
 }
