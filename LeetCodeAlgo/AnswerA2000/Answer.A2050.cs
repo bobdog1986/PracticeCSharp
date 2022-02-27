@@ -8,7 +8,26 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        ///2068. Check Whether Two Strings are Almost Equivalent
+        ///2053. Kth Distinct String in an Array
+        ///Given an array of strings arr, and an integer k, return the kth distinct string present in arr.
+        ///If there are fewer than k distinct strings, return an empty string "".
+        public string KthDistinct(string[] arr, int k)
+        {
+            Dictionary<string, int> dict = new Dictionary<string, int>();
+            foreach(var w in arr)
+            {
+                if(dict.ContainsKey(w))dict[w] ++;
+                else dict.Add(w,1);
+            }
+
+            foreach(var d in dict)
+            {
+                if (d.Value > 1) continue;
+                if (--k == 0) return d.Key;
+            }
+            return string.Empty;
+        }
+        /// 2068. Check Whether Two Strings are Almost Equivalent
         ///Given two strings word1 and word2, each of length n, return true if word1 and word2 are almost equivalent or false
         ///differences between the frequencies of each letter from 'a' to 'z' between word1 and word2 is at most 3.
 
