@@ -75,9 +75,9 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
-            //string bTreeStr = "0,0,null,null,0,0,null,null,0,0,null";
-            //var treeNode = anwser.deserializeTree(bTreeStr);
-            //anwser.printTree(treeNode);
+            string bTreeStr = "1,3,2,5,null,null,9,6,null,null,7";
+            var treeNode = anwser.deserializeTree(bTreeStr);
+            anwser.printTree(treeNode);
 
             //Console.WriteLine(String.Join(",", arr1));
 
@@ -88,7 +88,7 @@ namespace LeetCodeAlgo
 
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
-            var result = anwser.ShortestBridge(mat1);
+            var result = anwser.WidthOfBinaryTree(treeNode);
             //var result = anwser.GetPermutation(3,4);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

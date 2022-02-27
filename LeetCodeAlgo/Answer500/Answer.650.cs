@@ -8,7 +8,43 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        ///698. Partition to K Equal Sum Subsets
+        ///662. Maximum Width of Binary Tree
+        ///The maximum width of a tree is the maximum width among all levels.
+        ///The width of one level is defined as the length between the end-nodes(the leftmost and rightmost non-null nodes),
+        ///where the null nodes between the end-nodes are also counted into the length calculation.
+        ///The number of nodes in the tree is in the range [1, 3000].
+        public int WidthOfBinaryTree(TreeNode root)
+        {
+            int ans = 1;
+            Dictionary<int,TreeNode> dict = new Dictionary<int,TreeNode>();
+            dict.Add(0, root);
+            while (dict.Count > 0)
+            {
+                Dictionary<int, TreeNode> next =new Dictionary<int, TreeNode>();
+                int start = -1;
+                int end = -1;
+                foreach(var key in dict.Keys)
+                {
+                    var node = dict[key];
+                    if (node.left!=null)
+                    {
+                        if (start == -1) start = key * 2;
+                        end = key * 2;
+                        next.Add(key*2, node.left);
+                    }
+                    if (node.right != null)
+                    {
+                        if (start == -1) start = key * 2+1;
+                        end = key * 2 + 1;
+                        next.Add(key * 2+1, node.right);
+                    }
+                }
+                ans = Math.Max(ans, end-start+1);
+                dict = next;
+            }
+            return ans;
+        }
+        /// 698. Partition to K Equal Sum Subsets
         ///return true if it is possible to divide this array into k non-empty subsets whose sums are all equal.
         ///1 <= k <= nums.length <= 16,1 <= nums[i] <= 10^4, The frequency of each element is in the range [1, 4].
         public bool CanPartitionKSubsets(int[] nums, int k)
