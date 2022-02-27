@@ -296,7 +296,23 @@ namespace LeetCodeAlgo
             return ans.ToString();
         }
 
-        ///169. Majority Element
+        ///168. Excel Sheet Column Title
+        ///Given an integer columnNumber, return its corresponding column title as it appears in an Excel sheet.
+        public string ConvertToTitle(int columnNumber)
+        {
+            List<char> ans=new List<char>();
+            int n = columnNumber;
+            while (n > 0)
+            {
+                var c = (char)((n-1)%26 + 'A') ;
+                ans.Insert(0, (char)c);
+                n=(n-1)/26 ;
+            }
+            return new string(ans.ToArray());
+        }
+
+
+        /// 169. Majority Element
         ///The majority element is the element that appears more than n/2 times.
         public int MajorityElement(int[] nums)
         {

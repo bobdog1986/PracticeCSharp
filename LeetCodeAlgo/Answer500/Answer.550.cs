@@ -9,7 +9,7 @@ namespace LeetCodeAlgo
     public partial class Anwser
     {
         /// 557. Reverse Words in a String III
-        public string ReverseWords(string s)
+        public string ReverseWords_557(string s)
         {
             var arr = s.Split(' ');
             if (arr.Length == 0)

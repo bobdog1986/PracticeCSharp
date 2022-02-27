@@ -88,16 +88,16 @@ namespace LeetCodeAlgo
 
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
-            var result = anwser.ReverseBetween(listnode1,2,3);
+            var result = anwser.ConvertToTitle(701);
             //var result = anwser.GetPermutation(3,4);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
             //Console.WriteLine(string.Join(",", result.val));
-            anwser.printListNode(result);
+            //anwser.printListNode(result);
             Console.WriteLine($"Result = {result}");
 
-            Console.WriteLine(String.Join(",", result));
+            //Console.WriteLine(String.Join(",", result));
             //Console.WriteLine(String.Join(",", arr1));
 
             //if (result.Count() > 0)
