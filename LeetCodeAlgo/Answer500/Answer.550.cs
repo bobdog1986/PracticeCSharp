@@ -27,14 +27,14 @@ namespace LeetCodeAlgo
 
         ///559. Maximum Depth of N-ary Tree
         ///Given a n-ary tree, find its maximum depth.
-        public int MaxDepth(N_ary root)
+        public int MaxDepth(Node root)
         {
             if(root == null)
                 return 0;
             return 1 + MaxDepth(root.children);
         }
 
-        public int MaxDepth(IList<N_ary> nodes)
+        public int MaxDepth(IList<Node> nodes)
         {
             if(nodes == null||nodes.Count==0)
                 return 0;
@@ -224,7 +224,26 @@ namespace LeetCodeAlgo
             return word1.Length + word2.Length - 2 * dp[word1.Length][word2.Length];
         }
 
-        ///599. Minimum Index Sum of Two Lists
+        ///589. N-ary Tree Preorder Traversal
+        ///Given the root of an n-ary tree, return the preorder traversal of its nodes' values.
+        public IList<int> Preorder(Node root)
+        {
+            var ans=new List<int>();
+            PreorderNaryTree(root, ans);
+            return ans;
+        }
+
+        public void PreorderNaryTree(Node node, IList<int> ans)
+        {
+            if (node == null) return;
+            ans.Add(node.val);
+            foreach(var child in node.children)
+            {
+                if (child != null) PreorderNaryTree(child, ans);
+            }
+        }
+
+        /// 599. Minimum Index Sum of Two Lists
         /// find out their common interest with the least list index sum.
         public string[] FindRestaurant(string[] list1, string[] list2)
         {

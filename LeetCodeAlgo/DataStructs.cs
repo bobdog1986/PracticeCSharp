@@ -98,19 +98,19 @@ namespace LeetCodeAlgo
         }
     }
 
-    public class N_ary
+    public class Node
     {
         public int val;
-        public IList<N_ary> children;
+        public IList<Node> children;
 
-        public N_ary() { }
+        public Node() { }
 
-        public N_ary(int _val)
+        public Node(int _val)
         {
             val = _val;
         }
 
-        public N_ary(int _val, IList<N_ary> _children)
+        public Node(int _val, IList<Node> _children)
         {
             val = _val;
             children = _children;
