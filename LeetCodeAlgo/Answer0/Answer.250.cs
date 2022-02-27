@@ -8,6 +8,30 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
+        ///257. Binary Tree Paths
+        ///Given the root of a binary tree, return all root-to-leaf paths in any order.A leaf is a node with no children.
+        public IList<string> BinaryTreePaths(TreeNode root)
+        {
+            var ans=new List<string>();
+            BinaryTreePaths(root, string.Empty, ans);
+            return ans;
+        }
+
+        public void BinaryTreePaths(TreeNode node, string path, IList<string> ans)
+        {
+            if (node == null) return;
+            if (path != String.Empty) path += "->" + node.val.ToString();
+            else path = node.val.ToString();
+            if (node.left == null && node.right == null)
+            {
+                ans.Add(path);
+            }
+            else
+            {
+                if (node.left != null) BinaryTreePaths(node.left, path, ans);
+                if (node.right != null) BinaryTreePaths(node.right, path, ans);
+            }
+        }
         /// 258. Add Digits
         ///Given an integer num, repeatedly add all its digits until the result has only one digit, and return it.
         public int AddDigits(int num)
