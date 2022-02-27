@@ -1515,6 +1515,53 @@ namespace LeetCodeAlgo
             return max;
 
         }
+        ///86. Partition List
+        ///all nodes less than x come before nodes greater than or equal to x.
+        public ListNode Partition(ListNode head, int x)
+        {
+            if (head == null) return null;
+            ListNode head1 = null;
+            ListNode tail1 = null;
+            ListNode head2 = null;
+            ListNode tail2 = null;
+
+            var node = head;
+            while (node != null)
+            {
+                if (node.val < x)
+                {
+                    if(head1 == null)
+                    {
+                        head1= node;
+                        tail1 = node;
+                    }
+                    else
+                    {
+                        tail1.next = node;
+                        tail1 = tail1.next;
+                    }
+                    if (tail2 != null) tail2.next = null;
+                }
+                else
+                {
+                    if (head2 == null)
+                    {
+                        head2 = node;
+                        tail2 = node;
+                    }
+                    else
+                    {
+                        tail2.next = node;
+                        tail2 = tail2.next;
+                    }
+                    if (tail1!= null) tail1.next = null;
+                }
+                node = node.next;
+            }
+
+            if(tail1!=null)tail1.next = head2;
+            return head1??head2;
+        }
         /// 88. Merge Sorted Array
         /// nums1.length = m + n, nums2.length == n , 0 <= m, n <= 200, 1 <= m + n <= 200
         public void Merge(int[] nums1, int m, int[] nums2, int n)

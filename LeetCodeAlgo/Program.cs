@@ -65,8 +65,8 @@ namespace LeetCodeAlgo
                 //new char[]{'0','0','0'},
             };
 
-            //var listnode1 = anwser.buildListNode(new int[] { 0, 1, 2, 3, 4, 5 });
-            //anwser.printListNode(listnode1);
+            var listnode1 = anwser.buildListNode(new int[] { 1, 3, 2});
+            anwser.printListNode(listnode1);
             //var listnode2 = anwser.buildListNode(new int[] { 1000000, 1000001, 1000002 });
             //anwser.printListNode(listnode2);
 
@@ -75,9 +75,9 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
-            string bTreeStr = "1,3,2,5,null,null,9,6,null,null,7";
-            var treeNode = anwser.deserializeTree(bTreeStr);
-            anwser.printTree(treeNode);
+            //string bTreeStr = "1,3,2,5,null,null,9,6,null,null,7";
+            //var treeNode = anwser.deserializeTree(bTreeStr);
+            //anwser.printTree(treeNode);
 
             //Console.WriteLine(String.Join(",", arr1));
 
@@ -88,13 +88,13 @@ namespace LeetCodeAlgo
 
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
-            var result = anwser.WidthOfBinaryTree(treeNode);
+            var result = anwser.Partition(listnode1,3);
             //var result = anwser.GetPermutation(3,4);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
             //Console.WriteLine(string.Join(",", result.val));
-            //anwser.printListNode(result);
+            anwser.printListNode(result);
             Console.WriteLine($"Result = {result}");
 
             //Console.WriteLine(String.Join(",", arr1));
