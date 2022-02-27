@@ -35,7 +35,38 @@ namespace LeetCodeAlgo
             return ans;
 
         }
-        ///152. Maximum Product Subarray
+        ///151. Reverse Words in a String
+        ///Given an input string s, reverse the order of the words.
+        public string ReverseWords(string s)
+        {
+            List<string> ans = new List<string>();
+            List<char> word = new List<char>();
+            foreach(var c in s)
+            {
+                if(c==' ')
+                {
+                    if(word.Count > 0)
+                    {
+                        ans.Insert(0, new string(word.ToArray()));
+                        word.Clear ();
+                    }
+                }
+                else
+                {
+                    word.Add (c);
+                }
+            }
+
+            if (word.Count > 0)
+            {
+                ans.Insert(0, new string(word.ToArray()));
+                word.Clear();
+            }
+            return string.Join(" ", ans);
+        }
+
+
+        /// 152. Maximum Product Subarray
         ///Given an integer array nums, find a contiguous non-empty subarray within the array
         ///that has the largest product, and return the product.
         ///-10 <= nums[i] <= 10, 1 <= nums.length <= 2 * 10^4
