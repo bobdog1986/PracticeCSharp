@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.AnwserStructs
+namespace LeetCodeAlgo.Design
 {
     /// 304. Range Sum Query 2D - Immutable
     /// Calculate the sum of the elements of matrix inside the rectangle defined by

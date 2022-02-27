@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.AnwserStructs
+namespace LeetCodeAlgo.Design
 {
     ///155. Min Stack
     public class MinStack
