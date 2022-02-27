@@ -1595,7 +1595,61 @@ namespace LeetCodeAlgo
                 nums1[k] = cache[k];
         }
 
-        ///90. Subsets II
+        ///89. Gray Code. #Backtracking
+        ///An n-bit gray code sequence is a sequence of 2n integers inclusive range [0, 2n - 1],
+        ///The first integer is 0, An integer appears no more than once in the sequence,
+        ///The binary representation of every pair of adjacent integers differs by exactly one bit
+        ///The binary representation of the first and last integers differs by exactly one bit.
+        ///Given an integer n, return any valid n-bit gray code sequence.
+        public IList<int> GrayCode(int n)
+        {
+            var ans=new List<int>();
+            Dictionary<int, List<int>> dict = new Dictionary<int, List<int>>();
+            int i = 2;
+            for (; i < Math.Pow(2, n); i++)
+            {
+                var code = GrayCode_Code(i);
+                if(!dict.ContainsKey(code))dict.Add(code, new List<int>());
+                dict[code].Add(i);
+            }
+
+            ans.Add(0);
+            ans.Add(1);
+            int lastCode = 0;
+            while (i >2)
+            {
+                int upCode= lastCode + 1;
+                int downCode= lastCode - 1;
+                if(dict.ContainsKey(upCode))
+                {
+                    ans.Insert(ans.Count - 1, dict[upCode][0]);
+                    dict[upCode].RemoveAt(0);
+                    if (dict[upCode].Count == 0) dict.Remove(upCode);
+                    lastCode = upCode;
+                }
+                else if(dict.ContainsKey(downCode))
+                {
+                    ans.Insert(ans.Count - 1, dict[downCode][0]);
+                    dict[downCode].RemoveAt(0);
+                    if (dict[downCode].Count == 0) dict.Remove(downCode);
+                    lastCode = downCode;
+                }
+                i--;
+            }
+            return ans;
+        }
+        public int GrayCode_Code(int val)
+        {
+            int ans = 0;
+            while (val > 0)
+            {
+                if ((val & 1) == 1) ans++;
+                val >>= 1;
+            }
+            return ans;
+        }
+
+        /// 90. Subsets II
         ///Given an integer array nums that may contain duplicates, return all possible subsets (the power set).
         ///The solution set must not contain duplicate subsets. Return the solution in any order.
 
