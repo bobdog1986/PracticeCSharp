@@ -527,6 +527,42 @@ namespace LeetCodeAlgo
             return list.Count == 0 ? 0 : list.Sum();
         }
 
+        ///228. Summary Ranges
+        ///Return the smallest sorted list of ranges that cover all the numbers in the array exactly.
+        ///0 <= nums.length <= 20
+        public IList<string> SummaryRanges(int[] nums)
+        {
+            List<List<int>> ans = new List<List<int>>();
+            List<int> curr = new List<int>();
+            foreach(var n in nums)
+            {
+                if (curr.Count == 0)
+                {
+                    curr.Add(n);
+                }
+                else
+                {
+                    if (curr.Last() == n - 1)
+                    {
+                        if (curr.Count == 1)
+                        {
+                            curr.Add(n);
+                        }
+                        else
+                        {
+                            curr[1] = n;
+                        }
+                    }
+                    else
+                    {
+                        ans.Add(curr);
+                        curr = new List<int>() { n};
+                    }
+                }
+            }
+            if(curr.Count>0) ans.Add(curr);
+            return ans.Select(x => string.Join("->", x)).ToList();
+        }
         /// 230. Kth Smallest Element in a BST
         ///copy from InorderTraversal_Iteration()
         public int KthSmallest(TreeNode root, int k)
