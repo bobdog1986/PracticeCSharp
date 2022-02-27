@@ -8,7 +8,29 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        ///888. Fair Candy Swap
+        ///884. Uncommon Words from Two Sentences
+        ///Given two sentences s1 and s2, return a list of all the uncommon words. You may return the answer in any order.
+        public string[] UncommonFromSentences(string s1, string s2)
+        {
+            Dictionary<string, int> sentences = new Dictionary<string, int>();
+            var word1 = s1.Split(' ');
+            var word2 = s2.Split(' ');
+            foreach(var w1 in word1)
+            {
+                if (string.IsNullOrEmpty(w1)) continue;
+                if(!sentences.ContainsKey(w1))sentences.Add(w1, 1);
+                else sentences[w1]++;
+            }
+            foreach (var w2 in word2)
+            {
+                if (string.IsNullOrEmpty(w2)) continue;
+                if (!sentences.ContainsKey(w2)) sentences.Add(w2, 1);
+                else sentences[w2]++;
+            }
+
+            return sentences.Where(x=>x.Value==1).Select(x=>x.Key).ToArray();
+        }
+        /// 888. Fair Candy Swap
         ///Return an integer array answer where answer[0] is the number of candies in the box that Alice must exchange,
         ///and answer[1] is the number of candies in the box that Bob must exchange.
         public int[] FairCandySwap(int[] aliceSizes, int[] bobSizes)
