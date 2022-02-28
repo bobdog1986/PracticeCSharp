@@ -270,7 +270,73 @@ namespace LeetCodeAlgo
             return dp[0] == 10001 ? -1 : dp[0];
         }
 
-        ///326. Power of Three
+        ///324. Wiggle Sort II
+        ///Given an integer array nums, reorder it such that nums[0] < nums[1] > nums[2] < nums[3]....
+        ///1 <= nums.length <= 5 * 104, 0 <= nums[i] <= 5000, O(n) time and/or in-place with O(1) extra space?
+        public void WiggleSort(int[] nums)
+        {
+            int arrlen = 5000;
+            int[] arr=new int[arrlen + 1];
+            int left = arrlen;
+            int right = 0;
+            foreach (var n in nums)
+            {
+                arr[n]++;
+                left = Math.Min(left, n);
+                right = Math.Max(right, n);
+            }
+            int half = (nums.Length + 1) / 2;
+            int[] wiggleArr1 = new int[arrlen + 1];
+            int count1 = 0;
+            int mid = 0;
+            for(int i=left;i<=right&&count1<half;i++)
+            {
+                if (arr[i] > 0)
+                {
+                    if (count1 + arr[i] < half)
+                    {
+                        wiggleArr1[i] = arr[i];
+                        count1 += arr[i];
+                        arr[i] = 0;
+                    }
+                    else
+                    {
+                        wiggleArr1[i] = half - count1;
+                        arr[i] -= half - count1;
+                        count1 = half;
+                        mid = i;
+                        break;
+                    }
+                }
+            }
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    nums[i] = WiggleSort_Get(wiggleArr1, ref mid);
+                }
+                else
+                {
+                    nums[i] = WiggleSort_Get(arr, ref right);
+                }
+            }
+        }
+
+        public int WiggleSort_Get(int[] arr,ref int end)
+        {
+            for(int i= end; i>=0; i--)
+            {
+                if(arr[i] > 0)
+                {
+                    arr[i]--;
+                    if (arr[i] == 0) end--;
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        /// 326. Power of Three
         ///Given an integer n, return true if it is a power of three. Otherwise, return false.
         ///An integer n is a power of three, if there exists an integer x such that n == 3x.
         public bool IsPowerOfThree(int n)
@@ -460,7 +526,7 @@ namespace LeetCodeAlgo
             return false;
         }
 
-        ///343. Integer Break, #DP
+        /// 343. Integer Break, #DP
         ///find 3 as many as possible, but no 1; 2 <= n <= 58
         public int IntegerBreak(int n)
         {
