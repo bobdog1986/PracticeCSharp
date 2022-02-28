@@ -66,7 +66,7 @@ namespace LeetCodeAlgo
         }
 
 
-        /// 152. Maximum Product Subarray
+        /// 152. Maximum Product Subarray, #DP
         ///Given an integer array nums, find a contiguous non-empty subarray within the array
         ///that has the largest product, and return the product.
         ///-10 <= nums[i] <= 10, 1 <= nums.length <= 2 * 10^4
@@ -75,7 +75,6 @@ namespace LeetCodeAlgo
             int max = nums[0];
             int min = nums[0];
             int result = nums[0];
-
             for (int i = 1; i < nums.Length; i++)
             {
                 if (nums[i] < 0)
@@ -84,12 +83,10 @@ namespace LeetCodeAlgo
                     max = min;
                     min = temp;
                 }
-
                 max = Math.Max(nums[i], max * nums[i]);
                 min = Math.Min(nums[i], min * nums[i]);
                 result = Math.Max(max, result);
             }
-
             return result;
         }
 

@@ -1242,50 +1242,63 @@ namespace LeetCodeAlgo
 
             return pseudoHead.next;
         }
-        /// 139. Word Break
+        /// 139. Word Break, #DP, #Backtracking
         ///return true if s can be segmented into a space-separated sequence of one or more dictionary words.
         ///Note that the same word in the dictionary may be reused multiple times in the segmentation.
-        public bool WordBreak(string s, IList<string> wordDict)
+        public bool WordBreak_139(string s, IList<string> wordDict)
         {
-            var arr = s.ToArray();
-            List<int> list = new List<int> { 0 };
-            List<int> exist = new List<int> { 0 };
-            while (list.Count > 0)
+            bool ans = false;
+            WordBreak139_Backtracking(s, wordDict, new Dictionary<string, int>(), ref ans);
+            return ans;
+        }
+
+        public void WordBreak139_Backtracking(string s, IList<string> wordDict, IDictionary<string, int> existLens, ref bool ans)
+        {
+            if (ans || existLens.ContainsKey(s)) return;
+            existLens.Add(s, 1);
+            if (s.Length == 0)
             {
-                List<int> next = new List<int>();
-                foreach (var i in list)
-                {
-                    for (int j = 0; j < wordDict.Count; j++)
-                    {
-                        if (arr.Length - i < wordDict[j].Length)
-                            continue;
-                        bool canBreak = true;
-                        int k = 0;
-                        while (k < wordDict[j].Length)
-                        {
-                            if (wordDict[j][k] != arr[i + k])
-                            {
-                                canBreak = false;
-                                break;
-                            }
-                            k++;
-                        }
-                        if (canBreak)
-                        {
-                            var idx = i + wordDict[j].Length;
-                            if (idx == arr.Length)
-                                return true;
-                            if (!exist.Contains(idx))
-                            {
-                                next.Add(idx);
-                                exist.Add(idx);
-                            }
-                        }
-                    }
-                }
-                list = next;
+                ans = true;
+                return;
             }
-            return false;
+            foreach (var w in wordDict)
+            {
+                if (s.StartsWith(w))
+                {
+                    WordBreak139_Backtracking(s.Substring(w.Length), wordDict, existLens, ref ans);
+                }
+            }
+        }
+
+
+        ///140. Word Break II, #Backtracking
+        ///Given a string s and a dictionary of strings wordDict,
+        ///add spaces in s to construct a sentence where each word is a valid dictionary word.
+        ///Return all such possible sentences in any order.
+        public IList<string> WordBreak(string s, IList<string> wordDict)
+        {
+            var ans=new Dictionary<string, int>();
+            var list=new List<string>();
+            WordBreak140_Backtracking(s, wordDict, list, ans);
+            return ans.Keys.ToList();
+        }
+        public void WordBreak140_Backtracking(string s, IList<string> wordDict, IList<string> list,IDictionary<string,int> ans)
+        {
+            if (s.Length == 0)
+            {
+                var str = string.Join(" ", list);
+                if (!ans.ContainsKey(str))
+                    ans.Add(str,1);
+                return;
+            }
+            foreach (var w in wordDict)
+            {
+                if (s.StartsWith(w))
+                {
+                    var next = new List<string>(list) { w };
+                    WordBreak140_Backtracking(s.Substring(w.Length), wordDict, next, ans);
+                }
+            }
         }
 
         /// 141. Linked List Cycle, #Two Pointers ->O(1) space
