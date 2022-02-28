@@ -82,6 +82,7 @@
     <Compile Include="Answer.Helper.cs" />
     <Compile Include="Design\BSTIterator.cs" />
     <Compile Include="Design\Codec.cs" />
+    <Compile Include="Design\GuessGame.cs" />
     <Compile Include="Design\MyHashMap.cs" />
     <Compile Include="Design\MyLinkedList.cs" />
     <Compile Include="Design\MinStack.cs" />
