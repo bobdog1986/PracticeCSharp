@@ -269,6 +269,14 @@ namespace LeetCodeAlgo
         }
 
 
+        ///434. Number of Segments in a String
+        ///return the number of segments , segment is a contiguous sequence of non-space characters.0 <= s.length <= 300
+        public int CountSegments(string s)
+        {
+            if(s.Length==0) return 0;
+            var arr = s.Split(' ');
+            return arr.Where(x => x.Length > 0).Count();
+        }
         /// 435. Non-overlapping Intervals
         /// there are some embeded intervals, use Math.Min()
         public int EraseOverlapIntervals(int[][] intervals)
