@@ -76,5 +76,56 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
+        ///1745. Palindrome Partitioning IV, #DP
+        ///return true if split the string s into three non-empty palindromic substrings.
+
+        public bool CheckPartitioning(string s)
+        {
+            int n = s.Length;
+            bool[,] dp = new bool[n,n];
+            for (int i = n - 1; i >= 0; i--)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (i >= j)
+                        dp[i,j] = true;
+                    else if (s[i] == s[j])
+                        dp[i,j] = dp[i + 1,j - 1];
+                }
+            }
+            for (int i = 1; i < n; i++)
+                for (int j = i + 1; j < n; j++)
+                    if (dp[0,i - 1] && dp[i,j - 1] && dp[j,n - 1])
+                        return true;
+            return false;
+        }
+        public bool CheckPartitioning_MyOn3(string s)
+        {
+            bool ans = false;
+            for (int i = 0; i < s.Length - 2; i++)
+            {
+                if (CheckPartitioning(s, 0, i))
+                {
+                    for (int j = i + 1; j < s.Length - 1; j++)
+                    {
+                        if (CheckPartitioning(s, i + 1, j) && CheckPartitioning(s, j + 1, s.Length - 1))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return ans;
+        }
+
+        public bool CheckPartitioning(string s, int start,int end)
+        {
+            while (start < end)
+            {
+                if (s[start++] != s[end--]) return false;
+            }
+            return true;
+        }
     }
 }
