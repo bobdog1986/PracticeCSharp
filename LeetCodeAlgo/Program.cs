@@ -89,7 +89,7 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
             //anwser.WiggleSort(arr1);
-            var result = anwser.CanConstruct(str1,val1);
+            var result = anwser.DiStringMatch("IDID");
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
