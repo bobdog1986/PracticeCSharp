@@ -19,10 +19,7 @@ namespace LeetCodeAlgo
                     zeroCount++;
                     while (zeroCount > k && left <= i)
                     {
-                        if (nums[left] == 0)
-                        {
-                            zeroCount--;
-                        }
+                        if (nums[left] == 0) { zeroCount--; }
                         left++;
                     }
                 }
@@ -30,7 +27,6 @@ namespace LeetCodeAlgo
             }
             return max;
         }
-
 
         /// 1014. Best Sightseeing Pair
         ///find max = values[i] + values[j] + i - j, 1 <= values[i] <= 1000

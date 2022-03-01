@@ -424,6 +424,60 @@ namespace LeetCodeAlgo
             PathSum_Recursion(node.right, targetSum, new List<int>(list), ans);
         }
 
+        ///114. Flatten Binary Tree to Linked List
+        ///Given the root of a binary tree, flatten the tree into a "linked list":
+        ///The "linked list" should be in the same order as a pre-order traversal of the binary tree.
+        public void Flatten(TreeNode root)
+        {
+            Flatten(root, null);
+        }
+        public TreeNode Flatten(TreeNode root, TreeNode pre)
+        {
+            if (root == null) return pre;
+            pre = Flatten(root.right, pre);
+            pre = Flatten(root.left, pre);
+            root.right = pre;
+            root.left = null;
+            pre = root;
+            return pre;
+        }
+
+        public void Flatten_My(TreeNode root)
+        {
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            Flatten_My(root, stack);
+        }
+        public void Flatten_My(TreeNode root, Stack<TreeNode> stack)
+        {
+            if (root != null)
+            {
+                if (root.left == null && root.right == null)
+                {
+                    if (stack.Count() == 0) return;
+                    else
+                    {
+                        var node = stack.Pop();
+                        root.right = node;
+                        Flatten_My(root.right, stack);
+                    }
+                }
+                else
+                {
+                    if (root.left == null)
+                    {
+                        Flatten_My(root.right, stack);
+                    }
+                    else
+                    {
+                        if (root.right != null)
+                            stack.Push(root.right);
+                        root.right = root.left;
+                        root.left = null;
+                        Flatten_My(root.right, stack);
+                    }
+                }
+            }
+        }
         /// 116. Populating Next Right Pointers in Each Node
         /// You are given a perfect binary tree where all leaves are on the same level
         /// Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
