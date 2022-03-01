@@ -6,7 +6,24 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        ///1417. Reformat The String
+        ///1400. Construct K Palindrome Strings
+        ///return true if you can use all the characters in s to construct k palindrome.
+        ///1 <= s.length <= 10^5, s consists of lowercase English letters. 1 <= k <= 105
+        public bool CanConstruct(string s, int k)
+        {
+            if (s.Length < k) return false;
+            if (s.Length == k) return true;
+            Dictionary<char,int> dict=new Dictionary<char, int>();
+            foreach(var c in s)
+            {
+                if(!dict.ContainsKey(c))dict.Add(c, 0);
+                dict[c]++;
+            }
+            var singleCount = dict.Where(x => x.Value % 2 == 1).Count();
+            return k >= singleCount;
+        }
+
+        /// 1417. Reformat The String
         ///You are given an alphanumeric string s. Only lowercase English letters and digits.
         ///1 letter follow 1 digit , or reverse
         ///Return the reformatted string or return an empty string if it is impossible to reformat the string.
