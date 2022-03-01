@@ -245,6 +245,14 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///319. Bulb Switcher
+        public int BulbSwitch(int n)
+        {
+            int ans = 0;
+            for(int i=1; i*i <= n; i++)
+                ans++;
+            return ans;
+        }
         /// 322. Coin Change, #DP
         ///array coins representing coins of different denominations and an integer amount representing a total amount of money.
         ///Return the fewest number of coins that you need to make up that amount. Or return -1. can reuse each kind of coin.
