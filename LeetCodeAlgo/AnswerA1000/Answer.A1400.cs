@@ -110,6 +110,26 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+        ///1446. Consecutive Characters
+        ///The power of the string is the maximum length of a non-empty substring that contains only one unique character.
+        public int MaxPower(string s)
+        {
+            int max = 0;
+            int count = 1;
+            char c = s[0];
+            for(int i = 1; i < s.Length; i++)
+            {
+                if(c == s[i]) { count++; }
+                else
+                {
+                    max = Math.Max(max, count);
+                    c = s[i];
+                    count = 1;
+                }
+            }
+            max = Math.Max(max, count);
+            return max;
+        }
         /// 1448. Count Good Nodes in Binary Tree
         ///a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X.
         public int GoodNodes(TreeNode root)
