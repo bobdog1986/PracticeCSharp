@@ -88,8 +88,8 @@ namespace LeetCodeAlgo
 
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
-            anwser.WiggleSort(arr1);
-            //var result = anwser.GetPermutation(3,4);
+            //anwser.WiggleSort(arr1);
+            var result = anwser.CountBits(4);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
@@ -97,7 +97,7 @@ namespace LeetCodeAlgo
             //anwser.printListNode(result);
             //Console.WriteLine($"Result = {result}");
 
-            //Console.WriteLine(String.Join(",", result));
+            Console.WriteLine(String.Join(",", result));
             //Console.WriteLine(String.Join(",", arr1));
 
             //if (result.Count() > 0)

@@ -526,6 +526,35 @@ namespace LeetCodeAlgo
             return false;
         }
 
+        ///338. Counting Bits, #DP
+        ///return an array ans of length n + 1 ,ans[i] is the number of 1's in the binary representation of i.
+        /// O(n log n). Can you do it in linear time O(n) and possibly in a single pass?
+        public int[] CountBits(int n)
+        {
+            var ans=new int[n+1];
+            for(int i = 1; i <= n; i++)
+            {
+                int lastCount = ans[i - 1];
+                var last = i - 1;
+                int j = 1;
+                while (j <= n)
+                {
+                    if ((last & j) == j)//1
+                    {
+                        lastCount--;
+                        j <<= 1;
+                    }
+                    else
+                    {
+                        ans[i] = lastCount + 1;
+                        break;
+                    }
+                }
+            }
+            return ans;
+        }
+
+
         /// 343. Integer Break, #DP
         ///find 3 as many as possible, but no 1; 2 <= n <= 58
         public int IntegerBreak(int n)
