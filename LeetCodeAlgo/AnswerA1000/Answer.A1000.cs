@@ -5,7 +5,34 @@ namespace LeetCodeAlgo
 {
     public partial class Anwser
     {
-        ///1014. Best Sightseeing Pair
+        ///1004. Max Consecutive Ones III, #Sliding Window
+        //return the maximum number of consecutive 1's in the array if you can flip at most k 0's.
+        public int LongestOnes(int[] nums, int k)
+        {
+            int max = 0;
+            int left = 0;//left index, i is right index
+            int zeroCount = 0;
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if(nums[i] == 0)
+                {
+                    zeroCount++;
+                    while (zeroCount > k && left <= i)
+                    {
+                        if (nums[left] == 0)
+                        {
+                            zeroCount--;
+                        }
+                        left++;
+                    }
+                }
+                max = Math.Max(max, i - left + 1);
+            }
+            return max;
+        }
+
+
+        /// 1014. Best Sightseeing Pair
         ///find max = values[i] + values[j] + i - j, 1 <= values[i] <= 1000
         public int MaxScoreSightseeingPair(int[] values)
         {
