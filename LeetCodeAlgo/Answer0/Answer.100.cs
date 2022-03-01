@@ -363,6 +363,29 @@ namespace LeetCodeAlgo
                 }
             }
         }
+        ///111. Minimum Depth of Binary Tree
+        ///The minimum depth shortest path from the root node down to the nearest leaf node.
+        public int MinDepth(TreeNode root)
+        {
+            if (root == null) return 0;
+            int ans = 0;
+            List<TreeNode> list=new List<TreeNode>() { root};
+            while (list.Count > 0)
+            {
+                ans++;
+                List<TreeNode> next = new List<TreeNode>();
+                foreach(var node in list)
+                {
+                    if (node.left == null && node.right == null) return ans;
+                    if (node.left != null) next.Add(node.left);
+                    if (node.right != null) next.Add(node.right);
+                }
+                list = next;
+            }
+            return ans;
+        }
+
+
         /// 112. Path Sum
         /// Given the root of a binary tree and an integer targetSum,
         /// return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
@@ -1299,13 +1322,37 @@ namespace LeetCodeAlgo
         /// 139. Word Break, #DP, #Backtracking
         ///return true if s can be segmented into a space-separated sequence of one or more dictionary words.
         ///Note that the same word in the dictionary may be reused multiple times in the segmentation.
-        public bool WordBreak_139(string s, IList<string> wordDict)
+        public bool WordBreak139_DP(string s, IList<string> wordDict)
+        {
+            bool[] dp = new bool[s.Length + 1];
+            dp[0] = true;
+            for(int i = 0; i < s.Length; i++)
+            {
+                if (dp[i])
+                {
+                    foreach(var word in wordDict)
+                    {
+                        if (i + word.Length <= s.Length)
+                        {
+                            if (s.Substring(i, word.Length) == word)
+                            {
+                                dp[i + word.Length] = true;
+                                if (i + word.Length == s.Length) return true;
+                            }
+
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool WordBreak139_Backtracking(string s, IList<string> wordDict)
         {
             bool ans = false;
             WordBreak139_Backtracking(s, wordDict, new Dictionary<string, int>(), ref ans);
             return ans;
         }
-
         public void WordBreak139_Backtracking(string s, IList<string> wordDict, IDictionary<string, int> existLens, ref bool ans)
         {
             if (ans || existLens.ContainsKey(s)) return;
@@ -1324,12 +1371,64 @@ namespace LeetCodeAlgo
             }
         }
 
-
-        ///140. Word Break II, #Backtracking
+        ///140. Word Break II, #Backtracking, #DP
         ///Given a string s and a dictionary of strings wordDict,
         ///add spaces in s to construct a sentence where each word is a valid dictionary word.
         ///Return all such possible sentences in any order.
-        public IList<string> WordBreak(string s, IList<string> wordDict)
+        public IList<string> WordBreak_DP(string s, IList<string> wordDict)
+        {
+            bool[] dp = new bool[s.Length + 1];
+            Dictionary<int, List<List<string>>> map = new Dictionary<int, List<List<string>>> ();
+            Dictionary<string, int> dict = new Dictionary<string, int>();
+            foreach (var w in wordDict)
+            {
+                if(!string.IsNullOrEmpty(w))
+                    dict.Add(w, 1);
+            }
+            dp[0] = true;
+            map.Add(0, new List<List<string>>() );
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (dp[i])
+                {
+                    foreach (var key in dict.Keys)
+                    {
+                        int index = i + key.Length;
+                        if (index <= s.Length)
+                        {
+                            if (s.Substring(i, key.Length) == key)
+                            {
+                                dp[index] = true;
+                                if (!map.ContainsKey(index))
+                                    map.Add(index, new List<List<string>>());
+                                if (i == 0)
+                                {
+                                    map[index].Add(new List<string>() { key });
+                                }
+                                else
+                                {
+                                    foreach(var list in map[i])
+                                    {
+                                        map[index].Add(new List<string>(list) { key });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                //if(map.ContainsKey(i))map.Remove(i);
+            }
+            if (map.ContainsKey(s.Length))
+            {
+                return map[s.Length].Select(x=>String.Join(" ",x)).ToList();
+            }
+            else
+            {
+                return new List<string>();
+            }
+        }
+
+        public IList<string> WordBreak140_Backtracking(string s, IList<string> wordDict)
         {
             var ans=new Dictionary<string, int>();
             var list=new List<string>();
