@@ -67,5 +67,21 @@ namespace LeetCodeAlgo
             });
             return new string(teams.ToArray());
         }
+
+        ///1375. Number of Times Binary String Is Prefix-Aligned
+        ///Return the number of times the binary string is prefix-aligned during the flipping process.
+        public int NumTimesAllBlue(int[] flips)
+        {
+            int right = 0;
+            int ans = 0;
+            int index = 1;
+            foreach(var n in flips)
+            {
+                right = Math.Max(right, n);
+                if (right == index) ans++;
+                index++;
+            }
+            return ans;
+        }
     }
 }
