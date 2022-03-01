@@ -28,6 +28,76 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+        /// 1567. Maximum Length of Subarray With Positive Product
+        public int GetMaxLen(int[] nums)
+        {
+            if (nums == null || nums.Length == 0)
+                return 0;
+            if (nums.Length == 1)
+                return nums[0] > 0 ? 1 : 0;
+
+            int max = 0;
+
+            int count = 0;
+            int negCount = 0;
+            int negStart = -1;
+            int negEnd = 0;
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] == 0)
+                {
+                    if (count <= max)
+                    {
+                    }
+                    else
+                    {
+                        if (negCount % 2 == 0)
+                        {
+                            max = count;
+                        }
+                        else
+                        {
+                            var temp = Math.Max(Math.Max(count - negStart - 1, negStart), Math.Max(count - negEnd - 1, negEnd));
+                            max = Math.Max(max, temp);
+                        }
+                    }
+
+                    count = 0;
+                    negCount = 0;
+                    negStart = -1;
+                    negEnd = 0;
+                }
+                else
+                {
+                    if (nums[i] > 0)
+                    {
+                    }
+                    else
+                    {
+                        if (negStart == -1)
+                            negStart = count;
+
+                        negEnd = count;
+
+                        negCount++;
+                    }
+                    count++;
+                }
+            }
+
+            if (negCount % 2 == 0)
+            {
+                max = Math.Max(max, count);
+            }
+            else
+            {
+                var temp = Math.Max(Math.Max(count - negStart - 1, negStart), Math.Max(count - negEnd - 1, negEnd));
+
+                max = Math.Max(max, temp);
+            }
+            return max;
+        }
 
         ///1576. Replace All ?'s to Avoid Consecutive Repeating Characters
         /// replace ? to not same as previous or next char

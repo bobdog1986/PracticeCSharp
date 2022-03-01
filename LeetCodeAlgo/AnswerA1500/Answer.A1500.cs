@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Text;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LeetCodeAlgo
 {
@@ -32,75 +36,44 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        ///1567. Maximum Length of Subarray With Positive Product
-        public int GetMaxLen(int[] nums)
+        ///1513. Number of Substrings With Only 1s
+        ///Given a binary string s, return the number of substrings with all characters 1's.
+        ///Since the answer may be too large, return it modulo 109 + 7.
+        public int NumSub(string s)
         {
-            if (nums == null || nums.Length == 0)
-                return 0;
-            if (nums.Length == 1)
-                return nums[0] > 0 ? 1 : 0;
-
-            int max = 0;
-
-            int count = 0;
-            int negCount = 0;
-            int negStart = -1;
-            int negEnd = 0;
-
-            for (int i = 0; i < nums.Length; i++)
+            long ans = 0;
+            long mod = 10_0000_0007;
+            Dictionary<long, long> dict = new Dictionary<long, long>();
+            long count = 0;
+            for (int i = 0; i < s.Length; i++)
             {
-                if (nums[i] == 0)
-                {
-                    if (count <= max)
-                    {
-                    }
-                    else
-                    {
-                        if (negCount % 2 == 0)
-                        {
-                            max = count;
-                        }
-                        else
-                        {
-                            var temp = Math.Max(Math.Max(count - negStart - 1, negStart), Math.Max(count - negEnd - 1, negEnd));
-                            max = Math.Max(max, temp);
-                        }
-                    }
-
-                    count = 0;
-                    negCount = 0;
-                    negStart = -1;
-                    negEnd = 0;
-                }
+                if ('1' == s[i]) { count++; }
                 else
                 {
-                    if (nums[i] > 0)
-                    {
-                    }
-                    else
-                    {
-                        if (negStart == -1)
-                            negStart = count;
-
-                        negEnd = count;
-
-                        negCount++;
-                    }
-                    count++;
+                    if (count == 0) continue;
+                    if (!dict.ContainsKey(count)) { NumSub(count, dict); }
+                    ans += dict[count];
+                    ans %= mod;
+                    count = 0;
                 }
             }
-
-            if (negCount % 2 == 0)
+            if (!dict.ContainsKey(count)) { NumSub(count, dict); }
+            ans += dict[count];
+            ans %= mod;
+            return (int)(ans % mod);
+        }
+        public void NumSub(long count, Dictionary<long, long> dict)
+        {
+            long ans = 0;
+            long seed = 0;
+            int i = 0;
+            while (i <= count)
             {
-                max = Math.Max(max, count);
+                ans += seed;
+                if (!dict.ContainsKey(i)) dict.Add(i, ans);
+                i++;
+                seed++;
             }
-            else
-            {
-                var temp = Math.Max(Math.Max(count - negStart - 1, negStart), Math.Max(count - negEnd - 1, negEnd));
-
-                max = Math.Max(max, temp);
-            }
-            return max;
         }
     }
 }
