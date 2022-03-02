@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///830. Positions of Large Groups
         ///A group is considered large if it has 3 or more characters.

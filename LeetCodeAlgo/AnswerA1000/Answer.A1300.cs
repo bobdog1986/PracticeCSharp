@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
 
 

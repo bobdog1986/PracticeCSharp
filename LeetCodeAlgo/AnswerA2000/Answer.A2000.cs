@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///2001. Number of Pairs of Interchangeable Rectangles
         public long InterchangeableRectangles(int[][] rectangles)

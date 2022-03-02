@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///1893. Check if All the Integers in a Range Are Covered
         ///You are given a 2D integer array ranges and two integers left and right.

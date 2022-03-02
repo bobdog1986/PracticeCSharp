@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///884. Uncommon Words from Two Sentences
         ///Given two sentences s1 and s2, return a list of all the uncommon words. You may return the answer in any order.

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///100. Same Tree
         public bool IsSameTree(TreeNode p, TreeNode q)

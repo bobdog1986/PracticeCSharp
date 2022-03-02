@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///1814. Count Nice Pairs in an Array
         /// You are given an array nums that consists of non-negative integers.

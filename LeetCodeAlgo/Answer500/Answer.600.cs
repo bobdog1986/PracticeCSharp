@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///605. Can Place Flowers
         ///flowers cannot be planted in adjacent plots.

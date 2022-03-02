@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///662. Maximum Width of Binary Tree
         ///The maximum width of a tree is the maximum width among all levels.

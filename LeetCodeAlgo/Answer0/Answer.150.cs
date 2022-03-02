@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///150. Evaluate Reverse Polish Notation
         public int EvalRPN(string[] tokens)

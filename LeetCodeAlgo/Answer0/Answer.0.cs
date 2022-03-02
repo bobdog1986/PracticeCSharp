@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         /// 1. Two Sum, #HashMap, #Two Pointers
         /// return indices of the two numbers such that they add up to target.

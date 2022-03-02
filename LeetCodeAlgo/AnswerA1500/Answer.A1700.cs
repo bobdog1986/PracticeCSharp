@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///1706. Where Will the Ball Fall
         ///You have a 2-D grid of size m x n representing a box, and you have n balls.

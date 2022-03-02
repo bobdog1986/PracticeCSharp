@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         /// 2119. A Number After a Double Reversal
         ///1234 reverse to 4321, then again to 1234== origin 1234, return true

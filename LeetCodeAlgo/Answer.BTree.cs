@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         /// BTree PreorderTraversal Iteratively, Node->Left->Right
         public IList<int> PreorderTraversal_Iteratively(TreeNode root)

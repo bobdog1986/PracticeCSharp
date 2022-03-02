@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///1365. How Many Numbers Are Smaller Than the Current Number
         ///for each nums[i] find out how many numbers in the array are smaller than it.

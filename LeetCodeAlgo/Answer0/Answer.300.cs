@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///300. Longest Increasing Subsequence, #DP, #Binaray Search, #Patience Sort
         /// Patience Sort, https://en.wikipedia.org/wiki/Longest_increasing_subsequence

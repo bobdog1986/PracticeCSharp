@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///700. Search in a Binary Search Tree
         ///You are given the root of a binary search tree (BST) and an integer val.

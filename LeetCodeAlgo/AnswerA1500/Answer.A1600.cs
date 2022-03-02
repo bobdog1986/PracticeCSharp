@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///1609. Even Odd Tree, #BFS, #BTree
         ///A binary tree is named Even-Odd if it meets the following conditions:

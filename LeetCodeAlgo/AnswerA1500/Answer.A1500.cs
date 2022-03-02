@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///1512. Number of Good Pairs
         ///Given an array of integers nums, return the number of good pairs.

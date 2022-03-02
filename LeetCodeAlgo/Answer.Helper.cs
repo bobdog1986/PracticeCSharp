@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         /// find target in array from [left,right], return index or -1
         public int binarySearch(int[] nums, int target, int left=-1, int right=-1)

@@ -53,6 +53,7 @@
     <Compile Include="Answer500\Answer.850.cs" />
     <Compile Include="Answer500\Answer.950.cs" />
     <Compile Include="AnswerA1000\Answer.A1000.cs" />
+    <Compile Include="AnswerA1000\Answer.A1050.cs" />
     <Compile Include="AnswerA1000\Answer.A1200.cs" />
     <Compile Include="AnswerA1000\Answer.A1250.cs" />
     <Compile Include="AnswerA1000\Answer.A1300.cs" />

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///966. Vowel Spellchecker
         ///Given a wordlist, we want to implement a spellchecker that converts a query word into a correct word.

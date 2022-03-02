@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///1004. Max Consecutive Ones III, #Sliding Window
         //return the maximum number of consecutive 1's in the array if you can flip at most k 0's.

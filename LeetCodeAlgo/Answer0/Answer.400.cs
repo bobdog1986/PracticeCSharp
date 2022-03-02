@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///402. Remove K Digits
         ///a non-negative integer num, and an integer k, return the smallest possible integer after removing k digits from num.

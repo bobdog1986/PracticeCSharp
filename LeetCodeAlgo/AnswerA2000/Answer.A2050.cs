@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///2053. Kth Distinct String in an Array
         ///Given an array of strings arr, and an integer k, return the kth distinct string present in arr.

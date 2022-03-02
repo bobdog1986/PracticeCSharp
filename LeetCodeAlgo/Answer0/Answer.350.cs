@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///350. Intersection of Two Arrays II, #Two Pointers, #HashMap
         ///Given two integer arrays nums1 and nums2, return an array of their intersection.

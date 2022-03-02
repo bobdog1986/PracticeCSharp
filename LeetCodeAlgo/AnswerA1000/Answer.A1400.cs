@@ -4,7 +4,7 @@ using System;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///1400. Construct K Palindrome Strings
         ///return true if you can use all the characters in s to construct k palindrome.

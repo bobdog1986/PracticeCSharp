@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///1557. Minimum Number of Vertices to Reach All Nodes
         ///Given a directed acyclic graph, with n vertices numbered from 0 to n-1,

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
-    public partial class Anwser
+    public partial class Answer
     {
         ///1922. Count Good Numbers- not pass,support to 10^8, but input is 10^15
         ///even indices are even and the digits at odd indices are prime (2, 3, 5, or 7).
