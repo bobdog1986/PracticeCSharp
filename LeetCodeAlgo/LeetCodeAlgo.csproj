@@ -92,6 +92,7 @@
     <Compile Include="Design\NumMatrix.cs" />
     <Compile Include="Design\RandomizedSet.cs" />
     <Compile Include="Design\Shuffle.cs" />
+    <Compile Include="Design\Trie.cs" />
     <Compile Include="Design\WordDictionary.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
