@@ -75,5 +75,14 @@ namespace LeetCodeAlgo
                 seed++;
             }
         }
+
+        ///1523. Count Odd Numbers in an Interval Range
+        ///Given two non-negative integers low and high. Return the count of odd numbers between low and high (inclusive).
+        public int CountOdds(int low, int high)
+        {
+            var diff = high - low;
+            if (diff % 2 == 0) return diff / 2 + (low % 2 == 1 ? 1 : 0);
+            else return diff / 2 + 1;
+        }
     }
 }
