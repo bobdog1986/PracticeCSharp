@@ -76,6 +76,7 @@
     <Compile Include="AnswerA1500\Answer.A1750.cs" />
     <Compile Include="AnswerA1500\Answer.A1800.cs" />
     <Compile Include="AnswerA1500\Answer.A1850.cs" />
+    <Compile Include="AnswerA1500\Answer.A1950.cs" />
     <Compile Include="AnswerA2000\Answer.A2000.cs" />
     <Compile Include="AnswerA2000\Answer.A2050.cs" />
     <Compile Include="AnswerA2000\Answer.A2100.cs" />
