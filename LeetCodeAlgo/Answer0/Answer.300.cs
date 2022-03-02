@@ -603,7 +603,34 @@ namespace LeetCodeAlgo
             }
         }
 
-        ///347. Top K Frequent Elements
+        ///345. Reverse Vowels of a String
+        ///Given a string s, reverse only all the vowels in the string and return it.
+        public string ReverseVowels(string s)
+        {
+            Dictionary<char, int> dict = new Dictionary<char, int>()
+            {
+                {'a',0 },{'e',0 },{'i',0 },{'o',0 },{'u',0 },
+                {'A',0 },{'E',0 },{'I',0 },{'O',0 },{'U',0 },
+            };
+            List<int> list=new List<int>();
+            for(int i = 0; i < s.Length; i++)
+            {
+                if (dict.ContainsKey(s[i])) list.Add(i);
+            }
+            if (list.Count <=1) return s;
+            var arr = s.ToCharArray();
+            int left = 0;
+            int right = list.Count-1;
+            while (left < right)
+            {
+                var temp=arr[list[left]];
+                arr[list[left++]] = arr[list[right]];
+                arr[list[right--]] = temp;
+            }
+            return new string(arr);
+        }
+
+        /// 347. Top K Frequent Elements
         ///return the k most frequent elements. You may return the answer in any order.
         public int[] TopKFrequent(int[] nums, int k)
         {
