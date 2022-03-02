@@ -389,26 +389,31 @@ namespace LeetCodeAlgo
             return false;
         }
 
-        /// 220. Contains Duplicate III -- not pass,  time out
+        /// 220. Contains Duplicate III
         /// return true if abs(nums[i] - nums[j]) <= t and abs(i - j) <= k.
-        ///  1 <= nums.length <= 2 * 10^4,0 <= k <= 10^4, 0 <= t <= 2^31 - 1
+        ///  1 <= nums.length <= 2 * 10^4,-2^31 <= nums[i] <= 2^31 - 1, 0 <= k <= 10^4, 0 <= t <= 2^31 - 1
         public bool ContainsNearbyAlmostDuplicate(int[] nums, int k, int t)
         {
-            if (nums.Length == 1 || k == 0) return false;
-            Dictionary<int, int> dict = new Dictionary<int, int>();
+            if (k ==0 || nums.Length==1) return false;
+            Dictionary<long, long> map = new Dictionary<long, long>();
+            //split whole [-2^31, 2^31 - 1] range to t+1 width units
             for (int i = 0; i < nums.Length; i++)
             {
-                int left = nums[i] < int.MinValue + t ? int.MinValue : nums[i] - t;
-                int right = nums[i] > int.MaxValue - t ? int.MaxValue : nums[i] + t;
+                long remappedNum = (long)nums[i] - int.MinValue;
+                // if t not plus 1, when t == 0, num divide by 0 will cause crash.
+                long bucket = remappedNum / ((long)t + 1);
+                if (map.ContainsKey(bucket)) return true;
+                // if the two different numbers are located in two adjacent bucket, the value still might be less than t
+                if (map.ContainsKey(bucket - 1) && remappedNum - map[bucket - 1] <= t)return true;
+                if((map.ContainsKey(bucket + 1) && map[bucket + 1] - remappedNum <= t)) return true;
 
-                var keys=dict.Keys.Where(x=>x>=left && x<=right).ToList();
-                foreach(var key in keys)
-                    if (dict[key] > 0) return true;
-
-                if (dict.ContainsKey(nums[i])) dict[nums[i]]++;
-                else dict.Add(nums[i], 1);
-
-                if (i >= k) dict[nums[i - k]]--;
+                //update buckets
+                if (map.Count >= k)
+                {
+                    long lastBucket = ((long)nums[i - k] - int.MinValue) / ((long)t + 1);
+                    map.Remove(lastBucket);
+                }
+                map.Add(bucket, remappedNum);
             }
             return false;
         }
