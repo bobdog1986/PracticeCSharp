@@ -21,5 +21,20 @@ namespace LeetCodeAlgo
             }
             return false;
         }
+
+        ///1979. Find Greatest Common Divisor of Array
+        ///return the greatest common divisor of the smallest number and largest number in nums.
+        ///2 <= nums.length <= 1000,1 <= nums[i] <= 1000
+        public int FindGCD(int[] nums)
+        {
+            int max = 1;
+            int min = 1000;
+            foreach(var n in nums)
+            {
+                max=Math.Max(max, n);
+                min=Math.Min(min, n);
+            }
+            return getGcb(max, min);
+        }
     }
 }

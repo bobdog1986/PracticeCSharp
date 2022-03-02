@@ -94,7 +94,7 @@ namespace LeetCodeAlgo
         }
 
         /// 找出最大公约数
-        public int Gcb(int m, int n)
+        public int getGcb(int m, int n)
         {
             if (m < 1 || n < 1)
                 return m > 0 ? m : n;
@@ -106,10 +106,10 @@ namespace LeetCodeAlgo
             int remainder = m % n;
             m = n;
             n = remainder;
-            return Gcb(m, n);
+            return getGcb(m, n);
         }
 
-        public long GcbLong(long m, long n)
+        public long getGcbLong(long m, long n)
         {
             if (m < 1 || n < 1)
                 return m > 0 ? m : n;
@@ -121,7 +121,7 @@ namespace LeetCodeAlgo
             long remainder = m % n;
             m = n;
             n = remainder;
-            return GcbLong(m, n);
+            return getGcbLong(m, n);
         }
 
         ///ListNode, build and print
