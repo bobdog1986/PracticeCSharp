@@ -182,7 +182,59 @@ namespace LeetCodeAlgo
             }
             return count;
         }
-        ///485. Max Consecutive Ones
+        ///463. Island Perimeter, #BFS
+        ///Determine the perimeter of the island.
+        public int IslandPerimeter(int[][] grid)
+        {
+            int ans = 0;
+            int rowLen = grid.Length;
+            int colLen = grid[0].Length;
+            int row = -1;
+            int col = -1;
+            for(int i = 0; i < rowLen; i++)
+            {
+                for(int j = 0; j < colLen; j++)
+                {
+                    if(grid[i][j] == 1)
+                    {
+                        row = i;
+                        col = j;
+                        break;
+                    }
+                }
+                if (row != -1) break;
+            }
+            int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
+            bool[,] visit = new bool[rowLen, colLen];
+            Queue<int[]> queue= new Queue<int[]>();
+            queue.Enqueue(new int[] { row, col });
+            visit[row, col] = true;
+            while (queue.Count > 0)
+            {
+                var p = queue.Dequeue();
+                int count = 0;
+                foreach(var d in dxy4)
+                {
+                    var r = p[0] + d[0];
+                    var c = p[1] + d[1];
+                    if (r >= 0 && r < rowLen && c >= 0 && c < colLen && grid[r][c] == 1)
+                    {
+                        if(!visit[r, c])
+                        {
+                            visit[r, c] = true;
+                            queue.Enqueue(new int[] { r, c });
+                        }
+                    }
+                    else
+                    {
+                        count++;
+                    }
+                }
+                ans += count;
+            }
+            return ans;
+        }
+        /// 485. Max Consecutive Ones
         ///Given a binary array nums, return the maximum number of consecutive 1's in the array.
         public int FindMaxConsecutiveOnes(int[] nums)
         {

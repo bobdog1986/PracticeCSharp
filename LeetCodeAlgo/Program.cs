@@ -28,7 +28,7 @@ namespace LeetCodeAlgo
             var word2 = new string[] { "ABC", "ACB", "ABC", "ACB", "ACB" };
             var mat1 = new int[][]
             {
-                new int[]{0,1 },new int[]{1,0 },
+                new int[]{1,1 },new int[]{1,1 },
                 //new int[]{0  ,  1,    2,   3,   4,   5,   6,   7,   8,   9    },
             };
             var mat2 = new int[][] {
@@ -89,7 +89,7 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
             // anwser.GcdOfStrings(arr1);
-            var result = anwser.GcdOfStrings("ABC","ABCABC");
+            var result = anwser.IslandPerimeter(mat1);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
@@ -97,7 +97,7 @@ namespace LeetCodeAlgo
             //anwser.printListNode(result);
             //Console.WriteLine($"Result = {result}");
 
-            //Console.WriteLine(String.Join(",", result));
+            Console.WriteLine(String.Join(",", result));
             //Console.WriteLine(String.Join(",", arr1));
 
             //if (result.Count() > 0)

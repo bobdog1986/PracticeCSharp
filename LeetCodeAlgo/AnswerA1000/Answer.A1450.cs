@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.AnswerA1000
+namespace LeetCodeAlgo
 {
     public partial class Answer
     {
