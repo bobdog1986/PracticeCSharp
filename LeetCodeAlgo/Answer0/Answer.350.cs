@@ -228,16 +228,11 @@ namespace LeetCodeAlgo
         {
             if (string.IsNullOrEmpty(s))
                 return true;
-
             if (string.IsNullOrEmpty(t))
                 return false;
-
             int sLen = s.Length;
             int tLen = t.Length;
-
-            if (sLen > tLen)
-                return false;
-
+            if (sLen > tLen) return false;
             for (int i = 0; i <= tLen - sLen; i++)
             {
                 if (t[i] == s[0])
@@ -246,19 +241,12 @@ namespace LeetCodeAlgo
                     int k = i + 1;
                     while (j < s.Length && k <= tLen - (sLen - j))
                     {
-                        if (s[j] == t[k])
-                        {
-                            j++;
-                        }
-
+                        if (s[j] == t[k]) { j++; }
                         k++;
                     }
-
-                    if (j == s.Length)
-                        return true;
+                    if (j == s.Length) return true;
                 }
             }
-
             return false;
         }
     }

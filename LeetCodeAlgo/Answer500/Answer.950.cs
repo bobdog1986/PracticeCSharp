@@ -346,6 +346,27 @@ namespace LeetCodeAlgo
             return queue.Count == 0 ? loop : -1;
         }
 
+        ///995. Minimum Number of K Consecutive Bit Flips, #Greedy
+        ///Return the minimum number of k-bit flips required so that flip all 0s . If it is not possible, return -1.
+        public int MinKBitFlips(int[] nums, int k)
+        {
+            int n = nums.Length, flipped = 0, res = 0;
+            int[] isFlipped = new int[n];
+            for (int i = 0; i < nums.Length; ++i)
+            {
+                if (i >= k)
+                    flipped ^= isFlipped[i - k];
+                if (flipped == nums[i])
+                {
+                    if (i + k > nums.Length)
+                        return -1;
+                    isFlipped[i] = 1;
+                    flipped ^= 1;
+                    res++;
+                }
+            }
+            return res;
+        }
         /// 997. Find the Town Judge
         ///In a town, there are n people labeled from 1 to n. There is a rumor that one of these people is secretly the town judge.
         ///The town judge trusts nobody.Everybody (except for the town judge) trusts the town judge.

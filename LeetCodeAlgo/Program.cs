@@ -11,7 +11,7 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Anwser();
-            var arr1 = new int[] { 3, 2, 4, 1, 5 };
+            var arr1 = new int[] {0,0,0,1,0,1,1,0};
             var arr2 = new int[] { -1, 2 };
             int k = 2;
             var val1 = 15;
@@ -89,7 +89,7 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
             //anwser.WiggleSort(arr1);
-            var result = anwser.NumTimesAllBlue(arr1);
+            var result = anwser.MinKBitFlips(arr1,3);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
