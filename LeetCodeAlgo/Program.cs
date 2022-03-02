@@ -89,7 +89,7 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
             //anwser.WiggleSort(arr1);
-            var result = anwser.MinKBitFlips(arr1,3);
+            var result = anwser.IsInterleave("aabcc","dbbca","aadbbcbcac");
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");

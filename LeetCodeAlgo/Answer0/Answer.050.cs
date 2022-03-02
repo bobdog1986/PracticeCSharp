@@ -730,7 +730,7 @@ namespace LeetCodeAlgo
         }
         /// 67. Add Binary
         /// Given two binary strings a and b, return their sum as a binary string.
-        ///1 <= a.length, b.length <= 104, no leading zero
+        ///1 <= a.Length, b.Length <= 104, no leading zero
         public string AddBinary(string a, string b)
         {
             if (string.IsNullOrEmpty(a) && string.IsNullOrEmpty(b))
@@ -1563,7 +1563,7 @@ namespace LeetCodeAlgo
             return head1??head2;
         }
         /// 88. Merge Sorted Array
-        /// nums1.length = m + n, nums2.length == n , 0 <= m, n <= 200, 1 <= m + n <= 200
+        /// nums1.Length = m + n, nums2.Length == n , 0 <= m, n <= 200, 1 <= m + n <= 200
         public void Merge(int[] nums1, int m, int[] nums2, int n)
         {
             int[] cache=new int[m+n];
@@ -1710,7 +1710,7 @@ namespace LeetCodeAlgo
 
         /// 91. Decode Ways, #DP
         ///A message containing letters from A-Z can be encoded into numbers using the following mapping:
-        ///'A' -> "1", Z->26, 1 <= s.length <= 100
+        ///'A' -> "1", Z->26, 1 <= s.Length <= 100
         ///"AAJF" with the grouping (1 1 10 6)
         ///"KJF" with the grouping(11 10 6)
         public int NumDecodings(string s)
@@ -1903,7 +1903,54 @@ namespace LeetCodeAlgo
             return dp[n];
         }
 
-        ///98. Validate Binary Search Tree
+        ///97. Interleaving String, #DP
+        ///Given strings s1, s2, and s3, find whether s3 is formed by an interleaving of s1 and s2.
+        ///An interleaving of two strings s and t is a configuration where they are divided into non-empty substrings
+        public bool IsInterleave_DP(string s1, string s2, string s3)
+        {
+            if ((s1 == null || s1.Length == 0) && (s2 == null || s2.Length == 0))
+            {
+                return s3 == null || s3.Length == 0;
+            }
+            if (s1 == null || s1.Length == 0) { return s2==(s3); }
+            if (s2 == null || s2.Length == 0) { return s1==(s3); }
+            if (s1.Length + s2.Length != s3.Length) { return false; }
+
+            bool[,] dp= new bool[s1.Length + 1,s2.Length + 1];
+            dp[0,0] = true;
+
+            for (int i = 1; i < s1.Length; i++)
+            {
+                if (dp[i - 1,0] && s1[i - 1] == s3[i - 1])
+                {
+                    dp[i,0] = true;
+                }
+            }
+            for (int j = 1; j < s2.Length; j++)
+            {
+                if (dp[0,j - 1] && s2[j - 1] == s3[j - 1])
+                {
+                    dp[0,j] = true;
+                }
+            }
+            for (int i = 1; i < s1.Length; i++)
+            {
+                for (int j = 1; j < s2.Length; j++)
+                {
+                    if (dp[i - 1,j] && s1[i - 1] == s3[i + j - 1])
+                    {
+                        dp[i,j] = true;
+                    }
+                    else if (dp[i,j - 1] && s2[j - 1] == s3[i + j - 1])
+                    {
+                        dp[i,j] = true;
+                    }
+                }
+            }
+            return dp[s1.Length - 1,s2.Length - 1];
+        }
+
+        /// 98. Validate Binary Search Tree
         /// left.val<=Node.Val<=right.val
         public bool IsValidBST(TreeNode root)
         {
