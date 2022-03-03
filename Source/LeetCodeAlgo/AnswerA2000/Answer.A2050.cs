@@ -100,5 +100,18 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
+        ///2089. Find Target Indices After Sorting Array
+        public IList<int> TargetIndices(int[] nums, int target)
+        {
+            var ans=new List<int>();
+            Array.Sort(nums);
+            for(int i=0; i<nums.Length; i++)
+            {
+                if (nums[i] > target) break;
+                if (nums[i] == target) ans.Add(i);
+            }
+            return ans;
+        }
     }
 }
