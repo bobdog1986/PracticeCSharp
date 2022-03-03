@@ -140,5 +140,17 @@ namespace LeetCodeAlgo
 
             return list[0];
         }
+
+        ///1844. Replace All Digits with Characters
+        ///For every odd index i, you want to replace the digit s[i] with shift(s[i-1], s[i]).
+        public string ReplaceDigits(string s)
+        {
+            var arr = s.ToCharArray();
+            for(int i = 1; i < arr.Length; i += 2)
+            {
+                arr[i] = (char) (arr[i-1] + (arr[i]-'0'));
+            }
+            return new string(arr);
+        }
     }
 }
