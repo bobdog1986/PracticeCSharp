@@ -95,6 +95,22 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///693. Binary Number with Alternating Bits
+        ///Given a positive integer, check whether it has alternating bits, adjacent bits always have different values.
+        public bool HasAlternatingBits(int n)
+        {
+            bool last = (n & 1) == 0;
+            while (n > 0)
+            {
+                bool curr= (n & 1) == 1;
+                if (curr == last) return false;
+                last = curr;
+                n >>= 1;
+            }
+            return true;
+        }
+
+
         /// 695. Max Area of Island, #Graph, #DFS
         /// Return the maximum area of an island in grid. If there is no island, return 0.
         public int MaxAreaOfIsland(int[][] grid)
