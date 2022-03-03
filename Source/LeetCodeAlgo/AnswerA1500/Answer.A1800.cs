@@ -111,6 +111,18 @@ namespace LeetCodeAlgo
             sum -= max;
             return (int)(sum%1000000007);
         }
+        ///1822. Sign of the Product of an Array
+        ///Let product be the product of all values in the array nums. Return sign of (product).
+        public int ArraySign(int[] nums)
+        {
+            int negCount = 0;
+            foreach(var n in nums)
+            {
+                if (n == 0) return 0;
+                if (n < 0) negCount++;
+            }
+            return negCount % 2 == 0 ? 1 : -1;
+        }
         /// 1823. Find the Winner of the Circular Game
         public int FindTheWinner(int n, int k)
         {
