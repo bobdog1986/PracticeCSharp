@@ -11,10 +11,10 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Answer();
-            var arr1 = new int[] {0,0,0,1,0,1,1,0};
-            var arr2 = new int[] { -1, 2 };
+            var arr1 = new int[] {1,7,11};
+            var arr2 = new int[] { 2,4,6};
             int k = 2;
-            var val1 = 15;
+            var val1 = 3;
             var val2 = 100;
             ///uint uintVal =0b10000000_00000000_00000000_00000000;
             //var str1 = "())(((()m)(";
@@ -89,7 +89,7 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
             // anwser.GcdOfStrings(arr1);
-            var result = anwser.IslandPerimeter(mat1);
+            var result = anwser.KSmallestPairs(arr1,arr2,val1);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
@@ -97,14 +97,15 @@ namespace LeetCodeAlgo
             //anwser.printListNode(result);
             //Console.WriteLine($"Result = {result}");
 
-            Console.WriteLine(String.Join(",", result));
+            //Console.WriteLine(String.Join(",", result));
             //Console.WriteLine(String.Join(",", arr1));
 
-            //if (result.Count() > 0)
-            //    Console.WriteLine(String.Join("\r\n\r\n", result.Select(o => String.Join("\r\n", o))));
-            //    //Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
-            //else
-            //    Console.WriteLine("!!!Result count = 0");
+            if (result.Count() > 0)
+            {
+                //Console.WriteLine(String.Join("\r\n\r\n", result.Select(o => String.Join("\r\n", o))));
+                Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+            }
+            else Console.WriteLine("!!!Result count = 0");
 
             Console.WriteLine("=========Finish!========");
             Console.ReadLine();

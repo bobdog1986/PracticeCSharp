@@ -110,7 +110,37 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
-        ///374. Guess Number Higher or Lower, see GuessGame
+
+        /// 373. Find K Pairs with Smallest Sums, #Heap ,#Priority Queue
+        /// You are given two integer arrays nums1 and nums2 sorted in ascending order and an integer k.
+        ///Define a pair(u, v) which consists of one element from the first array and one element from the second array.
+        ///Return the k pairs (u1, v1), (u2, v2), ..., (uk, vk) with the smallest sums.
+        public IList<IList<int>> KSmallestPairs(int[] nums1, int[] nums2, int k)
+        {
+            int len1 = nums1.Length;
+            int len2 = nums2.Length;
+            var priorityQueue = new PriorityQueue<int[], int>();
+            for (int i = 0; i < len1; i++)
+            {
+                priorityQueue.Enqueue(new int[] {i ,0 }, nums1[i] + nums2[0]);
+            }
+            IList<IList<int>> ans = new List<IList<int>>();
+            while (ans.Count < k && priorityQueue.Count > 0)
+            {
+                var first = priorityQueue.Dequeue();
+                int i = first[0];
+                int j = first[1];
+                ans.Add(new List<int>() { nums1[i], nums2[j] });
+                if (++j < nums2.Length)
+                {
+                    priorityQueue.Enqueue(new int[] { i, j }, nums1[i] + nums2[j]);
+                }
+            }
+            return ans;
+        }
+        /// 374. Guess Number Higher or Lower, see GuessGame
+
+
 
         /// 376. Wiggle Subsequence, #DP
         ///A wiggle sequence is a sequence where the differences between numbers strictly alternate between positive and negative.
