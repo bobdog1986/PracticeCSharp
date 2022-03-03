@@ -23,6 +23,22 @@ namespace LeetCodeAlgo
             return k >= singleCount;
         }
 
+        ///1403. Minimum Subsequence in Non-Increasing Order
+        ///1 <= nums.length <= 500, 1 <= nums[i] <= 100
+        public IList<int> MinSubsequence(int[] nums)
+        {
+            Array.Sort(nums);
+            int total = nums.Sum();
+            var ans=new List<int>();
+            int sum = 0;
+            for(int i=nums.Length-1; i>=0; i--)
+            {
+                sum+=nums[i];
+                ans.Add(nums[i]);
+                if (sum > total - sum) break;
+            }
+            return ans;
+        }
         /// 1417. Reformat The String
         ///You are given an alphanumeric string s. Only lowercase English letters and digits.
         ///1 letter follow 1 digit , or reverse
