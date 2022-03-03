@@ -104,7 +104,33 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        ///1345. Jump Game IV
+        ///1331. Rank Transform of an Array
+        ///Given an array of integers arr, replace each element with its rank.
+        public int[] ArrayRankTransform(int[] arr)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach (var n in arr)
+            {
+                if (!dict.ContainsKey(n)) dict.Add(n, 0);
+                dict[n]++;
+            }
+            Dictionary<int, int> map = new Dictionary<int, int>();
+            var keys = dict.Keys.OrderBy(x => -x).ToList();
+            int rank = 1;
+            for (int i = keys.Count - 1; i >= 0; i--)
+            {
+                map.Add(keys[i], rank);
+                rank++;
+            }
+            for (int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = map[arr[i]];
+            }
+            return arr;
+        }
+
+
+        /// 1345. Jump Game IV
         ///Given an array of integers arr, you are initially positioned at the first index of the array.
         ///In one step you can jump from index i to index:
         ///i + 1 where: i + 1 < arr.length.
