@@ -105,5 +105,27 @@ namespace LeetCodeAlgo
                 seed++;
             }
         }
+
+        ///1779. Find Nearest Point That Has the Same X or Y Coordinate
+        public int NearestValidPoint(int x, int y, int[][] points)
+        {
+            int min = int.MaxValue;
+            int index = -1;
+            for (int i = 0; i < points.Length; i++)
+            {
+                var p = points[i];
+                if (p[0] == x || p[1] == y)
+                {
+                    var distance = Math.Abs(p[0] - x) + Math.Abs(p[1] - y);
+                    if (distance >= min) continue;
+                    else
+                    {
+                        min = distance;
+                        index = i;
+                    }
+                }
+            }
+            return index;
+        }
     }
 }
