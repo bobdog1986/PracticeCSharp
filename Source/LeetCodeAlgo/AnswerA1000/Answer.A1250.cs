@@ -60,7 +60,20 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
-        ///1288. Remove Covered Intervals
+        ///1281. Subtract the Product and Sum of Digits of an Integer
+        ///return the difference between the product of its digits and the sum of its digits.
+        public int SubtractProductAndSum(int n)
+        {
+            List<int> list=new List<int>();
+            while (n > 0)
+            {
+                list.Add(n % 10);
+                n /= 10;
+            }
+            return list.Aggregate((x, y) => x * y) - list.Aggregate((x, y) => x + y);
+        }
+
+        /// 1288. Remove Covered Intervals
         ///Given an array intervals where intervals[i] = [li, ri] represent the interval [li, ri),
         ///remove all intervals that are covered by another interval in the list.
         ///The interval [a, b) is covered by the interval [c, d) if and only if c <= a and b <= d.
