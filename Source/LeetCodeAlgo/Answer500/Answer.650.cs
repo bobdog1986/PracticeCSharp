@@ -61,7 +61,46 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///673. Number of Longest Increasing Subsequence - not understand
+        ///670. Maximum Swap
+        ///You can swap two digits at most once to get the maximum valued number. Return the max
+        public int MaximumSwap(int num)
+        {
+            List<int> list = new List<int>();
+            int n = num;
+            while (n > 0)
+            {
+                list.Add(n%10);
+                n /= 10;
+            }
+            if (list.Count > 1)
+            {
+                int start = list.Count - 1;
+                while (start > 0)
+                {
+                    var next=new List<int>();
+                    for(int i = 0; i <= start; i++)
+                        next.Add(list[i]);
+                    if (list[start] != next.Max()) break;
+                    start--;
+                }
+                if (start > 0)
+                {
+                    int end = 0;
+                    var next = new List<int>();
+                    for (int i = 0; i < start; i++)
+                        next.Add(list[i]);
+                    while (end < next.Count)
+                    {
+                        if(next[end] == next.Max()) break;
+                        end++;
+                    }
+                    num += (int)((list[end]-list[start]) * Math.Pow(10, start) - (list[end] - list[start]) * Math.Pow(10, end));
+                }
+            }
+            return num;
+        }
+
+        /// 673. Number of Longest Increasing Subsequence - not understand
         ///return the number of longest increasing subsequences. [1,3,5,4,7]->[1, 3, 4, 7] and [1, 3, 5, 7]. return 2
         public int FindNumberOfLIS(int[] nums)
         {
@@ -109,7 +148,6 @@ namespace LeetCodeAlgo
             }
             return true;
         }
-
 
         /// 695. Max Area of Island, #Graph, #DFS
         /// Return the maximum area of an island in grid. If there is no island, return 0.
