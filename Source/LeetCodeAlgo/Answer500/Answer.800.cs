@@ -109,6 +109,29 @@ namespace LeetCodeAlgo
             return true;
 
         }
+        ///848. Shifting Letters, #Prefix Sum
+        ///Now for each shifts[i] = x, we want to shift the first i + 1 letters of s, x times.
+        ///Return the final string after all such shifts to s are applied.
+        public string ShiftingLetters(string s, int[] shifts)
+        {
+            //cache the total shifts of s[i]
+            long[] arr=new long[s.Length];
+            //cache the sum from right to left, reduce time complexity from O(n^2) to O(n)
+            long sum = 0;
+            for(int i = shifts.Length-1; i >=0; i--)
+            {
+                sum += shifts[i];
+                arr[i] = sum;
+            }
+            var carr = s.ToCharArray();
+            for(int i=0;i< carr.Length; i++)
+            {
+                var val = carr[i] + arr[i] % 26;//mod of 26
+                if (val > 'z') val -= 26;
+                carr[i] = (char)(val);
+            }
+            return new string(carr);
+        }
         /// 849. Maximize Distance to Closest Person
         public int MaxDistToClosest(int[] seats)
         {
@@ -146,84 +169,7 @@ namespace LeetCodeAlgo
             return max;
         }
 
-        ///875. Koko Eating Bananas
-        ///There are n piles of bananas, the ith pile has piles[i] bananas.
-        ///The guards have gone and will come back in h hours.
-        ///Find min numb to eat all bananas in h hours. each time can only eat 1 index;
-        public int MinEatingSpeed(int[] piles, int h)
-        {
-            if (piles.Length == h)
-                return piles.Max();
 
-            int low = 1, high = 1000000000;
-            int mid = (low + high) / 2;
-            while (low <= high)
-            {
-                int sum = 0;
-                for (int i = 0; i < piles.Length; i++)
-                    sum += (int)Math.Ceiling(1.0 * piles[i] / mid);
-
-                if (sum > h)
-                    low = mid + 1;
-                else
-                    high = mid - 1;
-
-                mid = (low + high) / 2;
-            }
-            return low;
-        }
-
-        /// 876. Middle of the Linked List
-        public ListNode MiddleNode(ListNode head)
-        {
-            if (head == null || head.next == null)
-                return head;
-
-            var next = head.next;
-
-            int count = 1;
-            //List<int> nodes = new List<int>();
-            while (next != null)
-            {
-                count++;
-                //nodes.Add(head.val);
-                next = next.next;
-            }
-
-            int len = count / 2;
-
-            while (len > 0)
-            {
-                head = head.next;
-                len--;
-            }
-
-            return head;
-        }
-
-        ///878. Nth Magical Number, #Binary Search
-        ///A positive integer is magical if it is divisible by either a or b.
-        ///Given the three integers n, a, and b, return the nth magical number.
-        ///return it modulo 10^9 + 7. 1 <= n <= 10^9, 2 <= a, b <= 4 * 10^4
-        public int NthMagicalNumber(int n, int a, int b)
-        {
-            int mod = 1_000_000_007;
-            int c = a*b / getGcb(a,b);
-
-            long low = 0;
-            long high = (long)n * Math.Min(a, b);
-            //high will alway >=n, increase low and decrease high to the edge!
-            while (low < high)
-            {
-                long mid = low + (high - low) / 2;
-                if (mid / a + mid / b - mid / c < n)
-                    low = mid + 1;
-                else
-                    high = mid;
-            }
-
-            return (int)(low % mod);
-        }
 
     }
 }
