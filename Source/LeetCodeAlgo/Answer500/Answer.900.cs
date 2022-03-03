@@ -39,6 +39,21 @@ namespace LeetCodeAlgo
             return Math.Max(max, allSum - min);
         }
 
+        ///929. Unique Email Addresses
+        ///If you add periods '.' between some characters in the local name part of an email address, ignored
+        ///If you add a plus '+' in the local name, everything after the first plus sign will be ignored.
+        public int NumUniqueEmails(string[] emails)
+        {
+            HashSet<string> map = new HashSet<string>();
+            foreach(var email in emails)
+            {
+                var arr = email.Split("@");
+                var str0 = arr[0].Split("+")[0].Replace(".", "");//first str before '@', then trim all '.'
+                var str = str0 + "@" +arr[1];
+                if(!map.Contains(str))map.Add(str);
+            }
+            return map.Count;
+        }
 
         /// 931. Minimum Falling Path Sum
         /// Given an n x n array of integers matrix, return the minimum sum of any falling path through matrix.
