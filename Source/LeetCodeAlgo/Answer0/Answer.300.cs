@@ -245,7 +245,42 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///319. Bulb Switcher
+        ///318. Maximum Product of Word Lengths
+        ///return the max of length(word[i]) * length(word[j]) where the two words do not share common letters.
+        public int MaxProduct(string[] words)
+        {
+            int[][] matrix=new int[words.Length][];
+            for(int i=0; i<matrix.Length; i++)
+            {
+                int[] arr = new int[26];
+                foreach(var c in words[i])
+                    arr[c - 'a']++;
+                matrix[i] = arr;
+            }
+
+            int max = 0;
+            for(int i=0;i<words.Length-1; i++)
+            {
+                for(int j = i + 1; j < words.Length; j++)
+                {
+                    if (MaxProduct_CanProduct(matrix[i], matrix[j]))
+                        max = Math.Max(max, words[i].Length * words[j].Length);
+                }
+            }
+            return max;
+        }
+
+        public bool MaxProduct_CanProduct(int[] arr1, int[] arr2)
+        {
+            for(int i = 0; i < arr1.Length; i++)
+            {
+                if (arr1[i] > 0 && arr2[i] > 0) return false;
+            }
+            return true;
+        }
+
+
+        /// 319. Bulb Switcher
         public int BulbSwitch(int n)
         {
             int ans = 0;
