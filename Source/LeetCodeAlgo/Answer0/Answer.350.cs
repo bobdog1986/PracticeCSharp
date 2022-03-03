@@ -119,18 +119,23 @@ namespace LeetCodeAlgo
         {
             int len1 = nums1.Length;
             int len2 = nums2.Length;
+            //min heap, store indexes in nums1 and nums2, sort by nums1[i]+nums2[j]
             var priorityQueue = new PriorityQueue<int[], int>();
-            for (int i = 0; i < len1; i++)
+            for (int i = 0; i <Math.Min(len1,k); i++)
             {
+                //enqueue atmost Math.Min(len1,k) count of [i,0] combines, auto sorted by nums1[i] + nums2[0]
+                //{nums1[0],nums2[0]} always the first element
                 priorityQueue.Enqueue(new int[] {i ,0 }, nums1[i] + nums2[0]);
             }
             IList<IList<int>> ans = new List<IList<int>>();
-            while (ans.Count < k && priorityQueue.Count > 0)
+            while (k-- > 0 && priorityQueue.Count > 0)
             {
                 var first = priorityQueue.Dequeue();
                 int i = first[0];
                 int j = first[1];
+                //the first element must be {nums1[0],nums2[0]} , we add it to result
                 ans.Add(new List<int>() { nums1[i], nums2[j] });
+                //every time we add [i,j] to ans, then j=j+1, enqueue nums1[i]+nums2[j+1] if possible, so we will never miss any combines
                 if (++j < nums2.Length)
                 {
                     priorityQueue.Enqueue(new int[] { i, j }, nums1[i] + nums2[j]);

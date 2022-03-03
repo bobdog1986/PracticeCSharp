@@ -9,7 +9,32 @@ namespace LeetCodeAlgo
     public partial class Answer
     {
 
-        ///763. Partition Labels
+        ///762. Prime Number of Set Bits in Binary Representation
+        ///Return the count of numbers in range [left, right] having a prime number of set bits in binary representation.
+        public int CountPrimeSetBits(int left, int right)
+        {
+            int ans = 0;
+            HashSet<int> map=new HashSet<int>() { 2,3,5,7,11,13,17,19,23,29,31};
+            for(int i = left; i <= right; i++)
+            {
+                if (map.Contains(CountPrimeSetBits(i)))
+                    ans++;
+            }
+            return ans;
+        }
+
+        public int CountPrimeSetBits(int n)
+        {
+            int count = 0;
+            while (n > 0)
+            {
+                count += n & 1;
+                n >>= 1;
+            }
+            return count;
+        }
+
+        /// 763. Partition Labels
         ///s consists of lowercase English letters.
         public IList<int> PartitionLabels(string s)
         {

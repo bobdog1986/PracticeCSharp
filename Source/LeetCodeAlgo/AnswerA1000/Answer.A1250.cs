@@ -9,11 +9,10 @@ namespace LeetCodeAlgo
     public partial class Answer
     {
 
-        ///1254. Number of Closed Islands, #DFS
+        ///1254. Number of Closed Islands, #DFS, #Graph
         ///Given a 2D grid consists of 0s (land) and 1s (water).
         ///An island is a maximal 4-directionally connected group of 0s and
-        ///a closed island is an island totally (all left, top, right, bottom) surrounded by 1s.
-        ///Return the number of closed islands.
+        ///Return the number of islands.
         public int ClosedIsland(int[][] grid)
         {
             int ans = 0;
@@ -21,52 +20,42 @@ namespace LeetCodeAlgo
             int colLen = grid[0].Length;
             bool[,] visit = new bool[rowLen, colLen];
             int[][] dxy = new int[4][] { new int[] { -1, 0 }, new int[] { 1, 0 }, new int[] { 0, -1 }, new int[] { 0, 1 } };
-            List<int[]> points = new List<int[]>();
             for (int i = 1; i < rowLen - 1; i++)
             {
                 for (int j = 1; j < colLen - 1; j++)
                 {
-                    if (visit[i, j]) continue;
-                    if (grid[i][j] == 1) continue;
-
-                    bool isClose = true;
-                    points = new List<int[]>();
-                    points.Add(new int[] { i, j });
-                    while (points.Count > 0)
+                    if (grid[i][j] == 0 && !visit[i, j])
                     {
-                        List<int[]> nexts = new List<int[]>();
-                        foreach (var p in points)
+                        bool isClose = true;
+                        visit[i, j] = true;
+                        Queue<int[]> q = new Queue<int[]>();
+                        q.Enqueue(new int[] { i, j });
+                        while (q.Count > 0)
                         {
+                            var p = q.Dequeue();
                             var row = p[0];
                             var col = p[1];
                             if (row == 0 || row == rowLen - 1 || col == 0 || col == colLen - 1)
                             {
                                 isClose = false;
                             }
-                            if (visit[row, col]) continue;
-                            visit[row, col] = true;
                             if (grid[i][j] == 0)
                             {
                                 foreach (var d in dxy)
                                 {
                                     var r = row + d[0];
                                     var c = col + d[1];
-                                    if (r < 0 || r >= rowLen || c < 0 || c >= colLen)
+                                    if (r >= 0 && r < rowLen && c >= 0 && c < colLen && grid[r][c] == 0 && !visit[r, c])
                                     {
-                                        continue;
-                                    }
-                                    else
-                                    {
-                                        if (grid[r][c] == 0 && !visit[r, c])
-                                            nexts.Add(new int[] { r, c });
+                                        visit[r, c] = true;
+                                        q.Enqueue(new int[] { r, c });
                                     }
                                 }
                             }
                         }
-                        points = nexts;
+                        if (isClose)
+                            ans++;
                     }
-                    if (isClose)
-                        ans++;
                 }
             }
             return ans;
