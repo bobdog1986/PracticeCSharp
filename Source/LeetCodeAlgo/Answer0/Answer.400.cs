@@ -6,7 +6,27 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///402. Remove K Digits
+        ///400. Nth Digit
+        ///Given an integer n, return the nth digit of the infinite integer sequence [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...].
+        ///1 <= n <= 231 - 1
+        public int FindNthDigit(int n)
+        {
+            int len = 1, i = 1;
+            long range = 9;
+            while (n > len * range)
+            {
+                n -=(int)( len * range);
+                len++;
+                range *= 10;
+                i *= 10;
+            }
+
+            i += (n - 1) / len;
+            var s = i.ToString();
+            return (int)(s[(n - 1) % len]-'0');
+        }
+
+        /// 402. Remove K Digits
         ///a non-negative integer num, and an integer k, return the smallest possible integer after removing k digits from num.
         ///1 <= k <= num.length <= 105
         ///num consists of only digits.
