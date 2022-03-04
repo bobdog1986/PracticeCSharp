@@ -83,5 +83,33 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
+        ///1380. Lucky Numbers in a Matrix
+        ///A lucky number is an element of the matrix such that it is the minimum element in its row and maximum in its column.
+        ///1 <= n, m <= 50 , 1 <= matrix[i][j] <= 10^5.
+        public IList<int> LuckyNumbers(int[][] matrix)
+        {
+            var rowLen = matrix.Length;
+            var colLen=matrix[0].Length;
+            int[] minOfRows=new int[rowLen];
+            for(int i =0;i<rowLen;i++)
+                minOfRows[i]=int.MaxValue;
+            int[] maxOfCols=new int[colLen];
+            for(int i=0;i<rowLen;i++)
+                for(int j = 0; j < colLen; j++)
+                {
+                    minOfRows[i] = Math.Min(minOfRows[i], matrix[i][j]);
+                    maxOfCols[j] = Math.Max(maxOfCols[j], matrix[i][j]);
+                }
+            var ans=new List<int>();
+            for (int i = 0; i < rowLen; i++)
+                for (int j = 0; j < colLen; j++)
+                {
+                    if(matrix[i][j] == minOfRows[i] && matrix[i][j] == maxOfCols[j])
+                        ans.Add(matrix[i][j]);
+                }
+            return ans;
+        }
+
     }
 }
