@@ -111,5 +111,22 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///1394. Find Lucky Integer in an Array
+        ///Given an array of integers arr, a lucky integer is an integer that has a frequency in the array equal to its value.
+        ///Return the largest lucky integer in the array.If there is no lucky integer return -1.
+        public int FindLucky(int[] arr)
+        {
+            Dictionary<int,int> map = new Dictionary<int,int>();
+            foreach(var n in arr)
+            {
+                if (map.ContainsKey(n)) map[n]++;
+                else map.Add(n, 1);
+            }
+            var keys=map.Keys.OrderBy(x=>-x);
+            foreach(var key in keys)
+                if (map[key] == key) return key;
+            return -1;
+        }
+
     }
 }
