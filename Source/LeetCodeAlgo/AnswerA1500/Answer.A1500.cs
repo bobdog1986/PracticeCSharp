@@ -83,5 +83,16 @@ namespace LeetCodeAlgo
             if (diff % 2 == 0) return diff / 2 + (low % 2 == 1 ? 1 : 0);
             else return diff / 2 + 1;
         }
+
+        ///1528. Shuffle String
+        public string RestoreString(string s, int[] indices)
+        {
+            char[] arr = new char[indices.Length];
+            for (int i = 0; i < indices.Length; i++)
+            {
+                arr[indices[i]] = s[i];
+            }
+            return new string(arr);
+        }
     }
 }
