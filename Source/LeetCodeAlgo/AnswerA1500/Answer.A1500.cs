@@ -8,7 +8,17 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1512. Number of Good Pairs
+        ///1502. Can Make Arithmetic Progression From Sequence
+        ///A sequence of numbers is an arithmetic progression if the difference between any two consecutive elements is same.
+        public bool CanMakeArithmeticProgression(int[] arr)
+        {
+            Array.Sort(arr);
+            int diff = arr[1] - arr[0];
+            for (int i = 2; i < arr.Length; i++)
+                if (arr[i] - arr[i - 1] != diff) return false;
+            return true;
+        }
+        /// 1512. Number of Good Pairs
         ///Given an array of integers nums, return the number of good pairs.
         ///A pair(i, j) is called good if nums[i] == nums[j] and i<j.
         ///nums = [1,1,1,1], result =6;
