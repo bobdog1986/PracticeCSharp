@@ -8,7 +8,31 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///875. Koko Eating Bananas
+        ///859. Buddy Strings
+        ///return true if you can swap two letters in s so the result is equal to goal, otherwise, return false.
+        public bool BuddyStrings(string s, string goal)
+        {
+            if (s.Length != goal.Length) return false;
+            int[] arr1 = new int[26];
+            int[] arr2 = new int[26];
+            int diff = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] != goal[i]) diff++;
+                if (diff > 2) return false;
+                arr1[s[i] - 'a']++;
+                arr2[goal[i] - 'a']++;
+            }
+            bool len2 = false;
+            for (int i = 0; i < arr1.Length; i++)
+            {
+                if (arr1[i] != arr2[i]) return false;
+                if (arr1[i] >= 2) len2 = true;
+            }
+            if (diff == 0 && !len2) return false;
+            else return true;
+        }
+        /// 875. Koko Eating Bananas
         ///There are n piles of bananas, the ith pile has piles[i] bananas.
         ///The guards have gone and will come back in h hours.
         ///Find min numb to eat all bananas in h hours. each time can only eat 1 index;
