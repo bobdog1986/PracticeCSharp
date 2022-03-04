@@ -12,7 +12,25 @@ namespace LeetCodeAlgo
         {
             return num == 0 || num % 10 != 0;
         }
-        ///2148. Count Elements With Strictly Smaller and Greater Elements
+        ///2129. Capitalize the Title
+        /// Capitalize the string by changing the capitalization of each word such that:
+        ///If the length of the word is 1 or 2 letters, change all letters to lowercase.
+        ///Otherwise, change the first letter to uppercase and the remaining letters to lowercase.
+
+        public string CapitalizeTitle(string title)
+        {
+            var arr= title.Split(' ').Where(x => x.Length > 0).Select(x =>
+            {
+                if (x.Length <= 2) return x.ToLower();
+                else
+                {
+                    var str = x.ToLower();
+                    return str.Substring(0,1).ToUpper()+str.Substring(1);
+                }
+            });
+            return string.Join(" ", arr);
+        }
+        /// 2148. Count Elements With Strictly Smaller and Greater Elements
         ///return the number of elements that have both a strictly smaller and a strictly greater element appear in nums.
         ///-100000 <= nums[i] <= 100000
         public int CountElements(int[] nums)
