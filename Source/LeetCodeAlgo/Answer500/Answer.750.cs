@@ -216,5 +216,27 @@ namespace LeetCodeAlgo
 
             return ans;
         }
+
+        ///799. Champagne Tower , #DP
+        ///0 <= poured <= 10^9 , 0 <= query_glass <= query_row< 100
+        public double ChampagneTower(int poured, int query_row, int query_glass)
+        {
+            //from top to buttom
+            double[,] result = new double[101,101];
+            result[0,0] = poured;
+            for (int i = 0; i <= query_row; i++)
+            {
+                for (int j = 0; j <= i; j++)
+                {
+                    if (result[i,j] >= 1)
+                    {
+                        result[i + 1,j] += (result[i,j] - 1) / 2.0;
+                        result[i + 1,j + 1] += (result[i,j] - 1) / 2.0;
+                        result[i,j] = 1;
+                    }
+                }
+            }
+            return result[query_row,query_glass];
+        }
     }
 }
