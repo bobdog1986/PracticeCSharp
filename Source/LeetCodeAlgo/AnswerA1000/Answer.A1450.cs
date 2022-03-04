@@ -8,7 +8,17 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1464. Maximum Product of Two Elements in an Array
+        ///1455. Check If a Word Occurs As a Prefix of Any Word in a Sentence
+        public int IsPrefixOfWord(string sentence, string searchWord)
+        {
+            var arr=sentence.Split(' ');
+            for(int i=0; i<arr.Length; i++)
+            {
+                if (arr[i].StartsWith(searchWord)) return i+1;
+            }
+            return -1;
+        }
+        /// 1464. Maximum Product of Two Elements in an Array
         ///Return the maximum value of (nums[i]-1)*(nums[j]-1).
         ///2 <= nums.length <= 500, 1 <= nums[i] <= 10^3
         public int MaxProduct(int[] nums)
