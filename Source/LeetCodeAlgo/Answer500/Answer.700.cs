@@ -105,6 +105,11 @@ namespace LeetCodeAlgo
 
         ///707. Design Linked List, see MyLinkedList
 
+        ///709. To Lower Case
+        public string ToLowerCase(string s)
+        {
+            return s.ToLower();
+        }
 
         ///714. Best Time to Buy and Sell Stock with Transaction Fee
         ///https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/discuss/108870/Most-consistent-ways-of-dealing-with-the-series-of-stock-problems

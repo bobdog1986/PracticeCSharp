@@ -21,12 +21,9 @@ namespace LeetCodeAlgo
         {
             var arr= title.Split(' ').Where(x => x.Length > 0).Select(x =>
             {
-                if (x.Length <= 2) return x.ToLower();
-                else
-                {
-                    var str = x.ToLower();
-                    return str.Substring(0,1).ToUpper()+str.Substring(1);
-                }
+                var str = x.ToLower();
+                if (x.Length <= 2) return str;
+                return str.Substring(0, 1).ToUpper() + str.Substring(1);
             });
             return string.Join(" ", arr);
         }
