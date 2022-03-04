@@ -7,7 +7,7 @@ namespace LeetCodeAlgo
     public partial class Answer
     {
         /// 2119. A Number After a Double Reversal
-        ///1234 reverse to 4321, then again to 1234== origin 1234, return true
+        ///eg. 1234 reverse to 4321, then again to 1234== origin 1234, return true
         public bool IsSameAfterReversals(int num)
         {
             return num == 0 || num % 10 != 0;

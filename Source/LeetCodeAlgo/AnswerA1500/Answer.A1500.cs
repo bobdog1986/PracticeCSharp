@@ -12,8 +12,7 @@ namespace LeetCodeAlgo
         ///Given an array of integers nums, return the number of good pairs.
         ///A pair(i, j) is called good if nums[i] == nums[j] and i<j.
         ///nums = [1,1,1,1], result =6;
-        ///1 <= nums.length <= 100
-        ///1 <= nums[i] <= 100
+        ///1 <= nums.length <= 100, 1 <= nums[i] <= 100
         public int NumIdenticalPairs(int[] nums)
         {
             if (nums == null || nums.Length == 0)

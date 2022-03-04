@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
+using System.Text;
+using System.Linq;
 
 namespace LeetCodeAlgo
 {
@@ -43,87 +46,46 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///1091. Shortest Path in Binary Matrix
-        ///Given an n x n binary matrix grid, return the length of the shortest clear path in the matrix.
-        ///If there is no clear path, return -1.
-        ///8 direction
-        public int ShortestPathBinaryMatrix(int[][] grid)
+        ///1020. Number of Enclaves, #DFS, #Graph
+        ///Return the number of land cells in grid for which we cannot walk off the boundary of the grid in any number of moves.
+        public int NumEnclaves(int[][] grid)
         {
-            int len = grid.Length;
-
-            if (len == 1)
-                return grid[0][0] == 0 ? 1 : -1;
-
-            if (grid[0][0] == 1 || grid[len - 1][len - 1] == 1)
-                return -1;
-
-            int[][] visit = new int[len][];
-
-            for (int i = 0; i < len; i++)
-            {
-                visit[i] = new int[len];
-            }
-
-            int[][] dxy = new int[8][] {
-                new int[]{0,1}, new int[] {1, 0 },
-                new int[]{ 0,-1}, new int[] { -1, 0 },
-                new int[]{ 1,1 }, new int[]{ -1, -1 },
-                new int[]{ -1, 1 },new int[] { 1, -1 } };
-
-            List<int[]> list = new List<int[]>();
-
-            int step = 0;
-
-            list.Add(new int[] { 0, 0 });
-            visit[0][0] = 1;
-            step++;
-
-            while (list.Count > 0)
-            {
-                List<int[]> sub = new List<int[]>();
-
-                foreach (var cell in list)
+            int rowLen = grid.Length;
+            int colLen=grid[0].Length;
+            int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
+            int ans = 0;
+            bool[,] visit=new bool[rowLen, colLen];
+            for(int i = 0; i < rowLen; i++)
+                for(int j = 0; j < colLen; j++)
                 {
-                    int r = cell[0];
-                    int c = cell[1];
-
-                    foreach (var d in dxy)
+                    if (grid[i][j] == 0 || visit[i,j] ) continue;
+                    Queue<int[]> q=new Queue<int[]>();
+                    q.Enqueue(new int[] { i, j });
+                    visit[i, j] = true;
+                    int count = 1;
+                    bool ignore = false;
+                    while (q.Count > 0)
                     {
-                        int r1 = r + d[0];
-                        int c1 = c + d[1];
-
-                        if (r1 >= 0 && r1 <= len - 1 && c1 >= 0 && c1 <= len - 1)
+                        var p = q.Dequeue();
+                        if (p[0] == 0 || p[0] == rowLen - 1 || p[1] == 0 || p[1] == colLen - 1)
+                            ignore = true;
+                        foreach(var d in dxy4)
                         {
-                            if (r1 == len - 1 && c1 == len - 1)
-                                return step + 1;
-
-                            if (visit[r1][c1] == 1)
-                                continue;
-
-                            visit[r1][c1] = 1;
-
-                            if (grid[r1][c1] == 0)
+                            var r = p[0] + d[0];
+                            var c= p[1] + d[1];
+                            if(r>=0 && r<rowLen && c>=0 && c<colLen && grid[r][c]==1 && !visit[r, c])
                             {
-                                sub.Add(new int[] { r1, c1, });
+                                visit[r, c] = true;
+                                count++;
+                                q.Enqueue(new int[] { r, c });
                             }
-
                         }
-
-
                     }
+                    if (!ignore)
+                        ans += count;
                 }
-
-                list = sub;
-
-
-                step++;
-            }
-
-
-
-
-
-            return -1;
+            return ans;
         }
+
     }
 }
