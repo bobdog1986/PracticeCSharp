@@ -300,5 +300,29 @@ namespace LeetCodeAlgo
             total += expired - begin;
             return total;
         }
+        ///496. Next Greater Element I
+        ///Return an array ans of length nums1.length such that ans[i] is the next greater element as described above.
+        public int[] NextGreaterElement(int[] nums1, int[] nums2)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            for(int i = 0; i < nums2.Length; i++)
+                dict.Add(nums2[i], i);
+
+            int[] ans = new int[nums1.Length];
+            for(int i = 0; i < nums1.Length; i++)
+            {
+                int k = -1;
+                for (int j = dict[nums1[i]] + 1; j < nums2.Length; j++)
+                {
+                    if(nums2[j] > nums1[i])
+                    {
+                        k = nums2[j];
+                        break;
+                    }
+                }
+                ans[i] = k;
+            }
+            return ans;
+        }
     }
 }
