@@ -171,6 +171,18 @@ namespace LeetCodeAlgo
             }
             return ans.ToArray();
         }
+        ///976. Largest Perimeter Triangle
+        /// return the largest sum of perimeter of a triangle, formed from three of these lengths. Or 0 if impossible
+        public int LargestPerimeter(int[] nums)
+        {
+            Array.Sort(nums);
+            for(int i=nums.Length-1; i>=2; i--)
+            {
+                if(nums[i] < nums[i-1] + nums[i-2])
+                    return nums[i] + nums[i - 1] + nums[i - 2];
+            }
+            return 0;
+        }
         /// 977. Squares of a Sorted Array
         public int[] SortedSquares(int[] nums)
         {
