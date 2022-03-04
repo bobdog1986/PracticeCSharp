@@ -127,5 +127,26 @@ namespace LeetCodeAlgo
             }
             return index;
         }
+
+        ///1790. Check if One String Swap Can Make Strings Equal
+        ///Return true if make s2==s1 by performing at most one string swap(swap 2 chars in s2). Or return false.
+        public bool AreAlmostEqual(string s1, string s2)
+        {
+            int[] arr1 = new int[26];
+            int[] arr2 = new int[26];
+            int diff = 0;
+            for(int i=0; i < s1.Length; i++)
+            {
+                if (s1[i] != s2[i]) diff++;
+                if (diff >= 3) return false;
+                arr1[s1[i] - 'a']++;
+                arr2[s2[i] - 'a']++;
+            }
+            for(int i = 0; i < arr1.Length; i++)
+            {
+                if (arr1[i] != arr2[i]) return false;
+            }
+            return true;
+        }
     }
 }
