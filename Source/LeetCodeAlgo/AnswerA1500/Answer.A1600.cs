@@ -40,6 +40,28 @@ namespace LeetCodeAlgo
             return true;
         }
 
-
+        ///1636. Sort Array by Increasing Frequency
+        ///sort the array in increasing order based on the frequency of the values.
+        ///If multiple values have the same frequency, sort them in decreasing order.
+        public int[] FrequencySort(int[] nums)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach(var n in nums)
+            {
+                if(dict.ContainsKey(n))dict[n]++;
+                else dict.Add(n, 1);
+            }
+            var keys=dict.Keys.OrderBy(x=>dict[x]).ThenBy(x=>-x);
+            var res = new int[nums.Length];
+            int i = 0;
+            foreach(var key in keys)
+            {
+                while (dict[key]-- > 0)
+                {
+                    res[i++] = key;
+                }
+            }
+            return res;
+        }
     }
 }

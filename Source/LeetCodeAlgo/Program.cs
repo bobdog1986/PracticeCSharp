@@ -11,7 +11,7 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Answer();
-            var arr1 = new int[] {1};
+            var arr1 = new int[] {1,1,2,2,2,3};
             var arr2 = new int[] { 2,4,6};
             int k = 2;
             var val1 = 3;
@@ -89,7 +89,7 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
             // anwser.GcdOfStrings(arr1);
-            var result = anwser.ChampagneTower(25,6,1);
+            var result = anwser.FrequencySort(arr1);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
