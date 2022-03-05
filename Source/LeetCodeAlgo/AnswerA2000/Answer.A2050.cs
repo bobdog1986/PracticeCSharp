@@ -113,5 +113,37 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
+        ///2094. Finding 3-Digit Even Numbers
+        ///if the given digits were [1, 2, 3], integers 132 and 312 follow the requirements.
+        ///Return a sorted array of the unique integers.
+        public int[] FindEvenNumbers(int[] digits)
+        {
+            List<int> ans=new List<int>();
+            int[] arr=new int[10];
+            foreach (var d in digits)
+                arr[d]++;
+
+            for(int i = 100; i <= 998; i += 2)
+            {
+                int[] curr = new int[10];
+                curr[i / 100]++;
+                curr[i / 10 % 10]++;
+                curr[i % 10]++;
+                bool valid = true;
+                for(int j = 0; j < curr.Length; j++)
+                {
+                    if(curr[j] > arr[j])
+                    {
+                        valid = false;
+                        break;
+                    }
+                }
+                if(valid) ans.Add(i);
+            }
+            return ans.ToArray();
+        }
+
+
     }
 }
