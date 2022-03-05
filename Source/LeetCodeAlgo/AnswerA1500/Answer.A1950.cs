@@ -31,6 +31,31 @@ namespace LeetCodeAlgo
             }
             else return false;
         }
+        ///1957. Delete Characters to Make Fancy String
+        ///A fancy string is a string where no three consecutive characters are equal.
+        public string MakeFancyString(string s)
+        {
+            List<char> list = new List<char>();
+            char c = s[0];
+            int count = 1;
+            list.Add(c);
+            for(int i=1; i<s.Length; i++)
+            {
+                if(s[i] == c)
+                {
+                    count++;
+                }
+                else
+                {
+                    c = s[i];
+                    count = 1;
+                }
+                if (count <= 2) list.Add(c);
+            }
+            return new string(list.ToArray());
+        }
+
+
         /// 1961. Check If String Is a Prefix of Array
         ///Given a string s and an array of strings words, determine whether s is a prefix string of words.
         ///A string s is a prefix string of words if s can be made by concatenating the first k strings in words
