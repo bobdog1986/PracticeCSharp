@@ -106,7 +106,33 @@ namespace LeetCodeAlgo
             }
         }
 
-        ///1779. Find Nearest Point That Has the Same X or Y Coordinate
+        ///1768. Merge Strings Alternately
+        ///Merge the strings by adding letters in alternating order, starting with word1. 
+        public string MergeAlternately(string word1, string word2)
+        {
+            List<char> list = new List<char>();
+            int i = 0;
+            while (i < word1.Length && i < word2.Length)
+            {
+                list.Add(word1[i]);
+                list.Add(word2[i]);
+                i++;
+            }
+
+            if (i < word1.Length)
+            {
+                return new string(list.ToArray()) + word1.Substring(i);
+            }
+            else if (i < word2.Length)
+            {
+                return new string(list.ToArray()) + word2.Substring(i);
+            }
+            else
+            {
+                return new string(list.ToArray());
+            }
+        }
+        /// 1779. Find Nearest Point That Has the Same X or Y Coordinate
         public int NearestValidPoint(int x, int y, int[][] points)
         {
             int min = int.MaxValue;
