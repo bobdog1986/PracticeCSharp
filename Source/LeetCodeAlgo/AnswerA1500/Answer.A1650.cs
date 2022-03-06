@@ -97,7 +97,17 @@ namespace LeetCodeAlgo
             return accounts.Select(x => x.Sum()).Max();
         }
 
-        ///1694. Reformat Phone Number
+        ///1678. Goal Parser Interpretation
+        ///Given the string command, return the Goal Parser's interpretation of command.
+        public string Interpret(string command)
+        {
+            if (string.IsNullOrEmpty(command)) return string.Empty;
+            else if (command.StartsWith("G")) return "G" + Interpret(command.Substring(1));
+            else if (command.StartsWith("()")) return "o" + Interpret(command.Substring(2));
+            else if (command.StartsWith("(al)")) return "al" + Interpret(command.Substring(4));
+            else return command;
+        }
+        /// 1694. Reformat Phone Number
         ///number consists of digits, spaces ' ', and/or dashes '-'.
         ///Firstly, remove all spaces and dashes.
         ///Then, group the digits from left to right into blocks of length 3 until there are 4 or fewer digits.
