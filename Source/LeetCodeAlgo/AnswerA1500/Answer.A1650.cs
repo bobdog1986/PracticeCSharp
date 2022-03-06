@@ -107,6 +107,31 @@ namespace LeetCodeAlgo
             else if (command.StartsWith("(al)")) return "al" + Interpret(command.Substring(4));
             else return command;
         }
+        ///1684. Count the Number of Consistent Strings
+        ///Return the number of consistent strings in the array words.
+        public int CountConsistentStrings(string allowed, string[] words)
+        {
+            HashSet<char> map = new HashSet<char>();
+            foreach(var c in allowed)
+                if (!map.Contains(c)) map.Add(c);
+
+            int res = 0;
+            foreach(var word in words)
+            {
+                bool valid = true;
+                foreach(var w in word)
+                {
+                    if (!map.Contains(w))
+                    {
+                        valid = false;
+                        break;
+                    }
+                }
+                if(valid) res++;
+            }
+            return res;
+        }
+
         /// 1694. Reformat Phone Number
         ///number consists of digits, spaces ' ', and/or dashes '-'.
         ///Firstly, remove all spaces and dashes.
