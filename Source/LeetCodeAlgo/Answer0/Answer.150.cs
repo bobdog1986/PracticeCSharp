@@ -476,7 +476,7 @@ namespace LeetCodeAlgo
             return (int)count;
         }
 
-        ///198. House Robber, cannot rob adjacent houses
+        /// 198. House Robber, cannot rob adjacent houses, #DP
         ///The number of nodes in the tree is in the range [0, 100].
         public int Rob_198(int[] nums)
         {

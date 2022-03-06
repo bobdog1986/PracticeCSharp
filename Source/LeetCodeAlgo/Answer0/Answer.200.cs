@@ -284,7 +284,20 @@ namespace LeetCodeAlgo
         }
         /// 211. Design Add and Search Words Data Structure, see WordDictionary
 
-        /// 213. House Robber II
+        ///212. Word Search II
+        ///Given an m x n board of characters and a list of strings words, return all words on the board.
+        ///Each word must be constructed from letters of sequentially adjacent cells,
+        ///where adjacent cells are horizontally or vertically neighboring.
+        ///The same letter cell may not be used more than once in a word.
+        public IList<string> FindWords(char[][] board, string[] words)
+        {
+            return null;
+        }
+
+
+
+
+        /// 213. House Robber II, #DP
         ///All houses at this place are arranged in a circle. N-1 is next to 0
         public int Rob(int[] nums)
         {

@@ -199,5 +199,31 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///1295. Find Numbers with Even Number of Digits
+        ///Given an array nums of integers, return how many of them contain an even number of digits.
+        public int FindNumbers(int[] nums)
+        {
+            int res = 0;
+            foreach(var n in nums)
+                if (FindNumbers_isEvenDigit(n)) res++;
+            return res;
+        }
+
+        public bool FindNumbers_isEvenDigit(int n)
+        {
+            while (n > 0)
+            {
+                if (n >= 100)
+                {
+                    n /= 100;
+                }
+                else
+                {
+                    if (n < 10) return false;
+                    else return true;
+                }
+            }
+            return true;
+        }
     }
 }

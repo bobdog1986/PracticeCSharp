@@ -200,6 +200,16 @@ namespace LeetCodeAlgo
             return dp.Last();
         }
 
+        ///378. Kth Smallest Element in a Sorted Matrix
+        ///Given an n x n matrix where each of the rows and columns is sorted in ascending order,
+        ///return the kth smallest element in the matrix. O(n^2)
+        public int KthSmallest(int[][] matrix, int k)
+        {
+            return 0;
+        }
+
+
+
         /// 380. Insert Delete GetRandom O(1), see RandomizedSet
 
         ///383. Ransom Note
