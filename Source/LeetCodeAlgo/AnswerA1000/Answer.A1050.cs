@@ -64,7 +64,23 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        ///1091. Shortest Path in Binary Matrix, #Graph, #BFS
+        ///1089. Duplicate Zeros
+        ///Given a fixed-length integer array arr, duplicate each occurrence of zero, shifting the remaining elements to the right.
+        public void DuplicateZeros(int[] arr)
+        {
+            int n = arr.Length;
+            int[] temp = new int[n];
+            int j = 0;
+            for (int i = 0; i < n&&j<n; i++)
+            {
+                temp[j++] = arr[i];
+                if (arr[i] == 0&&j<n)
+                    temp[j++] = arr[i];
+            }
+            for (int i = 0; i < n; i++)
+                arr[i] = temp[i];
+        }
+        /// 1091. Shortest Path in Binary Matrix, #Graph, #BFS
         ///Given an n x n binary matrix grid, return the length of the shortest clear path in the matrix.
         ///If there is no clear path, return -1. 8 direction
         public int ShortestPathBinaryMatrix(int[][] grid)
