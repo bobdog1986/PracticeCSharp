@@ -8,7 +8,27 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1365. How Many Numbers Are Smaller Than the Current Number
+        ///1359. Count All Valid Pickup and Delivery Options, #DP
+        ///Given n orders, each order consist in pickup and delivery services.
+        ///Count all valid pickup/delivery possible sequences such that delivery(i) is always after of pickup(i).
+        ///Since the answer may be too large, return it modulo 10^9 + 7.
+        public int CountOrders(int n)
+        {
+            if (n == 1) return 1;
+            long dp = 1;
+            long mod = 10_0000_0007;
+            int i = 2;
+            while (i <= n)
+            {
+                dp *= (i * (2 * i - 1));
+                dp %= mod;
+                i++;
+            }
+            return (int)dp;
+        }
+
+
+        /// 1365. How Many Numbers Are Smaller Than the Current Number
         ///for each nums[i] find out how many numbers in the array are smaller than it.
         ///0 <= nums[i] <= 100, 2 <= nums.length <= 500
         public int[] SmallerNumbersThanCurrent(int[] nums)
