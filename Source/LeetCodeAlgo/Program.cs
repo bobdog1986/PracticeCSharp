@@ -35,6 +35,12 @@ namespace LeetCodeAlgo
                 //new int[] { 3, 9 },   new int[]{7, 12},  new int[]{3, 8},
                 new int[] { 1,2 },   new int[]{3,5},  new int[]{6,7},new int[]{8,10},new int[]{12,16}
             };
+            var grid0 = new char[][]
+            {
+                new char[]{'+', '+', '+' },new char[]{'.', '.', '.' },new char[]{ '+', '+', '+' }
+            };
+
+
             var grid1 = new char[][]
             {
                 //new char[]{ 'X', 'O','X','X'},
@@ -89,7 +95,7 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
             // anwser.GcdOfStrings(arr1);
-            var result = anwser.CheckStraightLine(mat1);
+            var result = anwser.NearestExit(grid0,new int[] { 1,0});
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");

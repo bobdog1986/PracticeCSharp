@@ -99,7 +99,7 @@ namespace LeetCodeAlgo
         {
             List<int[]> list1 = new List<int[]>();
             List<int[]> list2 = new List<int[]>();
-            int[][] dxy = new int[4][] { new int[] { -1, 0 }, new int[] { 1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 } };
+            int[][] dxy4 = new int[4][] { new int[] { -1, 0 }, new int[] { 1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 } };
             for (int i = 0; i < grid.Length; i++)
             {
                 for (int j = 0; j < grid[i].Length; j++)
@@ -114,7 +114,7 @@ namespace LeetCodeAlgo
                         List<int[]> nexts = new List<int[]>();
                         foreach(var v in visits)
                         {
-                            foreach (var d in dxy)
+                            foreach (var d in dxy4)
                             {
                                 int r = v[0] + d[0];
                                 int c = v[1] + d[1];

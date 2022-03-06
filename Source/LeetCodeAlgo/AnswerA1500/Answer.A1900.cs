@@ -107,5 +107,41 @@ namespace LeetCodeAlgo
             }
 
         }
+
+        ///1926. Nearest Exit from Entrance in Maze, #Graph, #BFS
+        ///Return the number of steps in the shortest path from the entrance to the nearest exit, or -1 if no such path exists.
+        public int NearestExit(char[][] maze, int[] entrance)
+        {
+            int rowLen = maze.Length;
+            int colLen = maze[0].Length;
+            int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
+            bool[,] visit = new bool[rowLen, colLen];
+
+            List<int[]> list = new List<int[]>() { entrance };
+            visit[entrance[0], entrance[1]] = true;
+            int step = 1;
+            while (list.Count > 0)
+            {
+                List<int[]> next = new List<int[]>();
+                foreach(var p in list)
+                {
+                    if (maze[p[0]][p[1]] == '+') continue;
+                    foreach(var d in dxy4)
+                    {
+                        var r = p[0] + d[0];
+                        var c= p[1] + d[1];
+                        if (r >= 0 && r < rowLen && c >= 0 && c < colLen && maze[r][c] == '.' && !visit[r, c])
+                        {
+                            if (r == 0 || r == rowLen - 1 || c == 0 || c == colLen - 1) return step;
+                            visit[r, c] = true;
+                            next.Add(new int[] { r, c });
+                        }
+                    }
+                }
+                step++;
+                list = next;
+            }
+            return -1;
+        }
     }
 }

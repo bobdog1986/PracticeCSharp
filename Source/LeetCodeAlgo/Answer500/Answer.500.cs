@@ -184,188 +184,56 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        /// 542. 01 Matrix
+        /// 542. 01 Matrix, #Graph, #BFS
         /// Given an m x n binary matrix mat, return the distance of the nearest 0 for each cell.
         /// The distance between two adjacent cells is 1.
         public int[][] UpdateMatrix(int[][] mat)
         {
             int rowLen = mat.Length;
             int colLen = mat[0].Length;
-
-            int[][] result = new int[rowLen][];
+            int[][] res = new int[rowLen][];
             for (int i = 0; i < rowLen; i++)
-            {
-                result[i] = new int[colLen];
-            }
-
-            //init every cell as max value, assuming the only 0 at furthest corner cell
+                res[i] = new int[colLen];
+            int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
+            Queue<int[]> q = new Queue<int[]>();
             for (int i = 0; i < rowLen; i++)
             {
                 for (int j = 0; j < colLen; j++)
                 {
-                    result[i][j] = Math.Max(i, rowLen - i - 1) + Math.Max(j, colLen - j - 1);
-                }
-            }
-
-            //left-top to right-bottom
-            int MAX_DISTANCE = (rowLen - 1) + (colLen - 1);
-
-            //dp value
-            int distance;
-
-            //loop rows first, forward sequence then backward
-            for (int r = 0; r < rowLen; r++)
-            {
-                if (colLen == 1)
-                    break;
-
-                distance = MAX_DISTANCE;
-                for (int c = 0; c < colLen; c++)
-                {
-                    if (mat[r][c] == 0)
+                    if (mat[i][j] == 0)
                     {
-                        distance = 0;
+                        res[i][j] = 0;
+                        q.Enqueue(new int[] { i, j });
                     }
                     else
                     {
-                        if (distance != MAX_DISTANCE)
+                        res[i][j] = Math.Max(i, rowLen - i - 1) + Math.Max(j, colLen - j - 1);
+                    }
+                }
+            }
+            int step = 1;
+            bool[,] visit = new bool[rowLen, colLen];
+            while (q.Count > 0)
+            {
+                int size = q.Count;
+                while (size-- > 0)
+                {
+                    var p = q.Dequeue();
+                    foreach(var d in dxy4)
+                    {
+                        var r=p[0] + d[0];
+                        var c=p[1] + d[1];
+                        if(r>=0 && r<rowLen && c>=0 && c<colLen && !visit[r,c] && mat[r][c] == 1)
                         {
-                            distance++;
+                            visit[r, c] = true;
+                            res[r][c] = step;
+                            q.Enqueue(new int[] { r, c });
                         }
                     }
-                    result[r][c] = Math.Min(result[r][c], distance);
                 }
-
-                distance = MAX_DISTANCE;
-                for (int c = colLen - 1; c >= 0; c--)
-                {
-                    if (mat[r][c] == 0)
-                    {
-                        distance = 0;
-                    }
-                    else
-                    {
-                        if (distance != MAX_DISTANCE)
-                        {
-                            distance++;
-                        }
-                    }
-                    result[r][c] = Math.Min(result[r][c], distance);
-                }
+                step++;
             }
-
-            //then loop cols
-            for (int c = 0; c < colLen; c++)
-            {
-                if (rowLen == 1)
-                    break;
-
-                distance = MAX_DISTANCE;
-                for (int r = 0; r < rowLen; r++)
-                {
-                    if (mat[r][c] == 0)
-                    {
-                        distance = 0;
-                    }
-                    else
-                    {
-                        if (distance != MAX_DISTANCE)
-                        {
-                            distance++;
-                        }
-                    }
-                    result[r][c] = Math.Min(result[r][c], distance);
-                }
-
-                distance = MAX_DISTANCE;
-                for (int r = rowLen - 1; r >= 0; r--)
-                {
-                    if (mat[r][c] == 0)
-                    {
-                        distance = 0;
-                    }
-                    else
-                    {
-                        if (distance != MAX_DISTANCE)
-                        {
-                            distance++;
-                        }
-                    }
-                    result[r][c] = Math.Min(result[r][c], distance);
-                }
-            }
-
-            if (rowLen == 1 || colLen == 1)
-                return result;
-
-            //every cell value is min of itself and all adjacents(left,right,top,bottom)
-            for (int i = 0; i < rowLen; i++)
-            {
-                for (int j = 0; j < colLen; j++)
-                {
-                    if (j > 0)
-                    {
-                        result[i][j] = Math.Min(result[i][j], result[i][j - 1] + 1);
-                    }
-
-                    if (j < colLen - 1)
-                    {
-                        result[i][j] = Math.Min(result[i][j], result[i][j + 1] + 1);
-                    }
-
-                    if (i > 0)
-                    {
-                        result[i][j] = Math.Min(result[i][j], result[i - 1][j] + 1);
-                    }
-
-                    if (i < rowLen - 1)
-                    {
-                        result[i][j] = Math.Min(result[i][j], result[i + 1][j] + 1);
-                    }
-                }
-            }
-
-            return result;
-        }
-
-        public int[] UpdateMatrixRow(int[] data)
-        {
-            if (data == null)
-                return null;
-            if (data.Length == 0)
-                return data;
-
-            int[] result = new int[data.Length];
-
-            int left = 0;
-            for (int i = 0; i < data.Length; i++)
-            {
-                if (data[i] == 0)
-                {
-                    left = 0;
-                }
-                else
-                {
-                    left++;
-                }
-                result[i] = left;
-            }
-
-            int right = 0;
-            for (int i = data.Length - 1; i >= 0; i--)
-            {
-                if (data[i] == 0)
-                {
-                    right = 0;
-                }
-                else
-                {
-                    right++;
-                }
-                result[i] = Math.Min(result[i], right);
-            }
-
-            return result;
+            return res;
         }
 
         ///547. Number of Provinces, #DFS
