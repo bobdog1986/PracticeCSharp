@@ -102,6 +102,8 @@ namespace LeetCodeAlgo
                 return 1;
             if (m % n == 0)
                 return n;
+            if (n > m)
+                return getGcb(n, m);
 
             int remainder = m % n;
             m = n;
