@@ -124,5 +124,17 @@ namespace LeetCodeAlgo
             }
             return String.Join("", arr);
         }
+
+        ///1588. Sum of All Odd Length Subarrays
+        public int SumOddLengthSubarrays(int[] arr)
+        {
+            int res = 0, n = arr.Length;
+            for (int i = 0; i < n; ++i)
+            {
+                var count= ((i + 1) * (n - i) + 1) / 2;
+                res += count * arr[i];
+            }
+            return res;
+        }
     }
 }
