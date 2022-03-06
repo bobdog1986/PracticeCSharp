@@ -216,7 +216,91 @@ namespace LeetCodeAlgo
             return c - '0';
         }
 
-        ///421. Maximum XOR of Two Numbers in an Array
+        ///417. Pacific Atlantic Water Flow. #Graph, #BFS
+        ///Return a 2D list where result[i] = [ri, ci] denotes that rain water can flow to both the Pacific and Atlantic.
+        public IList<IList<int>> PacificAtlantic(int[][] heights)
+        {
+            var res=new List<IList<int>>();
+            int rowLen = heights.Length;
+            int colLen=heights[0].Length;
+            int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
+            bool[,] visitPacific = new bool[rowLen, colLen];//store all cells that can flow to Pacific
+            Queue<int[]> q1=new Queue<int[]>();
+            //add seed cells of Pacific
+            for (int i=0; i<rowLen; i++)
+            {
+                if (i == 0)
+                {
+                    for(int j=0;j<colLen; j++)
+                    {
+                        q1.Enqueue(new int[] { i, j });
+                        visitPacific[i, j] = true;
+                    }
+                }
+                else
+                {
+                    q1.Enqueue(new int[] { i, 0 });
+                    visitPacific[i, 0] = true;
+                }
+            }
+
+            while (q1.Count > 0)
+            {
+                var p=q1.Dequeue();
+                foreach(var d in dxy4)
+                {
+                    var r=p[0]+ d[0];
+                    var c = p[1] + d[1];
+                    if(r>=0 && r<rowLen && c>=0 &&c<colLen && !visitPacific[r, c] && heights[r][c] >= heights[p[0]][p[1]])
+                    {
+                        visitPacific[r, c] = true;
+                        q1.Enqueue(new int[] { r, c });
+                    }
+                }
+            }
+
+            bool[,] visitAtlantic = new bool[rowLen, colLen];//store all cells that can flow to Atlantic
+            Queue<int[]> atlanticQ = new Queue<int[]>();
+            //add seed cells of Atlantic
+            for (int i = 0; i < rowLen; i++)
+            {
+                if (i == rowLen-1)
+                {
+                    for (int j = 0; j < colLen; j++)
+                    {
+                        atlanticQ.Enqueue(new int[] { i, j });
+                        visitAtlantic[i, j] = true;
+                    }
+                }
+                else
+                {
+                    atlanticQ.Enqueue(new int[] { i, colLen-1 });
+                    visitAtlantic[i, colLen - 1] = true;
+                }
+            }
+            while (atlanticQ.Count > 0)
+            {
+                var p = atlanticQ.Dequeue();
+                if(visitPacific[p[0], p[1]])
+                {
+                    res.Add(new List<int>() { p[0], p[1] });
+                }
+                foreach (var d in dxy4)
+                {
+                    var r = p[0] + d[0];
+                    var c = p[1] + d[1];
+                    if (r >= 0 && r < rowLen && c >= 0 && c < colLen&& !visitAtlantic[r, c] && heights[r][c] >= heights[p[0]][p[1]])
+                    {
+                        visitAtlantic[r, c] = true;
+                        atlanticQ.Enqueue(new int[] { r, c });
+                    }
+                }
+            }
+            return res;
+        }
+
+
+        /// 421. Maximum XOR of Two Numbers in an Array
         ///return the maximum result of nums[i] XOR nums[j], where 0 <= i <= j < n.
         ///1 <= nums.length <= 2 * 10^5, 0 <= nums[i] <= 2^31 - 1
         public int FindMaximumXOR(int[] nums)
