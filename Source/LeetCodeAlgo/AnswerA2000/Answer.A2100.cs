@@ -27,6 +27,29 @@ namespace LeetCodeAlgo
             });
             return string.Join(" ", arr);
         }
+        ///2133. Check if Every Row and Column Contains All Numbers
+        ///An n x n matrix is valid if every row and every column contains all the integers from 1 to n (inclusive).
+        ///Given an n x n integer matrix matrix, return true if the matrix is valid. Otherwise, return false.
+        public bool CheckValid(int[][] matrix)
+        {
+            int rowLen = matrix.Length;
+            int colLen=matrix[0].Length;
+            bool[,] colVisitMatrix=new bool[rowLen,colLen];
+            for(int i=0;i<rowLen; i++)
+            {
+                bool[] rowVisit=new bool[rowLen];
+                for(int j = 0; j < colLen; j++)
+                {
+                    if (colVisitMatrix[j, matrix[i][j] - 1]) return false;
+                    colVisitMatrix[j, matrix[i][j] - 1] = true;
+
+                    if (rowVisit[matrix[i][j]-1]) return false;
+                    rowVisit[matrix[i][j]-1] =true;
+                }
+            }
+            return true;
+        }
+
         /// 2148. Count Elements With Strictly Smaller and Greater Elements
         ///return the number of elements that have both a strictly smaller and a strictly greater element appear in nums.
         ///-100000 <= nums[i] <= 100000

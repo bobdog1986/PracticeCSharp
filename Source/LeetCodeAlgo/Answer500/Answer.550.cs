@@ -74,27 +74,23 @@ namespace LeetCodeAlgo
             return ans;
         }
         /// 566. Reshape the Matrix
+        /// In MATLAB, reshape an m x n matrix into a new one with a different size r x c keeping its original data.
         public int[][] MatrixReshape(int[][] mat, int r, int c)
         {
-            int row = mat.Length;
-            int col = mat[0].Length;
-
-            if (row * col != r * c)
-                return mat;
-
-            List<int[]> list = new List<int[]>();
+            int rowLen = mat.Length;
+            int colLen = mat[0].Length;
+            if (rowLen * colLen != r * c) return mat;
+            int[][] res = new int[r][];
             for (int i = 0; i < r; i++)
             {
-                var list2 = new List<int>();
+                res[i] = new int[c];
                 for (int j = 0; j < c; j++)
                 {
                     int index = i * c + j;
-                    list2.Add(mat[index / col][index % col]);
+                    res[i][j] = mat[index / colLen][index % colLen];
                 }
-                list.Add(list2.ToArray());
             }
-
-            return list.ToArray();
+            return res;
         }
 
         ///567. Permutation in String
