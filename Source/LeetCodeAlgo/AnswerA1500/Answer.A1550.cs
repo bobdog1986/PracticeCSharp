@@ -99,7 +99,21 @@ namespace LeetCodeAlgo
             return max;
         }
 
-        ///1576. Replace All ?'s to Avoid Consecutive Repeating Characters
+        ///1572. Matrix Diagonal Sum
+        ///Given a square matrix mat, return the sum of the matrix diagonals.
+        public int DiagonalSum(int[][] mat)
+        {
+            int res = 0;
+            for(int i = 0; i < mat.Length; i++)
+            {
+                res += mat[i][i];
+                res += mat[i][mat.Length - 1 - i];
+            }
+            if(mat.Length>1 && mat.Length%2==1)
+                res-=mat[mat.Length/2][mat.Length / 2];
+            return res;
+        }
+        /// 1576. Replace All ?'s to Avoid Consecutive Repeating Characters
         /// replace ? to not same as previous or next char
         public string ModifyString(string s)
         {
