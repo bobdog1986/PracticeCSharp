@@ -300,22 +300,124 @@ namespace LeetCodeAlgo
         }
 
 
-        /// 421. Maximum XOR of Two Numbers in an Array
+        /// 421. Maximum XOR of Two Numbers in an Array, #Trie
         ///return the maximum result of nums[i] XOR nums[j], where 0 <= i <= j < n.
         ///1 <= nums.length <= 2 * 10^5, 0 <= nums[i] <= 2^31 - 1
+        public int FindMaximumXOR1(int[] nums)
+        {
+            int maxResult = 0;
+            int mask = 0;
+            /*The maxResult is a record of the largest XOR we got so far. if it's 11100 at i = 2, it means
+            before we reach the last two bits, 11100 is the biggest XOR we have, and we're going to explore
+            whether we can get another two '1's and put them into maxResult
+
+            This is a greedy part, since we're looking for the largest XOR, we start
+            from the very begining, aka, the 31st postition of bits. */
+            for (int i = 31; i >= 0; i--)
+            {
+
+                //The mask will grow like  100..000 , 110..000, 111..000,  then 1111...111
+                //for each iteration, we only care about the left parts
+                mask = mask | (1 << i);
+
+                HashSet<int> set = new HashSet<int>();
+                foreach (int num in nums)
+                {
+                    /* we only care about the left parts, for example, if i = 2, then we have
+                    {1100, 1000, 0100, 0000} from {1110, 1011, 0111, 0010}*/
+                    int leftPartOfNum = num & mask;
+                    set.Add(leftPartOfNum);
+                }
+
+                // if i = 1 and before this iteration, the maxResult we have now is 1100,
+                // my wish is the maxResult will grow to 1110, so I will try to find a candidate
+                // which can give me the greedyTry;
+                int greedyTry = maxResult | (1 << i);
+
+                foreach (int leftPartOfNum in set)
+                {
+                    //This is the most tricky part, coming from a fact that if a ^ b = c, then a ^ c = b;
+                    // now we have the 'c', which is greedyTry, and we have the 'a', which is leftPartOfNum
+                    // If we hope the formula a ^ b = c to be valid, then we need the b,
+                    // and to get b, we need a ^ c, if a ^ c exisited in our set, then we're good to go
+                    int anotherNum = leftPartOfNum ^ greedyTry;
+                    if (set.Contains(anotherNum))
+                    {
+                        maxResult = greedyTry;
+                        break;
+                    }
+                }
+
+                // If unfortunately, we didn't get the greedyTry, we still have our max,
+                // So after this iteration, the max will stay at 1100.
+            }
+
+            return maxResult;
+        }
+
         public int FindMaximumXOR(int[] nums)
         {
-            int ans = 0;
+            Trie421 trie = new Trie421();
+            trie.insert(nums);
 
-            for (int i = 0; i < nums.Length - 1; i++)
+            int max = 0;
+
+            foreach (int num in nums)
             {
-                for (int j = i + 1; j < nums.Length; j++)
+                var curr = trie.root;
+                int currSum = 0;
+                for (int i = 31; i >= 0; i--)
                 {
-                    ans = Math.Max(ans, nums[i] ^ nums[j]);
+                    int requiredBit = 1 - ((num >> i) & 1); // if A[i] is 0, we need 1 and if A[i] is 1, we need 0. Thus, 1 - A[i]
+                    if (curr.children.ContainsKey(requiredBit))
+                    {
+                        currSum |= (1 << i); // set ith bit of curr result
+                        curr = curr.children[requiredBit];
+                    }
+                    else
+                    {
+                        curr = curr.children[1 - requiredBit];
+                    }
+                }
+                max = Math.Max(max, currSum); // get max number
+            }
+            return max;
+        }
+
+        public class Node421
+        {
+            public Dictionary<int, Node421> children;
+            public Node421()
+            {
+                this.children = new Dictionary<int, Node421>();
+            }
+        }
+
+        public class Trie421
+        {
+            public Node421 root;
+
+            public Trie421()
+            {
+                this.root = new Node421();
+            }
+
+            public void insert(int[] nums)
+            {
+                foreach (int num in nums)
+                {
+                    Node421 curr = this.root;
+                    for (int i = 31; i >= 0; i--)
+                    {
+                        int currBit = (num >> i) & 1;
+                        if (!curr.children.ContainsKey(currBit))
+                            curr.children.Add(currBit, new Node421());
+                        curr = curr.children[currBit];
+                    }
                 }
             }
-            return ans;
         }
+
 
         ///424. Longest Repeating Character Replacement, ### Siding Window
         ///You can choose any character of the string and change it to any other uppercase English character at most k times.
