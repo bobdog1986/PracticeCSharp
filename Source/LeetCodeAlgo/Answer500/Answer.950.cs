@@ -8,7 +8,38 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///966. Vowel Spellchecker
+        ///953. Verifying an Alien Dictionary
+        ///Given a sequence of words written in the alien language, and the order of the alphabet,
+        ///return true if and only if the given words are sorted lexicographically in this alien language.
+        public bool IsAlienSorted(string[] words, string order)
+        {
+            Dictionary<char,int> dict=new Dictionary<char, int>();
+            for(int i = 0; i < order.Length; i++)
+            {
+                dict.Add(order[i], i);
+            }
+
+            for(int i=0; i < words.Length-1; i++)
+            {
+                if (!IsAlienSorted(words[i], words[i + 1], dict)) return false;
+            }
+            return true;
+        }
+
+        public bool IsAlienSorted(string s1,string s2, Dictionary<char, int> dict)
+        {
+            int i = 0;
+            while(i< s1.Length && i < s2.Length)
+            {
+                if (dict[s1[i]] > dict[s2[i]]) return false;
+                else if(dict[s1[i]] < dict[s2[i]]) return true;
+                i++;
+            }
+
+            if (i < s1.Length) return false;
+            else return true;
+        }
+        /// 966. Vowel Spellchecker
         ///Given a wordlist, we want to implement a spellchecker that converts a query word into a correct word.
         public string[] Spellchecker(string[] wordlist, string[] queries)
         {
