@@ -304,7 +304,30 @@ namespace LeetCodeAlgo
             return image;
         }
 
-        ///740. Delete and Earn
+        ///739. Daily Temperatures, #Monotonic Function
+        ///Given an array of integers temperatures represents the daily temperatures,
+        ///return an array answer such that answer[i] is the number of days you have to wait after the ith day to get a warmer temperature.
+        ///If there is no future day for which this is possible, keep answer[i] == 0 instead.
+        public int[] DailyTemperatures(int[] temperatures)
+        {
+            int n = temperatures.Length;
+            int[] arr = new int[n];
+            int top = -1;
+            int[] res = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                while (top > -1 && temperatures[i] > temperatures[arr[top]])
+                {
+                    int idx = arr[top--];
+                    res[idx] = i - idx;
+                }
+                arr[++top] = i;
+            }
+            return res;
+
+        }
+
+        /// 740. Delete and Earn
         ///eat nums[i] will earn all nums[i] but delete nums[i]+1 and nums[i]-1, return the max of Earn
         ///1 <= nums[i] <= 10^4
         public int DeleteAndEarn(int[] nums)
