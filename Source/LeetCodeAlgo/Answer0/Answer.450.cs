@@ -234,6 +234,56 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+        ///472. Concatenated Words
+        ///Given an array of strings words (without duplicates), return all the concatenated words in the given list of words.
+        ///A concatenated word is defined as a string that is comprised entirely of at least two shorter words in the given array.
+
+        public IList<string> FindAllConcatenatedWordsInADict(string[] words)
+        {
+            HashSet<string> res = new HashSet<string>();
+            HashSet<string> map = new HashSet<string>();
+            var list = words.OrderBy(x => x.Length).ToList();
+
+            int count = 0;
+            if (list.Count > 0 && list[0].Length == 0)
+            {
+                count++;
+                list.RemoveAt(0);
+            }
+
+            for (int i = 1; i < list.Count; i++)
+            {
+                if (list[i].Length <= list[0].Length || list[i].Length < 2 * list[0].Length) continue;
+                var records = new List<string>() { list[i] };
+                FindAllConcatenatedWordsInADict_BackTracking(list, records, list[i], list[i], res, map);
+            }
+            return res.ToList();
+        }
+
+        public void FindAllConcatenatedWordsInADict_BackTracking(IList<string> words, IList<string> records, string origin, string curr, HashSet<string> res, HashSet<string> map)
+        {
+            if (map.Contains(curr)||curr.Length==0)
+            {
+                if(!res.Contains(origin))res.Add(origin);
+
+                foreach(var r in records)
+                {
+                    if(!map.Contains(r))map.Add(r);
+                }
+                return;
+            }
+
+            for (int i = 0; i < words.Count; i++)
+            {
+                if (words[i] == origin) continue;
+                if (words[i].Length > curr.Length) break;
+                if (curr.StartsWith(words[i]))
+                {
+                    var nextRecords = new List<string>(records) { words[i] };
+                    FindAllConcatenatedWordsInADict_BackTracking(words, nextRecords, origin, curr.Substring(words[i].Length), res,map);
+                }
+            }
+        }
         /// 485. Max Consecutive Ones
         ///Given a binary array nums, return the maximum number of consecutive 1's in the array.
         public int FindMaxConsecutiveOnes(int[] nums)

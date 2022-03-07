@@ -38,7 +38,19 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///1313. Decompress Run-Length Encoded List
+        ///1309. Decrypt String from Alphabet to Integer Mapping
+        ///Characters ('a' to 'i') are represented by ('1' to '9') respectively.
+        ///Characters('j' to 'z') are represented by('10#' to '26#') respectively.
+        ///Return the string formed after mapping.
+        public string FreqAlphabets(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return string.Empty;
+            if (s.Length < 3 || s[2]!='#' )
+                return ((char)(s[0]-'1'+'a')).ToString()+ FreqAlphabets(s.Substring(1));
+            else
+                return ((char)(int.Parse(s.Substring(0,2))-1+'a')).ToString() + FreqAlphabets(s.Substring(3));
+        }
+        /// 1313. Decompress Run-Length Encoded List
         ///Consider each adjacent pair of elements[freq, val] = [nums[2 * i], nums[2 * i + 1]](with i >= 0).
         /// Return the decompressed list.
         public int[] DecompressRLElist(int[] nums)
