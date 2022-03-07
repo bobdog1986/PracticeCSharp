@@ -284,18 +284,66 @@ namespace LeetCodeAlgo
         }
         /// 211. Design Add and Search Words Data Structure, see WordDictionary
 
-        ///212. Word Search II
+        ///212. Word Search II, #Trie, #Backtracking, #DFS
         ///Given an m x n board of characters and a list of strings words, return all words on the board.
         ///Each word must be constructed from letters of sequentially adjacent cells,
         ///where adjacent cells are horizontally or vertically neighboring.
         ///The same letter cell may not be used more than once in a word.
-        public IList<string> FindWords(char[][] board, string[] words)
+        public IList<string> FindWords212(char[][] board, string[] words)
         {
-            return null;
+            List<string> res = new List<string> ();
+            TrieNode root = buildTrie(words);
+            for (int i = 0; i < board.Length; i++)
+            {
+                for (int j = 0; j < board[0].Length; j++)
+                {
+                    FindWords212_dfs(board, i, j, root, res);
+                }
+            }
+            return res;
         }
 
+        public void FindWords212_dfs(char[][] board, int i, int j, TrieNode p, List<string> res)
+        {
+            char c = board[i][j];
+            if (c == '#' || p.next[c - 'a'] == null) return;
+            p = p.next[c - 'a'];
+            if (p.word != null)
+            {
+                // found one
+                res.Add(p.word);
+                p.word = null;// de-duplicate
+            }
+            board[i][j] = '#';
+            if (i > 0) FindWords212_dfs(board, i - 1, j, p, res);
+            if (j > 0) FindWords212_dfs(board, i, j - 1, p, res);
+            if (i < board.Length - 1) FindWords212_dfs(board, i + 1, j, p, res);
+            if (j < board[0].Length - 1) FindWords212_dfs(board, i, j + 1, p, res);
+            board[i][j] = c;
+        }
 
+        public TrieNode buildTrie(string[] words)
+        {
+            TrieNode root = new TrieNode();
+            foreach (var w in words)
+            {
+                TrieNode p = root;
+                foreach (char c in w)
+                {
+                    int i = c - 'a';
+                    if (p.next[i] == null) p.next[i] = new TrieNode();
+                    p = p.next[i];
+                }
+                p.word = w;
+            }
+            return root;
+        }
 
+        public class TrieNode
+        {
+            public TrieNode[] next = new TrieNode[26];
+            public string word;
+        }
 
         /// 213. House Robber II, #DP
         ///All houses at this place are arranged in a circle. N-1 is next to 0
@@ -664,8 +712,6 @@ namespace LeetCodeAlgo
 
             return false;
         }
-
-        //232. Implement Queue using Stacks
 
         //232. Implement Queue using Stacks
 

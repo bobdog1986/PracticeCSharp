@@ -11,7 +11,7 @@ namespace LeetCodeAlgo.Design
     ///There are various applications of this data structure, such as autocomplete and spellchecker.
     public class Trie
     {
-        private TrieItem root;
+        public TrieItem root;
         public Trie()
         {
             root=new TrieItem();
