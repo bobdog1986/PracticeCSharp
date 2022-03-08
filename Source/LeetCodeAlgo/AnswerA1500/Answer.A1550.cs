@@ -109,7 +109,7 @@ namespace LeetCodeAlgo
                 res += mat[i][i];
                 res += mat[i][mat.Length - 1 - i];
             }
-            if(mat.Length>1 && mat.Length%2==1)
+            if(mat.Length%2==1)
                 res-=mat[mat.Length/2][mat.Length / 2];
             return res;
         }

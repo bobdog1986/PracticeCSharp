@@ -107,7 +107,7 @@ namespace LeetCodeAlgo
         }
 
         ///1768. Merge Strings Alternately
-        ///Merge the strings by adding letters in alternating order, starting with word1. 
+        ///Merge the strings by adding letters in alternating order, starting with word1.
         public string MergeAlternately(string word1, string word2)
         {
             List<char> list = new List<char>();
