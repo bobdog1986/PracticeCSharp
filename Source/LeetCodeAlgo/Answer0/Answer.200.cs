@@ -421,16 +421,14 @@ namespace LeetCodeAlgo
                 }
             }
         }
-        /// 217. Contains Duplicate, #HashMap
+        /// 217. Contains Duplicate
         public bool ContainsDuplicate(int[] nums)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
             foreach (var n in nums)
             {
-                if (dict.ContainsKey(n))
-                    dict[n]++;
-                else
-                    dict.Add(n, 1);
+                if (dict.ContainsKey(n)) dict[n]++;
+                else dict.Add(n, 1);
             }
             return dict.Values.Max() > 1;
         }
@@ -715,30 +713,7 @@ namespace LeetCodeAlgo
 
         //232. Implement Queue using Stacks
 
-        //240
-        public bool SearchMatrix(int[,] matrix, int target)
-        {
-            if (matrix == null) return false;
 
-            return SerachMatrix(matrix, 0, matrix.GetLength(0), target);
-        }
-
-        public bool SerachMatrix(int[,] matrix, int startRowIndex, int endColIndex, int target)
-        {
-            if (matrix == null) return false;
-            int col = matrix.GetLength(0);
-            int row = matrix.GetLength(1);
-
-            for (int i = startRowIndex; i < row; i++)
-            {
-                for (int j = 0; j < endColIndex; j++)
-                {
-                    if (matrix[i, j] == target) return true;
-                    if (matrix[i, j] > target) return SerachMatrix(matrix, i, j, target);
-                }
-            }
-            return false;
-        }
 
         ///234. Palindrome Linked List
         ///Given the head of a singly linked list, return true if it is a palindrome.
@@ -922,23 +897,22 @@ namespace LeetCodeAlgo
             return ans;
         }
         /// 240. Search a 2D Matrix II, #Binary Search
+        ///This matrix has the following properties:
+        ///Integers in each row are sorted in ascending from left to right.
+        ///Integers in each column are sorted in ascending from top to bottom.
         public bool SearchMatrix(int[][] matrix, int target)
         {
             int rowLen = matrix.Length;
             int colLen = matrix[0].Length;
-
             if (matrix[0][0] > target || matrix[rowLen - 1][colLen - 1] < target)
                 return false;
-
             foreach (var arr in matrix)
             {
                 if (arr[0] > target || arr[arr.Length - 1] < target)
                     continue;
-
                 int col1 = 0;
                 int col2 = colLen - 1;
                 int col = (col2 - col1) / 2;
-
                 while (col1 <= col2 && col <= col2 && col >= col1)
                 {
                     if (col1 == col2)
@@ -947,7 +921,6 @@ namespace LeetCodeAlgo
                             return true;
                         break;
                     }
-
                     if (arr[col] == target)
                     {
                         return true;
@@ -964,7 +937,6 @@ namespace LeetCodeAlgo
                     }
                 }
             }
-
             return false;
         }
 
@@ -980,11 +952,7 @@ namespace LeetCodeAlgo
             foreach (var c in s)
                 arr[c - 'a']++;
             foreach (var c in t)
-            {
-                if (arr[c - 'a'] == 0)
-                    return false;
-                arr[c - 'a']--;
-            }
+                if (arr[c - 'a']-- == 0) return false;
             return true;
         }
     }
