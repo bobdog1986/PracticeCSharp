@@ -8,7 +8,25 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1359. Count All Valid Pickup and Delivery Options, #DP
+        ///1356. Sort Integers by The Number of 1 Bits
+        ///1 <= arr.length <= 500, 0 <= arr[i] <= 10^4
+        public int[] SortByBits(int[] arr)
+        {
+            return arr.OrderBy(x=> SortByBits_BitsCount(x)).ThenBy(x => x).ToArray();
+        }
+
+        public int SortByBits_BitsCount(int n)
+        {
+            int res = 0;
+            while (n > 0)
+            {
+                if ((n & 1) == 1) res++;
+                n >>= 1;
+            }
+            return res;
+        }
+
+        /// 1359. Count All Valid Pickup and Delivery Options, #DP
         ///Given n orders, each order consist in pickup and delivery services.
         ///Count all valid pickup/delivery possible sequences such that delivery(i) is always after of pickup(i).
         ///Since the answer may be too large, return it modulo 10^9 + 7.

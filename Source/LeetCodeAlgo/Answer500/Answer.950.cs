@@ -15,14 +15,9 @@ namespace LeetCodeAlgo
         {
             Dictionary<char,int> dict=new Dictionary<char, int>();
             for(int i = 0; i < order.Length; i++)
-            {
                 dict.Add(order[i], i);
-            }
-
-            for(int i=0; i < words.Length-1; i++)
-            {
+            for (int i=0; i < words.Length-1; i++)
                 if (!IsAlienSorted(words[i], words[i + 1], dict)) return false;
-            }
             return true;
         }
 
@@ -35,9 +30,7 @@ namespace LeetCodeAlgo
                 else if(dict[s1[i]] < dict[s2[i]]) return true;
                 i++;
             }
-
-            if (i < s1.Length) return false;
-            else return true;
+            return i >= s1.Length;
         }
         /// 966. Vowel Spellchecker
         ///Given a wordlist, we want to implement a spellchecker that converts a query word into a correct word.
