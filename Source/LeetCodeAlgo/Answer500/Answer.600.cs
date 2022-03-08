@@ -130,5 +130,29 @@ namespace LeetCodeAlgo
             return Math.Max(tasks.Length, (arr[25] - 1) * (n + 1) + count);
         }
 
+        ///648. Replace Words
+        ///Return the sentence after the replacement.
+        public string ReplaceWords(IList<string> dictionary, string sentence)
+        {
+            var words = dictionary.OrderBy(x => x).ThenBy(x => x.Length).ToList();
+            var list = sentence.Split(' ').Where(x=>x.Length>0).ToList();
+            var res =new List<string>();
+            foreach(var i in list)
+            {
+                bool match = false;
+                foreach(var word in words)
+                {
+                    if (i.StartsWith(word))
+                    {
+                        match = true;
+                        res.Add(word);
+                        break;
+                    }
+                }
+                if (!match)
+                    res.Add(i);
+            }
+            return string.Join(" ", res);
+        }
     }
 }
