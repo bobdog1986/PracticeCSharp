@@ -70,7 +70,21 @@ namespace LeetCodeAlgo
             return false;
         }
 
-        ///1979. Find Greatest Common Divisor of Array
+        ///1974. Minimum Time to Type Word Using Special Typewriter
+        ///Given a string word, return the minimum number of seconds to type out the characters in word.
+        public int MinTimeToType(string word)
+        {
+            int res = 0;
+            char c = 'a';
+            for(int i=0; i<word.Length; i++)
+            {
+                res+= Math.Min(Math.Abs(word[i] -c), 26 - Math.Abs(word[i] - c));
+                res++;
+                c=word[i];
+            }
+            return res;
+        }
+        /// 1979. Find Greatest Common Divisor of Array
         ///return the greatest common divisor of the smallest number and largest number in nums.
         ///2 <= nums.length <= 1000,1 <= nums[i] <= 1000
         public int FindGCD(int[] nums)
