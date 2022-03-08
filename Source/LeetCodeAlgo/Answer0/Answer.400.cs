@@ -497,7 +497,48 @@ namespace LeetCodeAlgo
         }
 
 
-        ///434. Number of Segments in a String
+        ///433. Minimum Genetic Mutation, #BFS, #Graph
+        ///return the minimum number of mutations needed to mutate from start to end.Or return -1 if not exist
+        public int MinMutation(string start, string end, string[] bank)
+        {
+            bool[] visit=new bool[bank.Length];
+            if (!bank.Contains(end)) return -1;
+            List<string> list = new List<string>() { start };
+            int step = 1;
+            while (list.Count > 0)
+            {
+                List<string> next = new List<string>();
+                foreach(var str in list)
+                {
+                    for(int j=0;j< bank.Length;j++)
+                    {
+                        if (visit[j]) continue;
+                        if(MinMutation_Can(str, bank[j]))
+                        {
+                            if (bank[j] == end) return step;
+                            next.Add(bank[j]);
+                            visit[j] = true;
+                        }
+                    }
+                }
+                step++;
+                list = next;
+            }
+            return -1;
+        }
+        public bool MinMutation_Can(string s1, string s2)
+        {
+            int diff = 0;
+            for(int i=0;i<s1.Length; i++)
+            {
+                if (s1[i] != s2[i]) diff++;
+                if (diff >= 2) return false;
+            }
+            return diff == 1;
+        }
+
+
+        /// 434. Number of Segments in a String
         ///return the number of segments , segment is a contiguous sequence of non-space characters.0 <= s.length <= 300
         public int CountSegments(string s)
         {

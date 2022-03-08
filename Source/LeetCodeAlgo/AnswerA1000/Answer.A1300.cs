@@ -116,7 +116,18 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        ///1331. Rank Transform of an Array
+        ///1319. Number of Operations to Make Network Connected
+        public int MakeConnected(int n, int[][] connections)
+        {
+            int res = 0;
+
+
+
+
+
+            return res;
+        }
+        /// 1331. Rank Transform of an Array
         ///Given an array of integers arr, replace each element with its rank.
         public int[] ArrayRankTransform(int[] arr)
         {
