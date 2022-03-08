@@ -66,6 +66,28 @@ namespace LeetCodeAlgo
             }
             return digits.Count == 0 ? "0" : new string(digits.ToArray());
         }
+        ///404. Sum of Left Leaves
+        ///Given the root of a binary tree, return the sum of all left leaves.
+        public int SumOfLeftLeaves(TreeNode root)
+        {
+            int sum = 0;
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            queue.Enqueue(root);
+            while(queue.Count > 0)
+            {
+                int size = queue.Count;
+                while (size-- > 0)
+                {
+                    var node = queue.Dequeue();
+                    if (node == null) continue;
+                    if (node.left != null && node.left.left == null && node.left.right==null) sum += node.left.val;
+                    if (node.left != null) queue.Enqueue(node.left);
+                    if (node.right != null) queue.Enqueue(node.right);
+                }
+            }
+            return sum;
+        }
+
         /// 409. Longest Palindrome
         ///case sensitive, Aa is different
         public int LongestPalindrome_409(string s)
