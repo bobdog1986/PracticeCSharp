@@ -60,7 +60,29 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
-        ///1281. Subtract the Product and Sum of Digits of an Integer
+        ///1260. Shift 2D Grid
+        ///Return the 2D grid after applying shift operation k times.
+        public IList<IList<int>> ShiftGrid(int[][] grid, int k)
+        {
+            int rowLen = grid.Length;
+            int colLen = grid[0].Length;
+            var res =new List<IList<int>>();
+            foreach(var r in grid)
+                res.Add(r.ToList());
+            k %= rowLen * colLen;
+            while(k-- > 0)
+            {
+                int temp = res[rowLen-1][colLen-1];
+                for(int i = 0; i < rowLen; i++)
+                {
+                    res[i].Insert(0,temp);
+                    temp = res[i].Last();
+                    res[i].RemoveAt(res[i].Count-1);
+                }
+            }
+            return res;
+        }
+        /// 1281. Subtract the Product and Sum of Digits of an Integer
         ///return the difference between the product of its digits and the sum of its digits.
         public int SubtractProductAndSum(int n)
         {
@@ -126,21 +148,6 @@ namespace LeetCodeAlgo
                 head = head.next;
             }
             return sum;
-
-            //int ans = 0;
-            //int seed = 1<<(30-1);
-            //int count = 0;
-            //while(head != null)
-            //{
-            //    if (head.val == 1)
-            //    {
-            //        ans += seed;
-            //    }
-            //    seed >>= 1;
-            //    count++;
-            //    head = head.next;
-            //}
-            //return ans>>=30-count;
         }
 
 
