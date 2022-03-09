@@ -284,6 +284,25 @@ namespace LeetCodeAlgo
                 }
             }
         }
+
+        ///482. License Key Formatting
+        ///Return the reformatted license key.
+        public string LicenseKeyFormatting(string s, int k)
+        {
+            List<char> list = new List<char>();
+            for (int i = s.Length - 1; i >= 0; i--)
+            {
+                if (s[i] != '-')
+                {
+                    list.Insert(0, char.ToUpper(s[i]));
+                    if (list.Count % (k + 1) == k) list.Insert(0, '-');
+                }
+            }
+            if (list.Count > 0 && list[0] == '-') list.RemoveAt(0);
+            return new string(list.ToArray());
+        }
+
+
         /// 485. Max Consecutive Ones
         ///Given a binary array nums, return the maximum number of consecutive 1's in the array.
         public int FindMaxConsecutiveOnes(int[] nums)
