@@ -122,7 +122,78 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///1380. Lucky Numbers in a Matrix
+        ///1376. Time Needed to Inform All Employees, #Graph, #BFS, #DFS
+
+        public int NumOfMinutes(int n, int headID, int[] manager, int[] informTime)
+        {
+            int res = 0;
+            HashSet<int> set = new HashSet<int>();
+            for (int i = 0; i < n; i++)
+                set.Add(i);
+            set.Remove(headID);
+
+            Dictionary<int, int> map = new Dictionary<int, int>();
+            map.Add(headID, 0);
+            while (map.Count > 0)
+            {
+                Dictionary<int, int> next = new Dictionary<int, int>();
+
+                foreach(var i in set)
+                {
+                    if (map.ContainsKey(manager[i]))
+                    {
+                        set.Remove(i);
+                        next.Add(i, map[manager[i]] + informTime[manager[i]]);
+                    }
+                }
+
+                if (next.Count > 0)
+                    res = Math.Max(res, next.Values.Max());
+                map = next;
+            }
+            return res;
+        }
+        public int NumOfMinutes_BFS(int n, int headID, int[] manager, int[] informTime)
+        {
+            List<int>[] graph =new List<int>[n];
+            for (int i = 0; i < n; i++)
+                graph[i] = new List<int>();
+
+            for (int i = 0; i < n; i++)
+                if (manager[i] != -1) graph[manager[i]].Add(i);
+
+            Queue<int[]> q = new Queue<int[]>(); // Since it's a tree, we don't need `visited` array
+            q.Enqueue(new int[] { headID, 0 });
+            int ans = 0;
+            while (q.Count>0)
+            {
+                int[] top = q.Dequeue();
+                int u = top[0], w = top[1];
+                ans = Math.Max(w, ans);
+                foreach (int v in graph[u])
+                    q.Enqueue(new int[] { v, w + informTime[u] });
+            }
+            return ans;
+        }
+        public int NumOfMinutes_DFS(int n, int headID, int[] manager, int[] informTime)
+        {
+            List<int>[] graph = new List<int>[n];
+            for (int i = 0; i < n; i++)
+                graph[i] = new List<int>();
+            for (int i = 0; i < n; i++)
+                if (manager[i] != -1) graph[manager[i]].Add(i);
+
+            return NumOfMinutes_DFS(graph, headID, informTime);
+        }
+        public int NumOfMinutes_DFS(List<int>[] graph, int u, int[] informTime)
+        {
+            int ans = 0;
+            foreach (int v in graph[u])
+                ans = Math.Max(ans, NumOfMinutes_DFS(graph, v, informTime));
+            return ans + informTime[u];
+        }
+
+        /// 1380. Lucky Numbers in a Matrix
         ///A lucky number is an element of the matrix such that it is the minimum element in its row and maximum in its column.
         ///1 <= n, m <= 50 , 1 <= matrix[i][j] <= 10^5.
         public IList<int> LuckyNumbers(int[][] matrix)
@@ -148,6 +219,7 @@ namespace LeetCodeAlgo
                 }
             return ans;
         }
+
 
         ///1394. Find Lucky Integer in an Array
         ///Given an array of integers arr, a lucky integer is an integer that has a frequency in the array equal to its value.
