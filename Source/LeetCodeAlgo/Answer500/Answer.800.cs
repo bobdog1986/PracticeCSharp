@@ -6,7 +6,42 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///830. Positions of Large Groups
+        ///802. Find Eventual Safe States, #DFS, #Graph
+        public IList<int> EventualSafeNodes(int[][] graph)
+        {
+            HashSet<int> map = new HashSet<int>();
+            int[] dp=new int[graph.Length];
+            bool[] visit = new bool[graph.Length];
+            for (int i = 0; i < graph.Length; i++)
+            {
+                EventualSafeNodes_dfs(graph, i, visit, dp, map);
+            }
+
+            return map.OrderBy(x=>x).ToList();
+        }
+
+        public int EventualSafeNodes_dfs(int[][] graph,int i,bool[] visit, int[] dp, HashSet<int> map)
+        {
+            if (visit[i])
+            {
+                return dp[i];
+            }
+            visit[i] = true;
+            int ans = 1;
+            foreach (var j in graph[i])
+            {
+                if (visit[j]) ans &= dp[j];
+                else ans &= EventualSafeNodes_dfs(graph, j, visit, dp, map);
+            }
+
+            if (ans==1)
+            {
+                if (!map.Contains(i)) map.Add(i);
+            }
+            dp[i] = ans;
+            return ans;
+        }
+        /// 830. Positions of Large Groups
         ///A group is considered large if it has 3 or more characters.
         ///Return the intervals of every large group sorted in increasing order by start index.
         public IList<IList<int>> LargeGroupPositions(string s)
