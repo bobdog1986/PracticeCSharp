@@ -116,16 +116,91 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        ///1319. Number of Operations to Make Network Connected
+        ///1319. Number of Operations to Make Network Connected, #Union-Find, #Graph, DFS, #BFS
         public int MakeConnected(int n, int[][] connections)
         {
-            int res = 0;
+            if (connections.Length < n - 1) return -1; // To connect all nodes need at least n-1 edges
+            int[] parent = new int[n];
+            for (int i = 0; i < n; i++) parent[i] = i;
+            int components = n;
+            foreach (var c in connections)
+            {
+                int p1 = MakeConnected_findParent(parent, c[0]);
+                int p2 = MakeConnected_findParent(parent, c[1]);
+                if (p1 != p2)
+                {
+                    parent[p1] = p2; // Union 2 component
+                    components--;
+                }
+            }
+            return components - 1; // Need (components-1) cables to connect components together
+        }
+        public int MakeConnected_findParent(int[] parent, int i)
+        {
+            if (i == parent[i]) return i;
+            return parent[i] = MakeConnected_findParent(parent, parent[i]); // Path compression
+        }
+        public int MakeConnected_dfs(int n, int[][] connections)
+        {
+            if (connections.Length < n - 1) return -1; // To connect all nodes need at least n-1 edges
+            List<int>[] graph = new List<int>[n];
+            for (int i = 0; i < n; i++) graph[i] = new List<int>();
+            foreach (int[] c in connections)
+            {
+                graph[c[0]].Add(c[1]);
+                graph[c[1]].Add(c[0]);
+            }
 
+            int components = 0;
+            bool[] visited = new bool[n];
+            for (int v = 0; v < n; v++)
+                components += MakeConnected_dfs(v, graph, visited);
+            return components - 1; // Need (components-1) cables to connect components together
+        }
+        public int MakeConnected_dfs(int u, List<int>[] graph, bool[] visited)
+        {
+            if (visited[u]) return 0;
+            visited[u] = true;
+            foreach (int v in graph[u]) MakeConnected_dfs(v, graph, visited);
+            return 1;
+        }
 
+        public int MakeConnected_bfs(int n, int[][] connections)
+        {
+            if (connections.Length < n - 1) return -1; // To connect all nodes need at least n-1 edges
+            List<int>[] graph = new List<int>[n];
+            for (int i = 0; i < n; i++) graph[i] = new List<int>();
+            foreach (int[] c in connections)
+            {
+                graph[c[0]].Add(c[1]);
+                graph[c[1]].Add(c[0]);
+            }
 
-
-
-            return res;
+            int components = 0;
+            bool[] visited = new bool[n];
+            for (int v = 0; v < n; v++)
+                components += MakeConnected_bfs(v, graph, visited);
+            return components - 1; // Need (components-1) cables to connect components together
+        }
+        public int MakeConnected_bfs(int src, List<int>[] graph, bool[] visited)
+        {
+            if (visited[src]) return 0;
+            visited[src] = true;
+            Queue<int> q = new Queue<int>();
+            q.Enqueue(src);
+            while (q.Count>0)
+            {
+                int u = q.Dequeue();
+                foreach (int v in graph[u])
+                {
+                    if (!visited[v])
+                    {
+                        visited[v] = true;
+                        q.Enqueue(v);
+                    }
+                }
+            }
+            return 1;
         }
         /// 1331. Rank Transform of an Array
         ///Given an array of integers arr, replace each element with its rank.
