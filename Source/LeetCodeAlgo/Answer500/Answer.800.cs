@@ -16,7 +16,6 @@ namespace LeetCodeAlgo
             {
                 EventualSafeNodes_dfs(graph, i, visit, dp, map);
             }
-
             return map.OrderBy(x=>x).ToList();
         }
 

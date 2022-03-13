@@ -6,7 +6,98 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1137. N-th Tribonacci Number
+        ///1129. Shortest Path with Alternating Colors, #Graph, #BFS
+        public int[] ShortestAlternatingPaths(int n, int[][] redEdges, int[][] blueEdges)
+        {
+            int[] res=new int[n];
+            //init graph
+            List<int>[] redGraph= new List<int>[n];
+            List<int>[] blueGraph = new List<int>[n];
+            for(int i=0; i<n; i++)
+            {
+                redGraph[i]=new List<int>();
+                blueGraph[i]=new List<int>();
+                if (i != 0)
+                    res[i] = -1;
+            }
+
+            //not dual-directions
+            foreach(var edge in redEdges)
+                redGraph[edge[0]].Add(edge[1]);
+            foreach (var edge in blueEdges)
+                blueGraph[edge[0]].Add(edge[1]);
+
+            //avoid duplicate visit
+            bool[] visitFromRedEdge = new bool[n];
+            bool[] visitFromBlueEdge = new bool[n];
+
+            //first loop seed data
+            var listRed = redGraph[0];
+            var listBlue = blueGraph[0];
+            foreach (var i in listRed)
+                visitFromRedEdge[i] = true;
+            foreach (var i in listBlue)
+                visitFromBlueEdge[i] = true;
+
+            int level = 1;
+            while(listRed.Count>0 || listBlue.Count > 0)
+            {
+                List<int> nextRed = new List<int>();
+                List<int> nextBlue = new List<int>();
+                foreach(var red in listRed)
+                {
+                    if (res[red] == -1)
+                        res[red] = level;
+                    if (level % 2 == 1)
+                    {
+                        foreach(var i in blueGraph[red])
+                        {
+                            if (visitFromBlueEdge[i]) continue;
+                            visitFromBlueEdge[i] = true;
+                            nextRed.Add(i);
+                        }
+                    }
+                    else
+                    {
+                        foreach (var i in redGraph[red])
+                        {
+                            if (visitFromRedEdge[i]) continue;
+                            visitFromRedEdge[i] = true;
+                            nextRed.Add(i);
+                        }
+                    }
+                }
+                foreach (var blue in listBlue)
+                {
+                    if (res[blue] == -1)
+                        res[blue] = level;
+                    if (level % 2 == 1)
+                    {
+                        foreach (var i in redGraph[blue])
+                        {
+                            if (visitFromRedEdge[i]) continue;
+                            visitFromRedEdge[i] = true;
+                            nextBlue.Add(i);
+                        }
+                    }
+                    else
+                    {
+                        foreach (var i in blueGraph[blue])
+                        {
+                            if (visitFromBlueEdge[i]) continue;
+                            visitFromBlueEdge[i] = true;
+                            nextBlue.Add(i);
+                        }
+                    }
+                }
+                listRed = nextRed;
+                listBlue = nextBlue;
+                level++;
+            }
+            return res;
+        }
+
+        /// 1137. N-th Tribonacci Number
         ///T0 = 0, T1 = 1, T2 = 1, and Tn+3 = Tn + Tn+1 + Tn+2 for n >= 0.
         public int Tribonacci(int n)
         {

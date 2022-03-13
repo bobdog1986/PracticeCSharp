@@ -123,36 +123,6 @@ namespace LeetCodeAlgo
         }
 
         ///1376. Time Needed to Inform All Employees, #Graph, #BFS, #DFS
-
-        public int NumOfMinutes(int n, int headID, int[] manager, int[] informTime)
-        {
-            int res = 0;
-            HashSet<int> set = new HashSet<int>();
-            for (int i = 0; i < n; i++)
-                set.Add(i);
-            set.Remove(headID);
-
-            Dictionary<int, int> map = new Dictionary<int, int>();
-            map.Add(headID, 0);
-            while (map.Count > 0)
-            {
-                Dictionary<int, int> next = new Dictionary<int, int>();
-
-                foreach(var i in set)
-                {
-                    if (map.ContainsKey(manager[i]))
-                    {
-                        set.Remove(i);
-                        next.Add(i, map[manager[i]] + informTime[manager[i]]);
-                    }
-                }
-
-                if (next.Count > 0)
-                    res = Math.Max(res, next.Values.Max());
-                map = next;
-            }
-            return res;
-        }
         public int NumOfMinutes_BFS(int n, int headID, int[] manager, int[] informTime)
         {
             List<int>[] graph =new List<int>[n];
