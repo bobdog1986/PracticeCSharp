@@ -8,14 +8,81 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
+        ///752. Open the Lock, #Graph
+        public int OpenLock(string[] deadends, string target)
+        {
+            int res = 0;
+            HashSet<string> dead = new HashSet<string>(deadends);
+            HashSet<string> visit = new HashSet<string>() { "0000" };
 
-        ///762. Prime Number of Set Bits in Binary Representation
+            var queue = new Queue<string>();
+            queue.Enqueue("0000");
+            while (queue.Count > 0)
+            {
+                int size = queue.Count;
+                for (int i = 0; i < size; i++)
+                {
+                    var str = queue.Dequeue();
+                    if (str == target) return res;
+                    if (dead.Contains(str)) continue;
+                    for (int j = 0; j < 4; j++)
+                    {
+                        var upKey = str;
+                        var downKey = str;
+                        if (str[j] == '9')
+                        {
+                            var arr = str.ToArray();
+                            arr[j] = '0';
+                            upKey = new string(arr);
+                        }
+                        else
+                        {
+                            var arr = str.ToArray();
+
+                            arr[j] = (char)(arr[j] + 1);
+                            upKey = new string(arr);
+                        }
+
+                        if (str[j] == '0')
+                        {
+                            var arr = str.ToArray();
+
+                            arr[j] = '9';
+                            downKey = new string(arr);
+                        }
+                        else
+                        {
+                            var arr = str.ToArray();
+
+                            arr[j] = (char)(arr[j] - 1);
+                            downKey = new string(arr);
+                        }
+
+                        if (!dead.Contains(upKey) && !visit.Contains(upKey))
+                        {
+                            queue.Enqueue(upKey);
+                            visit.Add(upKey);
+                        }
+                        if (!dead.Contains(downKey) && !visit.Contains(downKey))
+                        {
+                            queue.Enqueue(downKey);
+                            visit.Add(downKey);
+                        }
+                    }
+                }
+                res++;
+            }
+
+            return -1;
+        }
+
+        /// 762. Prime Number of Set Bits in Binary Representation
         ///Return the count of numbers in range [left, right] having a prime number of set bits in binary representation.
         public int CountPrimeSetBits(int left, int right)
         {
             int ans = 0;
-            HashSet<int> map=new HashSet<int>() { 2,3,5,7,11,13,17,19,23,29,31};
-            for(int i = left; i <= right; i++)
+            HashSet<int> map = new HashSet<int>() { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31 };
+            for (int i = left; i <= right; i++)
             {
                 if (map.Contains(CountPrimeSetBits(i)))
                     ans++;
@@ -74,11 +141,11 @@ namespace LeetCodeAlgo
                     ans.Add(len2 - len);
                     len = len2;
                 }
-
             }
 
             return ans;
         }
+
         /// 784. Letter Case Permutation
         ///ref 77 Combines()
         ///Given a string s, you can transform every letter individually to be lowercase or uppercase to create another string.
@@ -184,7 +251,6 @@ namespace LeetCodeAlgo
                     curr = sub;
                 }
 
-
                 if (all.Count > 0)
                 {
                     foreach (var j in all)
@@ -222,21 +288,21 @@ namespace LeetCodeAlgo
         public double ChampagneTower(int poured, int query_row, int query_glass)
         {
             //from top to buttom
-            double[,] result = new double[101,101];
-            result[0,0] = poured;
+            double[,] result = new double[101, 101];
+            result[0, 0] = poured;
             for (int i = 0; i <= query_row; i++)
             {
                 for (int j = 0; j <= i; j++)
                 {
-                    if (result[i,j] >= 1)
+                    if (result[i, j] >= 1)
                     {
-                        result[i + 1,j] += (result[i,j] - 1) / 2.0;
-                        result[i + 1,j + 1] += (result[i,j] - 1) / 2.0;
-                        result[i,j] = 1;
+                        result[i + 1, j] += (result[i, j] - 1) / 2.0;
+                        result[i + 1, j + 1] += (result[i, j] - 1) / 2.0;
+                        result[i, j] = 1;
                     }
                 }
             }
-            return result[query_row,query_glass];
+            return result[query_row, query_glass];
         }
     }
 }

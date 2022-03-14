@@ -348,7 +348,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
-        /// 997. Find the Town Judge
+        /// 997. Find the Town Judge, #Graph
         ///In a town, there are n people labeled from 1 to n. There is a rumor that one of these people is secretly the town judge.
         ///The town judge trusts nobody.Everybody (except for the town judge) trusts the town judge.
         ///Return the label of the town judge if the town judge exists and can be identified, or return -1 otherwise.

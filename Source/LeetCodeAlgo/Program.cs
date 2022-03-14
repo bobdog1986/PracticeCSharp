@@ -18,13 +18,13 @@ namespace LeetCodeAlgo
             var val2 = 100;
             ///uint uintVal =0b10000000_00000000_00000000_00000000;
             //var str1 = "())(((()m)(";
-            var str1 = @"ibzkwaxxaggkiwjbeysz";
+            var str1 = @"0202";
             var str2 = "**aa*****ba*a*bb**aa*ab****a*aaaaaa***a*aaaa**bbabb*b*b**aaaaaaaaa*a********ba*bbb***a*ba*bb*bb**a*b*bb";
             //var str1 = "aaabbbaabaaaaababaabaaabbabbbbbbbbaabababbabbbaaaaba";
             //var str2 = "a*******b";
             //var str1 = "abcabczzzde";
             //var str2 = "*abc???de*";
-            var word1 = new string[] { "oath", "pea", "eat", "rain" };
+            var word1 = new string[] { "0201", "0101", "0102", "1212", "2002" };
             var word2 = new string[] { "ABC", "ACB", "ABC", "ACB", "ACB" };
             var mat1 = new int[][]
             {
@@ -105,7 +105,7 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
             // anwser.GcdOfStrings(arr1);
-            var result = anwser.MinReorder(3,mat1);
+            var result = anwser.OpenLock(word1,str1);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
