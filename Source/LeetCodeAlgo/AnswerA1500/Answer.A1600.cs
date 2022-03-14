@@ -42,7 +42,36 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        ///1636. Sort Array by Increasing Frequency
+        ///1615. Maximal Network Rank, #Graph
+        ///Given the integer n and the array roads, return the maximal network rank of the entire infrastructure.
+        ///two cities donot need connected
+        public int MaximalNetworkRank(int n, int[][] roads)
+        {
+            int max = 0;
+            List<int>[] graph = new List<int>[n];
+            for (int i = 0; i < n; i++)
+                graph[i] = new List<int>();
+
+            foreach (var road in roads)
+            {
+                graph[road[0]].Add(road[1]);
+                graph[road[1]].Add(road[0]);
+            }
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = i + 1; j < n; j++)
+                {
+                    if (graph[i].Contains(j))
+                        max = Math.Max(max, graph[i].Count + graph[j].Count - 1);
+                    else
+                        max = Math.Max(max, graph[i].Count + graph[j].Count);
+                }
+
+            }
+            return max;
+        }
+        /// 1636. Sort Array by Increasing Frequency
         ///sort the array in increasing order based on the frequency of the values.
         ///If multiple values have the same frequency, sort them in decreasing order.
         public int[] FrequencySort(int[] nums)
