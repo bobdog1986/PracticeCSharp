@@ -70,7 +70,36 @@ namespace LeetCodeAlgo
             return ans.ToArray();
         }
 
-        ///367 not pass
+        ///365. Water and Jug Problem
+        ///If targetCapacity liters of water are measurable, you must have targetCapacity
+        ///liters of water contained within one or both buckets by the end.
+        public bool CanMeasureWater(int jug1Capacity, int jug2Capacity, int targetCapacity)
+        {
+            //limit brought by the statement that water is finallly in one or both buckets
+            if (jug1Capacity + jug2Capacity < targetCapacity)
+                return false;
+
+            //case x or y is zero
+            if (jug1Capacity == targetCapacity
+                || jug2Capacity == targetCapacity
+                || jug1Capacity + jug2Capacity == targetCapacity)
+                return true;
+
+            //get GCD, then we can use the property of Bézout's identity
+            return targetCapacity % CanMeasureWater_GCD(jug1Capacity, jug2Capacity) == 0;
+        }
+
+        public int CanMeasureWater_GCD(int a, int b)
+        {
+            while (b != 0)
+            {
+                int temp = b;
+                b = a % b;
+                a = temp;
+            }
+            return a;
+        }
+        /// 367 not pass
         public bool IsPerfectSquare(int num)
         {
             //leetcode pass anwser
