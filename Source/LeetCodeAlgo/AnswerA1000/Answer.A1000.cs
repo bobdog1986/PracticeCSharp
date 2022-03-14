@@ -15,9 +15,9 @@ namespace LeetCodeAlgo
             int max = 0;
             int left = 0;//left index, i is right index
             int zeroCount = 0;
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
-                if(nums[i] == 0)
+                if (nums[i] == 0)
                 {
                     zeroCount++;
                     while (zeroCount > k && left <= i)
@@ -51,15 +51,15 @@ namespace LeetCodeAlgo
         public int NumEnclaves(int[][] grid)
         {
             int rowLen = grid.Length;
-            int colLen=grid[0].Length;
+            int colLen = grid[0].Length;
             int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
             int ans = 0;
-            bool[,] visit=new bool[rowLen, colLen];
-            for(int i = 0; i < rowLen; i++)
-                for(int j = 0; j < colLen; j++)
+            bool[,] visit = new bool[rowLen, colLen];
+            for (int i = 0; i < rowLen; i++)
+                for (int j = 0; j < colLen; j++)
                 {
-                    if (grid[i][j] == 0 || visit[i,j] ) continue;
-                    Queue<int[]> q=new Queue<int[]>();
+                    if (grid[i][j] == 0 || visit[i, j]) continue;
+                    Queue<int[]> q = new Queue<int[]>();
                     q.Enqueue(new int[] { i, j });
                     visit[i, j] = true;
                     int count = 1;
@@ -69,11 +69,11 @@ namespace LeetCodeAlgo
                         var p = q.Dequeue();
                         if (p[0] == 0 || p[0] == rowLen - 1 || p[1] == 0 || p[1] == colLen - 1)
                             ignore = true;
-                        foreach(var d in dxy4)
+                        foreach (var d in dxy4)
                         {
                             var r = p[0] + d[0];
-                            var c= p[1] + d[1];
-                            if(r>=0 && r<rowLen && c>=0 && c<colLen && grid[r][c]==1 && !visit[r, c])
+                            var c = p[1] + d[1];
+                            if (r >= 0 && r < rowLen && c >= 0 && c < colLen && grid[r][c] == 1 && !visit[r, c])
                             {
                                 visit[r, c] = true;
                                 count++;
@@ -87,5 +87,39 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///1047. Remove All Adjacent Duplicates In String, #Two Pointer
+        ///"caacbc"=>"bc"
+        public string RemoveDuplicates_TwoPointer(string s)
+        {
+            int i = 0;
+            char[] res = s.ToArray();
+            for (int j = 0; j < s.Length; ++j, ++i)
+            {
+                res[i] = res[j];
+                if (i > 0 && res[i - 1] == res[i]) // count = 2
+                    i -= 2;
+            }
+            return new string(res, 0, i);
+        }
+
+        public string RemoveDuplicatesMy(string s)
+        {
+            int i = 0;
+            var list = s.ToList();
+            while (i < list.Count)
+            {
+                if (i > 0 && list[i] == list[i - 1])
+                {
+                    list.RemoveAt(i);
+                    list.RemoveAt(i - 1);
+                    i--;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            return new string(list.ToArray());
+        }
     }
 }

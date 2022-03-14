@@ -102,7 +102,7 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
             // anwser.GcdOfStrings(arr1);
-            var result = anwser.ShortestAlternatingPaths(3,mat1,mat2);
+            var result = anwser.RemoveDuplicates("abbaca");
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
