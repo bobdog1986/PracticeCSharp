@@ -38,7 +38,37 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///1309. Decrypt String from Alphabet to Integer Mapping
+        ///1306. Jump Game III, #Graph, #BFS
+        ///you can jump to i + arr[i] or i - arr[i], check if you can reach to any index with value 0.
+        public bool CanReach(int[] arr, int start)
+        {
+            bool[] visit = new bool[arr.Length];
+            List<int> list = new List<int>() { start};
+            visit[start] = true;
+            while(list.Count > 0)
+            {
+                var next =new List<int>();
+                foreach(var i in list)
+                {
+                    if (arr[i] == 0) return true;
+                    int up = i + arr[i];
+                    int down = i - arr[i];
+                    if(up>=0 && up<arr.Length && !visit[up])
+                    {
+                        visit[up] = true;
+                        next.Add(up);
+                    }
+                    if (down >= 0 && down < arr.Length && !visit[down])
+                    {
+                        visit[down] = true;
+                        next.Add(down);
+                    }
+                }
+                list = next;
+            }
+            return false;
+        }
+        /// 1309. Decrypt String from Alphabet to Integer Mapping
         ///Characters ('a' to 'i') are represented by ('1' to '9') respectively.
         ///Characters('j' to 'z') are represented by('10#' to '26#') respectively.
         ///Return the string formed after mapping.
