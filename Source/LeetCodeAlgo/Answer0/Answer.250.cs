@@ -47,7 +47,23 @@ namespace LeetCodeAlgo
             return AddDigits(total);
         }
 
-        ///264. Ugly Number II - NOT mine
+        ///263. Ugly Number
+        ///An ugly number is a positive integer whose prime factors are limited to 2, 3, and 5.
+        ///Given an integer n, return true if n is an ugly number.
+        public bool IsUgly(int n)
+        {
+            if (n <= 0) return false;
+            while (n > 1)
+            {
+                int last = n;
+                if (n % 2 == 0) n /= 2;
+                if (n % 3 == 0) n /= 3;
+                if (n % 5 == 0) n /= 5;
+                if(n==last) return false;
+            }
+            return true;
+        }
+        /// 264. Ugly Number II - NOT mine
         /// An ugly number is a positive integer whose prime factors are limited to 2, 3, and 5.
         /// Given an integer n, return the nth ugly number.
         /// (1) 1×2, 2×2, 3×2, 4×2, 5×2, …

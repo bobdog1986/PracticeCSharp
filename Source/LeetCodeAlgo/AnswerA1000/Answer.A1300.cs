@@ -42,6 +42,20 @@ namespace LeetCodeAlgo
         ///you can jump to i + arr[i] or i - arr[i], check if you can reach to any index with value 0.
         public bool CanReach(int[] arr, int start)
         {
+            if(start>=0 && start< arr.Length && arr[start] >= 0)
+            {
+                if (arr[start] == 0) return true;
+                else
+                {
+                    arr[start] = -arr[start];
+                    return CanReach(arr, start - arr[start]) || CanReach(arr, start + arr[start]);
+                }
+            }
+            else return false;
+        }
+
+        public bool CanReach_My(int[] arr, int start)
+        {
             bool[] visit = new bool[arr.Length];
             List<int> list = new List<int>() { start};
             visit[start] = true;
