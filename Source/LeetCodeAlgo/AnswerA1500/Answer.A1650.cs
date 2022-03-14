@@ -36,6 +36,44 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+        ///1654. Minimum Jumps to Reach Home, #Graph, #BFS
+        public int MinimumJumps(int[] forbidden, int a, int b, int x)
+        {
+            HashSet<int> skips=new HashSet<int>(forbidden);
+            HashSet<int> visits = new HashSet<int>();
+            int max = x + a + b;
+            foreach(var f in forbidden)
+            {
+                max = Math.Max(max, f + a + b);
+            }
+            int res = 0;
+            List<int[]> list = new List<int[]>() { new int[] {0,0 } };
+            visits.Add(0);
+            while (list.Count > 0)
+            {
+                var next = new List<int[]>();
+                foreach(var i in list)
+                {
+                    if (i[0] == x) return res;
+                    var m = i[0] + a;
+                    if(m >0 && m<= max && !skips.Contains(m) && !visits.Contains(m))
+                    {
+                        next.Add(new int[] {m,0});
+                        visits.Add(m);
+                    }
+
+                    var n = i[0] - b;
+                    if(i[1]==0 && n > 0 && n <= max && !skips.Contains(n) && !visits.Contains(n))
+                    {
+                        next.Add(new int[] { n, 1 });
+                        //visits.Add(n);
+                    }
+                }
+                res++;
+                list = next;
+            }
+            return -1;
+        }
         /// 1658. Minimum Operations to Reduce X to Zero
         ///Return the minimum number of operations to reduce x to exactly 0 if it is possible, otherwise, return -1.
         ///This problem is equivalent to finding the longest subarray whose sum is == totalSum - x
