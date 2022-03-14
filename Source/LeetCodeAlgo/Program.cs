@@ -28,11 +28,14 @@ namespace LeetCodeAlgo
             var word2 = new string[] { "ABC", "ACB", "ABC", "ACB", "ACB" };
             var mat1 = new int[][]
             {
-                new int[]{0,1},
-                //new int[]{2,1},
+                new int[]{1,0},
+                new int[]{2,0},
 
-                //new int[]{-2,-2}, new int[]{0,-2 }
-                //new int[]{0  ,  1,    2,   3,   4,   5,   6,   7,   8,   9    },
+                //new int[]{0,1},
+                //new int[]{1,3},
+                //new int[]{2,3},
+                //new int[]{4,0},
+                //new int[]{4,5},
             };
             var mat2 = new int[][] {
                 //new int[] { 3, 9 },   new int[]{7, 12},  new int[]{3, 8},
@@ -102,7 +105,7 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
             // anwser.GcdOfStrings(arr1);
-            var result = anwser.RemoveDuplicates("abbaca");
+            var result = anwser.MinReorder(3,mat1);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");

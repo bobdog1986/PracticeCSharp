@@ -39,6 +39,33 @@ namespace LeetCodeAlgo
             }
             return (max1 - 1) * (max2 - 1);
         }
+        ///1466. Reorder Routes to Make All Paths Lead to the City Zero, #Graph, #DFS
+        public int MinReorder(int n, int[][] connections)
+        {
+            List<int>[] graph = new List<int>[n];
+            for (int i = 0; i < n; i++)
+            {
+                graph[i] = new List<int>();
+            }
+            foreach (var conn in connections)
+            {
+                graph[conn[0]].Add(conn[1]);
+                graph[conn[1]].Add(-conn[0]);
+            }
+            var res = MinReorder_dfs(graph, new bool[n], 0);
+            return res;
+        }
+
+        public int MinReorder_dfs(List<int>[] graph, bool[] visited, int from)
+        {
+            int change = 0;
+            visited[from] = true;
+            foreach (var to in graph[from])
+                if (!visited[Math.Abs(to)])
+                    change += MinReorder_dfs(graph, visited, Math.Abs(to)) + (to > 0 ? 1 : 0);
+            return change;
+        }
+
         /// 1482. Minimum Number of Days to Make m Bouquets , ### Binary Search
         ///You want to make m bouquets. To make a bouquet, you need to use k adjacent flowers from the garden.
         ///The garden consists of n flowers, the ith flower will bloom in the bloomDay[i] and then can be used in exactly one bouquet.
