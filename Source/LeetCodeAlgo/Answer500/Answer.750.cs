@@ -207,7 +207,35 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        ///797. All Paths From Source to Target
+        ///785. Is Graph Bipartite? #Graph, #DFS
+        ///Same to 886
+        ///A graph is bipartite if the nodes can be partitioned into two independent sets A and B
+        ///such that every edge in the graph connects a node in set A and a node in set B.
+        ///Return true if and only if it is bipartite.
+        public bool IsBipartite(int[][] graph)
+        {
+            int n = graph.Length;
+            ///visit[i] = 0 means node i hasn't been visited.
+            ///visit[i] = 1 means node i has been grouped to 1.
+            ///visit[i] = -1 means node i has been grouped to - 1.
+            int[] visit = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                if (visit[i] == 0 && !IsBipartite_dfs(graph, visit, i, 1)) return false;
+            }
+            return true;
+        }
+        private bool IsBipartite_dfs(int[][] graph, int[] visit, int index, int slot)
+        {
+            visit[index] = slot;
+            foreach(var i in graph[index])
+            {
+                if (visit[i] == slot) return false;
+                if (visit[i] == 0 && !IsBipartite_dfs(graph, visit, i, -slot)) return false;
+            }
+            return true;
+        }
+        /// 797. All Paths From Source to Target
         ///only 0 to N-1
         public IList<IList<int>> AllPathsSourceTarget(int[][] graph)
         {
