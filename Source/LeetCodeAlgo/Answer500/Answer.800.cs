@@ -143,7 +143,47 @@ namespace LeetCodeAlgo
             return true;
 
         }
-        ///848. Shifting Letters, #Prefix Sum
+        ///847. Shortest Path Visiting All Nodes, #Graph, #BFS
+        ///You have an undirected, connected graph of n nodes labeled from 0 to n - 1.
+        ///You are given an array graph where graph[i] is a list of all the nodes connected with node i by an edge.
+        ///Return the length of the shortest path that visits every node.
+        ///You may start and stop at any node, you may revisit nodes multiple times, and you may reuse edges.
+        public int ShortestPathLength(int[][] graph)
+        {
+            int n = graph.Length;
+            //n<=12
+            //[bitMaskOfVisited, currNode , nodeCountOfVisited]
+            Queue<int[]> queue = new Queue<int[]>();
+            HashSet<int> set = new HashSet<int>();
+
+            for (int i = 0; i < n; i++)
+            {
+                int tmp = (1 << i);
+                set.Add((tmp<<4) + i);
+                queue.Enqueue(new int[] { tmp, i, 1 });
+            }
+
+            while (queue.Count>0)
+            {
+                var curr = queue.Dequeue();
+                if (curr[0] == (1 << n) - 1)
+                {
+                    return curr[2] - 1;//step = count -1
+                }
+                else
+                {
+                    foreach (int neighbor in graph[curr[1]])
+                    {
+                        int bitMask = curr[0] | (1 << neighbor);
+                        if (!set.Add((bitMask<<4) + neighbor)) continue;
+                        queue.Enqueue(new int[] { bitMask, neighbor, curr[2] + 1 });
+                    }
+                }
+            }
+            return -1;
+        }
+
+        /// 848. Shifting Letters, #Prefix Sum
         ///Now for each shifts[i] = x, we want to shift the first i + 1 letters of s, x times.
         ///Return the final string after all such shifts to s are applied.
         public string ShiftingLetters(string s, int[] shifts)
