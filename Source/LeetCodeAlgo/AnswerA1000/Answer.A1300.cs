@@ -443,5 +443,18 @@ namespace LeetCodeAlgo
 
             return allPath.Count - 1;
         }
+
+        ///1346. Check If N and Its Double Exist
+        ///check if there exists two integers N and M such that N is the double of M ( i.e. N = 2 * M).
+        public bool CheckIfExist(int[] arr)
+        {
+            HashSet<int> set=new HashSet<int>();
+            foreach(var n in arr)
+            {
+                if(set.Contains(n+n)||(n%2==0 && set.Contains(n/2)))return true;
+                set.Add(n);
+            }
+            return false;
+        }
     }
 }

@@ -70,11 +70,10 @@ namespace LeetCodeAlgo
         {
             int n = arr.Length;
             int[] temp = new int[n];
-            int j = 0;
-            for (int i = 0; i < n&&j<n; i++)
+            for (int i = 0,j=0; i < n&&j<n; i++)
             {
                 temp[j++] = arr[i];
-                if (arr[i] == 0&&j<n)
+                if (arr[i]==0 && j<n)
                     temp[j++] = arr[i];
             }
             for (int i = 0; i < n; i++)

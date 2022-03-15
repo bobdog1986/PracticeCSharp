@@ -1562,37 +1562,26 @@ namespace LeetCodeAlgo
             if(tail1!=null)tail1.next = head2;
             return head1??head2;
         }
-        /// 88. Merge Sorted Array
+        /// 88. Merge Sorted Array, #Two Pointers
+        /// Merge two sorted array nums1 and nums2, into a single array sorted in non-decreasing order.
         /// nums1.Length = m + n, nums2.Length == n , 0 <= m, n <= 200, 1 <= m + n <= 200
         public void Merge(int[] nums1, int m, int[] nums2, int n)
         {
-            int[] cache=new int[m+n];
-            int i = 0;
-            int j = 0;
-            while(i +j <m+n)
+            int[] temp = new int[m];
+            for(int k=0; k<m; k++)
+                temp[k]=nums1[k];
+
+            int i=0, j = 0;
+            while(i<m || j < n)
             {
-                if (i == m)
-                {
-                    cache[i + j] = nums2[j++];
-                }
-                else if (j == n)
-                {
-                    cache[i + j] = nums1[i++];
-                }
+                if (i == m) nums1[i+j]=nums2[j++];
+                else if(j == n) nums1[i+j]= temp[i++];
                 else
                 {
-                    if (nums1[i] <= nums2[j])
-                    {
-                        cache[i + j] = nums1[i++];
-                    }
-                    else
-                    {
-                        cache[i + j] = nums2[j++];
-                    }
+                    if (temp[i] <= nums2[j]) nums1[i + j] = temp[i++];
+                    else nums1[i + j] = nums2[j++];
                 }
             }
-            for(int k=0; k<nums1.Length; k++)
-                nums1[k] = cache[k];
         }
 
         ///89. Gray Code. #Backtracking
