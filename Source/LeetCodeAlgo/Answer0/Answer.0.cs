@@ -1196,74 +1196,36 @@ namespace LeetCodeAlgo
             return head;
         }
 
-        ///26. Remove Duplicates from Sorted Array, #HashMap
+        ///26. Remove Duplicates from Sorted Array, #Two Pointers
         ///nums sorted in non-decreasing order, remove the duplicates that each unique element appears only once.
         ///-100 <= nums[i] <= 100
-        public int RemoveDuplicates_25_OnlyOnce(int[] nums)
+        public int RemoveDuplicates_26_OnlyOnce(int[] nums)
         {
-            Dictionary<int, int> dict = new Dictionary<int, int>();
-            foreach (var n in nums)
+            HashSet<int> set = new HashSet<int>();
+            int begin = 0;
+            for (int i = 0; i < nums.Length; i++)
             {
-                if (!dict.ContainsKey(n))
-                    dict.Add(n, 1);
+                if (!set.Contains(nums[i]))
+                {
+                    set.Add(nums[i]);
+                    nums[begin++] = nums[i];
+                }
             }
-
-            var keys = dict.Keys.ToList();
-            for (int i = 0; i < keys.Count; i++)
-                nums[i] = keys[i];
-
-            return keys.Count;
-
-            //int ship = 100;
-            //int repeat = 1;
-            //int[] arr = new int[ship*2+1];
-            //foreach (var i in nums)
-            //    arr[i + ship]++;
-            //int count = 0;
-            //int skipCount = 0;
-            //for (int i = 0; i < arr.Length; i++)
-            //{
-            //    if (count + skipCount == arr.Length)
-            //        break;
-
-            //    if (arr[i] == 0)
-            //        continue;
-
-            //    skipCount += arr[i] - repeat;
-            //    int j = arr[i]> repeat?repeat: arr[i];
-            //    while(j > 0)
-            //    {
-            //        nums[count] = i - ship;
-            //        count++;
-            //        j--;
-            //    }
-            //}
-            //return count;
+            return begin;
         }
 
-        ///27. Remove Element
+        ///27. Remove Element, #Two Pointers
         ///Do not allocate extra space for another array.
         ///You must do this by modifying the input array in-place with O(1) extra memory.
         public int RemoveElement(int[] nums, int val)
         {
-            int count = 0;
-            for (int i = 0; i < nums.Length - count; i++)
+            int begin = 0;
+            for (int i = 0; i < nums.Length; i++)
             {
-                while (nums[i] == val)
-                {
-                    count++;
-                    int k = 0;
-                    while (k < nums.Length - 1 - i)
-                    {
-                        nums[i + k] = nums[i + k + 1];
-                        k++;
-                    }
-                    if (i >= nums.Length - count)
-                        break;
-                }
+                if (nums[i] != val)
+                    nums[begin++] = nums[i];
             }
-
-            return nums.Length - count;
+            return begin;
         }
 
         ///28. Implement strStr()

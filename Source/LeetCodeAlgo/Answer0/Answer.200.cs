@@ -315,10 +315,17 @@ namespace LeetCodeAlgo
                 p.word = null;// de-duplicate
             }
             board[i][j] = '#';
-            if (i > 0) FindWords212_dfs(board, i - 1, j, p, res);
-            if (j > 0) FindWords212_dfs(board, i, j - 1, p, res);
-            if (i < board.Length - 1) FindWords212_dfs(board, i + 1, j, p, res);
-            if (j < board[0].Length - 1) FindWords212_dfs(board, i, j + 1, p, res);
+            int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
+            foreach(var d in dxy4)
+            {
+                var row = i + d[0];
+                var col = j + d[1];
+                if(row>=0&&row<board.Length && col>=0 && col<board[0].Length)
+                {
+                    FindWords212_dfs(board, row, col, p, res);
+                }
+            }
+            //if failed to match a word , we need recovery it back
             board[i][j] = c;
         }
 
@@ -327,14 +334,14 @@ namespace LeetCodeAlgo
             TrieNode root = new TrieNode();
             foreach (var w in words)
             {
-                TrieNode p = root;
+                TrieNode curr = root;
                 foreach (char c in w)
                 {
                     int i = c - 'a';
-                    if (p.next[i] == null) p.next[i] = new TrieNode();
-                    p = p.next[i];
+                    if (curr.next[i] == null) curr.next[i] = new TrieNode();
+                    curr = curr.next[i];
                 }
-                p.word = w;
+                curr.word = w;
             }
             return root;
         }

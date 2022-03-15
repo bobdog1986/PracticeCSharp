@@ -232,5 +232,18 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+        ///1299. Replace Elements with Greatest Element on Right Side
+        ///replace every element with the greatest element among the elements to its right, and replace the last element with -1.
+        public int[] ReplaceElements(int[] arr)
+        {
+            int max = -1;
+            for(int i = arr.Length - 1; i >= 0; i--)
+            {
+                var temp = arr[i];
+                arr[i] = max;
+                max = Math.Max(max, temp);
+            }
+            return arr;
+        }
     }
 }
