@@ -125,6 +125,93 @@ namespace LeetCodeAlgo
 
             return sentences.Where(x=>x.Value==1).Select(x=>x.Key).ToArray();
         }
+        ///886. Possible Bipartition, #Graph, #DFS, #BFS
+        ///Given the integer n and the array dislikes where dislikes[i] = [ai, bi]
+        ///indicates that the person labeled ai does not like the person labeled bi,
+        ///return true if it is possible to split everyone into two groups in this way.
+        public bool PossibleBipartition(int n, int[][] dislikes)
+        {
+            int[,] graph = new int[n+1,n+1];
+            foreach(var dis in dislikes)
+            {
+                graph[dis[0], dis[1]] = 1;
+                graph[dis[1], dis[0]] = 1;
+            }
+            ///visit[i] = 0 means node i hasn't been visited.
+            ///visit[i] = 1 means node i has been grouped to 1.
+            ///visit[i] = -1 means node i has been grouped to - 1.
+            int[] visit = new int[n + 1];
+            for (int i = 1; i <= n; i++)
+            {
+                if (visit[i] == 0 && !PossibleBipartition_dfs(graph, visit, i, 1))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        private bool PossibleBipartition_dfs(int[,] graph, int[] visit, int index, int slot)
+        {
+            visit[index] = slot;
+            for (int i = 1; i < visit.Length; i++)
+            {
+                if (graph[index,i] == 1)
+                {
+                    if (visit[i] == slot)
+                    {
+                        return false;
+                    }
+                    if (visit[i] == 0 && !PossibleBipartition_dfs(graph, visit, i, -slot))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        public bool PossibleBipartition_bfs(int n, int[][] dislikes)
+        {
+            int[,] graph = new int[n + 1, n + 1];
+            foreach (var dis in dislikes)
+            {
+                graph[dis[0], dis[1]] = 1;
+                graph[dis[1], dis[0]] = 1;
+            }
+            ///visit[i] = 0 means node i hasn't been visited.
+            ///visit[i] = 1 means node i has been grouped to 1.
+            ///visit[i] = -1 means node i has been grouped to - 1.
+            int[] visit = new int[n + 1];
+            for (int i = 1; i <= n; i++)
+            {
+                if (visit[i] == 0)
+                {
+                    visit[i] = 1;
+                    Queue<int> q = new Queue<int>();
+                    q.Enqueue(i);
+                    while (q.Count>0)
+                    {
+                        int cur = q.Dequeue();
+                        for(int j=1; j <= n; j++)
+                        {
+                            if (graph[cur, j] == 1)
+                            {
+                                if (visit[j] == 0)
+                                {
+                                    visit[j] = -visit[cur] ;
+                                    q.Enqueue(j);
+                                }
+                                else
+                                {
+                                    if (visit[j] == visit[cur]) return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
         /// 888. Fair Candy Swap
         ///Return an integer array answer where answer[0] is the number of candies in the box that Alice must exchange,
         ///and answer[1] is the number of candies in the box that Bob must exchange.
