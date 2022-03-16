@@ -272,29 +272,26 @@ namespace LeetCodeAlgo
         public List<string> FindAllConcatenatedWordsInADict(string[] words)
         {
             words = words.OrderBy(x => x.Length).Where(x => x.Length > 0).ToArray();
-
             List<string> ans = new List<string>();
             HashSet<string> set = new HashSet<string>(words);
-
             foreach (var word in words)
             {
-                set.Remove(word);
-                if (FindAllConcatenatedWordsInADict_dfs(word, set, "")) ans.Add(word);
-                set.Add(word);
+                if (FindAllConcatenatedWordsInADict_dfs(word, word, set, ""))
+                    ans.Add(word);
             }
             return ans;
         }
 
-        private bool FindAllConcatenatedWordsInADict_dfs(string word, HashSet<string> set, string previous)
+        private bool FindAllConcatenatedWordsInADict_dfs(string word,string origin, HashSet<string> set, string previous)
         {
             if (!string.IsNullOrEmpty(previous)) set.Add(previous);
-            if (set.Contains(word)) return true;
+            if (word!=origin && set.Contains(word)) return true;
 
             for (int i = 1; i < word.Length; i++)
             {
                 string prefix = word.Substring(0, i);
                 if (set.Contains(prefix) &&
-                    FindAllConcatenatedWordsInADict_dfs(word.Substring(i, word.Length-i), set, previous + prefix))
+                    FindAllConcatenatedWordsInADict_dfs(word.Substring(i, word.Length-i), origin, set, previous + prefix))
                 {
                     return true;
                 }
