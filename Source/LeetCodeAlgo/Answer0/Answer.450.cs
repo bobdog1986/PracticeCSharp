@@ -12,13 +12,13 @@ namespace LeetCodeAlgo
         ///The number of nodes in the tree is in the range [0, 10^4].
         public TreeNode DeleteNode(TreeNode root, int key)
         {
-            if(root == null)
+            if (root == null)
                 return null;
             if (root.val == key)
             {
                 return DeleteNode(root);
             }
-            else if(key>root.val)
+            else if (key > root.val)
             {
                 root.right = DeleteNode(root.right, key);
             }
@@ -37,11 +37,11 @@ namespace LeetCodeAlgo
                 return root.left;
 
             //inset the right subtree to left subtree
-            var ans=root.left;
+            var ans = root.left;
             var node = root.left;
             while (node.right != null)
             {
-                node=node.right;
+                node = node.right;
             }
             node.right = root.right;
             return ans;
@@ -53,7 +53,7 @@ namespace LeetCodeAlgo
         public string FrequencySort(string s)
         {
             Dictionary<char, List<char>> dict = new Dictionary<char, List<char>>();
-            foreach(var c in s)
+            foreach (var c in s)
             {
                 if (dict.ContainsKey(c))
                 {
@@ -61,11 +61,12 @@ namespace LeetCodeAlgo
                 }
                 else
                 {
-                    dict.Add(c, new List<char>() { c});
+                    dict.Add(c, new List<char>() { c });
                 }
             }
-            return String.Join("", dict.OrderBy(x=>-x.Value.Count).Select(x=> string.Join("", x.Value)));
+            return String.Join("", dict.OrderBy(x => -x.Value.Count).Select(x => string.Join("", x.Value)));
         }
+
         /// 452. Minimum Number of Arrows to Burst Balloons, #DP
         ///points.Length = Balloons number, Balloons horizontal -231 <= xstart < xend <= 231 - 1
         public int FindMinArrowShots(int[][] points)
@@ -97,11 +98,11 @@ namespace LeetCodeAlgo
         {
             int ans = 0;
             Dictionary<int, int> dictSumOf34 = new Dictionary<int, int>();
-            for(int i = 0; i < nums3.Length; i++)
+            for (int i = 0; i < nums3.Length; i++)
             {
-                for(int j=0;j<nums4.Length; j++)
+                for (int j = 0; j < nums4.Length; j++)
                 {
-                    int sum=nums3[i]+nums4[j];
+                    int sum = nums3[i] + nums4[j];
                     if (dictSumOf34.ContainsKey(sum))
                     {
                         dictSumOf34[sum]++;
@@ -119,12 +120,13 @@ namespace LeetCodeAlgo
                     int sum = nums1[i] + nums2[j];
                     if (dictSumOf34.ContainsKey(-sum))
                     {
-                        ans+= dictSumOf34[-sum];
+                        ans += dictSumOf34[-sum];
                     }
                 }
             }
             return ans;
         }
+
         /// 457. Circular Array Loop
         ///If nums[i]>0, move nums[i] steps forward, If nums[i]<0 move nums[i] steps backward.
         ///Every nums[seq[j]] is either all positive or all negative.
@@ -139,7 +141,7 @@ namespace LeetCodeAlgo
                 bool forward = nums[i] > 0;
                 visit[i] = true;
 
-                bool[] currVisit=new bool[nums.Length];
+                bool[] currVisit = new bool[nums.Length];
                 currVisit[i] = true;
                 int lastVisit = i;
 
@@ -166,22 +168,24 @@ namespace LeetCodeAlgo
             }
             return false;
         }
+
         ///461. Hamming Distance
         ///return the Hamming distance between two integers, is the number of positions at which the corresponding bits are different.
         public int HammingDistance(int x, int y)
         {
             int count = 0;
-            while(x!=0 && y != 0)
+            while (x != 0 && y != 0)
             {
                 if ((x & 1) != (y & 1))
                 {
                     count++;
                 }
-                x>>= 1;
-                y>>= 1;
+                x >>= 1;
+                y >>= 1;
             }
             return count;
         }
+
         ///463. Island Perimeter, #BFS
         ///Determine the perimeter of the island.
         public int IslandPerimeter(int[][] grid)
@@ -191,11 +195,11 @@ namespace LeetCodeAlgo
             int colLen = grid[0].Length;
             int row = -1;
             int col = -1;
-            for(int i = 0; i < rowLen; i++)
+            for (int i = 0; i < rowLen; i++)
             {
-                for(int j = 0; j < colLen; j++)
+                for (int j = 0; j < colLen; j++)
                 {
-                    if(grid[i][j] == 1)
+                    if (grid[i][j] == 1)
                     {
                         row = i;
                         col = j;
@@ -206,20 +210,20 @@ namespace LeetCodeAlgo
             }
             int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
             bool[,] visit = new bool[rowLen, colLen];
-            Queue<int[]> queue= new Queue<int[]>();
+            Queue<int[]> queue = new Queue<int[]>();
             queue.Enqueue(new int[] { row, col });
             visit[row, col] = true;
             while (queue.Count > 0)
             {
                 var p = queue.Dequeue();
                 int count = 0;
-                foreach(var d in dxy4)
+                foreach (var d in dxy4)
                 {
                     var r = p[0] + d[0];
                     var c = p[1] + d[1];
                     if (r >= 0 && r < rowLen && c >= 0 && c < colLen && grid[r][c] == 1)
                     {
-                        if(!visit[r, c])
+                        if (!visit[r, c])
                         {
                             visit[r, c] = true;
                             queue.Enqueue(new int[] { r, c });
@@ -234,57 +238,69 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
-        ///472. Concatenated Words
+
+        ///472. Concatenated Words, #DP, #BFS
         ///Given an array of strings words (without duplicates), return all the concatenated words in the given list of words.
         ///A concatenated word is defined as a string that is comprised entirely of at least two shorter words in the given array.
 
-        public IList<string> FindAllConcatenatedWordsInADict(string[] words)
+        public IList<string> FindAllConcatenatedWordsInADict_DP(string[] words)
         {
-            HashSet<string> res = new HashSet<string>();
-            HashSet<string> map = new HashSet<string>();
-            var list = words.OrderBy(x => x.Length).ToList();
+            words = words.OrderBy(x => x.Length).Where(x => x.Length > 0).ToArray();
 
-            int count = 0;
-            if (list.Count > 0 && list[0].Length == 0)
+            List<string> ans = new List<string>();
+            HashSet<string> set = new HashSet<string>();
+            foreach (var word in words)
             {
-                count++;
-                list.RemoveAt(0);
+                bool[] dp = new bool[word.Length + 1];
+                dp[0] = true;
+                for (int i = 1; i <= word.Length; i++)
+                {
+                    for (int j = i-1; j >= 0; j--)
+                    {
+                        if (dp[j] && set.Contains(word.Substring(j, i-j)))
+                        {
+                            dp[i] = true;
+                            break;
+                        }
+                    }
+                }
+                if (dp[word.Length]) ans.Add(word);
+                set.Add(word);
             }
+            return ans;
+        }
+        public List<string> FindAllConcatenatedWordsInADict(string[] words)
+        {
+            words = words.OrderBy(x => x.Length).Where(x => x.Length > 0).ToArray();
 
-            for (int i = 1; i < list.Count; i++)
+            List<string> ans = new List<string>();
+            HashSet<string> set = new HashSet<string>(words);
+
+            foreach (var word in words)
             {
-                if (list[i].Length <= list[0].Length || list[i].Length < 2 * list[0].Length) continue;
-                var records = new List<string>() { list[i] };
-                FindAllConcatenatedWordsInADict_BackTracking(list, records, list[i], list[i], res, map);
+                set.Remove(word);
+                if (FindAllConcatenatedWordsInADict_dfs(word, set, "")) ans.Add(word);
+                set.Add(word);
             }
-            return res.ToList();
+            return ans;
         }
 
-        public void FindAllConcatenatedWordsInADict_BackTracking(IList<string> words, IList<string> records, string origin, string curr, HashSet<string> res, HashSet<string> map)
+        private bool FindAllConcatenatedWordsInADict_dfs(string word, HashSet<string> set, string previous)
         {
-            if (map.Contains(curr)||curr.Length==0)
-            {
-                if(!res.Contains(origin))res.Add(origin);
+            if (!string.IsNullOrEmpty(previous)) set.Add(previous);
+            if (set.Contains(word)) return true;
 
-                foreach(var r in records)
-                {
-                    if(!map.Contains(r))map.Add(r);
-                }
-                return;
-            }
-
-            for (int i = 0; i < words.Count; i++)
+            for (int i = 1; i < word.Length; i++)
             {
-                if (words[i] == origin) continue;
-                if (words[i].Length > curr.Length) break;
-                if (curr.StartsWith(words[i]))
+                string prefix = word.Substring(0, i);
+                if (set.Contains(prefix) &&
+                    FindAllConcatenatedWordsInADict_dfs(word.Substring(i, word.Length-i), set, previous + prefix))
                 {
-                    var nextRecords = new List<string>(records) { words[i] };
-                    FindAllConcatenatedWordsInADict_BackTracking(words, nextRecords, origin, curr.Substring(words[i].Length), res,map);
+                    return true;
                 }
             }
+            return false;
         }
-
         ///482. License Key Formatting
         ///Return the reformatted license key.
         public string LicenseKeyFormatting(string s, int k)
@@ -302,14 +318,13 @@ namespace LeetCodeAlgo
             return new string(list.ToArray());
         }
 
-
         /// 485. Max Consecutive Ones
         ///Given a binary array nums, return the maximum number of consecutive 1's in the array.
         public int FindMaxConsecutiveOnes(int[] nums)
         {
             var max = 0;
             int count = 0;
-            foreach(var n in nums)
+            foreach (var n in nums)
             {
                 if (n == 1) count++;
                 else
@@ -369,21 +384,22 @@ namespace LeetCodeAlgo
             total += expired - begin;
             return total;
         }
+
         ///496. Next Greater Element I
         ///Return an array ans of length nums1.length such that ans[i] is the next greater element as described above.
         public int[] NextGreaterElement(int[] nums1, int[] nums2)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
-            for(int i = 0; i < nums2.Length; i++)
+            for (int i = 0; i < nums2.Length; i++)
                 dict.Add(nums2[i], i);
 
             int[] ans = new int[nums1.Length];
-            for(int i = 0; i < nums1.Length; i++)
+            for (int i = 0; i < nums1.Length; i++)
             {
                 int k = -1;
                 for (int j = dict[nums1[i]] + 1; j < nums2.Length; j++)
                 {
-                    if(nums2[j] > nums1[i])
+                    if (nums2[j] > nums1[i])
                     {
                         k = nums2[j];
                         break;

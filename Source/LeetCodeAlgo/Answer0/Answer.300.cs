@@ -398,17 +398,22 @@ namespace LeetCodeAlgo
         public int CountRangeSum(int[] nums, int lower, int upper)
         {
             int ans = 0;
-            for (int i = 0; i < nums.Length; i++)
+            int n = nums.Length;
+            int sum1 = 0;
+            int sum2 = 0;
+            int[] dp1=new int[n];
+            int[] dp2=new int[n];
+            for (int i = 0; i < n; i++)
             {
-                long sum = 0;
-                int j = i;
-                while (j++ < nums.Length)
-                {
-                    sum += nums[j];
-                    if (sum >= lower && sum <= upper)
-                        ans++;
-                }
+                sum1 += nums[i];
+                sum2 += nums[n - 1 - i];
+                dp1[i] = sum1;
+                dp2[n - 1 - i] = sum2;
             }
+
+
+
+
             return ans;
         }
 
