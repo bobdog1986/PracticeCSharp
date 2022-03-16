@@ -1562,6 +1562,66 @@ namespace LeetCodeAlgo
             if(tail1!=null)tail1.next = head2;
             return head1??head2;
         }
+
+        ///87. Scramble String
+        public bool IsScramble(string s1, string s2)
+        {
+            bool ans = false;
+            IsScramble(s1, s2, new Dictionary<string, bool>(), ref ans);
+            return ans;
+        }
+
+        public bool IsScramble(string s1, string s2, Dictionary<string,bool> dict, ref bool ans)
+        {
+            if (ans) return true;
+            var key1 = s1 + "_" + s2;
+            var key2= s2 + "_" + s1;
+            if(dict.ContainsKey(key1))return dict[key1];
+            if(dict.ContainsKey(key2))return dict[key2];
+
+            if (s1 == s2) return true;
+            if(s1.Length != s2.Length) return false;
+            if(s1.Length == 2) return s1 == s2.Substring(0,1)+s2.Substring(1);
+
+            int[] arr1 = new int[26];
+            int[] arr2 = new int[26];
+            int len = s1.Length;
+
+            for (int i = 0; i < len; i++)
+            {
+                arr1[s1[i] - 'a']++;
+                arr2[s2[i] - 'a']++;
+            }
+
+            for(int i = 0; i < arr1.Length; i++)
+            {
+                if (arr1[i] != arr2[i])
+                {
+                    if (!dict.ContainsKey(key1))
+                        dict.Add(key1, false);
+                    if (!dict.ContainsKey(key2))
+                        dict.Add(key2, false);
+                    return false;
+                }
+            }
+
+            for (int i = 1; i < len; i++)
+            {
+                if (IsScramble(s1.Substring(0, i), s2.Substring(0, i)) && IsScramble(s1.Substring(i), s2.Substring(i)))
+                {
+                    ans = true;
+                    return true;
+                }
+                if (IsScramble(s1.Substring(0, i), s2.Substring(len - i)) && IsScramble(s1.Substring(i), s2.Substring(0, len - i)))
+                {
+                    ans = true;
+                    return true;
+                }
+            }
+            return false;
+
+        }
+
         /// 88. Merge Sorted Array, #Two Pointers
         /// Merge two sorted array nums1 and nums2, into a single array sorted in non-decreasing order.
         /// nums1.Length = m + n, nums2.Length == n , 0 <= m, n <= 200, 1 <= m + n <= 200

@@ -239,5 +239,23 @@ namespace LeetCodeAlgo
             }
             return null;
         }
+
+        ///896. Monotonic Array
+        ///An array is monotonic if it is either monotone increasing or monotone decreasing.
+        ///An array nums is monotone increasing if for all i <= j, nums[i] <= nums[j].
+        ///An array nums is monotone decreasing if for all i <= j, nums[i] >= nums[j].
+        ///Given an integer array nums, return true if the given array is monotonic, or false otherwise.
+        public bool IsMonotonic(int[] nums)
+        {
+            bool increasing = true;
+            bool decreasing = true;
+            for (int i = 0; i < nums.Length - 1; i++)
+            {
+                if (!increasing && !decreasing) return false;
+                if (increasing) increasing = nums[i] <= nums[i + 1];
+                if (decreasing) decreasing = nums[i] >= nums[i + 1];
+            }
+            return increasing || decreasing;
+        }
     }
 }
