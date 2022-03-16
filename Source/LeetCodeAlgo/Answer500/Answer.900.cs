@@ -222,31 +222,25 @@ namespace LeetCodeAlgo
             Stack<int> stack = new Stack<int>();
             var list1 = pushed.ToList();
             var list2 = popped.ToList();
-            int count = 0;
-            while (count<pushed.Length)
+            int count = 0;//how many nums in popped array have been handled
+            while (count++<pushed.Length)
             {
-                var next = list2.First();
-                var index = list1.IndexOf(next);
+                var index = list1.IndexOf(list2[0]);
                 if (index == -1)
                 {
                     if (stack.Count == 0) return false;
-                    var pop = stack.Pop();
-                    if (pop != next) return false;
-                    list2.RemoveAt(0);
-                    count++;
                 }
                 else
                 {
                     for(int i=0;i<=index; i++)
                     {
-                        stack.Push(list1[0]);
-                        list1.RemoveAt(0);
+                        stack.Push(list1[0]);//push all nums before popped[0] to stack
+                        list1.RemoveAt(0);//then remove
                     }
-                    var pop = stack.Pop();
-                    if (pop != next) return false;
-                    list2.RemoveAt(0);
-                    count++;
                 }
+                var pop = stack.Pop();
+                if (pop != list2[0]) return false;
+                list2.RemoveAt(0);//if equal, remove popped[0]
             }
             return true;
         }

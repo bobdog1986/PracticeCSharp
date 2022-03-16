@@ -229,15 +229,26 @@ namespace LeetCodeAlgo
             return dp.Last();
         }
 
-        ///378. Kth Smallest Element in a Sorted Matrix
+        ///378. Kth Smallest Element in a Sorted Matrix, #Heap, #Priority Queue
         ///Given an n x n matrix where each of the rows and columns is sorted in ascending order,
         ///return the kth smallest element in the matrix. O(n^2)
         public int KthSmallest(int[][] matrix, int k)
         {
+            PriorityQueue<int[],int> priorityQueue = new PriorityQueue<int[], int>();
+            for(int i = 0; i < matrix.Length; i++)
+            {
+                priorityQueue.Enqueue(new int[] { i, 0 }, matrix[i][0]);
+            }
+            int count = 0;
+            while(count++ < k)
+            {
+                var i = priorityQueue.Dequeue();
+                if (count == k ) return matrix[i[0]][i[1]];
+                if(i[1] != matrix[0].Length-1)
+                    priorityQueue.Enqueue(new int[] { i[0], i[1]+1 }, matrix[i[0]][i[1] + 1]);
+            }
             return 0;
         }
-
-
 
         /// 380. Insert Delete GetRandom O(1), see RandomizedSet
 
