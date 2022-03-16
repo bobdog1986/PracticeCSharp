@@ -169,7 +169,26 @@ namespace LeetCodeAlgo
             return false;
         }
 
-        ///461. Hamming Distance
+        ///459. Repeated Substring Pattern
+        ///check if s can be constructed by taking a substring of it and appending multiple copies of the substring together.
+        public bool RepeatedSubstringPattern(string s)
+        {
+            for(int i=1; i <= s.Length/2; i++)
+            {
+                var sub = s.Substring(0, i);
+                var curr = s;
+                while (curr.Length >= i)
+                {
+                    if (curr == sub) return true;
+                    if (curr.Length % i != 0) break;
+                    if (curr.StartsWith(sub)) curr = curr.Substring(i);
+                    else break;
+                }
+            }
+            return false;
+        }
+
+        /// 461. Hamming Distance
         ///return the Hamming distance between two integers, is the number of positions at which the corresponding bits are different.
         public int HammingDistance(int x, int y)
         {
