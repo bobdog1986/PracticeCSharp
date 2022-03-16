@@ -160,6 +160,26 @@ namespace LeetCodeAlgo
             return count;
         }
 
+        ///205. Isomorphic Strings
+        ///Given two strings s and t, determine if they are isomorphic.
+        ///Two strings s and t are isomorphic if the characters in s can be replaced to get t.
+        public bool IsIsomorphic(string s, string t)
+        {
+            Dictionary<char, char> dict = new Dictionary<char, char>();
+            for(int i = 0; i < s.Length; i++)
+            {
+                if (dict.ContainsKey(s[i]))
+                {
+                    if (dict[s[i]] != t[i]) return false;
+                }
+                else
+                {
+                    if (dict.ContainsValue(t[i])) return false;
+                    else dict.Add(s[i], t[i]);
+                }
+            }
+            return true;
+        }
         /// 206. Reverse Linked List
         ///Given the head of a singly linked list, reverse the list, and return the reversed list.
         ///The number of nodes in the list is the range [0, 5000].

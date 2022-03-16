@@ -1939,7 +1939,7 @@ namespace LeetCodeAlgo
             return dp[s1.Length - 1,s2.Length - 1];
         }
 
-        /// 98. Validate Binary Search Tree
+        /// 98. Validate Binary Search Tree, #BTree
         /// left.val<=Node.Val<=right.val
         public bool IsValidBST(TreeNode root)
         {
@@ -1953,6 +1953,43 @@ namespace LeetCodeAlgo
                 ||(right != null && root.val >= right.val))
                 return false;
             return IsValidBST_Recursion(root.left, left, root) && IsValidBST_Recursion(root.right, root, right);
+        }
+
+        /// 99. Recover Binary Search Tree, #BTree
+        ///BST where the values of exactly two nodes of the tree were swapped by mistake.
+        ///Recover the tree without changing its structure.
+        public void RecoverTree(TreeNode root)
+        {
+            //not pass
+            Dictionary<int, TreeNode> dict = new Dictionary<int, TreeNode>();
+            bool found = false;
+            RecoverTree_Recursion(root, dict, ref found, null, null);
+        }
+
+        public void RecoverTree_Recursion(TreeNode root, Dictionary<int, TreeNode> dict, ref bool found, TreeNode left = null, TreeNode right = null)
+        {
+            if (found) return;
+            if (root == null) return;
+            dict.Add(root.val, root);
+
+            if((left != null && root.val <= left.val))
+            {
+                int temp = root.val;
+                dict[root.val].val = left.val;
+                dict[left.val].val = temp;
+                found = true;
+                return;
+            }
+            if ((right != null && root.val >= right.val))
+            {
+                int temp = root.val;
+                dict[root.val].val = right.val;
+                dict[right.val].val = temp;
+                found = true;
+                return;
+            }
+            RecoverTree_Recursion(root.left, dict, ref found, left, root);
+            RecoverTree_Recursion(root.right, dict, ref found, root, right);
         }
     }
 }

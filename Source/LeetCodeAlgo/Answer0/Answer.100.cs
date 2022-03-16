@@ -6,7 +6,7 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///100. Same Tree
+        ///100. Same Tree, #BTree
         public bool IsSameTree(TreeNode p, TreeNode q)
         {
             if (p == null && q == null)
@@ -52,7 +52,7 @@ namespace LeetCodeAlgo
             }
             return true;
         }
-        /// 101. Symmetric Tree
+        /// 101. Symmetric Tree, #BTree
         ///Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
         public bool IsSymmetric(TreeNode root)
         {
@@ -70,43 +70,38 @@ namespace LeetCodeAlgo
             return IsSymmetric(left.left, right.right) && IsSymmetric(left.right, right.left);
         }
 
-        /// 102. Binary Tree Level Order Traversal
+        /// 102. Binary Tree Level Order Traversal, #BTree
         /// Given the root of a binary tree, return the level order traversal of its nodes' values.
         /// (i.e., from left to right, level by level).
         public IList<IList<int>> LevelOrder(TreeNode root)
         {
             var ans = new List<IList<int>>();
-            if (root == null)
-                return ans;
+            if (root == null) return ans;
             var nodes = new List<TreeNode>() { root };
             while (nodes.Count > 0)
             {
-                var subs = new List<TreeNode>();
+                var next = new List<TreeNode>();
                 var list = new List<int>();
                 foreach (TreeNode node in nodes)
                 {
-                    if (node == null)
-                        continue;
+                    if (node == null) continue;
                     list.Add(node.val);
-                    if (node.left != null)
-                        subs.Add(node.left);
-                    if (node.right != null)
-                        subs.Add(node.right);
+                    if (node.left != null) next.Add(node.left);
+                    if (node.right != null) next.Add(node.right);
                 }
-                nodes = subs;
+                nodes = next;
                 ans.Add(list);
             }
             return ans;
         }
 
-        ///103. Binary Tree Zigzag Level Order Traversal
+        ///103. Binary Tree Zigzag Level Order Traversal, #BTree
         ///return the zigzag level order traversal of its nodes' values.
         ///(i.e., from left to right, then right to left for the next level and alternate between).
         public IList<IList<int>> ZigzagLevelOrder(TreeNode root)
         {
             var ans=new List<IList<int>>();
-            if (root == null)
-                return ans;
+            if (root == null) return ans;
 
             var nodes=new List<TreeNode>() { root};
             bool forward = true;
@@ -114,23 +109,18 @@ namespace LeetCodeAlgo
             {
                 var nexts = new List<TreeNode>();
                 var vals = new List<int>();
-
                 foreach(var node in nodes)
                 {
                     vals.Add(node.val);
                     if (forward)
                     {
-                        if (node.left != null)
-                            nexts.Insert(0, node.left);
-                        if (node.right != null)
-                            nexts.Insert(0, node.right);
+                        if (node.left != null) nexts.Insert(0, node.left);
+                        if (node.right != null) nexts.Insert(0, node.right);
                     }
                     else
                     {
-                        if (node.right != null)
-                            nexts.Insert(0, node.right);
-                        if (node.left != null)
-                            nexts.Insert(0, node.left);
+                        if (node.right != null) nexts.Insert(0, node.right);
+                        if (node.left != null) nexts.Insert(0, node.left);
                     }
                 }
                 forward = !forward;
@@ -140,19 +130,19 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        /// 104. Maximum Depth of Binary Tree
+        /// 104. Maximum Depth of Binary Tree, #BTree
         /// Given the root of a binary tree, return its maximum depth.
         ///A binary tree's maximum depth is the number of nodes along the longest path
         ///from the root node down to the farthest leaf node.
-        public int MaxDepth(TreeNode root)
+        public int MaxDepth_104(TreeNode root)
         {
             if (root == null)
                 return 0;
-            int deepth = 0;
+            int depth = 0;
             var nodes = new List<TreeNode>() { root };
             while (nodes.Count > 0)
             {
-                deepth++;
+                depth++;
                 var subs = new List<TreeNode>();
                 foreach (var node in nodes)
                 {
@@ -165,10 +155,25 @@ namespace LeetCodeAlgo
                 }
                 nodes = subs;
             }
-            return deepth;
+            return depth;
+        }
+        public int MaxDepth_104_Recursion(TreeNode root)
+        {
+            int maxDepth = 0;
+            MaxDepth_104_Recursion(root, 0, ref maxDepth);
+            return maxDepth;
         }
 
-        ///105. Construct Binary Tree from Preorder and Inorder Traversal
+        public void MaxDepth_104_Recursion(TreeNode node, int curr, ref int max)
+        {
+            if (node == null) return;
+            curr++;
+            max = Math.Max(curr, max);
+            if (node.left != null) MaxDepth_104_Recursion(node.left, curr, ref max);
+            if (node.right != null) MaxDepth_104_Recursion(node.right, curr, ref max);
+        }
+
+        ///105. Construct Binary Tree from Preorder and Inorder Traversal, #BTree
         public TreeNode BuildTree(int[] preorder, int[] inorder)
         {
             return BuildTree(preorder, inorder, 0, preorder.Length - 1, 0, preorder.Length - 1);
@@ -184,7 +189,7 @@ namespace LeetCodeAlgo
             }
 
             TreeNode node = new TreeNode(preorder[preLeft]);
-            var index = FindIndex(preorder[preLeft], inorder, inLeft,inRight);
+            var index = BuildTree_FindIndex(preorder[preLeft], inorder, inLeft,inRight);
             var countLeft = index - inLeft;
             var countRight = inRight-index;
 
@@ -201,8 +206,7 @@ namespace LeetCodeAlgo
             }
             return node;
         }
-
-        public int FindIndex(int target, int[] array, int start, int end)
+        public int BuildTree_FindIndex(int target, int[] array, int start, int end)
         {
             for (int i = start; i <= end; i++)
             {
@@ -211,38 +215,7 @@ namespace LeetCodeAlgo
             throw new ArgumentOutOfRangeException();
         }
 
-        //106
-        //public TreeNode BuildTree(int[] inorder, int[] postorder)
-        //{
-        //    if (inorder == null || inorder.Length == 0) return null;
-
-        //    if (inorder.Length == 1)
-        //    {
-        //        return new TreeNode(inorder[0]);
-        //    }
-
-        //    TreeNode root = new TreeNode(postorder[postorder.Length-1]);
-        //    int index = FindIndex(postorder[postorder.Length - 1], inorder);
-
-        //    int[] leftInorder = new int[index];
-        //    int[] leftPostorder = new int[index];
-        //    int[] rightInorder = new int[inorder.Length - index - 1];
-        //    int[] rightPostorder = new int[inorder.Length - index - 1];
-
-        //    Array.Copy(inorder, 0, leftInorder, 0, index);
-        //    Array.Copy(inorder, index + 1, rightInorder, 0, inorder.Length - index - 1);
-
-        //    Array.Copy(postorder, 0, leftPostorder, 0, index);
-        //    Array.Copy(postorder, index, rightPostorder, 0, inorder.Length - index - 1);
-
-        //    root.left = BuildTree(leftInorder,leftPostorder);
-        //    root.right = BuildTree(rightInorder,rightPostorder);
-
-        //    return root;
-        //}
-
-
-        ///108. Convert Sorted Array to Binary Search Tree
+        ///108. Convert Sorted Array to Binary Search Tree, #BTree
         public TreeNode SortedArrayToBST(int[] nums)
         {
             Array.Sort(nums);
@@ -267,7 +240,7 @@ namespace LeetCodeAlgo
             }
             return node;
         }
-        ///109. Convert Sorted List to Binary Search Tree
+        ///109. Convert Sorted List to Binary Search Tree, #BTree
         ///Given the head of a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
         ///a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
         public TreeNode SortedListToBST(ListNode head)
@@ -314,7 +287,7 @@ namespace LeetCodeAlgo
             }
         }
 
-        /// 110. Balanced Binary Tree
+        /// 110. Balanced Binary Tree, #BTree
         ///Given a binary tree, determine if it is height-balanced.
         ///a binary tree in which the left and right subtrees of every node differ in height by no more than 1.
         public bool IsBalanced(TreeNode root)
@@ -363,7 +336,7 @@ namespace LeetCodeAlgo
                 }
             }
         }
-        ///111. Minimum Depth of Binary Tree
+        ///111. Minimum Depth of Binary Tree, #BTree
         ///The minimum depth shortest path from the root node down to the nearest leaf node.
         public int MinDepth(TreeNode root)
         {
@@ -386,7 +359,7 @@ namespace LeetCodeAlgo
         }
 
 
-        /// 112. Path Sum
+        /// 112. Path Sum, #BTree
         /// Given the root of a binary tree and an integer targetSum,
         /// return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
         public bool HasPathSum(TreeNode root, int targetSum)
@@ -423,7 +396,7 @@ namespace LeetCodeAlgo
             return false;
         }
 
-        ///113. Path Sum II
+        ///113. Path Sum II, #BTree
         ///return all root-to-leaf paths where the sum of the node values in the path equals targetSum
         public IList<IList<int>> PathSum(TreeNode root, int targetSum)
         {
@@ -447,7 +420,7 @@ namespace LeetCodeAlgo
             PathSum_Recursion(node.right, targetSum, new List<int>(list), ans);
         }
 
-        ///114. Flatten Binary Tree to Linked List
+        ///114. Flatten Binary Tree to Linked List, #BTree
         ///Given the root of a binary tree, flatten the tree into a "linked list":
         ///The "linked list" should be in the same order as a pre-order traversal of the binary tree.
         public void Flatten(TreeNode root)
@@ -727,7 +700,7 @@ namespace LeetCodeAlgo
             return sum;
         }
 
-        ///124. Binary Tree Maximum Path Sum, #Backtracking
+        ///124. Binary Tree Maximum Path Sum, #Backtracking, #BTree
         ///A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them.
         ///A node can only appear in the sequence at most once. Note that the path does not need to pass through the root.
         ///The path sum of a path is the sum of the node's values in the path.
@@ -1546,7 +1519,7 @@ namespace LeetCodeAlgo
                 }
             }
         }
-        /// 144. Binary Tree Preorder Traversal
+        /// 144. Binary Tree Preorder Traversal, #BTree
         public IList<int> PreorderTraversal(TreeNode root)
         {
             var result = new List<int>();
@@ -1556,9 +1529,7 @@ namespace LeetCodeAlgo
 
         public void PreorderTraversal(TreeNode node, IList<int> list)
         {
-            if (node == null)
-                return;
-
+            if (node == null) return;
             list.Add(node.val);
             PreorderTraversal(node.left, list);
             PreorderTraversal(node.right, list);

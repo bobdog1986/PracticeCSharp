@@ -5,7 +5,7 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        /// BTree PreorderTraversal Iteratively, Node->Left->Right
+        /// BTree PreorderTraversal Iteratively, Node->Left->Right, #BTree
         public IList<int> PreorderTraversal_Iteratively(TreeNode root)
         {
             var ans = new List<int>();
@@ -24,7 +24,7 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        /// BTree InorderTraversal Iteratively, Left->Node->Right
+        /// BTree InorderTraversal Iteratively, Left->Node->Right, #BTree
         public IList<int> InorderTraversal_Iteratively(TreeNode root)
         {
             var ans = new List<int>();
@@ -49,7 +49,7 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        /// BTree PostorderTraversal Iteratively, Left->Right->Node
+        /// BTree PostorderTraversal Iteratively, Left->Right->Node, #BTree
         public IList<int> PostorderTraversal_Iteratively(TreeNode root)
         {
             var ans = new List<int>();
@@ -93,7 +93,7 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        /// BTree PreorderTraversal Recursion
+        /// BTree PreorderTraversal Recursion, #BTree
         public IList<int> PreorderTraversal_Recursion(TreeNode root)
         {
             var ans = new List<int>() ;
@@ -109,7 +109,7 @@ namespace LeetCodeAlgo
             PreorderTraversal_Recursion_Add(node.right, list);
         }
 
-        /// BTree InorderTraversal Recursion
+        /// BTree InorderTraversal Recursion, #BTree
         public IList<int> InorderTraversal_Recursion(TreeNode root)
         {
             var ans = new List<int>();
@@ -125,7 +125,7 @@ namespace LeetCodeAlgo
             InorderTraversal_Recursion_Add(node.right, list);
         }
 
-        /// BTree PostorderTraversal Recursion
+        /// BTree PostorderTraversal Recursion, #BTree
         public IList<int> PostorderTraversal_Recursion(TreeNode root)
         {
             var ans = new List<int>();
@@ -140,98 +140,13 @@ namespace LeetCodeAlgo
             PostorderTraversal_Recursion_Add(node.right, list);
             list.Add(node.val);
         }
+        ///See 101. Symmetric Tree
 
-        /// BTree LevelOrder Iteratively
-        public IList<IList<int>> LevelOrder_1(TreeNode root)
-        {
-            var ans = new List<IList<int>>();
-            if (root == null)
-                return ans;
-            var nodes = new Queue<TreeNode>();
-            nodes.Enqueue(root);
+        ///See 102. Binary Tree Level Order Traversal
 
-            while (nodes.Count > 0)
-            {
-                var list = new List<int>();
-                var subs = new Queue<TreeNode>();
+        ///See 104. Maximum Depth of Binary Tree
 
-                while (nodes.Count > 0)
-                {
-                    var node = nodes.Dequeue();
-                    list.Add(node.val);
-
-                    if (node.left != null)
-                    {
-                        subs.Enqueue(node.left);
-                    }
-
-                    if (node.right != null)
-                    {
-                        subs.Enqueue(node.right);
-                    }
-                }
-
-                ans.Add(list);
-
-                nodes = subs;
-            }
-
-            return ans;
-        }
-
-        private int maxDepth = 0;
-
-        public int MaxDepth_1(TreeNode root)
-        {
-            if (root == null)
-                return maxDepth;
-
-            maxDepth++;
-
-            if (root.left != null)
-            {
-                LoopTree(root.left, 1);
-            }
-
-            if (root.right != null)
-            {
-                LoopTree(root.right, 1);
-            }
-
-            return maxDepth;
-        }
-
-        public void LoopTree(TreeNode node, int depth)
-        {
-            if (node == null)
-                return;
-
-            depth++;
-
-            maxDepth = Math.Max(maxDepth, depth);
-
-            if (node.left != null)
-            {
-                LoopTree(node.left, depth);
-            }
-
-            if (node.right != null)
-            {
-                LoopTree(node.right, depth);
-            }
-        }
-
-        ///101. Symmetric Tree
-        public bool IsSymmetric_101(TreeNode root)
-        {
-            return true;
-        }
-
-        /// 112 HasPathSum, see other file
-        /// Given the root of a binary tree and an integer targetSum,
-        /// return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
-        public void HasPathSum_112()
-        { }
+        ///See 105. Construct Binary Tree from Preorder and Inorder Traversal, #BTree
 
         ///
     }
