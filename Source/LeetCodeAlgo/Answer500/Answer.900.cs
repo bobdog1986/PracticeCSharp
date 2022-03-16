@@ -213,5 +213,42 @@ namespace LeetCodeAlgo
             }
             return ans.ToArray();
         }
+
+        ///946. Validate Stack Sequences
+        ///Given two integer arrays pushed and popped each with distinct values,
+        ///return true if this could have been the result of a sequence of push and pop operations on an initially empty stack, or false otherwise.
+        public bool ValidateStackSequences(int[] pushed, int[] popped)
+        {
+            Stack<int> stack = new Stack<int>();
+            var list1 = pushed.ToList();
+            var list2 = popped.ToList();
+            int count = 0;
+            while (count<pushed.Length)
+            {
+                var next = list2.First();
+                var index = list1.IndexOf(next);
+                if (index == -1)
+                {
+                    if (stack.Count == 0) return false;
+                    var pop = stack.Pop();
+                    if (pop != next) return false;
+                    list2.RemoveAt(0);
+                    count++;
+                }
+                else
+                {
+                    for(int i=0;i<=index; i++)
+                    {
+                        stack.Push(list1[0]);
+                        list1.RemoveAt(0);
+                    }
+                    var pop = stack.Pop();
+                    if (pop != next) return false;
+                    list2.RemoveAt(0);
+                    count++;
+                }
+            }
+            return true;
+        }
     }
 }
