@@ -8,15 +8,14 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-
         ///1162. As Far from Land as Possible, #Graph, #DP, #BFS
         ///0 represents water and 1 represents land,
         ///find a water cell such that its distance to the nearest land cell is maximized,
         ///and return the distance. If no land or water exists in the grid, return -1.
         public int MaxDistance1162_BFS(int[][] grid)
         {
-            int rowLen=grid.Length;
-            int colLen=grid[0].Length;
+            int rowLen = grid.Length;
+            int colLen = grid[0].Length;
             bool[,] visited = new bool[rowLen, colLen];
             int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
 
@@ -28,25 +27,25 @@ namespace LeetCodeAlgo
                     if (grid[i][j] == 1)
                     {
                         queue.Enqueue(new int[] { i, j });
-                        visited[i,j] = true;
+                        visited[i, j] = true;
                     }
                 }
             }
             int level = -1;
-            while (queue.Count>0)
+            while (queue.Count > 0)
             {
                 int size = queue.Count;
                 for (int i = 0; i < size; i++)
                 {
                     int[] p = queue.Dequeue();
-                    foreach (var  d in dxy4)
+                    foreach (var d in dxy4)
                     {
                         int r = p[0] + d[0];
                         int c = p[1] + d[1];
                         if (r >= 0 && r < rowLen && c >= 0 && c < colLen
-                           && !visited[r,c] && grid[r][c] == 0)
+                           && !visited[r, c] && grid[r][c] == 0)
                         {
-                            visited[r,c] = true;
+                            visited[r, c] = true;
                             queue.Enqueue(new int[] { r, c });
                         }
                     }
@@ -83,7 +82,6 @@ namespace LeetCodeAlgo
 
             return res == 201 ? -1 : res - 1;
         }
-
 
         /// 1171. Remove Zero Sum Consecutive Nodes from Linked List
         public ListNode RemoveZeroSumSublists(ListNode head)
@@ -133,6 +131,28 @@ namespace LeetCodeAlgo
             }
 
             return head;
+        }
+
+        ///1189. Maximum Number of Balloons
+        ///Given a string text, you want to use the characters of text to form as many instances of the word "balloon" as possible.
+        ///You can use each character in text at most once.Return the maximum number of instances that can be formed.
+        public int MaxNumberOfBalloons(string text)
+        {
+            Dictionary<char, int> map = new Dictionary<char, int>();
+            Dictionary<char, int> dict = new Dictionary<char, int>();
+            string balloonStr = "balloon";
+            foreach (var c in balloonStr)
+            {
+                if (dict.ContainsKey(c)) dict[c]++;
+                else dict.Add(c, 1);
+                if(!map.ContainsKey(c))map.Add(c,0);
+            }
+            foreach (var c in text)
+            {
+                if (map.ContainsKey(c)) map[c]++;
+            }
+            int res = dict.Keys.Select(x => map[x] / dict[x]).Min();
+            return res;
         }
     }
 }
