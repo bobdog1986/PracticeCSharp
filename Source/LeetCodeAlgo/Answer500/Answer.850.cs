@@ -32,6 +32,33 @@ namespace LeetCodeAlgo
             if (diff == 0 && !len2) return false;
             else return true;
         }
+
+        ///860. Lemonade Change
+        ///Given an integer array bills where bills[i] is the bill the ith customer pays,
+        ///return true if you can provide every customer with the correct change, or false otherwise.
+        public bool LemonadeChange(int[] bills)
+        {
+            ///index 1 =5 , 2=10, 4=20
+            int[] arr = new int[5];
+            foreach(var bill in bills)
+            {
+                int i = bill / 5;
+                arr[i--]++;// pay back bill-5 to customer
+                //if customer pay 20, we pay back 10 if we have
+                if (i > 2 && arr[2] > 0)
+                {
+                    arr[2]--;
+                    i -= 2;
+                }
+                //if have 10, we still need pay back another 5;
+                //if no 10, pay back 5+5+5
+                while (i-- > 0)
+                {
+                    if (arr[1]-- == 0) return false;
+                }
+            }
+            return true;
+        }
         /// 875. Koko Eating Bananas
         ///There are n piles of bananas, the ith pile has piles[i] bananas.
         ///The guards have gone and will come back in h hours.

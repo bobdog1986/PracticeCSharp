@@ -175,12 +175,13 @@ namespace LeetCodeAlgo
         {
             for(int i=1; i <= s.Length/2; i++)
             {
+                if (s.Length % i != 0) continue;
                 var sub = s.Substring(0, i);
-                var curr = s;
+                if (!s.StartsWith(sub)) return false;
+                var curr = s.Substring(i);
                 while (curr.Length >= i)
                 {
                     if (curr == sub) return true;
-                    if (curr.Length % i != 0) break;
                     if (curr.StartsWith(sub)) curr = curr.Substring(i);
                     else break;
                 }
