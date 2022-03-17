@@ -8,7 +8,31 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///859. Buddy Strings
+        ///856. Score of Parentheses
+        ///Given a balanced parentheses string s, return the score of the string.
+        ///"()" has score 1.
+        ///AB has score A + B, where A and B are balanced parentheses strings.
+        ///(A) has score 2 * A, where A is a balanced parentheses string.
+        public int ScoreOfParentheses(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return 0;
+            if(s.StartsWith("()"))return 1+ ScoreOfParentheses(s.Substring(2));
+            if (s.StartsWith("()()")) return 2 + ScoreOfParentheses(s.Substring(4));
+            if (s.StartsWith("(())")) return 2 + ScoreOfParentheses(s.Substring(4));
+
+            int count = 0;//using a int var instead of stack, fast and simple
+            for(int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == '(') count++;
+                else count--;
+                if(i!=0 && count == 0)
+                {
+                    return 2 * ScoreOfParentheses(s.Substring(1, i-1)) + ScoreOfParentheses(s.Substring(i+1));
+                }
+            }
+            return 0;//never happen
+        }
+        /// 859. Buddy Strings
         ///return true if you can swap two letters in s so the result is equal to goal, otherwise, return false.
         public bool BuddyStrings(string s, string goal)
         {
