@@ -6,7 +6,19 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///918. Maximum Sum Circular Subarray
+        ///905. Sort Array By Parity
+        ///Given an integer array nums, move all the even integers at the beginning of the array followed by all the odd integers.
+        public int[] SortArrayByParity(int[] nums)
+        {
+            var res =new List<int>();
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] % 2 == 0) res.Insert(0, nums[i]);
+                else res.Add(nums[i]);
+            }
+            return res.ToArray();
+        }
+        /// 918. Maximum Sum Circular Subarray
         ///Kadane algorithm, find max-of-positive and min-of-negtive, return max-of-positive or Sum()- min-of-neg
         public int MaxSubarraySumCircular(int[] nums)
         {

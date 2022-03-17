@@ -1201,15 +1201,15 @@ namespace LeetCodeAlgo
         ///-100 <= nums[i] <= 100
         public int RemoveDuplicates_26_OnlyOnce(int[] nums)
         {
-            HashSet<int> set = new HashSet<int>();
+            int prev = -10000;
             int begin = 0;
             for (int i = 0; i < nums.Length; i++)
             {
-                if (!set.Contains(nums[i]))
+                if (nums[i] != prev)
                 {
-                    set.Add(nums[i]);
                     nums[begin++] = nums[i];
                 }
+                prev = nums[i];
             }
             return begin;
         }
