@@ -1553,7 +1553,9 @@ namespace LeetCodeAlgo
             list.Add(node.val);
         }
 
-        ///148. Sort List
+        ///146. LRU Cache, see LRUCache
+
+        /// 148. Sort List
         ///Given the head of a linked list, return the list after sorting it in ascending order.
         ///O(n logn) time and O(1) memory
         public ListNode SortList(ListNode head)
