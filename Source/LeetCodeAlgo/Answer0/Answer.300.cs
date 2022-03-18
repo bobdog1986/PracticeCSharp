@@ -245,7 +245,26 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///318. Maximum Product of Word Lengths
+        ///316. Remove Duplicate Letters, #Greedy
+        ///Given a string s, remove duplicate letters so that every letter appears once and only once.
+        ///You must make sure your result is the smallest in lexicographical order among all possible results.
+        public string RemoveDuplicateLetters(string s)
+        {
+            int[] arr = new int[26];
+            int pos = 0; // the position for the smallest s[i]
+            for (int i = 0; i < s.Length; i++)
+                arr[s[i] - 'a']++;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i]< s[pos]) pos = i;
+                if (--arr[s[i] - 'a'] == 0) break;
+            }
+            return s.Length == 0 ? "" : s[pos].ToString() + RemoveDuplicateLetters(s.Substring(pos + 1).Replace(s[pos].ToString(), ""));
+        }
+
+
+        /// 318. Maximum Product of Word Lengths
         ///return the max of length(word[i]) * length(word[j]) where the two words do not share common letters.
         public int MaxProduct(string[] words)
         {
