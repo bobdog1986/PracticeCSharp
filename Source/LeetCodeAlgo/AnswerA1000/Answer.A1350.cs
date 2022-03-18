@@ -106,7 +106,37 @@ namespace LeetCodeAlgo
             return new string(teams.ToArray());
         }
 
-        ///1375. Number of Times Binary String Is Prefix-Aligned
+        ///1367. Linked List in Binary Tree, #BTree
+        ///Given a binary tree root and a linked list with head as the first node.
+        ///Return True if all the elements in the linked list starting from the head
+        ///correspond to some downward path connected in the binary tree otherwise return False.
+        public bool IsSubPath(ListNode head, TreeNode root)
+        {
+            return IsSubPath_Recursion(head, root, head);
+        }
+
+        public bool IsSubPath_Recursion(ListNode head, TreeNode root, ListNode origin)
+        {
+            if (head == null) return true;
+            if (root == null) return false;
+            if (head.val == root.val)
+            {
+                var leftOk = IsSubPath_Recursion(head.next, root.left,origin);
+                if (leftOk) return true;
+                var rightOk = IsSubPath_Recursion(head.next, root.right, origin);
+                if (rightOk) return true;
+            }
+            if(head == origin)
+            {
+                return IsSubPath_Recursion(head, root.left, origin) || IsSubPath_Recursion(head, root.right, origin);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// 1375. Number of Times Binary String Is Prefix-Aligned
         ///Return the number of times the binary string is prefix-aligned during the flipping process.
         public int NumTimesAllBlue(int[] flips)
         {
