@@ -566,7 +566,23 @@ namespace LeetCodeAlgo
             return len * len;
         }
 
-        ///225. Implement Stack using Queues, see MyStack
+        ///222. Count Complete Tree Nodes, #BTree
+        ///Given the root of a complete binary tree, return the number of the nodes in the tree.
+        public int CountNodes(TreeNode root)
+        {
+            int res = 0;
+            CountNodes(root, ref res);
+            return res;
+        }
+        public void CountNodes(TreeNode root, ref int res)
+        {
+            if (root == null) return;
+            res ++;
+            CountNodes(root.left, ref res);
+            CountNodes(root.right, ref res);
+        }
+
+        /// 225. Implement Stack using Queues, see MyStack
 
         /// 226. Invert Binary Tree
         ///Given the root of a binary tree, invert the tree, and return its root.
