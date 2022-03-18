@@ -130,7 +130,31 @@ namespace LeetCodeAlgo
             return Math.Max(tasks.Length, (arr[25] - 1) * (n + 1) + count);
         }
 
-        ///648. Replace Words
+        ///637. Average of Levels in Binary Tree, #BTree
+        ///Given the root of a binary tree, return the average value of the nodes
+        ///on each level in the form of an array. Answers within 10-5 of the actual answer will be accepted.
+        public IList<double> AverageOfLevels(TreeNode root)
+        {
+            var ans = new List<double>();
+            if (root == null) return ans;
+            var nodes = new List<TreeNode>() { root };
+            while (nodes.Count > 0)
+            {
+                var next = new List<TreeNode>();
+                var list = new List<long>();
+                foreach (TreeNode node in nodes)
+                {
+                    list.Add(node.val);
+                    if (node.left != null) next.Add(node.left);
+                    if (node.right != null) next.Add(node.right);
+                }
+                nodes = next;
+                ans.Add(list.Sum()*1.0/list.Count);
+            }
+            return ans;
+        }
+
+        /// 648. Replace Words
         ///Return the sentence after the replacement.
         public string ReplaceWords(IList<string> dictionary, string sentence)
         {
