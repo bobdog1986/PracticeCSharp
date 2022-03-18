@@ -215,7 +215,31 @@ namespace LeetCodeAlgo
             throw new ArgumentOutOfRangeException();
         }
 
-        ///108. Convert Sorted Array to Binary Search Tree, #BTree
+        ///107. Binary Tree Level Order Traversal II, #BTree
+        ///Given the root of a binary tree, return the bottom-up level order traversal of its nodes' values.
+        ///(i.e., from left to right, level by level from leaf to root).
+        public IList<IList<int>> LevelOrderBottom(TreeNode root)
+        {
+            var ans = new List<IList<int>>();
+            if (root == null) return ans;
+            var nodes = new List<TreeNode>() { root };
+            while (nodes.Count > 0)
+            {
+                var next = new List<TreeNode>();
+                var list = new List<int>();
+                foreach (TreeNode node in nodes)
+                {
+                    if (node == null) continue;
+                    list.Add(node.val);
+                    if (node.left != null) next.Add(node.left);
+                    if (node.right != null) next.Add(node.right);
+                }
+                nodes = next;
+                ans.Insert(0,list);
+            }
+            return ans;
+        }
+        /// 108. Convert Sorted Array to Binary Search Tree, #BTree
         public TreeNode SortedArrayToBST(int[] nums)
         {
             Array.Sort(nums);
