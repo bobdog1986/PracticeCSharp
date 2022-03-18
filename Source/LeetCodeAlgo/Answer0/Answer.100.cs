@@ -1132,6 +1132,46 @@ namespace LeetCodeAlgo
 
             return ans;
         }
+        ///135. Candy ,#DP, #DFS
+        ///There are n children standing in a line. Each child is assigned a rating value given in the integer array ratings.
+        ///Each child must have at least one candy, Children with a higher rating get more candies than their neighbors.
+        ///Return the minimum number of candies you need to have to distribute the candies to the children.
+        public int Candy(int[] ratings)
+        {
+            int n = ratings.Length;
+            int[] dp=new int[n];
+            List<int> list = new List<int>();
+
+            for (int i=0;i<n;i++)
+            {
+                if((i==0 || ratings[i] <=ratings[i-1])
+                    && (i == n-1 || ratings[i] <= ratings[i + 1]))
+                {
+                    list.Add(i);
+                    dp[i] = 1;
+                }
+            }
+
+            while (list.Count > 0)
+            {
+                var next = new List<int>();
+                foreach(var i in list)
+                {
+                    if(i>0 && ratings[i - 1] > ratings[i])
+                    {
+                        dp[i - 1] = Math.Max(dp[i - 1], dp[i] + 1);
+                        next.Add(i - 1);
+                    }
+                    if (i < n-1 && ratings[i + 1] > ratings[i])
+                    {
+                        dp[i + 1] = Math.Max(dp[i + 1], dp[i] + 1);
+                        next.Add(i + 1);
+                    }
+                }
+                list = next;
+            }
+            return dp.Sum();
+        }
         /// 136. Single Number, #HashMap
         /// Given a non - empty array of integers nums, every element appears twice except for one.Find that single one.
         /// You must implement a solution with a linear runtime complexity and use only constant extra space.

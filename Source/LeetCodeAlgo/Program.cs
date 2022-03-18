@@ -11,7 +11,7 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Answer();
-            var arr1 = new int[] {1,2,3,4,5};
+            var arr1 = new int[] {1, 6, 10, 8, 7, 3, 2};
             var arr2 = new int[] {4,3,5,1,2};
             int k = 2;
             var val1 = 3;
@@ -106,7 +106,7 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
             // anwser.GcdOfStrings(arr1);
-            var result = anwser.ValidateStackSequences(arr1,arr2);
+            var result = anwser.Candy(arr1);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");

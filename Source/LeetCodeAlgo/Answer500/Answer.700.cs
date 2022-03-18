@@ -327,6 +327,24 @@ namespace LeetCodeAlgo
 
         }
 
+        public int[] DailyTemperatures_Stack(int[] temperatures)
+        {
+            int n = temperatures.Length;
+
+            Stack<int> stack = new Stack<int>();
+            int[] res = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                while (stack.Count >0 && temperatures[i] > temperatures[stack.Peek()])
+                {
+                    int idx = stack.Pop();
+                    res[idx] = i - idx;
+                }
+                stack.Push(i);
+            }
+            return res;
+        }
+
         /// 740. Delete and Earn
         ///eat nums[i] will earn all nums[i] but delete nums[i]+1 and nums[i]-1, return the max of Earn
         ///1 <= nums[i] <= 10^4
