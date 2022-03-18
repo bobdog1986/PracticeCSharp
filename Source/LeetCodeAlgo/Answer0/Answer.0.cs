@@ -2086,13 +2086,13 @@ namespace LeetCodeAlgo
             int[] digits1 = new int[num1.Length];
             for (int i = 0; i < digits1.Length; i++)
             {
-                digits1[digits1.Length - 1 - i] = getDigit(num1[i]);
+                digits1[digits1.Length - 1 - i] = num1[i]-'0';
             }
 
             int[] digits2 = new int[num2.Length];
             for (int i = 0; i < digits2.Length; i++)
             {
-                digits2[digits2.Length - 1 - i] = getDigit(num2[i]);
+                digits2[digits2.Length - 1 - i] = num2[i] - '0';
             }
 
             int[] result = new int[digits1.Length + digits2.Length];
@@ -2134,7 +2134,7 @@ namespace LeetCodeAlgo
 
             for (int i = 0; i < len; i++)
             {
-                ans[i] = getChar(result[len - 1 - i]);
+                ans[i] = (char)(result[len - 1 - i]+'0');
             }
 
             return string.Join("", ans);

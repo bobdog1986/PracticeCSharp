@@ -242,6 +242,29 @@ namespace LeetCodeAlgo
             return list.ToArray();
 
         }
+        ///989. Add to Array-Form of Integer
+        ///The array-form of an integer num is an array representing its digits in left to right order.
+        ///For example, for num = 1321, the array form is [1,3,2,1].
+        ///Given num, the array-form of an integer, and an integer k, return the array-form of the integer num + k.
+        public IList<int> AddToArrayForm(int[] num, int k)
+        {
+            int carry = 0;
+            for(int i = num.Length - 1; i >= 0; i--)
+            {
+                int curr = num[i] + k + carry;
+                k = 0;
+                carry = curr / 10;
+                num[i] = curr % 10;
+            }
+            var list = num.ToList();
+            while (carry > 0)
+            {
+                list.Insert(0, carry % 10);
+                carry /= 10;
+            }
+            return list;
+        }
+
         /// 994. Rotting Oranges
         public int OrangesRotting(int[][] grid)
         {
