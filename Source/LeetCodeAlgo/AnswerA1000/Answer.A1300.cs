@@ -246,6 +246,42 @@ namespace LeetCodeAlgo
             }
             return 1;
         }
+        ///1325. Delete Leaves With a Given Value, #BTree
+        ///Given a binary tree root and an integer target, delete all the leaf nodes with value target.
+        ///Note that once you delete a leaf node with value target,
+        ///if its parent node becomes a leaf node and has the value target,
+        ///it should also be deleted (you need to continue doing that until you cannot).
+        public TreeNode RemoveLeafNodes(TreeNode root, int target)
+        {
+            RemoveLeafNodes(ref root, target);
+            return root;
+        }
+
+        public bool RemoveLeafNodes(ref TreeNode root, int target)
+        {
+            if (root == null) return true;
+            if (root.val != target)
+            {
+                RemoveLeafNodes(ref root.left, target);
+                RemoveLeafNodes(ref root.right, target);
+                return false;
+            }
+            else
+            {
+                bool leftEmpty = RemoveLeafNodes(ref root.left, target);
+                bool rightEmpty = RemoveLeafNodes(ref root.right, target);
+                if (leftEmpty && rightEmpty)
+                {
+                    root = null;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
         /// 1331. Rank Transform of an Array
         ///Given an array of integers arr, replace each element with its rank.
         public int[] ArrayRankTransform(int[] arr)
