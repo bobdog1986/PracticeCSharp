@@ -622,6 +622,8 @@ namespace LeetCodeAlgo
         }
 
 
+        ///341. Flatten Nested List Iterator, see NestedIterator
+
         /// 343. Integer Break, #DP
         ///find 3 as many as possible, but no 1; 2 <= n <= 58
         public int IntegerBreak(int n)
