@@ -106,6 +106,17 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
             // anwser.GcdOfStrings(arr1);
+            var median = new MedianFinder();
+            var ar = new int[] { 1,2,3};
+            Console.WriteLine("inputs = "+String.Join(",",ar));
+            foreach(var a in ar)
+            {
+                Console.WriteLine("Add : "+a.ToString());
+                median.AddNum(a);
+                Console.WriteLine(median.FindMedian());
+            }
+
+
             var result = anwser.MinCut(str1);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
