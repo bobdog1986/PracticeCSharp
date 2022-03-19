@@ -1084,7 +1084,42 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        ///133. Clone Graph, #Graph, #DFS
+        ///132. Palindrome Partitioning II
+        ///Given a string s, partition s such that every substring of the partition is a palindrome.
+        ///Return the minimum cuts needed for a palindrome partitioning of s.
+        public int MinCut(string s)
+        {
+            return MinCut_Recursion(s)-1;
+        }
+
+        public int MinCut_Recursion(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return 0;
+            int left = 0;
+            int right = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (Partition_IsPalindrome(s.Substring(0, i + 1)))
+                    left = i;
+                if (Partition_IsPalindrome(s.Substring(s.Length - 1 - i)))
+                    right = i;
+            }
+
+            if (left > right)
+            {
+                return 1 + MinCut_Recursion(s.Substring(left + 1));
+            }
+            else if(left<right)
+            {
+                return 1 + MinCut_Recursion(s.Substring(0,s.Length - 1 - right));
+            }
+            else
+            {
+                return Math.Min(1 + MinCut_Recursion(s.Substring(left + 1)), 1 + MinCut_Recursion(s.Substring(0, s.Length - 1 - right)));
+            }
+        }
+
+        /// 133. Clone Graph, #Graph, #DFS
         ///Given a reference of a node in a connected undirected graph.
         ///Return a deep copy(clone) of the graph.
         ///Each node in the graph contains a value(int) and a list(List[Node]) of its neighbors.

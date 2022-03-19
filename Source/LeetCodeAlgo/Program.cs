@@ -18,7 +18,7 @@ namespace LeetCodeAlgo
             var val2 = 100;
             ///uint uintVal =0b10000000_00000000_00000000_00000000;
             //var str1 = "())(((()m)(";
-            var str1 = @"0202";
+            var str1 = @"ababbbabbaba";
             var str2 = "**aa*****ba*a*bb**aa*ab****a*aaaaaa***a*aaaa**bbabb*b*b**aaaaaaaaa*a********ba*bbb***a*ba*bb*bb**a*b*bb";
             //var str1 = "aaabbbaabaaaaababaabaaabbabbbbbbbbaabababbabbbaaaaba";
             //var str2 = "a*******b";
@@ -92,9 +92,9 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
-            string bTreeStr = "3,3,6,6,3,5,";
-            var treeNode = anwser.deserializeTree(bTreeStr);
-            anwser.printTree(treeNode);
+            //string bTreeStr = "3,3,6,6,3,5,";
+            //var treeNode = anwser.deserializeTree(bTreeStr);
+            //anwser.printTree(treeNode);
 
             //Console.WriteLine(String.Join(",", arr1));
 
@@ -106,12 +106,12 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
             // anwser.GcdOfStrings(arr1);
-            var result = anwser.RemoveLeafNodes(treeNode,3);
+            var result = anwser.MinCut(str1);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
             //Console.WriteLine(string.Join(",", result.val));
-            anwser.printTree(result);
+            //anwser.printTree(result);
             //anwser.printListNode(result);
             //Console.WriteLine($"Result = {result}");
 
