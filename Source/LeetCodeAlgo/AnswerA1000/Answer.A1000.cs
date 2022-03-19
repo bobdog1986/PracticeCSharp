@@ -8,7 +8,40 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1004. Max Consecutive Ones III, #Sliding Window
+        ///1002. Find Common Characters
+        ///return an array of all characters that show up in all strings within the words (including duplicates).
+        public IList<string> CommonChars(string[] words)
+        {
+            var mat = new List<int[]>();
+            foreach(var w in words)
+            {
+                var arr = new int[26];
+                foreach (var c in w)
+                    arr[c - 'a']++;
+                mat.Add(arr);
+            }
+            List<string> res = new List<string>();
+            for(int i = 0; i < 26; i++)
+            {
+                int min = 100;
+                foreach(var arr in mat)
+                {
+                    if(arr[i] == 0)
+                    {
+                        min = 0;
+                        break;
+                    }
+                    else
+                    {
+                        min = Math.Min(min, arr[i]);
+                    }
+                }
+                while(min-- > 0)
+                    res.Add(((char)('a' + i)).ToString());
+            }
+            return res;
+        }
+        /// 1004. Max Consecutive Ones III, #Sliding Window
         //return the maximum number of consecutive 1's in the array if you can flip at most k 0's.
         public int LongestOnes(int[] nums, int k)
         {
