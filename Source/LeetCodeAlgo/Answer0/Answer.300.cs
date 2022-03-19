@@ -184,7 +184,7 @@ namespace LeetCodeAlgo
 
         /// 304. Range Sum Query 2D - Immutable, see NumMatrix
 
-        /// 309. Best Time to Buy and Sell Stock with Cooldown
+        /// 309. Best Time to Buy and Sell Stock with Cooldown, #DP
         ///After you sell your stock, you cannot buy stock on the next day (i.e., cooldown one day).
         ///0 <= prices[i] <= 1000, 1<=length<=5000
         public int MaxProfit(int[] prices)
@@ -213,7 +213,65 @@ namespace LeetCodeAlgo
             return sell[len - 1];
         }
 
-        ///315. Count of Smaller Numbers After Self - need fast
+        ///312. Burst Balloons, #DP, #Divide Conquer
+        ///You are given n balloons, indexed from 0 to n - 1. Each balloon is painted with a number
+        ///on it represented by an array nums. You are asked to burst all the balloons.
+        ///If you burst the ith balloon, you will get nums[i - 1] * nums[i] * nums[i + 1] coins.
+        ///If i - 1 or i + 1 goes out of bounds of the array, then treat it as if there is a balloon with a 1 painted on it.
+        ///Return the maximum coins you can collect by bursting the balloons wisely.
+        public int MaxCoins(int[] nums)
+        {
+            int n = nums.Length;
+
+            int[,] dp = new int[n,n];
+            // build the dp table for length from 1 to n
+            for (int k = 1; k <= n; k++)
+                // check every subarray of lengh k
+                for (int left = 0; left < n - k + 1; left++)
+                {
+                    int right = left + k - 1;
+                    int max = 0;
+                    // every element of the subarray could be the last balloon to burst
+                    for (int i = left; i <= right; i++)
+                    {
+                        int leftNum = (left <= 0) ? 1 : nums[left - 1];
+                        int rightNum = (right >= n - 1) ? 1 : nums[right + 1];
+
+                        int leftSum = (i == left) ? 0 : dp[left,i - 1];
+                        int rightSum = (i == right) ? 0 : dp[i + 1,right];
+                        max = Math.Max(max, leftNum * nums[i] * rightNum + leftSum + rightSum);
+                    }
+                    dp[left,right] = max;
+                }
+            return dp[0,n - 1];
+        }
+
+        public int MaxCoins_Divide_Conquer(int[] nums)
+        {
+            int n = nums.Length+2;
+            int[] arr = new int[n];
+            for (int i = 1; i < n - 1; i++)
+                arr[i] = nums[i - 1];
+            arr[0] = 1;
+            arr[n - 1] = 1;
+
+            int[,] memo = new int[n, n];
+            return MaxCoins_burst(memo, arr, 0, n-1);
+        }
+
+        public int MaxCoins_burst(int[,] memo, int[] nums, int left, int right)
+        {
+            if (left + 1 == right) return 0;
+            if (memo[left,right] > 0) return memo[left,right];
+            int ans = 0;
+            for (int i = left + 1; i < right; ++i)
+                ans = Math.Max(ans, nums[left] * nums[i] * nums[right]
+                + MaxCoins_burst(memo, nums, left, i) + MaxCoins_burst(memo, nums, i, right));
+            memo[left,right] = ans;
+            return ans;
+        }
+
+        /// 315. Count of Smaller Numbers After Self - need fast
         ///You are given an integer array nums and you have to return a new counts array.
         ///The counts array has the property where counts[i] is the number of smaller elements to the right of nums[i].
         ///-10^4 <= nums[i] <= 10^4
