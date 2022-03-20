@@ -66,6 +66,20 @@ namespace LeetCodeAlgo
             return change;
         }
 
+        ///1470. Shuffle the Array
+        ///Given the array nums consisting of 2n elements in the form [x1,x2,...,xn,y1,y2,...,yn].
+        ///Return the array in the form[x1, y1, x2, y2, ..., xn, yn].
+        public int[] Shuffle(int[] nums, int n)
+        {
+            int[] res=new int[n*2];
+            for(int i = 0; i < n ; i++)
+            {
+                res[i * 2] = nums[i];
+                res[i * 2 + 1] = nums[i + n ];
+            }
+            return res;
+        }
+
         /// 1482. Minimum Number of Days to Make m Bouquets , ### Binary Search
         ///You want to make m bouquets. To make a bouquet, you need to use k adjacent flowers from the garden.
         ///The garden consists of n flowers, the ith flower will bloom in the bloomDay[i] and then can be used in exactly one bouquet.

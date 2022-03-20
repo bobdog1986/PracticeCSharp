@@ -157,7 +157,7 @@ namespace LeetCodeAlgo
         }
 
         ///ListNode, build and print
-        public void printListNode(ListNode listNode, int maxLen = 20)
+        public static void printListNode(ListNode listNode, int maxLen = 20)
         {
             if (listNode == null)
             {
@@ -271,7 +271,7 @@ namespace LeetCodeAlgo
             var str = string.Join(",", ans);
             return str.Replace("1001", "");
         }
-        public void printTree(TreeNode root)
+        public static void printTree(TreeNode root)
         {
             if (root == null)
             {

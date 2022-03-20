@@ -11,7 +11,7 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Answer();
-            var arr1 = new int[] { 1, 2, 1, 1, 1, 2, 2, 2 };
+            var arr1 = new int[] { 2, 5, 1, 3, 4, 7 };
             var arr2 = new int[] { 2, 1, 2, 2, 2, 2, 2, 2 };
             int k = 2;
             var val1 = 3;
@@ -111,19 +111,28 @@ namespace LeetCodeAlgo
             //Console.WriteLine("input string is = "+ str1);
             // anwser.GcdOfStrings(arr1);
 
-            var result = anwser.MinDominoRotations(arr1,arr2);
+            var result = anwser.Shuffle(arr1,3);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
-            //Console.WriteLine(string.Join(",", result.val));
-            //anwser.printTree(result);
-            //anwser.printListNode(result);
 
             logResult(result);
 
             Console.WriteLine("=========Finish!========");
             Console.ReadLine();
         }
+
+        ///
+        private static void logResult(TreeNode result)
+        {
+            Answer.printTree(result);
+        }
+
+        private static void logResult(ListNode result)
+        {
+            Answer.printListNode(result);
+        }
+
         private static void logResult(int result)
         {
             Console.WriteLine($"Result = {result}");
