@@ -64,6 +64,26 @@ namespace LeetCodeAlgo
             return max;
         }
 
+        ///1007. Minimum Domino Rotations For Equal Row
+        ///Return the minimum number of rotations so that all the values in tops are the same,
+        ///or all the values in bottoms are the same.If it cannot be done, return -1.
+        public int MinDominoRotations(int[] tops, int[] bottoms)
+        {
+            int n = tops.Length;
+            for (int i = 0, a = 0, b = 0; i < n && (tops[i] == tops[0] || bottoms[i] == tops[0]); ++i)
+            {
+                if (tops[i] != tops[0]) a++;
+                if (bottoms[i] != tops[0]) b++;
+                if (i == n - 1) return Math.Min(a, b);
+            }
+            for (int i = 0, a = 0, b = 0; i < n && (tops[i] == bottoms[0] || bottoms[i] == bottoms[0]); ++i)
+            {
+                if (tops[i] != bottoms[0]) a++;
+                if (bottoms[i] != bottoms[0]) b++;
+                if (i == n - 1) return Math.Min(a, b);
+            }
+            return -1;
+        }
         /// 1014. Best Sightseeing Pair
         ///find max = values[i] + values[j] + i - j, 1 <= values[i] <= 1000
         public int MaxScoreSightseeingPair(int[] values)

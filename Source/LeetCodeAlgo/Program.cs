@@ -11,8 +11,8 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Answer();
-            var arr1 = new int[] {3,1,5,8};
-            var arr2 = new int[] {4,3,5,1,2};
+            var arr1 = new int[] { 1, 2, 1, 1, 1, 2, 2, 2 };
+            var arr2 = new int[] { 2, 1, 2, 2, 2, 2, 2, 2 };
             int k = 2;
             var val1 = 3;
             var val2 = 100;
@@ -87,15 +87,19 @@ namespace LeetCodeAlgo
             //var listnode2 = anwser.buildListNode(new int[] { 1000000, 1000001, 1000002 });
             //anwser.printListNode(listnode2);
 
+            //string bTreeStr = "3,3,6,6,3,5,";
+            //var treeNode = anwser.deserializeTree(bTreeStr);
+            //anwser.printTree(treeNode)
+
+            //string mat3Str = "[[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]";
+            //var mat3 = anwser.buildMatrix(mat3Str);
+
             //Console.WriteLine("Correct Anwser should be : ");
             //Console.WriteLine(string.Join("\r\n", mat1.Select(o => string.Join(",", o))));
             Stopwatch sw = new Stopwatch();
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
-            //string bTreeStr = "3,3,6,6,3,5,";
-            //var treeNode = anwser.deserializeTree(bTreeStr);
-            //anwser.printTree(treeNode);
-
+;
             //Console.WriteLine(String.Join(",", arr1));
 
             //if (grid1.Length > 0)
@@ -106,21 +110,27 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
             // anwser.GcdOfStrings(arr1);
-            string mat3Str = "[[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]";
-            var mat3 = anwser.buildMatrix(mat3Str);
-            var result = anwser.ReconstructQueue(mat3);
+
+            var result = anwser.MinDominoRotations(arr1,arr2);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
             //Console.WriteLine(string.Join(",", result.val));
             //anwser.printTree(result);
             //anwser.printListNode(result);
-            //Console.WriteLine($"Result = {result}");
 
             logResult(result);
 
             Console.WriteLine("=========Finish!========");
             Console.ReadLine();
+        }
+        private static void logResult(int result)
+        {
+            Console.WriteLine($"Result = {result}");
+        }
+        private static void logResult(string result)
+        {
+            Console.WriteLine($"Result = {result}");
         }
 
         private static void logResult(int[] result)
