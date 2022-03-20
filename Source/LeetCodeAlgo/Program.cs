@@ -106,7 +106,9 @@ namespace LeetCodeAlgo
             //anwser.SolveSudoku(grid1);
             //Console.WriteLine("input string is = "+ str1);
             // anwser.GcdOfStrings(arr1);
-            var result = anwser.MaxCoins(arr1);
+            string mat3Str = "[[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]";
+            var mat3 = anwser.buildMatrix(mat3Str);
+            var result = anwser.ReconstructQueue(mat3);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
@@ -115,18 +117,57 @@ namespace LeetCodeAlgo
             //anwser.printListNode(result);
             //Console.WriteLine($"Result = {result}");
 
-            Console.WriteLine(String.Join(",", result));
-            //Console.WriteLine(String.Join(",", arr1));
-
-            //if (result.Count() > 0)
-            //{
-            //    //Console.WriteLine(String.Join("\r\n\r\n", result.Select(o => String.Join("\r\n", o))));
-            //    Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
-            //}
-            //else Console.WriteLine("!!!Result count = 0");
+            logResult(result);
 
             Console.WriteLine("=========Finish!========");
             Console.ReadLine();
+        }
+
+        private static void logResult(int[] result)
+        {
+            Console.WriteLine(string.Join(",", result));
+        }
+        private static void logResult(IList<int> result)
+        {
+            Console.WriteLine(string.Join(",", result));
+        }
+
+        private static void logResult(int[][] result)
+        {
+            if (result.Count() > 0)
+            {
+                //Console.WriteLine(String.Join("\r\n\r\n", result.Select(o => String.Join("\r\n", o))));
+                Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+            }
+            else Console.WriteLine("!!!Result count = 0");
+        }
+
+        private static void logResult(IList<int[]> result)
+        {
+            if (result.Count() > 0)
+            {
+                //Console.WriteLine(String.Join("\r\n\r\n", result.Select(o => String.Join("\r\n", o))));
+                Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+            }
+            else Console.WriteLine("!!!Result count = 0");
+        }
+        private static void logResult(IList<IList<int>> result)
+        {
+            if (result.Count() > 0)
+            {
+                //Console.WriteLine(String.Join("\r\n\r\n", result.Select(o => String.Join("\r\n", o))));
+                Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+            }
+            else Console.WriteLine("!!!Result count = 0");
+        }
+        private static void logResult(string[][] result)
+        {
+            if (result.Count() > 0)
+            {
+                //Console.WriteLine(String.Join("\r\n\r\n", result.Select(o => String.Join("\r\n", o))));
+                Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+            }
+            else Console.WriteLine("!!!Result count = 0");
         }
     }
 }

@@ -126,6 +126,36 @@ namespace LeetCodeAlgo
             return getGcbLong(m, n);
         }
 
+
+        ///Matrix build
+        public int[][] buildMatrix(string str)
+        {
+            str = str.Replace(" ", "");
+            if(str[0]=='[')str=str.Substring(1);
+            if(str[str.Length-1]==']')str=str.Substring(0,str.Length-1);
+            var arr = str.Split("],[").Select(x=>x.Trim()).Where(x=>!string.IsNullOrEmpty(x)).ToList();
+            var res = new List<int[]>();
+            foreach(var a in arr)
+            {
+                res.Add(buildArray(a));
+            }
+            return res.ToArray();
+        }
+
+        public int[] buildArray(string str)
+        {
+            str = str.Replace(" ", "");
+            if (str[0] == '[') str = str.Substring(1);
+            if (str[str.Length - 1] == ']') str = str.Substring(0, str.Length - 1);
+            var arr = str.Split(",").Select(x => x.Trim()).Where(x => !string.IsNullOrEmpty(x)).ToList();
+            var res = new List<int>();
+            foreach (var a in arr)
+            {
+                res.Add(int.Parse(a));
+            }
+            return res.ToArray();
+        }
+
         ///ListNode, build and print
         public void printListNode(ListNode listNode, int maxLen = 20)
         {

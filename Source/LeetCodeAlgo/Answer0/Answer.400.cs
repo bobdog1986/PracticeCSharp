@@ -88,6 +88,45 @@ namespace LeetCodeAlgo
             return sum;
         }
 
+        ///406. Queue Reconstruction by Height, #Greedy
+        ///You are given an array of people, people, which are the attributes of some people
+        ///in a queue (not necessarily in order). Each people[i] = [hi, ki] represents
+        ///the ith person of height hi with exactly ki other people in front who have a height greater than or equal to hi.
+        ///Reconstruct and return the queue that is represented by the input array people.
+        ///The returned queue should be formatted as an array queue, where queue[j] = [hj, kj]
+        ///is the attributes of the jth person in the queue (queue[0] is the person at the front of the queue).
+        public int[][] ReconstructQueue(int[][] people)
+        {
+            var mat = people.OrderBy(p => p[1]).ThenBy(p => p[0]).ToList();
+            List<int[]> res = new List<int[]>();
+            for(int i = 0; i < mat.Count; i++)
+            {
+                var p = mat[i];
+                int count = p[1];
+                int j = 0;
+                while (count >= 0 && j < res.Count)
+                {
+                    if (res[j][0] >= p[0])
+                    {
+                        if (count == 0)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            count--;
+                            j++;
+                        }
+                    }
+                    else
+                    {
+                        j++;
+                    }
+                }
+                res.Insert(j, p);
+            }
+            return res.ToArray();
+        }
         /// 409. Longest Palindrome
         ///case sensitive, Aa is different
         public int LongestPalindrome_409(string s)
