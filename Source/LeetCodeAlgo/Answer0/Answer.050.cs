@@ -394,10 +394,8 @@ namespace LeetCodeAlgo
             {
                 if (s[i] == ' ')
                 {
-                    if (ans == 0)
-                        continue;
-                    else
-                        break;
+                    if (ans == 0) continue;
+                    else break;
                 }
                 else
                 {

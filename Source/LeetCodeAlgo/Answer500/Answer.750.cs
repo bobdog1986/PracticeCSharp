@@ -105,45 +105,30 @@ namespace LeetCodeAlgo
         ///s consists of lowercase English letters.
         public IList<int> PartitionLabels(string s)
         {
-            if (s.Length == 1)
-                return new List<int>() { 1 };
-
-            IList<int> ans = new List<int>();
-
-            Dictionary<char, List<int>> dict = new Dictionary<char, List<int>>();
-
+            var res = new List<int>();
+            Dictionary<char, HashSet<int>> dict = new Dictionary<char, HashSet<int>>();
             for (int i = 0; i < s.Length; i++)
             {
-                if (dict.ContainsKey(s[i]))
-                {
-                    dict[s[i]].Add(i);
-                }
-                else
-                {
-                    dict.Add(s[i], new List<int>() { i });
-                }
+                if (!dict.ContainsKey(s[i]))dict.Add(s[i], new HashSet<int>());
+                dict[s[i]].Add(i);
             }
 
-            List<char> list = new List<char>();
+            HashSet<char> currSet = new HashSet<char>();
             int len = 0;
             for (int i = 0; i < s.Length; i++)
             {
-                if (!list.Contains(s[i]))
-                    list.Add(s[i]);
-
-                bool canPartition = !list.Any(c => dict[c].Any(x => x > i));
-
+                if (!currSet.Contains(s[i]))
+                    currSet.Add(s[i]);
+                bool canPartition = !currSet.Any(c => dict[c].Any(x => x > i));
                 if (canPartition)
                 {
-                    list.Clear();
-
+                    currSet.Clear();
                     int len2 = i + 1;
-                    ans.Add(len2 - len);
+                    res.Add(len2 - len);
                     len = len2;
                 }
             }
-
-            return ans;
+            return res;
         }
 
         /// 784. Letter Case Permutation

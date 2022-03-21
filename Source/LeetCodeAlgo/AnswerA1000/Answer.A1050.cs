@@ -8,7 +8,42 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1071. Greatest Common Divisor of Strings
+        ///1054. Distant Barcodes, #PriorityQueue, #Heap
+        ///Rearrange the barcodes so that no two adjacent barcodes are equal.
+        public int[] RearrangeBarcodes(int[] barcodes)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach(var bar in barcodes)
+            {
+                if(dict.ContainsKey(bar))dict[bar]++;
+                else dict.Add(bar, 1);
+            }
+
+            //sort by occurrence - max heap
+            PriorityQueue<int, int> queue = new PriorityQueue<int, int>();
+
+            foreach (var k in dict.Keys)
+            {
+                queue.Enqueue(k,dict[k]);
+            }
+
+            // poll from queue - put into res array
+            int[] res = new int[barcodes.Length];
+            int i = 0;//start from index-0, traversal all even indexes
+            while (queue.Count>0)
+            {
+                var key = queue.Dequeue();
+                while (dict[key]-- > 0)
+                {
+                    res[i] = key;
+                    i += 2;
+                    //if exceed length,aka all even index already done, reset to index 1 for all odd indexes
+                    if (i >= barcodes.Length) i = 1;
+                }
+            }
+            return res;
+        }
+        /// 1071. Greatest Common Divisor of Strings
         ///Given two strings str1 and str2, return the largest string x such that x divides both str1 and str2.
         public string GcdOfStrings(string str1, string str2)
         {
