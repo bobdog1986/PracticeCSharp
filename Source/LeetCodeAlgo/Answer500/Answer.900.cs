@@ -18,6 +18,22 @@ namespace LeetCodeAlgo
             }
             return res.ToArray();
         }
+
+        ///908. Smallest Range I
+        ///The score of nums is the difference between the maximum and minimum elements in nums.
+        ///Return the minimum score of nums after applying the mentioned operation at most once for each index in it.
+        public int SmallestRangeI(int[] nums, int k)
+        {
+            int max = nums[0];
+            int min = nums[0];
+            foreach(var n in nums)
+            {
+                max=Math.Max(max, n);
+                min=Math.Min(min, n);
+            }
+            return Math.Max(0, max - min - 2 * k);
+        }
+
         /// 918. Maximum Sum Circular Subarray
         ///Kadane algorithm, find max-of-positive and min-of-negtive, return max-of-positive or Sum()- min-of-neg
         public int MaxSubarraySumCircular(int[] nums)
