@@ -134,7 +134,39 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///693. Binary Number with Alternating Bits
+        ///678. Valid Parenthesis String
+        ///Given a string s containing only three types of characters: '(', ')' and '*', return true if s is valid.
+        ///'*' could be treated as a single right parenthesis ')' or a single left parenthesis '(' or an empty string "".
+        public bool CheckValidString(string s)
+        {
+            int cmin = 0, cmax = 0; // open parentheses count in range [cmin, cmax]
+            foreach (var c in s)
+            {
+                if (c == '(')
+                {
+                    cmax++;
+                    cmin++;
+                }
+                else if (c == ')')
+                {
+                    cmax--;
+                    cmin--;
+                }
+                else if (c == '*')
+                {
+                    cmax++; // if `*` become `(` then openCount++
+                    cmin--; // if `*` become `)` then openCount--
+                            // if `*` become `` then nothing happens
+                            // So openCount will be in new range [cmin-1, cmax+1]
+                }
+                if (cmax < 0) return false; // Currently, don't have enough open parentheses to match close parentheses-> Invalid
+                                            // For example: ())(
+                cmin = Math.Max(cmin, 0);   // It's invalid if open parentheses count < 0 that's why cmin can't be negative
+            }
+            return cmin == 0; // Return true if can found `openCount == 0` in range [cmin, cmax]
+        }
+
+        /// 693. Binary Number with Alternating Bits
         ///Given a positive integer, check whether it has alternating bits, adjacent bits always have different values.
         public bool HasAlternatingBits(int n)
         {
