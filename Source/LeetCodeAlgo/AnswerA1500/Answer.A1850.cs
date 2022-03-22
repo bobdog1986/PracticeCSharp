@@ -31,5 +31,29 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///1886. Determine Whether Matrix Can Be Obtained By Rotation
+        ///Given two n x n binary matrices mat and target, return true if it is possible to
+        ///make mat equal to target by rotating mat in 90-degree increments, or false otherwise.
+        public bool FindRotation(int[][] mat, int[][] target)
+        {
+            int n=mat.Length;
+            bool[] rotate =new bool[4];
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    //every time rotate right 90 degree, row=j,col=n-1-i;
+                    if (!rotate[0] && mat[i][j] != target[i][j]) rotate[0] = true;
+                    if (!rotate[1] && mat[j][n - 1 - i] != target[i][j]) rotate[1] = true;
+                    if (!rotate[2] && mat[n - 1 - i][n - 1 - j] != target[i][j]) rotate[2] = true;
+                    if (!rotate[3] && mat[n - 1 - j][i] != target[i][j]) rotate[3] = true;
+                    if (rotate[0] && rotate[1] && rotate[2] && rotate[3]) return false;
+                }
+            }
+            return true;
+        }
+
+
     }
 }
