@@ -701,6 +701,21 @@ namespace LeetCodeAlgo
             if(curr.Count>0) ans.Add(curr);
             return ans.Select(x => string.Join("->", x)).ToList();
         }
+        ///229. Majority Element II
+        ///Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ times.
+        public IList<int> MajorityElement_229(int[] nums)
+        {
+            var res = new List<int>();
+            int count = nums.Length / 3;
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach(var n in nums)
+            {
+                if (!dict.ContainsKey(n)) dict.Add(n, 1);
+                else dict[n]++;
+                if(dict[n]==count+1)res.Add(n);
+            }
+            return res;
+        }
         /// 230. Kth Smallest Element in a BST
         ///copy from InorderTraversal_Iteration()
         public int KthSmallest(TreeNode root, int k)
