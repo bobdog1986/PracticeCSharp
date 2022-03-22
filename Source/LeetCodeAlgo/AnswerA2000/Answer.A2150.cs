@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,7 +38,41 @@ namespace LeetCodeAlgo
             }
             return res;
         }
-        ///2196. Create Binary Tree From Descriptions
+        ///2195. Append K Integers With Minimal Sum, #PriorityQueue, #Heap
+        ///You are given an integer array nums and an integer k.
+        ///Append k unique positive integers that do not appear in nums to nums such that the resulting total sum is minimum.
+        ///Return the sum of the k integers appended to nums.
+        public long MinimalKSum(int[] nums, int k)
+        {
+            long res = 0;
+            PriorityQueue<int,int> priorityQueue = new PriorityQueue<int,int>();
+            foreach(var n in nums)
+                priorityQueue.Enqueue(n,n);//min heap
+
+            int lastIndex = 0;
+            while (priorityQueue.Count > 0)
+            {
+                int currIndex = priorityQueue.Dequeue();
+                if (lastIndex == currIndex) continue;
+                else
+                {
+                    //how many nums in range [lastIndex + 1,currIndex - 1], inclusive
+                    int count = currIndex - 1 - (lastIndex+1) + 1;
+                    if (count >= k) count = k;//if exceed k, only append k nums
+                    res += (lastIndex + 1 + lastIndex + count) * (long)count / 2;
+                    k -= count;
+                    lastIndex = currIndex;//update lastIndex
+                }
+            }
+
+            if (k > 0)// if still k>0
+            {
+                res += (lastIndex + 1 + lastIndex + k) * (long)k / 2;
+            }
+
+            return res;
+        }
+        /// 2196. Create Binary Tree From Descriptions
         ///descriptions[i] = [parenti, childi, isLefti] indicates that parenti is the parent of childi in a binary tree of unique values. Furthermore,
         ///If isLefti == 1, then childi is the left child of parenti.
         ///If isLefti == 0, then childi is the right child of parenti.

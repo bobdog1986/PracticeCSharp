@@ -11,10 +11,10 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Answer();
-            var arr1 = new int[] { 2, 5, 1, 3, 4, 7 };
+            var arr1 = new int[] {1,4,25,10,25 };
             var arr2 = new int[] { 2, 1, 2, 2, 2, 2, 2, 2 };
             int k = 2;
-            var val1 = 3;
+            var val1 = 2;
             var val2 = 100;
             ///uint uintVal =0b10000000_00000000_00000000_00000000;
             //var str1 = "())(((()m)(";
@@ -111,7 +111,7 @@ namespace LeetCodeAlgo
             //Console.WriteLine("input string is = "+ str1);
             // anwser.GcdOfStrings(arr1);
 
-            var result = anwser.CountVowels("aa");
+            var result = anwser.MinimalKSum(arr1,val1);
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
             Console.WriteLine("***********Output Result*******");
