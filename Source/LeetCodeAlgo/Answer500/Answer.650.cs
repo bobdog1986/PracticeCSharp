@@ -22,7 +22,22 @@ namespace LeetCodeAlgo
             return FindTarget(root.left, k, dict) || FindTarget(root.right, k, dict);
         }
 
-        ///662. Maximum Width of Binary Tree
+        ///657. Robot Return to Origin
+        ///Return true if the robot returns to the origin after it finishes all of its moves, or false otherwise.
+        public bool JudgeCircle(string moves)
+        {
+            int x = 0;
+            int y = 0;
+            foreach(var c in moves)
+            {
+                if (c == 'R') x++;
+                else if (c == 'L') x--;
+                else if (c == 'U') y++;
+                else if (c == 'D') y--;
+            }
+            return x == 0 && y == 0;
+        }
+        /// 662. Maximum Width of Binary Tree
         ///The maximum width of a tree is the maximum width among all levels.
         ///The width of one level is defined as the length between the end-nodes(the leftmost and rightmost non-null nodes),
         ///where the null nodes between the end-nodes are also counted into the length calculation.
