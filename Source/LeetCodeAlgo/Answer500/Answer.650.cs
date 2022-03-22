@@ -166,6 +166,51 @@ namespace LeetCodeAlgo
             return cmin == 0; // Return true if can found `openCount == 0` in range [cmin, cmax]
         }
 
+        ///679. 24 Game, #Backtracking
+        ///Return true if you can get such expression that evaluates to 24, and false otherwise.
+        public bool JudgePoint24(int[] cards)
+        {
+            List<double> list = new List<double>();
+            foreach (int n in cards)
+                list.Add(n);
+            bool res = false;
+            JudgePoint24_BackTracking(list,ref res);
+            return res;
+        }
+
+        private void JudgePoint24_BackTracking(IList<double> list, ref bool res, double diff=0.01)
+        {
+            if (res) return;
+            if (list.Count == 1)
+            {
+                if (Math.Abs(list[0] - 24) < diff)
+                    res = true;
+                return;
+            }
+            for (int i = 0; i < list.Count; i++)
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    double p1 = list[i];
+                    double p2 = list[j];
+
+                    //all possible combine of '+','-','*','/' between p1 and p2
+                    List<double> candidates = new List<double>() { p1 + p2, p1 - p2, p2 - p1, p1 * p2 };
+                    if (Math.Abs(p2) > diff) candidates.Add(p1 / p2);
+                    if (Math.Abs(p1) > diff) candidates.Add(p2 / p1);
+
+                    list.RemoveAt(i);//remove p1 at i first, then p2 at j
+                    list.RemoveAt(j);
+                    foreach (var n in candidates)
+                    {
+                        List<double> next= new List<double>(list) { n};
+                        JudgePoint24_BackTracking(next, ref res);
+                    }
+                    list.Insert(j, p2);//if failed recovery p2 at j then p1 at i
+                    list.Insert(i, p1);
+                }
+            }
+        }
         /// 693. Binary Number with Alternating Bits
         ///Given a positive integer, check whether it has alternating bits, adjacent bits always have different values.
         public bool HasAlternatingBits(int n)
