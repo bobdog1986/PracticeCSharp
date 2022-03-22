@@ -1084,39 +1084,63 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        ///132. Palindrome Partitioning II
+        ///132. Palindrome Partitioning II,#DP
         ///Given a string s, partition s such that every substring of the partition is a palindrome.
         ///Return the minimum cuts needed for a palindrome partitioning of s.
         public int MinCut(string s)
         {
-            return MinCut_Recursion(s)-1;
+            if (s == null || s.Length <= 1)
+            {
+                return 0;
+            }
+            // dp
+            int n = s.Length;
+            int[] dp = new int[n]; // initial value: dp[i] = i
+            for (int i = 0; i < n; i++)
+                dp[i] = i;
+
+            for (int mid = 1; mid < n; mid++)
+            {
+                // iterate through all chars as mid point of palindrome
+                // CASE 1. odd len: center is at index mid, expand on both sides
+                for (int start = mid, end = mid; start >= 0 && end < n && s[start] == s[end]; start--, end++)
+                {
+                    int newCutAtEnd = (start == 0) ? 0 : dp[start - 1] + 1;
+                    dp[end] = Math.Min(dp[end], newCutAtEnd);
+                }
+                // CASE 2: even len: center is between [mid-1,mid], expand on both sides
+                for (int start = mid - 1, end = mid; start >= 0 && end < n && s[start] == s[end]; start--, end++)
+                {
+                    int newCutAtEnd = (start == 0) ? 0 : dp[start - 1] + 1;
+                    dp[end] = Math.Min(dp[end], newCutAtEnd);
+                }
+            }
+            return dp[n - 1];
         }
 
-        public int MinCut_Recursion(string s)
+        public int MinCut2(string s)
         {
-            if (string.IsNullOrEmpty(s)) return 0;
-            int left = 0;
-            int right = 0;
-            for (int i = 0; i < s.Length; i++)
-            {
-                if (Partition_IsPalindrome(s.Substring(0, i + 1)))
-                    left = i;
-                if (Partition_IsPalindrome(s.Substring(s.Length - 1 - i)))
-                    right = i;
-            }
+            //cut[i] is the minimum of cut[j - 1] + 1 (j <= i), if [j, i] is palindrome.
+            //If[j, i] is palindrome, [j +1, i - 1] is palindrome, and arr[j] == arr[i].
+            char[] arr = s.ToArray();
+            int n = arr.Length;
+            int[] cut = new int[n];
+            bool[,] pal = new bool[n, n];
 
-            if (left > right)
+            for (int i = 0; i < n; i++)
             {
-                return 1 + MinCut_Recursion(s.Substring(left + 1));
+                int min = i;
+                for (int j = 0; j <= i; j++)
+                {
+                    if (arr[j] == arr[i] && (j + 1 > i - 1 || pal[j + 1, i - 1]))
+                    {
+                        pal[j, i] = true;
+                        min = j == 0 ? 0 : Math.Min(min, cut[j - 1] + 1);
+                    }
+                }
+                cut[i] = min;
             }
-            else if(left<right)
-            {
-                return 1 + MinCut_Recursion(s.Substring(0,s.Length - 1 - right));
-            }
-            else
-            {
-                return Math.Min(1 + MinCut_Recursion(s.Substring(left + 1)), 1 + MinCut_Recursion(s.Substring(0, s.Length - 1 - right)));
-            }
+            return cut[n - 1];
         }
 
         /// 133. Clone Graph, #Graph, #DFS
