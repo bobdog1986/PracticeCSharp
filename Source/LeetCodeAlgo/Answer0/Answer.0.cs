@@ -1609,189 +1609,53 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        /// 37. Sudoku Solver -- part done, cannot pass any hard mode testcase
+        /// 37. Sudoku Solver, #Backtracking
         public void SolveSudoku(char[][] board)
         {
-            List<List<int>> rowMatrix = new List<List<int>>();
-            List<List<int>> colMatrix = new List<List<int>>();
-            List<List<int>> cellMatrix = new List<List<int>>();
-            for (int i = 0; i < 9; i++)
-            {
-                rowMatrix.Add(new List<int>());
-                colMatrix.Add(new List<int>());
-                cellMatrix.Add(new List<int>());
-            }
-
-            int puzzle = 0;
-
+            if (board == null || board.Length == 0)
+                return;
+            SolveSudoku_Solve(board);
+        }
+        private bool SolveSudoku_Solve(char[][] board)
+        {
             for (int i = 0; i < board.Length; i++)
             {
-                for (int j = 0; j < board[i].Length; j++)
+                for (int j = 0; j < board[0].Length; j++)
                 {
                     if (board[i][j] == '.')
                     {
-                        puzzle++;
-                        continue;
-                    }
-                    var val = getDigit(board[i][j]);
-
-                    rowMatrix[i].Add(val);
-                    colMatrix[j].Add(val);
-                    cellMatrix[i / 3 * 3 + j / 3].Add(val);
-                }
-            }
-
-            int loop = 1;
-            while (puzzle > 0)
-            {
-                int lastPuzzle = puzzle;
-                Console.WriteLine($"Loop {loop} start!!! puzzle = {puzzle}");
-                Console.WriteLine(String.Join("\r\n", board.Select(o => String.Join(" ", o))));
-
-                for (int r = 0; r < board.Length; r++)
-                {
-                    for (int c = 0; c < board[r].Length; c++)
-                    {
-                        if (board[r][c] == '.')
+                        for (char c = '1'; c <= '9'; c++)
                         {
-                            int val = SolveSudoku_Find(board, rowMatrix, colMatrix, cellMatrix, r, c);
-                            if (val > 0)
+                            if (SolveSudoku_isValid(board, i, j, c))
                             {
-                                board[r][c] = getChar(val);
-                                rowMatrix[r].Add(val);
-                                colMatrix[c].Add(val);
-                                cellMatrix[r / 3 * 3 + c / 3].Add(val);
-                                puzzle--;
-                                continue;
+                                board[i][j] = c; //Put c for this cell
+
+                                if (SolveSudoku_Solve(board))
+                                    return true; //If it's the solution return true
+                                else
+                                    board[i][j] = '.'; //Otherwise go back
                             }
                         }
+
+                        return false;
                     }
                 }
-
-                Console.WriteLine($"Loop {loop} done!!! puzzle left = {puzzle}, solve {lastPuzzle - puzzle}");
-                if (lastPuzzle != puzzle)
-                    Console.WriteLine(String.Join("\r\n", board.Select(o => String.Join(" ", o))));
-                else
-                    break;
-
-                loop++;
             }
-
-            Console.WriteLine("done");
+            return true;
         }
 
-        public int SolveSudoku_Find(char[][] board, List<List<int>> rowMat, List<List<int>> colMat, List<List<int>> cellMat, int r, int c)
+        private bool SolveSudoku_isValid(char[][] board, int row, int col, char c)
         {
-            var list = new List<int>();
-
-            var rowList = rowMat[r];
-            var colList = colMat[c];
-            var cellList = cellMat[r / 3 * 3 + c / 3];
-            list.AddRange(rowList);
-            list.AddRange(colList);
-            list.AddRange(cellList);
-            list = list.Distinct().ToList();
-
-            List<int> full = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-            if (list.Count == 8)
+            for (int i = 0; i < 9; i++)
             {
-                //sum to 9 solve case1 to 34 remain
-                return full.Sum() - list.Sum();
+                if (board[i][col] != '.' && board[i][col] == c) return false; //check row
+                if (board[row][i] != '.' && board[row][i] == c) return false; //check column
+                if (board[3 * (row / 3) + i / 3][3 * (col / 3) + i % 3] != '.' &&
+                    board[3 * (row / 3) + i / 3][3 * (col / 3) + i % 3] == c)
+                    return false; //check 3*3 block
             }
-            else
-            {
-                //return 0;
-                var candidates = full.Where(x => !list.Contains(x)).ToList();
-                //var candidates= full.Where(x=>!rowList.Contains(x)&&!colList.Contains(x)&&!cellList.Contains(x)).ToList();
-
-                int r1 = 0;
-                int r2 = 0;
-                if (r % 3 == 0)
-                {
-                    r1 = r + 1;
-                    r2 = r + 2;
-                }
-                else if (r % 3 == 1)
-                {
-                    r1 = r - 1;
-                    r2 = r + 1;
-                }
-                else
-                {
-                    r1 = r - 2;
-                    r2 = r - 1;
-                }
-
-                int c1 = 0;
-                int c2 = 0;
-                if (c % 3 == 0)
-                {
-                    c1 = c + 1;
-                    c2 = c + 2;
-                }
-                else if (c % 3 == 1)
-                {
-                    c1 = c - 1;
-                    c2 = c + 1;
-                }
-                else
-                {
-                    c1 = c - 2;
-                    c2 = c - 1;
-                }
-
-                var row1 = rowMat[r1];
-                var row2 = rowMat[r2];
-                var col1 = colMat[c1];
-                var col2 = colMat[c2];
-
-                var hor1 = board[r][c1];
-                var hor2 = board[r][c2];
-                var ver1 = board[r1][c];
-                var ver2 = board[r2][c];
-
-                bool isRow1Full = board[r1][c] != '.' && board[r1][c1] != '.' && board[r1][c2] != '.';
-                bool isRow2Full = board[r2][c] != '.' && board[r2][c1] != '.' && board[r2][c2] != '.';
-                bool isCol1Full = board[r][c1] != '.' && board[r1][c1] != '.' && board[r2][c1] != '.';
-                bool isCol2Full = board[r][c2] != '.' && board[r1][c2] != '.' && board[r2][c2] != '.';
-
-                foreach (var candi in candidates)
-                {
-                    //if (row1.Contains(candi)
-                    //    && row2.Contains(candi)
-                    //    && hor1 != '.'
-                    //    && hor2 != '.')
-                    //{
-                    //    return candi;
-                    //}
-                    //if (col1.Contains(candi)
-                    //    && col2.Contains(candi)
-                    //    && ver1 != '.'
-                    //    && ver2 != '.')
-                    //{
-                    //    return candi;
-                    //}
-
-                    //if (row1.Contains(candi)
-                    //    && row2.Contains(candi)
-                    //    && col1.Contains(candi)
-                    //    && col2.Contains(candi))
-                    //{
-                    //    return candi;
-                    //}
-                    if ((row1.Contains(candi) || isRow1Full)
-                        && (row2.Contains(candi) || isRow2Full)
-                        && (col1.Contains(candi) || isCol1Full)
-                        && (col2.Contains(candi) || isCol2Full))
-                    {
-                        return candi;
-                    }
-                }
-
-                return 0;
-            }
+            return true;
         }
-
         /// 38. Count and Say, #DP
         ///countAndSay(n) is the way you would "say" the digit string from countAndSay(n-1),countAndSay(1) = "1"
         ///eg. countAndSay(2)=say 'one' '1'= 11,countAndSay(3)=two '1' =21, countAndSay(3)=one '2' one '1'=1211
