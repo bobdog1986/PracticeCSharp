@@ -131,6 +131,18 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///771. Jewels and Stones
+        public int NumJewelsInStones(string jewels, string stones)
+        {
+            int res = 0;
+            HashSet<char> set = new HashSet<char>();
+            foreach (var j in jewels)
+                set.Add(j);
+
+            foreach (var s in stones)
+                if (set.Contains(s)) res++;
+            return res;
+        }
         /// 784. Letter Case Permutation
         ///ref 77 Combines()
         ///Given a string s, you can transform every letter individually to be lowercase or uppercase to create another string.
