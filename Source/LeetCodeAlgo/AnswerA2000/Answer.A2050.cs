@@ -26,6 +26,22 @@ namespace LeetCodeAlgo
             }
             return string.Empty;
         }
+        ///2063. Vowels of All Substrings, O(n)
+        ///Given a string word, return the sum of the number of vowels ('a', 'e', 'i', 'o', and 'u') in every substring of word.
+        public long CountVowels(string word)
+        {
+            //For each vowels s[i], it could be in the substring starting at s[x] and ending at s[y],
+            //where 0 <= x <= i and i <= y < n ,that is (i + 1) choices for x and (n - i) choices for y.
+            //So there are(i + 1) * (n - i) substrings containing s[i]
+            HashSet<char> set = new HashSet<char>() { 'a', 'e', 'i', 'o', 'u' };
+            long res = 0, n = word.Length;
+            for (int i = 0; i < n; i++)
+                if (set.Contains(word[i]))
+                    res += (i + 1) * (n - i);
+            return res;
+
+        }
+
         /// 2068. Check Whether Two Strings are Almost Equivalent
         ///Given two strings word1 and word2, each of length n, return true if word1 and word2 are almost equivalent or false
         ///differences between the frequencies of each letter from 'a' to 'z' between word1 and word2 is at most 3.
