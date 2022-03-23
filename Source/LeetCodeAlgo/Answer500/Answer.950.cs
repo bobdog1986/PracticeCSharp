@@ -254,6 +254,23 @@ namespace LeetCodeAlgo
             return list;
         }
 
+        ///991. Broken Calculator
+        ///multiply the number on display by 2, or subtract 1 from the number on display.
+        /// return the minimum number of operations needed to display target on the calculator.
+        public int BrokenCalc(int startValue, int target)
+        {
+            int res = 0;
+            while (target > startValue)
+            {
+                if (target % 2 == 0)
+                    target = target / 2;
+                else
+                    target += 1;
+                res++;
+            }
+            return res + (startValue - target);
+        }
+
         /// 994. Rotting Oranges
         public int OrangesRotting(int[][] grid)
         {
