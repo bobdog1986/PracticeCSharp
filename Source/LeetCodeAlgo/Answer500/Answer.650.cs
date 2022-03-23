@@ -12,13 +12,14 @@ namespace LeetCodeAlgo
         ///return true if there exist two elements in the BST such that sum = target.
         public bool FindTarget(TreeNode root, int k)
         {
-            return FindTarget(root, k, new Dictionary<int,int>());
+            return FindTarget(root, k, new Dictionary<int, int>());
         }
+
         public bool FindTarget(TreeNode root, int k, Dictionary<int, int> dict)
         {
             if (root == null) return false;
             if (dict.ContainsKey(root.val)) return true;
-            dict.Add(k - root.val,1);
+            dict.Add(k - root.val, 1);
             return FindTarget(root.left, k, dict) || FindTarget(root.right, k, dict);
         }
 
@@ -28,7 +29,7 @@ namespace LeetCodeAlgo
         {
             int x = 0;
             int y = 0;
-            foreach(var c in moves)
+            foreach (var c in moves)
             {
                 if (c == 'R') x++;
                 else if (c == 'L') x--;
@@ -37,6 +38,7 @@ namespace LeetCodeAlgo
             }
             return x == 0 && y == 0;
         }
+
         /// 662. Maximum Width of Binary Tree
         ///The maximum width of a tree is the maximum width among all levels.
         ///The width of one level is defined as the length between the end-nodes(the leftmost and rightmost non-null nodes),
@@ -84,7 +86,7 @@ namespace LeetCodeAlgo
             int n = num;
             while (n > 0)
             {
-                list.Add(n%10);
+                list.Add(n % 10);
                 n /= 10;
             }
             if (list.Count > 1)
@@ -92,8 +94,8 @@ namespace LeetCodeAlgo
                 int start = list.Count - 1;
                 while (start > 0)
                 {
-                    var next=new List<int>();
-                    for(int i = 0; i <= start; i++)
+                    var next = new List<int>();
+                    for (int i = 0; i <= start; i++)
                         next.Add(list[i]);
                     if (list[start] != next.Max()) break;
                     start--;
@@ -106,10 +108,10 @@ namespace LeetCodeAlgo
                         next.Add(list[i]);
                     while (end < next.Count)
                     {
-                        if(next[end] == next.Max()) break;
+                        if (next[end] == next.Max()) break;
                         end++;
                     }
-                    num += (int)((list[end]-list[start]) * Math.Pow(10, start) - (list[end] - list[start]) * Math.Pow(10, end));
+                    num += (int)((list[end] - list[start]) * Math.Pow(10, start) - (list[end] - list[start]) * Math.Pow(10, end));
                 }
             }
             return num;
@@ -189,11 +191,11 @@ namespace LeetCodeAlgo
             foreach (int n in cards)
                 list.Add(n);
             bool res = false;
-            JudgePoint24_BackTracking(list,ref res);
+            JudgePoint24_BackTracking(list, ref res);
             return res;
         }
 
-        private void JudgePoint24_BackTracking(IList<double> list, ref bool res, double diff=0.01)
+        private void JudgePoint24_BackTracking(IList<double> list, ref bool res, double diff = 0.01)
         {
             if (res) return;
             if (list.Count == 1)
@@ -218,7 +220,7 @@ namespace LeetCodeAlgo
                     list.RemoveAt(j);
                     foreach (var n in candidates)
                     {
-                        List<double> next= new List<double>(list) { n};
+                        List<double> next = new List<double>(list) { n };
                         JudgePoint24_BackTracking(next, ref res);
                     }
                     list.Insert(j, p2);//if failed recovery p2 at j then p1 at i
@@ -226,6 +228,32 @@ namespace LeetCodeAlgo
                 }
             }
         }
+
+        ///692. Top K Frequent Words, #PriorityQueue, #Heap
+        ///Given an array of strings words and an integer k, return the k most frequent strings.
+        ///Return the answer sorted by the frequency from highest to lowest.
+        ///Sort the words with the same frequency by their lexicographical order.
+        public IList<string> TopKFrequent(string[] words, int k)
+        {
+            List<string> res = new List<string>();
+            Dictionary<string, int> dict = new Dictionary<string, int>();
+            foreach (var word in words)
+            {
+                if (dict.ContainsKey(word)) dict[word]++;
+                else dict.Add(word, 1);
+            }
+
+            PriorityQueue<string, string> queue = new PriorityQueue<string, string>(
+                Comparer<string>.Create ((s1, s2) => dict[s1] == dict[s2] ? s1.CompareTo(s2): dict[s2] - dict[s1] ));
+            foreach (var key in dict.Keys)
+                queue.Enqueue(key, key);
+
+            while (k-- > 0)
+                res.Add(queue.Dequeue());
+
+            return res;
+        }
+
         /// 693. Binary Number with Alternating Bits
         ///Given a positive integer, check whether it has alternating bits, adjacent bits always have different values.
         public bool HasAlternatingBits(int n)
@@ -233,7 +261,7 @@ namespace LeetCodeAlgo
             bool last = (n & 1) == 0;
             while (n > 0)
             {
-                bool curr= (n & 1) == 1;
+                bool curr = (n & 1) == 1;
                 if (curr == last) return false;
                 last = curr;
                 n >>= 1;
@@ -262,7 +290,7 @@ namespace LeetCodeAlgo
                         while (queue.Count > 0)
                         {
                             var curr = queue.Dequeue();
-                            foreach(var d in dxy4)
+                            foreach (var d in dxy4)
                             {
                                 int r = curr[0] + d[0];
                                 int c = curr[1] + d[1];
@@ -393,6 +421,5 @@ namespace LeetCodeAlgo
                 }
             }
         }
-
     }
 }

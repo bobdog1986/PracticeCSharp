@@ -168,32 +168,21 @@ namespace LeetCodeAlgo
                 return 0;
             }
         }
-        /// 973. K Closest Points to Origin
+        /// 973. K Closest Points to Origin, #PriorityQueue, #Heap
         ///return the k closest points to the origin (0, 0).
         public int[][] KClosest(int[][] points, int k)
         {
-            Dictionary<int, List<int[]>> dict = new Dictionary<int, List<int[]>>();
-            foreach (var p in points)
+            List<int[]> res=new List<int[]>();
+            PriorityQueue<int[],int> priorityQueue = new PriorityQueue<int[],int>();
+            foreach(var p in points)
             {
-                var distance = p[0] * p[0] + p[1] * p[1];
-                if (dict.ContainsKey(distance))
-                {
-                    dict[distance].Add(p);
-                }
-                else
-                {
-                    dict.Add(distance, new List<int[]>() { p });
-                }
+                priorityQueue.Enqueue(p, p[0] * p[0] + p[1] * p[1]);
             }
-            var mat = dict.OrderBy(x => x.Key).Select(x => x.Value).ToList();
-            List<int[]> ans = new List<int[]>();
-            foreach (var list in mat)
+            while (k-- > 0)
             {
-                ans.AddRange(list);
-                if (ans.Count == k)
-                    break;
+                res.Add(priorityQueue.Dequeue());
             }
-            return ans.ToArray();
+            return res.ToArray();
         }
         ///976. Largest Perimeter Triangle
         /// return the largest sum of perimeter of a triangle, formed from three of these lengths. Or 0 if impossible
