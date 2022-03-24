@@ -216,7 +216,21 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///415. Add Strings
+        ///414. Third Maximum Number
+        ///Given an integer array nums, return the third distinct maximum number in this array.
+        ///If the third maximum does not exist, return the maximum number.
+        public int ThirdMax(int[] nums)
+        {
+            SortedSet<int> set = new SortedSet<int>();
+            foreach(var n in nums)
+                set.Add(n);
+
+            if(set.Count>=3)return set.ElementAt(set.Count-3);
+            else return set.ElementAt(set.Count - 1);
+        }
+
+
+        /// 415. Add Strings
         ///Given two non-negative integers, num1 and num2 represented as string, return the sum of num1 and num2 as a string.
         // input maybe so big!!! cannot use any int/long type
         public string AddStrings(string num1, string num2)
