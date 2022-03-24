@@ -71,6 +71,69 @@ namespace LeetCodeAlgo
             }
             return max;
         }
+        ///1630. Arithmetic Subarrays
+        ///Return a list of boolean elements answer, where answer[i] is true if the subarray
+        ///nums[l[i]], nums[l[i]+1], ... , nums[r[i]] can be rearranged to form an arithmetic sequence or false.
+        public IList<bool> CheckArithmeticSubarrays_QuickSort(int[] nums, int[] l, int[] r)
+        {
+            bool[] res=new bool[l.Length];
+            for(int i= 0; i < l.Length; i++)
+            {
+                int len = r[i] -l[i]+1;
+                int[] arr=new int[len];
+                for(int j = l[i]; j <= r[i]; j++)
+                {
+                    arr[j - l[i]] = nums[j];
+                }
+
+                res[i] = CheckArithmeticSubarrays_QuickSort(arr);
+            }
+            return res.ToList();
+        }
+        private bool CheckArithmeticSubarrays_QuickSort(int[] arr)
+        {
+            if (arr.Length <= 2) return true;
+
+            Array.Sort(arr);
+            int diff = arr[1] - arr[0];
+            for(int i = 2; i < arr.Length; i++)
+            {
+                if(arr[i] - arr[i-1]!= diff) return false;
+            }
+            return true;
+        }
+
+        public IList<bool> CheckArithmeticSubarrays(int[] nums, int[] l, int[] r)
+        {
+            bool[] res = new bool[l.Length];
+            for (int i = 0; i < l.Length; i++)
+            {
+                res[i] = CheckArithmeticSubarrays_IsArithmeticSeq(nums, l[i], r[i]);
+            }
+            return res.ToList();
+        }
+
+        private bool CheckArithmeticSubarrays_IsArithmeticSeq(int[] nums, int start, int end)
+        {
+            if (end - start < 2) return true;
+
+            int min = int.MaxValue, max = int.MinValue;
+            HashSet<int> set = new HashSet<int>();
+            for (int i = start; i <= end; i++)
+            {
+                min = Math.Min(min, nums[i]);
+                max = Math.Max(max, nums[i]);
+                set.Add(nums[i]);
+            }
+
+            if ((max - min) % (end - start) != 0) return false;
+            int interval = (max - min) / (end - start);
+            for (int i = 1; i <= end - start; i++)
+            {
+                if (!set.Contains(min + i * interval)) return false;
+            }
+            return true;
+        }
         /// 1636. Sort Array by Increasing Frequency
         ///sort the array in increasing order based on the frequency of the values.
         ///If multiple values have the same frequency, sort them in decreasing order.
