@@ -154,7 +154,52 @@ namespace LeetCodeAlgo
             return (int)(low % mod);
         }
 
-        ///884. Uncommon Words from Two Sentences
+        ///881. Boats to Save People, #Two Pointers, #Buckets
+        ///You are given an array people where people[i] is the weight of the ith person,
+        ///and an infinite number of boats where each boat can carry a maximum weight of limit.
+        ///Each boat carries at most two people at the same time, provided the sum of the weight of those people is at most limit.
+        ///Return the minimum number of boats to carry every given person.
+        public int NumRescueBoats_TwoPointers(int[] people, int limit)
+        {
+            Array.Sort(people);
+            int res = 0;
+            int start = 0;
+            int end = people.Length - 1;
+            while (start <= end)
+            {
+                res++;
+                if (start == end) break; // last person on boat
+                if (people[start] + people[end] <= limit) start++; // we can carry two people
+                end--;
+            }
+            return res;
+        }
+        public int NumRescueBoats_Buckets(int[] people, int limit)
+        {
+            int[] buckets = new int[limit + 1];
+            foreach (var p in people)
+                buckets[p]++;
+
+            int start = 0;
+            int end = buckets.Length - 1;
+            int res = 0;
+            while (start <= end)
+            {
+                //make sure the start always point to a valid number
+                while (start <= end && buckets[start] <= 0) start++;
+                //make sure end always point to valid number
+                while (start <= end && buckets[end] <= 0) end--;
+                //no one else left on the ship, hence break.
+                if (buckets[start] <= 0 && buckets[end] <= 0) break;
+                res++;
+                if (start + end <= limit) buckets[start]--; // both start and end can carry on the boat
+                buckets[end]--;
+            }
+            return res;
+        }
+
+
+        /// 884. Uncommon Words from Two Sentences
         ///Given two sentences s1 and s2, return a list of all the uncommon words. You may return the answer in any order.
         public string[] UncommonFromSentences(string s1, string s2)
         {
