@@ -682,6 +682,25 @@ namespace LeetCodeAlgo
 
         ///341. Flatten Nested List Iterator, see NestedIterator
 
+        ///342. Power of Four
+        ///Given an integer n, return true if it is a power of four. Otherwise, return false.
+        ///An integer n is a power of four, if there exists an integer x such that n == 4x.
+        public bool IsPowerOfFour_Math(int n)
+        {
+            return n>0 && (n & (n-1)) ==0 && (n & 0xAAAAAAAA)==0;
+        }
+
+        public bool IsPowerOfFour_My(int n)
+        {
+            if (n <= 0) return false;
+            while (n > 0)
+            {
+                if (n == 1) return true;
+                if ((n & 3) != 0) return false;
+                n >>= 2;
+            }
+            return false;
+        }
         /// 343. Integer Break, #DP
         ///find 3 as many as possible, but no 1; 2 <= n <= 58
         public int IntegerBreak(int n)
