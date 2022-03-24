@@ -750,6 +750,44 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///441. Arranging Coins, #Binary Search
+        ///You have n coins and you want to build a staircase with these coins.
+        ///The staircase consists of k rows where the ith row has exactly i coins. The last row of the staircase may be incomplete.
+        ///Given the integer n, return the number of complete rows of the staircase you will build.
+        public int ArrangeCoins(int n)
+        {
+            int res = 0;
+            int row = 1;
+            while (n > 0)
+            {
+                n -= row++;
+                if(n>=0) res++;
+            }
+            return res;
+        }
+        public int ArrangeCoins_BinarySearch(int n)
+        {
+            long left = 0; // we use "long" because we may get an integer overflow
+            long right = n;
+            while (left <= right)
+            {
+                long pivot = left + (right - left) / 2;
+                long coinsUsed = pivot * (pivot + 1) / 2;
+                if (coinsUsed == n)
+                {
+                    return (int)pivot;
+                }
+                else if (n < coinsUsed)
+                {
+                    right = pivot - 1;
+                }
+                else
+                {
+                    left = pivot + 1;
+                }
+            }
+            return (int)right; // cast as an "int" because it was initiliazed as a "long"
+        }
         /// 443
         public int Compress(char[] chars)
         {
