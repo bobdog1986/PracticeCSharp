@@ -7,7 +7,34 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///509. Fibonacci Number
+        ///503. Next Greater Element II ,#Monotonic Function
+        ///Given a circular integer array nums (i.e., the next element of nums[nums.length - 1] is nums[0]),
+        ///return the next greater number for every element in nums.
+        ///The next greater number of a number x is the first greater number to its traversing-order next in the array,
+        ///which means you could search circularly to find its next greater number.If it doesn't exist, return -1 for this number.
+        public int[] NextGreaterElements(int[] nums)
+        {
+            int len = nums.Length;
+            int[] res = new int[len];
+            for (int i = 0; i < res.Length; i++)
+                res[i] = -1;
+
+            Stack<int> stack = new Stack<int>();
+
+            for (int i = 0; i < len * 2; i++)
+            {
+                while (stack.Count > 0 && nums[i % len] > nums[stack.Peek() % len])
+                {
+                    var j = stack.Pop();
+                    res[j % len] = nums[i % len];
+                }
+                if (i < len && res[i % len] == -1)
+                    stack.Push(i);
+            }
+            return res;
+        }
+
+        /// 509. Fibonacci Number
         ///0 <= n <= 30, F(0) = 0, F(1) = 1, F(n) = F(n - 1) + F(n - 2), for n > 1.
         public int Fib(int n)
         {
@@ -26,6 +53,7 @@ namespace LeetCodeAlgo
             }
             return dp;
         }
+
         public int Fib_Recursion(int n)
         {
             if (n == 0) return 0;
@@ -39,24 +67,24 @@ namespace LeetCodeAlgo
         ///by deleting some or no elements without changing the order of the remaining elements.
         public int LongestPalindromeSubseq(string s)
         {
-            int[,] dp = new int[s.Length,s.Length];
+            int[,] dp = new int[s.Length, s.Length];
 
             for (int i = s.Length - 1; i >= 0; i--)
             {
-                dp[i,i] = 1;
+                dp[i, i] = 1;
                 for (int j = i + 1; j < s.Length; j++)
                 {
                     if (s[i] == s[j])
                     {
-                        dp[i,j] = dp[i + 1,j - 1] + 2;
+                        dp[i, j] = dp[i + 1, j - 1] + 2;
                     }
                     else
                     {
-                        dp[i,j] = Math.Max(dp[i + 1,j], dp[i,j - 1]);
+                        dp[i, j] = Math.Max(dp[i + 1, j], dp[i, j - 1]);
                     }
                 }
             }
-            return dp[0,s.Length - 1];
+            return dp[0, s.Length - 1];
         }
 
         ///518. Coin Change 2, #DP
@@ -75,7 +103,6 @@ namespace LeetCodeAlgo
             }
             return dp[amount];
         }
-
 
         /// 520. Detect Capital
         ///3 pattern: all UpCase, all LowerCase, only first char UpCase others lower
@@ -110,8 +137,8 @@ namespace LeetCodeAlgo
                 }
             }
             return ans;
-
         }
+
         ///525. Contiguous Array
         ///Given a binary array nums, return the maximum length of a contiguous subarray with an equal number of 0 and 1.
         ///1 <= nums.length <= 105
@@ -124,7 +151,7 @@ namespace LeetCodeAlgo
             //dict[0] should inited as -1, because [0,1] will add dict[0]-index1,
             dict.Add(0, -1);
             int max = 0;
-            for (int i=0; i<nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 //assume 0 is -1, then find diff of index between two dict[sum]
                 if (nums[i] == 0)
@@ -153,8 +180,8 @@ namespace LeetCodeAlgo
         /// |nums[i] - nums[j]| == k, -10^7 <= nums[i] <= 10^7, 0 <= k <= 10^7
         public int FindPairs(int[] nums, int k)
         {
-            Dictionary<int,int> dict= new Dictionary<int,int>();
-            foreach(var n in nums)
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach (var n in nums)
             {
                 if (dict.ContainsKey(n))
                     dict[n]++;
@@ -164,7 +191,7 @@ namespace LeetCodeAlgo
             int ans = 0;
             if (k == 0)
             {
-                foreach(var key in dict.Keys)
+                foreach (var key in dict.Keys)
                 {
                     if (dict[key] >= 2)
                         ans++;
@@ -173,7 +200,7 @@ namespace LeetCodeAlgo
             else
             {
                 var keys = dict.Keys.OrderBy(x => x).ToList();
-                foreach(var key in keys)
+                foreach (var key in keys)
                 {
                     if (key + k > keys.Last())
                         break;
@@ -219,11 +246,11 @@ namespace LeetCodeAlgo
                 while (size-- > 0)
                 {
                     var p = q.Dequeue();
-                    foreach(var d in dxy4)
+                    foreach (var d in dxy4)
                     {
-                        var r=p[0] + d[0];
-                        var c=p[1] + d[1];
-                        if(r>=0 && r<rowLen && c>=0 && c<colLen && !visit[r,c] && mat[r][c] == 1)
+                        var r = p[0] + d[0];
+                        var c = p[1] + d[1];
+                        if (r >= 0 && r < rowLen && c >= 0 && c < colLen && !visit[r, c] && mat[r][c] == 1)
                         {
                             visit[r, c] = true;
                             res[r][c] = step;
@@ -282,6 +309,5 @@ namespace LeetCodeAlgo
                 }
             }
         }
-
     }
 }
