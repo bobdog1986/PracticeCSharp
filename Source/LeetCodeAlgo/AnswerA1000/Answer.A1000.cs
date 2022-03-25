@@ -140,7 +140,20 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///1047. Remove All Adjacent Duplicates In String, #Two Pointer
+        ///1029. Two City Scheduling
+        ///A company is planning to interview 2n people. Given the array costs where costs[i] = [aCosti, bCosti],
+        ///the cost of flying the ith person to city a is aCosti, and the cost of flying the ith person to city b is bCosti.
+        ///Return the minimum cost to fly every person to a city such that exactly n people arrive in each city.
+        public int TwoCitySchedCost(int[][] costs)
+        {
+            int res = costs.Sum(x => x[0]);
+            int[] diff = costs.Select(x=>x[1]-x[0]).ToArray();
+            Array.Sort(diff);
+            for (int i = 0; i < diff.Length / 2; i++)
+                res += diff[i];
+            return res;
+        }
+        /// 1047. Remove All Adjacent Duplicates In String, #Two Pointer
         ///"caacbc"=>"bc"
         public string RemoveDuplicates_TwoPointer(string s)
         {
