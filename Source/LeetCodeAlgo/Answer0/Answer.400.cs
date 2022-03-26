@@ -909,6 +909,23 @@ namespace LeetCodeAlgo
             }
             return (int)right; // cast as an "int" because it was initiliazed as a "long"
         }
+        ///442. Find All Duplicates in an Array
+        ///Given an integer array nums of length n where all of nums in the range [1, n]
+        ///and each integer appears once or twice, return an array of all the integers that appears twice.
+        public IList<int> FindDuplicates(int[] nums)
+        {
+            var res=new List<int>();
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach(var n in nums)
+            {
+                if(!dict.ContainsKey(n))dict.Add(n, 0);
+                dict[n]++;
+            }
+            foreach (var k in dict.Keys)
+                if (dict[k] == 2) res.Add(k);
+
+            return res;
+        }
         /// 443
         public int Compress(char[] chars)
         {
