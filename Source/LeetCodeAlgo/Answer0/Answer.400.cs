@@ -964,5 +964,23 @@ namespace LeetCodeAlgo
 
             return ans;
         }
+
+        ///448. Find All Numbers Disappeared in an Array
+        ///Given an array nums of n integers where nums[i] is in the range [1, n],
+        ///return an array of all the integers in the range [1, n] that do not appear in nums.
+        public IList<int> FindDisappearedNumbers(int[] nums)
+        {
+            var res=new List<int>();
+            HashSet<int> set = new HashSet<int>();
+            foreach(var n in nums)
+                set.Add(n);
+
+            for (int i=1;i<= nums.Length; i++)
+                if(!set.Contains(i))res.Add(i);
+
+            return res;
+        }
+
+
     }
 }
