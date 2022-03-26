@@ -59,7 +59,6 @@ namespace LeetCodeAlgo
             return res;
         }
 
-
         public IList<string> ReadBinaryWatch(int turnedOn)
         {
             List<string> res =new List<string>();
@@ -191,7 +190,26 @@ namespace LeetCodeAlgo
             return sum;
         }
 
-        ///406. Queue Reconstruction by Height, #Greedy
+        ///405. Convert a Number to Hexadecimal
+        ///Given an integer num, return a string representing its hexadecimal representation.
+        ///For negative integers, two’s complement method is used.
+        public string ToHex(int num)
+        {
+            if(num==0) return "0";
+            string res = "";
+            List<string> digits = new List<string>() {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
+            int count = 0;
+            while (num != 0)
+            {
+                if (count >= 8) break;
+                int hex = num & 15;
+                res = digits[hex] + res;
+                num >>= 4;//c# negative >> will pad 1 on the 31-bit to keep negative
+                count++;
+            }
+            return res;
+        }
+        /// 406. Queue Reconstruction by Height, #Greedy
         ///You are given an array of people, people, which are the attributes of some people
         ///in a queue (not necessarily in order). Each people[i] = [hi, ki] represents
         ///the ith person of height hi with exactly ki other people in front who have a height greater than or equal to hi.
