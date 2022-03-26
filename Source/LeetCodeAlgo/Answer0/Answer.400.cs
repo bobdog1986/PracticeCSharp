@@ -459,7 +459,7 @@ namespace LeetCodeAlgo
             return max;
         }
 
-        public class Node421
+        private class Node421
         {
             public Dictionary<int, Node421> children;
             public Node421()
@@ -468,7 +468,7 @@ namespace LeetCodeAlgo
             }
         }
 
-        public class Trie421
+        private class Trie421
         {
             public Node421 root;
 

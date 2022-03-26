@@ -2196,26 +2196,21 @@ namespace LeetCodeAlgo
         ///eg. ["ate","eat","tea"]
         public IList<IList<string>> GroupAnagrams(string[] strs)
         {
-            var ans = new List<IList<string>>();
+            List<IList<string>> res = new List<IList<string>>();
             Dictionary<string, List<int>> dict = new Dictionary<string, List<int>>();
             for (int i = 0; i < strs.Length; i++)
             {
-                var word = string.Join("", strs[i].ToArray().OrderBy(c => c));
-                if (dict.ContainsKey(word))
-                {
-                    dict[word].Add(i);
-                }
-                else
-                {
-                    dict.Add(word, new List<int>() { i });
-                }
+                var word = new string(strs[i].ToArray().OrderBy(c => c).ToArray());
+                if (!dict.ContainsKey(word))
+                    dict.Add(word, new List<int>());
+                dict[word].Add(i);
             }
             foreach (var list in dict.Values)
             {
                 var words = list.Select(x => strs[x]).ToList();
-                ans.Add(words);
+                res.Add(words);
             }
-            return ans;
+            return res;
         }
     }
 }

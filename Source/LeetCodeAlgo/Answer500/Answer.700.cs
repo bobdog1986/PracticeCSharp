@@ -71,7 +71,7 @@ namespace LeetCodeAlgo
             return root;
         }
 
-        /// 704. Binary Search  O(log n), #Binaray Search
+        /// 704. Binary Search  O(logn), #Binaray Search
         ///Given an array of integers nums which is sorted in ascending order,and an integer target
         ///If target exists, then return its index.Otherwise, return -1.
         ///All the integers in nums are unique. 1 <= nums.length <= 104, -104 < nums[i], target < 104
@@ -81,21 +81,15 @@ namespace LeetCodeAlgo
             int high = nums.Length - 1;
             while (low<=high)
             {
-                if (target < nums[low] || target > nums[high]) return -1;
-                if (target == nums[low]) return low;
-                if (target == nums[high]) return high;
-
                 int mid = low + (high - low) / 2;
                 if (nums[mid] == target) { return mid; }
                 else if (nums[mid] > target)
                 {
                     high = mid - 1;
-                    mid = low + (high - low) / 2;
                 }
                 else
                 {
                     low = mid + 1;
-                    mid = low + (high - low) / 2;
                 }
             }
             return -1;

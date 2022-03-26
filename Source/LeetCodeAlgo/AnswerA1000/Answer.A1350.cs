@@ -153,6 +153,14 @@ namespace LeetCodeAlgo
         }
 
         ///1376. Time Needed to Inform All Employees, #Graph, #BFS, #DFS
+        ///A company has n employees from 0 to n - 1. The head of the company is the one with headID.
+        ///Each employee has one direct manager given in the manager array where manager[i]
+        ///is the direct manager of the i-th employee, manager[headID] = -1.
+        ///Also, it is guaranteed that the subordination relationships have a tree structure.
+        ///The i-th employee needs informTime[i] minutes to inform all of his direct subordinates
+        ///(i.e., After informTime[i] minutes, all his direct subordinates can start spreading the news).
+        ///Return the number of minutes needed to inform all the employees about the urgent news.
+
         public int NumOfMinutes_BFS(int n, int headID, int[] manager, int[] informTime)
         {
             List<int>[] graph =new List<int>[n];

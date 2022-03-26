@@ -15,10 +15,73 @@ namespace LeetCodeAlgo
         ///1 <= n <= 2^31 - 1
         public int NextGreaterElement(int n)
         {
-            //index to change
-            //swap lowest index
+            int index = -1;
+            var digits = NextGreaterElement_GetDigits(n);
+            int max = digits.Last();
+            for (int i = digits.Count - 1; i >=0; i--)
+            {
+                if (digits[i] < max)
+                {
+                    index = i;
+                    break;
+                }
+                max = Math.Max(max, digits[i]);
+            }
 
-            return -1;
+            if (index == -1) return -1;
+            int swapIndex = -1;
+            for(int i = index + 1; i < digits.Count; i++)
+            {
+                if(digits[i] > digits[index])
+                {
+                    if (swapIndex == -1)
+                    {
+                        swapIndex = i;
+                    }
+                    else
+                    {
+                        if (digits[i] < digits[swapIndex]) swapIndex = i;
+                    }
+                }
+            }
+
+            int a=digits[swapIndex];
+            int b=digits[index];
+            digits.RemoveAt(swapIndex);
+            digits.RemoveAt(index);
+            digits.Insert(index, a);
+            digits.Insert(swapIndex, b);
+
+            //digits after index, to the last of digits
+            var list= digits.GetRange(index + 1, digits.Count - 1 - (index + 1) + 1);
+            list.Sort();
+            for (int i = 0; i < list.Count; i++)
+                digits[index + 1 + i] = list[i];
+
+            return NextGreaterElement_ToInt(digits);
+        }
+        public int NextGreaterElement_ToInt(IList<int> digits)
+        {
+            long res = 0;
+            long multiply = 1;
+            for(int i=digits.Count-1; i>=0; i--)
+            {
+                res+=digits[i]*multiply;
+                multiply *= 10;
+            }
+            if (res > int.MaxValue) return -1;
+            else return (int)res;
+        }
+
+        public List<int> NextGreaterElement_GetDigits(int n)
+        {
+            var res=new List<int>();
+            while (n > 0)
+            {
+                res.Insert(0, n % 10);
+                n /= 10;
+            }
+            return res;
         }
 
         /// 557. Reverse Words in a String III
