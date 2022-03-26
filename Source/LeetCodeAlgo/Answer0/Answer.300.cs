@@ -782,5 +782,18 @@ namespace LeetCodeAlgo
             }
             return dict.OrderBy(x => -x.Value).Take(k).Select(x => x.Key).ToArray();
         }
+
+        ///349. Intersection of Two Arrays
+        ///return an array of their intersection. Each element in the result must be unique
+        public int[] Intersection(int[] nums1, int[] nums2)
+        {
+            HashSet<int> res = new HashSet<int>();
+            HashSet<int> set = new HashSet<int>();
+            foreach (var n in nums1)
+                set.Add(n);
+            foreach(var n in nums2)
+                if(set.Contains(n))res.Add(n);
+            return res.ToArray();
+        }
     }
 }
