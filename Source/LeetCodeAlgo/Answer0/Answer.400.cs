@@ -26,6 +26,109 @@ namespace LeetCodeAlgo
             return (int)(s[(n - 1) % len]-'0');
         }
 
+        ///401. Binary Watch
+        ///A binary watch has 4 LEDs on the top which represent the hours (0-11), and the 6 LEDs on the bottom represent the minutes (0-59).
+        ///Each LED represents a zero or one, with the least significant bit on the right.
+        public IList<string> ReadBinaryWatch_Bits(int turnedOn)
+        {
+            List<string> res = new List<string>();
+            for(int hour = 0; hour < 12; hour++)
+            {
+                int hourBits = ReadBinaryWatch_GetBitsCount(hour);
+                if (hourBits > turnedOn) continue;
+                for (int minute = 0; minute < 60; minute++)
+                {
+                    int minuteBits = ReadBinaryWatch_GetBitsCount(minute);
+                    if(hourBits+ minuteBits == turnedOn)
+                    {
+                        res.Add($"{hour}:{minute.ToString("00")}");
+                    }
+                }
+            }
+            return res;
+        }
+
+        private int ReadBinaryWatch_GetBitsCount(int n)
+        {
+            int res = 0;
+            while (n > 0)
+            {
+                if ((n & 1) == 1) res++;
+                n>>= 1;
+            }
+            return res;
+        }
+
+
+        public IList<string> ReadBinaryWatch(int turnedOn)
+        {
+            List<string> res =new List<string>();
+            Dictionary<int, List<int>> hourDict = new Dictionary<int, List<int>>();
+            List<int> hours = new List<int>() { 1, 2, 4, 8 };
+            for(int i = 0; i <= hours.Count; i++)
+            {
+                List<int> list = new List<int>();
+                ReadBinaryWatch_GetHour_BackTracking(i, 0, 0, hours, list);
+                if(list.Count>0)
+                    hourDict.Add(i, list);
+            }
+
+            Dictionary<int, List<int>> minuteDict = new Dictionary<int, List<int>>();
+            List<int> minutes = new List<int>() { 1, 2, 4, 8,16,32 };
+            for (int i = 0; i <= minutes.Count; i++)
+            {
+                List<int> list = new List<int>();
+                ReadBinaryWatch_GetMinute_BackTracking(i, 0, 0, minutes, list);
+                if (list.Count > 0)
+                    minuteDict.Add(i, list);
+            }
+
+            for(int i = 0; i <= turnedOn; i++)
+            {
+                if (!hourDict.ContainsKey(i)) continue;
+                if (!minuteDict.ContainsKey(turnedOn-i)) continue;
+                foreach(var hour in hourDict[i])
+                {
+                    foreach(var minute in minuteDict[turnedOn - i])
+                    {
+                        res.Add($"{hour}:{minute.ToString("00")}");
+                    }
+                }
+            }
+            return res;
+        }
+
+        private void ReadBinaryWatch_GetHour_BackTracking(int count, int index, int curr, List<int> list, List<int> res,int max= 11, int min = 0)
+        {
+            if(count == 0)
+            {
+                if (curr >= min && curr <= max && !res.Contains(curr))
+                    res.Add(curr);
+                return;
+            }
+            if (index >= list.Count) return;
+            ReadBinaryWatch_GetHour_BackTracking(count, index + 1, curr, list, res);
+            for (int i = index; i < list.Count; i++)
+            {
+                ReadBinaryWatch_GetHour_BackTracking(count - 1, i + 1, curr + list[i], list, res);
+            }
+        }
+
+        private void ReadBinaryWatch_GetMinute_BackTracking(int count, int index, int curr, List<int> list, List<int> res, int max = 59, int min = 0)
+        {
+            if (count == 0)
+            {
+                if (curr >= min && curr <= max && !res.Contains(curr))
+                    res.Add(curr);
+                return;
+            }
+            if (index >= list.Count) return;
+            ReadBinaryWatch_GetMinute_BackTracking(count, index + 1, curr, list, res);
+            for (int i = index; i < list.Count; i++)
+            {
+                ReadBinaryWatch_GetMinute_BackTracking(count - 1, i + 1, curr + list[i], list, res);
+            }
+        }
         /// 402. Remove K Digits
         ///a non-negative integer num, and an integer k, return the smallest possible integer after removing k digits from num.
         ///1 <= k <= num.length <= 105

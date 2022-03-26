@@ -42,7 +42,10 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine(string.Join(",", result));
         }
-
+        public static void log(IList<string> result)
+        {
+            Console.WriteLine(string.Join(",", result));
+        }
         public static void log(int[][] result)
         {
             if (result.Count() > 0)
