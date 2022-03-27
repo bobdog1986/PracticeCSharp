@@ -306,7 +306,35 @@ namespace LeetCodeAlgo
             }
             return arr;
         }
+        ///1337. The K Weakest Rows in a Matrix, #PriorityQueue, #Heap
+        ///A row i is weaker than a row j if one of the following is true:
+        ///The number of soldiers(1) in row i is less than the number of soldiers in row j.
+        ///Both rows have the same number of soldiers and i<j.
+        ///Return the indices of the k weakest rows in the matrix ordered from weakest to strongest.
+        public int[] KWeakestRows(int[][] mat, int k)
+        {
+            PriorityQueue<int, int> priorityQueue = new PriorityQueue<int, int>(Comparer<int>.Create((x, y) =>
+            {
+                var sumX = mat[x].Sum();
+                var sumY = mat[y].Sum();
+                if (sumX != sumY) return sumX - sumY;
+                else return x - y;
+            }));
 
+            for(int i=0; i < mat.Length; i++)
+            {
+                priorityQueue.Enqueue(i, i);
+            }
+
+            int[] res = new int[k];
+            int j = 0;
+            while (j<k)
+            {
+                res[j++]= priorityQueue.Dequeue();
+            }
+
+            return res;
+        }
 
         /// 1345. Jump Game IV
         ///Given an array of integers arr, you are initially positioned at the first index of the array.
