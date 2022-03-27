@@ -7,7 +7,40 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///503. Next Greater Element II ,#Monotonic Function
+        ///500. Keyboard Row
+        ///the first row consists of the characters "qwertyuiop",
+        ///the second row consists of the characters "asdfghjkl", and
+        ///the third row consists of the characters "zxcvbnm".
+        ///return the words that can be typed using only one row of American keyboard like the image below.
+        public string[] FindWords(string[] words)
+        {
+            List<string> result = new List<string>();
+            Dictionary<char, int> dict = new Dictionary<char, int>()
+            {
+                {'q',1 },{'w',1 },{'e',1 },{'r',1 },{'t',1 },{'y',1 },{'u',1 },{'i',1 },{'o',1 },{'p',1 },
+                {'a',2 },{'s',2 },{'d',2 },{'f',2 },{'g',2 },{'h',2 },{'j',2 },{'k',2 },{'l',2 },
+                {'z',3 },{'x',3 },{'c',3 },{'v',3 },{'b',3 },{'n',3 },{'m',3 },
+            };
+
+            foreach(var w in words)
+            {
+                int last = dict[char.ToLower(w[0])];
+                for(int i = 1; i <w.Length; i++)
+                {
+                    if(dict[char.ToLower(w[i])]!=last)
+                    {
+                        last = 0;
+                        break;
+                    }
+                }
+                if (last != 0) result.Add(w);
+            }
+
+            return result.ToArray();
+        }
+
+
+        /// 503. Next Greater Element II ,#Monotonic Function
         ///Given a circular integer array nums (i.e., the next element of nums[nums.length - 1] is nums[0]),
         ///return the next greater number for every element in nums.
         ///The next greater number of a number x is the first greater number to its traversing-order next in the array,
