@@ -40,6 +40,39 @@ namespace LeetCodeAlgo
         }
 
 
+        ///501. Find Mode in Binary Search Tree, #BTree
+        ///Given the root of a binary search tree (BST) with duplicates, return all the most frequently occurred elements.
+        ///If the tree has more than one mode, return them in any order.
+        public int[] FindMode(TreeNode root)
+        {
+            var res=new List<int>();
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            List<TreeNode> list=new List<TreeNode>() { root};
+            int max = 0;
+            while (list.Count > 0)
+            {
+                List<TreeNode> next = new List<TreeNode>();
+                foreach (var i in list)
+                {
+                    if (i != null)
+                    {
+                        if (dict.ContainsKey(i.val)) dict[i.val]++;
+                        else dict.Add(i.val, 1);
+                        max = Math.Max(max, dict[i.val]);
+
+                        if (i.left != null) next.Add(i.left);
+                        if (i.right != null) next.Add(i.right);
+                    }
+                }
+
+                list = next;
+            }
+            foreach (var k in dict.Keys)
+                if (dict[k] == max) res.Add(k);
+
+            return res.ToArray();
+        }
+
         /// 503. Next Greater Element II ,#Monotonic Function
         ///Given a circular integer array nums (i.e., the next element of nums[nums.length - 1] is nums[0]),
         ///return the next greater number for every element in nums.
