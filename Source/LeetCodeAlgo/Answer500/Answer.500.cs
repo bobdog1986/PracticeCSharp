@@ -100,6 +100,22 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///504. Base 7
+        ///Given an integer num, return a string of its base 7 representation.
+        public string ConvertToBase7(int num)
+        {
+            if (num == 0) return "0";
+            bool sign = num > 0;
+            num = Math.Abs(num);
+            string res = "";
+            while (num > 0)
+            {
+                res = num % 7 + res;
+                num /= 7;
+            }
+            return sign ? res : "-" + res;
+        }
+
         /// 509. Fibonacci Number
         ///0 <= n <= 30, F(0) = 0, F(1) = 1, F(n) = F(n - 1) + F(n - 2), for n > 1.
         public int Fib(int n)
