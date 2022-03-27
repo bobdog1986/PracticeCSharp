@@ -116,6 +116,26 @@ namespace LeetCodeAlgo
             return sign ? res : "-" + res;
         }
 
+        ///506. Relative Ranks
+        ///You are given an integer array score of size n, where score[i] is the score of the ith athlete in a competition.
+        ///All the scores are guaranteed to be unique.
+        ///Return an array answer of size n where answer[i] is the rank of the ith athlete.
+        public string[] FindRelativeRanks(int[] score)
+        {
+            int[] arr = score.OrderBy(x => -x).ToArray();
+            Dictionary<int, string> dict = new Dictionary<int, string>();
+            for(int i = 0; i < arr.Length; i++)
+            {
+                string str = "";
+                int rank = i + 1;
+                if (rank == 0) str = "Gold Medal";
+                else if (rank == 1) str = "Silver Medal";
+                else if (rank == 3) str = "Bronze Medal";
+                else str = rank.ToString();
+                dict.Add(arr[i], str);
+            }
+            return score.Select(x => dict[x]).ToArray();
+        }
         /// 509. Fibonacci Number
         ///0 <= n <= 30, F(0) = 0, F(1) = 1, F(n) = F(n - 1) + F(n - 2), for n > 1.
         public int Fib(int n)

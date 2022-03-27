@@ -615,7 +615,7 @@ namespace LeetCodeAlgo
         }
 
 
-        ///424. Longest Repeating Character Replacement, ### Siding Window
+        ///424. Longest Repeating Character Replacement, #Sliding Window
         ///You can choose any character of the string and change it to any other uppercase English character at most k times.
         ///Return the length of the longest substring containing the same letter you can get after performing the above operations.
         ///1 <= s.length <= 10^5, 0 <= k <= s.length, s consists of only uppercase English letters.
@@ -742,11 +742,10 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        /// 438. Find All Anagrams in a string
+        /// 438. Find All Anagrams in a string, #Sliding Window
         /// Input: s = "cbaebabacd", p = "abc", Output: [0,6]
         /// The substring with start index = 0 is "cba", which is an anagram of "abc".
         /// The substring with start index = 6 is "bac", which is an anagram of "abc".
-        /// should use sliding window
         public List<int> FindAnagrams(string s, string p)
         {
             var ans = new List<int>();

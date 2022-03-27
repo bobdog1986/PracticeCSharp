@@ -147,32 +147,31 @@ namespace LeetCodeAlgo
             }
             return odd;
         }
-        /// 713. Subarray Product Less Than K
-        /// Sliding-Window
+        /// 713. Subarray Product Less Than K, #Sliding Window
+        ///return the number of contiguous subarrays where the product of all is less than k.
+        ///1 <= nums.length <= 3 * 10^4, 1 <= nums[i] <= 1000, 0 <= k <= 10^6
         public int NumSubarrayProductLessThanK(int[] nums, int k)
         {
             if (k <= 1)
                 return 0;
 
-            int ans = 0;
+            int res = 0;
             int product = 1;
             int start = 0;
             for (int i = 0; i < nums.Length; i++)
             {
                 product *= nums[i];
-                while (product >= k && start <= i && start >= 0)
+                while (product >= k && start <= i)
                 {
                     product = product / nums[start];
                     start++;
                 }
-
                 if (product < k)
                 {
-                    ans += (i - start + 1);
+                    res += (i - start + 1);//all subarray contain i from [start,i]
                 }
             }
-
-            return ans;
+            return res;
         }
 
         ///725. Split Linked List in Parts

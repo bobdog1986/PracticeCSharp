@@ -72,7 +72,7 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///2024. Maximize the Confusion of an Exam, ###Sliding Window ,### Binary Search
+        ///2024. Maximize the Confusion of an Exam, #Sliding Window ,#Binary Search
         ///See 424. Longest Repeating Character Replacement
         ///Change the answer key for any question to 'T' or 'F' (i.e., set answerKey[i] to 'T' or 'F').
         ///Return the maximum number of consecutive 'T's or 'F's in the answer key after performing the operation at most k times.
