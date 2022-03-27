@@ -127,6 +127,32 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///455. Assign Cookies
+        ///Each child i g[i] is the minimum size of a cookie that the child will be content with
+        ///and each cookie j has a size s[j]. If s[j] >= g[i], we can assign the cookie j to the child i,
+        ///Your goal is to maximize the number of your content children and output the maximum number.
+        public int FindContentChildren(int[] g, int[] s)
+        {
+            int res = 0;
+            Array.Sort(g);
+            Array.Sort(s);
+            int i = 0;
+            int j = 0;
+            while(i<g.Length && j < s.Length)
+            {
+                if(g[i] <= s[j])
+                {
+                    i++;
+                    j++;
+                    res++;
+                }
+                else
+                {
+                    j++;
+                }
+            }
+            return res;
+        }
         /// 457. Circular Array Loop
         ///If nums[i]>0, move nums[i] steps forward, If nums[i]<0 move nums[i] steps backward.
         ///Every nums[seq[j]] is either all positive or all negative.
