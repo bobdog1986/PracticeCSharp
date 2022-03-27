@@ -338,6 +338,26 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///541. Reverse String II
+        ///Given a string s and an integer k, reverse the first k characters for every 2k characters
+        public string ReverseStr(string s, int k)
+        {
+            string res = "";
+            for(int i=0; i < s.Length; i += k)
+            {
+                int count = i + k <= s.Length ? k : s.Length - i;
+                if(i/k % 2 ==0)
+                {
+                    res += new string(s.Substring(i, count).Reverse().ToArray());
+                }
+                else
+                {
+                    res += s.Substring(i, count);
+                }
+            }
+            return res;
+        }
+
         /// 542. 01 Matrix, #Graph, #BFS
         /// Given an m x n binary matrix mat, return the distance of the nearest 0 for each cell.
         /// The distance between two adjacent cells is 1.
