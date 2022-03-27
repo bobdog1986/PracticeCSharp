@@ -277,7 +277,32 @@ namespace LeetCodeAlgo
             return max;
         }
 
-        ///532. K-diff Pairs in an Array, #HashMap
+        ///530. Minimum Absolute Difference in BST, #BTree
+        ///Given the root of a Binary Search Tree (BST), return the minimum absolute difference between any two nodes in the tree.
+        public int GetMinimumDifference(TreeNode root)
+        {
+            HashSet<int> set = new HashSet<int>();
+            List<TreeNode> list=new List<TreeNode>() { root};
+            while (list.Count > 0)
+            {
+                List<TreeNode> next = new List<TreeNode>();
+                foreach(var i in list)
+                {
+                    if (i == null) continue;
+                    set.Add(i.val);
+                    if (i.left != null) next.Add(i.left);
+                    if (i.right != null) next.Add(i.right);
+                }
+                list = next;
+            }
+            var arr= set.OrderBy(x => x).ToList();
+            int min = arr[1] - arr[0];
+            for(int i=2; i < arr.Count; i++)
+                min = Math.Min(min, arr[i] - arr[i - 1]);
+            return min;
+        }
+
+        /// 532. K-diff Pairs in an Array, #HashMap
         ///Given an array of integers nums and an integer k, return the number of unique k-diff pairs in the array.
         /// |nums[i] - nums[j]| == k, -10^7 <= nums[i] <= 10^7, 0 <= k <= 10^7
         public int FindPairs(int[] nums, int k)
