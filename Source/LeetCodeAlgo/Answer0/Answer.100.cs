@@ -502,17 +502,17 @@ namespace LeetCodeAlgo
         /// You are given a perfect binary tree where all leaves are on the same level
         /// Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
         /// Initially, all next pointers are set to NULL.
-        public Node1 Connect_116(Node1 root)
+        public Node_1 Connect_116(Node_1 root)
         {
             if (root == null)
                 return null;
-            List<Node1> list = new List<Node1>
+            List<Node_1> list = new List<Node_1>
             {
                 root
             };
             while (list.Count != 0)
             {
-                List<Node1> subs = new List<Node1>();
+                List<Node_1> subs = new List<Node_1>();
                 for (int i = 0; i < list.Count; i++)
                 {
                     list[i].next = i == list.Count - 1 ? null : list[i + 1];
@@ -530,17 +530,17 @@ namespace LeetCodeAlgo
         /// 117. Populating Next Right Pointers in Each Node II
         /// Populate each next pointer to point to its next right node.
         /// If there is no next right node, the next pointer should be set to NULL.
-        public Node1 Connect(Node1 root)
+        public Node_1 Connect(Node_1 root)
         {
             if (root == null)
                 return null;
-            List<Node1> list = new List<Node1>
+            List<Node_1> list = new List<Node_1>
             {
                 root
             };
             while (list.Count != 0)
             {
-                List<Node1> subs = new List<Node1>();
+                List<Node_1> subs = new List<Node_1>();
                 for (int i = 0; i < list.Count; i++)
                 {
                     list[i].next = i == list.Count - 1 ? null : list[i + 1];
@@ -1286,20 +1286,20 @@ namespace LeetCodeAlgo
 
         ///138. Copy List with Random Pointer
         ///Random may pointer to itself
-        public RandomNode CopyRandomList_My(RandomNode head)
+        public Node CopyRandomList_My(Node head)
         {
             if (head == null) return null;
-            RandomNode brand = null;
-            RandomNode tail = null;
+            Node brand = null;
+            Node tail = null;
 
-            List<RandomNode> inputs = new List<RandomNode>();
-            List<RandomNode> list = new List<RandomNode>();
+            List<Node> inputs = new List<Node>();
+            List<Node> list = new List<Node>();
             var node = head;
             while (node != null)
             {
                 if(brand == null)
                 {
-                    brand = new RandomNode(node.val);
+                    brand = new Node(node.val);
                     tail = brand;
 
                     inputs.Add(node);
@@ -1314,7 +1314,7 @@ namespace LeetCodeAlgo
                         var rIndex = inputs.IndexOf(node.random);
                         if (rIndex == -1)
                         {
-                            tail.random = new RandomNode(node.random.val);
+                            tail.random = new Node(node.random.val);
                             list.Add(tail.random);
                             inputs.Add(node.random);
                         }
@@ -1329,7 +1329,7 @@ namespace LeetCodeAlgo
                     var index = inputs.IndexOf(node);
                     if (index == -1)
                     {
-                        tail.next =new RandomNode(node.val);
+                        tail.next =new Node(node.val);
                         tail = tail.next;
                         list.Add(tail);
                         inputs.Add(node);
@@ -1349,7 +1349,7 @@ namespace LeetCodeAlgo
                         var rIndex = inputs.IndexOf(node.random);
                         if(rIndex == -1)
                         {
-                            tail.random = new RandomNode(node.random.val);
+                            tail.random = new Node(node.random.val);
                             list.Add(tail.random);
                             inputs.Add(node.random);
                         }
@@ -1365,9 +1365,9 @@ namespace LeetCodeAlgo
             return brand;
         }
 
-        public RandomNode CopyRandomList(RandomNode head)
+        public Node CopyRandomList(Node head)
         {
-            RandomNode iter = head, next;
+            Node iter = head, next;
 
             // First round: make copy of each node,
             // and link them together side-by-side in a single list.
@@ -1375,7 +1375,7 @@ namespace LeetCodeAlgo
             {
                 next = iter.next;
 
-                RandomNode copy1 = new RandomNode(iter.val);
+                Node copy1 = new Node(iter.val);
                 iter.next = copy1;
                 copy1.next = next;
 
@@ -1395,8 +1395,8 @@ namespace LeetCodeAlgo
 
             // Third round: restore the original list, and extract the copy list.
             iter = head;
-            RandomNode pseudoHead = new RandomNode(0);
-            RandomNode copy, copyIter = pseudoHead;
+            Node pseudoHead = new Node(0);
+            Node copy, copyIter = pseudoHead;
 
             while (iter != null)
             {

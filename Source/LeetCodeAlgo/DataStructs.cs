@@ -60,13 +60,13 @@ namespace LeetCodeAlgo
     //    { x = a; y = b; }
     //}
 
-    public class RandomNode
+    public class Node
     {
         public int val;
-        public RandomNode next;
-        public RandomNode random;
+        public Node next;
+        public Node random;
 
-        public RandomNode(int _val)
+        public Node(int _val)
         {
             val = _val;
             next = null;
@@ -74,22 +74,22 @@ namespace LeetCodeAlgo
         }
     }
 
-    public class Node1
+    public class Node_1
     {
         public int val;
-        public Node1 left;
-        public Node1 right;
-        public Node1 next;
+        public Node_1 left;
+        public Node_1 right;
+        public Node_1 next;
 
-        public Node1()
+        public Node_1()
         { }
 
-        public Node1(int _val)
+        public Node_1(int _val)
         {
             val = _val;
         }
 
-        public Node1(int _val, Node1 _left, Node1 _right, Node1 _next)
+        public Node_1(int _val, Node_1 _left, Node_1 _right, Node_1 _next)
         {
             val = _val;
             left = _left;
@@ -98,19 +98,19 @@ namespace LeetCodeAlgo
         }
     }
 
-    public class Node
+    public class Node_Childs
     {
         public int val;
-        public IList<Node> children;
+        public IList<Node_Childs> children;
 
-        public Node() { }
+        public Node_Childs() { }
 
-        public Node(int _val)
+        public Node_Childs(int _val)
         {
             val = _val;
         }
 
-        public Node(int _val, IList<Node> _children)
+        public Node_Childs(int _val, IList<Node_Childs> _children)
         {
             val = _val;
             children = _children;

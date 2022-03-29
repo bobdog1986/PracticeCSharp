@@ -650,13 +650,13 @@ namespace LeetCodeAlgo
 
         ///429. N-ary Tree Level Order Traversal
         ///Given an n-ary tree, return the level order traversal of its nodes' values.
-        public IList<IList<int>> LevelOrder(Node root)
+        public IList<IList<int>> LevelOrder(Node_Childs root)
         {
             var ans=new List<IList<int>>();
-            var nodes=new List<Node>() { root};
+            var nodes=new List<Node_Childs>() { root};
             while(nodes.Count > 0)
             {
-                var next = new List<Node>();
+                var next = new List<Node_Childs>();
                 var list = new List<int>();
                 foreach(var n in nodes)
                 {

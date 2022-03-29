@@ -34,7 +34,23 @@ namespace LeetCodeAlgo
             return Math.Max(0, max - min - 2 * k);
         }
 
-        /// 918. Maximum Sum Circular Subarray
+        ///910. Smallest Range II
+        ///For each index i where 0 <= i<nums.length, change nums[i] to be either nums[i] + k or nums[i] - k.
+        ///Return the minimum difference between the max and min elements after changing the values at each index.
+        public int SmallestRangeII(int[] nums, int k)
+        {
+            Array.Sort(nums);
+            int n = nums.Length;
+            int res = nums[n - 1] - nums[0];
+            for (int i = 0; i < n - 1; ++i)
+            {
+                int max = Math.Max(nums[i] + k, nums[n - 1] - k);
+                int min = Math.Min(nums[i + 1] -k, nums[0] + k);
+                res = Math.Min(res, max - min);
+            }
+            return res;
+        }
+        /// 918. Maximum Sum Circular Subarray, #Kadane
         ///Kadane algorithm, find max-of-positive and min-of-negtive, return max-of-positive or Sum()- min-of-neg
         public int MaxSubarraySumCircular(int[] nums)
         {

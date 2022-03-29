@@ -103,14 +103,14 @@ namespace LeetCodeAlgo
 
         ///559. Maximum Depth of N-ary Tree
         ///Given a n-ary tree, find its maximum depth.
-        public int MaxDepth(Node root)
+        public int MaxDepth(Node_Childs root)
         {
             if(root == null)
                 return 0;
             return 1 + MaxDepth(root.children);
         }
 
-        public int MaxDepth(IList<Node> nodes)
+        public int MaxDepth(IList<Node_Childs> nodes)
         {
             if(nodes == null||nodes.Count==0)
                 return 0;
@@ -298,14 +298,14 @@ namespace LeetCodeAlgo
 
         ///589. N-ary Tree Preorder Traversal
         ///Given the root of an n-ary tree, return the preorder traversal of its nodes' values.
-        public IList<int> Preorder(Node root)
+        public IList<int> Preorder(Node_Childs root)
         {
             var ans=new List<int>();
             PreorderNaryTree(root, ans);
             return ans;
         }
 
-        public void PreorderNaryTree(Node node, IList<int> ans)
+        public void PreorderNaryTree(Node_Childs node, IList<int> ans)
         {
             if (node == null) return;
             ans.Add(node.val);
@@ -317,14 +317,14 @@ namespace LeetCodeAlgo
 
         ///590. N-ary Tree Postorder Traversal
         ///Given the root of an n-ary tree, return the postorder traversal of its nodes' values.
-        public IList<int> Postorder(Node root)
+        public IList<int> Postorder(Node_Childs root)
         {
             var ans = new List<int>();
             PostorderNaryTree(root, ans);
             return ans;
         }
 
-        public void PostorderNaryTree(Node node, IList<int> ans)
+        public void PostorderNaryTree(Node_Childs node, IList<int> ans)
         {
             if (node == null) return;
             foreach (var child in node.children)
