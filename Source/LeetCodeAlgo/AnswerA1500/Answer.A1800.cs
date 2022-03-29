@@ -164,5 +164,8 @@ namespace LeetCodeAlgo
             }
             return new string(arr);
         }
+
+        ///1845. Seat Reservation Manager, see SeatManager
+
     }
 }
