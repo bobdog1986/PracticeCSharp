@@ -970,7 +970,52 @@ namespace LeetCodeAlgo
             return num.ToString().ToCharArray();
         }
 
-        ///446. Arithmetic Slices II - Subsequence, #DP
+        ///445. Add Two Numbers II
+        ///You are given two non-empty linked lists representing two non-negative integers.
+        ///The most significant digit comes first and each of their nodes contains a single digit.
+        ///Add the two numbers and return the sum as a linked list.
+        public ListNode AddTwoNumbers_445(ListNode l1, ListNode l2)
+        {
+            List<int> list1 = new List<int>();
+            List<int> list2 = new List<int>();
+            while (l1 != null)
+            {
+                list1.Insert(0, l1.val);
+                l1 = l1.next;
+            }
+            while (l2 != null)
+            {
+                list2.Insert(0, l2.val);
+                l2 = l2.next;
+            }
+            int carry = 0;
+            List<int> list = new List<int>();
+            for (int i = 0; i < list1.Count || i<list2.Count ; i++)
+            {
+                int a = i < list1.Count ? list1[i] : 0;
+                int b = i < list2.Count ? list2[i] : 0;
+                int sum = a + b + carry;
+                list.Insert(0,sum%10);
+                carry = sum/10;
+            }
+
+            if (carry != 0) list.Insert(0, carry);
+            ListNode res = new ListNode();
+            var curr = res;
+            for(int i=0; i<list.Count; i++)
+            {
+                curr.val = list[i];
+                if (i != list.Count - 1)
+                {
+                    curr.next = new ListNode();
+                    curr = curr.next;
+                }
+            }
+            return res;
+        }
+
+        /// 
+        /// 446. Arithmetic Slices II - Subsequence, #DP
         ///at least 3 nums with same distance, eg. [1,2,3,4], [1,1,1]
         ///1  <= nums.length <= 1000, -2^31 <= nums[i] <= 2^31 - 1
         ///Subsequence may not continuous
