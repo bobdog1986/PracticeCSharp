@@ -154,6 +154,22 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///645. Set Mismatch
+        ///[1,n] Find the number that occurs twice and the number that is missing and return them in the form of an array.
+        public int[] FindErrorNums(int[] nums)
+        {
+            int[] arr=new int[nums.Length+1];
+            int sum = 0;
+            int twice = 0;
+            foreach(var n in nums)
+            {
+                sum += n;
+                arr[n]++;
+                if (arr[n] == 2) twice = n;
+            }
+            int miss = twice -( sum - (nums.Length + 1) * nums.Length / 2 ) ;
+            return new int[] { twice, miss };
+        }
         /// 648. Replace Words
         ///Return the sentence after the replacement.
         public string ReplaceWords(IList<string> dictionary, string sentence)
