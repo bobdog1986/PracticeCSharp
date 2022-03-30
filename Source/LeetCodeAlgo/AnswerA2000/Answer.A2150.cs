@@ -30,6 +30,17 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///2154. Keep Multiplying Found Values by Two
+        ///If original is found in nums, multiply it by two (i.e., set original = 2 * original).
+        ///Otherwise, stop the process.Repeat this process with the new number as long as you keep finding the number.
+        ///Return the final value of original.
+        public int FindFinalValue(int[] nums, int original)
+        {
+            HashSet<int> set = new HashSet<int>(nums);
+            while (set.Contains(original))
+                original += original;
+            return original;
+        }
         /// 2185. Counting Words With a Given Prefix
         public int PrefixCount(string[] words, string pref)
         {
