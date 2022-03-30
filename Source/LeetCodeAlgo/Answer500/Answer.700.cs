@@ -400,7 +400,22 @@ namespace LeetCodeAlgo
             //every solution must to last1 or last2
             return Math.Min(dp[cost.Length - 1], dp[cost.Length - 2]);
         }
-
+        ///747. Largest Number At Least Twice of Others, #PriorityQueue, #Heap
+        ///Determine whether the largest element in the array is at least twice as much as every other number
+        ///If it is, return the index of the largest element, or return -1 otherwise.
+        public int DominantIndex(int[] nums)
+        {
+            PriorityQueue<int,int> pq =new PriorityQueue<int, int> ();
+            for(int i=0; i<nums.Length; i++)
+            {
+                pq.Enqueue(i, -nums[i]);
+            }
+            int maxIndex = -1;
+            int secondIndex = -1;
+            if (pq.Count > 0) maxIndex = pq.Dequeue();
+            if (pq.Count > 0) secondIndex = pq.Dequeue();
+            return secondIndex == -1 || nums[maxIndex] >= nums[secondIndex] * 2 ? maxIndex : -1;
+        }
 
     }
 }
