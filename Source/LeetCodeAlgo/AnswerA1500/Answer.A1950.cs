@@ -98,5 +98,22 @@ namespace LeetCodeAlgo
             }
             return getGcb(max, min);
         }
+
+        ///1984. Minimum Difference Between Highest and Lowest of K Scores
+        ///You are given a 0-indexed integer array nums, where nums[i] represents the score of the ith student.
+        ///You are also given an integer k. Pick the scores of any k students from the array
+        ///so that the difference between the highest and the lowest of the k scores is minimized.Return it;
+        public int MinimumDifference(int[] nums, int k)
+        {
+            if (k == 1) return 0;
+            Array.Sort(nums);
+            int min = int.MaxValue;
+            for(int i=0; i<nums.Length-k+1; i++)
+            {
+                min = Math.Min(min, nums[i + k - 1] - nums[i]);
+            }
+            return min;
+        }
+
     }
 }
