@@ -8,6 +8,27 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
+        ///652. Find Duplicate Subtrees, #BTree
+        ///Given the root of a binary tree, return all duplicate subtrees.
+        ///For each kind of duplicate subtrees, you only need to return the root node of any one of them.
+        ///Two trees are duplicate if they have the same structure with the same node values.
+        public IList<TreeNode> FindDuplicateSubtrees(TreeNode root)
+        {
+            var dict = new Dictionary<string, List<TreeNode>>();
+            FindDuplicateSubtrees_Init(root, dict);
+            return dict.Where(x => x.Value.Count >= 2).Select(x => x.Value[0]).ToList();
+        }
+
+        private string FindDuplicateSubtrees_Init(TreeNode root, Dictionary<string, List<TreeNode>> dict, int min = -201)
+        {
+            if (root == null) return min.ToString();
+            var leftStr = FindDuplicateSubtrees_Init(root.left, dict);
+            var rightStr = FindDuplicateSubtrees_Init(root.right, dict);
+            var str = $"{root.val}_{leftStr}_{rightStr}";
+            if(!dict.ContainsKey(str))dict.Add(str, new List<TreeNode>());
+            dict[str].Add(root);
+            return str;
+        }
         /// 653. Two Sum IV - Input is a BST
         ///return true if there exist two elements in the BST such that sum = target.
         public bool FindTarget(TreeNode root, int k)
