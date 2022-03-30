@@ -149,6 +149,19 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+        ///561. Array Partition I
+        ///Given an integer array nums of 2n integers, group these integers
+        ///into n pairs (a1, b1), (a2, b2), ..., (an, bn) such that
+        ///the sum of min(ai, bi) for all i is maximized. Return the maximized sum.
+        public int ArrayPairSum(int[] nums)
+        {
+            Array.Sort(nums);
+            int sum = 0;
+            for (int i = 0; i < nums.Length; i += 2)
+                sum += nums[i];
+            return sum;
+        }
+
         /// 566. Reshape the Matrix
         /// In MATLAB, reshape an m x n matrix into a new one with a different size r x c keeping its original data.
         public int[][] MatrixReshape(int[][] mat, int r, int c)
