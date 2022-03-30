@@ -82,8 +82,8 @@ namespace LeetCodeAlgo
             var list = new List<int>();
             TotalNQueens_Backtracking(list, n, n, ref ans);
             return ans;
-
         }
+
         public void TotalNQueens_Backtracking(IList<int> list, int n, int len, ref int ans)
         {
             if (n == 0)
@@ -130,6 +130,7 @@ namespace LeetCodeAlgo
             //if all negtive num ,return nums.Max()
             return max > 0 ? max : nums.Max();
         }
+
         ///54. Spiral Matrix
         ///Given an m x n matrix, return all elements of the matrix in spiral order.
         public IList<int> SpiralOrder(int[][] matrix)
@@ -205,9 +206,7 @@ namespace LeetCodeAlgo
                 }
             }
 
-
             return ans;
-
         }
 
         ///55. Jump Game, #DP
@@ -551,7 +550,6 @@ namespace LeetCodeAlgo
             return "";
         }
 
-
         ///61. Rotate List
         ///Given the head of a linked list, rotate the list to the right by k places.
         public ListNode RotateRight(ListNode head, int k)
@@ -601,7 +599,6 @@ namespace LeetCodeAlgo
                     dp[i, j] = dp[i - 1, j] + dp[i, j - 1];
 
             return dp[m - 1, n - 1];
-
         }
 
         ///63. Unique Paths II, #DP
@@ -628,6 +625,7 @@ namespace LeetCodeAlgo
 
             return dp[r - 1, c - 1];
         }
+
         ///64. Minimum Path Sum, #DP
         ///Given a m x n grid filled with non-negative numbers,find a path from top left to bottom right,
         ///which minimizes the sum of all numbers along its path. Only move either down or right at any point in time.
@@ -656,6 +654,7 @@ namespace LeetCodeAlgo
             }
             return dp[m, n];
         }
+
         /// 65
         public bool IsNumber(string s)
         {
@@ -728,6 +727,7 @@ namespace LeetCodeAlgo
             }
             return digits;
         }
+
         /// 67. Add Binary
         /// Given two binary strings a and b, return their sum as a binary string.
         ///1 <= a.Length, b.Length <= 104, no leading zero
@@ -841,10 +841,60 @@ namespace LeetCodeAlgo
             return string.Join("", result);
         }
 
-        ///69. Sqrt(x), #Binary Search
+        ///68. Text Justification
+        ///Given an array of strings words and a width maxWidth, format the text such that each line has exactly maxWidth characters and is fully (left and right) justified.
+        public IList<string> FullJustify(string[] words, int maxWidth)
+        {
+            var res = new List<string>();
+
+            var list = new List<string>();
+
+            foreach (var word in words)
+            {
+                int sum = list.Sum(x => x.Length);
+                if (sum + list.Count + word.Length > maxWidth)
+                {
+                    FullJustify_Add(list, maxWidth, res);
+                }
+                list.Add(word);
+            }
+            FullJustify_Add(list, maxWidth, res,true);
+            return res;
+        }
+
+        private void FullJustify_Add(List<string> list, int maxWidth, List<string> res, bool leftJustify = false)
+        {
+            if (list.Count == 0) return;
+            else if (list.Count == 1 || leftJustify)
+            {
+                string str = string.Join(" ",list).PadRight(maxWidth, ' ');
+                res.Add(str);
+            }
+            else
+            {
+                int spaces = maxWidth - list.Sum(x => x.Length);
+                int mod = spaces % (list.Count - 1);//additional space after first mod count strings
+                int j = spaces / (list.Count - 1);//base spaces count between strings
+                string str = string.Empty;
+                for (int i = 0; i < list.Count - 1; i++)
+                {
+                    str += list[i];
+                    int k = j;
+                    if (mod > 0 && i < mod)
+                        k++;
+                    while (k-- > 0)
+                        str += " ";
+                }
+                str += list.Last();
+                res.Add(str);
+            }
+            list.Clear();
+        }
+
+        /// 69. Sqrt(x), #Binary Search
         ///Given a non-negative integer x, compute and return the square root of x.
         ///Since the return type is an integer, the decimal digits are truncated, and only the integer part of the result is returned.
-
+        ///0 <= x <= 231 - 1
         public int MySqrt(int x)
         {
             //int.MaxValue. 2147483647
@@ -852,20 +902,16 @@ namespace LeetCodeAlgo
             long right = 50000;
             while (left <= right)
             {
-                long mid = (left + right) / 2;
+                long mid = left + (right - left) / 2;
                 if (left == mid)
                     break;
-                if (mid * mid > x)
-                {
-                    right = mid;
-                }
-                else
-                {
-                    left = mid;
-                }
+                if (mid * mid == x) return (int)mid;
+                else if (mid * mid > x) right = mid;
+                else left = mid;
             }
             return (int)left;
         }
+
         public int MySqrt_Math(int x)
         {
             long r = x;
@@ -873,6 +919,7 @@ namespace LeetCodeAlgo
                 r = (r + x / r) / 2;
             return (int)r;
         }
+
         ///70. Climbing Stairs, #DP
         ///Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
         ///1 <= n <= 45
@@ -923,6 +970,7 @@ namespace LeetCodeAlgo
             foreach (var dir in list) ans += "/" + dir;
             return ans == string.Empty ? "/" : ans;
         }
+
         /// 72. Edit Distance
         ///Given two strings word1 and word2, return the minimum number of operations required to convert word1 to word2.
         ///Insert/Delete/Replace a character
@@ -956,6 +1004,7 @@ namespace LeetCodeAlgo
             }
             return dp[rowLen, colLen];
         }
+
         /// 73. Set Matrix Zeroes, #DFS
         ///Given an m x n integer matrix matrix, if an element is 0, set its entire row and column to 0's.
         public void SetZeroes(int[][] matrix)
@@ -1406,6 +1455,7 @@ namespace LeetCodeAlgo
             }
             return false;
         }
+
         /// 82. Remove Duplicates from Sorted List II
         /// remove all duplicates, [1,1,1,2,2,3]=>[3], [1,2,2,3]=>[1,3]
         public ListNode DeleteDuplicates(ListNode head)
@@ -1495,7 +1545,6 @@ namespace LeetCodeAlgo
         /// 0<= height <=10000, heights.Length>=1
         public int LargestRectangleArea(int[] heights)
         {
-
             int[] dp = new int[heights.Length];
 
             int start = 0;
@@ -1509,12 +1558,9 @@ namespace LeetCodeAlgo
             {
             }
 
-
-
-
             return max;
-
         }
+
         ///86. Partition List
         ///all nodes less than x come before nodes greater than or equal to x.
         public ListNode Partition(ListNode head, int x)
@@ -1530,9 +1576,9 @@ namespace LeetCodeAlgo
             {
                 if (node.val < x)
                 {
-                    if(head1 == null)
+                    if (head1 == null)
                     {
-                        head1= node;
+                        head1 = node;
                         tail1 = node;
                     }
                     else
@@ -1554,13 +1600,13 @@ namespace LeetCodeAlgo
                         tail2.next = node;
                         tail2 = tail2.next;
                     }
-                    if (tail1!= null) tail1.next = null;
+                    if (tail1 != null) tail1.next = null;
                 }
                 node = node.next;
             }
 
-            if(tail1!=null)tail1.next = head2;
-            return head1??head2;
+            if (tail1 != null) tail1.next = head2;
+            return head1 ?? head2;
         }
 
         ///87. Scramble String, #DP
@@ -1588,7 +1634,7 @@ namespace LeetCodeAlgo
             //  (F(i, j, q) AND F(i + q, j + q, k - q)) OR (F(i, j + k - q, q) AND F(i + q, j, k - q))
             // Base case is k = 1, where we simply need to check for S1[i] and S2[j] to be equal
             int len = s1.Length;
-            bool[,,] dp = new bool[len,len,len + 1];
+            bool[,,] dp = new bool[len, len, len + 1];
             for (int k = 1; k <= len; ++k)
             {
                 for (int i = 0; i + k <= len; ++i)
@@ -1607,7 +1653,7 @@ namespace LeetCodeAlgo
                     }
                 }
             }
-            return dp[0,0,len];
+            return dp[0, 0, len];
         }
 
         /// 88. Merge Sorted Array, #Two Pointers
@@ -1616,14 +1662,14 @@ namespace LeetCodeAlgo
         public void Merge(int[] nums1, int m, int[] nums2, int n)
         {
             int[] temp = new int[m];
-            for(int k=0; k<m; k++)
-                temp[k]=nums1[k];
+            for (int k = 0; k < m; k++)
+                temp[k] = nums1[k];
 
-            int i=0, j = 0;
-            while(i<m || j < n)
+            int i = 0, j = 0;
+            while (i < m || j < n)
             {
-                if (i == m) nums1[i+j]=nums2[j++];
-                else if(j == n) nums1[i+j]= temp[i++];
+                if (i == m) nums1[i + j] = nums2[j++];
+                else if (j == n) nums1[i + j] = temp[i++];
                 else
                 {
                     if (temp[i] <= nums2[j]) nums1[i + j] = temp[i++];
@@ -1640,31 +1686,31 @@ namespace LeetCodeAlgo
         ///Given an integer n, return any valid n-bit gray code sequence.
         public IList<int> GrayCode(int n)
         {
-            var ans=new List<int>();
+            var ans = new List<int>();
             Dictionary<int, List<int>> dict = new Dictionary<int, List<int>>();
             int i = 2;
             for (; i < Math.Pow(2, n); i++)
             {
                 var code = GrayCode_Code(i);
-                if(!dict.ContainsKey(code))dict.Add(code, new List<int>());
+                if (!dict.ContainsKey(code)) dict.Add(code, new List<int>());
                 dict[code].Add(i);
             }
 
             ans.Add(0);
             ans.Add(1);
             int lastCode = 0;
-            while (i >2)
+            while (i > 2)
             {
-                int upCode= lastCode + 1;
-                int downCode= lastCode - 1;
-                if(dict.ContainsKey(upCode))
+                int upCode = lastCode + 1;
+                int downCode = lastCode - 1;
+                if (dict.ContainsKey(upCode))
                 {
                     ans.Insert(ans.Count - 1, dict[upCode][0]);
                     dict[upCode].RemoveAt(0);
                     if (dict[upCode].Count == 0) dict.Remove(upCode);
                     lastCode = upCode;
                 }
-                else if(dict.ContainsKey(downCode))
+                else if (dict.ContainsKey(downCode))
                 {
                     ans.Insert(ans.Count - 1, dict[downCode][0]);
                     dict[downCode].RemoveAt(0);
@@ -1675,6 +1721,7 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
         public int GrayCode_Code(int val)
         {
             int ans = 0;
@@ -1763,7 +1810,7 @@ namespace LeetCodeAlgo
             for (int i = 1; i < s.Length; i++)
             {
                 int curr = s[i] - '0';
-                int prev = s[i-1]- '0';
+                int prev = s[i - 1] - '0';
 
                 // can't make progress, return 0
                 if (prev == 0 && curr == 0 || (curr == 0 && (prev * 10 + curr > 26)))
@@ -1803,7 +1850,7 @@ namespace LeetCodeAlgo
             var node = head;
             int len = 0;
             List<ListNode> list = new List<ListNode>();
-            while(node != null)
+            while (node != null)
             {
                 len++;
                 if (len == left)
@@ -1825,13 +1872,13 @@ namespace LeetCodeAlgo
                     list.Add(node);
                 }
 
-                if(len == right)
+                if (len == right)
                 {
                     var next = node.next;
 
-                    for(int i = list.Count - 1; i >= 1; i--)
+                    for (int i = list.Count - 1; i >= 1; i--)
                     {
-                        list[i].next = list[i-1];
+                        list[i].next = list[i - 1];
                     }
                     list[0].next = next;
                     if (tail == null)
@@ -1851,6 +1898,7 @@ namespace LeetCodeAlgo
 
             return ans;
         }
+
         /// 94. Binary Tree Inorder Traversal
         public IList<int> InorderTraversal(TreeNode root)
         {
@@ -1929,11 +1977,11 @@ namespace LeetCodeAlgo
             dp[0] = 1;
             dp[1] = 1;
 
-            for(int i = 2; i <= n; i++)
+            for (int i = 2; i <= n; i++)
             {
-                for(int j = 1; j <= i; j++)
+                for (int j = 1; j <= i; j++)
                 {
-                    dp[i] += dp[i - j]*dp[j-1];
+                    dp[i] += dp[i - j] * dp[j - 1];
                 }
             }
 
@@ -1949,42 +1997,42 @@ namespace LeetCodeAlgo
             {
                 return s3 == null || s3.Length == 0;
             }
-            if (s1 == null || s1.Length == 0) { return s2==(s3); }
-            if (s2 == null || s2.Length == 0) { return s1==(s3); }
+            if (s1 == null || s1.Length == 0) { return s2 == (s3); }
+            if (s2 == null || s2.Length == 0) { return s1 == (s3); }
             if (s1.Length + s2.Length != s3.Length) { return false; }
 
-            bool[,] dp= new bool[s1.Length + 1,s2.Length + 1];
-            dp[0,0] = true;
+            bool[,] dp = new bool[s1.Length + 1, s2.Length + 1];
+            dp[0, 0] = true;
 
             for (int i = 1; i < s1.Length; i++)
             {
-                if (dp[i - 1,0] && s1[i - 1] == s3[i - 1])
+                if (dp[i - 1, 0] && s1[i - 1] == s3[i - 1])
                 {
-                    dp[i,0] = true;
+                    dp[i, 0] = true;
                 }
             }
             for (int j = 1; j < s2.Length; j++)
             {
-                if (dp[0,j - 1] && s2[j - 1] == s3[j - 1])
+                if (dp[0, j - 1] && s2[j - 1] == s3[j - 1])
                 {
-                    dp[0,j] = true;
+                    dp[0, j] = true;
                 }
             }
             for (int i = 1; i < s1.Length; i++)
             {
                 for (int j = 1; j < s2.Length; j++)
                 {
-                    if (dp[i - 1,j] && s1[i - 1] == s3[i + j - 1])
+                    if (dp[i - 1, j] && s1[i - 1] == s3[i + j - 1])
                     {
-                        dp[i,j] = true;
+                        dp[i, j] = true;
                     }
-                    else if (dp[i,j - 1] && s2[j - 1] == s3[i + j - 1])
+                    else if (dp[i, j - 1] && s2[j - 1] == s3[i + j - 1])
                     {
-                        dp[i,j] = true;
+                        dp[i, j] = true;
                     }
                 }
             }
-            return dp[s1.Length - 1,s2.Length - 1];
+            return dp[s1.Length - 1, s2.Length - 1];
         }
 
         /// 98. Validate Binary Search Tree, #BTree
@@ -1993,12 +2041,13 @@ namespace LeetCodeAlgo
         {
             return IsValidBST_Recursion(root);
         }
+
         public bool IsValidBST_Recursion(TreeNode root, TreeNode left = null, TreeNode right = null)
         {
             if (root == null)
                 return true;
             if ((left != null && root.val <= left.val)
-                ||(right != null && root.val >= right.val))
+                || (right != null && root.val >= right.val))
                 return false;
             return IsValidBST_Recursion(root.left, left, root) && IsValidBST_Recursion(root.right, root, right);
         }
@@ -2020,7 +2069,7 @@ namespace LeetCodeAlgo
             if (root == null) return;
             dict.Add(root.val, root);
 
-            if((left != null && root.val <= left.val))
+            if ((left != null && root.val <= left.val))
             {
                 int temp = root.val;
                 dict[root.val].val = left.val;

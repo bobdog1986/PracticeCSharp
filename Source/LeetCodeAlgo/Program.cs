@@ -19,7 +19,7 @@ namespace LeetCodeAlgo
             ///uint uintVal =0b10000000_00000000_00000000_00000000;
             var str1 = @"ababbbabbaba";
             var str2 = "**aa*****ba*a*bb**aa*ab****a*aaaaaa***a*aaaa**bbabb*b*b**aaaaaaaaa*a********ba*bbb***a*ba*bb*bb**a*b*bb";
-            var word1 = new string[] { "0201", "0101", "0102", "1212", "2002" };
+            var word1 = new string[] { "What", "must", "be", "acknowledgment", "shall", "be" };
             var word2 = new string[] { "ABC", "ACB", "ABC", "ACB", "ACB" };
             var mat1 = new int[][]
             {
@@ -62,7 +62,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.ToHex(-1);
+            var result = anwser.FullJustify(word1,16);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
