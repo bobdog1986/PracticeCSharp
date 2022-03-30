@@ -30,66 +30,31 @@ namespace LeetCodeAlgo
 
         ///2. Add Two Numbers
         ///Add the two numbers and return the sum as a linked list.
-        ///Input: l1 = [2,4,3], l2 = [5,6,4]
-        ///Output: [7,0,8]
-        ///Explanation: 342 + 465 = 807.
+        ///Input: l1 = [2,4,3], l2 = [5,6,4], Output: [7,0,8] ,Explanation: 342 + 465 = 807.
         public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
         {
-            var node1 = l1;
-            var node2 = l2;
-
-            bool carry = false;
-            ListNode root = null;
-            var current = root;
-            while (node1 != null || node2 != null)
+            ListNode root = new ListNode();
+            var curr = root;
+            int carry = 0;
+            while (l1 != null || l2 != null)
             {
-                var node = new ListNode();
-                int val = 0;
-                if (node1 == null)
+                int a = l1 == null ? 0 : l1.val;
+                int b = l2 == null ? 0 : l2.val;
+                int c = a + b + carry;
+                curr.val = c % 10;
+                carry = c / 10;
+                if (l1 != null) l1 = l1.next;
+                if (l2 != null) l2 = l2.next;
+                if (l1 != null || l2 != null)
                 {
-                    val = node2.val;
-                    if (carry)
-                        val++;
-                    carry = val / 10 == 1;
-                    node.val = val % 10;
-
-                    node2 = node2.next;
-                }
-                else if (node2 == null)
-                {
-                    val = node1.val;
-                    if (carry)
-                        val++;
-                    carry = val / 10 == 1;
-                    node.val = val % 10;
-
-                    node1 = node1.next;
-                }
-                else
-                {
-                    val = node1.val + node2.val;
-                    if (carry)
-                        val++;
-                    carry = val / 10 == 1;
-                    node.val = val % 10;
-
-                    node1 = node1.next;
-                    node2 = node2.next;
-                }
-
-                if (current == null)
-                {
-                    root = node;
-                    current = node;
-                }
-                else
-                {
-                    current.next = node;
-                    current = node;
+                    curr.next = new ListNode();
+                    curr = curr.next;
                 }
             }
-            if (carry)
-                current.next = new ListNode(1);
+            if (carry != 0)
+            {
+                curr.next = new ListNode(carry);
+            }
             return root;
         }
 
@@ -1042,6 +1007,7 @@ namespace LeetCodeAlgo
             GenerateParenthesis_Backtracking(ans, "", 0, 0, n);
             return ans;
         }
+
         ///string is immutable , best for this question
         public void GenerateParenthesis_Backtracking(IList<string> list, string str, int left, int right, int count)
         {
@@ -1540,20 +1506,20 @@ namespace LeetCodeAlgo
         {
             int[] result = new int[] { -1, -1 };
             int left = 0;
-            int right= nums.Length - 1;
+            int right = nums.Length - 1;
             int found = -1;
             while (left <= right)
             {
-                int mid=(left+ right)/2;
+                int mid = (left + right) / 2;
 
-                if(nums[mid] == target)
+                if (nums[mid] == target)
                 {
                     found = mid;
                     break;
                 }
-                else if(nums[mid] > target)
+                else if (nums[mid] > target)
                 {
-                    right = mid-1;
+                    right = mid - 1;
                 }
                 else
                 {
@@ -1564,13 +1530,13 @@ namespace LeetCodeAlgo
             if (found != -1)
             {
                 int start = found;
-                while (start>0 && nums[start-1]==target)
+                while (start > 0 && nums[start - 1] == target)
                 {
                     start--;
                 }
 
                 int end = found;
-                while (end <nums.Length-1 && nums[end + 1] == target)
+                while (end < nums.Length - 1 && nums[end + 1] == target)
                 {
                     end++;
                 }
@@ -1616,6 +1582,7 @@ namespace LeetCodeAlgo
                 return;
             SolveSudoku_Solve(board);
         }
+
         private bool SolveSudoku_Solve(char[][] board)
         {
             for (int i = 0; i < board.Length; i++)
@@ -1656,6 +1623,7 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+
         /// 38. Count and Say, #DP
         ///countAndSay(n) is the way you would "say" the digit string from countAndSay(n-1),countAndSay(1) = "1"
         ///eg. countAndSay(2)=say 'one' '1'= 11,countAndSay(3)=two '1' =21, countAndSay(3)=one '2' one '1'=1211
@@ -1881,16 +1849,16 @@ namespace LeetCodeAlgo
         /// 1 <= nums.length <= 5 * 10^5, -2^31 <= nums[i] <= 2^31 - 1
         public int FirstMissingPositive(int[] nums)
         {
-            int[] arr=new int[nums.Length+1];
-            foreach(var n in nums)
+            int[] arr = new int[nums.Length + 1];
+            foreach (var n in nums)
             {
-                if (n > 0 && n<=nums.Length) arr[n]++;
+                if (n > 0 && n <= nums.Length) arr[n]++;
             }
-            for(int i = 1; i < arr.Length; i++)
+            for (int i = 1; i < arr.Length; i++)
             {
                 if (arr[i] == 0) return i;
             }
-            return nums.Length+1;
+            return nums.Length + 1;
         }
 
         ///42. Trapping Rain Water, #Two Pointers
@@ -1945,7 +1913,7 @@ namespace LeetCodeAlgo
             int[] digits1 = new int[num1.Length];
             for (int i = 0; i < digits1.Length; i++)
             {
-                digits1[digits1.Length - 1 - i] = num1[i]-'0';
+                digits1[digits1.Length - 1 - i] = num1[i] - '0';
             }
 
             int[] digits2 = new int[num2.Length];
@@ -1993,7 +1961,7 @@ namespace LeetCodeAlgo
 
             for (int i = 0; i < len; i++)
             {
-                ans[i] = (char)(result[len - 1 - i]+'0');
+                ans[i] = (char)(result[len - 1 - i] + '0');
             }
 
             return string.Join("", ans);
@@ -2067,25 +2035,25 @@ namespace LeetCodeAlgo
         {
             var ans = new List<IList<int>>();
             var list = new List<int>();
-            bool[] visit=new bool[nums.Length];
+            bool[] visit = new bool[nums.Length];
             Permute_Backtracking(ans, list, nums, visit, 0);
             return ans;
         }
 
         public void Permute_Backtracking(IList<IList<int>> ans, IList<int> list, int[] nums, bool[] visit, int count)
         {
-            if(count == nums.Length)
+            if (count == nums.Length)
             {
                 ans.Add(list);
                 return;
             }
-            for(int i = 0; i < visit.Length; i++)
+            for (int i = 0; i < visit.Length; i++)
             {
                 if (visit[i]) continue;
-                var nextVisit=new bool[visit.Length];
+                var nextVisit = new bool[visit.Length];
                 Array.Copy(visit, nextVisit, visit.Length);
                 nextVisit[i] = true;
-                var nextList=new List<int>(list) { nums[i]};
+                var nextList = new List<int>(list) { nums[i] };
                 Permute_Backtracking(ans, nextList, nums, nextVisit, count + 1);
             }
         }
