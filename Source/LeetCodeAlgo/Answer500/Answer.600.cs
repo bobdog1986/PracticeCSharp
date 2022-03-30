@@ -41,6 +41,32 @@ namespace LeetCodeAlgo
             return count % 2 == 1 ? n > count / 2 + 1 : n > count / 2;
         }
 
+        ///606. Construct String from Binary Tree, #BTree
+        ///Given the root of a binary tree, construct a string consisting of parenthesis and
+        ///integers from a binary tree with the preorder traversal way, and return it.
+        ///Omit all the empty parenthesis pairs that do not affect the one-to-one mapping
+        ///relationship between the string and the original binary tree.
+        public string Tree2str(TreeNode root)
+        {
+            if (root == null) return String.Empty;
+            string str = root.val.ToString();
+            if (root.left == null && root.right == null)
+            {
+                return str;
+            }
+            else if(root.left == null)
+            {
+                return str + $"()({Tree2str(root.right)})";
+            }
+            else if(root.right ==null)
+            {
+                return str + $"({Tree2str(root.left)})";
+            }
+            else
+            {
+                return str + $"({Tree2str(root.left)})" + $"({Tree2str(root.right)})";
+            }
+        }
         /// 611
         public int TriangleNumber(int[] nums)
         {
