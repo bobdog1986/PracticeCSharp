@@ -6,7 +6,25 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///2001. Number of Pairs of Interchangeable Rectangles
+        ///2000. Reverse Prefix of Word
+        ///reverse the segment of word that starts at index 0 and ends at the index of the first occurrence of ch (inclusive).
+        ///If the character ch does not exist in word, do nothing.
+        public string ReversePrefix(string word, char ch)
+        {
+            List<char> list=new List<char>();
+            for(int i = 0; i < word.Length; i++)
+            {
+                list.Add(word[i]);
+                if (ch == word[i])
+                {
+                    list.Reverse();
+                    return new string(list.ToArray()) + word.Substring(i+1);
+                }
+            }
+            return word;
+        }
+
+        /// 2001. Number of Pairs of Interchangeable Rectangles
         public long InterchangeableRectangles(int[][] rectangles)
         {
             long sum = 0;
