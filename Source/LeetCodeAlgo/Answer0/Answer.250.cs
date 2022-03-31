@@ -47,7 +47,20 @@ namespace LeetCodeAlgo
             return AddDigits(total);
         }
 
-        ///263. Ugly Number
+        ///260. Single Number III
+        ///exactly two elements appear only once and all the other elements appear exactly twice.
+        ///Find the two elements that appear only once. You can return the answer in any order.
+        public int[] SingleNumber(int[] nums)
+        {
+            HashSet<int> set = new HashSet<int>();
+            foreach(var n in nums)
+            {
+                if(set.Contains(n))set.Remove(n);
+                else set.Add(n);
+            }
+            return set.ToArray();
+        }
+        /// 263. Ugly Number
         ///An ugly number is a positive integer whose prime factors are limited to 2, 3, and 5.
         ///Given an integer n, return true if n is an ugly number.
         public bool IsUgly(int n)
