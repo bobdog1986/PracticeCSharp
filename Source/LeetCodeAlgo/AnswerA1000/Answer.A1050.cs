@@ -99,7 +99,58 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        ///1089. Duplicate Zeros
+        ///1079. Letter Tile Possibilities, #Backtracking, #DFS
+        ///You have n  tiles, where each tile has one letter tiles[i] printed on it.
+        ///Return the number of possible non-empty sequences can make using the letters printed on those tiles.
+        public int NumTilePossibilities_DFS(string tiles)
+        {
+            int[] arr = new int[26];
+            foreach (var c in tiles)
+                arr[c - 'A']++;
+            return NumTilePossibilities_DFS(arr);
+
+        }
+        private int NumTilePossibilities_DFS(int[] arr)
+        {
+            int sum = 0;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] == 0) continue;
+                sum++;
+                arr[i]--;
+                sum += NumTilePossibilities_DFS(arr);
+                arr[i]++;
+            }
+            return sum;
+        }
+
+        public int NumTilePossibilities_BackTracking(string tiles)
+        {
+            HashSet<string> set=new HashSet<string>();
+            for (int i=1; i <= tiles.Length; i++)
+            {
+                NumTilePossibilities_BackTracking(i, "", tiles,new HashSet<int>(), set);
+            }
+            return set.Count;
+        }
+
+        private void NumTilePossibilities_BackTracking(int count, string curr, string tiles, HashSet<int> visit, HashSet<string> set)
+        {
+            if(count == 0)
+            {
+                if(curr.Length>0)
+                    set.Add(curr);
+                return;
+            }
+
+            for(int i = 0; i < tiles.Length; i++)
+            {
+                if (visit.Contains(i)) continue;
+                var nextVisit = new HashSet<int>(visit) { i };
+                NumTilePossibilities_BackTracking(count - 1, curr + tiles[i].ToString(), tiles, nextVisit, set);
+            }
+        }
+        /// 1089. Duplicate Zeros
         ///Given a fixed-length integer array arr, duplicate each occurrence of zero, shifting the remaining elements to the right.
         public void DuplicateZeros(int[] arr)
         {
