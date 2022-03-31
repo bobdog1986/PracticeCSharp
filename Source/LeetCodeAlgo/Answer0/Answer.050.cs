@@ -1984,7 +1984,42 @@ namespace LeetCodeAlgo
             InorderTraversal_Recursion(node.right, list);
         }
 
-        /// 96. Unique Binary Search Trees - NOT mine
+        ///95. Unique Binary Search Trees II, #BTree
+        ///Given an integer n, return all the structurally unique BST's (binary search trees),
+        ///which has exactly n nodes of unique values from 1 to n. Return the answer in any order.
+        ///1 <= n <= 8
+        public IList<TreeNode> GenerateTrees(int n)
+        {
+            return GenerateTrees_Recursion(1,n);
+        }
+
+        private List<TreeNode> GenerateTrees_Recursion(int s, int e)
+        {
+            List<TreeNode> res = new List<TreeNode>();
+            if (s > e)
+            {
+                res.Add(null); // empty tree
+                return res;
+            }
+            for (int i = s; i <= e; i++)
+            {
+                List<TreeNode> leftSubtrees = GenerateTrees_Recursion(s, i - 1);
+                List<TreeNode> rightSubtrees = GenerateTrees_Recursion(i + 1, e);
+                foreach (TreeNode left in leftSubtrees)
+                {
+                    foreach (TreeNode right in rightSubtrees)
+                    {
+                        TreeNode root = new TreeNode(i);
+                        root.left = left;
+                        root.right = right;
+                        res.Add(root);
+                    }
+                }
+            }
+            return res;
+        }
+
+        /// 96. Unique Binary Search Trees , #BTree, #DP
         /// Given an integer n, return the number of structurally unique BST's (binary search trees)
         /// which has exactly n nodes of unique values from 1 to n.
         public int NumTrees(int n)
@@ -1992,15 +2027,14 @@ namespace LeetCodeAlgo
             int[] dp = new int[n + 1];
             dp[0] = 1;
             dp[1] = 1;
-
             for (int i = 2; i <= n; i++)
             {
                 for (int j = 1; j <= i; j++)
                 {
+                    //Just treat each number as root, and then left part * right part is the answer.
                     dp[i] += dp[i - j] * dp[j - 1];
                 }
             }
-
             return dp[n];
         }
 
