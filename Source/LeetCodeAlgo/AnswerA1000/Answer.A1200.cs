@@ -6,7 +6,27 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1232. Check If It Is a Straight Line
+        ///1200. Minimum Absolute Difference
+        ///find all pairs of elements with the minimum absolute difference of any two elements.
+        public IList<IList<int>> MinimumAbsDifference(int[] arr)
+        {
+            Array.Sort(arr);
+            var res = new List<IList<int>>();
+            int min = int.MaxValue;
+            for (int i = 0; i < arr.Length - 1; i++)
+            {
+                var diff = arr[i + 1] - arr[i];
+                if (diff <= min)
+                {
+                    if (diff < min) res.Clear();
+                    min = diff;
+                    res.Add(new List<int>() { arr[i], arr[i + 1] });
+                }
+            }
+            return res;
+        }
+
+        /// 1232. Check If It Is a Straight Line
         ///coordinates[i] = [x, y], where [x, y] represents the coordinate of a point.
         ///Check if these points make a straight line in the XY plane.
         public bool CheckStraightLine(int[][] coordinates)
@@ -20,11 +40,13 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+
         public bool CheckStraightLine_onLine(int[] p1, int[] p2, int[] p3)
         {
             int x = p1[0], y = p1[1], x1 = p2[0], y1 = p2[1], x2 = p3[0], y2 = p3[1];
             return ((y - y1) * (x2 - x1) == (y2 - y1) * (x - x1));
         }
+
         /// 1249. Minimum Remove to Make Valid Parentheses
         ///Given a string s of '(' , ')' and lowercase English characters.
         ///remove the minimum number of parentheses  '(' or ')', in any positions, to make it valid string
@@ -37,7 +59,7 @@ namespace LeetCodeAlgo
             {
                 if (arr[i] == '(')
                 {
-                    stack.Push(new int[] { arr[i],i });
+                    stack.Push(new int[] { arr[i], i });
                 }
                 else if (arr[i] == ')')
                 {
@@ -60,14 +82,13 @@ namespace LeetCodeAlgo
                 }
             }
 
-            while(stack.Count > 0)
+            while (stack.Count > 0)
             {
-                var pop=stack.Pop();
+                var pop = stack.Pop();
                 arr[pop[1]] = ' ';
             }
 
             return string.Join("", arr.Where(x => x != ' '));
         }
-
     }
 }

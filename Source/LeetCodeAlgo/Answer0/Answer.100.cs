@@ -1277,7 +1277,7 @@ namespace LeetCodeAlgo
             }
             return dp.Sum();
         }
-        /// 136. Single Number, #HashMap
+        /// 136. Single Number
         /// Given a non - empty array of integers nums, every element appears twice except for one.Find that single one.
         /// You must implement a solution with a linear runtime complexity and use only constant extra space.
         public int SingleNumber_136(int[] nums)
@@ -1285,17 +1285,18 @@ namespace LeetCodeAlgo
             return nums.Aggregate((x, y) => x ^ y);
         }
 
-        ///137. Single Number II, #HashMap
+        ///137. Single Number II
         ///Given an integer array nums where every element appears three times except for one, which appears exactly once.
         ///Find the single element and return it.
-        public int SingleNumber(int[] nums)
+        public int SingleNumber_137(int[] nums)
         {
             Dictionary<int,int> dict=new Dictionary<int, int>();
             foreach(var n in nums)
             {
                 if (dict.ContainsKey(n))
                 {
-                    dict[n]++;
+                    if(dict[n] ==2)dict.Remove(n);
+                    else dict[n]++;
                 }
                 else
                 {
