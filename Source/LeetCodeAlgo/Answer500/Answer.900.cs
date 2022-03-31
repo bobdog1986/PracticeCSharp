@@ -50,6 +50,27 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///917. Reverse Only Letters
+        ///not English letters remain in the same position.English letters(lowercase or uppercase) should be reversed.
+        public string ReverseOnlyLetters(string s)
+        {
+            var arr = s.ToArray();
+            List<int> list = new List<int>();
+            List<char> letters = new List<char>();
+            for(int i = 0; i < arr.Length; i++)
+            {
+                if (char.IsLetter(s[i]))
+                {
+                    list.Add(i);
+                    letters.Insert(0,s[i]);
+                }
+            }
+            for(int i = 0; i < list.Count; i++)
+            {
+                arr[list[i]]=letters[i];
+            }
+            return new string(arr);
+        }
         /// 918. Maximum Sum Circular Subarray, #Kadane
         ///Kadane algorithm, find max-of-positive and min-of-negtive, return max-of-positive or Sum()- min-of-neg
         public int MaxSubarraySumCircular(int[] nums)
