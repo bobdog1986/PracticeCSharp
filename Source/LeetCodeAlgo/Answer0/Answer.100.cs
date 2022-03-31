@@ -948,6 +948,28 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///129. Sum Root to Leaf Numbers, #BTree
+        ///Return the total sum of all root-to-leaf numbers.A leaf node is a node with no children.
+        public int SumNumbers(TreeNode root)
+        {
+            int res = 0;
+            SumNumbers(root, 0, ref res);
+            return res;
+        }
+
+        private void SumNumbers(TreeNode root, int curr, ref int res)
+        {
+            if (root == null) { return; }
+            if (root.left == null && root.right == null)
+            {
+                res += curr * 10 + root.val;
+            }
+            else
+            {
+                SumNumbers(root.left, curr * 10 + root.val, ref res);
+                SumNumbers(root.right, curr * 10 + root.val, ref res);
+            }
+        }
         /// 130. Surrounded Regions
         ///Given an m x n matrix board containing 'X' and 'O',
         ///capture all regions that are 4-directionally surrounded by 'X'.
