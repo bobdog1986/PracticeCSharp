@@ -6,7 +6,42 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1814. Count Nice Pairs in an Array
+        ///1805. Number of Different Integers in a String
+        public int NumDifferentIntegers(string word)
+        {
+            HashSet<string> set = new HashSet<string>();
+            List<char> list = new List<char>();
+            foreach (var c in word)
+            {
+                if (char.IsDigit(c))
+                {
+                    list.Add(c);
+                }
+                else
+                {
+                    NumDifferentIntegers_Add(set, list);
+                }
+            }
+            NumDifferentIntegers_Add(set, list);
+            return set.Count;
+        }
+
+        private void NumDifferentIntegers_Add(HashSet<string> set, List<char> list)
+        {
+            if (list.Count != 0)
+            {
+                var sub = new List<char>();
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (i != list.Count - 1 && sub.Count == 0 && list[i] == '0') continue;
+                    sub.Add(list[i]);
+                }
+                set.Add(new string(sub.ToArray()));
+                list.Clear();
+            }
+        }
+
+        /// 1814. Count Nice Pairs in an Array
         /// You are given an array nums that consists of non-negative integers.
         /// For example, rev(123) = 321, and rev(120) = 21.
         /// A pair of indices(i, j) is nice if it satisfies all of the following conditions:
@@ -72,7 +107,7 @@ namespace LeetCodeAlgo
             int[] arr = new int[100001];
             int left = 100000;
             int right = 1;
-            foreach(var i in nums1)
+            foreach (var i in nums1)
             {
                 arr[i]++;
                 left = Math.Min(left, i);
@@ -80,9 +115,9 @@ namespace LeetCodeAlgo
             }
             int max = 0;
             long sum = 0;
-            for(int i=0;i<nums1.Length; i++)
+            for (int i = 0; i < nums1.Length; i++)
             {
-                int abs=nums1[i]>= nums2[i]? nums1[i] - nums2[i]: nums2[i] - nums1[i];
+                int abs = nums1[i] >= nums2[i] ? nums1[i] - nums2[i] : nums2[i] - nums1[i];
                 sum += abs;
 
                 int j = nums2[i];
@@ -95,10 +130,10 @@ namespace LeetCodeAlgo
                 {
                     //len is the closest nums1 element to nums2[i]
                     int len = 1;
-                    while ((j - len >= left || j + len <= right) && len<abs && (abs-len>max))
+                    while ((j - len >= left || j + len <= right) && len < abs && (abs - len > max))
                     {
-                        if((j - len >= left && arr[j - len]>0 )
-                            ||(j + len <= right && arr[j + len] > 0))
+                        if ((j - len >= left && arr[j - len] > 0)
+                            || (j + len <= right && arr[j + len] > 0))
                         {
                             max = abs - len;
                             break;
@@ -109,36 +144,38 @@ namespace LeetCodeAlgo
             }
 
             sum -= max;
-            return (int)(sum%1000000007);
+            return (int)(sum % 1000000007);
         }
+
         ///1822. Sign of the Product of an Array
         ///Let product be the product of all values in the array nums. Return sign of (product).
         public int ArraySign(int[] nums)
         {
             int negCount = 0;
-            foreach(var n in nums)
+            foreach (var n in nums)
             {
                 if (n == 0) return 0;
                 if (n < 0) negCount++;
             }
             return negCount % 2 == 0 ? 1 : -1;
         }
+
         /// 1823. Find the Winner of the Circular Game
         public int FindTheWinner(int n, int k)
         {
             List<int> list = new List<int>();
-            for(int i=1;i<=n;i++)
+            for (int i = 1; i <= n; i++)
                 list.Add(i);
 
             int start = 0;
 
             while (list.Count > 1)
             {
-                int steps = (k-1) % list.Count;
+                int steps = (k - 1) % list.Count;
                 int loss = start + steps;
-                if(loss>=list.Count)
-                    loss-=list.Count;
-                if (loss <list.Count-1)
+                if (loss >= list.Count)
+                    loss -= list.Count;
+                if (loss < list.Count - 1)
                 {
                     list.RemoveAt(loss);
                     start = loss;
@@ -158,14 +195,13 @@ namespace LeetCodeAlgo
         public string ReplaceDigits(string s)
         {
             var arr = s.ToCharArray();
-            for(int i = 1; i < arr.Length; i += 2)
+            for (int i = 1; i < arr.Length; i += 2)
             {
-                arr[i] = (char) (arr[i-1] + (arr[i]-'0'));
+                arr[i] = (char)(arr[i - 1] + (arr[i] - '0'));
             }
             return new string(arr);
         }
 
         ///1845. Seat Reservation Manager, see SeatManager
-
     }
 }
