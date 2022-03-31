@@ -858,7 +858,7 @@ namespace LeetCodeAlgo
                 }
                 list.Add(word);
             }
-            FullJustify_Add(list, maxWidth, res,true);
+            FullJustify_Add(list, maxWidth, res, true);
             return res;
         }
 
@@ -867,7 +867,7 @@ namespace LeetCodeAlgo
             if (list.Count == 0) return;
             else if (list.Count == 1 || leftJustify)
             {
-                string str = string.Join(" ",list).PadRight(maxWidth, ' ');
+                string str = string.Join(" ", list).PadRight(maxWidth, ' ');
                 res.Add(str);
             }
             else
@@ -1900,6 +1900,42 @@ namespace LeetCodeAlgo
         }
 
         ///93. Restore IP Addresses
+        ///A valid IP address consists of exactly four integers separated by single dots.
+        ///Each integer is between 0 and 255 (inclusive) and cannot have leading zeros.
+        ///For example, "0.1.2.201" and "192.168.1.1" are valid IP addresses, but "0.011.255.245", "192.168.1.312" and "192.168@1.1" are invalid IP addresses.
+        ///Given a string s containing only digits, return all possible valid IP addresses that can be formed by inserting dots into s.
+        ///You are not allowed to reorder or remove any digits in s.You may return the valid IP addresses in any order.
+        ///1 <= s.length <= 20,s consists of digits only.
+        public IList<string> RestoreIpAddresses(string s)
+        {
+            var res = new List<string>();
+            if (s.Length > 12 || s.Length < 4) return res;
+            for (int i = 0; i < s.Length - 3 && i <= 2; i++)
+            {
+                if (i > 0 && s[0] == '0') continue;
+                for (int j = i + 1; j < s.Length - 2 && j <= i + 3; j++)
+                {
+                    if (j > i + 1 && s[i + 1] == '0') continue;
+                    for (int k = j + 1; k < s.Length - 1 && k <= j + 3; k++)
+                    {
+                        if (k > j + 1 && s[j + 1] == '0') continue;
+                        if (k + 1 < s.Length - 1 && s[k + 1] == '0') continue;
+                        if (s.Length - 1 - k > 3) continue;
+
+                        int ip0 = int.Parse(s.Substring(0, i + 1));
+                        if (ip0 >= 256) continue;
+                        int ip1 = int.Parse(s.Substring(i + 1, j - i));
+                        if (ip1 >= 256) continue;
+                        int ip2 = int.Parse(s.Substring(j + 1, k - j));
+                        if (ip2 >= 256) continue;
+                        int ip3 = int.Parse(s.Substring(k + 1));
+                        if (ip3 >= 256) continue;
+                        res.Add($"{ip0}.{ip1}.{ip2}.{ip3}");
+                    }
+                }
+            }
+            return res;
+        }
 
         /// 94. Binary Tree Inorder Traversal, #BTree
         /// Left->Node->Right
@@ -1946,36 +1982,6 @@ namespace LeetCodeAlgo
             InorderTraversal_Recursion(node.left, list);
             list.Add(node.val);
             InorderTraversal_Recursion(node.right, list);
-        }
-
-        /// 
-        public IList<int> LayerTraversal(TreeNode root)
-        {
-            List<int> values = new List<int>();
-
-            if (root == null) return values;
-
-            IList<TreeNode> nodes = new List<TreeNode> { root };
-
-            while (nodes != null && nodes.Count > 0)
-            {
-                nodes = GetInorderAndReturnSubNodes(nodes, values);
-            }
-
-            return values;
-        }
-
-        public IList<TreeNode> GetInorderAndReturnSubNodes(IList<TreeNode> nodes, List<int> values)
-        {
-            if (nodes == null || nodes.Count == 0) return null;
-            IList<TreeNode> subNodes = new List<TreeNode>();
-            foreach (var n in nodes)
-            {
-                values.Add(n.val);
-                if (n.left != null) { subNodes.Add(n.left); }
-                if (n.right != null) { subNodes.Add(n.right); }
-            }
-            return subNodes;
         }
 
         /// 96. Unique Binary Search Trees - NOT mine

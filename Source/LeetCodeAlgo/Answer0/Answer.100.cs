@@ -1676,20 +1676,61 @@ namespace LeetCodeAlgo
 
         ///145. Binary Tree Postorder Traversal, #BTree
         /// Left -> Right -> Node
-        public IList<int> PostorderTraversal(TreeNode root)
+        public IList<int> PostorderTraversal_Iteratively(TreeNode root)
+        {
+            var ans = new List<int>();
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            stack.Push(root);
+            while (stack.Count > 0)
+            {
+                var node = stack.Pop();
+                if (node == null) { break; }
+                var left = node.left;
+                var right = node.right;
+                node.left = null;
+                node.right = null;
+                if (left != null)
+                {
+                    if (right != null)
+                    {
+                        stack.Push(node);
+                        stack.Push(right);
+                        stack.Push(left);
+                        continue;
+                    }
+                    else
+                    {
+                        stack.Push(node);
+                        stack.Push(left);
+                        continue;
+                    }
+                }
+                else
+                {
+                    if (right != null)
+                    {
+                        stack.Push(node);
+                        stack.Push(right);
+                        continue;
+                    }
+                }
+                ans.Add(node.val);
+            }
+            return ans;
+        }
+
+        public IList<int> PostorderTraversal_Recursion(TreeNode root)
         {
             var result = new List<int>();
-            PostorderTraversal(root, result);
+            PostorderTraversal_Recursion(root, result);
             return result;
         }
 
-        public void PostorderTraversal(TreeNode node, IList<int> list)
+        public void PostorderTraversal_Recursion(TreeNode node, IList<int> list)
         {
-            if (node == null)
-                return;
-
-            PostorderTraversal(node.left, list);
-            PostorderTraversal(node.right, list);
+            if (node == null) return;
+            PostorderTraversal_Recursion(node.left, list);
+            PostorderTraversal_Recursion(node.right, list);
             list.Add(node.val);
         }
 
