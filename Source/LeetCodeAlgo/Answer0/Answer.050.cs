@@ -1899,8 +1899,41 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        /// 94. Binary Tree Inorder Traversal
-        public IList<int> InorderTraversal(TreeNode root)
+        ///93. Restore IP Addresses
+
+        /// 94. Binary Tree Inorder Traversal, #BTree
+        /// Left->Node->Right
+        public IList<int> InorderTraversal_Iteration(TreeNode root)
+        {
+            List<int> res = new List<int>();
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            TreeNode node = root;
+            while (node != null || stack.Any())
+            {
+                if (node != null)
+                {
+                    if (node.left == null)
+                    {
+                        res.Add(node.val);
+                        node = node.right;
+                    }
+                    else
+                    {
+                        stack.Push(node);
+                        node = node.left;
+                    }
+                }
+                else
+                {
+                    var top = stack.Pop();
+                    res.Add(top.val);
+                    node = top.right;
+                }
+            }
+            return res;
+        }
+
+        public IList<int> InorderTraversal_Recursion(TreeNode root)
         {
             var result = new List<int>();
             InorderTraversal_Recursion(root, result);
@@ -1909,36 +1942,13 @@ namespace LeetCodeAlgo
 
         public void InorderTraversal_Recursion(TreeNode node, IList<int> list)
         {
-            if (node == null)
-                return;
+            if (node == null) return;
             InorderTraversal_Recursion(node.left, list);
             list.Add(node.val);
             InorderTraversal_Recursion(node.right, list);
         }
 
-        public IList<int> InorderTraversal_Iteration(TreeNode root)
-        {
-            List<int> values = new List<int>();
-            if (root == null) return values;
-            Stack<TreeNode> stack = new Stack<TreeNode>();
-            TreeNode node = root;
-            while (node != null || stack.Any())
-            {
-                if (node != null)
-                {
-                    stack.Push(node);
-                    node = node.left;
-                }
-                else
-                {
-                    var item = stack.Pop();
-                    values.Add(item.val);
-                    node = item.right;
-                }
-            }
-            return values;
-        }
-
+        /// 
         public IList<int> LayerTraversal(TreeNode root)
         {
             List<int> values = new List<int>();

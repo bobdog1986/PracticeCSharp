@@ -143,8 +143,18 @@ namespace LeetCodeAlgo
                 if (set.Contains(s)) res++;
             return res;
         }
-        /// 784. Letter Case Permutation
-        ///ref 77 Combines()
+        ///783. Minimum Distance Between BST Nodes
+        ///root of a Binary Search Tree (BST), return the minimum difference between any two different nodes
+        public int MinDiffInBST(TreeNode root)
+        {
+            int res=int.MaxValue;
+            var list = PreorderTraversal_Iteratively(root);
+            var arr= list.OrderBy(x => x).ToList();
+            for (int i = 0; i < arr.Count - 1; i++)
+                res = Math.Min(res, arr[i + 1] - arr[i]);
+            return res;
+        }
+        /// 784. Letter Case Permutation, ref 77 Combines()
         ///Given a string s, you can transform every letter individually to be lowercase or uppercase to create another string.
         ///Return a list of all possible strings we could create.Return the output in any order.
         /// 1 <= s.length <= 12

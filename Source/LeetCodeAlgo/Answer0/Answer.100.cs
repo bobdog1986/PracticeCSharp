@@ -1643,22 +1643,39 @@ namespace LeetCodeAlgo
             }
         }
         /// 144. Binary Tree Preorder Traversal, #BTree
-        public IList<int> PreorderTraversal(TreeNode root)
+        /// Node -> Left -> Right
+        public IList<int> PreorderTraversal_Iteratively(TreeNode root)
+        {
+            var ans = new List<int>();
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            stack.Push(root);
+            while (stack.Count > 0)
+            {
+                var node = stack.Pop();
+                if (node == null) break;
+                ans.Add(node.val);
+                if (node.right != null) stack.Push(node.right);
+                if (node.left != null) stack.Push(node.left);
+            }
+            return ans;
+        }
+        public IList<int> PreorderTraversal_Recursion(TreeNode root)
         {
             var result = new List<int>();
-            PreorderTraversal(root, result);
+            PreorderTraversal_Recursion(root, result);
             return result;
         }
 
-        public void PreorderTraversal(TreeNode node, IList<int> list)
+        public void PreorderTraversal_Recursion(TreeNode node, IList<int> list)
         {
             if (node == null) return;
             list.Add(node.val);
-            PreorderTraversal(node.left, list);
-            PreorderTraversal(node.right, list);
+            PreorderTraversal_Recursion(node.left, list);
+            PreorderTraversal_Recursion(node.right, list);
         }
 
-        //145. Binary Tree Postorder Traversal
+        ///145. Binary Tree Postorder Traversal, #BTree
+        /// Left -> Right -> Node
         public IList<int> PostorderTraversal(TreeNode root)
         {
             var result = new List<int>();
