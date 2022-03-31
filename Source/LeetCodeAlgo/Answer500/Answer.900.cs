@@ -104,7 +104,33 @@ namespace LeetCodeAlgo
             return Math.Max(max, allSum - min);
         }
 
-        ///929. Unique Email Addresses
+        ///925. Long Pressed Name
+        ///Your friend is typing his name into a keyboard. Sometimes, when typing a character c,
+        ///the key might get long pressed, and the character will be typed 1 or more times.
+        ///You examine the typed characters of the keyboard.Return True if it is possible
+        ///that it was your friends name, with some characters (possibly none) being long pressed
+        public bool IsLongPressedName(string name, string typed)
+        {
+            int i = 0;
+            int j = 0;
+            for (; j < typed.Length && i<name.Length; j++)
+            {
+                if (typed[j] == name[i]) i++;
+                else
+                {
+                    if (j == 0 || typed[j] != typed[j - 1]) return false;
+                }
+            }
+
+            if (i != name.Length) return false;
+            while (j < typed.Length)
+            {
+                if (typed[j] != typed[j - 1]) return false;
+                j++;
+            }
+            return true;
+        }
+        /// 929. Unique Email Addresses
         ///If you add periods '.' between some characters in the local name part of an email address, ignored
         ///If you add a plus '+' in the local name, everything after the first plus sign will be ignored.
         public int NumUniqueEmails(string[] emails)
