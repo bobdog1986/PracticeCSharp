@@ -60,7 +60,6 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-
         private int CountSubIslands_dfs(int[][] grid1, int[][] grid2, int i, int j)
         {
             int m = grid2.Length, n = grid2[0].Length, ans = 1;
@@ -77,17 +76,17 @@ namespace LeetCodeAlgo
         ///even indices are even and the digits at odd indices are prime (2, 3, 5, or 7).
         public int CountGoodNumbers(long n)
         {
+            long Modulo = 1000000007;
+
             long even = n / 2;
 
             long odd = n - even;
 
-            var c = (power1922(5, odd)%Modulo) * (power1922(4, even) % Modulo) % Modulo;
+            var c = (power1922(5, odd) % Modulo) * (power1922(4, even) % Modulo) % Modulo;
             return (int)c;
         }
 
-        public long Modulo = 1000000007;
-
-        public long power1922(long seed, long pow)
+        public long power1922(long seed, long pow, long Modulo = 1000000007)
         {
             if (pow == 0)
                 return 1;
@@ -99,13 +98,12 @@ namespace LeetCodeAlgo
 
             if (pow % 2 == 0)
             {
-                return (power1922(seed, half) % Modulo) * (power1922(seed, half) % Modulo)% Modulo;
+                return (power1922(seed, half) % Modulo) * (power1922(seed, half) % Modulo) % Modulo;
             }
             else
             {
                 return (seed * (power1922(seed, half) % Modulo) * (power1922(seed, half) % Modulo)) % Modulo;
             }
-
         }
 
         ///1926. Nearest Exit from Entrance in Maze, #Graph, #BFS
@@ -123,13 +121,13 @@ namespace LeetCodeAlgo
             while (list.Count > 0)
             {
                 List<int[]> next = new List<int[]>();
-                foreach(var p in list)
+                foreach (var p in list)
                 {
                     if (maze[p[0]][p[1]] == '+') continue;
-                    foreach(var d in dxy4)
+                    foreach (var d in dxy4)
                     {
                         var r = p[0] + d[0];
-                        var c= p[1] + d[1];
+                        var c = p[1] + d[1];
                         if (r >= 0 && r < rowLen && c >= 0 && c < colLen && maze[r][c] == '.' && !visit[r, c])
                         {
                             if (r == 0 || r == rowLen - 1 || c == 0 || c == colLen - 1) return step;
@@ -155,13 +153,11 @@ namespace LeetCodeAlgo
                 else dict.Add(c, 1);
             }
             var keys = dict.Keys.ToList();
-            for(int i = 0; i < keys.Count-1; i++)
+            for (int i = 0; i < keys.Count - 1; i++)
             {
                 if (dict[keys[i]] != dict[keys[i + 1]]) return false;
             }
             return true;
         }
-
-
     }
 }

@@ -6,12 +6,43 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
+        ///2103. Rings and Rods
+        ///Return the number of rods that have all three colors of rings on them.
+        public int CountPoints(string rings)
+        {
+            int[,] mat = new int[10, 3];
+            for (int i = 0; i < rings.Length; i += 2)
+            {
+                int index = rings[i + 1] - '0';
+                if (rings[i] == 'R')
+                {
+                    mat[index, 0] = 1;
+                }
+                else if (rings[i] == 'G')
+                {
+                    mat[index, 1] = 1;
+                }
+                else if (rings[i] == 'B')
+                {
+                    mat[index, 2] = 1;
+                }
+            }
+
+            int res = 0;
+            for (int i = 0; i < 10; i++)
+            {
+                if (mat[i, 0] == 1 && mat[i, 1] == 1 && mat[i, 2] == 1) res++;
+            }
+            return res;
+        }
+
         /// 2119. A Number After a Double Reversal
         ///eg. 1234 reverse to 4321, then again to 1234== origin 1234, return true
         public bool IsSameAfterReversals(int num)
         {
             return num == 0 || num % 10 != 0;
         }
+
         ///2129. Capitalize the Title
         /// Capitalize the string by changing the capitalization of each word such that:
         ///If the length of the word is 1 or 2 letters, change all letters to lowercase.
@@ -19,32 +50,33 @@ namespace LeetCodeAlgo
 
         public string CapitalizeTitle(string title)
         {
-            var arr= title.Split(' ').Where(x => x.Length > 0).Select(x =>
-            {
-                var str = x.ToLower();
-                if (x.Length <= 2) return str;
-                return str.Substring(0, 1).ToUpper() + str.Substring(1);
-            });
+            var arr = title.Split(' ').Where(x => x.Length > 0).Select(x =>
+             {
+                 var str = x.ToLower();
+                 if (x.Length <= 2) return str;
+                 return str.Substring(0, 1).ToUpper() + str.Substring(1);
+             });
             return string.Join(" ", arr);
         }
+
         ///2133. Check if Every Row and Column Contains All Numbers
         ///An n x n matrix is valid if every row and every column contains all the integers from 1 to n (inclusive).
         ///Given an n x n integer matrix matrix, return true if the matrix is valid. Otherwise, return false.
         public bool CheckValid(int[][] matrix)
         {
             int rowLen = matrix.Length;
-            int colLen=matrix[0].Length;
-            bool[,] colVisitMatrix=new bool[rowLen,colLen];
-            for(int i=0;i<rowLen; i++)
+            int colLen = matrix[0].Length;
+            bool[,] colVisitMatrix = new bool[rowLen, colLen];
+            for (int i = 0; i < rowLen; i++)
             {
-                bool[] rowVisit=new bool[rowLen];
-                for(int j = 0; j < colLen; j++)
+                bool[] rowVisit = new bool[rowLen];
+                for (int j = 0; j < colLen; j++)
                 {
                     if (colVisitMatrix[j, matrix[i][j] - 1]) return false;
                     colVisitMatrix[j, matrix[i][j] - 1] = true;
 
-                    if (rowVisit[matrix[i][j]-1]) return false;
-                    rowVisit[matrix[i][j]-1] =true;
+                    if (rowVisit[matrix[i][j] - 1]) return false;
+                    rowVisit[matrix[i][j] - 1] = true;
                 }
             }
             return true;
@@ -56,21 +88,20 @@ namespace LeetCodeAlgo
         public int CountElements(int[] nums)
         {
             int ship = 100000;
-            int[] arr=new int[ship*2+1];
-            int start = arr.Length-1;
+            int[] arr = new int[ship * 2 + 1];
+            int start = arr.Length - 1;
             int end = 0;
-            foreach(var num in nums)
+            foreach (var num in nums)
             {
                 var index = num + ship;
                 arr[index]++;
-                start=Math.Min(start, index);
+                start = Math.Min(start, index);
                 end = Math.Max(end, index);
             }
             int sum = 0;
-            for (int i = start+1; i <= end-1; i++)
+            for (int i = start + 1; i <= end - 1; i++)
                 sum += arr[i];
             return sum;
         }
-
     }
 }
