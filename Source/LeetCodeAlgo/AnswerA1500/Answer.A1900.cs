@@ -143,5 +143,25 @@ namespace LeetCodeAlgo
             }
             return -1;
         }
+
+        ///1941. Check if All Characters Have Equal Number of Occurrences
+        ///A string s is good if all the characters that appear in s have the same number of occurrences
+        public bool AreOccurrencesEqual(string s)
+        {
+            Dictionary<char, int> dict = new Dictionary<char, int>();
+            foreach (var c in s)
+            {
+                if (dict.ContainsKey(c)) dict[c]++;
+                else dict.Add(c, 1);
+            }
+            var keys = dict.Keys.ToList();
+            for(int i = 0; i < keys.Count-1; i++)
+            {
+                if (dict[keys[i]] != dict[keys[i + 1]]) return false;
+            }
+            return true;
+        }
+
+
     }
 }
