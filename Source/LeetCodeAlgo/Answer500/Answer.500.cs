@@ -410,7 +410,12 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///547. Number of Provinces, #DFS
+        ///543. Diameter of Binary Tree, #BTree
+        ///The diameter of a binary tree is the length of the longest path between any two nodes in a tree.
+        ///This path may or may not pass through the root.
+        ///The length of a path between two nodes is represented by the number of edges between them.
+
+        /// 547. Number of Provinces, #DFS
         ///BFS/DFS, same to 200
         public int FindCircleNum(int[][] isConnected)
         {

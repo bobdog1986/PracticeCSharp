@@ -242,6 +242,21 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+        ///796. Rotate String
+        ///Given two strings s and goal, return true if and only if s can become goal after some number of shifts on s.
+        public bool RotateString(string s, string goal)
+        {
+            if (s.Length != goal.Length) return false;
+            for(int i = 0; i < s.Length; i++)
+            {
+                if(s[i] == goal[0])
+                {
+                    if(goal == s.Substring(i)+s.Substring(0,i))return true;
+                }
+            }
+            return false;
+        }
+
         /// 797. All Paths From Source to Target
         ///only 0 to N-1
         public IList<IList<int>> AllPathsSourceTarget(int[][] graph)
