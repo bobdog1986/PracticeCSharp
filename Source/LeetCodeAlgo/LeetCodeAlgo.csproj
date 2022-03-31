@@ -8,4 +8,9 @@
     <BaseOutputPath>..\..\Artifacts</BaseOutputPath>
   </PropertyGroup>
 
+
+  <ItemGroup>
+    <None Include="AnswerA2000\Answer.A2200.cs" />
+  </ItemGroup>
+
 </Project>
