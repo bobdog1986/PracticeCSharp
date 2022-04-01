@@ -24,7 +24,34 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2217. Find Palindrome With Fixed Length
+        ///2216. Minimum Deletions to Make Array Beautiful, #Two Pointers
+        ///The array nums is beautiful if: nums.length is even. nums[i] != nums[i + 1] for all i % 2 == 0.
+        ///When you delete an element,all the elements to the right of the deleted element will be shifted one unit
+        ///Return the minimum number of elements to delete from nums to make it beautiful.
+        public int MinDeletion(int[] nums)
+        {
+            int res = 0;
+            int i = 0;
+            int j = 1;
+            while (j < nums.Length)
+            {
+                if (nums[i] == nums[j])
+                {
+                    //if left == right , delete right, and move right-index j to next
+                    res++;
+                    j++;
+                }
+                else
+                {
+                    //update left to next of current right, then update right to next of left
+                    i = j + 1;
+                    j = i + 1;
+                }
+            }
+            if ((nums.Length - res) % 2 == 1) res++;//if odd count of elements still in nums, delete the last one
+            return res;
+        }
+        /// 2217. Find Palindrome With Fixed Length
         ///Given an integer array queries and a positive integer intLength, return an array answer where answer[i]
         ///is either the queries[i]th smallest positive palindrome of length intLength or -1 if no such palindrome exists.
         ///A palindrome is a number that reads the same backwards and forwards.Palindromes cannot have leading zeros.
