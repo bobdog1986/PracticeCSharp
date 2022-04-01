@@ -34,15 +34,16 @@ namespace LeetCodeAlgo
             Console.WriteLine($"Result = {result}");
         }
 
-        public static void log(int[] result)
+        public static void log(IEnumerable<long> result)
         {
             Console.WriteLine(string.Join(",", result));
         }
-        public static void log(IList<int> result)
+
+        public static void log(IEnumerable<int> result)
         {
             Console.WriteLine(string.Join(",", result));
         }
-        public static void log(IList<string> result)
+        public static void log(IEnumerable<string> result)
         {
             Console.WriteLine(string.Join(",", result));
         }

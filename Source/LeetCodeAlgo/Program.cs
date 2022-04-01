@@ -11,7 +11,7 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Answer();
-            var arr1 = new int[] {1,4,25,10,25 };
+            var arr1 = new int[] {1,2,3,4,5,90 };
             var arr2 = new int[] { 2, 1, 2, 2, 2, 2, 2, 2 };
             int k = 2;
             var val1 = 2;
@@ -62,7 +62,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.RestoreIpAddresses("101023");
+            var result = anwser.KthPalindrome(arr1,3);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
