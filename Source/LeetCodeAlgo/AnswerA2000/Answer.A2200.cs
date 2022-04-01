@@ -8,7 +8,37 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///2206. Divide Array Into Equal Pairs
+        ///2201. Count Artifacts That Can Be Extracted
+        ///Given a 0-indexed 2D integer array dig where dig[i] = [ri, ci] indicates that
+        ///you will excavate the cell (ri, ci), return the number of artifacts that you can extract.
+        public int DigArtifacts(int n, int[][] artifacts, int[][] dig)
+        {
+            int res = 0;
+
+            bool[,] matrix =new bool[n,n];
+            foreach(var d in dig)
+            {
+                matrix[d[0], d[1]] = true;
+            }
+            foreach(var arti in artifacts)
+            {
+                bool canDig = true;
+                for(int i = arti[0]; i <= arti[2]; i++)
+                {
+                    for(int j = arti[1]; j <= arti[3]; j++)
+                    {
+                        if(!matrix[i,j])
+                        {
+                            canDig = false;
+                            break;
+                        }
+                    }
+                }
+                if (canDig) res++;
+            }
+            return res;
+        }
+        /// 2206. Divide Array Into Equal Pairs
         public bool DivideArray(int[] nums)
         {
             HashSet<int> set = new HashSet<int>();
