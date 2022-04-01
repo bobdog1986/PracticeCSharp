@@ -36,6 +36,13 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2108. Find First Palindromic String in the Array
+        public string FirstPalindrome(string[] words)
+        {
+            foreach(var w in words)
+                if (w == new string(w.Reverse().ToArray())) return w;
+            return "";
+        }
         /// 2119. A Number After a Double Reversal
         ///eg. 1234 reverse to 4321, then again to 1234== origin 1234, return true
         public bool IsSameAfterReversals(int num)
