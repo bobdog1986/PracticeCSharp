@@ -174,7 +174,12 @@ namespace LeetCodeAlgo
         }
         /// 374. Guess Number Higher or Lower, see GuessGame
 
-
+        ///375. Guess Number Higher or Lower II
+        public int GetMoneyAmount(int n)
+        {
+            //TODO
+            throw new NotImplementedException();
+        }
 
         /// 376. Wiggle Subsequence, #DP
         ///A wiggle sequence is a sequence where the differences between numbers strictly alternate between positive and negative.

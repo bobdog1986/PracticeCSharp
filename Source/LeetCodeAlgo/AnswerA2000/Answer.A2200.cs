@@ -8,7 +8,30 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///2215. Find the Difference of Two Arrays
+        ///2210. Count Hills and Valleys in an Array, #Two Pointers, #Greedy
+        ///An index i is part of a hill in nums if the closest non-equal neighbors of i are smaller than nums[i].
+        ///Similarly, an index i is part of a valley in nums if the closest non-equal neighbors of i are larger than nums[i].
+        ///Adjacent indices i and j are part of the same hill or valley if nums[i] == nums[j].
+        ///Note that for an index to be part of a hill or valley, it must have a non-equal neighbor on both the left and right sides.
+        ///Return the number of hills and valleys in nums.
+        public int CountHillValley(int[] nums)
+        {
+            int res = 0;
+            int left = -1;
+            for (int i = 0; i < nums.Length-1; i++)
+            {
+                if (nums[i] == nums[i + 1]) continue;
+                int right = nums[i + 1];
+                if(left != -1)
+                {
+                    if (nums[i] > left && nums[i] > right) res++;//hill
+                    else if (nums[i] < left && nums[i] < right) res++;//valley
+                }
+                left = nums[i];
+            }
+            return res;
+        }
+        /// 2215. Find the Difference of Two Arrays
         ///Given two 0-indexed integer arrays nums1 and nums2, return a list answer of size 2 where:
         ///answer[0] is a list of all distinct integers in nums1 which are not present in nums2.
         ///answer[1] is a list of all distinct integers in nums2 which are not present in nums1
