@@ -99,5 +99,37 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2218. Maximum Value of K Coins From Piles, #DP, #Memo
+        ///There are n piles of coins on a table. Each pile consists of a positive number of coins of assorted denominations.
+        ///In one move, you can choose any coin on top of any pile, remove it, and add it to your wallet.
+        ///Given a list piles, where piles[i] is a list of integers denoting the composition of the ith pile from top to bottom,
+        ///and a positive integer k, return the maximum total value of coins you can have in your wallet
+        ///if you choose exactly k coins optimally.
+        public int MaxValueOfCoins(IList<IList<int>> piles, int k)
+        {
+            //dp[i,k] means picking k elements from pile[i] to pile[n-1].
+            //We can pick 0,1,2,3... elements from the current pile[i] one by one.
+            //It asks for the maximum total value of coins we can have,
+            //so we need to return max of all the options.
+            //Complexity:Time O(nm),Space O(nk)
+            int[,] memo = new int[piles.Count + 1,k + 1];
+            return MaxValueOfCoins_DP(piles, memo, 0, k);
+        }
+        private int MaxValueOfCoins_DP(IList<IList<int>> piles, int[,] memo, int i, int k)
+        {
+            if (k == 0 || i == piles.Count) return 0;
+            if (memo[i,k] != 0) return memo[i,k];
+
+            int res = MaxValueOfCoins_DP(piles, memo, i + 1, k);
+            int sum = 0;
+
+            for (int j = 0; j < Math.Min(piles[i].Count, k); j++)
+            {
+                sum += piles[i][j];
+                res = Math.Max(res, sum + MaxValueOfCoins_DP(piles, memo, i + 1, k - j - 1));
+            }
+            memo[i, k] = res;
+            return res;
+        }
     }
 }
