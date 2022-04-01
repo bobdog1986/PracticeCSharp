@@ -8,7 +8,18 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///2210. Count Hills and Valleys in an Array, #Two Pointers, #Greedy
+        ///2206. Divide Array Into Equal Pairs
+        public bool DivideArray(int[] nums)
+        {
+            HashSet<int> set = new HashSet<int>();
+            foreach(var n in nums)
+            {
+                if (set.Contains(n)) set.Remove(n);
+                else set.Add(n);
+            }
+            return set.Count==0;
+        }
+        /// 2210. Count Hills and Valleys in an Array, #Two Pointers, #Greedy
         ///An index i is part of a hill in nums if the closest non-equal neighbors of i are smaller than nums[i].
         ///Similarly, an index i is part of a valley in nums if the closest non-equal neighbors of i are larger than nums[i].
         ///Adjacent indices i and j are part of the same hill or valley if nums[i] == nums[j].
