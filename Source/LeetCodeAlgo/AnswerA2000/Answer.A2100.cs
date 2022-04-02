@@ -43,6 +43,14 @@ namespace LeetCodeAlgo
                 if (w == new string(w.Reverse().ToArray())) return w;
             return "";
         }
+        ///2114. Maximum Number of Words Found in Sentences
+        ///A sentence is a list of words that are separated by a single space with no leading or trailing spaces.
+        ///Return the maximum number of words that appear in a single sentence.
+        public int MostWordsFound(string[] sentences)
+        {
+            //return sentences.Max(x => x.Split(' ').Count());
+            return sentences.Max(x => x.Where(x=>x==' ').Count())+1;
+        }
         /// 2119. A Number After a Double Reversal
         ///eg. 1234 reverse to 4321, then again to 1234== origin 1234, return true
         public bool IsSameAfterReversals(int num)
