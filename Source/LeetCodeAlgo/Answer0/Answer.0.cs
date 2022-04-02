@@ -1418,59 +1418,6 @@ namespace LeetCodeAlgo
             return maxLen;
         }
 
-        /// 35. Search Insert Position
-
-        public int SearchInsert(int[] nums, int target)
-        {
-            return SearchInsert(nums, target, 0, nums.Length - 1);
-        }
-
-        public int SearchInsert(int[] nums, int target, int start, int end)
-        {
-            if (start == end)
-            {
-                if (nums[start] >= target)
-                {
-                    return start;
-                }
-                else
-                {
-                    return start + 1;
-                }
-            }
-
-            if (start + 1 == end)
-            {
-                if (nums[start] >= target)
-                {
-                    return start;
-                }
-                else if (nums[end] < target)
-                {
-                    return end + 1;
-                }
-                else
-                {
-                    return start + 1;
-                }
-            }
-
-            int num = end - start + 1;
-            int mid = num / 2 + start;
-            if (nums[mid] == target)
-            {
-                return SearchInsert(nums, target, start, mid);
-            }
-            else if (nums[mid] < target)
-            {
-                return SearchInsert(nums, target, mid + 1, end);
-            }
-            else
-            {
-                return SearchInsert(nums, target, start, mid - 1);
-            }
-        }
-
         ///33. Search in Rotated Sorted Array
         /// original array [1,2,3,4,5] sorted in ascending order (with distinct values).
         /// then possibly rotated to eg. [3,4,5,1,2]
@@ -1544,6 +1491,24 @@ namespace LeetCodeAlgo
             }
 
             return result;
+        }
+        /// 35. Search Insert Position, #Binary Search
+        /// Given a sorted array of distinct integers and a target value, return the index if the target is found.
+        /// If not, return the index where it would be if it were inserted in order.
+        public int SearchInsert(int[] nums, int target)
+        {
+            int left = 0;
+            int right = nums.Length - 1;
+            while (left <= right)
+            {
+                int mid = left + (right-left) / 2;
+                if (nums[mid] == target) return mid;
+                else if (target > nums[right]) return right + 1;
+                else if (target < nums[left]) return left;
+                else if (nums[mid] > target) right = mid - 1;
+                else left = mid + 1;
+            }
+            return -1;//never go here
         }
 
         /// 36. Valid Sudoku

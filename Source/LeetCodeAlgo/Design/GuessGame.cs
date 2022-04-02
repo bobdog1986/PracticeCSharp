@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo.Design
 {
-    ///374. Guess Number Higher or Lower, #Binaray Search
+    ///374. Guess Number Higher or Lower, #Binary Search
     public class GuessGame
     {
         private int val=6;

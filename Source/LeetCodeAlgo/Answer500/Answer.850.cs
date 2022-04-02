@@ -8,7 +8,23 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///856. Score of Parentheses
+        ///852. Peak Index in a Mountain Array, #Binary Search
+        ///arr must be a mountain. Find arr[i] is the top
+        public int PeakIndexInMountainArray(int[] arr)
+        {
+            int left = 0;
+            int right = arr.Length - 1;
+            while (left < right)
+            {
+                int mid = (left + right) / 2;
+                if (arr[mid] < arr[mid + 1])
+                    left = mid + 1;
+                else
+                    right = mid;
+            }
+            return left;
+        }
+        /// 856. Score of Parentheses
         ///Given a balanced parentheses string s, return the score of the string.
         ///"()" has score 1.
         ///AB has score A + B, where A and B are balanced parentheses strings.
