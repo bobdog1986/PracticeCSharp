@@ -46,7 +46,7 @@ namespace LeetCodeAlgo
             return "";
         }
 
-        ///2109. Adding Spaces to a String
+        ///2109. Adding Spaces to a String, #Two Pointers
         ///array spaces that describes the indices in the original string where spaces will be added.
         ///Each space should be inserted before the character at the given index.
         public string AddSpaces(string s, int[] spaces)
@@ -138,6 +138,25 @@ namespace LeetCodeAlgo
                 }
             }
             return true;
+        }
+
+        ///2138. Divide a String Into Groups of Size k
+        ///If last str.length < k, pad right with char fill
+        public string[] DivideString(string s, int k, char fill)
+        {
+            int n = s.Length / k;
+            if (s.Length % k != 0)
+                n++;
+            var res = new string[n];
+            for (int i = 0; i < n; i++)
+            {
+                res[i] = s.Substring(i * k, Math.Min(k, s.Length - i * k));
+            }
+            if (s.Length % k != 0)
+            {
+                res[n - 1] = res[n - 1].PadRight(k, fill);
+            }
+            return res;
         }
 
         /// 2148. Count Elements With Strictly Smaller and Greater Elements
