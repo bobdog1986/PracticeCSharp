@@ -250,7 +250,34 @@ namespace LeetCodeAlgo
             }
         }
 
-        ///692. Top K Frequent Words, #PriorityQueue, #Heap
+        ///680. Valid Palindrome II
+        ///Given a string s, return true if the s can be palindrome after deleting at most one character from it.
+        public bool ValidPalindrome(string s)
+        {
+            return ValidPalindrome(s, 0, s.Length - 1, true);
+        }
+
+        public bool ValidPalindrome(string s, int left, int right, bool canSkip=true)
+        {
+            while (left < right)
+            {
+                if(s[left] == s[right])
+                {
+                    left++;
+                    right--;
+                }
+                else
+                {
+                    if (canSkip)
+                    {
+                        return ValidPalindrome(s, left + 1, right, false) || ValidPalindrome(s, left, right - 1, false);
+                    }
+                    else return false;
+                }
+            }
+            return true;
+        }
+        /// 692. Top K Frequent Words, #PriorityQueue, #Heap
         ///Given an array of strings words and an integer k, return the k most frequent strings.
         ///Return the answer sorted by the frequency from highest to lowest.
         ///Sort the words with the same frequency by their lexicographical order.
