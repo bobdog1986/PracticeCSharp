@@ -58,7 +58,26 @@ namespace LeetCodeAlgo
             return num == 0 || num % 10 != 0;
         }
 
-        ///2129. Capitalize the Title
+        ///2124. Check if All A's Appears Before All B's
+        public bool CheckString(string s)
+        {
+            int lastAIndex = -1;
+            int lastBIndex = -1;
+            for(int i=0; i < s.Length; i++)
+            {
+                if(s[i] == 'a')
+                {
+                    if (lastBIndex != -1) return false;
+                    lastAIndex = i;
+                }
+                else if(s[i] == 'b')
+                {
+                    lastBIndex = i;
+                }
+            }
+            return true;
+        }
+        /// 2129. Capitalize the Title
         /// Capitalize the string by changing the capitalization of each word such that:
         ///If the length of the word is 1 or 2 letters, change all letters to lowercase.
         ///Otherwise, change the first letter to uppercase and the remaining letters to lowercase.
