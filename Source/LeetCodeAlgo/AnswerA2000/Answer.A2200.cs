@@ -8,26 +8,43 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///2201. Count Artifacts That Can Be Extracted
+        ///2200. Find All K-Distant Indices in an Array
+        ///A k-distant index is an index i of nums for which there exists at least one index j
+        ///such that |i - j| <= k and nums[j] == key. Return a list of all k-distant indices sorted in increasing order.
+        public IList<int> FindKDistantIndices(int[] nums, int key, int k)
+        {
+            var set = new HashSet<int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] == key)
+                {
+                    for (int j = Math.Max(0, i - k); j <= i + k && j < nums.Length; j++)
+                        set.Add(j);
+                }
+            }
+            return set.ToList();
+        }
+
+        /// 2201. Count Artifacts That Can Be Extracted
         ///Given a 0-indexed 2D integer array dig where dig[i] = [ri, ci] indicates that
         ///you will excavate the cell (ri, ci), return the number of artifacts that you can extract.
         public int DigArtifacts(int n, int[][] artifacts, int[][] dig)
         {
             int res = 0;
 
-            bool[,] matrix =new bool[n,n];
-            foreach(var d in dig)
+            bool[,] matrix = new bool[n, n];
+            foreach (var d in dig)
             {
                 matrix[d[0], d[1]] = true;
             }
-            foreach(var arti in artifacts)
+            foreach (var arti in artifacts)
             {
                 bool canDig = true;
-                for(int i = arti[0]; i <= arti[2]; i++)
+                for (int i = arti[0]; i <= arti[2]; i++)
                 {
-                    for(int j = arti[1]; j <= arti[3]; j++)
+                    for (int j = arti[1]; j <= arti[3]; j++)
                     {
-                        if(!matrix[i,j])
+                        if (!matrix[i, j])
                         {
                             canDig = false;
                             break;
@@ -38,17 +55,19 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 2206. Divide Array Into Equal Pairs
         public bool DivideArray(int[] nums)
         {
             HashSet<int> set = new HashSet<int>();
-            foreach(var n in nums)
+            foreach (var n in nums)
             {
                 if (set.Contains(n)) set.Remove(n);
                 else set.Add(n);
             }
-            return set.Count==0;
+            return set.Count == 0;
         }
+
         /// 2210. Count Hills and Valleys in an Array, #Two Pointers, #Greedy
         ///An index i is part of a hill in nums if the closest non-equal neighbors of i are smaller than nums[i].
         ///Similarly, an index i is part of a valley in nums if the closest non-equal neighbors of i are larger than nums[i].
@@ -59,11 +78,11 @@ namespace LeetCodeAlgo
         {
             int res = 0;
             int left = -1;
-            for (int i = 0; i < nums.Length-1; i++)
+            for (int i = 0; i < nums.Length - 1; i++)
             {
                 if (nums[i] == nums[i + 1]) continue;
                 int right = nums[i + 1];
-                if(left != -1)
+                if (left != -1)
                 {
                     if (nums[i] > left && nums[i] > right) res++;//hill
                     else if (nums[i] < left && nums[i] < right) res++;//valley
@@ -72,6 +91,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 2215. Find the Difference of Two Arrays
         ///Given two 0-indexed integer arrays nums1 and nums2, return a list answer of size 2 where:
         ///answer[0] is a list of all distinct integers in nums1 which are not present in nums2.
@@ -115,6 +135,7 @@ namespace LeetCodeAlgo
             if ((nums.Length - res) % 2 == 1) res++;//if odd count of elements still in nums, delete the last one
             return res;
         }
+
         /// 2217. Find Palindrome With Fixed Length
         ///Given an integer array queries and a positive integer intLength, return an array answer where answer[i]
         ///is either the queries[i]th smallest positive palindrome of length intLength or -1 if no such palindrome exists.
@@ -124,17 +145,17 @@ namespace LeetCodeAlgo
             long[] res = new long[queries.Length];
             //maxCount for each intLength from 1 to 15
             Dictionary<int, long> maxCountDict = new Dictionary<int, long>();
-            for(int i = 1; i <= 15; i++)
+            for (int i = 1; i <= 15; i++)
             {
                 long count = 9;
-                int j = i-1;
+                int j = i - 1;
                 while (j-- > 0)
                     count *= 10;
                 maxCountDict.Add(i, count);
             }
             //how many palindrome pairs
             int pair = (intLength + 1) / 2;
-            for (int i=0; i < queries.Length; i++)
+            for (int i = 0; i < queries.Length; i++)
             {
                 //out of range, assign -1
                 if (queries[i] > maxCountDict[pair]) res[i] = -1;
@@ -151,12 +172,12 @@ namespace LeetCodeAlgo
                         if (curr % count == 0) k--;//if mod is 0, need k--
                         curr -= k * count;
                         list[j] = k;
-                        list[intLength-1-j] = k;//work for both odd and even intLength
+                        list[intLength - 1 - j] = k;//work for both odd and even intLength
                     }
 
                     //remove leading zero
                     list[0] = list[0] + 1;
-                    list[intLength-1] = list[0];//this will work for intLength=1, avoid duplicate +1
+                    list[intLength - 1] = list[0];//this will work for intLength=1, avoid duplicate +1
                     res[i] = long.Parse(String.Join("", list));
                 }
             }
@@ -176,13 +197,14 @@ namespace LeetCodeAlgo
             //It asks for the maximum total value of coins we can have,
             //so we need to return max of all the options.
             //Complexity:Time O(nm),Space O(nk)
-            int[,] memo = new int[piles.Count + 1,k + 1];
+            int[,] memo = new int[piles.Count + 1, k + 1];
             return MaxValueOfCoins_DP(piles, memo, 0, k);
         }
+
         private int MaxValueOfCoins_DP(IList<IList<int>> piles, int[,] memo, int i, int k)
         {
             if (k == 0 || i == piles.Count) return 0;
-            if (memo[i,k] != 0) return memo[i,k];
+            if (memo[i, k] != 0) return memo[i, k];
 
             int res = MaxValueOfCoins_DP(piles, memo, i + 1, k);
             int sum = 0;
