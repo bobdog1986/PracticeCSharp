@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Diagnostics;
 
 namespace LeetCodeAlgo
 {
@@ -39,18 +41,39 @@ namespace LeetCodeAlgo
         ///2108. Find First Palindromic String in the Array
         public string FirstPalindrome(string[] words)
         {
-            foreach(var w in words)
+            foreach (var w in words)
                 if (w == new string(w.Reverse().ToArray())) return w;
             return "";
         }
-        ///2114. Maximum Number of Words Found in Sentences
+
+        ///2109. Adding Spaces to a String
+        ///array spaces that describes the indices in the original string where spaces will be added.
+        ///Each space should be inserted before the character at the given index.
+        public string AddSpaces(string s, int[] spaces)
+        {
+            var sb = new StringBuilder();
+            int i = 0, j = 0;
+            for (; i < s.Length && j < spaces.Length; i++)
+            {
+                if (i == spaces[j])
+                {
+                    sb.Append(' ');
+                    j++;
+                }
+                sb.Append(s[i]);
+            }
+            return sb.ToString() + s.Substring(i);
+        }
+
+        /// 2114. Maximum Number of Words Found in Sentences
         ///A sentence is a list of words that are separated by a single space with no leading or trailing spaces.
         ///Return the maximum number of words that appear in a single sentence.
         public int MostWordsFound(string[] sentences)
         {
             //return sentences.Max(x => x.Split(' ').Count());
-            return sentences.Max(x => x.Where(x=>x==' ').Count())+1;
+            return sentences.Max(x => x.Where(x => x == ' ').Count()) + 1;
         }
+
         /// 2119. A Number After a Double Reversal
         ///eg. 1234 reverse to 4321, then again to 1234== origin 1234, return true
         public bool IsSameAfterReversals(int num)
@@ -63,20 +86,21 @@ namespace LeetCodeAlgo
         {
             int lastAIndex = -1;
             int lastBIndex = -1;
-            for(int i=0; i < s.Length; i++)
+            for (int i = 0; i < s.Length; i++)
             {
-                if(s[i] == 'a')
+                if (s[i] == 'a')
                 {
                     if (lastBIndex != -1) return false;
                     lastAIndex = i;
                 }
-                else if(s[i] == 'b')
+                else if (s[i] == 'b')
                 {
                     lastBIndex = i;
                 }
             }
             return true;
         }
+
         /// 2129. Capitalize the Title
         /// Capitalize the string by changing the capitalization of each word such that:
         ///If the length of the word is 1 or 2 letters, change all letters to lowercase.
