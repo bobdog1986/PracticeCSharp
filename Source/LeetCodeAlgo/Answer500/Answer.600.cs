@@ -158,6 +158,19 @@ namespace LeetCodeAlgo
 
         ///622. Design Circular Queue, see MyCircularQueue
 
+        ///633. Sum of Square Numbers
+        ///Given a non-negative integer c, decide whether there're two integers a and b such that a2 + b2 = c.
+        public bool JudgeSquareSum(int c)
+        {
+            HashSet<int> set = new HashSet<int>();
+            for(long i=0; i*i <= c; i++)
+                set.Add((int)(i*i));
+
+            foreach (var n in set)
+                if (set.Contains(c - n)) return true;
+            return false;
+        }
+
         /// 637. Average of Levels in Binary Tree, #BTree
         ///Given the root of a binary tree, return the average value of the nodes
         ///on each level in the form of an array. Answers within 10-5 of the actual answer will be accepted.
