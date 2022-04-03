@@ -217,5 +217,21 @@ namespace LeetCodeAlgo
             memo[i, k] = res;
             return res;
         }
+
+        ///2220. Minimum Bit Flips to Convert Number
+        ///Given two integers start and goal, return the minimum number of bit flips to convert start to goal.
+        public int MinBitFlips(int start, int goal)
+        {
+            int x = start ^ goal;
+            int res = 0;
+            while (x > 0)
+            {
+                if ((x & 1) == 1) res++;
+                x >>= 1;
+            }
+            return res;
+        }
+
+
     }
 }
