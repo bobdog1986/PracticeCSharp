@@ -229,7 +229,14 @@ namespace LeetCodeAlgo
         }
 
 
-        ///1394. Find Lucky Integer in an Array
+        ///1385. Find the Distance Value Between Two Arrays
+        ///Given two integer arrays arr1 and arr2, and the integer d, return the distance value between the two arrays.
+        ///The distance value is defined as the number of elements arr1[i] such that there is not any element arr2[j] where |arr1[i]-arr2[j]| <= d.
+        public int FindTheDistanceValue(int[] arr1, int[] arr2, int d)
+        {
+            return arr1.Where(a => !arr2.Any(b => Math.Abs(a - b) <= d)).Count();
+        }
+        /// 1394. Find Lucky Integer in an Array
         ///Given an array of integers arr, a lucky integer is an integer that has a frequency in the array equal to its value.
         ///Return the largest lucky integer in the array.If there is no lucky integer return -1.
         public int FindLucky(int[] arr)

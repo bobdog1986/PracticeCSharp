@@ -1344,10 +1344,10 @@ namespace LeetCodeAlgo
                 }
             }
             //why????  reverse everything from i to end
-            reverse(nums, i, nums.Length - 1);
+            NextPermutation_Reverse(nums, i, nums.Length - 1);
         }
 
-        public void reverse(int[] nums, int start, int end)
+        private void NextPermutation_Reverse(int[] nums, int start, int end)
         {
             for (int i = start, j = end; i < j; i++, j--)
             {

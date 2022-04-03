@@ -99,17 +99,21 @@ namespace LeetCodeAlgo
             }
             return a;
         }
-        /// 367 not pass
+        /// 367. Valid Perfect Square, #Binary Search
+        /// Given a positive integer num, write a function which returns True if num is a perfect square else False.
         public bool IsPerfectSquare(int num)
         {
-            //leetcode pass anwser
-            int i = 1;
-            while (num > 0)
+            long left = 1;
+            long right = num;
+            while (left <= right)
             {
-                num -= i;
-                i += 2;
+                long mid = (left + right) / 2;
+                long pow = mid * mid;
+                if (pow == num) return true;
+                else if (pow > num) right = mid - 1;
+                else left = mid + 1;
             }
-            return num == 0;
+            return false;
         }
 
         ///371. Sum of Two Integers
