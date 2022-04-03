@@ -232,6 +232,20 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2221. Find Triangular Sum of an Array
+        ///Return the triangular sum of nums.
+        public int TriangularSum(int[] nums)
+        {
+            while (nums.Length > 1)
+            {
+                var arr = new int[nums.Length - 1];
+                for(int i=0;i<nums.Length-1;i++)
+                    arr[i]=(nums[i]+nums[i+1])%10;
+                nums = arr;
+            }
+            return nums[0];
+        }
+
 
     }
 }
