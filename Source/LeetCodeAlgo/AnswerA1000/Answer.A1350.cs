@@ -46,6 +46,13 @@ namespace LeetCodeAlgo
         }
 
 
+        ///1360. Number of Days Between Two Dates
+        ///Write a program to count the number of days between two dates.
+        ///The two dates are given as strings, their format is YYYY-MM-DD as shown in the examples.
+        public int DaysBetweenDates(string date1, string date2)
+        {
+            return Math.Abs((DateTime.Parse(date1) - DateTime.Parse(date2)).Days);
+        }
         /// 1365. How Many Numbers Are Smaller Than the Current Number
         ///for each nums[i] find out how many numbers in the array are smaller than it.
         ///0 <= nums[i] <= 100, 2 <= nums.length <= 500
