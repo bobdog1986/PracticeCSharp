@@ -144,5 +144,17 @@ namespace LeetCodeAlgo
 
             return sum*1.0 / (salary.Length - 2);
         }
+
+        ///1492. The kth Factor of n
+        ///You are given two positive integers n and k. A factor of an integer n is defined as an integer i where n % i == 0.
+        ///Consider a list of all factors of n sorted in ascending order, return the kth factor in this list or return -1 if n has less than k factors.
+        public int KthFactor(int n, int k)
+        {
+            var list = new List<int>();
+            for (int i = 1; i <= n; i++)
+                if (n % i == 0) list.Add(i);
+            return list.Count >= k ? list[k - 1] : -1;
+        }
+
     }
 }
