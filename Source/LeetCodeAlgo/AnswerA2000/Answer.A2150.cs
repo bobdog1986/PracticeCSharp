@@ -41,6 +41,33 @@ namespace LeetCodeAlgo
                 original += original;
             return original;
         }
+        ///2176. Count Equal and Divisible Pairs in an Array
+        ///return the number of pairs (i, j) where 0 <= i < j < n, such that nums[i] == nums[j] and (i * j) is divisible by k.
+        public int CountPairs(int[] nums, int k)
+        {
+            int res = 0;
+            Dictionary<int, List<int>> dict = new Dictionary<int, List<int>>();
+            for(int i=0; i < nums.Length; i++)
+            {
+                if(!dict.ContainsKey(nums[i]))dict.Add(nums[i], new List<int>());
+                dict[nums[i]].Add(i);
+            }
+            foreach(var key in dict.Keys)
+            {
+                if (dict[key].Count >= 2)
+                {
+                    for(int i = 0; i < dict[key].Count - 1; i++)
+                    {
+                        for(int j = i + 1; j < dict[key].Count; j++)
+                        {
+                            if (dict[key][i] * dict[key][j] % k == 0) res++;
+                        }
+                    }
+                }
+            }
+            return res;
+        }
+
         /// 2185. Counting Words With a Given Prefix
         public int PrefixCount(string[] words, string pref)
         {

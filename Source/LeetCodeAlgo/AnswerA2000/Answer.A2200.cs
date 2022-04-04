@@ -239,8 +239,8 @@ namespace LeetCodeAlgo
             while (nums.Length > 1)
             {
                 var arr = new int[nums.Length - 1];
-                for(int i=0;i<nums.Length-1;i++)
-                    arr[i]=(nums[i]+nums[i+1])%10;
+                for (int i = 0; i < nums.Length - 1; i++)
+                    arr[i] = (nums[i] + nums[i + 1]) % 10;
                 nums = arr;
             }
             return nums[0];
@@ -265,12 +265,12 @@ namespace LeetCodeAlgo
             {
                 if (s[i] == '0')
                 {
-                    ans = ans + (currOnes * (totOnes - currOnes));
+                    ans += (currOnes * (totOnes - currOnes));
                     currZeros++;
                 }
                 else
                 {
-                    ans = ans + (currZeros * (totZeros - currZeros));
+                    ans += (currZeros * (totZeros - currZeros));
                     currOnes++;
                 }
             }
