@@ -68,6 +68,31 @@ namespace LeetCodeAlgo
             return set.Count == 0;
         }
 
+        ///2208. Minimum Operations to Halve Array Sum, #PriorityQueue, #Heap
+        ///In one operation, you can choose any number from nums and reduce it to exactly half the number.
+        ///(Note that you may choose this reduced number in future operations.)
+        ///Return the minimum number of operations to reduce the sum of nums by at least half.
+        public int HalveArray(int[] nums)
+        {
+            int res = 0;
+            PriorityQueue<double, double> pq = new PriorityQueue<double, double>();
+            double sum = 0;
+            foreach(var n in nums)
+            {
+                pq.Enqueue(n, -n);
+                sum += n;
+            }
+            double diff = 0;
+            while (diff < sum / 2)
+            {
+                res++;
+                var val =pq.Dequeue();
+                diff += val / 2;
+                pq.Enqueue(val / 2, -val / 2);
+            }
+            return res;
+        }
+
         /// 2210. Count Hills and Valleys in an Array, #Two Pointers, #Greedy
         ///An index i is part of a hill in nums if the closest non-equal neighbors of i are smaller than nums[i].
         ///Similarly, an index i is part of a valley in nums if the closest non-equal neighbors of i are larger than nums[i].
@@ -349,6 +374,5 @@ namespace LeetCodeAlgo
         }
 
         ///2227. Encrypt and Decrypt Strings, see Encrypter
-
     }
 }
