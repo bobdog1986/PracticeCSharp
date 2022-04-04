@@ -320,5 +320,32 @@ namespace LeetCodeAlgo
             res.Add(list2);
             return res;
         }
+
+        ///2226. Maximum Candies Allocated to K Children, #Binary Search
+        ///Each candy can split to any parts, return the maximum number of candies each child can get.
+        public int MaximumCandies(int[] candies, long k)
+        {
+            //left inited as 0, if invalid then return 0
+            int left = 0, right = 10_000_000;
+            ///Tip1.left < right Vs left <= right
+            ///keep using left < right ,never bother thinking it anymore.
+            while (left < right)
+            {
+                long sum = 0;
+                ///Tip2.mid = (left + right + 1) / 2 Vs mid = (left + right) / 2
+                ///mid = (left + right) / 2 to find first element valid
+                ///mid = (left + right + 1) / 2 to find last element valid
+                int mid = (left + right + 1) / 2;
+                foreach (int candy in candies)
+                {
+                    sum += candy / mid;
+                }
+                if (k > sum)
+                    right = mid - 1;
+                else
+                    left = mid;//make left always valid
+            }
+            return left;
+        }
     }
 }
