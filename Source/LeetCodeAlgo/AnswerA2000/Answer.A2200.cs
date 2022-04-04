@@ -246,6 +246,35 @@ namespace LeetCodeAlgo
             return nums[0];
         }
 
+        ///2222. Number of Ways to Select Buildings
+        ///Find all combine of 010 or 101
+        public long NumberOfWays(string s)
+        {
+            long ans = 0;
+            int len = s.Length;
 
+            long totOnes = 0;
+            for (int i = 0; i < len; i++)
+                totOnes += s[i] - '0';
+
+            long totZeros = len - totOnes;
+            long currZeros = s[0] == '0' ? 1 : 0;
+            long currOnes = s[0] == '1' ? 1 : 0;
+
+            for (int i = 1; i < len; i++)
+            {
+                if (s[i] == '0')
+                {
+                    ans = ans + (currOnes * (totOnes - currOnes));
+                    currZeros++;
+                }
+                else
+                {
+                    ans = ans + (currZeros * (totZeros - currZeros));
+                    currOnes++;
+                }
+            }
+            return ans;
+        }
     }
 }
