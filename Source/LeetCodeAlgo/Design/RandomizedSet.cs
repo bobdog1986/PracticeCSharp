@@ -6,35 +6,32 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo.Design
 {
+    ///380. Insert Delete GetRandom O(1)
+
     public class RandomizedSet
     {
-        private readonly Dictionary<int, int> dict = new Dictionary<int, int>();
-        private Random random=new Random();
+        private readonly HashSet<int> set;
+        private readonly Random random;
         public RandomizedSet()
         {
-
+            random = new Random();
+            set = new HashSet<int>();
         }
 
         public bool Insert(int val)
         {
-            if (dict.ContainsKey(val))
-                return false;
-            dict.Add(val, val);
-            return true;
+            return set.Add(val);
         }
 
         public bool Remove(int val)
         {
-            return dict.Remove(val);
+            return set.Remove(val);
         }
 
         public int GetRandom()
         {
-            var keys=dict.Keys.ToList();
-
-            var index = random.Next(0, keys.Count);
-
-            return keys[index];
+            var index = random.Next(0, set.Count);
+            return set.ElementAt(index);
         }
     }
 }
