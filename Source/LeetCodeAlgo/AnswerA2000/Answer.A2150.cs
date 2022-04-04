@@ -18,18 +18,19 @@ namespace LeetCodeAlgo
         {
             List<int> res = new List<int>();
             Dictionary<int, int> dict = new Dictionary<int, int>();
-            foreach(var n in nums)
+            foreach (var n in nums)
             {
                 if (dict.ContainsKey(n)) dict[n]++;
                 else dict.Add(n, 1);
             }
-            foreach(var key in dict.Keys)
+            foreach (var key in dict.Keys)
             {
                 if (dict[key] == 1 && !dict.ContainsKey(key - 1) && !dict.ContainsKey(key + 1))
                     res.Add(key);
             }
             return res;
         }
+
         ///2154. Keep Multiplying Found Values by Two
         ///If original is found in nums, multiply it by two (i.e., set original = 2 * original).
         ///Otherwise, stop the process.Repeat this process with the new number as long as you keep finding the number.
@@ -41,24 +42,25 @@ namespace LeetCodeAlgo
                 original += original;
             return original;
         }
+
         ///2176. Count Equal and Divisible Pairs in an Array
         ///return the number of pairs (i, j) where 0 <= i < j < n, such that nums[i] == nums[j] and (i * j) is divisible by k.
         public int CountPairs(int[] nums, int k)
         {
             int res = 0;
             Dictionary<int, List<int>> dict = new Dictionary<int, List<int>>();
-            for(int i=0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
-                if(!dict.ContainsKey(nums[i]))dict.Add(nums[i], new List<int>());
+                if (!dict.ContainsKey(nums[i])) dict.Add(nums[i], new List<int>());
                 dict[nums[i]].Add(i);
             }
-            foreach(var key in dict.Keys)
+            foreach (var key in dict.Keys)
             {
                 if (dict[key].Count >= 2)
                 {
-                    for(int i = 0; i < dict[key].Count - 1; i++)
+                    for (int i = 0; i < dict[key].Count - 1; i++)
                     {
-                        for(int j = i + 1; j < dict[key].Count; j++)
+                        for (int j = i + 1; j < dict[key].Count; j++)
                         {
                             if (dict[key][i] * dict[key][j] % k == 0) res++;
                         }
@@ -66,6 +68,21 @@ namespace LeetCodeAlgo
                 }
             }
             return res;
+        }
+
+        ///2180. Count Integers With Even Digit Sum, nums<=1000
+        public int CountEven(int num)
+        {
+            ///10 = 2, 4, 6, 8(4)
+            ///20 = 2, 4, 6, 8, 11, 13, 15, 17, 19, 20(10)
+            ///30 = 2, 4, 6, 8, 11, 13, 15, 17, 19, 20, 22, 24, 26, and 28. (14)
+            int temp = num, sum = 0;
+            while (num > 0)
+            {
+                sum += num % 10;
+                num /= 10;
+            }
+            return sum % 2 == 0 ? temp / 2 : (temp - 1) / 2;
         }
 
         /// 2185. Counting Words With a Given Prefix
@@ -82,21 +99,22 @@ namespace LeetCodeAlgo
             int max = 0;
             int res = 0;
             Dictionary<int, int> map = new Dictionary<int, int>();
-            for(int i = 0; i < nums.Length-1; i++)
+            for (int i = 0; i < nums.Length - 1; i++)
             {
-                if(nums[i] == key)
+                if (nums[i] == key)
                 {
-                    if(map.ContainsKey(nums[i+1]))map[nums[i+1]]++;
-                    else map.Add(nums[i+1], 1);
+                    if (map.ContainsKey(nums[i + 1])) map[nums[i + 1]]++;
+                    else map.Add(nums[i + 1], 1);
                     if (map[nums[i + 1]] > max)
                     {
-                        max = map[nums[i+1]];
+                        max = map[nums[i + 1]];
                         res = nums[i + 1];
                     }
                 }
             }
             return res;
         }
+
         ///2195. Append K Integers With Minimal Sum, #PriorityQueue, #Heap
         ///You are given an integer array nums and an integer k.
         ///Append k unique positive integers that do not appear in nums to nums such that the resulting total sum is minimum.
@@ -104,9 +122,9 @@ namespace LeetCodeAlgo
         public long MinimalKSum(int[] nums, int k)
         {
             long res = 0;
-            PriorityQueue<int,int> priorityQueue = new PriorityQueue<int,int>();
-            foreach(var n in nums)
-                priorityQueue.Enqueue(n,n);//min heap
+            PriorityQueue<int, int> priorityQueue = new PriorityQueue<int, int>();
+            foreach (var n in nums)
+                priorityQueue.Enqueue(n, n);//min heap
 
             int lastIndex = 0;
             while (priorityQueue.Count > 0)
@@ -116,7 +134,7 @@ namespace LeetCodeAlgo
                 else
                 {
                     //how many nums in range [lastIndex + 1,currIndex - 1], inclusive
-                    int count = currIndex - 1 - (lastIndex+1) + 1;
+                    int count = currIndex - 1 - (lastIndex + 1) + 1;
                     if (count >= k) count = k;//if exceed k, only append k nums
                     res += (lastIndex + 1 + lastIndex + count) * (long)count / 2;
                     k -= count;
@@ -131,6 +149,7 @@ namespace LeetCodeAlgo
 
             return res;
         }
+
         /// 2196. Create Binary Tree From Descriptions
         ///descriptions[i] = [parenti, childi, isLefti] indicates that parenti is the parent of childi in a binary tree of unique values. Furthermore,
         ///If isLefti == 1, then childi is the left child of parenti.
@@ -141,13 +160,12 @@ namespace LeetCodeAlgo
             //set contains all nodes,but only the root's value is true
             Dictionary<TreeNode, bool> set = new Dictionary<TreeNode, bool>();
             Dictionary<int, TreeNode> dict = new Dictionary<int, TreeNode>();
-            foreach(var desc in descriptions)
+            foreach (var desc in descriptions)
             {
                 TreeNode parent = null;
                 if (!dict.ContainsKey(desc[0])) dict.Add(desc[0], new TreeNode(desc[0]));
                 parent = dict[desc[0]];
-                if (!set.ContainsKey(parent)) set.Add(parent,true);
-
+                if (!set.ContainsKey(parent)) set.Add(parent, true);
 
                 TreeNode child = null;
                 if (!dict.ContainsKey(desc[1])) dict.Add(desc[1], new TreeNode(desc[1]));

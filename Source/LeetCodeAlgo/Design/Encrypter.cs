@@ -18,14 +18,15 @@ namespace LeetCodeAlgo.Design
         private readonly HashSet<string> set;
         private readonly Dictionary<string, string> dict1;
         private readonly TrieOfEncrypt root;
+
         public Encrypter(char[] keys, string[] values, string[] dictionary)
         {
-            encryptDict=new Dictionary<char, string>();
-            decryptDict=new Dictionary<string, List<char>>();
-            for(int i=0; i<keys.Length; i++)
+            encryptDict = new Dictionary<char, string>();
+            decryptDict = new Dictionary<string, List<char>>();
+            for (int i = 0; i < keys.Length; i++)
             {
                 encryptDict.Add(keys[i], values[i]);
-                if(!decryptDict.ContainsKey(values[i])) decryptDict.Add(values[i],new List<char>());
+                if (!decryptDict.ContainsKey(values[i])) decryptDict.Add(values[i], new List<char>());
                 decryptDict[values[i]].Add(keys[i]);
             }
             set = new HashSet<string>(dictionary);
@@ -36,10 +37,10 @@ namespace LeetCodeAlgo.Design
 
         private void BuildTrieTree()
         {
-            foreach(var key in set)
+            foreach (var key in set)
             {
                 var curr = root;
-                foreach(var c in key)
+                foreach (var c in key)
                 {
                     if (!curr.childs.ContainsKey(c)) curr.childs.Add(c, new TrieOfEncrypt());
                     curr = curr.childs[c];
@@ -52,9 +53,9 @@ namespace LeetCodeAlgo.Design
         public string Encrypt(string word1)
         {
             //cache encrypt keys to avoid TLE
-            if(dict1.ContainsKey(word1))return dict1[word1];
+            if (dict1.ContainsKey(word1)) return dict1[word1];
 
-            StringBuilder sb= new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             //string res = string.Empty;
             foreach (var c in word1)
                 sb.Append(encryptDict[c]);
@@ -66,9 +67,9 @@ namespace LeetCodeAlgo.Design
         public int Decrypt(string word2)
         {
             var list = new List<TrieOfEncrypt>() { root };
-            for(int i = 0; i < word2.Length; i += 2)
+            for (int i = 0; i < word2.Length; i += 2)
             {
-                var str=word2.Substring(i, 2);
+                var str = word2.Substring(i, 2);
                 if (!decryptDict.ContainsKey(str)) return 0;//cannot decrypt
                 var next = new List<TrieOfEncrypt>();
                 foreach (var curr in list)
@@ -83,7 +84,7 @@ namespace LeetCodeAlgo.Design
                 list = next;
                 if (list.Count == 0) return 0;
             }
-            return list.Where(x=>x.valid).Count();
+            return list.Where(x => x.valid).Count();
         }
     }
 
@@ -91,10 +92,46 @@ namespace LeetCodeAlgo.Design
     {
         //indicate if current trie node is valid
         public bool valid = false;
+
         public readonly Dictionary<char, TrieOfEncrypt> childs;
+
         public TrieOfEncrypt()
         {
             childs = new Dictionary<char, TrieOfEncrypt>();
+        }
+    }
+
+    public class Encrypter_Lee215
+    {
+        private readonly Dictionary<char, string> encryptDict;
+        private readonly Dictionary<string, int> decryptDict;
+
+        public Encrypter_Lee215(char[] keys, string[] values, string[] dictionary)
+        {
+            encryptDict = new Dictionary<char, string>();
+            for (int i = 0; i < keys.Length; ++i)
+                encryptDict.Add(keys[i], values[i]);
+
+            decryptDict = new Dictionary<string, int>();
+            foreach (var word in dictionary)
+            {
+                var encrypt = Encrypt(word);
+                if (!decryptDict.ContainsKey(encrypt)) decryptDict.Add(encrypt, 1);
+                else decryptDict[encrypt]++;
+            }
+        }
+
+        public string Encrypt(string word1)
+        {
+            StringBuilder res = new StringBuilder();
+            for (int i = 0; i < word1.Length; i++)
+                res.Append(encryptDict[word1[i]]);
+            return res.ToString();
+        }
+
+        public int Decrypt(string word2)
+        {
+            return decryptDict.ContainsKey(word2) ? decryptDict[word2] : 0;
         }
     }
 }
