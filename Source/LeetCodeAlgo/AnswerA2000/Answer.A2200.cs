@@ -296,5 +296,29 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///2225. Find Players With Zero or One Losses
+        ///You are given an integer array matches where matches[i] = [winneri, loseri] indicates that
+        ///the player winneri defeated player loseri in a match. Return a list answer of size 2 where:
+        ///answer[0] is a list of all players that have not lost any matches.
+        ///answer[1] is a list of all players that have lost exactly one match.
+        ///The values in the two lists should be returned in increasing order.
+        public IList<IList<int>> FindWinners(int[][] matches)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach (var match in matches)
+            {
+                if (!dict.ContainsKey(match[0])) dict.Add(match[0], 0);
+                if (!dict.ContainsKey(match[1])) dict.Add(match[1], 0);
+                dict[match[1]]++;
+            }
+
+            var res = new List<IList<int>>();
+            var list1 = dict.Keys.Where(x => dict[x] == 0).OrderBy(x => x).ToList();
+            var list2 = dict.Keys.Where(x => dict[x] == 1).OrderBy(x => x).ToList();
+            res.Add(list1);
+            res.Add(list2);
+            return res;
+        }
     }
 }
