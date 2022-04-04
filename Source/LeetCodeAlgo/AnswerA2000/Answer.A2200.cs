@@ -276,5 +276,25 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
+        ///2224. Minimum Number of Operations to Convert Time
+        ///In one operation you can increase the time current by 1, 5, 15, or 60 minutes.
+        ///You can perform this operation any number of times. Return the minimum number of operations to convert current to correct.
+        public int ConvertTime(string current, string correct)
+        {
+            DateTime start = DateTime.ParseExact(current, "HH:mm", null);
+            DateTime end = DateTime.ParseExact(correct, "HH:mm", null);
+            int diff = (int)((end - start).TotalMinutes);
+            int res = 0;
+            while (diff > 0)
+            {
+                res++;
+                if (diff >= 60) diff -= 60;
+                else if (diff >= 15) diff -= 15;
+                else if (diff >= 5) diff -= 5;
+                else if (diff >= 1) diff -= 1;
+            }
+            return res;
+        }
     }
 }
