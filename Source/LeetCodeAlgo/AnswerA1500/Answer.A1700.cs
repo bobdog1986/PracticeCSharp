@@ -47,7 +47,46 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
-        ///1742. Maximum Number of Balls in a Box
+        ///1721. Swapping Nodes in a Linked List
+        ///You are given the head of a linked list, and an integer k.
+        ///Return the head of the linked list after swapping the values of the kth node
+        ///from the beginning and the kth node from the end(the list is 1-indexed).
+        public ListNode SwapNodes(ListNode head, int k)
+        {
+            List<ListNode> list = new List<ListNode>();
+            var node = head;
+            while(node != null)
+            {
+                list.Add(node);
+                node = node.next;
+            }
+            if (k > list.Count / 2)
+                k = list.Count + 1 - k;
+            if (list.Count % 2 == 1 && k == list.Count / 2 + 1)
+                return head;
+
+            var temp = list[k - 1];
+            list[k - 1] = list[list.Count - k];
+            list[list.Count - k] = temp;
+            if (k == 1 || k == list.Count)
+            {
+                list[0].next = list[1];
+
+                list[list.Count - 2].next = list[list.Count - 1];
+                list[list.Count - 1].next = null;
+            }
+            else
+            {
+                list[k - 2].next = list[k - 1];
+                list[k - 1].next = list[k];
+
+                list[list.Count - k -1].next = list[list.Count - k];
+                list[list.Count - k].next = list[list.Count - k + 1];
+            }
+            return list[0];
+        }
+
+        /// 1742. Maximum Number of Balls in a Box
         ///For example, the ball number 321 will be put in the box number 3 + 2 + 1 = 6 and
         ///the ball number 10 will be put in the box number 1 + 0 = 1.
         ///Given two integers lowLimit and highLimit, return the number of balls in the box with the most balls.
