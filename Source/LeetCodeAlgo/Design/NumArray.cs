@@ -6,81 +6,115 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo.Design
 {
-    ///303. Range Sum Query - Immutable, #Segment Tree
-    ///Given an integer array nums, handle multiple queries of the following type:
-    ///Calculate the sum of the elements of nums between indices [left,right] inclusive where left <= right.
+    ///307. Range Sum Query - Mutable, #Segment Tree
+    ///Given an integer array nums, handle multiple queries of the following types:
+    ///Update the value of an element in nums.
+    ///Calculate the sum of the elements of nums between indices left and right inclusive where left <= right.
+
     public class NumArray
     {
-        private int[] dp;
+        private SegmentTreeNode root = null;
+
         public NumArray(int[] nums)
         {
-            dp = new int[nums.Length];
-            int sum = 0;
-            for(int i = 0; i < dp.Length; i++)
-            {
-                sum += nums[i];
-                dp[i]=sum;
-            }
+            root = BuildSegmentTree(nums, 0, nums.Length - 1);
         }
 
-        public int SumRange(int left, int right)
+        private SegmentTreeNode BuildSegmentTree(int[] nums, int start, int end)
         {
-            if (left == 0) return dp[right];
-            return dp[right] - dp[left-1];
-        }
-    }
-
-    public class NumArray_SegmentTree
-    {
-        private int[] tree;
-        private int n;
-
-        public NumArray_SegmentTree(int[] nums)
-        {
-            n = nums.Length;
-            if (n == 0) return;
-            //why?
-            if ((n & (n - 1)) == 0)
+            if (start > end)
             {
-                tree = new int[2 * n];
+                return null;
             }
             else
             {
-                int count = 0;
-                int n1 = n;
-                while (n1 > 0)
+                SegmentTreeNode res = new SegmentTreeNode(start, end);
+                if (start == end)
                 {
-                    count++;
-                    n1 >>= 1;
+                    res.sum = nums[start];
                 }
-                tree = new int[2 * (1 << count)];
+                else
+                {
+                    int mid = (start + end ) / 2;
+                    res.left = BuildSegmentTree(nums, start, mid);
+                    res.right = BuildSegmentTree(nums, mid + 1, end);
+                    res.sum = res.left.sum + res.right.sum;
+                }
+                return res;
             }
-            buildSegmentTree(0, n - 1, 1, nums);
         }
-        private int buildSegmentTree(int left, int right, int pos, int[] nums)
-        {
-            if (left == right)
-            {
-                tree[pos] = nums[left];
-                return tree[pos];
-            }
-            int mid = (left + right) / 2;
-            tree[pos] = buildSegmentTree(left, mid, pos * 2, nums) + buildSegmentTree(mid + 1, right, pos * 2 + 1, nums);
-            return tree[pos];
 
-        }
-        private int find(int start, int end, int left, int right, int pos)
+        public void Update(int index, int val)
         {
-            if (end < left || right < start)
-                return 0;
-            if (start <= left && right <= end)
-                return tree[pos];
-            int mid = (left + right) / 2;
-            return find(start, end, left, mid, pos * 2) + find(start, end, mid + 1, right, pos * 2 + 1);
+            Update(root, index, val);
         }
+
+        private void Update(SegmentTreeNode node,int index, int val)
+        {
+            if (node.start == node.end)
+            {
+                node.sum = val;
+            }
+            else
+            {
+                int mid = (node.start+ node.end) / 2;
+                if (index <= mid)
+                {
+                    Update(node.left, index, val);
+                }
+                else
+                {
+                    Update(node.right, index, val);
+                }
+                node.sum = node.left.sum + node.right.sum;
+            }
+        }
+
         public int SumRange(int left, int right)
         {
-            return find(left, right, 0, n - 1, 1);
+            return SumRange(root, left, right);
+        }
+
+        private int SumRange(SegmentTreeNode node, int start, int end)
+        {
+            if (node.end == end && node.start == start)
+            {
+                return node.sum;
+            }
+            else
+            {
+                int mid = (node.start +node.end ) / 2;
+                if (end <= mid)
+                {
+                    return SumRange(node.left, start, end);
+                }
+                else if (start >= mid + 1)
+                {
+                    return SumRange(node.right, start, end);
+                }
+                else
+                {
+                    return SumRange(node.right, mid + 1, end) + SumRange(node.left, start, mid);
+                }
+            }
+        }
+    }
+
+    public class SegmentTreeNode
+    {
+        public int start;
+        public int end;
+        public SegmentTreeNode left;
+        public SegmentTreeNode right;
+        public int sum;
+
+        public SegmentTreeNode(int start, int end)
+        {
+            this.start = start;
+            this.end = end;
+            this.left = null;
+            this.right = null;
+            this.sum = 0;
         }
     }
 }
