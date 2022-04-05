@@ -128,7 +128,27 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2195. Append K Integers With Minimal Sum, #PriorityQueue, #Heap
+        ///2191. Sort the Jumbled Numbers
+        ///Transfer digits according to mapping array, then sort
+        public int[] SortJumbled(int[] mapping, int[] nums)
+        {
+            return nums.OrderBy(x => SortJumbled(x, mapping)).ToArray();
+        }
+
+        public int SortJumbled(int n, int[] mapping)
+        {
+            if (n < 10) return mapping[n];//avoid n==0 issue
+            int res = 0;
+            int x = 1;
+            while (n > 0)
+            {
+                res += mapping[n % 10] * x;
+                n /= 10;
+                x *= 10;
+            }
+            return res;
+        }
+        /// 2195. Append K Integers With Minimal Sum, #PriorityQueue, #Heap
         ///You are given an integer array nums and an integer k.
         ///Append k unique positive integers that do not appear in nums to nums such that the resulting total sum is minimum.
         ///Return the sum of the k integers appended to nums.
