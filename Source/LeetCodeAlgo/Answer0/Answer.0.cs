@@ -8,7 +8,7 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        /// 1. Two Sum, #HashMap, #Two Pointers
+        /// 1. Two Sum
         /// return indices of the two numbers such that they add up to target.
         public int[] TwoSum(int[] nums, int target)
         {
@@ -16,14 +16,9 @@ namespace LeetCodeAlgo
             for (int i = 0; i < nums.Length; i++)
             {
                 if (dict.ContainsKey(target - nums[i]))
-                {
                     return new int[2] { dict[target - nums[i]], i };
-                }
-                else
-                {
-                    if (!dict.ContainsKey(nums[i]))
-                        dict.Add(nums[i], i);
-                }
+                else if (!dict.ContainsKey(nums[i]))
+                    dict.Add(nums[i], i);
             }
             return null;
         }
@@ -52,46 +47,33 @@ namespace LeetCodeAlgo
                 }
             }
             if (carry != 0)
-            {
                 curr.next = new ListNode(carry);
-            }
             return root;
         }
 
-        /// 3. Longest Substring Without Repeating Characters, #HashMap
+        /// 3. Longest Substring Without Repeating Characters
         /// Given a string s, find the length of the longest substring without repeating characters.
         /// s consists of English letters, digits, symbols and spaces.
         public int LengthOfLongestSubstring(string s)
         {
-            if (s.Length <= 1) return s.Length;
-            int max = 1;
-            int len = 0;
-            int[] arr = new int[128];
-            for (int i = 0; i < arr.Length; i++)
-                arr[i] = -1;
-            for (int i = 0; i < s.Length; i++)
+            if (s.Length <=1) return s.Length;
+            Dictionary<char, int> map = new Dictionary<char, int>();
+            int max = 0;
+            int left = 0;
+            for (int right = 0; right < s.Length; ++right)
             {
-                int j = s[i];
-                if (arr[j] != -1)
+                if (map.ContainsKey(s[right]))
                 {
-                    int start = arr[j];
-                    for (int k = 0; k < arr.Length && len > 0; k++)
-                    {
-                        if (arr[k] != -1 && arr[k] <= start)
-                        {
-                            arr[k] = -1;
-                            len--;
-                        }
-                    }
+                    left = Math.Max(left, map[s[right]] + 1);
+                    map[s[right]] = right;
                 }
-                arr[j] = i;
-                len++;
-                max = Math.Max(max, len);
+                else map.Add(s[right], right);
+                max = Math.Max(max, right - left + 1);
             }
             return max;
         }
 
-        ///4. Median of Two Sorted Arrays
+        ///4. Median of Two Sorted Arrays, #Two Pointers
         ///Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
         ///The overall run time complexity should be O(log (m+n)).
         public double FindMedianSortedArrays(int[] nums1, int[] nums2)
@@ -204,22 +186,10 @@ namespace LeetCodeAlgo
         {
             if (s.Length <= numRows || numRows == 1)
                 return s;
-
             int zagLen = numRows + (numRows - 2);
-            int zagCount = 1;
             int zagColCount = 1 + (numRows - 2);
-            while (true)
-            {
-                int sum1 = zagCount * zagLen;
-                if (s.Length <= sum1)
-                {
-                    break;
-                }
-                else
-                {
-                    zagCount++;
-                }
-            }
+            int zagCount = s.Length / zagLen;
+            if (s.Length % zagLen != 0) zagCount++;
 
             char[][] mat = new char[numRows][];
             for (int i = 0; i < mat.Length; i++)
@@ -233,32 +203,14 @@ namespace LeetCodeAlgo
                 int zagModulo = i % zagLen;
 
                 int c = zagIndex * zagColCount;
-                if (zagModulo == 0)
-                {
-                }
-                else if (zagModulo < numRows)
-                {
-                    //c++;
-                }
-                else
-                {
-                    //c++;
-                    c += zagModulo - numRows + 1;
-                }
+                if (zagModulo == 0) { }
+                else if (zagModulo < numRows) { }
+                else { c += zagModulo - numRows + 1; }
 
                 int r = 0;
-                if (zagModulo == 0)
-                {
-                    //r=0
-                }
-                if (zagModulo < numRows)
-                {
-                    r = zagModulo;
-                }
-                else
-                {
-                    r = numRows - 1 - (zagModulo - numRows + 1);
-                }
+                if (zagModulo == 0) { }
+                else if (zagModulo < numRows) { r = zagModulo; }
+                else { r = numRows - 1 - (zagModulo - numRows + 1); }
 
                 mat[r][c] = s[i];
             }
@@ -269,12 +221,9 @@ namespace LeetCodeAlgo
                 foreach (var a in r)
                 {
                     if ((byte)a != 0)
-                    {
                         list.Add(a);
-                    }
                 }
             }
-
             return new string(list.ToArray());
         }
 
@@ -289,16 +238,16 @@ namespace LeetCodeAlgo
             bool isNeg = x < 0;
             if (x < 0)
                 x = -x;
-            int result = 0;
+            int res = 0;
             while (x > 0)
             {
-                if (result > (int.MaxValue / 10))
+                if (res > (int.MaxValue / 10))
                     return 0;
-                result *= 10;
-                result += x % 10;
+                res *= 10;
+                res += x % 10;
                 x = x / 10;
             }
-            return isNeg ? -result : result;
+            return isNeg ? -res : res;
         }
 
         /// 8. String to Integer (atoi)
@@ -384,7 +333,7 @@ namespace LeetCodeAlgo
             return ans == x;
         }
 
-        ///10. Regular Expression Matching
+        ///10. Regular Expression Matching, #DP
         ///Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*'
         ///'.' Matches any single character​​​​, '*' Matches zero or more of the preceding element.
         ///1 <= s.length <= 20, 1 <= p.length <= 30,
@@ -392,221 +341,63 @@ namespace LeetCodeAlgo
         ///It is guaranteed for each appearance of the character '*', there will be a previous valid character to match.
         public bool IsMatch_10(string s, string p)
         {
-            if (p.Contains('*'))
+            //All posibilities:
+            //1. p[pIndex] == '*'
+            //    1.1 p[pIndex] == s[sIndex]
+            //        1.1.1 '*' can use 0 times: remove 'x*' dp[i, j - 2]
+            //        1.1.1 '*' can use 1~n times: keep 'x*' dp[i - 1, j]
+            //    1.2 p[pIndex] != s[sIndex]
+            //        1.2.1 '*' can use 0 times.
+            //2. p[pIndex] == '.'
+            //3. p[pIndex] == a~z
+            //    3.1 p[pIndex] == s[sIndex]
+            //    3.2 p[pIndex] != s[sIndex]
+            var sLen = s.Length;
+            var pLen = p.Length;
+
+            var dp = new bool[sLen + 1, pLen + 1];
+            // init - only s: "" and p: "" => true, the other all false
+            dp[0, 0] = true;
+            for (int i = 0; i <= sLen; i++)
             {
-                List<string> patterns = new List<string>();
-                int count = p.Where(x => x == '*').Count();
-                string lastStrictPattern = string.Empty;
-                string strictStr = "";
-                foreach (var i in p.Split('*'))
+                var sIndex = i - 1;
+                for (int j = 1; j <= pLen; j++)
                 {
-                    if (i.Length == 0)
-                        continue;
-                    if (count > 0)
+                    var pIndex = j - 1;
+
+                    if (p[pIndex] == '*')
                     {
-                        if (i.Length > 1)
+                        if (i > 0 && (p[pIndex - 1] == s[sIndex] || p[pIndex - 1] == '.'))
                         {
-                            //add strict pattern, eg. "abc", "a.c"
-                            var str = i.Substring(0, i.Length - 1);
-                            patterns.Add(str);
-                            strictStr = strictStr + str;
-                        }
-                        //add mutable pattern, eg. "a*" or ".*"
-                        var pat = new string(new char[] { i.Last(), '*' });
-                        if (patterns.Count > 0)
-                        {
-                            if (pat == patterns.Last())
-                            {
-                                //
-                            }
-                            else if ((patterns.Last() == ".*" || (pat == ".*" && patterns.Last().Last() == '*')))
-                            {
-                                patterns[patterns.Count - 1] = ".*";
-                            }
-                            else
-                            {
-                                patterns.Add(pat);
-                            }
+                            // aa    * = 0 (dp[i, j-2])   aa   * = 1~n (dp[i - 1, j])
+                            //  a*                         a*
+                            dp[i, j] = dp[i, j - 2] || dp[i - 1, j];
                         }
                         else
                         {
-                            patterns.Add(pat);
+                            // ab   * = 0 (dp[i, j-2])
+                            //  a*
+                            dp[i, j] = dp[i, j - 2];
                         }
-                        count--;
+                    }
+                    else if (i > 0 && p[pIndex] == '.')
+                    {
+                        // abc
+                        // ab.
+                        dp[i, j] = dp[i - 1, j - 1];
                     }
                     else
                     {
-                        //last strict one, no '*'
-                        lastStrictPattern = i;
-                    }
-                }
-                //if exist tail strict str, check and remove it
-                if (lastStrictPattern.Length > 0)
-                {
-                    if (s.Length < lastStrictPattern.Length)
-                        return false;
-                    var str = s.Substring(s.Length - lastStrictPattern.Length);
-                    if (!IsMatch_StrictCompare(str, lastStrictPattern))
-                        return false;
-                    s = s.Substring(0, s.Length - lastStrictPattern.Length);
-                }
-                return IsMatch_CompareAll(s, patterns, strictStr);
-            }
-            else
-            {
-                return IsMatch_StrictCompare(s, p);
-            }
-        }
-
-        public bool IsMatch_StrictCompare(string s, string p)
-        {
-            if (s.Length != p.Length)
-                return false;
-            for (int i = 0; i < s.Length; i++)
-            {
-                if (s[i] != p[i] && p[i] != '.')
-                    return false;
-            }
-            return true;
-        }
-
-        public bool IsMatch_CompareAll(string s, IList<string> patterns, string strictStr)
-        {
-            for (int i = 0; i < patterns.Count; i++)
-            {
-                //matched
-                if (s.Length == strictStr.Length && strictStr.Length == 0)
-                    return true;
-                //no possible match
-                if (s.Length < strictStr.Length)
-                    return false;
-
-                if (s.Length == strictStr.Length || patterns[i].Last() != '*')
-                {
-                    if (patterns[i].Last() == '*')
-                        continue;
-                    //must strict compare
-                    string str = s.Substring(0, patterns[i].Length);
-                    if (!IsMatch_StrictCompare(str, patterns[i]))
-                        return false;
-                    s = s.Substring(patterns[i].Length);
-                    strictStr = strictStr.Substring(patterns[i].Length);
-                }
-                else
-                {
-                    if (strictStr.Length > 0)
-                    {
-                        //find all possible start index
-                        List<int> foundList = new List<int>();
-                        for (int j = 0; j < s.Length; j++)
+                        if (i > 0 && p[pIndex] == s[sIndex])
                         {
-                            if (foundList.Contains(j))
-                                continue;
-                            int m = j;
-                            int start = -1;
-                            int k = 0;
-                            while (m < s.Length && k < strictStr.Length)
-                            {
-                                if (s[m] == strictStr[k] || strictStr[k] == '.')
-                                {
-                                    if (start == -1)
-                                    {
-                                        start = m;
-                                    }
-                                    k++;
-                                    m++;
-                                }
-                                else
-                                {
-                                    m++;
-                                }
-                            }
-                            if (k == strictStr.Length)
-                            {
-                                if (!foundList.Contains(start))
-                                {
-                                    foundList.Add(start);
-                                }
-                                j = start;
-                            }
-                        }
-                        //cannot match
-                        if (foundList.Count == 0)
-                            return false;
-                        if (patterns[i] == ".*")
-                        {
-                            s = s.Substring(foundList.Last());
-                        }
-                        else
-                        {
-                            int l = 0;
-                            for (; l < s.Length; l++)
-                            {
-                                if (s[l] != patterns[i][0])
-                                    break;
-                            }
-                            if (l >= foundList.Last())
-                            {
-                                //find the best anwser
-                                s = s.Substring(foundList.Last());
-                            }
-                            else if (l > 0)
-                            {
-                                //try all possible indexes
-                                //a*,a or a*,.a, donot disable next strict
-                                if (foundList.Count == 1)
-                                {
-                                    l = Math.Min(l, foundList[0]);
-                                    s = s.Substring(l);
-                                }
-                                else
-                                {
-                                    foreach (var next in foundList)
-                                    {
-                                        if (next > l)
-                                            continue;
-                                        var str = s.Substring(next);
-                                        List<string> subPats = new List<string>();
-                                        for (int m = i + 1; m < patterns.Count; m++)
-                                        {
-                                            subPats.Add(patterns[m]);
-                                        }
-                                        if (IsMatch_CompareAll(str, subPats, strictStr))
-                                            return true;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                //l==0, s=s
-                            }
+                            // ab
+                            // ab
+                            dp[i, j] = dp[i - 1, j - 1];
                         }
                     }
-                    else
-                    {
-                        //remove as many as possible
-                        //strictStr.Length == 0;
-                        int n = i;
-                        while (n < patterns.Count)
-                        {
-                            if (patterns[n] == ".*")
-                                return true;
-                            n++;
-                        }
-
-                        int l = 0;
-                        for (; l < s.Length; l++)
-                        {
-                            if (s[l] != patterns[i][0])
-                                break;
-                        }
-                        if (l == s.Length)
-                            return true;
-                        s = s.Substring(l);
-                    }
                 }
             }
-            return strictStr.Length == 0 && s.Length == 0;
+            return dp[sLen, pLen];
         }
 
         /// 11. Container With Most Water, #Two Pointers
@@ -1492,6 +1283,7 @@ namespace LeetCodeAlgo
 
             return result;
         }
+
         /// 35. Search Insert Position, #Binary Search
         /// Given a sorted array of distinct integers and a target value, return the index if the target is found.
         /// If not, return the index where it would be if it were inserted in order.
@@ -1501,7 +1293,7 @@ namespace LeetCodeAlgo
             int right = nums.Length - 1;
             while (left <= right)
             {
-                int mid = left + (right-left) / 2;
+                int mid = left + (right - left) / 2;
                 if (nums[mid] == target) return mid;
                 else if (target > nums[right]) return right + 1;
                 else if (target < nums[left]) return left;

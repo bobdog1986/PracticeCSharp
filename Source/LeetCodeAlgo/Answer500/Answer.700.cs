@@ -79,7 +79,7 @@ namespace LeetCodeAlgo
         {
             int low = 0;
             int high = nums.Length - 1;
-            while (low<=high)
+            while (low <= high)
             {
                 int mid = low + (high - low) / 2;
                 if (nums[mid] == target) { return mid; }
@@ -119,10 +119,11 @@ namespace LeetCodeAlgo
             for (int i = 1; i < len; i++)
             {
                 buy[i] = Math.Max(buy[i - 1], sell[i - 1] - prices[i]);
-                sell[i] = Math.Max(sell[i - 1], buy[i - 1] + prices[i]-fee);
+                sell[i] = Math.Max(sell[i - 1], buy[i - 1] + prices[i] - fee);
             }
             return sell[len - 1];
         }
+
         /// 717. 1-bit and 2-bit Characters
         ///The first character can be represented by one bit 0.
         ///The second character can be represented by two bits (10 or 11).
@@ -131,7 +132,7 @@ namespace LeetCodeAlgo
         public bool IsOneBitCharacter(int[] bits)
         {
             bool odd = true;
-            for(int i = bits.Length - 2; i >= 0; i--)
+            for (int i = bits.Length - 2; i >= 0; i--)
             {
                 if (odd && bits[i] == 0)
                     return true;
@@ -141,6 +142,7 @@ namespace LeetCodeAlgo
             }
             return odd;
         }
+
         /// 713. Subarray Product Less Than K, #Sliding Window
         ///return the number of contiguous subarrays where the product of all is less than k.
         ///1 <= nums.length <= 3 * 10^4, 1 <= nums[i] <= 1000, 0 <= k <= 10^6
@@ -181,16 +183,16 @@ namespace LeetCodeAlgo
                 node = node.next;
             }
 
-            if (count == 0 || k==1)
+            if (count == 0 || k == 1)
             {
                 ans[0] = head;
             }
             else
             {
-                int len= count / k;
-                int plusIndex= count - len * k;
-                node=head;
-                for(int i= 0; i < ans.Length; i++)
+                int len = count / k;
+                int plusIndex = count - len * k;
+                node = head;
+                for (int i = 0; i < ans.Length; i++)
                 {
                     int num = len;
                     if (i < plusIndex) num++;
@@ -207,16 +209,17 @@ namespace LeetCodeAlgo
                         else
                         {
                             currTail.next = node;
-                            currTail=currTail.next;
+                            currTail = currTail.next;
                         }
-                        node=node.next;
+                        node = node.next;
                     }
-                    if(currTail != null)currTail.next = null;
-                    ans[i]=currHead;
+                    if (currTail != null) currTail.next = null;
+                    ans[i] = currHead;
                 }
             }
             return ans;
         }
+
         /// 728
         public IList<int> SelfDividingNumbers(int left, int right)
         {
@@ -285,7 +288,7 @@ namespace LeetCodeAlgo
                         var c = point[1] + d[1];
                         if (r >= 0 && r < rowLen && c >= 0 && c < colLen && image[r][c] == color)
                         {
-                            queue.Enqueue(new int[] { r,c});
+                            queue.Enqueue(new int[] { r, c });
                         }
                     }
                 }
@@ -313,7 +316,6 @@ namespace LeetCodeAlgo
                 arr[++top] = i;
             }
             return res;
-
         }
 
         public int[] DailyTemperatures_Stack(int[] temperatures)
@@ -324,7 +326,7 @@ namespace LeetCodeAlgo
             int[] res = new int[n];
             for (int i = 0; i < n; i++)
             {
-                while (stack.Count >0 && temperatures[i] > temperatures[stack.Peek()])
+                while (stack.Count > 0 && temperatures[i] > temperatures[stack.Peek()])
                 {
                     int idx = stack.Pop();
                     res[idx] = i - idx;
@@ -364,16 +366,23 @@ namespace LeetCodeAlgo
             return dp[max];
         }
 
-        ///744. Find Smallest Letter Greater Than Target
+        ///744. Find Smallest Letter Greater Than Target, #Binary Search
         public char NextGreatestLetter(char[] letters, char target)
         {
-            foreach (char letter in letters)
+            if (target >= letters[letters.Length - 1])
+                return letters[0];
+
+            int n = letters.Length;
+            int left = 0, right = n - 1;
+            while (left < right)
             {
-                if(letter > target)
-                    return letter;
+                int mid = (left + right) / 2;
+                if (letters[mid] > target) right = mid;
+                else left = mid + 1;
             }
-            return letters.Last();
+            return letters[left];
         }
+
         /// 746. Min Cost Climbing Stairs
         ///cost[i] is the cost of ith step on a staircase.
         ///You can either start from the step with index 0, or the step with index 1
@@ -394,13 +403,14 @@ namespace LeetCodeAlgo
             //every solution must to last1 or last2
             return Math.Min(dp[cost.Length - 1], dp[cost.Length - 2]);
         }
+
         ///747. Largest Number At Least Twice of Others, #PriorityQueue, #Heap
         ///Determine whether the largest element in the array is at least twice as much as every other number
         ///If it is, return the index of the largest element, or return -1 otherwise.
         public int DominantIndex(int[] nums)
         {
-            PriorityQueue<int,int> pq =new PriorityQueue<int, int> ();
-            for(int i=0; i<nums.Length; i++)
+            PriorityQueue<int, int> pq = new PriorityQueue<int, int>();
+            for (int i = 0; i < nums.Length; i++)
             {
                 pq.Enqueue(i, -nums[i]);
             }
@@ -410,6 +420,5 @@ namespace LeetCodeAlgo
             if (pq.Count > 0) secondIndex = pq.Dequeue();
             return secondIndex == -1 || nums[maxIndex] >= nums[secondIndex] * 2 ? maxIndex : -1;
         }
-
     }
 }

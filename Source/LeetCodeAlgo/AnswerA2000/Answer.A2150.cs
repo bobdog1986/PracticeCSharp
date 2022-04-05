@@ -91,7 +91,20 @@ namespace LeetCodeAlgo
             return words.Where(word => word.StartsWith(pref)).Count();
         }
 
-        ///2190. Most Frequent Number Following Key In an Array
+        ///2186. Minimum Number of Steps to Make Two Strings Anagram II
+        ///You are given two strings s and t. In one step, you can append any character to either s or t.
+        ///Return the minimum number of steps to make s and t anagrams of each other.
+        ///An anagram of a string is a string that contains the same characters with a different(or the same) ordering.
+        public int MinSteps(string s, string t)
+        {
+            int[] arr = new int[26];
+            foreach (var c in s)
+                arr[c - 'a']++;
+            foreach (var c in t)
+                arr[c - 'a']--;
+            return arr.Sum(x => Math.Abs(x));
+        }
+        /// 2190. Most Frequent Number Following Key In an Array
         ///0 <= i <= n - 2, nums[i] == key and, nums[i + 1] == target.
         ///Return the target with the maximum count.
         public int MostFrequent(int[] nums, int key)
