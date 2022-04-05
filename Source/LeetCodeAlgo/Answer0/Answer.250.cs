@@ -116,6 +116,40 @@ namespace LeetCodeAlgo
             }
             return -1;
         }
+        ///274. H-Index
+        ///Given an array of integers citations where citations[i] is the number of citations
+        ///a researcher received for their ith paper, return compute the researcher's h-index.
+        public int HIndex(int[] citations)
+        {
+            int n = citations.Length;
+            int[] count = new int[n + 1];
+            foreach (int c in citations)
+            {
+                if (c > n) count[n]++;//greater than count
+                else count[c]++;
+            }
+            int total = 0;
+            for (int i = n; i >= 0; i--)
+            {
+                total += count[i];
+                if (total >= i)
+                    return i;
+            }
+            return 0;
+        }
+
+        public int HIndex_NlogN(int[] citations)
+        {
+            Array.Sort(citations);
+            int n = citations.Length;
+            for (int i = 0; i <n;i++)
+            {
+                int count = n-i;
+                if (citations[i] >= count) return count;
+            }
+            return 0;
+        }
+
         /// 278. First Bad Version, #Binary Search
         /// 1 <= bad <= n <= 2^31 - 1
         public int FirstBadVersion(int n)
