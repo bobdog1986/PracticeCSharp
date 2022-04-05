@@ -97,7 +97,12 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2180. Count Integers With Even Digit Sum, nums<=1000
+        ///2177. Find Three Consecutive Integers That Sum to a Given Number
+        public long[] SumOfThree(long num)
+        {
+            return num % 3 == 0 ? new long[] { num / 3 - 1, num / 3, num / 3 + 1 } : new long[] { };
+        }
+        /// 2180. Count Integers With Even Digit Sum, nums<=1000
         public int CountEven(int num)
         {
             ///10 = 2, 4, 6, 8(4)
