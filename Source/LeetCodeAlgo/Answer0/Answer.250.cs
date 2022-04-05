@@ -119,7 +119,7 @@ namespace LeetCodeAlgo
         ///274. H-Index
         ///Given an array of integers citations where citations[i] is the number of citations
         ///a researcher received for their ith paper, return compute the researcher's h-index.
-        public int HIndex(int[] citations)
+        public int HIndex_274_O_N(int[] citations)
         {
             int n = citations.Length;
             int[] count = new int[n + 1];
@@ -138,7 +138,7 @@ namespace LeetCodeAlgo
             return 0;
         }
 
-        public int HIndex_NlogN(int[] citations)
+        public int HIndex_274_NlogN(int[] citations)
         {
             Array.Sort(citations);
             int n = citations.Length;
@@ -148,6 +148,23 @@ namespace LeetCodeAlgo
                 if (citations[i] >= count) return count;
             }
             return 0;
+        }
+
+        ///275. H-Index II, #Binary Search
+        public int HIndex(int[] citations)
+        {
+            int n = citations.Length;
+            if (citations[n-1] == 0) return 0;
+            int left = 0;
+            int right=n-1;
+            while (left < right)
+            {
+                int mid=(left+right)/2;
+                int count = n - mid;
+                if (citations[mid] >= count) right = mid;
+                else left = mid + 1;
+            }
+            return n - right;
         }
 
         /// 278. First Bad Version, #Binary Search
