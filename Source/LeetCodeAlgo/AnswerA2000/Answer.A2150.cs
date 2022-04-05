@@ -117,6 +117,21 @@ namespace LeetCodeAlgo
             return sum % 2 == 0 ? temp / 2 : (temp - 1) / 2;
         }
 
+        ///2181. Merge Nodes in Between Zeros
+        public ListNode MergeNodes(ListNode head)
+        {
+            if (head == null||head.next==null) return null;
+            var node = head.next;
+            int sum = 0;
+            while(node != null && node.val!=0)
+            {
+                sum += node.val;
+                node = node.next;
+            }
+            var res = new ListNode(sum);
+            res.next = MergeNodes(node);
+            return res;
+        }
         /// 2185. Counting Words With a Given Prefix
         public int PrefixCount(string[] words, string pref)
         {
