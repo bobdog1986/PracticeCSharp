@@ -1759,6 +1759,44 @@ namespace LeetCodeAlgo
 
         ///146. LRU Cache, see LRUCache
 
+        ///147. Insertion Sort List
+        ///Given the head of a singly linked list, sort the list using insertion sort, and return the sorted list's head.
+        public ListNode InsertionSortList(ListNode head)
+        {
+            ListNode res = null;
+            var node = head;
+            while(node != null)
+            {
+                var temp = node.next;
+                if (res == null)
+                {
+                    res = node;
+                    res.next = null;//remember set next of res to null to avoid endless loop
+                }
+                else
+                {
+                    if (node.val < res.val)
+                    {
+                        node.next = res;
+                        res = node;
+                    }
+                    else
+                    {
+                        var prev = res;
+                        while (prev != null && prev.next!=null && prev.next.val<node.val)
+                        {
+                            prev = prev.next;
+                        }
+                        node.next = prev.next;
+                        prev.next = node;
+
+                    }
+                }
+                node = temp;
+            }
+            return res;
+        }
+
         /// 148. Sort List
         ///Given the head of a linked list, return the list after sorting it in ascending order.
         ///O(n logn) time and O(1) memory
