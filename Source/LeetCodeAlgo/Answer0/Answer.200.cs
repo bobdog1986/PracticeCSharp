@@ -74,7 +74,7 @@ namespace LeetCodeAlgo
         }
 
         /// 202. Happy Number
-        /// Starting with any positive integer, replace the number by the sum of the squares of its digits.
+        /// Starting with any positive int, replace the number by the sum of the squares of its digits.
         /// Repeat the process until the number==1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
         /// Those numbers for which this process ends in 1 are happy. Return true if n is a happy number, and false if not.
         public bool IsHappy(int n)
@@ -141,7 +141,7 @@ namespace LeetCodeAlgo
         }
 
         ///204. Count Primes
-        ///Given an integer n, return the number of prime numbers that are strictly less than n.
+        ///Given an int n, return the number of prime numbers that are strictly less than n.
         public int CountPrimes(int n)
         {
             bool[] notPrime = new bool[n];
@@ -461,7 +461,7 @@ namespace LeetCodeAlgo
         }
 
         ///219. Contains Duplicate II
-        ///Given an integer array nums and an integer k, return true if nums[i] == nums[j] and abs(i - j) <= k.
+        ///Given an int array nums and an int k, return true if nums[i] == nums[j] and abs(i - j) <= k.
         ///1 <= nums.length <= 10^5,0 <= k <= 10^5
         public bool ContainsNearbyDuplicate(int[] nums, int k)
         {
@@ -610,8 +610,8 @@ namespace LeetCodeAlgo
         }
 
         ///227. Basic Calculator II
-        ///1 <= s.length <= 3 * 10^5,non-negative integers in the range [0, 2^31 - 1].
-        ///s consists of integers and operators ('+', '-', '*', '/') separated by some number of spaces.
+        ///1 <= s.length <= 3 * 10^5,non-negative ints in the range [0, 2^31 - 1].
+        ///s consists of ints and operators ('+', '-', '*', '/') separated by some number of spaces.
         public int Calculate(string s)
         {
             List<int> list = new List<int>();
@@ -702,7 +702,7 @@ namespace LeetCodeAlgo
             return ans.Select(x => string.Join("->", x)).ToList();
         }
         ///229. Majority Element II
-        ///Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ times.
+        ///Given an int array of size n, find all elements that appear more than ⌊ n/3 ⌋ times.
         public IList<int> MajorityElement_229(int[] nums)
         {
             var res = new List<int>();
@@ -748,7 +748,7 @@ namespace LeetCodeAlgo
         }
 
         /// 231. Power of Two
-        ///Given an integer n, return true if it is a power of two.
+        ///Given an int n, return true if it is a power of two.
 
         public bool IsPowerOfTwo(int n)
         {
@@ -887,7 +887,7 @@ namespace LeetCodeAlgo
         }
 
         ///239. Sliding Window Maximum
-        ///You are given an array of integers nums, there is a sliding window of size k which is moving from the very left of the array to the very right.
+        ///You are given an array of ints nums, there is a sliding window of size k which is moving from the very left of the array to the very right.
         ///You can only see the k numbers in the window. Each time the sliding window moves right by one position.
         ///Return the max sliding window. -10^4 <= nums[i] <= 10^4
         public int[] MaxSlidingWindow(int[] nums, int k)
@@ -956,8 +956,8 @@ namespace LeetCodeAlgo
         }
         /// 240. Search a 2D Matrix II, #Binary Search
         ///This matrix has the following properties:
-        ///Integers in each row are sorted in ascending from left to right.
-        ///Integers in each column are sorted in ascending from top to bottom.
+        ///ints in each row are sorted in ascending from left to right.
+        ///ints in each column are sorted in ascending from top to bottom.
         public bool SearchMatrix(int[][] matrix, int target)
         {
             int rowLen = matrix.Length;
@@ -996,6 +996,51 @@ namespace LeetCodeAlgo
                 }
             }
             return false;
+        }
+
+        ///241. Different Ways to Add Parentheses
+        ///Given a string expression of numbers and operators, return all possible results from computing
+        ///all the different possible ways to group numbers and operators. You may return the answer in any order.
+        public IList<int> DiffWaysToCompute(string expression)
+        {
+            var res = new List<int>();
+            for (int i = 0; i < expression.Length; i++)
+            {
+                if (expression[i] == '-' ||
+                    expression[i] == '*' ||
+                    expression[i] == '+')
+                {
+                    var part1 = expression.Substring(0, i);
+                    var part2 = expression.Substring(i + 1);
+                    var part1Res = DiffWaysToCompute(part1);
+                    var part2Res = DiffWaysToCompute(part2);
+                    foreach (int p1 in part1Res)
+                    {
+                        foreach (int p2 in part2Res)
+                        {
+                            int c = 0;
+                            switch (expression[i])
+                            {
+                                case '+':
+                                    c = p1 + p2;
+                                    break;
+                                case '-':
+                                    c = p1 - p2;
+                                    break;
+                                case '*':
+                                    c = p1 * p2;
+                                    break;
+                            }
+                            res.Add(c);
+                        }
+                    }
+                }
+            }
+            if (res.Count == 0)
+            {
+                res.Add(int.Parse(expression));
+            }
+            return res;
         }
 
         /// 242. Valid Anagram
