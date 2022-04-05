@@ -43,7 +43,34 @@ namespace LeetCodeAlgo
             return original;
         }
 
-        ///2176. Count Equal and Divisible Pairs in an Array
+        ///2161. Partition Array According to Given Pivot
+        ///smaller than pivot on left, same as pivot on mid, larger on right
+        public int[] PivotArray(int[] nums, int pivot)
+        {
+            int left = 0;
+            int mid = 0;
+            int right = 0;
+            int[] arr = new int[nums.Length];
+            int[] res = new int[nums.Length];
+            foreach (var n in nums)
+            {
+                if (n < pivot) res[left++]=n;
+                else if (n == pivot) mid++;
+                else arr[right++]=n;
+            }
+            while (mid-- > 0)
+            {
+                res[left++] = pivot;
+            }
+            int j = 0;
+            while (j<right)
+            {
+                res[left + j] = arr[j];
+                j++;
+            }
+            return res;
+        }
+        /// 2176. Count Equal and Divisible Pairs in an Array
         ///return the number of pairs (i, j) where 0 <= i < j < n, such that nums[i] == nums[j] and (i * j) is divisible by k.
         public int CountPairs(int[] nums, int k)
         {
