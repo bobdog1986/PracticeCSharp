@@ -343,5 +343,42 @@ namespace LeetCodeAlgo
             }
             return false;
         }
+
+        ///394. Decode String
+        ///The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. 
+        ///Input: s = "3[a]2[bc]"       =>      Output: "aaabcbc";
+        ///Input: s = "3[a2[c]]"        =>      Output: "accaccacc"
+        ///Input: s = "2[abc]3[cd]ef"   =>      Output: "abcabccdcdcdef"
+        public string DecodeString(string s)
+        {
+            int startOfDigit = -1;
+            int endOfDigit = -1;
+            int count = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (char.IsDigit(s[i]) && startOfDigit == -1) startOfDigit = i;
+                if (s[i] == '[')
+                {
+                    count++;
+                    if(endOfDigit==-1)endOfDigit = i-1;
+                }
+                if (s[i] == ']')
+                {
+                    count--;
+                    if (count == 0)
+                    {
+                        int k = int.Parse(s.Substring(startOfDigit, endOfDigit-startOfDigit+1));
+                        string curr = "";
+                        string sub = DecodeString(s.Substring(endOfDigit + 2, i - (endOfDigit + 2)));
+                        while (k-- > 0)
+                        {
+                            curr += sub;
+                        }
+                        return s.Substring(0, startOfDigit)+ curr + DecodeString(s.Substring(i + 1));
+                    }
+                }
+            }
+            return s;
+        }
     }
 }
