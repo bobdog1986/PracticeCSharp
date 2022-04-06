@@ -8,7 +8,52 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///2102. Sequentially Ordinal Rank Tracker, see SORTracker
+        ///2101. Detonate the Maximum Bombs,#Graph, #DFS
+        ///You may choose to detonate a single bomb. When a bomb is detonated,
+        ///it will detonate all bombs that lie in its range. These bombs will
+        ///further detonate the bombs that lie in their ranges.
+        ///Given the list of bombs, return the maximum number of bombs that can be
+        ///detonated if you are allowed to detonate only one bomb.
+        public int MaximumDetonation(int[][] bombs)
+        {
+            int n = bombs.Length;
+            List<int>[] graph = new List<int>[n];
+            for (int i = 0; i < n; i++)
+                graph[i] = new List<int>();
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (i != j && MaximumDetonation_CanDetonated(i, j, bombs))
+                        graph[i].Add(j);
+                }
+            }
+
+            int max = 0;
+            for (int i = 0; i < bombs.Length; i++)
+            {
+                max = Math.Max(max, MaximumDetonation_dfs(i, graph, new bool[n]));
+            }
+            return max;
+        }
+
+        private int MaximumDetonation_dfs(int index, List<int>[] graph, bool[] visit)
+        {
+            visit[index] = true;
+            return 1 + graph[index].Where(x => !visit[x]).Select(x => MaximumDetonation_dfs(x, graph, visit)).Sum();
+        }
+
+        private bool MaximumDetonation_CanDetonated(int i, int j, int[][] bombs)
+        {
+            //true if i bomb detonates j bomb
+            long x = bombs[i][0] - bombs[j][0];
+            long y = bombs[i][1] - bombs[j][1];
+            long r = bombs[i][2];
+            return Math.Sqrt(x * x + y * y) <= r;
+        }
+
+        /// 2102. Sequentially Ordinal Rank Tracker, see SORTracker
 
         /// 2103. Rings and Rods
         ///Return the number of rods that have all three colors of rings on them.
@@ -108,14 +153,14 @@ namespace LeetCodeAlgo
         {
             int res = 0;
             int i = 0;
-            while(i < bank.Length)
+            while (i < bank.Length)
             {
-                var count1=bank[i].Count(x=>x=='1');
+                var count1 = bank[i].Count(x => x == '1');
                 if (count1 == 0) i++;
                 else
                 {
                     int j = i + 1;
-                    while(j < bank.Length)
+                    while (j < bank.Length)
                     {
                         var count2 = bank[j].Count(x => x == '1');
                         if (count2 > 0)
@@ -130,6 +175,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 2129. Capitalize the Title
         /// Capitalize the string by changing the capitalization of each word such that:
         ///If the length of the word is 1 or 2 letters, change all letters to lowercase.
