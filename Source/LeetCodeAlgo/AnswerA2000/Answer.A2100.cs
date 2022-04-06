@@ -228,7 +228,25 @@ namespace LeetCodeAlgo
             return string.Join(" ", arr);
         }
 
-        ///2133. Check if Every Row and Column Contains All Numbers
+        ///2130. Maximum Twin Sum of a Linked List
+        ///Given the head of a linked list with even length, return the maximum twin sum of the linked list.
+        public int PairSum(ListNode head)
+        {
+            List<int> list=new List<int>();
+            while(head != null)
+            {
+                list.Add(head.val);
+                head = head.next;
+            }
+
+            int max = 0;
+            for(int i=0; i < list.Count/2; i++)
+            {
+                max = Math.Max(max,list[i] + list[list.Count - 1 - i]);
+            }
+            return max;
+        }
+        /// 2133. Check if Every Row and Column Contains All Numbers
         ///An n x n matrix is valid if every row and every column contains all the integers from 1 to n (inclusive).
         ///Given an n x n integer matrix matrix, return true if the matrix is valid. Otherwise, return false.
         public bool CheckValid(int[][] matrix)
