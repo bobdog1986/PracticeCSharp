@@ -101,6 +101,33 @@ namespace LeetCodeAlgo
             return true;
         }
 
+        ///2125. Number of Laser Beams in a Bank
+        public int NumberOfBeams(string[] bank)
+        {
+            int res = 0;
+            int i = 0;
+            while(i < bank.Length)
+            {
+                var count1=bank[i].Count(x=>x=='1');
+                if (count1 == 0) i++;
+                else
+                {
+                    int j = i + 1;
+                    while(j < bank.Length)
+                    {
+                        var count2 = bank[j].Count(x => x == '1');
+                        if (count2 > 0)
+                        {
+                            res += count1 * count2;
+                            break;
+                        }
+                        j++;
+                    }
+                    i = j;
+                }
+            }
+            return res;
+        }
         /// 2129. Capitalize the Title
         /// Capitalize the string by changing the capitalization of each word such that:
         ///If the length of the word is 1 or 2 letters, change all letters to lowercase.

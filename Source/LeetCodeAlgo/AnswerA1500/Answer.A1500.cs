@@ -105,28 +105,23 @@ namespace LeetCodeAlgo
             return new string(arr);
         }
 
-        ///1539. Kth Missing Positive Number
+        ///1539. Kth Missing Positive Number, #Binary Search
         ///Given an array arr of positive integers sorted in a strictly increasing order, and an integer k.
         ///Find the kth positive integer that is missing from this array.
         public int FindKthPositive(int[] arr, int k)
         {
-            int last = 0;
-            for(int i=0; i < arr.Length; i++)
+            int left = 0;
+            int right = arr.Length;
+            int mid;
+            while (left < right)
             {
-                if(arr[i] -last != 1)
-                {
-                    if(k<= arr[i] - last -1)
-                    {
-                        return last + k;
-                    }
-                    else
-                    {
-                        k -= arr[i] - last - 1;
-                    }
-                }
-                last = arr[i];
+                mid = (left + right) / 2;
+                if (arr[mid] - 1 - mid < k)
+                    left = mid + 1;
+                else
+                    right = mid;
             }
-            return last+k;
+            return left + k;
         }
     }
 }

@@ -887,26 +887,17 @@ namespace LeetCodeAlgo
         }
         public int ArrangeCoins_BinarySearch(int n)
         {
-            long left = 0; // we use "long" because we may get an integer overflow
+            long left = 0;
             long right = n;
             while (left <= right)
             {
-                long pivot = left + (right - left) / 2;
-                long coinsUsed = pivot * (pivot + 1) / 2;
-                if (coinsUsed == n)
-                {
-                    return (int)pivot;
-                }
-                else if (n < coinsUsed)
-                {
-                    right = pivot - 1;
-                }
-                else
-                {
-                    left = pivot + 1;
-                }
+                long mid = left + (right - left) / 2;
+                long coinsUsed = mid * (mid + 1) / 2;
+                if (coinsUsed == n) return (int)mid;
+                else if (n < coinsUsed) right = mid - 1;
+                else left = mid + 1;
             }
-            return (int)right; // cast as an "int" because it was initiliazed as a "long"
+            return (int)right;
         }
         ///442. Find All Duplicates in an Array
         ///Given an integer array nums of length n where all of nums in the range [1, n]
