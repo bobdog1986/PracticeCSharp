@@ -104,7 +104,33 @@ namespace LeetCodeAlgo
             return Math.Max(max, allSum - min);
         }
 
-        ///925. Long Pressed Name
+        ///923. 3Sum With Multiplicity
+        ///Given an integer array arr, and an integer target, return the number of tuples i, j, k
+        ///such that i < j < k and arr[i] + arr[j] + arr[k] == target.  return it modulo 10^9 + 7.
+        ///0<= arr[i] <=100
+        public int ThreeSumMulti(int[] arr, int target)
+        {
+            long[] nums = new long[101];
+            foreach (int i in arr)
+                nums[i]++;
+            long res = 0;
+            for (int i = 0; i <= 100; i++)
+                for (int j = i; j <= 100; j++)
+                {
+                    int k = target - i - j;
+                    if (k > 100 || k < 0) continue;
+                    if (i == j && j == k)
+                        res += nums[i] * (nums[i] - 1) * (nums[i] - 2) / 6;
+                    else if (i == j && j != k)
+                        res += nums[i] * (nums[i] - 1) / 2 * nums[k];
+                    else if (j < k)
+                        res += nums[i] * nums[j] * nums[k];
+                }
+            return (int)(res % 10_0000_0007);
+        }
+
+
+        /// 925. Long Pressed Name
         ///Your friend is typing his name into a keyboard. Sometimes, when typing a character c,
         ///the key might get long pressed, and the character will be typed 1 or more times.
         ///You examine the typed characters of the keyboard.Return True if it is possible
