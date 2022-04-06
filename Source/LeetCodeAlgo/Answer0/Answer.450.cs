@@ -413,6 +413,51 @@ namespace LeetCodeAlgo
             return result;
         }
 
+        ///494. Target Sum, #HashSet, #BackTracking
+        ///build an expression out of nums by adding one of the symbols '+' and '-'
+        ///before each integer in nums and then concatenate all the integers.
+        ///Return the number of different expressions that you can build, which evaluates to target.
+        public int FindTargetSumWays(int[] nums, int target)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            dict.Add(0, 1);//seed data = 1
+
+            foreach(var n in nums)
+            {
+                Dictionary<int, int> next = new Dictionary<int, int>();
+                foreach(var k in dict.Keys)
+                {
+                    if (next.ContainsKey(k + n)) next[k + n] += dict[k];
+                    else next.Add(k + n, dict[k]);
+
+                    if (next.ContainsKey(k - n)) next[k - n] += dict[k];
+                    else next.Add(k - n, dict[k]);
+                }
+
+                dict = next;
+            }
+
+            return dict.ContainsKey(target)? dict[target]:0;
+        }
+
+        public int FindTargetSumWays_BackTracking(int[] nums, int target)
+        {
+            int res = 0;
+            FindTargetSumWays_BackTracking(nums, target, 0, ref res);
+            return res;
+        }
+
+        public void FindTargetSumWays_BackTracking(int[] nums, int target, int index, ref int res)
+        {
+            if (index == nums.Length)
+            {
+                if (target == 0) res++;
+                return;
+            }
+            FindTargetSumWays_BackTracking(nums, target + nums[index], index + 1, ref res);
+            FindTargetSumWays_BackTracking(nums, target - nums[index], index + 1, ref res);
+        }
+
         //495
         public int FindPoisonedDuration(int[] timeSeries, int duration)
         {
