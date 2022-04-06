@@ -85,7 +85,43 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2108. Find First Palindromic String in the Array
+        ///2104. Sum of Subarray Ranges, #Monotonic
+        ///The range of a subarray of nums is the difference between the largest and smallest element in the subarray.
+        ///Return the sum of all subarray ranges of nums. A subarray is a contiguous non-empty sequence.
+        public long SubArrayRanges(int[] nums)
+        {
+            ///The idea is to divide sum(max - min) to sum(max) - sum(min), and focus one each number's counter when it is max and min.
+            int n = nums.Length;
+            int j, k;
+            long res = 0;
+
+            Stack<int> s = new Stack<int>();
+            //why <=n? not <n
+            for (int i = 0; i <= n; i++)
+            {
+                while (s.Count>0 && nums[s.Peek()] > (i == n ? int.MinValue : nums[i]))
+                {
+                    j = s.Pop();
+                    k = s.Count==0 ? -1 : s.Peek();
+                    res -= (long)nums[j] * (i - j) * (j - k);//how many times nums[j] works as min
+                }
+                s.Push(i);
+            }
+
+            s.Clear();
+            for (int i = 0; i <= n; i++)
+            {
+                while (s.Count > 0 && nums[s.Peek()] < (i == n ? int.MaxValue : nums[i]))
+                {
+                    j = s.Pop();
+                    k = s.Count==0 ? -1 : s.Peek();
+                    res += (long)nums[j] * (i - j) * (j - k);//how many times nums[j] works as max
+                }
+                s.Push(i);
+            }
+            return res;
+        }
+        /// 2108. Find First Palindromic String in the Array
         public string FirstPalindrome(string[] words)
         {
             foreach (var w in words)
