@@ -11,49 +11,49 @@ namespace LeetCodeAlgo
         ///150. Evaluate Reverse Polish Notation
         public int EvalRPN(string[] tokens)
         {
-            Stack<int> stack =new Stack<int> ();
+            Stack<int> stack = new Stack<int>();
             int ans = 0;
-            foreach(var str in tokens)
+            foreach (var str in tokens)
             {
-                if (str == "+"|| str == "-" || str == "*" || str =="/")
+                if (str == "+" || str == "-" || str == "*" || str == "/")
                 {
-                    var b=stack.Pop ();
-                    var a=stack.Pop ();
-                    if (str == "+") ans = a +b ;
-                    else if(str == "-") ans = a - b;
-                    else if(str == "*") ans = a * b;
-                    else if(str == "/") ans = a/b;
-                    stack.Push (ans);
+                    var b = stack.Pop();
+                    var a = stack.Pop();
+                    if (str == "+") ans = a + b;
+                    else if (str == "-") ans = a - b;
+                    else if (str == "*") ans = a * b;
+                    else if (str == "/") ans = a / b;
+                    stack.Push(ans);
                 }
                 else
                 {
-                    stack.Push (int.Parse(str));
+                    stack.Push(int.Parse(str));
                 }
             }
-            if(stack.Count > 0)
-                return stack.Pop ();
+            if (stack.Count > 0)
+                return stack.Pop();
             return ans;
-
         }
+
         ///151. Reverse Words in a String
         ///Given an input string s, reverse the order of the words.
         public string ReverseWords(string s)
         {
             List<string> ans = new List<string>();
             List<char> word = new List<char>();
-            foreach(var c in s)
+            foreach (var c in s)
             {
-                if(c==' ')
+                if (c == ' ')
                 {
-                    if(word.Count > 0)
+                    if (word.Count > 0)
                     {
                         ans.Insert(0, new string(word.ToArray()));
-                        word.Clear ();
+                        word.Clear();
                     }
                 }
                 else
                 {
-                    word.Add (c);
+                    word.Add(c);
                 }
             }
 
@@ -64,7 +64,6 @@ namespace LeetCodeAlgo
             }
             return string.Join(" ", ans);
         }
-
 
         /// 152. Maximum Product Subarray, #DP
         ///Given an integer array nums, find a contiguous non-empty subarray within the array
@@ -200,27 +199,6 @@ namespace LeetCodeAlgo
             return 0;
         }
 
-        public int[] TwoSumII(int[] numbers, int target)
-        {
-            for (int i = 0; i < numbers.Length - 1; i++)
-            {
-                if (i > 0)
-                {
-                    if (numbers[i - 1] == numbers[i]) { continue; }
-                }
-
-                for (int j = i + 1; j < numbers.Length; j++)
-                {
-                    if (numbers[i] + numbers[j] != target) { continue; }
-
-                    if (numbers[i] + numbers[j] == target)
-                    {
-                        return new int[2] { i + 1, j + 1 };
-                    }
-                }
-            }
-            throw new ArgumentOutOfRangeException();
-        }
         ///165. Compare Version Numbers
         ///If version1<version2, return -1. If version1 > version2, return 1. Otherwise, return 0.
         public int CompareVersion(string version1, string version2)
@@ -228,9 +206,9 @@ namespace LeetCodeAlgo
             var list1 = version1.Split('.').Select(x => int.Parse(x)).ToList();
             var list2 = version2.Split('.').Select(x => int.Parse(x)).ToList();
 
-            for (int i = 0; i<list1.Count && i<list2.Count; i++)
+            for (int i = 0; i < list1.Count && i < list2.Count; i++)
             {
-                if(list1[i] > list2[i]) return 1;
+                if (list1[i] > list2[i]) return 1;
                 else if (list1[i] < list2[i]) return -1;
             }
 
@@ -250,6 +228,7 @@ namespace LeetCodeAlgo
             }
             return 0;
         }
+
         /// 166. Fraction to Recurring Decimal
         ///Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.
         ///If the fractional part is repeating, enclose the repeating part in parentheses.
@@ -293,21 +272,60 @@ namespace LeetCodeAlgo
             return ans.ToString();
         }
 
-        ///168. Excel Sheet Column Title
+        ///167. Two Sum II - Input Array Is Sorted, #Two Pointers, #Binary Search
+        ///Given a 1-indexed array sorted in non-decreasing order, find two numbers add up to target number.
+        //numbers[index1] and numbers[index2] where 1 <= index1<index2 <= numbers.length.
+        ///Return the indices of the two numbers, index1 and index2, added by one as an integer array[index1, index2] of length 2.
+
+        public int[] TwoSum167_BinarySearch(int[] numbers, int target)
+        {
+            int n=numbers.Length;
+            for(int i = 0; i < n-1; i++)
+            {
+                int goal = target - numbers[i];
+                int left = i + 1;
+                int right = n - 1;
+                while (left <= right)
+                {
+                    int mid = (left + right) / 2;
+                    if (numbers[mid] == goal) return new int[] { i + 1, mid + 1 };
+                    else if (numbers[mid] > goal) right = mid - 1;
+                    else left = mid + 1;
+                }
+            }
+            return new int[] { };
+        }
+
+        public int[] TwoSum167_TwoPointers(int[] numbers, int target)
+        {
+            int left = 0;
+            int right = numbers.Length - 1;
+            int sum = 0;
+            while (left < right)
+            {
+                sum = numbers[left] + numbers[right];
+                if (sum == target) return new int[] { left + 1, right + 1 };
+                else if (sum < target) left++;
+                else right--;
+            }
+            return new int[] { left+1,right+1};
+        }
+
+
+        /// 168. Excel Sheet Column Title
         ///Given an integer columnNumber, return its corresponding column title as it appears in an Excel sheet.
         public string ConvertToTitle(int columnNumber)
         {
-            List<char> ans=new List<char>();
+            List<char> ans = new List<char>();
             int n = columnNumber;
             while (n > 0)
             {
-                var c = (char)((n-1)%26 + 'A') ;
+                var c = (char)((n - 1) % 26 + 'A');
                 ans.Insert(0, (char)c);
-                n=(n-1)/26 ;
+                n = (n - 1) / 26;
             }
             return new string(ans.ToArray());
         }
-
 
         /// 169. Majority Element
         ///The majority element is the element that appears more than n/2 times.
@@ -336,7 +354,7 @@ namespace LeetCodeAlgo
         {
             int ans = 0;
             int m = 1;
-            for(int i = columnTitle.Length - 1; i >= 0; i--)
+            for (int i = columnTitle.Length - 1; i >= 0; i--)
             {
                 ans += m * (columnTitle[i] - 'A' + 1);
                 m *= 26;
@@ -361,6 +379,7 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
         /// 173. Binary Search Tree Iterator, see BSTIterator
 
         /// 174 not done
@@ -396,12 +415,14 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
         public int LargestNumber_Compare(int x, int y)
         {
             string a = $"{x}{y}";
             string b = $"{y}{x}";
             return a.CompareTo(b);
         }
+
         /// 187. Repeated DNA Sequences
         ///return all the 10-letter-long sequences (substrings) that occur more than once
         public IList<string> FindRepeatedDnaSequences(string s)

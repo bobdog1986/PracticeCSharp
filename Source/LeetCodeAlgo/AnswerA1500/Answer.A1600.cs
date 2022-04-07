@@ -10,6 +10,43 @@ namespace LeetCodeAlgo
     {
         ///1603. Design Parking System
 
+        ///1608. Special Array With X Elements Greater Than or Equal X
+        ///Return x if the array is special, otherwise, return -1.
+        ///0 <= nums[i] <= 1000
+        public int SpecialArray(int[] nums)
+        {
+            int[] arr = new int[1001];
+            foreach(var n in nums)
+                arr[n]++;
+
+            int count = 0;
+            for(int i = 1000; i >= 0; i--)
+            {
+                count += arr[i];
+                if (count == i) return i;
+                else if (count > i) break;
+            }
+            return -1;
+        }
+
+        public int SpecialArray_BinarySearch(int[] nums)
+        {
+            int n = nums.Length;
+            Array.Sort(nums);
+            //<= n
+            for (int i = 0; i <= n; i++)
+            {
+                int left = 0, right = n;
+                while (left < right)
+                {
+                    int mid = left + (right - left) / 2;
+                    if (nums[mid] >= i) right = mid;
+                    else left = mid + 1;
+                }
+                if ((n - left) == i) return i;//find how many num >=i
+            }
+            return -1;
+        }
         /// 1609. Even Odd Tree, #BFS, #BTree
         ///A binary tree is named Even-Odd if it meets the following conditions:
         ///odd-indexed level, all nodes at the level have even integer values in strictly decreasing order(from left to right).
