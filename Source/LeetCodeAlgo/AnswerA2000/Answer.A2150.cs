@@ -70,6 +70,38 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+
+        ///2165. Smallest Value of the Rearranged Number
+        ///Rearrange the digits of num such that its value is minimized and it does not contain any leading zeros.
+        ///Return the rearranged number with minimal value. the sign does not change after rearranging the digits.
+        ///-10^15 <=x <= 10^15
+        public long SmallestNumber(long num)
+        {
+            if (num <= 10 && num >= -10) return num;
+            long res = 0;
+            long sign = num < 0?-1:1;
+
+            var str = Math.Abs(num).ToString();
+            var arr = str.OrderBy(x => sign*x).ToArray();
+
+            if (sign==1)
+            {
+                int i = 0;
+                while (i < arr.Length)
+                {
+                    if (arr[i] != '0') break;
+                    i++;
+                }
+
+                var temp = arr[0];
+                arr[0] = arr[i];
+                arr[i] = temp;
+            }
+            res = long.Parse(new string(arr));
+            return sign *res;
+
+        }
         /// 2176. Count Equal and Divisible Pairs in an Array
         ///return the number of pairs (i, j) where 0 <= i < j < n, such that nums[i] == nums[j] and (i * j) is divisible by k.
         public int CountPairs(int[] nums, int k)
