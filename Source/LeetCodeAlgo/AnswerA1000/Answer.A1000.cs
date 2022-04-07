@@ -153,6 +153,24 @@ namespace LeetCodeAlgo
                 res += diff[i];
             return res;
         }
+        ///1046. Last Stone Weight, #PriorityQueue
+        /// x == y, both stones are destroyed, and
+        ///If x != y, the stone of weight x is destroyed, and the stone of weight y has new weight y - x.
+        ///Return the smallest possible weight of the left stone.If there are no stones left, return 0.
+        public int LastStoneWeight(int[] stones)
+        {
+            PriorityQueue<int, int> pq = new PriorityQueue<int, int>();
+            foreach (var n in stones)
+                pq.Enqueue(n, -n);
+            while (pq.Count >= 2)
+            {
+                int max1=pq.Dequeue();
+                int max2=pq.Dequeue();
+                if(max1>max2)
+                    pq.Enqueue(max1-max2,max2-max1);
+            }
+            return pq.Count > 0 ? pq.Dequeue() : 0;
+        }
         /// 1047. Remove All Adjacent Duplicates In String, #Two Pointer
         ///"caacbc"=>"bc"
         public string RemoveDuplicates_TwoPointer(string s)
