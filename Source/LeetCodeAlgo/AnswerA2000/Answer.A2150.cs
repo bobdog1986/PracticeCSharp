@@ -43,7 +43,39 @@ namespace LeetCodeAlgo
             return original;
         }
 
-        ///2161. Partition Array According to Given Pivot
+        ///2155. All Divisions With the Highest Score of a Binary Array
+        ///The division score of an index i is the sum of the number of 0's in numsleft and the number of 1's in numsright.
+        ///Return all distinct indices that have the highest possible division score.
+        public IList<int> MaxScoreIndices(int[] nums)
+        {
+            int[] arr = new int[nums.Length+1];
+            int zeros = 0;
+            for(int i=0; i<nums.Length; i++)
+            {
+                arr[i] = zeros;
+                if (nums[i] == 0) zeros++;
+            }
+            arr[nums.Length]=zeros;
+            int ones = nums.Length-zeros;
+            int max = 0;
+            var res=new List<int>();
+
+            for(int i = 0; i < arr.Length; i++)
+            {
+                int divide = arr[i] + ones - (i - arr[i]);
+                if(divide == max)res.Add(i);
+                else if (divide > max)
+                {
+                    res.Clear();
+                    res.Add(i);
+                    max = divide;
+                }
+            }
+
+            return res;
+
+        }
+        /// 2161. Partition Array According to Given Pivot
         ///smaller than pivot on left, same as pivot on mid, larger on right
         public int[] PivotArray(int[] nums, int pivot)
         {
