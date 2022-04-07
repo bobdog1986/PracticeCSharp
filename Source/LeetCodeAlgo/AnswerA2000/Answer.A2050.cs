@@ -160,6 +160,26 @@ namespace LeetCodeAlgo
             return ans.ToArray();
         }
 
-
+        ///2095. Delete the Middle Node of a Linked List
+        ///You are given the head of a linked list. Delete the middle node, and return the head of the modified linked list.
+        ///The middle node of a linked list of size n is the ⌊n / 2⌋th node from the start using 0-based indexing,
+        ///where ⌊x⌋ denotes the largest integer less than or equal to x.
+        public ListNode DeleteMiddle(ListNode head)
+        {
+            int count = 0;
+            var node = head;
+            while (node != null)
+            {
+                count++;
+                node = node.next;
+            }
+            if (count == 1) return null;
+            int i = (count) / 2;
+            node = head;
+            while (--i > 0)
+                node = node.next;
+            node.next = node.next.next;
+            return head;
+        }
     }
 }
