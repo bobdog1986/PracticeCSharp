@@ -99,10 +99,10 @@ namespace LeetCodeAlgo
             //why <=n? not <n
             for (int i = 0; i <= n; i++)
             {
-                while (s.Count>0 && nums[s.Peek()] > (i == n ? int.MinValue : nums[i]))
+                while (s.Count > 0 && nums[s.Peek()] > (i == n ? int.MinValue : nums[i]))
                 {
                     j = s.Pop();
-                    k = s.Count==0 ? -1 : s.Peek();
+                    k = s.Count == 0 ? -1 : s.Peek();
                     res -= (long)nums[j] * (i - j) * (j - k);//how many times nums[j] works as min
                 }
                 s.Push(i);
@@ -114,13 +114,14 @@ namespace LeetCodeAlgo
                 while (s.Count > 0 && nums[s.Peek()] < (i == n ? int.MaxValue : nums[i]))
                 {
                     j = s.Pop();
-                    k = s.Count==0 ? -1 : s.Peek();
+                    k = s.Count == 0 ? -1 : s.Peek();
                     res += (long)nums[j] * (i - j) * (j - k);//how many times nums[j] works as max
                 }
                 s.Push(i);
             }
             return res;
         }
+
         /// 2108. Find First Palindromic String in the Array
         public string FirstPalindrome(string[] words)
         {
@@ -232,20 +233,21 @@ namespace LeetCodeAlgo
         ///Given the head of a linked list with even length, return the maximum twin sum of the linked list.
         public int PairSum(ListNode head)
         {
-            List<int> list=new List<int>();
-            while(head != null)
+            List<int> list = new List<int>();
+            while (head != null)
             {
                 list.Add(head.val);
                 head = head.next;
             }
 
             int max = 0;
-            for(int i=0; i < list.Count/2; i++)
+            for (int i = 0; i < list.Count / 2; i++)
             {
-                max = Math.Max(max,list[i] + list[list.Count - 1 - i]);
+                max = Math.Max(max, list[i] + list[list.Count - 1 - i]);
             }
             return max;
         }
+
         /// 2133. Check if Every Row and Column Contains All Numbers
         ///An n x n matrix is valid if every row and every column contains all the integers from 1 to n (inclusive).
         ///Given an n x n integer matrix matrix, return true if the matrix is valid. Otherwise, return false.
@@ -308,6 +310,29 @@ namespace LeetCodeAlgo
             for (int i = start + 1; i <= end - 1; i++)
                 sum += arr[i];
             return sum;
+        }
+
+        ///2149. Rearrange Array Elements by Sign
+        ///Every consecutive pair of integers have opposite signs.
+        ///For all integers with the same sign, the order in which they were present in nums is preserved.
+        ///The rearranged array begins with a positive integer
+        public int[] RearrangeArray(int[] nums)
+        {
+            int len = nums.Length / 2;
+            int[] arr1 = new int[len];
+            int[] arr2 = new int[len];
+            int i = 0, j = 0;
+            foreach (var n in nums)
+            {
+                if (n > 0) arr1[i++] = n;
+                else arr1[j++] = n;
+            }
+            for (int k = 0; k < len; k++)
+            {
+                nums[2 * k] = arr1[k];
+                nums[2 * k + 1] = arr2[k];
+            }
+            return nums;
         }
     }
 }
