@@ -190,7 +190,30 @@ namespace LeetCodeAlgo
             return list[0];
         }
 
-        ///1844. Replace All Digits with Characters
+        ///1838. Frequency of the Most Frequent Element, #Sliding Window
+        ///In one operation, you can choose an index of nums and increment the element at that index by 1.
+        ///Return the maximum possible frequency of an element after performing at most k operations.
+        public int MaxFrequency(int[] nums, int k)
+        {
+            //the key is to find out the valid condition:
+            //k + sum >= size * max which is k + sum >= (j - i + 1) * nums[j]
+            int res = 1, i = 0, j;
+            long sum = 0;
+            Array.Sort(nums);
+            for (j = 0; j < nums.Length; ++j)
+            {
+                sum += nums[j];
+                while (sum + k < (long)nums[j] * (j - i + 1))
+                {
+                    sum -= nums[i];
+                    i++;
+                }
+                res = Math.Max(res, j - i + 1);
+            }
+            return res;
+        }
+
+        /// 1844. Replace All Digits with Characters
         ///For every odd index i, you want to replace the digit s[i] with shift(s[i-1], s[i]).
         public string ReplaceDigits(string s)
         {
