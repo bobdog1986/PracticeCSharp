@@ -423,6 +423,8 @@ namespace LeetCodeAlgo
             return a.CompareTo(b);
         }
 
+        ///183. Customers Who Never Order, see sql script
+
         /// 187. Repeated DNA Sequences
         ///return all the 10-letter-long sequences (substrings) that occur more than once
         public IList<string> FindRepeatedDnaSequences(string s)

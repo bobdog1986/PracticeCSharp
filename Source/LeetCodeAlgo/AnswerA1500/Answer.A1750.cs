@@ -8,7 +8,6 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-
         /// 1752. Check if Array Is Sorted and Rotated
         ///Given an array nums, return true if the array sorted in non-decreasing order, then rotated some
         ///[1,2,3,3,4],[2,3,4,1],[3,4,5,1,2]=>true, [2,1,3,4]=>false
@@ -43,6 +42,9 @@ namespace LeetCodeAlgo
 
             return ans;
         }
+
+        ///1757. Recyclable and Low Fat Products, see sql script
+
         /// 1758. Minimum Changes To Make Alternating Binary String
         /// Return the minimum number of operations needed to make s alternating. 010101 or 101010
         public int MinOperations(string s)
@@ -51,17 +53,17 @@ namespace LeetCodeAlgo
             //int dp1 = 0;
             //char c0 = '0';
             //char c1 = '1';
-            for(int i=0; i<s.Length; i++)
+            for (int i = 0; i < s.Length; i++)
             {
-                if(s[i]-'0'!=i%2)
-                    dp0 ++;
+                if (s[i] - '0' != i % 2)
+                    dp0++;
                 //if (s[i] != c1)
-                    //dp1++;
+                //dp1++;
                 //var temp = c0;
                 //c0 = c1;
                 //c1 = temp;
             }
-            return Math.Min(dp0, s.Length-dp0);
+            return Math.Min(dp0, s.Length - dp0);
         }
 
         ///1759. Count Number of Homogenous Substrings
@@ -81,7 +83,7 @@ namespace LeetCodeAlgo
                 else
                 {
                     if (!dict.ContainsKey(count)) { CountHomogenous(count, dict); }
-                    ans+= dict[count];
+                    ans += dict[count];
                     ans %= mod;
                     c = s[i];
                     count = 1;
@@ -92,16 +94,17 @@ namespace LeetCodeAlgo
             ans %= mod;
             return (int)(ans % mod);
         }
-        public void CountHomogenous(long count, Dictionary<long,long> dict)
+
+        public void CountHomogenous(long count, Dictionary<long, long> dict)
         {
             long ans = 0;
             long seed = 0;
             int i = 0;
-            while (i<=count)
+            while (i <= count)
             {
                 ans += seed;
                 if (!dict.ContainsKey(i)) dict.Add(i, ans);
-                i++ ;
+                i++;
                 seed++;
             }
         }
@@ -132,6 +135,7 @@ namespace LeetCodeAlgo
                 return new string(list.ToArray());
             }
         }
+
         /// 1779. Find Nearest Point That Has the Same X or Y Coordinate
         public int NearestValidPoint(int x, int y, int[][] points)
         {
@@ -161,14 +165,14 @@ namespace LeetCodeAlgo
             int[] arr1 = new int[26];
             int[] arr2 = new int[26];
             int diff = 0;
-            for(int i=0; i < s1.Length; i++)
+            for (int i = 0; i < s1.Length; i++)
             {
                 if (s1[i] != s2[i]) diff++;
                 if (diff >= 3) return false;
                 arr1[s1[i] - 'a']++;
                 arr2[s2[i] - 'a']++;
             }
-            for(int i = 0; i < arr1.Length; i++)
+            for (int i = 0; i < arr1.Length; i++)
             {
                 if (arr1[i] != arr2[i]) return false;
             }
@@ -176,6 +180,5 @@ namespace LeetCodeAlgo
         }
 
         ///1797. Design Authentication Manager, see AuthenticationManager
-
     }
 }

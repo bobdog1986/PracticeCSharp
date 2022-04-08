@@ -309,7 +309,9 @@ namespace LeetCodeAlgo
             return word1.Length + word2.Length - 2 * dp[word1.Length][word2.Length];
         }
 
-        ///589. N-ary Tree Preorder Traversal
+        ///584. Find Customer Referee, see sql script
+
+        /// 589. N-ary Tree Preorder Traversal
         ///Given the root of an n-ary tree, return the preorder traversal of its nodes' values.
         public IList<int> Preorder(Node_Childs root)
         {
@@ -346,6 +348,9 @@ namespace LeetCodeAlgo
             }
             ans.Add(node.val);
         }
+
+        ///595. Big Countries, see sql script
+
         /// 599. Minimum Index Sum of Two Lists
         /// find out their common interest with the least list index sum.
         public string[] FindRestaurant(string[] list1, string[] list2)

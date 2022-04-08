@@ -71,6 +71,8 @@ namespace LeetCodeAlgo
             return root;
         }
 
+        ///703. Kth Largest Element in a Stream, see KthLargest
+
         /// 704. Binary Search  O(logn), #Binary Search
         ///Given an array of integers nums which is sorted in ascending order,and an integer target
         ///If target exists, then return its index.Otherwise, return -1.
