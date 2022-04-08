@@ -26,7 +26,17 @@ namespace LeetCodeAlgo
             }
             return string.Empty;
         }
-        ///2063. Vowels of All Substrings, O(n)
+        ///2057. Smallest Index With Equal Value
+        ///Given a 0-indexed integer array nums, return the smallest index i of nums such that
+        ///i mod 10 == nums[i], or -1 if such index does not exist.
+        public int SmallestEqual(int[] nums)
+        {
+            for (int i = 0; i < nums.Length; i++)
+                if (nums[i] == i % 10) return i;
+            return -1;
+        }
+
+        /// 2063. Vowels of All Substrings, O(n)
         ///Given a string word, return the sum of the number of vowels ('a', 'e', 'i', 'o', and 'u') in every substring of word.
         public long CountVowels(string word)
         {
@@ -73,8 +83,6 @@ namespace LeetCodeAlgo
             while (colors[n - 1] == colors[i]) i++;
             return Math.Max(n - 1 - i, j);
         }
-
-
 
         public int MaxDistance_2078(int[] colors)
         {
