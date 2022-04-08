@@ -72,6 +72,15 @@ namespace LeetCodeAlgo
             return ans & grid1[i][j];
         }
 
+        ///1910. Remove All Occurrences of a Substring
+        ///Find the leftmost occurrence of the substring part and remove it from s.
+        ///Return s after removing all occurrences of part.
+        public string RemoveOccurrences(string s, string part)
+        {
+            var index=s.IndexOf(part);
+            if (index != -1) return RemoveOccurrences(s.Substring(0, index) + s.Substring(index + part.Length), part);
+            else return s;
+        }
         /// 1922. Count Good Numbers- not pass,support to 10^8, but input is 10^15
         ///even indices are even and the digits at odd indices are prime (2, 3, 5, or 7).
         public int CountGoodNumbers(long n)
