@@ -8,7 +8,43 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1356. Sort Integers by The Number of 1 Bits
+        ///1351. Count Negative Numbers in a Sorted Matrix, #Binary Search
+        ///Given a m x n matrix grid which is sorted in non-increasing order
+        ///both row-wise and column-wise, return the number of negative numbers in grid.
+        public int CountNegatives(int[][] grid)
+        {
+            int m = grid.Length;
+            int n = grid[0].Length;
+            int res = 0;
+            int lastNeg = n - 1;
+            for (int i = 0; i < m; i++)
+            {
+                //check edge cases - if first element is < 0 - all elements in row are negative
+                if (grid[i][0] < 0)
+                {
+                    res += n;
+                    continue;
+                }
+                //if last element is positive - it means there are no negative numbers in a row
+                if (grid[i][n - 1] > 0)
+                    continue;
+                //binary search, left is the first negative
+                int left = 0, right = lastNeg;
+                while (left <= right)
+                {
+                    int mid = left + (right - left) / 2;
+                    if (grid[i][mid] < 0)
+                        right = mid - 1;
+                    else
+                        left = mid + 1;
+                }
+                res += (n - left);//from indexes of n-1 to left
+                lastNeg = left;//update
+            }
+            return res;
+        }
+
+        /// 1356. Sort Integers by The Number of 1 Bits
         ///1 <= arr.length <= 500, 0 <= arr[i] <= 10^4
         public int[] SortByBits(int[] arr)
         {
