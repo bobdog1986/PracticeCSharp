@@ -99,7 +99,36 @@ namespace LeetCodeAlgo
             return getGcb(max, min);
         }
 
-        ///1984. Minimum Difference Between Highest and Lowest of K Scores
+        ///1980. Find Unique Binary String
+        ///Given an array of strings nums containing n unique binary strings each of length n,
+        ///return a binary string of length n that does not appear in nums. If there are multiple
+        ///answers, you may return any of them.
+        public string FindDifferentBinaryString(string[] nums)
+        {
+            HashSet<string> set =new HashSet<string>();
+
+            FindDifferentBinaryString(nums[0].Length, "", set);
+            HashSet<string> map = new HashSet<string>(nums);
+
+
+            foreach (var n in set)
+            {
+                if (!map.Contains(n)) return n;
+            }
+
+            return "";
+        }
+        public void FindDifferentBinaryString(int count, string curr, HashSet<string> res)
+        {
+            if (count == 0) res.Add(curr);
+            else
+            {
+                FindDifferentBinaryString(count - 1, curr + "0", res);
+                FindDifferentBinaryString(count - 1, curr + "1", res);
+            }
+        }
+
+        /// 1984. Minimum Difference Between Highest and Lowest of K Scores
         ///You are given a 0-indexed integer array nums, where nums[i] represents the score of the ith student.
         ///You are also given an integer k. Pick the scores of any k students from the array
         ///so that the difference between the highest and the lowest of the k scores is minimized.Return it;
