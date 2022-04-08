@@ -36,6 +36,32 @@ namespace LeetCodeAlgo
             return -1;
         }
 
+        ///2058. Find the Minimum and Maximum Number of Nodes Between Critical Points
+        ///A critical point in a linked list is defined as either a local maxima or a local minima.
+        public int[] NodesBetweenCriticalPoints(ListNode head)
+        {
+            int min = int.MaxValue;
+            ListNode prev = null;
+            List<int> list=new List<int>();
+            int index = 1;
+            var node=head;
+            while(node != null && node.next != null)
+            {
+                if (prev != null)
+                {
+                    if((node.val>prev.val && node.val>node.next.val)
+                        ||(node.val < prev.val && node.val < node.next.val))
+                    {
+                        if (list.Count > 0) min = Math.Min(min, index - list.Last());
+                        list.Add(index);
+                    }
+                }
+                index++;
+                prev = node;
+                node = node.next;
+            }
+            return list.Count >= 2 ? new int[] { min, list.Last() - list.First() } : new int[] { -1, -1 };
+        }
         /// 2063. Vowels of All Substrings, O(n)
         ///Given a string word, return the sum of the number of vowels ('a', 'e', 'i', 'o', and 'u') in every substring of word.
         public long CountVowels(string word)

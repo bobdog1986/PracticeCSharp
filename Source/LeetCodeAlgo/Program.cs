@@ -44,7 +44,7 @@ namespace LeetCodeAlgo
                 //new char[]{'1','1','1'},
             };
 
-            //var listnode1 = anwser.buildListNode(new int[] { 1, 2,3,4});
+            var listnode1 = anwser.buildListNode(new int[] { 1, 3, 2, 2, 3, 2, 2, 2, 7});
             //anwser.printListNode(listnode1);
             //var listnode2 = anwser.buildListNode(new int[] { 1000000, 1000001, 1000002 });
             //anwser.printListNode(listnode2);
@@ -62,7 +62,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.DecodeString("2[abc]3[cd]ef");
+            var result = anwser.NodesBetweenCriticalPoints(listnode1);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
