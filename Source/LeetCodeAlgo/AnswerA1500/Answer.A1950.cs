@@ -70,7 +70,25 @@ namespace LeetCodeAlgo
             return false;
         }
 
-        ///1974. Minimum Time to Type Word Using Special Typewriter
+        ///1963. Minimum Number of Swaps to Make the String Balanced
+        ///Return the minimum number of swaps to make s balanced.
+        public int MinSwaps(string s)
+        {
+            //from middle of string, ]][[ need 1 swap
+            int stack_size = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == '[')
+                    stack_size++;
+                else
+                {
+                    if (stack_size > 0)
+                        stack_size--;
+                }
+            }
+            return (stack_size + 1) / 2;//both ]][[, ][ need 1 swap
+        }
+        /// 1974. Minimum Time to Type Word Using Special Typewriter
         ///Given a string word, return the minimum number of seconds to type out the characters in word.
         public int MinTimeToType(string word)
         {
