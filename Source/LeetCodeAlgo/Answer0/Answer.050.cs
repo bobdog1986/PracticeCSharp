@@ -1041,68 +1041,51 @@ namespace LeetCodeAlgo
             }
         }
 
-        /// 74. Search a 2D Matrix
+        /// 74. Search a 2D Matrix, #Binary Search
         ///a value in an m x n matrix.
         ///Integers in each row are sorted from left to right.
         ///The first integer of each row is greater than the last integer of the previous row.
 
-        public bool SearchMatrix_74(int[][] matrix, int target)
+        public bool SearchMatrix_74_1D(int[][] matrix, int target)
         {
             int rowLen = matrix.Length;
             int colLen = matrix[0].Length;
-
-            if (matrix[0][0] > target || matrix[rowLen - 1][colLen - 1] < target)
-                return false;
-
-            int row1 = 0;
-            int row2 = rowLen - 1;
-            int row = (row2 - row1) / 2;
-
-            while (row1 <= row2 && row >= row1 && row <= row2)
+            int left = 0;
+            int right = colLen * rowLen - 1;
+            while (left < right)
             {
-                if (matrix[row][colLen - 1] == target)
-                {
-                    return true;
-                }
-                else if (matrix[row][colLen - 1] > target)
-                {
-                    row2 = row - 1;
-                    row = (row2 - row1) / 2 + row1;
-                }
+                int mid = (left + right - 1)/2;
+                if (matrix[mid / colLen][mid % colLen] < target)
+                    left = mid + 1;
                 else
+                    right = mid;
+            }
+            return matrix[right / colLen][right % colLen] == target;
+        }
+
+        public bool SearchMatrix_74_2D(int[][] matrix, int target)
+        {
+            int colLen = matrix[0].Length;
+            int rowLen = matrix.Length;
+            for (int i = 0; i < rowLen; i++)
+            {
+                if (target >= matrix[i][0] && target <= matrix[i][colLen - 1])
                 {
-                    row1 = row + 1;
-                    row = (row2 - row1) / 2 + row1;
+                    int[] arrToSearch = matrix[i];
+                    int start = 0, end = colLen - 1;
+                    while (start <= end)
+                    {
+                        int mid = (start + end) / 2;
+                        if (target == arrToSearch[mid]) return true;
+                        else if (target > arrToSearch[mid]) start = mid + 1;
+                        else end = mid - 1;
+                    }
+                    break;
                 }
             }
-
-            //find row
-            var arr = matrix[row];
-
-            int col1 = 0;
-            int col2 = colLen - 1;
-            int col = (col2 - col1) / 2;
-
-            while (col1 <= col2 && col <= col2 && col >= col1)
-            {
-                if (arr[col] == target)
-                {
-                    return true;
-                }
-                else if (arr[col] > target)
-                {
-                    col2 = col - 1;
-                    col = (col2 - col1) / 2 + col1;
-                }
-                else
-                {
-                    col1 = col + 1;
-                    col = (col2 - col1) / 2 + col1;
-                }
-            }
-
             return false;
         }
+
 
         ///75. Sort Colors
         ///We will use the integers 0, 1, and 2 to represent the color red, white, and blue, respectively.

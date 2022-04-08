@@ -58,7 +58,41 @@ namespace LeetCodeAlgo
                 if (x > 3 || x < -3) return false;
             return true;
         }
-        ///2085. Count Common Words With One Occurrence
+        ///2078. Two Furthest Houses With Different Colors
+        ///There are n houses evenly lined up on the street, and each house is beautifully painted.
+        ///You are given a 0-indexed integer array colors of length n, where colors[i] represents
+        ///the color of the ith house.Return the maximum distance between two houses with different colors.
+        ///The distance between the ith and jth houses is abs(i - j), where abs(x) is the absolute value of x.
+        public int MaxDistance_2078_O_n(int[] colors)
+        {
+            ///Find the last house with different color of the fisrt house.
+            ///Find the first house with different color of the last house.
+            ///Return the max distance of these two options.
+            int n = colors.Length, i = 0, j = n - 1;
+            while (colors[0] == colors[j]) j--;
+            while (colors[n - 1] == colors[i]) i++;
+            return Math.Max(n - 1 - i, j);
+        }
+
+
+
+        public int MaxDistance_2078(int[] colors)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            int res = 0;
+            for(int i = 0; i < colors.Length; i++)
+            {
+                if(!dict.ContainsKey(colors[i]))dict.Add(colors[i], i);
+                foreach(var key in dict.Keys)
+                {
+                    if (key != colors[i])
+                        res = Math.Max(res, i - dict[key]);
+                }
+            }
+            return res;
+        }
+
+        /// 2085. Count Common Words With One Occurrence
         ///return the number of strings that appear exactly once in each of the two arrays.
         public int CountWords(string[] words1, string[] words2)
         {
