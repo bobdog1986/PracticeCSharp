@@ -102,6 +102,33 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///1975. Maximum Matrix Sum
+        ///You can do any times:Choose any two adjacent elements of matrix and multiply each of them by -1.
+        ///Return the maximum sum of the matrix's elements using the operation mentioned above.
+        public long MaxMatrixSum(int[][] matrix)
+        {
+            long res = 0;
+            int min = int.MaxValue;
+            int count = 0;
+
+            foreach(var m in matrix)
+                foreach(var n in m)
+                {
+                    if (n >= 0)
+                    {
+                        res += n;
+                        min = Math.Min(min, n);
+                    }
+                    else
+                    {
+                        res -= n;
+                        min = Math.Min(min, -n);
+                        count++;
+                    }
+                }
+
+            return count%2==0?res:res-min;
+        }
         /// 1979. Find Greatest Common Divisor of Array
         ///return the greatest common divisor of the smallest number and largest number in nums.
         ///2 <= nums.length <= 1000,1 <= nums[i] <= 1000
