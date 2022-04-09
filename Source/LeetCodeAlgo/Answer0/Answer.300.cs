@@ -770,8 +770,40 @@ namespace LeetCodeAlgo
             return new string(arr);
         }
 
-        /// 347. Top K Frequent Elements
+        /// 347. Top K Frequent Elements, #BucketSort
         ///return the k most frequent elements. You may return the answer in any order.
+        public int[] TopKFrequent_BucketSort(int[] nums, int k)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            List<int>[] bucket = new List<int>[nums.Length + 1];
+            int[] res = new int[k];
+            foreach (int num in nums)
+            {
+                if (!dict.ContainsKey(num)) dict.Add(num, 0);
+                dict[num]++;
+            }
+
+            foreach (int key in dict.Keys)
+            {
+                int frequency = dict[key];
+                if (bucket[frequency] == null)
+                    bucket[frequency] = new List<int>();
+                bucket[frequency].Add(key);
+            }
+
+            int j = 0;
+            for (int pos = bucket.Length - 1; pos >= 0; pos--)
+            {
+                if (j >= k) break;
+                if (bucket[pos] != null)
+                {
+                    for (int i = 0; i < bucket[pos].Count && j<k; i++)
+                        res[j++]=bucket[pos][i];
+                }
+            }
+            return res;
+        }
+
         public int[] TopKFrequent(int[] nums, int k)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();

@@ -151,7 +151,15 @@ namespace LeetCodeAlgo
             return -1;
         }
 
-        ///1941. Check if All Characters Have Equal Number of Occurrences
+        ///1930. Unique Length-3 Palindromic Subsequences
+        ///Given a string s, return the number of unique palindromes of length three that are a subsequence of s.
+        public int CountPalindromicSubsequence(string s)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        /// 1941. Check if All Characters Have Equal Number of Occurrences
         ///A string s is good if all the characters that appear in s have the same number of occurrences
         public bool AreOccurrencesEqual(string s)
         {
