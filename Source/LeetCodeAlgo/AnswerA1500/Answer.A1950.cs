@@ -162,5 +162,53 @@ namespace LeetCodeAlgo
             return min;
         }
 
+        ///1992. Find All Groups of Farmland, #BFS
+        ///Return a 2D array containing the 4-length arrays for each group of farmland in land(1s rectangle area.).
+        public int[][] FindFarmland(int[][] land)
+        {
+            List<int[]> res = new List<int[]>();
+            int rowLen = land.Length;
+            int colLen = land[0].Length;
+            int[][] dxy = new int[2][] { new int[] { 1, 0 }, new int[] { 0, 1 }};
+            for (int i = 0; i < rowLen; i++)
+            {
+                for(int j=0; j<colLen; j++)
+                {
+                    if (land[i][j] == 0) continue;
+                    int maxRow = i;
+                    int maxCol = j;
+                    int[] curr = new int[4] { i, j, maxRow, maxCol };
+                    land[i][j] = 0;
+                    List<int[]> list = new List<int[]>() { new int[] { i, j } };
+                    while (list.Count > 0)
+                    {
+                        List<int[]> next = new List<int[]>();
+                        foreach(var p in list)
+                        {
+                            foreach(var d in dxy)
+                            {
+                                var r = p[0] + d[0];
+                                var c = p[1] + d[1];
+
+                                if (r >= 0 && r < rowLen && c >= 0 && c < colLen && land[r][c] == 1)
+                                {
+                                    land[r][c] = 0;
+                                    next.Add(new int[] { r, c });
+                                    maxRow = Math.Max(maxRow, r);
+                                    maxCol = Math.Max(maxCol, c);
+                                }
+                            }
+                        }
+                        list = next;
+                    }
+
+                    curr[2] = maxRow;
+                    curr[3] = maxCol;
+                    res.Add(curr);
+                }
+            }
+
+            return res.ToArray();
+        }
     }
 }
