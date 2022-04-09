@@ -8,20 +8,34 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1876. Substrings of Size Three with Distinct Characters
+        ///1860. Incremental Memory Leak
+        ///Return an array containing [crashTime, memory1crash, memory2crash]
+        public int[] MemLeak(int memory1, int memory2)
+        {
+            int i = 1;
+            while (Math.Max(memory1, memory2) >= i)
+            {
+                if (memory1 >= memory2) memory1 -= i;
+                else memory2 -= i;
+                i++;
+            }
+            return new int[] { i, memory1, memory2 };
+        }
+
+        /// 1876. Substrings of Size Three with Distinct Characters
         ///A string is good if there are no repeated characters.
         ///Given a string s,return the number of good substrings of length three in s.
         public int CountGoodSubstrings(string s)
         {
             int res = 0;
-            Dictionary<char,int> dict=new Dictionary<char, int>();
-            for(int i = 0; i < s.Length-2; i++)
+            Dictionary<char, int> dict = new Dictionary<char, int>();
+            for (int i = 0; i < s.Length - 2; i++)
             {
                 if (i == 0)
                 {
-                    dict.Add(s[0],1);
-                    if(dict.ContainsKey(s[1]))dict[s[1]]++;
-                    else dict.Add(s[1],1);
+                    dict.Add(s[0], 1);
+                    if (dict.ContainsKey(s[1])) dict[s[1]]++;
+                    else dict.Add(s[1], 1);
                 }
                 if (dict.ContainsKey(s[i + 2])) dict[s[i + 2]]++;
                 else dict.Add(s[i + 2], 1);
@@ -37,8 +51,8 @@ namespace LeetCodeAlgo
         ///make mat equal to target by rotating mat in 90-degree increments, or false otherwise.
         public bool FindRotation(int[][] mat, int[][] target)
         {
-            int n=mat.Length;
-            bool[] rotate =new bool[4];
+            int n = mat.Length;
+            bool[] rotate = new bool[4];
             for (int i = 0; i < n; i++)
             {
                 for (int j = 0; j < n; j++)
@@ -53,7 +67,5 @@ namespace LeetCodeAlgo
             }
             return true;
         }
-
-
     }
 }
