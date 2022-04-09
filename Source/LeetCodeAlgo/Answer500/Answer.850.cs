@@ -352,7 +352,30 @@ namespace LeetCodeAlgo
             return null;
         }
 
-        ///895. Maximum Frequency Stack, see FreqStack
+        ///893. Groups of Special-Equivalent Strings
+        ///In one move, you can swap any two even indexed characters or any two odd indexed characters of a string words[i].
+        public int NumSpecialEquivGroups(string[] words)
+        {
+            HashSet<string> set = new HashSet<string>();
+
+            foreach(var w in words)
+            {
+                List<char> list1 = new List<char>();
+                List<char> list2 = new List<char>();
+                bool even = true;
+                foreach(var c in w)
+                {
+                    if (even) list1.Add(c);
+                    else list2.Add(c);
+                    even = !even;
+                }
+                list1.Sort();
+                list2.Sort();
+                set.Add($"{new string(list1.ToArray())}{new string(list2.ToArray())}");
+            }
+            return set.Count;
+        }
+        /// 895. Maximum Frequency Stack, see FreqStack
 
         /// 896. Monotonic Array
         ///An array is monotonic if it is either monotone increasing or monotone decreasing.
