@@ -375,6 +375,11 @@ namespace LeetCodeAlgo
             }
             return set.Count;
         }
+        ///894. All Possible Full Binary Trees
+        public IList<TreeNode> AllPossibleFBT(int n)
+        {
+            throw new NotImplementedException();
+        }
         /// 895. Maximum Frequency Stack, see FreqStack
 
         /// 896. Monotonic Array

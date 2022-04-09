@@ -10,16 +10,16 @@ namespace LeetCodeAlgo
         public IList<int> EventualSafeNodes(int[][] graph)
         {
             HashSet<int> map = new HashSet<int>();
-            int[] dp=new int[graph.Length];
+            int[] dp = new int[graph.Length];
             bool[] visit = new bool[graph.Length];
             for (int i = 0; i < graph.Length; i++)
             {
                 EventualSafeNodes_dfs(graph, i, visit, dp, map);
             }
-            return map.OrderBy(x=>x).ToList();
+            return map.OrderBy(x => x).ToList();
         }
 
-        public int EventualSafeNodes_dfs(int[][] graph,int i,bool[] visit, int[] dp, HashSet<int> map)
+        public int EventualSafeNodes_dfs(int[][] graph, int i, bool[] visit, int[] dp, HashSet<int> map)
         {
             if (visit[i])
             {
@@ -33,21 +33,43 @@ namespace LeetCodeAlgo
                 else ans &= EventualSafeNodes_dfs(graph, j, visit, dp, map);
             }
 
-            if (ans==1)
+            if (ans == 1)
             {
                 if (!map.Contains(i)) map.Add(i);
             }
             dp[i] = ans;
             return ans;
         }
+
+        ///814. Binary Tree Pruning, #BTree
+        ///return the same tree where every subtree (of the given tree) not containing a 1 has been removed.
+        ///A subtree of a node node is node plus every node that is a descendant of node.
+        public TreeNode PruneTree(TreeNode root)
+        {
+            if (!PruneTree_AnyChildEqualToOne(root)) return null;
+            return root;
+        }
+
+        private bool PruneTree_AnyChildEqualToOne(TreeNode root)
+        {
+            if (root == null) return false;
+            var leftHasOne = PruneTree_AnyChildEqualToOne(root.left);
+            var rightHasOne = PruneTree_AnyChildEqualToOne(root.right);
+            if (!leftHasOne) root.left = null;
+            if (!rightHasOne) root.right = null;
+
+            if (root.val == 1 || leftHasOne || rightHasOne) return true;
+            else return false;
+        }
+
         /// 830. Positions of Large Groups
         ///A group is considered large if it has 3 or more characters.
         ///Return the intervals of every large group sorted in increasing order by start index.
         public IList<IList<int>> LargeGroupPositions(string s)
         {
-            var ans=new List<IList<int>>();
+            var ans = new List<IList<int>>();
             int count = 1;
-            for(int i=1; i<s.Length; i++)
+            for (int i = 1; i < s.Length; i++)
             {
                 if (s[i] == s[i - 1])
                 {
@@ -57,7 +79,7 @@ namespace LeetCodeAlgo
                 {
                     if (count >= 3)
                     {
-                        ans.Add(new List<int>() { i-count,i-1});
+                        ans.Add(new List<int>() { i - count, i - 1 });
                     }
                     count = 1;
                 }
@@ -68,17 +90,18 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
         /// 841. Keys and Rooms
         ///Given an array rooms where rooms[i] is the set of keys that you can obtain if you visited room i,
         ///return true if you can visit all the rooms, or false otherwise.
         public bool CanVisitAllRooms(IList<IList<int>> rooms)
         {
             int count = rooms.Count;
-            int[] arr=new int[count];
+            int[] arr = new int[count];
             arr[0] = 1;
             count--;
-            List<int> list=new List<int>(rooms[0]);
-            while(list.Count > 0 && count>0)
+            List<int> list = new List<int>(rooms[0]);
+            while (list.Count > 0 && count > 0)
             {
                 List<int> next = new List<int>();
                 foreach (var key in list)
@@ -92,8 +115,9 @@ namespace LeetCodeAlgo
                 }
                 list = next;
             }
-            return count==0;
+            return count == 0;
         }
+
         /// 844. Backspace String Compare
         ///Given two strings s and t, return true if they are equal when both are typed into empty text editors.
         ///'#' means a backspace character.Note that after backspacing an empty text, the text will continue empty.
@@ -141,8 +165,8 @@ namespace LeetCodeAlgo
             }
 
             return true;
-
         }
+
         ///847. Shortest Path Visiting All Nodes, #Graph, #BFS
         ///You have an undirected, connected graph of n nodes labeled from 0 to n - 1.
         ///You are given an array graph where graph[i] is a list of all the nodes connected with node i by an edge.
@@ -159,11 +183,11 @@ namespace LeetCodeAlgo
             for (int i = 0; i < n; i++)
             {
                 int tmp = (1 << i);
-                set.Add((tmp<<4) + i);
+                set.Add((tmp << 4) + i);
                 queue.Enqueue(new int[] { tmp, i, 1 });
             }
 
-            while (queue.Count>0)
+            while (queue.Count > 0)
             {
                 var curr = queue.Dequeue();
                 if (curr[0] == (1 << n) - 1)
@@ -175,7 +199,7 @@ namespace LeetCodeAlgo
                     foreach (int neighbor in graph[curr[1]])
                     {
                         int bitMask = curr[0] | (1 << neighbor);
-                        if (!set.Add((bitMask<<4) + neighbor)) continue;
+                        if (!set.Add((bitMask << 4) + neighbor)) continue;
                         queue.Enqueue(new int[] { bitMask, neighbor, curr[2] + 1 });
                     }
                 }
@@ -189,16 +213,16 @@ namespace LeetCodeAlgo
         public string ShiftingLetters(string s, int[] shifts)
         {
             //cache the total shifts of s[i]
-            long[] arr=new long[s.Length];
+            long[] arr = new long[s.Length];
             //cache the sum from right to left, reduce time complexity from O(n^2) to O(n)
             long sum = 0;
-            for(int i = shifts.Length-1; i >=0; i--)
+            for (int i = shifts.Length - 1; i >= 0; i--)
             {
                 sum += shifts[i];
                 arr[i] = sum;
             }
             var carr = s.ToCharArray();
-            for(int i=0;i< carr.Length; i++)
+            for (int i = 0; i < carr.Length; i++)
             {
                 var val = carr[i] + arr[i] % 26;//mod of 26
                 if (val > 'z') val -= 26;
@@ -206,6 +230,7 @@ namespace LeetCodeAlgo
             }
             return new string(carr);
         }
+
         /// 849. Maximize Distance to Closest Person
         public int MaxDistToClosest(int[] seats)
         {
@@ -242,8 +267,5 @@ namespace LeetCodeAlgo
                 max = Math.Max(max, len);
             return max;
         }
-
-
-
     }
 }
