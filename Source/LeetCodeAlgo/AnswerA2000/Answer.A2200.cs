@@ -410,5 +410,32 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///2232. Minimize Result by Adding Parentheses to Expression
+        ///You are given a 0-indexed string expression of the form "<num1>+<num2>" where <num1> and <num2> represent positive integers.
+        ///Insert "()" to get the minimium value, return the final expression string
+        public string MinimizeResult(string expression)
+        {
+            var arr = expression.Split("+");
+            int res = int.MaxValue;
+            int x = 0;
+            int y = 0;
+            for (int i = 0; i < arr[0].Length; i++)
+            {
+                for (int j = 0; j < arr[1].Length; j++)
+                {
+                    int val1 = i == 0 ? 1 : int.Parse(arr[0].Substring(0, i));
+                    int val2 = int.Parse(arr[0].Substring(i)) + int.Parse(arr[1].Substring(0, j + 1));
+                    int val3 = j == arr[1].Length - 1 ? 1 : int.Parse(arr[1].Substring(j + 1));
+                    if (val1 * val2 * val3 < res)
+                    {
+                        res = val1 * val2 * val3;
+                        x = i;
+                        y = j;
+                    }
+                }
+            }
+            return arr[0].Insert(x,"(")+"+"+arr[1].Insert(y+1,")");
+        }
     }
 }
