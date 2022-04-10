@@ -277,6 +277,43 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+        ///682. Baseball Game
+        ///"+", add sum of last two; "C"-remove the last, "D"-double the last then add
+        public int CalPoints(string[] ops)
+        {
+            int res = 0;
+            List<int> list = new List<int>();
+            foreach(var op in ops)
+            {
+                int val = 0;
+                bool isData = int.TryParse(op, out val);
+                if (isData)
+                {
+                    res += val;
+                    list.Add(val);
+                }
+                else
+                {
+                    if (op == "C")
+                    {
+                        res -= list[list.Count - 1];
+                        list.RemoveAt(list.Count - 1);
+                    }
+                    else if (op == "D")
+                    {
+                        res += list[list.Count - 1] * 2;
+                        list.Add(list[list.Count - 1] * 2);
+                    }
+                    else if(op=="+")
+                    {
+                        res += list[list.Count - 1] + list[list.Count - 2];
+                        list.Add(list[list.Count - 1] + list[list.Count - 2]);
+                    }
+                }
+            }
+
+            return res;
+        }
         /// 692. Top K Frequent Words, #PriorityQueue, #Heap
         ///Given an array of strings words and an integer k, return the k most frequent strings.
         ///Return the answer sorted by the frequency from highest to lowest.
