@@ -437,5 +437,31 @@ namespace LeetCodeAlgo
             }
             return arr[0].Insert(x,"(")+"+"+arr[1].Insert(y+1,")");
         }
+
+        ///2233. Maximum Product After K Increments, #PriorityQueue, #Heap
+        ///You are given an array of non-negative integers nums and an integer k.
+        ///In one operation, you may choose any element from nums and increment it by 1.
+        ///Return the maximum product of nums after at most k operations.Since the answer may be very large, return it modulo 109 + 7
+        public int MaximumProduct(int[] nums, int k)
+        {
+            if (nums.Length == 1) return nums[0] + k;
+            PriorityQueue<int, int> pq = new PriorityQueue<int, int>();
+            foreach (var n in nums)
+                pq.Enqueue(n, n);
+
+            while (k-- > 0)
+            {
+                var min = pq.Dequeue();
+                min++;
+                pq.Enqueue(min,min);
+            }
+            long res = 1;
+            while (pq.Count > 0)
+            {
+                res*=pq.Dequeue();
+                res %= 10_0000_0007;
+            }
+            return (int)res;
+        }
     }
 }

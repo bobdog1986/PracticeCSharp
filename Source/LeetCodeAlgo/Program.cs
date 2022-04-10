@@ -55,14 +55,15 @@ namespace LeetCodeAlgo
 
             string mat3Str = "[[1,2,3],[2,3,1],[3,4,2],[4,5,3],[5,6,4]]";
             var mat3 = anwser.buildMatrix(mat3Str);
-
+            string arrStr3 = "[92, 36, 15, 84, 57, 60, 72, 86, 70, 43, 16]";
+            var arr3 = anwser.buildArray(arrStr3);
             //Console.WriteLine("Correct Anwser should be : ");
             //Console.WriteLine(string.Join("\r\n", mat1.Select(o => string.Join(",", o))));
             Stopwatch sw = new Stopwatch();
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.MinimizeResult("999+999");
+            var result = anwser.MaximumProduct(arr3, 62);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
