@@ -1,5 +1,11 @@
 ﻿
 /*
+
+///176. Second Highest Salary
+select (
+	select distinct Salary from Employee order by Salary Desc limit 1 offset 1
+) as SecondHighestSalary
+
 ///183. Customers Who Never Order
 
 select name as Customers from Customers where NOT EXISTS (SELECT * FROM Orders WHERE Customers.id=Orders.customerId)
@@ -7,9 +13,9 @@ select name as Customers from Customers where NOT EXISTS (SELECT * FROM Orders W
 ///196. Delete Duplicate Emails
 
 delete from Person where id not in(
-    select t.id from (
-        select min(id) as id from Person group by email
-    ) t
+	select t.id from (
+		select min(id) as id from Person group by email
+	) t
 )
 
 ///584. Find Customer Referee
@@ -20,7 +26,13 @@ select name from Customer where isnull(referee_id) || referee_id !=2
 
 select name,population, area from World where area>=3000000 or population>=25000000
 
+///608. Tree Node
 
+select id,
+(case when p_id is null then 'Root'
+	when id in (select p_id from tree) then 'Inner'
+	else 'Leaf' end) as Type
+from tree
 
 ///627. Swap Salary
 
@@ -31,9 +43,9 @@ update salary set sex = CHAR(ASCII('f') ^ ASCII('m') ^ ASCII(sex));
 ///1484. Group Sold Products By The Date
 
 SELECT
-    sell_date,
-    COUNT(DISTINCT product) AS num_sold,
-    GROUP_CONCAT(DISTINCT product ORDER BY product) AS products
+	sell_date,
+	COUNT(DISTINCT product) AS num_sold,
+	GROUP_CONCAT(DISTINCT product ORDER BY product) AS products
 FROM Activities
 GROUP BY sell_date;
 
@@ -55,18 +67,41 @@ from users order by user_id
 
 select product_id   from Products where low_fats='Y' and recyclable ='Y'
 
+///1795. Rearrange Products Table
+
+SELECT product_id, 'store1' AS store, store1 AS price FROM Products WHERE store1 IS NOT NULL
+UNION
+SELECT product_id, 'store2' AS store, store2 AS price FROM Products WHERE store2 IS NOT NULL
+UNION
+SELECT product_id, 'store3' AS store, store3 AS price FROM Products WHERE store3 IS NOT NULL
+ORDER BY 1,2 ASC
 
 ///1873. Calculate Special Bonus
 
 SELECT employee_id ,
-            CASE
-                WHEN mod(employee_id ,2)=1 and name not like 'M%'
-                    THEN salary
-                ELSE 0
-            END
-            as bonus FROM Employees ;
+			CASE
+				WHEN mod(employee_id ,2)=1 and name not like 'M%'
+					THEN salary
+				ELSE 0
+			END
+			as bonus FROM Employees ;
 
+///1965. Employees With Missing Information
 
+SELECT sub.employee_id
+FROM (
+	SELECT e.employee_id, name, salary
+	FROM employees AS e
+	LEFT JOIN salaries AS s
+	ON e.employee_id = s.employee_id
 
+	UNION
+
+	SELECT s.employee_id, name, salary
+	FROM employees AS e
+	RIGHT JOIN salaries AS s
+	ON e.employee_id = s.employee_id) AS sub
+WHERE sub.name IS NULL OR sub.salary IS NULL
+ORDER BY sub.employee_id
 
 */
