@@ -54,11 +54,11 @@ namespace LeetCodeAlgo
             {
                 return str;
             }
-            else if(root.left == null)
+            else if (root.left == null)
             {
                 return str + $"()({Tree2str(root.right)})";
             }
-            else if(root.right ==null)
+            else if (root.right == null)
             {
                 return str + $"({Tree2str(root.left)})";
             }
@@ -67,6 +67,7 @@ namespace LeetCodeAlgo
                 return str + $"({Tree2str(root.left)})" + $"({Tree2str(root.right)})";
             }
         }
+
         /// 611
         public int TriangleNumber(int[] nums)
         {
@@ -163,11 +164,28 @@ namespace LeetCodeAlgo
         public bool JudgeSquareSum(int c)
         {
             HashSet<int> set = new HashSet<int>();
-            for(long i=0; i*i <= c; i++)
-                set.Add((int)(i*i));
+            for (long i = 0; i * i <= c; i++)
+                set.Add((int)(i * i));
 
             foreach (var n in set)
                 if (set.Contains(c - n)) return true;
+            return false;
+        }
+
+        public bool JudgeSquareSum_TwoPointers(int c)
+        {
+            long left = 0;
+            long right = (long)(Math.Sqrt(c));
+            while (left <= right)
+            {
+                long cur = left * left + right * right;
+                if (cur == c) return true;
+                else if (cur < c)
+                    left += 1;
+                else
+                    right -= 1;
+            }
+
             return false;
         }
 
@@ -190,7 +208,7 @@ namespace LeetCodeAlgo
                     if (node.right != null) next.Add(node.right);
                 }
                 nodes = next;
-                ans.Add(list.Sum()*1.0/list.Count);
+                ans.Add(list.Sum() * 1.0 / list.Count);
             }
             return ans;
         }
@@ -199,29 +217,30 @@ namespace LeetCodeAlgo
         ///[1,n] Find the number that occurs twice and the number that is missing and return them in the form of an array.
         public int[] FindErrorNums(int[] nums)
         {
-            int[] arr=new int[nums.Length+1];
+            int[] arr = new int[nums.Length + 1];
             int sum = 0;
             int twice = 0;
-            foreach(var n in nums)
+            foreach (var n in nums)
             {
                 sum += n;
                 arr[n]++;
                 if (arr[n] == 2) twice = n;
             }
-            int miss = twice -( sum - (nums.Length + 1) * nums.Length / 2 ) ;
+            int miss = twice - (sum - (nums.Length + 1) * nums.Length / 2);
             return new int[] { twice, miss };
         }
+
         /// 648. Replace Words
         ///Return the sentence after the replacement.
         public string ReplaceWords(IList<string> dictionary, string sentence)
         {
             var words = dictionary.OrderBy(x => x).ThenBy(x => x.Length).ToList();
-            var list = sentence.Split(' ').Where(x=>x.Length>0).ToList();
-            var res =new List<string>();
-            foreach(var i in list)
+            var list = sentence.Split(' ').Where(x => x.Length > 0).ToList();
+            var res = new List<string>();
+            foreach (var i in list)
             {
                 bool match = false;
-                foreach(var word in words)
+                foreach (var word in words)
                 {
                     if (i.StartsWith(word))
                     {

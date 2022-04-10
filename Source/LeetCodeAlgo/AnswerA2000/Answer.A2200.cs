@@ -374,5 +374,41 @@ namespace LeetCodeAlgo
         }
 
         ///2227. Encrypt and Decrypt Strings, see Encrypter
+
+        ///2231. Largest Number After Digit Swaps by Parity
+        ///You are given a positive integer num. You may swap any two digits of num that have the same parity
+        ///(i.e. both odd digits or both even digits).
+        ///Return the largest possible value of num after any number of swaps.
+        public int LargestInteger(int num)
+        {
+            List<int> evens = new List<int>();
+            List<int> odds = new List<int>();
+            List<bool> parities = new List<bool>();
+
+            while (num > 0)
+            {
+                int mod = num % 10;
+                if (mod % 2 == 0)
+                    evens.Add(mod);
+                else
+                    odds.Add(mod);
+                parities.Insert(0, mod % 2 == 0);
+                num /= 10;
+            }
+            evens.Sort();
+            odds.Sort();
+            int i = evens.Count - 1;
+            int j = odds.Count - 1;
+            int res = 0;
+            foreach (var parity in parities)
+            {
+                res *= 10;
+                if (parity)
+                    res += evens[i--];
+                else
+                    res += odds[j--];
+            }
+            return res;
+        }
     }
 }
