@@ -337,7 +337,7 @@ namespace LeetCodeAlgo
             if (string.IsNullOrEmpty(data))
                 return null;
 
-            data = data.Replace("null", "").Replace("-", "").Replace(" ", "");
+            data = data.Replace("null", "").Replace("-", "").Replace(" ", "").Replace("[", "").Replace("]", "");
             var arr = data.Split(',').Select(x => x == string.Empty ? 1001 : int.Parse(x)).ToList();
             int i = 0;
             var root = new TreeNode(arr[i]);

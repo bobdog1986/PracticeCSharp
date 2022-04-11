@@ -49,8 +49,8 @@ namespace LeetCodeAlgo
             //var listnode2 = anwser.buildListNode(new int[] { 1000000, 1000001, 1000002 });
             //anwser.printListNode(listnode2);
 
-            //string bTreeStr = "3,3,6,6,3,5,";
-            //var treeNode = anwser.deserializeTree(bTreeStr);
+            string bTreeStr = "[4,1,6,0,2,5,7,null,null,null,3,null,null,null,8]";
+            var treeNode = anwser.deserializeTree(bTreeStr);
             //anwser.printTree(treeNode)
 
             string mat3Str = "[[1,2,3],[2,3,1],[3,4,2],[4,5,3],[5,6,4]]";
@@ -63,7 +63,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.MaximumProduct(arr3, 62);
+            var result = anwser.BstToGst(treeNode);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

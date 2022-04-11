@@ -153,7 +153,22 @@ namespace LeetCodeAlgo
                 res += diff[i];
             return res;
         }
-        ///1046. Last Stone Weight, #PriorityQueue
+        ///1038. Binary Search Tree to Greater Sum Tree, #BTree
+        public TreeNode BstToGst(TreeNode root)
+        {
+            BstToGst_Recursion(root, 0);
+            return root;
+        }
+        private int BstToGst_Recursion(TreeNode root,int sum)
+        {
+            if (root == null)
+                return sum;
+            var rightVal = BstToGst_Recursion(root.right,sum);
+            root.val += rightVal;
+            return BstToGst_Recursion(root.left, root.val);
+        }
+
+        /// 1046. Last Stone Weight, #PriorityQueue
         /// x == y, both stones are destroyed, and
         ///If x != y, the stone of weight x is destroyed, and the stone of weight y has new weight y - x.
         ///Return the smallest possible weight of the left stone.If there are no stones left, return 0.
