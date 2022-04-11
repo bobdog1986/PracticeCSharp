@@ -194,5 +194,22 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///1637. Widest Vertical Area Between Two Points Containing No Points
+        public int MaxWidthOfVerticalArea(int[][] points)
+        {
+            int res = 0;
+            PriorityQueue<int,int> pq = new PriorityQueue<int,int>();
+            foreach (var point in points)
+                pq.Enqueue(point[0], point[0]);
+
+            var curr = pq.Dequeue();
+            while (pq.Count > 0)
+            {
+                res = Math.Max(res, pq.Peek() - curr);
+                curr=pq.Dequeue();
+            }
+            return res;
+        }
     }
 }
