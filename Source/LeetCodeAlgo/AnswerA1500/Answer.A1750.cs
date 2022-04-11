@@ -136,6 +136,21 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///1769. Minimum Number of Operations to Move All Balls to Each Box
+        ///Operations of moving all 1 to every index
+        public int[] MinOperations_1769(string boxes)
+        {
+            List<int> list = new List<int>();
+            for(int i = 0; i < boxes.Length; i++)
+                if (boxes[i] == '1') list.Add(i);
+
+            int[] res=new int[boxes.Length];
+            for(int i = 0; i < res.Length; i++)
+                res[i] = list.Sum(x => Math.Abs(x - i));
+
+            return res;
+        }
+
         /// 1779. Find Nearest Point That Has the Same X or Y Coordinate
         public int NearestValidPoint(int x, int y, int[][] points)
         {
