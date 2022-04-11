@@ -41,7 +41,35 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///814. Binary Tree Pruning, #BTree
+        ///807. Max Increase to Keep City Skyline
+        public int MaxIncreaseKeepingSkyline(int[][] grid)
+        {
+            int rowLen = grid.Length;
+            int colLen = grid[0].Length;
+            int[] rowMax=grid.Select(x=>x.Max()).ToArray();
+            int[] colMax=new int[colLen];
+            for(int c = 0; c < colLen; c++)
+            {
+                int max = int.MinValue;
+                for (int r = 0; r < rowLen; r++)
+                {
+                    max = Math.Max(max, grid[r][c]);
+                }
+                colMax[c] = max;
+            }
+
+            int res = 0;
+            for(int r = 0; r < rowLen; r++)
+            {
+                for (int c = 0; c < colLen; c++)
+                {
+                    int max = Math.Min(rowMax[r], colMax[c]);
+                    res += max > grid[r][c] ? max - grid[r][c] : 0;
+                }
+            }
+            return res;
+        }
+        /// 814. Binary Tree Pruning, #BTree
         ///return the same tree where every subtree (of the given tree) not containing a 1 has been removed.
         ///A subtree of a node node is node plus every node that is a descendant of node.
         public TreeNode PruneTree(TreeNode root)
