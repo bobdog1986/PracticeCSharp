@@ -8,7 +8,34 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1860. Incremental Memory Leak
+        ///1855. Maximum Distance Between a Pair of Values
+        ///You are given two non-increasing 0-indexed integer arrays nums1 and nums2​​​​​​
+        ///i <= j and nums1[i] <= nums2[j]. The distance of the pair is j - i​​​​.
+        ///Return the maximum distance of any valid pair(i, j). If there are no valid pairs, return 0.
+        public int MaxDistance(int[] nums1, int[] nums2)
+        {
+            int i = 0;
+            int j = 0;
+            int res = 0;
+            while(i<nums1.Length && j < nums2.Length)
+            {
+                if (i > j)
+                {
+                    j++;
+                }
+                else
+                {
+                    if (nums1[i] > nums2[j]) i++;
+                    else
+                    {
+                        res = Math.Max(res, j - i);
+                        j++;
+                    }
+                }
+            }
+            return res;
+        }
+        /// 1860. Incremental Memory Leak
         ///Return an array containing [crashTime, memory1crash, memory2crash]
         public int[] MemLeak(int memory1, int memory2)
         {
