@@ -198,7 +198,36 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///2094. Finding 3-Digit Even Numbers
+        ///2091. Removing Minimum and Maximum From Array
+        ///A deletion is defined as either removing an element from the front of
+        ///the array or removing an element from the back of the array.
+        ///Return the minimum of deletions to remove both the minimum and maximum element from the array.
+        public int MinimumDeletions(int[] nums)
+        {
+            int max = int.MinValue;
+            int min = int.MaxValue;
+            int maxIndex = 0;
+            int minIndex = 0;
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if(nums[i] > max)
+                {
+                    max = nums[i];
+                    maxIndex = i;
+                }
+                if (nums[i] < min)
+                {
+                    min = nums[i];
+                    minIndex = i;
+                }
+            }
+
+            int left = Math.Min(maxIndex, minIndex);
+            int right = Math.Max(maxIndex, minIndex);
+
+            return Math.Min(right + 1, Math.Min(nums.Length - left, left+1+ nums.Length - right));
+        }
+        /// 2094. Finding 3-Digit Even Numbers
         ///if the given digits were [1, 2, 3], integers 132 and 312 follow the requirements.
         ///Return a sorted array of the unique integers.
         public int[] FindEvenNumbers(int[] digits)
