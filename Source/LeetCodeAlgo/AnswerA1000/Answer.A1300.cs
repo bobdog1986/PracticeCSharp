@@ -8,7 +8,26 @@ namespace LeetCodeAlgo
     {
 
 
-        ///1305. All Elements in Two Binary Search Trees
+        ///1302. Deepest Leaves Sum
+        public int DeepestLeavesSum(TreeNode root)
+        {
+            int res = 0;
+            List<TreeNode> list = new List<TreeNode>() { root};
+
+            while(list.Count > 0)
+            {
+                res = list.Sum(x => x.val);
+                List<TreeNode> next = new List<TreeNode>();
+                foreach(var node in list)
+                {
+                    if(node.left!=null)next.Add(node.left);
+                    if(node.right!=null)next.Add(node.right);
+                }
+                list = next;
+            }
+            return res;
+        }
+        /// 1305. All Elements in Two Binary Search Trees
         //two binary search trees root1 and root2, return a list containing all the integers from both trees sorted in ascending order.
         public IList<int> GetAllElements(TreeNode root1, TreeNode root2)
         {
