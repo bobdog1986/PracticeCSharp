@@ -160,7 +160,34 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        ///1319. Number of Operations to Make Network Connected, #Union-Find, #Graph, DFS, #BFS
+        ///1315. Sum of Nodes with Even-Valued Grandparent
+        public int SumEvenGrandparent(TreeNode root)
+        {
+            int res = 0;
+            SumEvenGrandparent(root, ref res);
+            return res;
+        }
+
+        private void SumEvenGrandparent(TreeNode root,ref int res)
+        {
+            if (root == null) return;
+            if (root.val % 2 == 0)
+            {
+                if (root.left != null)
+                {
+                    if (root.left.left != null) res+= root.left.left.val;
+                    if (root.left.right != null) res += root.left.right.val;
+                }
+                if (root.right != null)
+                {
+                    if (root.right.left != null) res += root.right.left.val;
+                    if (root.right.right != null) res += root.right.right.val;
+                }
+            }
+            SumEvenGrandparent(root.left, ref res);
+            SumEvenGrandparent(root.right, ref res);
+        }
+        /// 1319. Number of Operations to Make Network Connected, #Union-Find, #Graph, DFS, #BFS
         public int MakeConnected(int n, int[][] connections)
         {
             if (connections.Length < n - 1) return -1; // To connect all nodes need at least n-1 edges
