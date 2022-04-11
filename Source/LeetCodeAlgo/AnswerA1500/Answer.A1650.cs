@@ -194,6 +194,14 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///1689. Partitioning Into Minimum Number Of Deci-Binary Numbers
+        public int MinPartitions(string n)
+        {
+            int res = 0;
+            foreach(var c in n)
+                res = Math.Max(res, c - '0');
+            return res;
+        }
         /// 1694. Reformat Phone Number
         ///number consists of digits, spaces ' ', and/or dashes '-'.
         ///Firstly, remove all spaces and dashes.
