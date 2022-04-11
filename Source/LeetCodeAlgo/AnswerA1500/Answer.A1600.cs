@@ -199,16 +199,9 @@ namespace LeetCodeAlgo
         public int MaxWidthOfVerticalArea(int[][] points)
         {
             int res = 0;
-            PriorityQueue<int,int> pq = new PriorityQueue<int,int>();
-            foreach (var point in points)
-                pq.Enqueue(point[0], point[0]);
-
-            var curr = pq.Dequeue();
-            while (pq.Count > 0)
-            {
-                res = Math.Max(res, pq.Peek() - curr);
-                curr=pq.Dequeue();
-            }
+            var list = points.Select(x=>x[0]).OrderBy(x =>x).ToList();
+            for (int i = 0; i < list.Count - 1; i++)
+                res = Math.Max(res, list[i + 1] - list[i]);
             return res;
         }
     }

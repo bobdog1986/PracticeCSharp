@@ -94,7 +94,26 @@ namespace LeetCodeAlgo
             }
             return list.Aggregate((x, y) => x * y) - list.Aggregate((x, y) => x + y);
         }
-
+        ///1282. Group the People Given the Group Size They Belong To
+        public IList<IList<int>> GroupThePeople(int[] groupSizes)
+        {
+            Dictionary<int, List<int>> dict = new Dictionary<int, List<int>>();
+            for(int i=0; i<groupSizes.Length; i++)
+            {
+                if(!dict.ContainsKey(groupSizes[i]))dict.Add(groupSizes[i], new List<int>());
+                dict[groupSizes[i]].Add(i);
+            }
+            var keys = dict.Keys.OrderBy(x=>x).ToList();
+            var res= new List<IList<int>>();
+            foreach(var key in keys)
+            {
+                for(int i = 0; i < dict[key].Count; i += key)
+                {
+                    res.Add(dict[key].GetRange(i, key));
+                }
+            }
+            return res;
+        }
         /// 1288. Remove Covered Intervals
         ///Given an array intervals where intervals[i] = [li, ri] represent the interval [li, ri),
         ///remove all intervals that are covered by another interval in the list.
