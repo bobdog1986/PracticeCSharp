@@ -249,6 +249,27 @@ namespace LeetCodeAlgo
             return ans + informTime[u];
         }
 
+        ///1379. Find a Corresponding Node of a Binary Tree in a Clone of That Tree
+        public TreeNode GetTargetCopy(TreeNode original, TreeNode cloned, TreeNode target)
+        {
+            TreeNode res = null;
+            GetTargetCopy(original, cloned, target, ref res);
+            return res;
+        }
+
+        private void GetTargetCopy(TreeNode original, TreeNode cloned, TreeNode target,ref TreeNode found)
+        {
+            if (original==null) return;
+            if (found!=null) return;
+            if (original == target)
+            {
+                found = cloned;
+                return;
+            }
+            GetTargetCopy(original.left, cloned.left, target, ref found);
+            GetTargetCopy(original.right, cloned.right, target, ref found);
+        }
+
         /// 1380. Lucky Numbers in a Matrix
         ///A lucky number is an element of the matrix such that it is the minimum element in its row and maximum in its column.
         ///1 <= n, m <= 50 , 1 <= matrix[i][j] <= 10^5.
