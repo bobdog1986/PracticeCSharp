@@ -41,6 +41,7 @@ namespace LeetCodeAlgo
             }
         }
 
+
         /// 1814. Count Nice Pairs in an Array
         /// You are given an array nums that consists of non-negative integers.
         /// For example, rev(123) = 321, and rev(120) = 21.
@@ -190,6 +191,11 @@ namespace LeetCodeAlgo
             return list[0];
         }
 
+        ///1828. Queries on Number of Points Inside a Circle
+        public int[] CountPoints(int[][] points, int[][] queries)
+        {
+            return queries.Select(q => points.Count(p => (p[0] - q[0]) * (p[0] - q[0]) + (p[1] - q[1]) * (p[1] - q[1]) <= q[2] * q[2])) .ToArray();
+        }
         ///1838. Frequency of the Most Frequent Element, #Sliding Window
         ///In one operation, you can choose an index of nums and increment the element at that index by 1.
         ///Return the maximum possible frequency of an element after performing at most k operations.
