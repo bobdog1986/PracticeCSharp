@@ -463,5 +463,17 @@ namespace LeetCodeAlgo
             }
             return (int)res;
         }
+
+        ///2235. Add Two Integers
+        //public int Sum(int num1, int num2)
+        //{
+        //    return num1 + num2;
+        //}
+
+        ///2236. Root Equals Sum of Children
+        //public bool CheckTree(TreeNode root)
+        //{
+        //    return root.val == root.left.val + root.right.val;
+        //}
     }
 }

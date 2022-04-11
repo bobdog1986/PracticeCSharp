@@ -119,25 +119,30 @@ namespace LeetCodeAlgo
         ///Return a string of all teams sorted by the ranking system.
         public string RankTeams(string[] votes)
         {
-            int[,] matrix = new int[26, votes[0].Length];
+            int len = votes[0].Length;//votes count in each vote string, eg "ABC" is 3
+            int[][] matrix = new int[26][];//at most 26 teams from A to Z
+            for(int i=0;i<26;i++)
+                matrix[i] = new int[len];
+
             foreach(var vote in votes)
             {
                 for(int i=0;i<vote.Length;i++)
                 {
-                    matrix[vote[i] - 'A', i]++;
+                    matrix[vote[i] - 'A'][i]++;//calculate all votes for every team
                 }
             }
-            var teams= votes[0].ToList();
+            var teams= votes[0].ToList();//get all teams
             teams.Sort((x, y) =>
             {
+                //compare score from 0 index to len-1, higher votes win
                 int i = 0;
                 while (i < votes[0].Length)
                 {
-                    if(matrix[x-'A',i]> matrix[y-'A', i])
+                    if(matrix[x-'A'][i]> matrix[y-'A'][ i])
                     {
                         return -1;
                     }
-                    else if(matrix[x - 'A', i]< matrix[y - 'A', i])
+                    else if(matrix[x - 'A'][i]< matrix[y - 'A'][i])
                     {
                         return 1;
                     }
