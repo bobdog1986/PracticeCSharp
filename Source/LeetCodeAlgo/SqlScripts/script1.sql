@@ -1,6 +1,11 @@
 ﻿
 /*
 
+///175. Combine Two Tables
+
+select FirstName, LastName, City, State from Person left join Address on Person.PersonId = Address.PersonId;
+
+
 ///176. Second Highest Salary
 select (
 	select distinct Salary from Employee order by Salary Desc limit 1 offset 1
@@ -38,7 +43,11 @@ from tree
 
 update salary set sex = CHAR(ASCII('f') ^ ASCII('m') ^ ASCII(sex));
 
+///1148. Article Views I
 
+SELECT DISTINCT author_id AS id FROM Views
+where author_id = viewer_id
+ORDER BY id
 
 ///1484. Group Sold Products By The Date
 
@@ -55,6 +64,13 @@ GROUP BY sell_date;
 SELECT * FROM PATIENTS WHERE
 CONDITIONS LIKE '% DIAB1%' OR
 CONDITIONS LIKE 'DIAB1%';
+
+///1581. Customer Who Visited but Did Not Make Any Transactions
+
+select customer_id, count(visit_id) as count_no_trans
+from visits
+where visit_id not in (select visit_id from transactions)
+group by customer_id
 
 ///1667. Fix Names in a Table
 
