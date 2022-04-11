@@ -44,7 +44,34 @@ namespace LeetCodeAlgo
             return FindTarget(root.left, k, dict) || FindTarget(root.right, k, dict);
         }
 
-        ///657. Robot Return to Origin
+        ///654. Maximum Binary Tree, #BTree
+        public TreeNode ConstructMaximumBinaryTree(int[] nums)
+        {
+            return ConstructMaximumBinaryTree_Recursion(nums, 0, nums.Length - 1);
+        }
+        private TreeNode ConstructMaximumBinaryTree_Recursion(int[] nums, int start, int end)
+        {
+            if (start > end) return null;
+            if (start == end) return new TreeNode(nums[start]);
+
+            int max = -1;
+            int index = -1;
+            for(int i=start; i<=end; i++)
+            {
+                if(nums[i] > max)
+                {
+                    max= nums[i];
+                    index= i;
+                }
+            }
+
+            var node=new TreeNode(nums[index]);
+            node.left = ConstructMaximumBinaryTree_Recursion(nums, start, index - 1);
+            node.right = ConstructMaximumBinaryTree_Recursion(nums,  index + 1,end);
+            return node;
+        }
+
+        /// 657. Robot Return to Origin
         ///Return true if the robot returns to the origin after it finishes all of its moves, or false otherwise.
         public bool JudgeCircle(string moves)
         {
