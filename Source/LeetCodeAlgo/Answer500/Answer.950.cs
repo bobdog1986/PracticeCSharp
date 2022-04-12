@@ -201,7 +201,64 @@ namespace LeetCodeAlgo
         {
             return nums.Select(x => x * x).OrderBy(x => x).ToArray();
         }
-        ///986. Interval List Intersections
+        ///980. Unique Paths III, #DFS
+        ///1 representing the starting square.There is exactly one starting square.
+        ///2 representing the ending square. There is exactly one ending square.
+        ///0 representing empty squares we can walk over.
+        ///-1 representing obstacles that we cannot walk over.
+        ///Return the number of 4-directional walks from the starting square to the ending square,
+        ///that walk over every non-obstacle square exactly once.
+        public int UniquePathsIII(int[][] grid)
+        {
+            int total = 0;
+            int res = 0;
+            int startRow=0 ,startCol=0;
+            for(int i=0; i<grid.Length; i++)
+            {
+                for(int j=0; j<grid[i].Length; j++)
+                {
+                    if(grid[i][j] == 1)
+                    {
+                        startRow = i;
+                        startCol = j;
+                    }
+                    else if (grid[i][j] == 0)
+                    {
+                        total++;
+                    }
+                }
+            }
+            int[][] dxy = new int[4][] { new int[] { 0, 1 }, new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, -1 } };
+            UniquePathsIII_DFS(grid, startRow, startCol, total, dxy, ref res);
+            return res;
+        }
+
+        private void UniquePathsIII_DFS(int[][] grid,int row, int col, int count,int[][] dxy, ref int res)
+        {
+            if (row < 0 || row >= grid.Length || col < 0 || col >= grid[0].Length) return;
+            if (grid[row][col] == -1) return;
+            if (grid[row][col] == 2)
+            {
+                if (count == 0) res++;
+                return;
+            }
+            else
+            {
+                var temp = grid[row][col];
+                grid[row][col] = -1;
+                int nextCount = temp == 0 ? count - 1 : count;
+                foreach(var d in dxy)
+                {
+                    var r = row + d[0];
+                    var c = col + d[1];
+                    if (r < 0 || r >= grid.Length || c < 0 || c >= grid[0].Length) continue;
+                    if (grid[r][c] == -1) continue;
+                    UniquePathsIII_DFS(grid, r, c, nextCount, dxy, ref res);
+                }
+                grid[row][col] = temp;
+            }
+        }
+        /// 986. Interval List Intersections
         ///The intersection of two closed intervals is a set of real numbers that are either empty or represented as a closed interval.
         ///For example, the intersection of [1, 3] and [2, 4] is [2, 3].
         public int[][] IntervalIntersection(int[][] firstList, int[][] secondList)
