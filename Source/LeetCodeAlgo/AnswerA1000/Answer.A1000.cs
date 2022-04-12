@@ -140,7 +140,66 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///1029. Two City Scheduling
+        ///1028. Recover a Tree From Preorder Traversal
+        public TreeNode RecoverFromPreorder(string traversal)
+        {
+            return RecoverFromPreorder(traversal, 1);
+        }
+
+        public TreeNode RecoverFromPreorder(string str, int count)
+        {
+
+            int sum = 0;
+            int leftStart=-1;
+            int rightStart=-1;
+            for(int i = 0; i <str.Length; i++)
+            {
+                if (str[i] != '-')
+                {
+                    if (sum == count)
+                    {
+                        if (leftStart == -1)
+                        {
+                            leftStart = i;
+                        }
+                        else if(rightStart == -1)
+                        {
+                            rightStart = i;
+                            break;
+                        }
+                    }
+                    sum = 0;
+                }
+                else
+                {
+                    sum++;
+                }
+            }
+
+            if(leftStart==-1 && rightStart == -1)
+            {
+                return new TreeNode(int.Parse(str));
+            }
+            else if (rightStart == -1)
+            {
+                var val = int.Parse(str.Substring(0, leftStart - count));
+                var leftNode = RecoverFromPreorder(str.Substring(leftStart), count + 1);
+                var res=new TreeNode(val);
+                res.left = leftNode;
+                return res;
+            }
+            else
+            {
+                var val = int.Parse(str.Substring(0, leftStart - count));
+                var leftNode = RecoverFromPreorder(str.Substring(leftStart, rightStart - count - leftStart), count + 1);
+                var rightNode = RecoverFromPreorder(str.Substring(rightStart), count + 1);
+                var res = new TreeNode(val);
+                res.left = leftNode;
+                res.right = rightNode;
+                return res;
+            }
+        }
+        /// 1029. Two City Scheduling
         ///A company is planning to interview 2n people. Given the array costs where costs[i] = [aCosti, bCosti],
         ///the cost of flying the ith person to city a is aCosti, and the cost of flying the ith person to city b is bCosti.
         ///Return the minimum cost to fly every person to a city such that exactly n people arrive in each city.

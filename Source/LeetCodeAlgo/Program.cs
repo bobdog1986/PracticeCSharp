@@ -63,7 +63,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.UniquePathsIII(mat3);
+            var result = anwser.RecoverFromPreorder("1-2--3--4-5--6--7");
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
