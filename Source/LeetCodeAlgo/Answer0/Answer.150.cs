@@ -89,42 +89,20 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        /// 153. Find Minimum in Rotated Sorted Array
-        /// use binary search
+        /// 153. Find Minimum in Rotated Sorted Array, #Binary Search
         public int FindMin(int[] nums)
         {
-            if (nums.Length == 1)
-                return nums[0];
-
-            int start = 0;
-            int end = nums.Length - 1;
-
-            if (nums[start] < nums[end])
-                return nums[start];
-
-            int mid = (end - start) / 2 + start;
-
-            while (start <= end)
+            int left = 0;
+            int right = nums.Length - 1;
+            while (left < right)
             {
-                if (start == end)
-                    return nums[start];
-
-                if (start + 1 == end)
-                    return Math.Min(nums[start], nums[end]);
-
-                if (nums[end] < nums[mid])
-                {
-                    start = mid;
-                    mid = (end - start) / 2 + start;
-                }
-                else if (nums[mid] < nums[start])
-                {
-                    end = mid;
-                    mid = (end - start) / 2 + start;
-                }
+                int mid = left + (right - left) / 2;
+                if (nums[mid] < nums[right])
+                    right = mid;
+                else
+                    left = mid + 1;
             }
-
-            return nums[start];
+            return nums[left];
         }
 
         ///155. Min Stack , see MinStack

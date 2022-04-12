@@ -39,6 +39,23 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+        ///1409. Queries on a Permutation With Key
+        public int[] ProcessQueries(int[] queries, int m)
+        {
+            int[] arr= new int[m];
+            for (int i = 0; i < m; i++)
+                arr[i] = i + 1;
+            var list = arr.ToList();
+            int[] res= new int[queries.Length];
+            for(int i=0;i<queries.Length;i++)
+            {
+                int index = list.IndexOf(queries[i]);
+                res[i] = index;
+                list.RemoveAt(index);
+                list.Insert(0, queries[i]);
+            }
+            return res;
+        }
         /// 1417. Reformat The String
         ///You are given an alphanumeric string s. Only lowercase English letters and digits.
         ///1 letter follow 1 digit , or reverse
