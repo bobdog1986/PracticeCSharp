@@ -328,6 +328,29 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///1329. Sort the Matrix Diagonally
+        public int[][] DiagonalSort(int[][] mat)
+        {
+            int rowLen = mat.Length;
+            int colLen=mat[0].Length;
+            for(int i=0; i < colLen + rowLen - 1; i++)
+            {
+                int r = i < colLen ? 0 : i - (colLen -1);
+                int c = i < colLen ? colLen-1-i : 0;
+                List<int> list = new List<int>();
+                while(r<rowLen && c < colLen)
+                    list.Add(mat[r++][c++]);
+
+                list.Sort();
+
+                r = i < colLen ? 0 : i - (colLen - 1);
+                c = i < colLen ? colLen - 1 - i : 0;
+                int j = 0;
+                while (r < rowLen && c < colLen)
+                    mat[r++][c++] = list[j++];
+            }
+            return mat;
+        }
         /// 1331. Rank Transform of an Array
         ///Given an array of integers arr, replace each element with its rank.
         public int[] ArrayRankTransform(int[] arr)
