@@ -60,7 +60,54 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
-        ///1260. Shift 2D Grid
+        ///1255. Maximum Score Words Formed by Letters, #Backtracking, #DFS
+        ///Return the maximum score of any valid set of words formed by given letters(words[i] use only 1 time).
+        ///each letter can only be used once.Score of letters 'a', 'b',... 'z' is given by score[0], score[25] respectively.
+        public int MaxScoreWords(string[] words, char[] letters, int[] score)
+        {
+            int res = 0;
+            int[] arr = new int[26];
+            foreach (var l in letters)
+                arr[l - 'a']++;
+            MaxScoreWords_DFS(words, arr,0, 0, score, ref res);
+            return res;
+        }
+
+        private void MaxScoreWords_DFS(string[] words, int[] arr,int index, int currScore , int[] score, ref int res)
+        {
+            res = Math.Max(res, currScore);
+            for(int i = index; i < words.Length; i++)
+            {
+                int[] map = new int[26];
+                bool valid = true;
+                foreach(var c in words[i])
+                {
+                    map[c - 'a']++;
+                    if (map[c - 'a'] > arr[c-'a'])
+                    {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (valid)
+                {
+                    int sum = 0;
+                    foreach(var c in words[i])
+                    {
+                        sum += score[c - 'a'];
+                        arr[c - 'a']--;
+                    }
+                    MaxScoreWords_DFS(words, arr, i+1, currScore +sum, score, ref res);
+                    foreach (var c in words[i])
+                    {
+                        arr[c - 'a']++;
+                    }
+                }
+            }
+
+        }
+
+        /// 1260. Shift 2D Grid
         ///Return the 2D grid after applying shift operation k times.
         public IList<IList<int>> ShiftGrid(int[][] grid, int k)
         {
