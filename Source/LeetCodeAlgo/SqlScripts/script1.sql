@@ -23,6 +23,12 @@ delete from Person where id not in(
 	) t
 )
 
+///197. Rising Temperature
+
+SELECT wt1.Id
+FROM Weather as wt1, Weather as wt2
+WHERE wt1.temperature> wt2.temperature AND TO_DAYS(wt1.recordDate)-TO_DAYS(wt2.recordDate)=1;
+
 ///584. Find Customer Referee
 
 select name from Customer where isnull(referee_id) || referee_id !=2
@@ -30,6 +36,15 @@ select name from Customer where isnull(referee_id) || referee_id !=2
 ///595. Big Countries
 
 select name,population, area from World where area>=3000000 or population>=25000000
+
+///607. Sales Person
+
+SELECT name FROM salesperson
+where sales_id not in
+(SELECT sales_id FROM orders
+LEFT JOIN company
+ON orders.com_id=company.com_id
+WHERE company.name='RED')
 
 ///608. Tree Node
 
