@@ -58,6 +58,13 @@ from tree
 
 update salary set sex = CHAR(ASCII('f') ^ ASCII('m') ^ ASCII(sex));
 
+///1141. User Activity for the Past 30 Days I
+
+select activity_date as day, count(distinct user_id) as active_users
+from Activity
+where datediff('2019-07-27', activity_date) <30
+group by activity_date
+
 ///1148. Article Views I
 
 SELECT DISTINCT author_id AS id FROM Views
@@ -92,11 +99,19 @@ group by customer_id
 select user_id,concat(upper(substr(name,1,1)),lower(substr(name,2))) as name
 from users order by user_id
 
+///1693. Daily Leads and Partners
 
+select date_id, make_name, count(distinct lead_id) as unique_leads ,count(distinct partner_id) as unique_partners
+from DailySales
+group by date_id,make_name;
+
+///1729. Find Followers Count
+
+select user_id, count(distinct follower_id) as followers_count from Followers group by user_id;
 
 ///1757. Recyclable and Low Fat Products
 
-select product_id   from Products where low_fats='Y' and recyclable ='Y'
+select product_id from Products where low_fats='Y' and recyclable ='Y'
 
 ///1795. Rearrange Products Table
 
