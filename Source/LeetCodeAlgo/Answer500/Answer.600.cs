@@ -68,27 +68,24 @@ namespace LeetCodeAlgo
             }
         }
 
-        /// 611
+        ///611. Valid Triangle Number, #Two Pointers
+        ///return the number of triplets chosen from the array that can make triangles.
         public int TriangleNumber(int[] nums)
         {
             Array.Sort(nums);
-            int count = 0;
-            int i, j, k;
-            for (i = 0; i < nums.Length - 2; i++)
+            int count = 0, n = nums.Length;
+            for (int i = n - 1; i >= 2; i--)
             {
-                for (j = i + 1; j < nums.Length - 1; j++)
+                int l = 0, r = i - 1;
+                while (l < r)
                 {
-                    for (k = j + 1; k < nums.Length; k++)
+                    if (nums[l] + nums[r] > nums[i])
                     {
-                        if (IsTriangle(nums[i], nums[j], nums[k]))
-                        {
-                            count++;
-                        }
-                        else
-                        {
-                            break;
-                        }
+                        //all l in [l,r) will valid
+                        count += r - l;
+                        r--;
                     }
+                    else l++;
                 }
             }
             return count;

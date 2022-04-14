@@ -87,12 +87,31 @@ namespace LeetCodeAlgo
             return x == 0 && y == 0;
         }
 
-        /// 662. Maximum Width of Binary Tree
-        ///The maximum width of a tree is the maximum width among all levels.
-        ///The width of one level is defined as the length between the end-nodes(the leftmost and rightmost non-null nodes),
-        ///where the null nodes between the end-nodes are also counted into the length calculation.
-        ///The number of nodes in the tree is in the range [1, 3000].
-        public int WidthOfBinaryTree(TreeNode root)
+
+        ///658. Find K Closest Elements, #Binary Search
+        ///Given a sorted integer array arr, two integers k and x,
+        ///return the k closest integers to x in the array. The result should also be sorted in ascending order.
+        ///An integer a is closer to x than an integer b if:|a - x| < |b - x|, or |a - x| == |b - x| and a<b
+        public IList<int> FindClosestElements(int[] arr, int k, int x)
+        {
+            int left = 0, right = arr.Length - k;
+            while (left < right)
+            {
+                int mid = (left + right) / 2;
+                if (x - arr[mid] > arr[mid + k] - x)
+                    left = mid + 1;
+                else
+                    right = mid;
+            }
+            return arr.Skip(left).Take(k).ToList();
+        }
+
+    /// 662. Maximum Width of Binary Tree
+    ///The maximum width of a tree is the maximum width among all levels.
+    ///The width of one level is defined as the length between the end-nodes(the leftmost and rightmost non-null nodes),
+    ///where the null nodes between the end-nodes are also counted into the length calculation.
+    ///The number of nodes in the tree is in the range [1, 3000].
+    public int WidthOfBinaryTree(TreeNode root)
         {
             int ans = 1;
             Dictionary<int, TreeNode> dict = new Dictionary<int, TreeNode>

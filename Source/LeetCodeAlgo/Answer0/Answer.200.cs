@@ -235,28 +235,42 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
-        ///208. Implement Trie (Prefix Tree), see Trie, 
+        ///208. Implement Trie (Prefix Tree), see Trie
 
-        /// 209. Minimum Size Subarray Sum ,#Prefix Sum
+        /// 209. Minimum Size Subarray Sum ,#Sliding Window
         ///return the minimal length of a contiguous subarray of which the sum >= target.
         ///If there is no such subarray, return 0 instead.
-        public int MinSubArrayLen(int target, int[] nums)
+        ///1 <= target <= 10^9, 1 <= nums.length <= 10^5, 1 <= nums[i] <= 10^5
+
+        public int MinSubArrayLen_Lee215(int target, int[] nums)
         {
-            int min = nums.Length + 1;
-            int sum = 0;
-            int left = 0;
-            for (int i = 0; i < nums.Length; i++)
+            int i = 0, n = nums.Length, res = n + 1;
+            for (int j = 0; j < n; ++j)
             {
-                sum += nums[i];
-                while (sum >= target)
+                target -= nums[j];
+                while (target <= 0)
                 {
-                    int len = i - left + 1;
-                    min = Math.Min(min, len);
-                    sum -= nums[left];
-                    left++;
+                    res = Math.Min(res, j - i + 1);
+                    target += nums[i++];
                 }
             }
-            return min == nums.Length + 1 ? 0 : min;
+            return res % (n + 1);
+        }
+
+        public int MinSubArrayLen(int target, int[] nums)
+        {
+            int i = 0, j = 0, sum = 0, min = int.MaxValue;
+
+            while (j < nums.Length)
+            {
+                sum += nums[j++];
+                while (sum >= target)
+                {
+                    min = Math.Min(min, j - i);
+                    sum -= nums[i++];
+                }
+            }
+            return min == int.MaxValue ? 0 : min;
         }
 
         ///210. Course Schedule II, #Graph
