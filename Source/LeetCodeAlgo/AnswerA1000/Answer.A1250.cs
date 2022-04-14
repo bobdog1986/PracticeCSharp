@@ -8,7 +8,6 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-
         ///1254. Number of Closed Islands, #DFS, #Graph
         ///Given a 2D grid consists of 0s (land) and 1s (water).
         ///An island is a maximal 4-directionally connected group of 0s and
@@ -60,6 +59,7 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
         ///1255. Maximum Score Words Formed by Letters, #Backtracking, #DFS
         ///Return the maximum score of any valid set of words formed by given letters(words[i] use only 1 time).
         ///each letter can only be used once.Score of letters 'a', 'b',... 'z' is given by score[0], score[25] respectively.
@@ -69,21 +69,21 @@ namespace LeetCodeAlgo
             int[] arr = new int[26];
             foreach (var l in letters)
                 arr[l - 'a']++;
-            MaxScoreWords_DFS(words, arr,0, 0, score, ref res);
+            MaxScoreWords_DFS(words, arr, 0, 0, score, ref res);
             return res;
         }
 
-        private void MaxScoreWords_DFS(string[] words, int[] arr,int index, int currScore , int[] score, ref int res)
+        private void MaxScoreWords_DFS(string[] words, int[] arr, int index, int currScore, int[] score, ref int res)
         {
             res = Math.Max(res, currScore);
-            for(int i = index; i < words.Length; i++)
+            for (int i = index; i < words.Length; i++)
             {
                 int[] map = new int[26];
                 bool valid = true;
-                foreach(var c in words[i])
+                foreach (var c in words[i])
                 {
                     map[c - 'a']++;
-                    if (map[c - 'a'] > arr[c-'a'])
+                    if (map[c - 'a'] > arr[c - 'a'])
                     {
                         valid = false;
                         break;
@@ -92,19 +92,18 @@ namespace LeetCodeAlgo
                 if (valid)
                 {
                     int sum = 0;
-                    foreach(var c in words[i])
+                    foreach (var c in words[i])
                     {
                         sum += score[c - 'a'];
                         arr[c - 'a']--;
                     }
-                    MaxScoreWords_DFS(words, arr, i+1, currScore +sum, score, ref res);
+                    MaxScoreWords_DFS(words, arr, i + 1, currScore + sum, score, ref res);
                     foreach (var c in words[i])
                     {
                         arr[c - 'a']++;
                     }
                 }
             }
-
         }
 
         /// 1260. Shift 2D Grid
@@ -113,27 +112,28 @@ namespace LeetCodeAlgo
         {
             int rowLen = grid.Length;
             int colLen = grid[0].Length;
-            var res =new List<IList<int>>();
-            foreach(var r in grid)
+            var res = new List<IList<int>>();
+            foreach (var r in grid)
                 res.Add(r.ToList());
             k %= rowLen * colLen;
-            while(k-- > 0)
+            while (k-- > 0)
             {
-                int temp = res[rowLen-1][colLen-1];
-                for(int i = 0; i < rowLen; i++)
+                int temp = res[rowLen - 1][colLen - 1];
+                for (int i = 0; i < rowLen; i++)
                 {
-                    res[i].Insert(0,temp);
+                    res[i].Insert(0, temp);
                     temp = res[i].Last();
-                    res[i].RemoveAt(res[i].Count-1);
+                    res[i].RemoveAt(res[i].Count - 1);
                 }
             }
             return res;
         }
+
         /// 1281. Subtract the Product and Sum of Digits of an Integer
         ///return the difference between the product of its digits and the sum of its digits.
         public int SubtractProductAndSum(int n)
         {
-            List<int> list=new List<int>();
+            List<int> list = new List<int>();
             while (n > 0)
             {
                 list.Add(n % 10);
@@ -141,26 +141,88 @@ namespace LeetCodeAlgo
             }
             return list.Aggregate((x, y) => x * y) - list.Aggregate((x, y) => x + y);
         }
+
         ///1282. Group the People Given the Group Size They Belong To
         public IList<IList<int>> GroupThePeople(int[] groupSizes)
         {
             Dictionary<int, List<int>> dict = new Dictionary<int, List<int>>();
-            for(int i=0; i<groupSizes.Length; i++)
+            for (int i = 0; i < groupSizes.Length; i++)
             {
-                if(!dict.ContainsKey(groupSizes[i]))dict.Add(groupSizes[i], new List<int>());
+                if (!dict.ContainsKey(groupSizes[i])) dict.Add(groupSizes[i], new List<int>());
                 dict[groupSizes[i]].Add(i);
             }
-            var keys = dict.Keys.OrderBy(x=>x).ToList();
-            var res= new List<IList<int>>();
-            foreach(var key in keys)
+            var keys = dict.Keys.OrderBy(x => x).ToList();
+            var res = new List<IList<int>>();
+            foreach (var key in keys)
             {
-                for(int i = 0; i < dict[key].Count; i += key)
+                for (int i = 0; i < dict[key].Count; i += key)
                 {
                     res.Add(dict[key].GetRange(i, key));
                 }
             }
             return res;
         }
+
+        ///1284. Minimum Number of Flips to Convert Binary Matrix to Zero Matrix, #DFS
+        ///Given a m x n binary matrix mat. In one step, you can choose one cell and
+        ///flip it and all the four neighbors of it if they exist (Flip is changing 1 to 0 and 0 to 1).
+        ///Return the minimum number of steps required to convert mat to a zero matrix or -1 if you cannot.
+        public int MinFlips(int[][] mat)
+        {
+            int res = -1;
+            int[][] dxy = new int[4][] { new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 } };
+            int count = mat.Sum(x => x.Sum());
+            bool[] visit = new bool[mat.Length * mat[0].Length];
+            MinFlips_DFS(mat, visit, count, 0, dxy, ref res);
+            return res;
+        }
+
+        private void MinFlips_DFS(int[][] mat, bool[] visit, int count, int step, int[][] dxy, ref int res)
+        {
+            if (count == 0)
+            {
+                if (res == -1) res = step;
+                else res = Math.Min(res, step);
+                return;
+            }
+
+            for (int i = 0; i < mat.Length * mat[0].Length; i++)
+            {
+                if (visit[i]) continue;
+                visit[i] = true;
+
+                int row = i / mat[0].Length;
+                int col = i % mat[0].Length;
+                count += mat[row][col] == 0 ? 1 : -1;
+                mat[row][col] ^= 1;
+                foreach (var d in dxy)
+                {
+                    int r = row + d[0];
+                    int c = col + d[1];
+                    if (r < 0 || r >= mat.Length || c < 0 || c >= mat[0].Length) continue;
+                    count += mat[r][c] == 0 ? 1 : -1;
+                    mat[r][c] ^= 1;
+                }
+
+                MinFlips_DFS(mat, visit, count, step + 1, dxy, ref res);
+
+                count += mat[row][col] == 0 ? 1 : -1;
+                mat[row][col] ^= 1;
+
+                foreach (var d in dxy)
+                {
+                    int r = row + d[0];
+                    int c = col + d[1];
+                    if (r < 0 || r >= mat.Length || c < 0 || c >= mat[0].Length) continue;
+                    count += mat[r][c] == 0 ? 1 : -1;
+                    mat[r][c] ^= 1;
+                }
+
+                visit[i] = false;
+
+            }
+        }
+
         /// 1288. Remove Covered Intervals
         ///Given an array intervals where intervals[i] = [li, ri] represent the interval [li, ri),
         ///remove all intervals that are covered by another interval in the list.
@@ -180,7 +242,7 @@ namespace LeetCodeAlgo
                 }
                 else//v[0] > left
                 {
-                    if(v[1] > right)
+                    if (v[1] > right)
                     {
                         ans++;
                         left = v[0];
@@ -200,6 +262,7 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
         /// 1290. Convert Binary Number in a Linked List to Integer
         ///The value of each node in the linked list is either 0 or 1. The linked list holds the binary representation of a number.
         ///Return the decimal value of the number in the linked list.
@@ -209,13 +272,12 @@ namespace LeetCodeAlgo
             int sum = 0;
             while (head != null)
             {
-                sum <<=1;
+                sum <<= 1;
                 sum += head.val;
                 head = head.next;
             }
             return sum;
         }
-
 
         /// 1291. Sequential Digits
         ///An integer has sequential digits if and only if each digit in the number is one more than the previous digit.
@@ -277,7 +339,7 @@ namespace LeetCodeAlgo
         public int FindNumbers(int[] nums)
         {
             int res = 0;
-            foreach(var n in nums)
+            foreach (var n in nums)
                 if (FindNumbers_isEvenDigit(n)) res++;
             return res;
         }
@@ -298,12 +360,13 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+
         ///1299. Replace Elements with Greatest Element on Right Side
         ///replace every element with the greatest element among the elements to its right, and replace the last element with -1.
         public int[] ReplaceElements(int[] arr)
         {
             int max = -1;
-            for(int i = arr.Length - 1; i >= 0; i--)
+            for (int i = arr.Length - 1; i >= 0; i--)
             {
                 var temp = arr[i];
                 arr[i] = max;

@@ -25,10 +25,11 @@ namespace LeetCodeAlgo
             var leftStr = FindDuplicateSubtrees_Init(root.left, dict);
             var rightStr = FindDuplicateSubtrees_Init(root.right, dict);
             var str = $"{root.val}_{leftStr}_{rightStr}";
-            if(!dict.ContainsKey(str))dict.Add(str, new List<TreeNode>());
+            if (!dict.ContainsKey(str)) dict.Add(str, new List<TreeNode>());
             dict[str].Add(root);
             return str;
         }
+
         /// 653. Two Sum IV - Input is a BST
         ///return true if there exist two elements in the BST such that sum = target.
         public bool FindTarget(TreeNode root, int k)
@@ -49,6 +50,7 @@ namespace LeetCodeAlgo
         {
             return ConstructMaximumBinaryTree_Recursion(nums, 0, nums.Length - 1);
         }
+
         private TreeNode ConstructMaximumBinaryTree_Recursion(int[] nums, int start, int end)
         {
             if (start > end) return null;
@@ -56,18 +58,18 @@ namespace LeetCodeAlgo
 
             int max = -1;
             int index = -1;
-            for(int i=start; i<=end; i++)
+            for (int i = start; i <= end; i++)
             {
-                if(nums[i] > max)
+                if (nums[i] > max)
                 {
-                    max= nums[i];
-                    index= i;
+                    max = nums[i];
+                    index = i;
                 }
             }
 
-            var node=new TreeNode(nums[index]);
+            var node = new TreeNode(nums[index]);
             node.left = ConstructMaximumBinaryTree_Recursion(nums, start, index - 1);
-            node.right = ConstructMaximumBinaryTree_Recursion(nums,  index + 1,end);
+            node.right = ConstructMaximumBinaryTree_Recursion(nums, index + 1, end);
             return node;
         }
 
@@ -87,7 +89,6 @@ namespace LeetCodeAlgo
             return x == 0 && y == 0;
         }
 
-
         ///658. Find K Closest Elements, #Binary Search
         ///Given a sorted integer array arr, two integers k and x,
         ///return the k closest integers to x in the array. The result should also be sorted in ascending order.
@@ -106,12 +107,12 @@ namespace LeetCodeAlgo
             return arr.Skip(left).Take(k).ToList();
         }
 
-    /// 662. Maximum Width of Binary Tree
-    ///The maximum width of a tree is the maximum width among all levels.
-    ///The width of one level is defined as the length between the end-nodes(the leftmost and rightmost non-null nodes),
-    ///where the null nodes between the end-nodes are also counted into the length calculation.
-    ///The number of nodes in the tree is in the range [1, 3000].
-    public int WidthOfBinaryTree(TreeNode root)
+        /// 662. Maximum Width of Binary Tree
+        ///The maximum width of a tree is the maximum width among all levels.
+        ///The width of one level is defined as the length between the end-nodes(the leftmost and rightmost non-null nodes),
+        ///where the null nodes between the end-nodes are also counted into the length calculation.
+        ///The number of nodes in the tree is in the range [1, 3000].
+        public int WidthOfBinaryTree(TreeNode root)
         {
             int ans = 1;
             Dictionary<int, TreeNode> dict = new Dictionary<int, TreeNode>
@@ -303,11 +304,11 @@ namespace LeetCodeAlgo
             return ValidPalindrome(s, 0, s.Length - 1, true);
         }
 
-        public bool ValidPalindrome(string s, int left, int right, bool canSkip=true)
+        public bool ValidPalindrome(string s, int left, int right, bool canSkip = true)
         {
             while (left < right)
             {
-                if(s[left] == s[right])
+                if (s[left] == s[right])
                 {
                     left++;
                     right--;
@@ -323,13 +324,14 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+
         ///682. Baseball Game
         ///"+", add sum of last two; "C"-remove the last, "D"-double the last then add
         public int CalPoints(string[] ops)
         {
             int res = 0;
             List<int> list = new List<int>();
-            foreach(var op in ops)
+            foreach (var op in ops)
             {
                 int val = 0;
                 bool isData = int.TryParse(op, out val);
@@ -350,7 +352,7 @@ namespace LeetCodeAlgo
                         res += list[list.Count - 1] * 2;
                         list.Add(list[list.Count - 1] * 2);
                     }
-                    else if(op=="+")
+                    else if (op == "+")
                     {
                         res += list[list.Count - 1] + list[list.Count - 2];
                         list.Add(list[list.Count - 1] + list[list.Count - 2]);
@@ -360,6 +362,7 @@ namespace LeetCodeAlgo
 
             return res;
         }
+
         /// 692. Top K Frequent Words, #PriorityQueue, #Heap
         ///Given an array of strings words and an integer k, return the k most frequent strings.
         ///Return the answer sorted by the frequency from highest to lowest.
@@ -375,7 +378,7 @@ namespace LeetCodeAlgo
             }
 
             PriorityQueue<string, string> queue = new PriorityQueue<string, string>(
-                Comparer<string>.Create ((s1, s2) => dict[s1] == dict[s2] ? s1.CompareTo(s2): dict[s2] - dict[s1] ));
+                Comparer<string>.Create((s1, s2) => dict[s1] == dict[s2] ? s1.CompareTo(s2) : dict[s2] - dict[s1]));
             foreach (var key in dict.Keys)
                 queue.Enqueue(key, key);
 
