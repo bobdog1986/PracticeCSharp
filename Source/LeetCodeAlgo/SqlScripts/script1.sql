@@ -29,9 +29,22 @@ SELECT wt1.Id
 FROM Weather as wt1, Weather as wt2
 WHERE wt1.temperature> wt2.temperature AND TO_DAYS(wt1.recordDate)-TO_DAYS(wt2.recordDate)=1;
 
+///511. Game Play Analysis I
+
+select player_id, min(event_date) as first_login
+from activity
+group by player_id
+
+
 ///584. Find Customer Referee
 
 select name from Customer where isnull(referee_id) || referee_id !=2
+
+///586. Customer Placing the Largest Number of Orders
+
+select customer_number from orders
+group by customer_number
+order by count(*) desc limit 1;
 
 ///595. Big Countries
 
@@ -109,6 +122,12 @@ group by date_id,make_name;
 
 select user_id, count(distinct follower_id) as followers_count from Followers group by user_id;
 
+///1741. Find Total Time Spent by Each Employee
+
+select event_day as day, emp_id , sum(out_time -in_time ) as total_time
+from Employees
+group by day, emp_id
+
 ///1757. Recyclable and Low Fat Products
 
 select product_id from Products where low_fats='Y' and recyclable ='Y'
@@ -130,7 +149,15 @@ SELECT employee_id ,
 					THEN salary
 				ELSE 0
 			END
-			as bonus FROM Employees ;
+			as bonus
+FROM Employees ;
+
+///1890. The Latest Login in 2020
+
+select user_id , max(time_stamp) as last_stamp
+from Logins
+where YEAR(time_stamp)=2020
+group by user_id
 
 ///1965. Employees With Missing Information
 
