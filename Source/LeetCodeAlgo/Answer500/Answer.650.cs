@@ -146,7 +146,27 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///670. Maximum Swap
+        ///669. Trim a Binary Search Tree, #BTree, #BST
+        ///Given the root of a binary search tree, trim the tree so that all elements in [low, high].
+        public TreeNode TrimBST(TreeNode root, int low, int high)
+        {
+            if (root == null) return null;
+            if (root.val > high)
+            {
+                return TrimBST(root.left, low, high);
+            }
+            else if(root.val < low)
+            {
+                return TrimBST(root.right, low, high);
+            }
+            else
+            {
+                root.left = TrimBST(root.left, low, high);
+                root.right = TrimBST(root.right, low, high);
+                return root;
+            }
+        }
+        /// 670. Maximum Swap
         ///You can swap two digits at most once to get the maximum valued number. Return the max
         public int MaximumSwap(int num)
         {
