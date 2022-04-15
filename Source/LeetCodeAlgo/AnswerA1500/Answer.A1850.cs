@@ -94,5 +94,35 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+
+        ///1894. Find the Student that Will Replace the Chalk, #Binary Search
+        ///Every time k-=chalk[i], return not enough for index i;
+        public int ChalkReplacer(int[] chalk, int k)
+        {
+            long[] prefix = new long[chalk.Length];
+            long sum = 0;
+            for (int i = 0; i < chalk.Length; i++)
+            {
+                sum += chalk[i];
+                prefix[i] = sum;
+            }
+            k = (int)(k % sum);
+            int left = 0;
+            int right = chalk.Length - 1;
+            while (left <= right)
+            {
+                int mid = left + (right - left) / 2;
+                if (k == prefix[mid]) return mid + 1;
+                else if (k < prefix[mid])
+                {
+                    right = mid - 1;
+                }
+                else
+                {
+                    left = mid + 1;
+                }
+            }
+            return left;
+        }
     }
 }
