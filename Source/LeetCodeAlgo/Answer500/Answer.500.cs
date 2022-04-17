@@ -338,7 +338,48 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///541. Reverse String II
+        ///538. Convert BST to Greater Tree, #BTree, #BST
+        ///
+        public TreeNode ConvertBST1(TreeNode root)
+        {
+            TreeNode node = root;
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+
+            int sum = 0;
+            while (node != null || stack.Count > 0)
+            {
+                if (node != null)
+                {
+                    stack.Push(node);
+                    node = node.right;
+                }
+                else
+                {
+                    node = stack.Pop();
+                    sum += node.val;
+                    node.val = sum;
+
+                    node = node.left;
+                }
+            }
+
+            return root;
+        }
+
+        public TreeNode ConvertBST(TreeNode root)
+        {
+            ConvertBST_dfs(root, 0);
+            return root;
+        }
+        public int ConvertBST_dfs(TreeNode root, int val)
+        {
+            if (root == null) return val;
+            int right = ConvertBST_dfs(root.right, val);
+            int left = ConvertBST_dfs(root.left, root.val + right);
+            root.val = root.val + right;
+            return left;
+        }
+        /// 541. Reverse String II
         ///Given a string s and an integer k, reverse the first k characters for every 2k characters
         public string ReverseStr(string s, int k)
         {
