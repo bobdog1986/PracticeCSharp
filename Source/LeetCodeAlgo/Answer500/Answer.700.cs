@@ -91,6 +91,8 @@ namespace LeetCodeAlgo
             return -1;
         }
 
+        ///705. Design HashSet, see MyHashSet
+
         ///706. Design HashMap, see MyHashMap
 
         ///707. Design Linked List, see MyLinkedList
