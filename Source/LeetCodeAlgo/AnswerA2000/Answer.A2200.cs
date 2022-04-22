@@ -475,5 +475,20 @@ namespace LeetCodeAlgo
         //{
         //    return root.val == root.left.val + root.right.val;
         //}
+
+
+        ///2240. Number of Ways to Buy Pens and Pencils
+        ///Return the number of distinct ways you can buy some number of pens and pencils.
+        public long WaysToBuyPensPencils(int total, int cost1, int cost2)
+        {
+            long res = 0;
+            //including 0 combines
+            for (int i = 0; i <= total / cost1; i++)
+            {
+                var curr = total - i * cost1;
+                res += curr / cost2 + 1;
+            }
+            return res;
+        }
     }
 }
