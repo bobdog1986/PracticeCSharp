@@ -94,7 +94,23 @@ namespace LeetCodeAlgo
             else return diff / 2 + 1;
         }
 
-        ///1528. Shuffle String
+        /// 1526. Minimum Number of Increments on Subarrays to Form a Target Array
+        /// In one operation you can choose any subarray from initial and increment each value by one.
+        ///Return the minimum number of operations to form a target array from initial.
+        public int MinNumberOperations(int[] target)
+        {
+            int res = 0;
+            int pre = 0;
+            foreach (var n in target)
+            {
+                if (n > pre)
+                    res += n - pre;
+                pre = n;
+            }
+            return res;
+        }
+
+        /// 1528. Shuffle String
         public string RestoreString(string s, int[] indices)
         {
             char[] arr = new char[indices.Length];
