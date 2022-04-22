@@ -13,9 +13,9 @@ namespace LeetCodeAlgo
         public int[] RearrangeBarcodes(int[] barcodes)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
-            foreach(var bar in barcodes)
+            foreach (var bar in barcodes)
             {
-                if(dict.ContainsKey(bar))dict[bar]++;
+                if (dict.ContainsKey(bar)) dict[bar]++;
                 else dict.Add(bar, 1);
             }
 
@@ -24,13 +24,13 @@ namespace LeetCodeAlgo
 
             foreach (var k in dict.Keys)
             {
-                queue.Enqueue(k,dict[k]);
+                queue.Enqueue(k, dict[k]);
             }
 
             // poll from queue - put into res array
             int[] res = new int[barcodes.Length];
             int i = 0;//start from index-0, traversal all even indexes
-            while (queue.Count>0)
+            while (queue.Count > 0)
             {
                 var key = queue.Dequeue();
                 while (dict[key]-- > 0)
@@ -43,6 +43,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 1071. Greatest Common Divisor of Strings
         ///Given two strings str1 and str2, return the largest string x such that x divides both str1 and str2.
         public string GcdOfStrings(string str1, string str2)
@@ -99,7 +100,43 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        ///1079. Letter Tile Possibilities, #Backtracking, #DFS
+        ///1074. Number of Submatrices That Sum to Target, #Prefix Sum
+        ///Given a matrix and a target, return the number of non-empty submatrices that sum to target.
+        public int NumSubmatrixSumTarget(int[][] matrix, int target)
+        {
+            int res = 0;
+            int m = matrix.Length;
+            int n = matrix[0].Length;
+            //each row is PrefixSum
+            for (int i = 0; i < m; i++)
+                for (int j = 1; j < n; j++)
+                    matrix[i][j] += matrix[i][j - 1];
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = i; j < n; j++)
+                {
+                    //loop all column pairs
+                    dict.Clear();
+                    dict.Add(0, 1);//init, add{0,1}
+                    int cur = 0;
+                    for (int k = 0; k < m; k++)
+                    {
+                        //sum of current row's cols [i,j]
+                        cur += matrix[k][j] - (i > 0 ? matrix[k][i - 1] : 0);
+                        if (dict.ContainsKey(cur - target))
+                        {
+                            res += dict[cur - target];
+                        }
+                        if(dict.ContainsKey(cur))dict[cur]++;
+                        else dict.Add(cur,1);
+                    }
+                }
+            }
+            return res;
+        }
+
+        /// 1079. Letter Tile Possibilities, #Backtracking, #DFS
         ///You have n  tiles, where each tile has one letter tiles[i] printed on it.
         ///Return the number of possible non-empty sequences can make using the letters printed on those tiles.
         public int NumTilePossibilities_DFS(string tiles)
@@ -108,8 +145,8 @@ namespace LeetCodeAlgo
             foreach (var c in tiles)
                 arr[c - 'A']++;
             return NumTilePossibilities_DFS(arr);
-
         }
+
         private int NumTilePossibilities_DFS(int[] arr)
         {
             int sum = 0;
@@ -126,45 +163,47 @@ namespace LeetCodeAlgo
 
         public int NumTilePossibilities_BackTracking(string tiles)
         {
-            HashSet<string> set=new HashSet<string>();
-            for (int i=1; i <= tiles.Length; i++)
+            HashSet<string> set = new HashSet<string>();
+            for (int i = 1; i <= tiles.Length; i++)
             {
-                NumTilePossibilities_BackTracking(i, "", tiles,new HashSet<int>(), set);
+                NumTilePossibilities_BackTracking(i, "", tiles, new HashSet<int>(), set);
             }
             return set.Count;
         }
 
         private void NumTilePossibilities_BackTracking(int count, string curr, string tiles, HashSet<int> visit, HashSet<string> set)
         {
-            if(count == 0)
+            if (count == 0)
             {
-                if(curr.Length>0)
+                if (curr.Length > 0)
                     set.Add(curr);
                 return;
             }
 
-            for(int i = 0; i < tiles.Length; i++)
+            for (int i = 0; i < tiles.Length; i++)
             {
                 if (visit.Contains(i)) continue;
                 var nextVisit = new HashSet<int>(visit) { i };
                 NumTilePossibilities_BackTracking(count - 1, curr + tiles[i].ToString(), tiles, nextVisit, set);
             }
         }
+
         /// 1089. Duplicate Zeros
         ///Given a fixed-length integer array arr, duplicate each occurrence of zero, shifting the remaining elements to the right.
         public void DuplicateZeros(int[] arr)
         {
             int n = arr.Length;
             int[] temp = new int[n];
-            for (int i = 0,j=0; i < n&&j<n; i++)
+            for (int i = 0, j = 0; i < n && j < n; i++)
             {
                 temp[j++] = arr[i];
-                if (arr[i]==0 && j<n)
+                if (arr[i] == 0 && j < n)
                     temp[j++] = arr[i];
             }
             for (int i = 0; i < n; i++)
                 arr[i] = temp[i];
         }
+
         /// 1091. Shortest Path in Binary Matrix, #Graph, #BFS
         ///Given an n x n binary matrix grid, return the length of the shortest clear path in the matrix.
         ///If there is no clear path, return -1. 8 direction
@@ -184,7 +223,7 @@ namespace LeetCodeAlgo
             List<int[]> list = new List<int[]>();
             int step = 0;
             list.Add(new int[] { 0, 0 });
-            visit[0,0] = true;
+            visit[0, 0] = true;
             step++;
             while (list.Count > 0)
             {
@@ -199,7 +238,7 @@ namespace LeetCodeAlgo
                         {
                             if (r == len - 1 && c == len - 1)
                                 return step + 1;
-                            visit[r,c] = true;
+                            visit[r, c] = true;
                             if (grid[r][c] == 0)
                             {
                                 next.Add(new int[] { r, c, });
