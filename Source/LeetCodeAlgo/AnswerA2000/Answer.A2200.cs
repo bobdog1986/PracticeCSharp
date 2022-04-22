@@ -490,5 +490,27 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///2244. Minimum Rounds to Complete All Tasks
+        ///Everytime you can complete 2 or 3 same level tasks, if task count of level is 1, return -1
+        public int MinimumRounds(int[] tasks)
+        {
+            int res = 0;
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach(var task in tasks)
+            {
+                if (dict.ContainsKey(task)) dict[task]++;
+                else dict.Add(task,1);
+            }
+
+            foreach(var key in dict.Keys)
+            {
+                if (dict[key] == 1) return -1;
+                if (dict[key] % 3 == 0) res += dict[key] / 3;
+                else res += dict[key] / 3 + 1;
+
+            }
+            return res;
+        }
     }
 }
