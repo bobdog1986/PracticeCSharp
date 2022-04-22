@@ -293,7 +293,38 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        ///2138. Divide a String Into Groups of Size k
+        ///2136. Earliest Possible Day of Full Bloom, #Greedy
+        ///Planting a seed takes time and so does the growth of a seed,plantTime and growTime, of length n each:
+        ///plantTime[i] is the days it takes you to plant the ith seed.Every day,you can work on planting exactly one seed.
+        ///You do not have to work on planting the same seed on consecutive days, but the planting of a seed is not complete until you have worked plantTime[i] days on planting it in total.
+        ///growTime[i] is the number of full days it takes the ith seed to grow after being completely planted.
+        ///Return the earliest possible day where all seeds are blooming.
+        public int EarliestFullBloom(int[] plantTime, int[] growTime)
+        {
+            int n = plantTime.Length;
+            int[][] times = new int[n][];
+            for (int i = 0; i < n; i++)
+            {
+                times[i] = new int[2];
+                times[i][0] = plantTime[i];
+                times[i][1] = growTime[i];
+            }
+
+            Array.Sort(times, (x, y) =>
+            {
+                return y[1] - x[1];
+            });
+
+            int res = 0, curStart = 0;
+            for (int i = 0; i < n; i++)
+            {
+                res = Math.Max(res, curStart + times[i][0] + times[i][1]);
+                curStart += times[i][0];
+            }
+
+            return res;
+        }
+        /// 2138. Divide a String Into Groups of Size k
         ///If last str.length < k, pad right with char fill
         public string[] DivideString(string s, int k, char fill)
         {
