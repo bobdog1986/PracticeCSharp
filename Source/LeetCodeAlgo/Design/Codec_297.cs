@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace LeetCodeAlgo.Design
 {
     ///297. Serialize and Deserialize Binary Tree
-    public class Codec
+    public class Codec_297
     {
         // Encodes a tree to a single string.
         public string serialize(TreeNode root)
