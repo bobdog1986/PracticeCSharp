@@ -298,7 +298,38 @@ namespace LeetCodeAlgo
         }
 
 
-        ///1385. Find the Distance Value Between Two Arrays
+        ///1382. Balance a Binary Search Tree, #BTree, #BST
+        ///return a balanced binary search tree with the same node values. return any answer.
+        ///A binary search tree is balanced if the depth of the two subtrees of every node never differs by more than 1.
+        public TreeNode BalanceBST(TreeNode root)
+        {
+            var list = new List<int>();
+            BalanceBST_Recur(root, list);
+            return BalanceBST_Build(list, 0, list.Count - 1);
+        }
+
+        private void BalanceBST_Recur(TreeNode root, List<int> list)
+        {
+            if (root == null) return;
+            BalanceBST_Recur(root.left, list);
+            list.Add(root.val);
+            BalanceBST_Recur(root.right, list);
+        }
+
+        private TreeNode BalanceBST_Build(List<int> list, int left, int right)
+        {
+            if (left > right) return null;
+            else if (left == right) return new TreeNode(list[left]);
+            else
+            {
+                var mid = (left + right) / 2;
+                var leftTree = BalanceBST_Build(list, left, mid - 1);
+                var rightTree = BalanceBST_Build(list, mid+1,right );
+                return new TreeNode(list[mid],leftTree,rightTree);
+            }
+        }
+
+        /// 1385. Find the Distance Value Between Two Arrays
         ///Given two integer arrays arr1 and arr2, and the integer d, return the distance value between the two arrays.
         ///The distance value is defined as the number of elements arr1[i] such that there is not any element arr2[j] where |arr1[i]-arr2[j]| <= d.
         public int FindTheDistanceValue(int[] arr1, int[] arr2, int d)
