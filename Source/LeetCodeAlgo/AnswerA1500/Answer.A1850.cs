@@ -73,7 +73,17 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///1886. Determine Whether Matrix Can Be Obtained By Rotation
+        ///1877. Minimize Maximum Pair Sum in Array
+        ///Return the minimized maximum pair sum after optimally pairing up the elements.
+        public int MinPairSum(int[] nums)
+        {
+            int max = int.MinValue;
+            Array.Sort(nums);
+            for (int i = 0; i < nums.Length / 2; i++)
+                max = Math.Max(max, nums[i] + nums[nums.Length - 1 - i]);
+            return max;
+        }
+        /// 1886. Determine Whether Matrix Can Be Obtained By Rotation
         ///Given two n x n binary matrices mat and target, return true if it is possible to
         ///make mat equal to target by rotating mat in 90-degree increments, or false otherwise.
         public bool FindRotation(int[][] mat, int[][] target)
