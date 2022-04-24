@@ -99,7 +99,32 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        ///1818. Minimum Absolute Sum Difference
+        ///1817. Finding the Users Active Minutes
+        public int[] FindingUsersActiveMinutes(int[][] logs, int k)
+        {
+            int[] res = new int[k];
+
+            Dictionary<int, HashSet<int>> dict= new Dictionary<int, HashSet<int>>();
+            foreach(var log in logs)
+            {
+                if (dict.ContainsKey(log[0])) dict[log[0]].Add(log[1]);
+                else dict.Add(log[0], new HashSet<int>() { log[1] });
+            }
+
+            Dictionary<int, int> map = new Dictionary<int, int>();
+            foreach(var d in dict)
+            {
+                if (map.ContainsKey(d.Value.Count)) map[d.Value.Count]++;
+                else map.Add(d.Value.Count, 1);
+            }
+
+            for(int i = 0; i < k; i++)
+            {
+                res[i] = map.ContainsKey(i+1)? map[i+1]:0;
+            }
+            return res;
+        }
+        /// 1818. Minimum Absolute Sum Difference
         ///You are given two positive integer arrays nums1 and nums2, both of length n.
         ///Return the minimum absolute sum of |nums1[i] - nums2[i]| after replacing at most one element in the array nums1.
         ///return it modulo 109 + 7. 1 <= nums1[i], nums2[i] <= 10&5, 1 <= n <= 105
