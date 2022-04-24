@@ -126,6 +126,28 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2079. Watering Plants
+        ///plants[i] is the amount of water the ith plant needs, capacity representing the watering capacity
+        ///return the number of steps needed to water all the plants.
+        public int WateringPlants(int[] plants, int capacity)
+        {
+            int res = 0;
+            int index = -1;
+            int curr = capacity;
+            for (int i = 0; i < plants.Length; i++)
+            {
+                res += i - index;
+                curr -= plants[i];
+                index = i;
+                if (i < plants.Length - 1 && curr < plants[i + 1])
+                {
+                    index = -1;
+                    curr = capacity;
+                    res += i + 1;
+                }
+            }
+            return res;
+        }
         /// 2085. Count Common Words With One Occurrence
         ///return the number of strings that appear exactly once in each of the two arrays.
         public int CountWords(string[] words1, string[] words2)
