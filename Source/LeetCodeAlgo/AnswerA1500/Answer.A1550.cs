@@ -148,6 +148,46 @@ namespace LeetCodeAlgo
             return String.Join("", arr);
         }
 
+        ///1584. Min Cost to Connect All Points, #Greedy, #Prim's algorithm,
+        ///Return the minimum cost to make all points connected.
+        public int MinCostConnectPoints(int[][] points)
+        {
+            int n = points.Length;
+            int ans = 0;
+            HashSet<int> set = new HashSet<int>();
+            set.Add(0);
+            int[] dist = new int[n];
+            for (int i = 1; i < n; i++)
+                dist[i] = MinCostConnectPoints_ManhattanDist(points, 0, i);
+            while (set.Count != n)
+            {
+                // Find the node that has shortest distance
+                int next = -1;
+                for (int i = 0; i < n; i++)
+                {
+                    if (set.Contains(i)) continue;
+                    if (next == -1 || dist[next] > dist[i])
+                        next = i;
+                }
+                // Put the node into the Minning Spanning Tree
+                set.Add(next);
+                ans += dist[next];
+                // Update distance array
+                for (int i = 0; i < n; i++)
+                {
+                    if (!set.Contains(i))
+                    {
+                        dist[i] = Math.Min(dist[i], MinCostConnectPoints_ManhattanDist(points, i, next));
+                    }
+                }
+            }
+            return ans;
+        }
+        private int MinCostConnectPoints_ManhattanDist(int[][] points, int source, int dest)
+        {
+            return Math.Abs(points[source][0] - points[dest][0]) + Math.Abs(points[source][1] - points[dest][1]);
+        }
+
         ///1588. Sum of All Odd Length Subarrays
         public int SumOddLengthSubarrays(int[] arr)
         {
