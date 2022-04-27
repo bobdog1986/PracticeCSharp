@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace LeetCodeAlgo
 {
@@ -24,6 +25,75 @@ namespace LeetCodeAlgo
                 }
             }
             return res;
+        }
+
+        ///1202. Smallest String With Swaps, #Disjoint Set, #Union Find
+        ///an array of pairs of indices where pairs[i] = [a, b] indicates 2 indices(0-indexed) of the string.
+        ///You can swap the characters at any pair of indices in the given pairs any number of times.
+        ///Return the lexicographically smallest string that s can be changed to after using the swaps.
+        public string SmallestStringWithSwaps(string s, IList<IList<int>> pairs)
+        {
+            int n = s.Length;
+            int[] parents=new int[n];
+            //default root of each index is itself
+            for(int i = 0; i < n; i++)
+                parents[i] = i;
+
+            //group index by the min index of connected-pairs
+            foreach (var pair in pairs)
+                SmallestStringWithSwaps_union(pair[0], pair[1], parents);
+
+            return SmallestStringWithSwaps(s, pairs, parents);
+        }
+
+        private string SmallestStringWithSwaps(string s, IList<IList<int>> pairs, int[] parents)
+        {
+            var map = new Dictionary<int, PriorityQueue<char,char>>();
+            for (int i = 0; i < s.Length; i++)
+            {
+                int root = SmallestStringWithSwaps_find(i,parents);
+                //if no root index, create one using pq as value to auto sort s[i]
+                if (!map.ContainsKey(root))
+                    map.Add(root, new PriorityQueue<char, char>());
+
+                map[root].Enqueue(s[i], s[i]);
+            }
+
+            var sb = new StringBuilder();
+            for (int i = 0; i < s.Length; i++)
+            {
+                //find the root , then dequeue a char from pq
+                var root = SmallestStringWithSwaps_find(i, parents);
+                sb.Append(map[root].Dequeue());
+            }
+            return sb.ToString();
+        }
+
+        private void SmallestStringWithSwaps_union(int a, int b, int[] parents)
+        {
+            //find root index of a and b
+            int aParent = SmallestStringWithSwaps_find(a, parents);
+            int bParent = SmallestStringWithSwaps_find(b, parents);
+            //if a<b, set b's root = a
+            if (aParent < bParent)
+            {
+                parents[bParent] = aParent;
+            }
+            else
+            {
+                parents[aParent] = bParent;
+            }
+        }
+
+        private int SmallestStringWithSwaps_find(int index, int[] parents)
+        {
+            //if equal, this index is the root index
+            while (parents[index] != index)
+            {
+                parents[index] = parents[parents[index]];
+                index = parents[index];
+            }
+            return index;
         }
 
         /// 1232. Check If It Is a Straight Line
