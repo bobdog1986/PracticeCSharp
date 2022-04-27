@@ -84,6 +84,46 @@ namespace LeetCodeAlgo
             }
             return -1;
         }
+        ///1008. Construct Binary Search Tree from Preorder Traversal, #BTree, #BST
+        public TreeNode BstFromPreorder(int[] preorder)
+        {
+            int i = 0;
+            return BstFromPreorder_O_N_Recurr(preorder, int.MaxValue, ref i);
+        }
+        public TreeNode BstFromPreorder_O_N_Recurr(int[] preorder, int bound, ref int index)
+        {
+            if (index >= preorder.Length || preorder[index] > bound) return null;
+            var node = new TreeNode(preorder[index++]);
+            node.left = BstFromPreorder_O_N_Recurr(preorder, node.val, ref index);
+            node.right = BstFromPreorder_O_N_Recurr(preorder, bound, ref index);
+            return node;
+        }
+
+        public TreeNode BstFromPreorder_N2(int[] preorder)
+        {
+            return BstFromPreorder_N2_Recurr(preorder, 0, preorder.Length - 1);
+        }
+        public TreeNode BstFromPreorder_N2_Recurr(int[] preorder,int left,int right)
+        {
+            if(left>right) return null;
+            else if(left==right)return new TreeNode(preorder[left]);
+            else
+            {
+                var node = new TreeNode(preorder[left]);
+                int i = left + 1;
+                while(i <= right)
+                {
+                    if (preorder[i] < preorder[left])
+                        i++;
+                    else
+                        break;
+                }
+                node.left = BstFromPreorder_N2_Recurr(preorder, left + 1, i - 1);
+                node.right = BstFromPreorder_N2_Recurr(preorder, i, right);
+                return node;
+            }
+        }
+
         /// 1014. Best Sightseeing Pair
         ///find max = values[i] + values[j] + i - j, 1 <= values[i] <= 1000
         public int MaxScoreSightseeingPair(int[] values)
