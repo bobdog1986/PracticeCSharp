@@ -221,7 +221,7 @@ namespace LeetCodeAlgo
         ///If you burst the ith balloon, you will get nums[i - 1] * nums[i] * nums[i + 1] coins.
         ///If i - 1 or i + 1 goes out of bounds of the array, then treat it as if there is a balloon with a 1 painted on it.
         ///Return the maximum coins you can collect by bursting the balloons wisely.
-        public int MaxCoins(int[] nums)
+        public int MaxCoins_312(int[] nums)
         {
             int n = nums.Length;
 

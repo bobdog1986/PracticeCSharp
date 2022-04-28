@@ -37,6 +37,23 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+        ///1561. Maximum Number of Coins You Can Get
+        public int MaxCoins_1561(int[] piles)
+        {
+            int res = 0;
+            Array.Sort(piles);
+            int left = 0;
+            int right = piles.Length - 1;
+
+            while (left < right)
+            {
+                left++;
+                right--;
+                res += piles[right--];
+            }
+            return res;
+
+        }
         /// 1567. Maximum Length of Subarray With Positive Product
         public int GetMaxLen(int[] nums)
         {

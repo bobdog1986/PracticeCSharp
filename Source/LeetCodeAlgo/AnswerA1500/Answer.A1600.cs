@@ -12,7 +12,7 @@ namespace LeetCodeAlgo
 
         ///1605. Find Valid Matrix Given Row and Column Sums, #Greedy
         ///Find any matrix of non-negative integers of size rowSum.length x colSum.length satisfies the Sum.
-        ///0 <= rowSum[i], colSum[i] <= 108
+        ///0 <= rowSum[i], colSum[i] <= 10^8
         public int[][] RestoreMatrix(int[] rowSum, int[] colSum)
         {
             int rowLen= rowSum.Length;
