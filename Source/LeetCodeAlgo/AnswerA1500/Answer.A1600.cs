@@ -10,7 +10,31 @@ namespace LeetCodeAlgo
     {
         ///1603. Design Parking System
 
-        ///1608. Special Array With X Elements Greater Than or Equal X
+        ///1605. Find Valid Matrix Given Row and Column Sums, #Greedy
+        ///Find any matrix of non-negative integers of size rowSum.length x colSum.length satisfies the Sum.
+        ///0 <= rowSum[i], colSum[i] <= 108
+        public int[][] RestoreMatrix(int[] rowSum, int[] colSum)
+        {
+            int rowLen= rowSum.Length;
+            int colLen= colSum.Length;
+
+            int[][] res= new int[rowLen][];
+            for(int i=0; i<rowLen; i++)
+                res[i]=new int[colLen];
+
+            for(int i=0;i<rowLen; i++)
+            {
+                for(int j=0;j<colLen; j++)
+                {
+                    var val = Math.Min(rowSum[i], colSum[j]);
+                    res[i][j]=val;
+                    rowSum[i] -= val;
+                    colSum[j] -= val;
+                }
+            }
+            return res;
+        }
+        /// 1608. Special Array With X Elements Greater Than or Equal X
         ///Return x if the array is special, otherwise, return -1.
         ///0 <= nums[i] <= 1000
         public int SpecialArray(int[] nums)
