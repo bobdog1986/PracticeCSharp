@@ -42,17 +42,10 @@ namespace LeetCodeAlgo
         {
             int res = 0;
             Array.Sort(piles);
-            int left = 0;
-            int right = piles.Length - 1;
-
-            while (left < right)
-            {
-                left++;
-                right--;
+            int left = 0, right = piles.Length - 1;
+            while (left++ < right--)
                 res += piles[right--];
-            }
             return res;
-
         }
         /// 1567. Maximum Length of Subarray With Positive Product
         public int GetMaxLen(int[] nums)

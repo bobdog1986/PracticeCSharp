@@ -10,8 +10,8 @@ namespace LeetCodeAlgo
         ///Given an integer array nums, move all the even integers at the beginning of the array followed by all the odd integers.
         public int[] SortArrayByParity(int[] nums)
         {
-            var res =new List<int>();
-            for(int i = 0; i < nums.Length; i++)
+            var res = new List<int>();
+            for (int i = 0; i < nums.Length; i++)
             {
                 if (nums[i] % 2 == 0) res.Insert(0, nums[i]);
                 else res.Add(nums[i]);
@@ -26,10 +26,10 @@ namespace LeetCodeAlgo
         {
             int max = nums[0];
             int min = nums[0];
-            foreach(var n in nums)
+            foreach (var n in nums)
             {
-                max=Math.Max(max, n);
-                min=Math.Min(min, n);
+                max = Math.Max(max, n);
+                min = Math.Min(min, n);
             }
             return Math.Max(0, max - min - 2 * k);
         }
@@ -45,11 +45,12 @@ namespace LeetCodeAlgo
             for (int i = 0; i < n - 1; ++i)
             {
                 int max = Math.Max(nums[i] + k, nums[n - 1] - k);
-                int min = Math.Min(nums[i + 1] -k, nums[0] + k);
+                int min = Math.Min(nums[i + 1] - k, nums[0] + k);
                 res = Math.Min(res, max - min);
             }
             return res;
         }
+
         ///917. Reverse Only Letters
         ///not English letters remain in the same position.English letters(lowercase or uppercase) should be reversed.
         public string ReverseOnlyLetters(string s)
@@ -57,20 +58,21 @@ namespace LeetCodeAlgo
             var arr = s.ToArray();
             List<int> list = new List<int>();
             List<char> letters = new List<char>();
-            for(int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
                 if (char.IsLetter(s[i]))
                 {
                     list.Add(i);
-                    letters.Insert(0,s[i]);
+                    letters.Insert(0, s[i]);
                 }
             }
-            for(int i = 0; i < list.Count; i++)
+            for (int i = 0; i < list.Count; i++)
             {
-                arr[list[i]]=letters[i];
+                arr[list[i]] = letters[i];
             }
             return new string(arr);
         }
+
         /// 918. Maximum Sum Circular Subarray, #Kadane
         ///Kadane algorithm, find max-of-positive and min-of-negtive, return max-of-positive or Sum()- min-of-neg
         public int MaxSubarraySumCircular(int[] nums)
@@ -104,7 +106,28 @@ namespace LeetCodeAlgo
             return Math.Max(max, allSum - min);
         }
 
-        ///923. 3Sum With Multiplicity
+        ///921. Minimum Add to Make Parentheses Valid
+        ///Return the minimum number of moves required to make s valid. ()) to ()() or (())
+        public int MinAddToMakeValid(string s)
+        {
+            int left=0;
+            int right=0;
+            for(int i=0; i<s.Length; i++)
+            {
+                if(s[i] == '(')
+                {
+                    right++;
+                }
+                else
+                {
+                    if (right > 0) right--;
+                    else left++;
+                }
+            }
+            return left + right;
+        }
+
+        /// 923. 3Sum With Multiplicity
         ///Given an integer array arr, and an integer target, return the number of tuples i, j, k
         ///such that i < j < k and arr[i] + arr[j] + arr[k] == target.  return it modulo 10^9 + 7.
         ///0<= arr[i] <=100
@@ -129,7 +152,6 @@ namespace LeetCodeAlgo
             return (int)(res % 10_0000_0007);
         }
 
-
         /// 925. Long Pressed Name
         ///Your friend is typing his name into a keyboard. Sometimes, when typing a character c,
         ///the key might get long pressed, and the character will be typed 1 or more times.
@@ -139,7 +161,7 @@ namespace LeetCodeAlgo
         {
             int i = 0;
             int j = 0;
-            for (; j < typed.Length && i<name.Length; j++)
+            for (; j < typed.Length && i < name.Length; j++)
             {
                 if (typed[j] == name[i]) i++;
                 else
@@ -156,18 +178,19 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+
         /// 929. Unique Email Addresses
         ///If you add periods '.' between some characters in the local name part of an email address, ignored
         ///If you add a plus '+' in the local name, everything after the first plus sign will be ignored.
         public int NumUniqueEmails(string[] emails)
         {
             HashSet<string> map = new HashSet<string>();
-            foreach(var email in emails)
+            foreach (var email in emails)
             {
                 var arr = email.Split("@");
                 var str0 = arr[0].Split("+")[0].Replace(".", "");//first str before '@', then trim all '.'
-                var str = str0 + "@" +arr[1];
-                if(!map.Contains(str))map.Add(str);
+                var str = str0 + "@" + arr[1];
+                if (!map.Contains(str)) map.Add(str);
             }
             return map.Count;
         }
@@ -223,19 +246,19 @@ namespace LeetCodeAlgo
                 {
                     if (grid[i][j] == 0) continue;
                     List<int[]> curr = new List<int[]>();
-                    List<int[]> visits = new List<int[]>() { new int[] {i,j } };
+                    List<int[]> visits = new List<int[]>() { new int[] { i, j } };
                     grid[i][j] = 0;
                     while (visits.Count > 0)
                     {
                         curr.AddRange(visits);
                         List<int[]> nexts = new List<int[]>();
-                        foreach(var v in visits)
+                        foreach (var v in visits)
                         {
                             foreach (var d in dxy4)
                             {
                                 int r = v[0] + d[0];
                                 int c = v[1] + d[1];
-                                if(r>=0&&r<grid.Length && c>=0&&c<grid[i].Length && grid[r][c] == 1)
+                                if (r >= 0 && r < grid.Length && c >= 0 && c < grid[i].Length && grid[r][c] == 1)
                                 {
                                     grid[r][c] = 0;
                                     nexts.Add(new int[] { r, c });
@@ -254,9 +277,9 @@ namespace LeetCodeAlgo
             {
                 foreach (var j in list2)
                 {
-                    int len=int.MaxValue;
-                    if (i[0] == j[0]) len = Math.Abs(i[1] - j[1])-1;
-                    else if(i[1] == j[1]) len = Math.Abs(i[0] - j[0])-1;
+                    int len = int.MaxValue;
+                    if (i[0] == j[0]) len = Math.Abs(i[1] - j[1]) - 1;
+                    else if (i[1] == j[1]) len = Math.Abs(i[0] - j[0]) - 1;
                     else len = Math.Abs(i[1] - j[1]) - 1 + Math.Abs(i[0] - j[0]);
                     min = Math.Min(min, len);
                     if (min == 1) return min;
@@ -296,6 +319,7 @@ namespace LeetCodeAlgo
             }
             return !isClimbing;
         }
+
         ///942. DI String Match
         ///s[i] == 'I' if perm[i] < perm[i + 1], s[i] == 'D' if perm[i] > perm[i + 1].
         ///Given a string s, reconstruct the permutation perm and return it.
@@ -309,13 +333,13 @@ namespace LeetCodeAlgo
             }
             int increase = 0;
             int decrease = 0;
-            foreach(var c in s)
+            foreach (var c in s)
             {
                 if (c == 'I') increase++;
                 else decrease++;
             }
             ans.Add(list[decrease]);
-            foreach(var c in s)
+            foreach (var c in s)
             {
                 if (c == 'I')
                 {
@@ -340,7 +364,7 @@ namespace LeetCodeAlgo
             var list1 = pushed.ToList();
             var list2 = popped.ToList();
             int count = 0;//how many nums in popped array have been handled
-            while (count++<pushed.Length)
+            while (count++ < pushed.Length)
             {
                 var index = list1.IndexOf(list2[0]);
                 if (index == -1)
@@ -349,7 +373,7 @@ namespace LeetCodeAlgo
                 }
                 else
                 {
-                    for(int i=0;i<=index; i++)
+                    for (int i = 0; i <= index; i++)
                     {
                         stack.Push(list1[0]);//push all nums before popped[0] to stack
                         list1.RemoveAt(0);//then remove
