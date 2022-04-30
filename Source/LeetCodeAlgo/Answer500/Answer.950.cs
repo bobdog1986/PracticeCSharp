@@ -288,7 +288,36 @@ namespace LeetCodeAlgo
             return list.ToArray();
 
         }
-        ///989. Add to Array-Form of Integer
+        ///988. Smallest String Starting From Leaf, #BTree
+        ///each node has a value in the range [0, 25] representing the letters 'a' to 'z'.
+        ///Return the lexicographically smallest string that starts at a leaf of this tree and ends at the root.
+        public string SmallestFromLeaf(TreeNode root)
+        {
+            string res = string.Empty;
+            SmallestFromLeaf(root, string.Empty, ref res);
+            return res;
+        }
+
+        private void SmallestFromLeaf(TreeNode root, string curr, ref string res)
+        {
+            if (root == null) return;
+            if (root.left == null && root.right == null)
+            {
+                var str = ((char)(root.val + 'a')).ToString() + curr;
+                if (string.IsNullOrEmpty(res)
+                    || string.Compare(str, res, StringComparison.OrdinalIgnoreCase) < 0)
+                {
+                    res = str;
+                }
+            }
+            else
+            {
+                SmallestFromLeaf(root.left, ((char)(root.val + 'a')).ToString() + curr, ref res);
+                SmallestFromLeaf(root.right, ((char)(root.val + 'a')).ToString() + curr, ref res);
+            }
+        }
+
+        /// 989. Add to Array-Form of Integer
         ///The array-form of an integer num is an array representing its digits in left to right order.
         ///For example, for num = 1321, the array form is [1,3,2,1].
         ///Given num, the array-form of an integer, and an integer k, return the array-form of the integer num + k.
