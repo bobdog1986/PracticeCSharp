@@ -43,6 +43,12 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine(string.Join(",", result));
         }
+
+        public static void log(IEnumerable<double> result)
+        {
+            Console.WriteLine(string.Join(",", result));
+        }
+
         public static void log(IEnumerable<string> result)
         {
             Console.WriteLine(string.Join(",", result));

@@ -345,7 +345,7 @@ namespace LeetCodeAlgo
         }
 
         ///394. Decode String
-        ///The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. 
+        ///The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times.
         ///Input: s = "3[a]2[bc]"       =>      Output: "aaabcbc";
         ///Input: s = "3[a2[c]]"        =>      Output: "accaccacc"
         ///Input: s = "2[abc]3[cd]ef"   =>      Output: "abcabccdcdcdef"
@@ -379,6 +379,52 @@ namespace LeetCodeAlgo
                 }
             }
             return s;
+        }
+
+        ///399. Evaluate Division, #Graph, #DFS
+        ///where equations[i] = [Ai, Bi] and values[i] represent the equation Ai / Bi = values[i].
+        ///Each Ai or Bi is a string that represents a single variable.
+        ///queries[j] = [Cj, Dj] represents the jth query where you must find the answer for Cj / Dj = ?.
+        ///Return the answers to all queries.If a single answer cannot be determined, return -1.0.
+        public double[] CalcEquation(IList<IList<string>> equations, double[] values, IList<IList<string>> queries)
+        {
+            double[] res= new double[queries.Count];
+            Dictionary<string,Dictionary<string,double>> graph=new Dictionary<string, Dictionary<string, double>>();
+            for(int i=0; i< equations.Count; i++)
+            {
+                var curr = equations[i];
+                if (!graph.ContainsKey(curr[0])) graph.Add(curr[0], new Dictionary<string, double>());
+                if(!graph.ContainsKey(curr[1])) graph.Add(curr[1], new Dictionary<string,double>());
+                graph[curr[0]].Add(curr[1], values[i]);
+                graph[curr[1]].Add(curr[0], 1/values[i]);
+            }
+
+            for(int i=0; i< queries.Count; i++)
+            {
+                bool find = false;
+                double val = -1;
+                CalcEquation_DFS(graph, new HashSet<string>(), queries[i][0], queries[i][1], 1, ref find, ref val);
+                res[i] = find ? 1 / val : -1;
+            }
+            return res;
+        }
+
+        private void CalcEquation_DFS(Dictionary<string, Dictionary<string, double>> graph, HashSet<string> visit, string key, string target, double seed, ref bool find,ref double val)
+        {
+            if (find) return;
+            if (visit.Contains(key)) return;
+            visit.Add(key);
+            if (!graph.ContainsKey(key)) return;
+            if (graph[key].ContainsKey(target))
+            {
+                find= true;
+                val = seed/graph[key][target];
+                return;
+            }
+            foreach(var subKey in graph[key].Keys)
+            {
+                CalcEquation_DFS(graph, visit, subKey, target, seed / graph[key][subKey], ref find, ref val);
+            }
         }
     }
 }

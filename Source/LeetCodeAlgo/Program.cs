@@ -44,6 +44,9 @@ namespace LeetCodeAlgo
                 //new char[]{'1','1','1'},
             };
 
+            var llist1=new List<IList<string>> { new List<string> {"a","e" }, new List<string> { "b", "e" } };
+            var llist2 = new List<IList<string>> { new List<string> { "a", "b" }, new List<string> { "e", "e" }, new List<string> { "x", "x" } };
+
             var listnode1 = anwser.buildListNode(new int[] { 1, 3, 2, 2, 3, 2, 2, 2, 7});
             //anwser.printListNode(listnode1);
             //var listnode2 = anwser.buildListNode(new int[] { 1000000, 1000001, 1000002 });
@@ -63,7 +66,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.ChalkReplacer(arr3,835);
+            var result = anwser.CalcEquation(llist1,new double[] { 4,3}, llist2);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
