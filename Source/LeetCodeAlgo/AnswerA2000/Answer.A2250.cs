@@ -15,6 +15,39 @@ namespace LeetCodeAlgo
         }
 
 
+        ///2256. Minimum Average Difference
+        ///The average difference of the index i is the absolute difference between the
+        ///average of the first i + 1 elements of nums and the average of the last n - i - 1 elements.
+        ///Both averages should be rounded down to the nearest integer.
+        ///Return the index with the minimum average difference.If there are multiple such indices, return the smallest one.
+        public int MinimumAverageDifference(int[] nums)
+        {
+            int res = 0;
+            int min = int.MaxValue;
+
+            long sum = 0;
+            foreach (var x in nums)
+                sum += x;
+
+            int n=nums.Length;
+            long curr = 0;
+
+            for(int i = 0; i < nums.Length; i++)
+            {
+                curr += nums[i];
+                sum-=nums[i];
+
+                long left = curr / (i + 1);
+                long right = i<nums.Length-1?  sum / (n - i - 1):0;
+                var diff = (int)Math.Abs(left - right);
+                if(diff < min)
+                {
+                    min= diff;
+                    res = i;
+                }
+            }
+            return res;
+        }
         /// 2259. Remove Digit From Number to Maximize Result
         public string RemoveDigit(string number, char digit)
         {
