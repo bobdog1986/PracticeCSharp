@@ -24,6 +24,27 @@ namespace LeetCodeAlgo.AnswerA2000
             return res;
         }
 
+        ///2260. Minimum Consecutive Cards to Pick Up
+        ///Return the minimum number of consecutive cards have a pair of matching cards.
+        ///If it is impossible to have matching cards, return -1.
+        public int MinimumCardPickup(int[] cards)
+        {
+            int res = int.MaxValue;
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            for (int i = 0; i < cards.Length; i++)
+            {
+                if (dict.ContainsKey(cards[i]))
+                {
+                    res = Math.Min(res, i - dict[cards[i]] + 1);
+                    dict[cards[i]] = i;
+                }
+                else
+                {
+                    dict.Add(cards[i], i);
+                }
+            }
+            return res == int.MaxValue ? -1 : res;
+        }
 
     }
 }

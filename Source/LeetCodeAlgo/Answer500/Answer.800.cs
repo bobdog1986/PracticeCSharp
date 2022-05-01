@@ -151,48 +151,25 @@ namespace LeetCodeAlgo
         ///'#' means a backspace character.Note that after backspacing an empty text, the text will continue empty.
         public bool BackspaceCompare(string s, string t)
         {
-            var arr1 = s.ToArray();
-            var arr2 = t.ToArray();
+            var str1 = BackspaceCompare_Get(s);
+            var str2 = BackspaceCompare_Get(t);
+            return str1 == str2;
+        }
 
-            Stack<char> stack1 = new Stack<char>();
-            Stack<char> stack2 = new Stack<char>();
-
-            for (int i = 0; i < arr1.Length; i++)
+        private string BackspaceCompare_Get(string s)
+        {
+            char[] arr=new char[s.Length];
+            int i = 0;
+            for(int j = 0; j < s.Length; j++)
             {
-                if (arr1[i] == '#')
+                if(s[j] == '#')
                 {
-                    if (stack1.Count > 0)
-                        stack1.Pop();
+                    if(i>0)
+                        i--;
                 }
-                else
-                {
-                    stack1.Push(arr1[i]);
-                }
+                else arr[i++]=s[j];
             }
-
-            for (int j = 0; j < arr2.Length; j++)
-            {
-                if (arr2[j] == '#')
-                {
-                    if (stack2.Count > 0)
-                        stack2.Pop();
-                }
-                else
-                {
-                    stack2.Push(arr2[j]);
-                }
-            }
-
-            if (stack1.Count != stack2.Count)
-                return false;
-            int count = stack1.Count;
-            for (int i = 0; i < count; i++)
-            {
-                if (stack1.Pop() != stack2.Pop())
-                    return false;
-            }
-
-            return true;
+            return new string(arr.Take(i).ToArray());
         }
 
         ///847. Shortest Path Visiting All Nodes, #Graph, #BFS
