@@ -298,7 +298,9 @@ namespace LeetCodeAlgo
         }
 
 
-        ///1382. Balance a Binary Search Tree, #BTree, #BST
+        ///1381. Design a Stack With Increment Operation, see CustomStack
+
+        /// 1382. Balance a Binary Search Tree, #BTree, #BST
         ///return a balanced binary search tree with the same node values. return any answer.
         ///A binary search tree is balanced if the depth of the two subtrees of every node never differs by more than 1.
         public TreeNode BalanceBST(TreeNode root)
