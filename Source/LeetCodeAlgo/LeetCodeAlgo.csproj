@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
     <BaseOutputPath>..\..\Artifacts</BaseOutputPath>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="AnswerA2000\Answer.A2250.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AnswerA2000\Answer.A2250.cs" />
+  </ItemGroup>
 </Project>
