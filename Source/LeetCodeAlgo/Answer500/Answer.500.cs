@@ -455,8 +455,22 @@ namespace LeetCodeAlgo
 
         ///543. Diameter of Binary Tree, #BTree
         ///The diameter of a binary tree is the length of the longest path between any two nodes in a tree.
-        ///This path may or may not pass through the root.
-        ///The length of a path between two nodes is represented by the number of edges between them.
+        ///This path may or may not pass through the root. number of edges between them.
+        public int DiameterOfBinaryTree(TreeNode root)
+        {
+            int res = 0;
+            DiameterOfBinaryTree_Recur(root, ref res);
+            return res;
+        }
+
+        private int DiameterOfBinaryTree_Recur(TreeNode root, ref int res)
+        {
+            if (root == null) return 0;
+            var left = DiameterOfBinaryTree_Recur(root.left, ref res);
+            var right = DiameterOfBinaryTree_Recur(root.right, ref res);
+            res = Math.Max(res, left + right);
+            return Math.Max(left,right)+1;
+        }
 
         /// 547. Number of Provinces, #DFS
         ///BFS/DFS, same to 200
