@@ -8,7 +8,25 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///953. Verifying an Alien Dictionary
+        ///950. Reveal Cards In Increasing Order
+        public int[] DeckRevealedIncreasing(int[] deck)
+        {
+            int n = deck.Length;
+            List<int> list = new List<int>();
+            Array.Sort(deck);
+            for (int i = n - 1; i >= 0; i--)
+            {
+                if (list.Count > 0)
+                {
+                    list.Insert(0, list.Last());
+                    list.RemoveAt(list.Count - 1);
+                }
+                list.Insert(0, deck[i]);
+            }
+            return list.ToArray();
+        }
+
+        /// 953. Verifying an Alien Dictionary
         ///Given a sequence of words written in the alien language, and the order of the alphabet,
         ///return true if and only if the given words are sorted lexicographically in this alien language.
         public bool IsAlienSorted(string[] words, string order)
