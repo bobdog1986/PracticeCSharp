@@ -8,7 +8,14 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///2259. Remove Digit From Number to Maximize Result
+        ///2255. Count Prefixes of a Given String
+        public int CountPrefixes(string[] words, string s)
+        {
+            return words.Where(x => s.StartsWith(x)).Count();
+        }
+
+
+        /// 2259. Remove Digit From Number to Maximize Result
         public string RemoveDigit(string number, char digit)
         {
             string res = string.Empty;
