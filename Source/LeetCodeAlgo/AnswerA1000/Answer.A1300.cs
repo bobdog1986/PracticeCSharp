@@ -589,5 +589,16 @@ namespace LeetCodeAlgo
             }
             return false;
         }
+
+        ///1347. Minimum Number of Steps to Make Two Strings Anagram
+        public int MinSteps_1347(string s, string t)
+        {
+            int[] arr1 = new int[26];
+            foreach (var c in s)
+                arr1[c - 'a']++;
+            foreach (var c in t)
+                arr1[c - 'a']--;
+            return Math.Min(arr1.Where(x => x > 0).Sum(), -arr1.Where(x => x < 0).Sum());
+        }
     }
 }
