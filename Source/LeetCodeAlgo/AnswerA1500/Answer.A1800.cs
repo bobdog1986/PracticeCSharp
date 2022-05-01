@@ -221,7 +221,35 @@ namespace LeetCodeAlgo
         {
             return queries.Select(q => points.Count(p => (p[0] - q[0]) * (p[0] - q[0]) + (p[1] - q[1]) * (p[1] - q[1]) <= q[2] * q[2])) .ToArray();
         }
-        ///1838. Frequency of the Most Frequent Element, #Sliding Window
+        ///1829. Maximum XOR for Each Query
+        ///You are given a sorted array nums of n non-negative integers and an integer maximumBit.
+        ///You want to perform the following query n times:
+        ///Find a non-negative integer k< 2maximumBit such that nums[0] XOR nums[1] XOR...XOR nums[nums.length - 1] XOR k is maximized.k is the answer to the ith query.
+        ///Remove the last element from the current array nums.
+        ///Return an array answer, where answer[i] is the answer to the ith query.
+        public int[] GetMaximumXor(int[] nums, int maximumBit)
+        {
+            int n=nums.Length;
+            int sum = 0;
+            int[] res = new int[n];
+            for(int i=0; i<n; i++)
+            {
+                sum^=nums[i];
+                int x = 0;
+                int m = 1;
+                while (m < (1 << maximumBit))
+                {
+                    if((m & sum) == 0)
+                    {
+                        x += m;
+                    }
+                    m <<= 1;
+                }
+                res[n - 1 - i] = x;
+            }
+            return res;
+        }
+        /// 1838. Frequency of the Most Frequent Element, #Sliding Window
         ///In one operation, you can choose an index of nums and increment the element at that index by 1.
         ///Return the maximum possible frequency of an element after performing at most k operations.
         public int MaxFrequency(int[] nums, int k)
