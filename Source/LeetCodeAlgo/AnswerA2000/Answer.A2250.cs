@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.AnswerA2000
+namespace LeetCodeAlgo
 {
     public partial class Answer
     {
@@ -90,5 +90,23 @@ namespace LeetCodeAlgo.AnswerA2000
             return set.Count;
         }
 
+        ///2262. Total Appeal of A String, #DP
+        ///The appeal of a string is the number of distinct characters found in the string.
+        ///Given a string s, return the total appeal of all of its substrings.
+        public long AppealSum(string s)
+        {
+            long res = 0;
+            long cur = 0;
+            long[] prev = new long[26];
+            for (int i = 0; i < s.Length; ++i)
+            {
+                cur += i + 1 - prev[s[i] - 'a'];
+                prev[s[i] - 'a'] = i + 1;
+                res += cur;
+            }
+            return res;
+        }
+
     }
+
 }
