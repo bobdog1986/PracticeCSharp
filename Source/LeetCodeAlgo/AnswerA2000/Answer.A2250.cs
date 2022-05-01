@@ -46,5 +46,49 @@ namespace LeetCodeAlgo.AnswerA2000
             return res == int.MaxValue ? -1 : res;
         }
 
+        ///2261. K Divisible Elements Subarrays
+        ///return the number of distinct subarrays which have at most k elements divisible by p.
+        public int CountDistinct(int[] nums, int k, int p)
+        {
+            int count = 0;
+            int left = 0;
+            HashSet<string> set = new HashSet<string>();
+            var list = nums.ToList();
+            int i = 0;
+            for (; i < list.Count; i++)
+            {
+                if (list[i] % p == 0)
+                {
+                    if (count == k)
+                    {
+                        for (int j = left; j <= i - 1; j++)
+                        {
+                            for (int x = j; x <= i - 1; x++)
+                            {
+                                var str = string.Join('_', list.GetRange(j, x - j + 1));
+                                set.Add(str);
+                            }
+                        }
+                        while (left <= i)
+                        {
+                            if (list[left++] % p == 0)
+                                break;
+                        }
+                        count--;
+                    }
+                    count++;
+                }
+            }
+            for (int j = left; j <= i - 1; j++)
+            {
+                for (int x = j; x <= i - 1; x++)
+                {
+                    var str = string.Join('_', list.GetRange(j, x - j + 1));
+                    set.Add(str);
+                }
+            }
+            return set.Count;
+        }
+
     }
 }
