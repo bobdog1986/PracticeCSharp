@@ -69,6 +69,32 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///811. Subdomain Visit Count
+        public IList<string> SubdomainVisits(string[] cpdomains)
+        {
+            var res=new List<string>();
+            Dictionary<string, int> dict = new Dictionary<string, int>();
+            foreach(var cpdomain in cpdomains)
+            {
+                var arr1=cpdomain.Split(' ');
+                int time=int.Parse(arr1[0]);
+                string str=arr1[1];
+                var domains = str.Split('.');
+                string curr="";
+                for (int i = domains.Length-1; i>=0; i--)
+                {
+                    curr = domains[i]+curr;
+                    if (dict.ContainsKey(curr)) dict[curr] += time;
+                    else dict.Add(curr, time);
+                    curr = "." + curr;
+                }
+            }
+            foreach(var key in dict.Keys)
+            {
+                res.Add($"{dict[key]} {key}");
+            }
+            return res;
+        }
         /// 814. Binary Tree Pruning, #BTree
         ///return the same tree where every subtree (of the given tree) not containing a 1 has been removed.
         ///A subtree of a node node is node plus every node that is a descendant of node.
