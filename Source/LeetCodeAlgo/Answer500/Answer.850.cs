@@ -352,7 +352,32 @@ namespace LeetCodeAlgo
             return null;
         }
 
-        ///893. Groups of Special-Equivalent Strings
+        ///890. Find and Replace Pattern
+        ///Given a list of strings words and a string pattern, return a list of words[i] that match pattern
+        public IList<string> FindAndReplacePattern(string[] words, string pattern)
+        {
+            return words.Where(x => FindAndReplacePattern(x,pattern)).ToList();
+        }
+
+        private bool FindAndReplacePattern(string word , string pattern)
+        {
+            Dictionary<char,char> dict = new Dictionary<char,char>();
+            for(int i = 0; i < pattern.Length; i++)
+            {
+                //if (!dict.ContainsKey(pattern[i]) && dict.ContainsValue(word[i])) return false;
+                if (dict.ContainsKey(pattern[i]))
+                {
+                    if (dict[pattern[i]] != word[i]) return false;
+                }
+                else
+                {
+                    if (dict.ContainsValue(word[i])) return false;
+                    dict.Add(pattern[i], word[i]);
+                }
+            }
+            return true;
+        }
+        /// 893. Groups of Special-Equivalent Strings
         ///In one move, you can swap any two even indexed characters or any two odd indexed characters of a string words[i].
         public int NumSpecialEquivGroups(string[] words)
         {
