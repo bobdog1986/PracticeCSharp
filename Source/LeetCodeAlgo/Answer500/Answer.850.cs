@@ -400,10 +400,37 @@ namespace LeetCodeAlgo
             }
             return set.Count;
         }
-        ///894. All Possible Full Binary Trees
+        ///894. All Possible Full Binary Trees, #BTree, #DP
+        ///return a list of all possible full binary trees with n nodes.
+        ///Each node of each tree in the answer must have Node.val == 0.
+        ///A full binary tree is a binary tree where each node has exactly 0 or 2 children.
+
         public IList<TreeNode> AllPossibleFBT(int n)
         {
-            throw new NotImplementedException();
+            //When n is divisible by 2, return an empty list
+            List<TreeNode>[] dp = new List<TreeNode>[n + 1];
+            //Base case, when N==1
+            dp[1] = new List<TreeNode>() { new TreeNode(0) };
+
+            for (int i = 3; i <= n; i += 2)
+            {
+                dp[i] = new List<TreeNode>();
+                //Traverse all the possibilities of how to divide the nodes to left and right sides
+                for (int j = 1; j < i - 1; j += 2)
+                {
+                    foreach (TreeNode l in dp[j])
+                    {
+                        foreach (TreeNode r in dp[i - j - 1])
+                        {
+                            TreeNode node = new TreeNode(0);
+                            node.left = l;
+                            node.right = r;
+                            dp[i].Add(node);
+                        }
+                    }
+                }
+            }
+            return dp[n]?? new List<TreeNode>();
         }
         /// 895. Maximum Frequency Stack, see FreqStack
 
