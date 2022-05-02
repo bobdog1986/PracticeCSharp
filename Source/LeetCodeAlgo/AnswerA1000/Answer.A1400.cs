@@ -173,7 +173,30 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///1446. Consecutive Characters
+        ///1442. Count Triplets That Can Form Two Arrays of Equal XOR, #Prefix Sum
+        ///We want to select three indices i, j and k where (0 <= i < j <= k < arr.length).
+        ///a = arr[i] ^ arr[i + 1] ^ ... ^ arr[j - 1] b = arr[j] ^ arr[j + 1] ^ ... ^ arr[k]
+        ///Return the number of triplets (i, j and k) Where a == b.
+        ///xor of range [i,k] ==0
+
+        public int CountTriplets(int[] arr)
+        {
+            int n = arr.Length + 1;
+            int res = 0;
+            int[] prefixXor = new int[n];
+
+            for (int i = 1; i < n; ++i)
+                prefixXor[i] = arr[i - 1] ^ prefixXor[i - 1];
+
+            for (int i = 0; i < n-1; ++i)
+                for (int j = i + 1; j < n; ++j)
+                    if (prefixXor[i] == prefixXor[j])
+                        res += j - i - 1;
+            return res;
+        }
+
+
+        /// 1446. Consecutive Characters
         ///The power of the string is the maximum length of a non-empty substring that contains only one unique character.
         public int MaxPower(string s)
         {
