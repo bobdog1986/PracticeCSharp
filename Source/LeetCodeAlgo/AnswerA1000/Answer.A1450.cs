@@ -80,7 +80,9 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///1476. Subrectangle Queries, see SubrectangleQueries
+        ///1472. Design Browser History, see BrowserHistory
+
+        /// 1476. Subrectangle Queries, see SubrectangleQueries
 
         /// 1482. Minimum Number of Days to Make m Bouquets , ### Binary Search
         ///You want to make m bouquets. To make a bouquet, you need to use k adjacent flowers from the garden.
