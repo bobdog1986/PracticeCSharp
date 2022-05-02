@@ -272,5 +272,36 @@ namespace LeetCodeAlgo
                 res = Math.Max(res, list[i + 1] - list[i]);
             return res;
         }
+
+        ///1641. Count Sorted Vowel Strings, #DP
+        ///return the number of strings of length n that consist only of vowels (a, e, i, o, u) and are lexicographically sorted.
+        public int CountVowelStrings(int n)
+        {
+            int[] dp = new int[] { 0, 1, 1, 1, 1, 1 };
+            for (int i = 1; i <= n; ++i)
+                for (int k = 1; k <= 5; ++k)
+                    dp[k] += dp[k - 1];
+            return dp[5];
+        }
+
+        public int CountVowelStrings_DP(int n)
+        {
+            int a = 1, e = 1, i = 1, o = 1, u = 1;
+            while (n-- > 1)
+            {
+                // add new char before prev string
+                a = a + e + i + o + u; // a, e, i, o, u -> aa, ae, ai, ao, au
+                e = e + i + o + u; // e, i, o, u -> ee, ei, eo, eu
+                i = i + o + u; // i, o, u -> ii, io, iu
+                o = o + u; // o, u -> oo, ou
+                u = u; ; // u -> uu
+            }
+            return a + e + i + o + u;
+        }
+
+        public int CountVowelStrings_Math(int n)
+        {
+            return (n + 1) * (n + 2) * (n + 3) * (n + 4) / 24;
+        }
     }
 }
