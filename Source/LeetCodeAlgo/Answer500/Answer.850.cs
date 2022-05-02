@@ -99,6 +99,27 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+        ///861. Score After Flipping Matrix, #Greedy
+        ///A move consists of choosing any row or column and toggling each value in that row or column
+        ///(i.e., changing all 0's to 1's, and all 1's to 0's).
+        ///Return the highest possible score after making any number of moves (including zero moves).
+        public int MatrixScore(int[][] grid)
+        {
+            int rowLen = grid.Length;
+            int colLen = grid[0].Length;
+            int res = 0;
+            res+= (1 << (colLen - 1)) * rowLen;//flip all row to start at 1, aka grid[i][0]=1
+            for (int j = 1; j < colLen; j++)
+            {
+                //then flip col [1,n-1] to max
+                int cur = 0;
+                for (int i = 0; i < rowLen; i++)
+                    cur += grid[i][j] == grid[i][0]?1:0;
+                //max of 1s or 0s, we can flip all 0s to 1s, then rotate left
+                res += Math.Max(cur, rowLen - cur) * (1 << (colLen - j - 1));
+            }
+            return res;
+        }
         /// 875. Koko Eating Bananas
         ///There are n piles of bananas, the ith pile has piles[i] bananas.
         ///The guards have gone and will come back in h hours.
