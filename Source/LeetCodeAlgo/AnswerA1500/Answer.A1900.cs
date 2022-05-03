@@ -155,7 +155,25 @@ namespace LeetCodeAlgo
         ///Given a string s, return the number of unique palindromes of length three that are a subsequence of s.
         public int CountPalindromicSubsequence(string s)
         {
-            throw new NotImplementedException();
+            int res = 0;
+            Dictionary<char, List<int>> dict = new Dictionary<char, List<int>>();
+            for(int i = 0; i < s.Length; i++)
+            {
+                if (dict.ContainsKey(s[i])) dict[s[i]].Add(i);
+                else dict.Add(s[i], new List<int>() { i});
+            }
+
+            foreach(var key in dict.Keys)
+            {
+                if (dict[key].Count == 1) continue;
+                int left = dict[key].First();
+                int right = dict[key].Last();
+                if (right - left <= 1) continue;
+                var map = new HashSet<char>(s.Substring(left + 1, right - 1 - left));
+                res += map.Count;
+            }
+
+            return res;
         }
 
 
