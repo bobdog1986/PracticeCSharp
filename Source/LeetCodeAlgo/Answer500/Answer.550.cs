@@ -292,7 +292,29 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///583. Delete Operation for Two Strings
+        ///581. Shortest Unsorted Continuous Subarray
+        ///find one continuous subarray that sort this subarray in ascending order,then the whole array sorted.
+        ///Return the shortest such subarray and output its length.
+        public int FindUnsortedSubarray(int[] nums)
+        {
+            int start = -1;
+            int end = -1;
+            int max = int.MinValue;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (max > nums[i])
+                {
+                    //find the smallest index that > nums[i]
+                    if (start == -1) start = i - 1;
+                    while (start >= 1 && nums[start - 1] > nums[i])
+                        start--;
+                    end = i;
+                }
+                else max = nums[i];
+            }
+            return start==-1?0: end - start+1;
+        }
+        /// 583. Delete Operation for Two Strings
         ///return the minimum number of steps required to make word1 and word2 the same.
         ///In one step, you can delete exactly one character in either string.
         ///1 <= word1.length, word2.length <= 500, only lower case english
