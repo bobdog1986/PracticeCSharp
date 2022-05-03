@@ -496,6 +496,37 @@ namespace LeetCodeAlgo
         }
 
 
+        ///419. Battleships in a Board, #DFS
+        public int CountBattleships(char[][] board)
+        {
+            int res = 0;
+            int[][] dxy = new int[4][] { new int[] { 1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { -1, 0 } };
+            for(int i = 0; i < board.Length; i++)
+            {
+                for(int j = 0; j < board[i].Length; j++)
+                {
+                    if (board[i][j] == '.') continue;
+                    res++;
+                    board[i][j] = '.';
+                    CountBattleships_DFS(board, i, j, dxy);
+                }
+            }
+            return res;
+        }
+
+        private void CountBattleships_DFS(char[][] board, int row,int col, int[][] dxy)
+        {
+            foreach(var d in dxy)
+            {
+                int r = row + d[0];
+                int c = col + d[1];
+                if(r>=0 && r<board.Length && c >=0 && c<board[0].Length && board[r][c] != '.')
+                {
+                    board[r][c] = '.';
+                    CountBattleships_DFS(board, r, c, dxy);
+                }
+            }
+        }
         /// 421. Maximum XOR of Two Numbers in an Array, #Trie
         ///return the maximum result of nums[i] XOR nums[j], where 0 <= i <= j < n.
         ///1 <= nums.length <= 2 * 10^5, 0 <= nums[i] <= 2^31 - 1
@@ -1005,7 +1036,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        /// 
+        ///
         /// 446. Arithmetic Slices II - Subsequence, #DP
         ///at least 3 nums with same distance, eg. [1,2,3,4], [1,1,1]
         ///1  <= nums.length <= 1000, -2^31 <= nums[i] <= 2^31 - 1
