@@ -259,6 +259,54 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///2192. All Ancestors of a Node in a Directed Acyclic Graph, #Graph, #DFS
+        ///edges[i] = [fromi, toi] denotes that there is a unidirectional edge from fromi to toi in the graph.
+        ///Return a list answer, where answer[i] is the list of ancestors of the ith node, sorted in ascending order.
+        public IList<IList<int>> GetAncestors(int n, int[][] edges)
+        {
+            IList<int>[] res=new List<int>[n];
+            bool[][] graph = new bool[n][];
+            for (int i = 0; i < n; i++)
+                graph[i] = new bool[n];
+
+            foreach (var edge in edges)
+                graph[edge[1]][edge[0]] = true;
+
+            for(int i = 0; i < n; i++)
+            {
+                bool[] parent =new bool[n];
+                GetAncestors_DFS(graph, i, parent, res);
+                List<int> list=new List<int>();
+                for(int j = 0; j < n; j++)
+                {
+                    if(parent[j])
+                        list.Add(j);
+                }
+                res[i] = list;
+            }
+            return res.ToList();
+        }
+        private void GetAncestors_DFS(bool[][] graph, int index, bool[] parent, IList<int>[] res)
+        {
+            for(int i = 0; i < graph[index].Length; i++)
+            {
+                if (graph[index][i] && !parent[i])
+                {
+                    if (res[i] != null)
+                    {
+                        parent[i] = true;
+                        foreach (var j in res[i])
+                            parent[j] = true;
+                    }
+                    else
+                    {
+                        parent[i] = true;
+                        GetAncestors_DFS(graph, i, parent, res);
+                    }
+                }
+            }
+        }
+
         /// 2195. Append K Integers With Minimal Sum, #PriorityQueue, #Heap
         ///You are given an integer array nums and an integer k.
         ///Append k unique positive integers that do not appear in nums to nums such that the resulting total sum is minimum.
