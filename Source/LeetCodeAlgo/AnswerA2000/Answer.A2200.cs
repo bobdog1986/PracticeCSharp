@@ -512,5 +512,35 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///2249. Count Lattice Points Inside a Circle
+        ///circles[i] = [xi, yi, ri] ,return the number of lattice points that are present inside at least one circle.
+        ///1 <= xi, yi <= 100
+        public int CountLatticePoints(int[][] circles)
+        {
+            HashSet<int> set = new HashSet<int>();
+            foreach(var c in circles)
+            {
+                int x = c[0];
+                int y= c[1];
+                int r = c[2];
+                for(int i = x - r; i <= x + r; i++)
+                {
+                    for (int j = y; j <= y + r; j++)
+                    {
+                        if (set.Contains(i * 1000 + j)) continue;
+                        if ((i - x) * (i - x) + (j - y) * (j - y) > r * r) break;
+                        set.Add(i * 1000 + j);
+                    }
+                    for(int j = y - 1; j >= y - r; j--)
+                    {
+                        if (set.Contains(i * 1000 + j)) continue;
+                        if ((i - x) * (i - x) + (j - y) * (j - y) > r * r) break;
+                        set.Add(i * 1000 + j);
+                    }
+                }
+            }
+            return set.Count;
+        }
     }
 }
