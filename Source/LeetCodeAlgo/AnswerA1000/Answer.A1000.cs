@@ -180,7 +180,27 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///1028. Recover a Tree From Preorder Traversal
+        ///1026. Maximum Difference Between Node and Ancestor, #BTree
+        public int MaxAncestorDiff(TreeNode root)
+        {
+            int res = 0;
+            MaxAncestorDiff(root, int.MinValue, int.MaxValue, ref res);
+            return res;
+        }
+
+        private void MaxAncestorDiff(TreeNode root,int max, int min, ref int res)
+        {
+            if (root == null) return;
+            if(max!= int.MinValue)
+                res = Math.Max(res, Math.Abs(max - root.val));
+            if(min!= int.MaxValue)
+                res = Math.Max(res, Math.Abs(min - root.val));
+            max=Math.Max(max, root.val);
+            min=Math.Min(min, root.val);
+            MaxAncestorDiff(root.left, max, min, ref res);
+            MaxAncestorDiff(root.right, max, min, ref res);
+        }
+        /// 1028. Recover a Tree From Preorder Traversal
         public TreeNode RecoverFromPreorder(string traversal)
         {
             return RecoverFromPreorder(traversal, 1);
