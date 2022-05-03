@@ -381,7 +381,42 @@ namespace LeetCodeAlgo
             return s;
         }
 
-        ///399. Evaluate Division, #Graph, #DFS
+        ///395. Longest Substring with At Least K Repeating Characters, #Divide And Conquer
+        ///return the length of the longest substring of s such that the frequency of each character >= k.
+        public int LongestSubstring(string s, int k)
+        {
+            if (s.Length < k) return 0;
+
+            int res = 0;
+            Dictionary<char,int> dict=new Dictionary<char, int>();
+            foreach(var c in s)
+            {
+                if (dict.ContainsKey(c)) dict[c]++;
+                else dict.Add(c,1);
+            }
+
+            bool match = dict.Keys.Where(x=>dict[x]<k).Count()==0;
+            if (match)
+                return s.Length;
+
+            int left = 0;
+            int right = 0;
+            for(; right < s.Length; right++)
+            {
+                if (dict[s[right]] < k)
+                {
+                    if (right - 1 >= left)
+                    {
+                        res = Math.Max(res, LongestSubstring(s.Substring(left, right - 1 - left + 1), k));
+                    }
+                    left = right + 1;
+                }
+            }
+            res = Math.Max(res, LongestSubstring(s.Substring(left, right - 1 - left + 1), k));
+            return res;
+        }
+
+        /// 399. Evaluate Division, #Graph, #DFS
         ///where equations[i] = [Ai, Bi] and values[i] represent the equation Ai / Bi = values[i].
         ///Each Ai or Bi is a string that represents a single variable.
         ///queries[j] = [Cj, Dj] represents the jth query where you must find the answer for Cj / Dj = ?.

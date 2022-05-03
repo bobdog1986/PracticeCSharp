@@ -215,7 +215,7 @@ namespace LeetCodeAlgo
             return sell[len - 1];
         }
 
-        ///312. Burst Balloons, #DP, #Divide Conquer
+        ///312. Burst Balloons, #DP, #Divide And Conquer
         ///You are given n balloons, indexed from 0 to n - 1. Each balloon is painted with a number
         ///on it represented by an array nums. You are asked to burst all the balloons.
         ///If you burst the ith balloon, you will get nums[i - 1] * nums[i] * nums[i + 1] coins.
