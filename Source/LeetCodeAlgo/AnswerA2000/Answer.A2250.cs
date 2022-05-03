@@ -48,6 +48,51 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///2257. Count Unguarded Cells in the Grid
+        ///A guard can see every cell in the four cardinal directions (north, east, south, or west) unless obstructed by a wall or another guard.
+        ///Return the number of unoccupied cells that are not guarded.
+        public int CountUnguarded(int m, int n, int[][] guards, int[][] walls)
+        {
+            int count = 0;
+            bool[,] visit = new bool[m, n];
+            int[,] matrix = new int[m, n];
+            foreach (var w in walls)
+                matrix[w[0], w[1]] = 1;
+            foreach(var g in guards)
+                matrix[g[0], g[1]] = 2;
+
+            foreach (var g in guards)
+            {
+                visit[g[0], g[1]] = true;
+                count++;
+
+                for (int i = g[0] - 1; i >= 0; i--)
+                {
+                    if (matrix[i, g[1]] !=0) break;
+                    if (!visit[i, g[1]])count++;
+                    visit[i, g[1]] = true;
+                }
+                for (int i = g[0] + 1; i < m; i++)
+                {
+                    if (matrix[i, g[1]] != 0) break;
+                    if (!visit[i, g[1]]) count++;
+                    visit[i, g[1]] = true;
+                }
+                for (int i = g[1] - 1; i >= 0; i--)
+                {
+                    if (matrix[g[0], i] != 0) break;
+                    if (!visit[g[0], i]) count++;
+                    visit[g[0], i] = true;
+                }
+                for (int i = g[1] + 1; i < n; i++)
+                {
+                    if (matrix[g[0], i] != 0) break;
+                    if (!visit[g[0], i]) count++;
+                    visit[g[0], i] = true;
+                }
+            }
+            return m * n - count - walls.Length;
+        }
         /// 2259. Remove Digit From Number to Maximize Result
         public string RemoveDigit(string number, char digit)
         {
