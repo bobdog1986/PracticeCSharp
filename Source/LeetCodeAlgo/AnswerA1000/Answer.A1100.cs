@@ -6,7 +6,46 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1129. Shortest Path with Alternating Colors, #Graph, #BFS
+        ///1104. Path In Zigzag Labelled Binary Tree, #BTree
+        ///Zigzag sequence: 1-> 3,2 -> 4, 5, 6, 7 -> 15,14....8->...
+        public IList<int> PathInZigZagTree(int label)
+        {
+            var res=new List<int>();
+            bool forward = true;
+            int levelCount = 1;
+            int total = 0;
+            total += levelCount;
+            while (label > total)
+            {
+                levelCount <<= 1;
+                total += levelCount;
+                forward = !forward;
+            }
+
+            while (label > 0)
+            {
+                res.Insert(0, label);
+                int curr = label - (total - levelCount);
+                int half = (curr-1) / 2;
+                if (!forward)
+                    half = levelCount / 2 -1- half;
+
+                int nextTotal = (total - levelCount);
+                int nextLevel = levelCount / 2;
+
+                //next forward
+                forward = !forward;
+                total -= levelCount;
+                levelCount = nextLevel;
+                if(forward)
+                    label = nextTotal - nextLevel + (half + 1);
+                else
+                    label = nextTotal - half ;
+            }
+
+            return res;
+        }
+        /// 1129. Shortest Path with Alternating Colors, #Graph, #BFS
         public int[] ShortestAlternatingPaths(int n, int[][] redEdges, int[][] blueEdges)
         {
             int[] res=new int[n];

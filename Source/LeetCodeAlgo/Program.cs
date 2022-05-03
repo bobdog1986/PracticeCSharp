@@ -66,7 +66,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.MinimumAverageDifference(new int[] { 2, 5, 3, 9, 5, 3 });
+            var result = anwser.PathInZigZagTree(26);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
