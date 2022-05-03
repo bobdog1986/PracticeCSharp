@@ -773,6 +773,43 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///437. Path Sum III, #BTree, #Prefix Sum
+        ///return the number of paths where the sum of the values along the path equals targetSum.
+        ///The path does not need to start or end at the root or a leaf, but it must go downwards.
+
+        public int PathSum_437(TreeNode root, int targetSum)
+        {
+            int res = 0;
+            Dictionary<int, int> prefixSumDict = new Dictionary<int, int>();
+            PathSum_Recur(root, prefixSumDict, targetSum, ref res);
+            return res;
+        }
+        private void PathSum_Recur(TreeNode root, Dictionary<int, int> prefixSumDict, int targetSum, ref int res)
+        {
+            if (root == null) return;
+
+            if (root.val == targetSum)
+                res++;//find a single-node path
+
+            if (prefixSumDict.ContainsKey(root.val))
+                res += prefixSumDict[root.val];//all path go downward to parent of node
+
+            //update all prefixSum by -root.val, then build a new dict
+            var nextDict = new Dictionary<int, int>();
+            foreach (var key in prefixSumDict.Keys)
+            {
+                var nextkey = key - root.val;
+                if (nextDict.ContainsKey(nextkey)) nextDict[nextkey] += prefixSumDict[key];
+                else nextDict.Add(nextkey, prefixSumDict[key]);
+            }
+
+            //add or update prefixSum, starting at current node
+            if (nextDict.ContainsKey(targetSum - root.val)) nextDict[targetSum - root.val]++;
+            else nextDict.Add(targetSum - root.val, 1);
+
+            PathSum_Recur(root.left, nextDict, targetSum, ref res);
+            PathSum_Recur(root.right, nextDict, targetSum, ref res);
+        }
         /// 438. Find All Anagrams in a string, #Sliding Window
         /// Input: s = "cbaebabacd", p = "abc", Output: [0,6]
         /// The substring with start index = 0 is "cba", which is an anagram of "abc".

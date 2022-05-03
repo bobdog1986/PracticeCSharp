@@ -422,14 +422,14 @@ namespace LeetCodeAlgo
 
         ///113. Path Sum II, #BTree
         ///return all root-to-leaf paths where the sum of the node values in the path equals targetSum
-        public IList<IList<int>> PathSum(TreeNode root, int targetSum)
+        public IList<IList<int>> PathSum_113(TreeNode root, int targetSum)
         {
             var ans=new List<IList<int>>();
             PathSum_Recursion(root, targetSum, new List<int>(), ans);
             return ans;
         }
 
-        public void PathSum_Recursion(TreeNode node, int targetSum, IList<int> list, IList<IList<int>> ans)
+        private void PathSum_Recursion(TreeNode node, int targetSum, IList<int> list, IList<IList<int>> ans)
         {
             if (node == null)
                 return;
