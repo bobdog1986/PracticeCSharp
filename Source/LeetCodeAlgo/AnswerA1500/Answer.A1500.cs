@@ -106,12 +106,11 @@ namespace LeetCodeAlgo
             {
                 set1.Add(s[i]);
                 arr1[i] = set1.Count;
+
+                set2.Add(s[s.Length-1- i]);
+                arr2[s.Length - 1 - i] = set2.Count;
             }
-            for(int i=s.Length-1; i>=0; i--)
-            {
-                set2.Add(s[i]);
-                arr2[i] = set2.Count;
-            }
+
             for(int i=0; i<s.Length-1; i++)
             {
                 if (arr1[i] == arr2[i + 1])
