@@ -169,7 +169,28 @@ namespace LeetCodeAlgo
             else if (command.StartsWith("(al)")) return "al" + Interpret(command.Substring(4));
             else return command;
         }
-        ///1684. Count the Number of Consistent Strings
+        ///1679. Max Number of K-Sum Pairs
+        ///how many pairs n1+n2 = k
+        public int MaxOperations(int[] nums, int k)
+        {
+            int res = 0;
+            Dictionary<int, int> map = new Dictionary<int, int>();
+            foreach(var n in nums)
+            {
+                if(map.ContainsKey(k-n) && map[k-n] > 0)
+                {
+                    map[k - n]--;
+                    res++;
+                }
+                else
+                {
+                    if (map.ContainsKey(n)) map[n]++;
+                    else map.Add(n, 1);
+                }
+            }
+            return res;
+        }
+        /// 1684. Count the Number of Consistent Strings
         ///Return the number of consistent strings in the array words.
         public int CountConsistentStrings(string allowed, string[] words)
         {
