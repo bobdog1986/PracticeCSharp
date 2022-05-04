@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.Collections;
 
 namespace LeetCodeAlgo
 {
@@ -83,6 +84,36 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///1415. The k-th Lexicographical String of All Happy Strings of Length n, #Backtracking
+        ///A happy string is a string that:consists only of letters of the set['a', 'b', 'c'].
+        ///s[i] != s[i + 1] for all values of i from 1 to s.length - 1 (string is 1-indexed).
+        ///Given two integers n and k, consider a list of all happy strings of length n sorted in lexicographical order.
+        ///Return the kth string of this list or return an empty string if there are less than k happy strings of length n.
+        public string GetHappyString(int n, int k)
+        {
+            char[] arr = new char[] { 'a', 'b', 'c' };
+            List<string> list = new List<string>();
+
+            GetHappyString(arr, "", -1, n, k, list);
+            return list.Count<k ?string.Empty:list.Last();
+        }
+        private void GetHappyString(char[] arr,string curr, int index, int count,int k, List<string> res)
+        {
+            if (res.Count == k) return;
+            if(count == 0)
+            {
+                res.Add(curr);
+                return;
+            }
+
+            for(int i = 0; i < arr.Length; i++)
+            {
+                if (i == index) continue;
+                GetHappyString(arr, curr + arr[i], i, count - 1, k, res);
+            }
+        }
+
 
         /// 1417. Reformat The String
         ///You are given an alphanumeric string s. Only lowercase English letters and digits.
