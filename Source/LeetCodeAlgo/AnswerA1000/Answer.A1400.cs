@@ -135,6 +135,40 @@ namespace LeetCodeAlgo
             return string.Join("", ans);
         }
 
+        ///1418. Display Table of Food Orders in a Restaurant
+        public IList<IList<string>> DisplayTable(IList<IList<string>> orders)
+        {
+            Dictionary<string, Dictionary<string, int>> dict = new Dictionary<string, Dictionary<string, int>>();
+            HashSet<string> foodSet = new HashSet<string>();
+            foreach(var order in orders)
+            {
+                foodSet.Add(order[2]);
+
+                if (!dict.ContainsKey(order[1])) dict.Add(order[1], new Dictionary<string, int>());
+                if (dict[order[1]].ContainsKey(order[2])) dict[order[1]][order[2]]++;
+                else dict[order[1]].Add(order[2],1);
+            }
+            var foods = foodSet.OrderBy(x=>x, StringComparer.Ordinal).ToList();
+
+            var res=new List<IList<string>>();
+            var headers=new List<string>();
+            headers.Add("Table");
+            headers.AddRange(foods);
+            res.Add(headers);
+            var keys=dict.Keys.OrderBy(x=>int.Parse(x)).ToList();
+            foreach (var table in keys)
+            {
+                var curr=new List<string>();
+                curr.Add(table);
+                foreach(var food in foods)
+                {
+                    if (!dict[table].ContainsKey(food)) curr.Add("0");
+                    else curr.Add(dict[table][food].ToString());
+                }
+                res.Add(curr);
+            }
+            return res;
+        }
         /// 1422. Maximum Score After Splitting a String
         ///Split to 2 string,score is the number of zeros in the left + the number of ones in the right substring.
         public int MaxScore(string s)
