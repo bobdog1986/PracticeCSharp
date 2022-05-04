@@ -513,7 +513,23 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2249. Count Lattice Points Inside a Circle
+        ///2248. Intersection of Multiple Arrays
+        ///Given a 2D integer array nums where nums[i] is a non-empty array of distinct positive integers,
+        ///return the list of integers that are present in each array of nums sorted in ascending order.
+        public IList<int> Intersection_2248(int[][] nums)
+        {
+            HashSet<int> set=new HashSet<int>(nums[0]);
+            for(int i = 1; i < nums.Length; i++)
+            {
+                HashSet<int> currSet = new HashSet<int>(nums[i]);
+                foreach(var j in set)
+                    if(!currSet.Contains(j))set.Remove(j);
+                if (set.Count == 0) break;
+            }
+            return set.OrderBy(x=>x).ToList();
+        }
+
+        /// 2249. Count Lattice Points Inside a Circle
         ///circles[i] = [xi, yi, ri] ,return the number of lattice points that are present inside at least one circle.
         ///1 <= xi, yi <= 100
         public int CountLatticePoints(int[][] circles)

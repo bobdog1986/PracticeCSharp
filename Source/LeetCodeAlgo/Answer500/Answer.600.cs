@@ -68,7 +68,7 @@ namespace LeetCodeAlgo
             }
         }
 
-        ///611. Valid Triangle Number, #Two Pointers
+        ///611. Valid Triangle Number, #Two Pointers, #Binary Search
         ///return the number of triplets chosen from the array that can make triangles.
         public int TriangleNumber(int[] nums)
         {
@@ -91,11 +91,50 @@ namespace LeetCodeAlgo
             return count;
         }
 
-        public bool IsTriangle(int num1, int num2, int num3)
+        public int TriangleNumber_BinarySearch(int[] nums)
         {
-            return num3 < num1 + num2;
+            int n = nums.Length;
+            Array.Sort(nums);
+            int count = 0;
+            for (int i = 0; i < n - 2; i++)
+            {
+                for (int j = i + 1; j < n - 1; j++)
+                {
+                    int sum = nums[i] + nums[j];
+                    // find the first number < sum, return the index
+                    int index = TriangleNumber_BinarySearch(j + 1, sum, nums);
+                    if (index != -1)
+                    {
+                        count += index - j;
+                    }
+                }
+            }
+            return count;
         }
+        private int TriangleNumber_BinarySearch(int start,int target,int[] nums)
+        {
+            if (nums[start] >= target)
+                return -1;
 
+            if (nums[nums.Length - 1] < target)
+                return nums.Length - 1;
+
+            int right = nums.Length - 1;
+            int left = start;
+            while (left < right)
+            {
+                int mid = (left + right +1) / 2 ;//plus 1 will make mid as the right half center side
+                if (nums[mid] < target)
+                {
+                    left = mid;
+                }
+                else
+                {
+                    right = mid-1;
+                }
+            }
+            return left;
+        }
         //617. Merge Two Binary Trees
 
         public TreeNode MergeTrees(TreeNode root1, TreeNode root2)

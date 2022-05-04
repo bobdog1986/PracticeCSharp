@@ -241,34 +241,21 @@ namespace LeetCodeAlgo
         ///return the minimal length of a contiguous subarray of which the sum >= target.
         ///If there is no such subarray, return 0 instead.
         ///1 <= target <= 10^9, 1 <= nums.length <= 10^5, 1 <= nums[i] <= 10^5
-
-        public int MinSubArrayLen_Lee215(int target, int[] nums)
-        {
-            int i = 0, n = nums.Length, res = n + 1;
-            for (int j = 0; j < n; ++j)
-            {
-                target -= nums[j];
-                while (target <= 0)
-                {
-                    res = Math.Min(res, j - i + 1);
-                    target += nums[i++];
-                }
-            }
-            return res % (n + 1);
-        }
-
         public int MinSubArrayLen(int target, int[] nums)
         {
-            int i = 0, j = 0, sum = 0, min = int.MaxValue;
-
-            while (j < nums.Length)
+            int left = 0;
+            int right = 0;
+            int sum = 0;
+            int min = int.MaxValue;
+            while (right < nums.Length)
             {
-                sum += nums[j++];
+                sum += nums[right];
                 while (sum >= target)
                 {
-                    min = Math.Min(min, j - i);
-                    sum -= nums[i++];
+                    min = Math.Min(min, right - left+1);
+                    sum -= nums[left++];
                 }
+                right++;
             }
             return min == int.MaxValue ? 0 : min;
         }
