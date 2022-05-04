@@ -94,6 +94,31 @@ namespace LeetCodeAlgo
             else return diff / 2 + 1;
         }
 
+        ///1525. Number of Good Ways to Split a String
+        public int NumSplits(string s)
+        {
+            int res = 0;
+            HashSet<char> set1 = new HashSet<char>();
+            HashSet<char> set2 = new HashSet<char>();
+            int[] arr1 = new int[s.Length];
+            int[] arr2 = new int[s.Length];
+            for (int i=0; i<s.Length; i++)
+            {
+                set1.Add(s[i]);
+                arr1[i] = set1.Count;
+            }
+            for(int i=s.Length-1; i>=0; i--)
+            {
+                set2.Add(s[i]);
+                arr2[i] = set2.Count;
+            }
+            for(int i=0; i<s.Length-1; i++)
+            {
+                if (arr1[i] == arr2[i + 1])
+                    res++;
+            }
+            return res;
+        }
         /// 1526. Minimum Number of Increments on Subarrays to Form a Target Array
         /// In one operation you can choose any subarray from initial and increment each value by one.
         ///Return the minimum number of operations to form a target array from initial.
