@@ -66,7 +66,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.TriangleNumber_BinarySearch(new int[] { 4, 2, 3, 4 });
+            var result = anwser.CountMaxOrSubsets(new int[] { 2, 2, 2 });
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

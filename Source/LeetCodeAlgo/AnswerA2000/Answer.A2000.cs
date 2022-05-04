@@ -196,5 +196,30 @@ namespace LeetCodeAlgo
 
             return left;
         }
+        ///2044. Count Number of Maximum Bitwise-OR Subsets,#Backtracking
+        ///find the maximum possible bitwise OR of a subset of nums and return the number of different non-empty subsets with the maximum bitwise OR.
+        ///An array a is a subset of an array b if a can be obtained from b by deleting some(possibly zero) elements of b.
+        public int CountMaxOrSubsets(int[] nums)
+        {
+            int res = 0;
+            int maxOr = 0;
+            foreach(var n in nums)
+                maxOr|=n;
+            CountMaxOrSubsets_BackTracking(nums, 0, 0, maxOr, ref res);
+            return res;
+        }
+
+        private void CountMaxOrSubsets_BackTracking(int[] nums,int i, int currOr, int maxOr, ref int res)
+        {
+            if (currOr == maxOr && i == nums.Length)
+            {
+                res++;
+                return;
+            }
+
+            if (i >= nums.Length) return;
+            CountMaxOrSubsets_BackTracking(nums, i + 1, currOr, maxOr, ref res);
+            CountMaxOrSubsets_BackTracking(nums, i + 1, currOr|nums[i], maxOr, ref res);
+        }
     }
 }
