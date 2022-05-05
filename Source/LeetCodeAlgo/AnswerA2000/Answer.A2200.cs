@@ -493,6 +493,23 @@ namespace LeetCodeAlgo
 
         ///2241. Design an ATM Machine, see ATM
 
+        ///2243. Calculate Digit Sum of a String
+        public string DigitSum(string s, int k)
+        {
+            while (s.Length > k)
+            {
+                string temp = string.Empty;
+                for (int i = 0; i < s.Length; i += k)
+                {
+                    int sum = 0;
+                    for (int j = i; j < k + i && j<s.Length ; j++)
+                        sum += s[j] - '0';
+                    temp += sum.ToString();
+                }
+                s = temp;
+            }
+            return s;
+        }
         /// 2244. Minimum Rounds to Complete All Tasks
         ///Everytime you can complete 2 or 3 same level tasks, if task count of level is 1, return -1
         public int MinimumRounds(int[] tasks)

@@ -3,40 +3,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace LeetCodeAlgo.Design
 {
     ///225. Implement Stack using Queues
     public class MyStack
     {
-        private List<int> list=new List<int>();
-
+        private readonly Queue<int> q1;
+        private  readonly Queue<int> q2;
+        private int top=0;
         public MyStack()
         {
-
+            q1=new Queue<int>();
+            q2=new Queue<int>();
         }
 
         public void Push(int x)
         {
-            list.Insert(0, x);
+            if(q2.Count>0) EnqueueInternal(q2,x);
+            else EnqueueInternal(q1,x);
+        }
+
+        private void EnqueueInternal(Queue<int> q, int x)
+        {
+            q.Enqueue(x);
+            top=x;
         }
 
         public int Pop()
         {
-            var x = list[0];
-            list.RemoveAt(0);
-            return x;
+            if(q2.Count>0)
+            {
+                while(q2.Count>1)
+                    EnqueueInternal(q1,q2.Dequeue());
+                return q2.Dequeue();
+            }
+            else
+            {
+                while(q1.Count>1)
+                    EnqueueInternal(q2,q1.Dequeue());
+                return q1.Dequeue(); 
+            }
         }
 
         public int Top()
         {
-            var x = list[0];
-            return x;
+            return top;
         }
 
         public bool Empty()
         {
-            return list.Count == 0;
+            return q1.Count==0 && q2.Count==0;
         }
     }
 }
