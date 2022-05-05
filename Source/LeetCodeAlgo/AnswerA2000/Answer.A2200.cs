@@ -117,7 +117,55 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2212. Maximum Points in an Archery Competition, #Backtracking
+        ///2211. Count Collisions on a Road
+        public int CountCollisions(string directions)
+        {
+            int res = 0;
+            char prev = 'L';
+            int rights = 0;
+            for(int i = 0; i < directions.Length; i++)
+            {
+                if(directions[i] == 'L')
+                {
+                    if(prev=='R')
+                    {
+                        res+= rights;
+                        res++;
+                        rights = 0;
+                        prev = 'R';
+
+                    }
+                    else if (prev == 'S')
+                    {
+                        res++;
+                        prev = 'S';
+                    }
+                    else
+                    {
+                        prev = directions[i];
+                    }
+                }
+                else if(directions[i] == 'S')
+                {
+                    if (prev == 'R')
+                    {
+                        res += rights;
+                        rights = 0;
+                    }
+                    prev = directions[i];
+
+                }
+                else if(directions[i] == 'R')
+                {
+                    rights++;
+                    prev = directions[i];
+
+                }
+            }
+
+            return res;
+        }
+        /// 2212. Maximum Points in an Archery Competition, #Backtracking
         ///Return the array bobArrows which represents the number of arrows Bob shot on each scoring section from 0 to 11.
         ///The sum of the values in bobArrows should equal numArrows.
         ///If there are multiple ways for Bob to earn the maximum total points, return any one of them.
