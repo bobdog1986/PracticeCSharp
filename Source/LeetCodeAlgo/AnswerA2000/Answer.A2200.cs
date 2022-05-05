@@ -117,6 +117,42 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2212. Maximum Points in an Archery Competition, #Backtracking
+        ///Return the array bobArrows which represents the number of arrows Bob shot on each scoring section from 0 to 11.
+        ///The sum of the values in bobArrows should equal numArrows.
+        ///If there are multiple ways for Bob to earn the maximum total points, return any one of them.
+        public int[] MaximumBobPoints(int numArrows, int[] aliceArrows)
+        {
+            int[] res=new int[aliceArrows.Length];
+            int max = int.MinValue;
+            MaximumBobPoints_BackTracking(numArrows, aliceArrows, new int[aliceArrows.Length], aliceArrows.Length - 1, 0, ref max, ref res);
+            return res;
+        }
+
+        private void MaximumBobPoints_BackTracking(int numArrows, int[] aliceArrows, int[] bobArrows,int index,int total, ref int max, ref int[] res)
+        {
+            if (index == 0)
+            {
+                bobArrows[0] = numArrows;
+                if (total > max)
+                {
+                    max = total;
+                    res = bobArrows;
+                }
+            }
+            else
+            {
+                MaximumBobPoints_BackTracking(numArrows, aliceArrows, bobArrows,index-1,total,ref max, ref res);
+                if(numArrows > aliceArrows[index])
+                {
+                    var nextArr = new int[bobArrows.Length];
+                    Array.Copy(bobArrows, nextArr, nextArr.Length);
+                    nextArr[index] = aliceArrows[index] + 1;
+                    MaximumBobPoints_BackTracking(numArrows - aliceArrows[index] - 1, aliceArrows, nextArr, index - 1, total + index, ref max, ref res);
+                }
+            }
+        }
+
         /// 2215. Find the Difference of Two Arrays
         ///Given two 0-indexed integer arrays nums1 and nums2, return a list answer of size 2 where:
         ///answer[0] is a list of all distinct integers in nums1 which are not present in nums2.
