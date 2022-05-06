@@ -104,7 +104,76 @@ namespace LeetCodeAlgo
         }
 
 
-        ///2165. Smallest Value of the Rearranged Number
+        ///2162. Minimum Cost to Set Cooking Time
+        public int MinCostSetTime(int startAt, int moveCost, int pushCost, int targetSeconds)
+        {
+            int minutes = targetSeconds / 60;
+            int second = targetSeconds % 60;
+
+            //if targetSeconds>=6000, should be 99:60 etc.
+            if (minutes >= 100)
+            {
+                minutes--;
+                second += 60;
+            }
+
+            int res = MinCostSetTime(startAt, moveCost, pushCost, minutes, second);
+            //if exist another minutes:seconds combine
+            if (minutes >0 && second < 40)
+                res = Math.Min(res, MinCostSetTime(startAt,moveCost,pushCost,minutes-1,second+60));
+            return res;
+        }
+
+        private int MinCostSetTime(int startAt, int moveCost, int pushCost, int minutes, int seconds)
+        {
+            //if over flow ,return int.MaxValue
+            if (minutes >= 100 || seconds >= 100) return int.MaxValue;
+            int res = 0;
+            if (minutes >0)
+            {
+                if (minutes >= 10)
+                {
+                    if (startAt != minutes / 10) res += moveCost;
+                    res += pushCost;
+                    startAt = minutes / 10;
+                    minutes %= 10;
+                }
+
+                if (startAt != minutes) res += moveCost;
+                res += pushCost;
+                startAt = minutes;
+
+                if (startAt != seconds / 10) res += moveCost;
+                res += pushCost;
+                startAt = seconds / 10;
+                seconds %= 10;
+
+                if (startAt != seconds) res += moveCost;
+                res += pushCost;
+            }
+            else
+            {
+                if (seconds >0)
+                {
+                    if(seconds >= 10)
+                    {
+                        if (startAt != seconds / 10) res += moveCost;
+                        res += pushCost;
+                        startAt = seconds / 10;
+                        seconds %= 10;
+                    }
+                    if (startAt != seconds) res += moveCost;
+                    res += pushCost;
+                }
+                else
+                {
+                    if (startAt != seconds) res += moveCost;
+                    res += pushCost;
+                }
+            }
+            return res;
+        }
+        /// 2165. Smallest Value of the Rearranged Number
         ///Rearrange the digits of num such that its value is minimized and it does not contain any leading zeros.
         ///Return the rearranged number with minimal value. the sign does not change after rearranging the digits.
         ///-10^15 <=x <= 10^15
