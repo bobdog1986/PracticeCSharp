@@ -96,6 +96,45 @@ namespace LeetCodeAlgo
             return index;
         }
 
+        ///1209. Remove All Adjacent Duplicates in String II
+        public string RemoveDuplicates(string s, int k)
+        {
+            List<char> list = new List<char>();
+            int count = 0;
+            char prev = ' ';
+            for(int i = 0; i < s.Length; i++)
+            {
+                if (prev == s[i]) count++;
+                else count = 1;
+                prev = s[i];
+                list.Add(s[i]);
+                if(count == k)
+                {
+                    while (count > 0)
+                    {
+                        list.RemoveAt(list.Count - 1);
+                        count--;
+                    }
+
+                    if (list.Count == 0)
+                    {
+                        prev = ' ';
+                    }
+                    else
+                    {
+                        prev = list.Last();
+                        for(int j = list.Count-1; j >=0; j--)
+                        {
+                            if (list[j] == prev)
+                                count++;
+                            else break;
+                        }
+                    }
+                }
+            }
+
+            return new string(list.ToArray());
+        }
         /// 1232. Check If It Is a Straight Line
         ///coordinates[i] = [x, y], where [x, y] represents the coordinate of a point.
         ///Check if these points make a straight line in the XY plane.

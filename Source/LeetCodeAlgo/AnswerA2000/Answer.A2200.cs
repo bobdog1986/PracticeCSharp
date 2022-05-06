@@ -133,7 +133,6 @@ namespace LeetCodeAlgo
                         res++;
                         rights = 0;
                         prev = 'R';
-
                     }
                     else if (prev == 'S')
                     {
@@ -142,7 +141,7 @@ namespace LeetCodeAlgo
                     }
                     else
                     {
-                        prev = directions[i];
+                        prev = 'L';
                     }
                 }
                 else if(directions[i] == 'S')
@@ -159,10 +158,8 @@ namespace LeetCodeAlgo
                 {
                     rights++;
                     prev = directions[i];
-
                 }
             }
-
             return res;
         }
         /// 2212. Maximum Points in an Archery Competition, #Backtracking

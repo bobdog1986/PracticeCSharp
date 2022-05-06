@@ -66,7 +66,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.CountCollisions("LLRLRLLSLRLLSLSSSS");
+            var result = anwser.RemoveDuplicates("deeedbbcccbdaa", 3);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
