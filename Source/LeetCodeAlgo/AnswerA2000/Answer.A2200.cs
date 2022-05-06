@@ -68,7 +68,32 @@ namespace LeetCodeAlgo
             return set.Count == 0;
         }
 
-        ///2208. Minimum Operations to Halve Array Sum, #PriorityQueue, #Heap
+        ///2207. Maximize Number of Subsequences in a String
+        ///pattern is 2 length, eg "ab"
+        ///You can add either pattern[0] or pattern[1] anywhere in text exactly once.
+        ///Note that the character can be added even at the beginning or at the end of text.
+        ///Return the maximum number of times pattern can occur as a subsequence of the modified text.
+        public long MaximumSubsequenceCount(string text, string pattern)
+        {
+            ///If we add pattern[0], the best option is to add at the begin.
+            ///If we add pattern[1], the best option is to add at the end.
+            long res = 0, cnt1 = 0, cnt2 = 0;
+            for (int i = 0; i < text.Length; ++i)
+            {
+                if (text[i] == pattern[1])
+                {
+                    res += cnt1;//add all exist patterns
+                    cnt2++;
+                }
+                if (text[i] == pattern[0])
+                {
+                    cnt1++;
+                }
+            }
+            //res + max possible of p0 or p1
+            return res + Math.Max(cnt1, cnt2);
+        }
+        /// 2208. Minimum Operations to Halve Array Sum, #PriorityQueue, #Heap
         ///In one operation, you can choose any number from nums and reduce it to exactly half the number.
         ///(Note that you may choose this reduced number in future operations.)
         ///Return the minimum number of operations to reduce the sum of nums by at least half.
