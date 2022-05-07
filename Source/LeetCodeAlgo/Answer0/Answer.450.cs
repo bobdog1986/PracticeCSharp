@@ -153,6 +153,23 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///456. 132 Pattern, #Monotonic
+        ///nums[i] < nums[k] < nums[j]. Return true if there is a 132 pattern in nums, otherwise, return false.
+        public bool Find132pattern(int[] nums)
+        {
+            Stack<int> stack = new Stack<int>();
+            int thirdElement = int.MinValue;
+            for (int i = nums.Length - 1; i >= 0; i--)
+            {
+                if (nums[i] < thirdElement)
+                    return true;
+
+                while (stack.Count > 0 && stack.Peek() < nums[i])
+                    thirdElement = stack.Pop();
+                stack.Push(nums[i]);
+            }
+            return false;
+        }
         /// 457. Circular Array Loop
         ///If nums[i]>0, move nums[i] steps forward, If nums[i]<0 move nums[i] steps backward.
         ///Every nums[seq[j]] is either all positive or all negative.
