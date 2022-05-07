@@ -583,6 +583,21 @@ namespace LeetCodeAlgo
         //}
 
 
+        ///2239. Find Closest Number to Zero
+        public int FindClosestNumber(int[] nums)
+        {
+            int abs=Math.Abs(nums[0]);
+            int res=nums[0];
+            for(int i=1;i<nums.Length;i++)
+            {
+                if(Math.Abs(nums[i])<abs||(Math.Abs(nums[i])==abs&& nums[i]>res ))
+                {
+                    abs=Math.Abs(nums[i]);
+                    res=nums[i];
+                }
+            }
+            return res;
+        }
         ///2240. Number of Ways to Buy Pens and Pencils
         ///Return the number of distinct ways you can buy some number of pens and pencils.
         public long WaysToBuyPensPencils(int total, int cost1, int cost2)
