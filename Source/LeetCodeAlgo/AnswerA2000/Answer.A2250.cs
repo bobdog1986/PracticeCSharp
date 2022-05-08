@@ -212,6 +212,32 @@ namespace LeetCodeAlgo
             }
             return max == ' ' ? "" : max.ToString() + max.ToString() + max.ToString();
         }
+
+        ///2265. Count Nodes Equal to Average of Subtree, BTree
+
+        public int AverageOfSubtree(TreeNode root)
+        {
+            int res = 0;
+            AverageOfSubtree(root, ref res);
+            return res;
+        }
+
+        private int[] AverageOfSubtree(TreeNode root, ref int res)
+        {
+            var arr = new int[2];
+            if (root == null) return arr;
+            var left = AverageOfSubtree(root.left, ref res);
+            var right = AverageOfSubtree(root.right, ref res);
+
+            int subSum = left[0] + right[0];
+            int subCount = left[1] + right[1];
+            if ((subSum + root.val) / (subCount + 1) == root.val)
+                res++;
+
+            arr[0] = subSum + root.val;
+            arr[1] = subCount + 1;
+            return arr;
+        }
     }
 
 }
