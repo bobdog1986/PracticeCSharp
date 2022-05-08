@@ -203,6 +203,18 @@ namespace LeetCodeAlgo
             return sign *res;
 
         }
+        ///2169. Count Operations to Obtain Zero
+        public int CountOperations(int num1, int num2)
+        {
+            int res = 0;
+            while(num1!=0&& num2 != 0)
+            {
+                if (num1 >= num2) num1 -= num2;
+                else num2 -= num1;
+                res++;
+            }
+            return res;
+        }
         /// 2176. Count Equal and Divisible Pairs in an Array
         ///return the number of pairs (i, j) where 0 <= i < j < n, such that nums[i] == nums[j] and (i * j) is divisible by k.
         public int CountPairs(int[] nums, int k)
