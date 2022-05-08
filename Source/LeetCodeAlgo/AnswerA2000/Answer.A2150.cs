@@ -173,6 +173,31 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///2164. Sort Even and Odd Indices Independently, #PriorityQueue, #Heap
+        ///Sort the values at odd indices of nums in non-increasing order., Even indices in non-decreasing
+        public int[] SortEvenOdd(int[] nums)
+        {
+            int[] res= new int[nums.Length];
+            PriorityQueue<int, int> q1 = new PriorityQueue<int, int>();
+            PriorityQueue<int, int> q2 = new PriorityQueue<int, int>();
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if (i % 2 == 0)
+                    q2.Enqueue(nums[i], nums[i]);
+                else
+                    q1.Enqueue(nums[i], -nums[i]);
+            }
+
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if(i % 2 == 0)
+                    res[i] = q2.Dequeue();
+                else
+                    res[i] = q1.Dequeue();
+            }
+
+            return res;
+        }
         /// 2165. Smallest Value of the Rearranged Number
         ///Rearrange the digits of num such that its value is minimized and it does not contain any leading zeros.
         ///Return the rearranged number with minimal value. the sign does not change after rearranging the digits.
