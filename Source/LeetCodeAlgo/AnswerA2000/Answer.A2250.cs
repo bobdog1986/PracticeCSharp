@@ -238,6 +238,50 @@ namespace LeetCodeAlgo
             arr[1] = subCount + 1;
             return arr;
         }
+
+        ///2266. Count Number of Texts, #DP
+        ///Given a string pressedKeys representing the string received by Bob,
+        ///return the total number of possible text messages Alice could have sent.
+        public int CountTexts(string pressedKeys)
+        {
+            Dictionary<char, int> dict = new Dictionary<char, int>()
+            {
+                {'2',3 },
+                {'3',3 },
+                {'4',3 },
+                {'5',3 },
+                {'6',3 },
+                {'7',4 },
+                {'8',3 },
+                {'9',4 },
+            };
+
+            long[] dp = new long[pressedKeys.Length+1];
+            dp[0] = 1;
+            for (int i = 1; i < pressedKeys.Length+1; i++)
+            {
+                int count = 0;
+                for (int j = i - 1; j >= 0 && count< dict[pressedKeys[i - 1]]; j--)
+                {
+                    if (pressedKeys[j] == pressedKeys[i-1])
+                    {
+                        dp[i] += dp[j];
+                        dp[i] %= 10_0000_0007;
+                        count++;
+                    }
+                    else
+                    {
+                        if (count == 0)
+                        {
+                            dp[i] += dp[j];
+                            dp[i] %= 10_0000_0007;
+                        }
+                        break;
+                    }
+                }
+            }
+            return (int)(dp.Last());
+        }
     }
 
 }
