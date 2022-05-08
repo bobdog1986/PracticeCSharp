@@ -35,8 +35,9 @@ namespace LeetCodeAlgo
             };
             var grid0 = new char[][]
             {
-                new char[]{'o', 'a', 'a', 'n'},
-                new char[]{'e', 't', 'a', 'e'},
+                new char[]{'(', '('},
+                new char[]{')', '('},
+                new char[]{'(', ')'},
             };
             var grid1 = new char[][]
             {
@@ -52,7 +53,7 @@ namespace LeetCodeAlgo
             //var listnode2 = anwser.buildListNode(new int[] { 1000000, 1000001, 1000002 });
             //anwser.printListNode(listnode2);
 
-            string bTreeStr = "[4,1,6,0,2,5,7,null,null,null,3,null,null,null,8]";
+            string bTreeStr = "[1,1,1]";
             var treeNode = anwser.deserializeTree(bTreeStr);
             //anwser.printTree(treeNode)
 
@@ -66,7 +67,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.RemoveDuplicates("deeedbbcccbdaa", 3);
+            var result = anwser.CountTexts("222222222222222222222222222222222222");
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

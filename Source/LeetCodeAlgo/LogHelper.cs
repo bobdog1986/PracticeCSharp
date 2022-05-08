@@ -29,6 +29,11 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine($"Result = {result}");
         }
+
+        public static void log(bool result)
+        {
+            Console.WriteLine($"Result = {result}");
+        }
         public static void log(string result)
         {
             var res = string.IsNullOrEmpty(result) ? "String.Empty" : result;

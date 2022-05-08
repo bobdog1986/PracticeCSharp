@@ -29,20 +29,20 @@ namespace LeetCodeAlgo
             foreach (var x in nums)
                 sum += x;
 
-            int n=nums.Length;
+            int n = nums.Length;
             long curr = 0;
 
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 curr += nums[i];
-                sum-=nums[i];
+                sum -= nums[i];
 
                 long left = curr / (i + 1);
-                long right = i<nums.Length-1?  sum / (n - i - 1):0;
+                long right = i < nums.Length - 1 ? sum / (n - i - 1) : 0;
                 var diff = (int)Math.Abs(left - right);
-                if(diff < min)
+                if (diff < min)
                 {
-                    min= diff;
+                    min = diff;
                     res = i;
                 }
             }
@@ -58,7 +58,7 @@ namespace LeetCodeAlgo
             int[,] matrix = new int[m, n];
             foreach (var w in walls)
                 matrix[w[0], w[1]] = 1;
-            foreach(var g in guards)
+            foreach (var g in guards)
                 matrix[g[0], g[1]] = 2;
 
             foreach (var g in guards)
@@ -68,8 +68,8 @@ namespace LeetCodeAlgo
 
                 for (int i = g[0] - 1; i >= 0; i--)
                 {
-                    if (matrix[i, g[1]] !=0) break;
-                    if (!visit[i, g[1]])count++;
+                    if (matrix[i, g[1]] != 0) break;
+                    if (!visit[i, g[1]]) count++;
                     visit[i, g[1]] = true;
                 }
                 for (int i = g[0] + 1; i < m; i++)
@@ -281,6 +281,20 @@ namespace LeetCodeAlgo
                 }
             }
             return (int)(dp.Last());
+        }
+
+        ///2194. Cells in a Range on an Excel Sheet
+        public IList<string> CellsInRange(string s)
+        {
+            var res=new List<string>();
+            for(char c = s[0]; c <= s[3]; c++)
+            {
+                for(char i = s[1];i<= s[4]; i++)
+                {
+                    res.Add($"{c}{i}");
+                }
+            }
+            return res;
         }
     }
 
