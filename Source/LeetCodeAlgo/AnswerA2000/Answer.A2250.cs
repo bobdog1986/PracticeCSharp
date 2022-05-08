@@ -192,6 +192,26 @@ namespace LeetCodeAlgo
             return res;
         }
 
+
+        ///2264. Largest 3-Same-Digit Number in String
+        public string LargestGoodInteger(string num)
+        {
+            char max = ' ';
+            int count = 1;
+            char prev = num[0];
+            for (int i = 1; i < num.Length; ++i)
+            {
+                if (num[i] == prev) count++;
+                else
+                {
+                    prev = num[i];
+                    count = 1;
+                }
+                if (count >= 3) max = (char)Math.Max(max, prev);
+                if (max == '9') break;
+            }
+            return max == ' ' ? "" : max.ToString() + max.ToString() + max.ToString();
+        }
     }
 
 }
