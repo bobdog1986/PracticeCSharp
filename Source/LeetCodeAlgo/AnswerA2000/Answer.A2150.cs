@@ -75,6 +75,33 @@ namespace LeetCodeAlgo
             return res;
 
         }
+        ///2160. Minimum Sum of Four Digit Number After Splitting Digits
+        ///You are given a positive integer num consisting of exactly four digits.
+        ///Split num into two new integers new1 and new2 by using the digits found in num.
+        ///Leading zeros are allowed in new1 and new2, and all the digits found in num must be used.
+        ///Return the minimum possible sum of new1 and new2.
+        public int MinimumSum(int num)
+        {
+            List<int> list=new List<int>();
+            for(int i=0; i<4; i++)
+            {
+                var curr = num % 10;
+                if(curr > 0)
+                    list.Add(curr);
+                num /= 10;
+            }
+            list.Sort();
+            int sum1 = 0;
+            int sum2 = 0;
+            for(var i = 0; i < list.Count;i++ )
+            {
+                sum1 = sum1*10+ list[i++];
+                if (i >= list.Count)
+                    break;
+                sum2 = sum2 * 10 + list[i++];
+            }
+            return sum1 + sum2;
+        }
         /// 2161. Partition Array According to Given Pivot
         ///smaller than pivot on left, same as pivot on mid, larger on right
         public int[] PivotArray(int[] nums, int pivot)
