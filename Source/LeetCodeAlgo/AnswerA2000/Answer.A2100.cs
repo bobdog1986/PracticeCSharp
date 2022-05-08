@@ -343,6 +343,21 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2144. Minimum Cost of Buying Candies With Discount
+        ///For every two candies sold, the shop gives a third candy for free.
+        ///return the minimum cost of buying all the candies.
+        public int MinimumCost(int[] cost)
+        {
+            var arr=cost.OrderBy(x => -x).ToArray();
+            int sum = 0;
+            for(int i = 0; i < arr.Length; i++)
+            {
+                sum += arr[i++];
+                if (i >= arr.Length) break;
+                sum += arr[i++];
+            }
+            return sum;
+        }
         /// 2148. Count Elements With Strictly Smaller and Greater Elements
         ///return the number of elements that have both a strictly smaller and a strictly greater element appear in nums.
         ///-100000 <= nums[i] <= 100000
