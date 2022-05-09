@@ -299,6 +299,30 @@ namespace LeetCodeAlgo
         {
             return num % 3 == 0 ? new long[] { num / 3 - 1, num / 3, num / 3 + 1 } : new long[] { };
         }
+        ///2178. Maximum Split of Positive Even Integers
+        public IList<long> MaximumEvenSplit(long finalSum)
+        {
+            if (finalSum % 2 == 1) return new List<long>();
+
+            var res =new HashSet<long>();
+            int seed = 2;
+            while (finalSum > 0)
+            {
+                if (finalSum >= seed)
+                {
+                    res.Add(seed);
+                    finalSum -= seed;
+                    seed += 2;
+                }
+                else
+                {
+                    res.Remove(seed - 2);
+                    res.Add(finalSum+seed-2);
+                    break;
+                }
+            }
+            return res.ToList();
+        }
         /// 2180. Count Integers With Even Digit Sum, nums<=1000
         public int CountEven(int num)
         {
