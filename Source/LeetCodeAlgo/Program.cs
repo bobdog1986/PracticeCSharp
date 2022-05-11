@@ -67,7 +67,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.CountTexts("222222222222222222222222222222222222");
+            var result = anwser.RepeatLimitedString("cczazcc", 3);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

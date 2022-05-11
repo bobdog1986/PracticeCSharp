@@ -353,6 +353,55 @@ namespace LeetCodeAlgo
             res.next = MergeNodes(node);
             return res;
         }
+        ///2182. Construct String With Repeat Limit
+        ///Return the lexicographically largest repeatLimitedString possible.
+        public string RepeatLimitedString(string s, int repeatLimit)
+        {
+            int[] arr = new int[26];
+            foreach (var c in s)
+                arr[c - 'a']++;
+            List<char> list=new List<char>();
+            bool isStop = false;
+            int maxIndex = 25;
+            int minIndex = 0;
+            while (!isStop)
+            {
+                bool existHigh = false;
+                while (arr[maxIndex] == 0)
+                    maxIndex--;
+                while (arr[minIndex] == 0)
+                    minIndex++;
+
+                for (int i = maxIndex; i >= minIndex; i--)
+                {
+                    if (arr[i] == 0) continue;
+                    if (existHigh)
+                    {
+                        list.Add((char)('a' + i));
+                        arr[i]--;
+                        break;
+                    }
+                    else
+                    {
+                        int j = Math.Min(repeatLimit, arr[i]);
+                        arr[i] -= j;
+                        while (j-- > 0)
+                            list.Add((char)('a' + i));
+
+                        existHigh = arr[i] > 0;
+                        if (i == minIndex)
+                        {
+                            isStop = true;
+                            break;
+                        }
+                    }
+                }
+                if(list.Count == s.Length)
+                    isStop = true;
+            }
+            return new string(list.ToArray());
+        }
+
         /// 2185. Counting Words With a Given Prefix
         public int PrefixCount(string[] words, string pref)
         {
