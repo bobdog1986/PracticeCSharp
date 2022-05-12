@@ -421,6 +421,23 @@ namespace LeetCodeAlgo
                 arr[c - 'a']--;
             return arr.Sum(x => Math.Abs(x));
         }
+        ///2187. Minimum Time to Complete Trips, #Binary Search
+        /// Return the minimum time required for all buses to complete at least totalTrips trips.
+        public long MinimumTime(int[] time, int totalTrips)
+        {
+            long left = 1;
+            long right = 100_000_000_000_000_000;
+            while (left < right)
+            {
+                long mid = left + (right - left) / 2;
+                double sum = time.Sum(x => (mid / x) * 1.0);
+                if (sum >= totalTrips)
+                    right = mid;
+                else
+                    left = mid + 1;
+            }
+            return left;
+        }
         /// 2190. Most Frequent Number Following Key In an Array
         ///0 <= i <= n - 2, nums[i] == key and, nums[i + 1] == target.
         ///Return the target with the maximum count.
