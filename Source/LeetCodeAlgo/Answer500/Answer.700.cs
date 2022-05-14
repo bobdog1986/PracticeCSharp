@@ -370,7 +370,58 @@ namespace LeetCodeAlgo
             return dp[max];
         }
 
-        ///744. Find Smallest Letter Greater Than Target, #Binary Search
+        ///743. Network Delay Time, #Graph, #BFS
+        ///Return the time it takes for all the n nodes to receive the signal.
+        ///If it is impossible for all the n nodes to receive the signal, return -1.
+        public int NetworkDelayTime(int[][] times, int n, int k)
+        {
+            int[][] graph = new int[n][];
+            for(int i=0;i<n; ++i)
+            {
+                graph[i] = new int[n];
+                for (int j = 0; j < n; ++j)
+                    graph[i][j] = -1;
+            }
+
+            foreach (var time in times)
+                graph[time[0] - 1][time[1] - 1] = time[2];
+
+            int[] res = new int[n];
+            for (int i = 0; i < n; ++i)
+                res[i] = int.MaxValue;
+
+            var list = new List<int>() {  k - 1 };
+            res[k - 1] = 0;
+            while (list.Count > 0)
+            {
+                var next = new List<int>();
+                foreach(var p in list)
+                {
+                    for(int i = 0; i < n; ++i)
+                    {
+                        if (graph[p][i] == -1) continue;
+                        if (res[i] > res[p] + graph[p][i])
+                        {
+                            res[i] = res[p] + graph[p][i];
+                            if(!next.Contains(i))
+                                next.Add(i);
+                        }
+                    }
+                }
+                list = next;
+            }
+
+            int max = int.MinValue;
+            for(int i = 0; i < n; ++i)
+            {
+                if (res[i] == int.MaxValue) return -1;
+                max = Math.Max(max, res[i]);
+            }
+            return max;
+        }
+
+
+        /// 744. Find Smallest Letter Greater Than Target, #Binary Search
         public char NextGreatestLetter(char[] letters, char target)
         {
             if (target >= letters[letters.Length - 1])
