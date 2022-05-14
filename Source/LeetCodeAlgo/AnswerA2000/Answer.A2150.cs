@@ -267,6 +267,22 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///2171. Removing Minimum Number of Magic Beans, #Prefix Sum
+        public long MinimumRemoval(int[] beans)
+        {
+            Array.Sort(beans);
+            long sum = 0;
+            foreach (var bean in beans)
+                sum += bean;
+
+            long res = long.MaxValue;
+            long m = beans.Length;
+            for (int i = 0; i < beans.Length; i++, m--)
+            {
+                res = Math.Min(res, sum - m * beans[i]);
+            }
+            return res;
+        }
         /// 2176. Count Equal and Divisible Pairs in an Array
         ///return the number of pairs (i, j) where 0 <= i < j < n, such that nums[i] == nums[j] and (i * j) is divisible by k.
         public int CountPairs(int[] nums, int k)
