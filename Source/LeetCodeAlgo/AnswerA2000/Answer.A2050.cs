@@ -94,7 +94,25 @@ namespace LeetCodeAlgo
                 if (x > 3 || x < -3) return false;
             return true;
         }
-        ///2078. Two Furthest Houses With Different Colors
+        ///2073. Time Needed to Buy Tickets
+        public int TimeRequiredToBuy(int[] tickets, int k)
+        {
+            int res = 0;
+            int count = tickets[k];
+            for(int i = 0; i < tickets.Length; i++)
+            {
+                if (i <= k)
+                {
+                    res += Math.Min(tickets[i], count);
+                }
+                else
+                {
+                    res += Math.Min(tickets[i], count - 1);
+                }
+            }
+            return res;
+        }
+        /// 2078. Two Furthest Houses With Different Colors
         ///There are n houses evenly lined up on the street, and each house is beautifully painted.
         ///You are given a 0-indexed integer array colors of length n, where colors[i] represents
         ///the color of the ith house.Return the maximum distance between two houses with different colors.
