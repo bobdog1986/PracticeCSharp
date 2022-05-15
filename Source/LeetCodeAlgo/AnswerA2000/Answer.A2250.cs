@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace LeetCodeAlgo
 {
@@ -296,6 +297,22 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///2269 Find the K-Beauty of a Number
+        /// It has a length of k. It is a divisor of num.
+        public int DivisorSubstrings(int num, int k)
+        {
+            int res = 0;
+            var str = num.ToString();
+            for(int i = 0; i < str.Length - k + 1; i++)
+            {
+                var curr =int.Parse( str.Substring(i, k));
+                if (curr == 0) continue;
+                if (num % curr == 0) res++;
+            }
+            return res;
+        }
+
     }
 
 }
