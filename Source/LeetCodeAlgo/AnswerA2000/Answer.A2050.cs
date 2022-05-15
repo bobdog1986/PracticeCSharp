@@ -300,5 +300,21 @@ namespace LeetCodeAlgo
             node.next = node.next.next;
             return head;
         }
+
+        ///2099. Find Subsequence of Length K With the Largest Sum, #PriorityQueue
+        public int[] MaxSubsequence(int[] nums, int k)
+        {
+            PriorityQueue<int, int> pq = new PriorityQueue<int, int>();
+            for(int i = 0; i < nums.Length; i++)
+                pq.Enqueue(i, -nums[i]);
+
+            var list = new List<int>();
+            while (k-- > 0)
+                list.Add(pq.Dequeue());
+
+            return list.OrderBy(x => x).Select(x => nums[x]).ToArray();
+
+        }
+
     }
 }

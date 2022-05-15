@@ -267,7 +267,42 @@ namespace LeetCodeAlgo
             }
             return res;
         }
-        ///2171. Removing Minimum Number of Magic Beans, #Prefix Sum
+        ///2170. Minimum Operations to Make the Array Alternating
+        public int MinimumOperations(int[] nums)
+        {
+            Dictionary<int, int> dict1 = new Dictionary<int, int>();
+            Dictionary<int, int> dict2 = new Dictionary<int, int>();
+            for(int i = 0; i < nums.Length; ++i)
+            {
+                if (i % 2 == 0)
+                {
+                    if (dict1.ContainsKey(nums[i])) dict1[nums[i]]++;
+                    else dict1.Add(nums[i], 1);
+                }
+                else
+                {
+                    if (dict2.ContainsKey(nums[i])) dict2[nums[i]]++;
+                    else dict2.Add(nums[i], 1);
+                }
+            }
+
+            int len1 = (nums.Length + 1) / 2;
+            int len2 = nums.Length - len1;
+
+            int res = int.MaxValue;
+            foreach(var k1 in dict1.Keys)
+            {
+                foreach(var k2 in dict2.Keys)
+                {
+                    if (k1 == k2) continue;
+                    int count = (len1 - dict1[k1]) + (len2 - dict2[k2]);
+                    res = Math.Min(res, count);
+                }
+            }
+
+            return res;
+        }
+        /// 2171. Removing Minimum Number of Magic Beans, #Prefix Sum
         public long MinimumRemoval(int[] beans)
         {
             Array.Sort(beans);
