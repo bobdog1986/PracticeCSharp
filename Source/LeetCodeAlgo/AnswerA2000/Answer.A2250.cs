@@ -366,6 +366,25 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2275. Largest Combination With Bitwise AND Greater Than Zero
+        public int LargestCombination(int[] candidates)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach(var candidate in candidates)
+            {
+                int seed = 1;
+                while (seed <= candidate)
+                {
+                    if ((candidate & seed) != 0)
+                    {
+                        if(dict.ContainsKey(seed))dict[seed]++;
+                        else dict.Add(seed, 1);
+                    }
+                    seed <<= 1;
+                }
+            }
+            return dict.Values.Max();
+        }
     }
 
 }
