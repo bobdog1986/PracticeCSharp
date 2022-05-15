@@ -94,7 +94,56 @@ namespace LeetCodeAlgo
                 if (x > 3 || x < -3) return false;
             return true;
         }
-        ///2073. Time Needed to Buy Tickets
+        /// 2070. Most Beautiful Item for Each Query, #Binary Search
+        /// items[i] = [pricei, beautyi] denotes the price and beauty of an item respectively.
+        ///For each queries[j], you want to determine the maximum beauty of an item whose price is less than or equal to queries[j].
+        ///If no such item exists, then the answer to this query is 0.
+        ///Return an array answer of the same length as queries where answer[j] is the answer to the jth query.
+        public int[] MaximumBeauty(int[][] items, int[] queries)
+        {
+            items = items.OrderBy(x => x[0]).ToArray();
+
+            int[][] arr = new int[items.Length][];
+            int beauty = int.MinValue; ;
+            for(int i = 0; i < items.Length; i++)
+            {
+                beauty = Math.Max(beauty, items[i][1]);
+                arr[i] = new int[] { items[i][0], beauty };
+            }
+
+            var res = new int[queries.Length];
+            for (int i=0;i< queries.Length; i++)
+            {
+                if (queries[i] < arr[0][0])
+                {
+                    res[i] = 0;
+                    continue;
+                }
+                if (queries[i] >= arr[items.Length - 1][0])
+                {
+                    res[i] = arr[items.Length - 1][1];
+                    continue;
+                }
+
+                int left = 0;
+                int right = items.Length - 1;
+                while (left < right)
+                {
+                    int mid = (left + right+1) / 2;
+                    if (arr[mid][0] > queries[i])
+                    {
+                        right = mid - 1;
+                    }
+                    else
+                    {
+                        left = mid;
+                    }
+                }
+                res[i] = arr[left][1];
+            }
+            return res;
+        }
+        /// 2073. Time Needed to Buy Tickets
         public int TimeRequiredToBuy(int[] tickets, int k)
         {
             int res = 0;
