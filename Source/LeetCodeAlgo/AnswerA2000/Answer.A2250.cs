@@ -350,6 +350,22 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///2274. Maximum Consecutive Floors Without Special Floors
+        ///Return the maximum number of consecutive floors without a special floor.
+        public int MaxConsecutive(int bottom, int top, int[] special)
+        {
+            int res = 0;
+            Array.Sort(special);
+            for (int i = 0; i < special.Length - 1; i++)
+            {
+                res = Math.Max(special[i + 1] - 1 - special[i], res);
+            }
+            res = Math.Max(res, special[0] - bottom);
+            res = Math.Max(res, top - special.Last());
+            return res;
+        }
+
     }
 
 }
