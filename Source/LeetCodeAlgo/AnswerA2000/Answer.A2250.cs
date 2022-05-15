@@ -313,6 +313,25 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2270. Number of Ways to Split Array, #Prefix Sum
+        ///The sum of the first [0,i] elements is >= the sum of the last [i+1,n-1] elements.
+        ///There is at least one element to the right of i.That is, 0 <= i<n - 1.
+        public int WaysToSplitArray(int[] nums)
+        {
+            long total = 0;
+            foreach (var n in nums)
+                total += n;
+
+            int res = 0;
+            long curr = 0;
+            for(int i = 0; i < nums.Length-1; i++)
+            {
+                curr += nums[i];
+                if (curr >= total - curr)
+                    res++;
+            }
+            return res;
+        }
     }
 
 }
