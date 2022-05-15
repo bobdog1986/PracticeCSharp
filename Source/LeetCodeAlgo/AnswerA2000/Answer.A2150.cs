@@ -546,6 +546,19 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///2194. Cells in a Range on an Excel Sheet
+        public IList<string> CellsInRange(string s)
+        {
+            var res = new List<string>();
+            for (char c = s[0]; c <= s[3]; c++)
+            {
+                for (char i = s[1]; i <= s[4]; i++)
+                {
+                    res.Add($"{c}{i}");
+                }
+            }
+            return res;
+        }
         /// 2195. Append K Integers With Minimal Sum, #PriorityQueue, #Heap
         ///You are given an integer array nums and an integer k.
         ///Append k unique positive integers that do not appear in nums to nums such that the resulting total sum is minimum.

@@ -181,14 +181,12 @@ namespace LeetCodeAlgo
         ///Given a string s, return the total appeal of all of its substrings.
         public long AppealSum(string s)
         {
+            int[] last = new int[26];
             long res = 0;
-            long cur = 0;
-            long[] prev = new long[26];
             for (int i = 0; i < s.Length; ++i)
             {
-                cur += i + 1 - prev[s[i] - 'a'];
-                prev[s[i] - 'a'] = i + 1;
-                res += cur;
+                last[s[i] - 'a'] = i + 1;
+                res += last.Sum(x => (long)x);
             }
             return res;
         }
@@ -284,20 +282,6 @@ namespace LeetCodeAlgo
             return (int)(dp.Last());
         }
 
-        ///2194. Cells in a Range on an Excel Sheet
-        public IList<string> CellsInRange(string s)
-        {
-            var res=new List<string>();
-            for(char c = s[0]; c <= s[3]; c++)
-            {
-                for(char i = s[1];i<= s[4]; i++)
-                {
-                    res.Add($"{c}{i}");
-                }
-            }
-            return res;
-        }
-
         ///2269 Find the K-Beauty of a Number
         /// It has a length of k. It is a divisor of num.
         public int DivisorSubstrings(int num, int k)
@@ -332,6 +316,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         ///2273. Find Resultant Array After Removing Anagrams
         public IList<string> RemoveAnagrams(string[] words)
         {
@@ -385,6 +370,9 @@ namespace LeetCodeAlgo
             }
             return dict.Values.Max();
         }
+
+        ///2276. Count Integers in Intervals, see CountIntervals
+
     }
 
 }
