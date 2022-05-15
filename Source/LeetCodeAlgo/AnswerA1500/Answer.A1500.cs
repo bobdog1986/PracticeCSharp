@@ -145,7 +145,30 @@ namespace LeetCodeAlgo
             return new string(arr);
         }
 
-        ///1539. Kth Missing Positive Number, #Binary Search
+
+        ///1529. Minimum Suffix Flips
+        ///In one operation, you can pick an index i where 0 <= i<n
+        ///and flip all bits in the inclusive range[i, n - 1]. Flip means changing '0' to '1' and '1' to '0'.
+        ///Return the minimum number of operations needed to make s equal to target
+        public int MinFlips(string target)
+        {
+            int res = 0;
+            int i = 0;
+            int n = target.Length;
+            char curr = '0';
+            while (i< n)
+            {
+                if (target[i] != curr)
+                {
+                    res++;
+                    curr = curr == '0' ? '1' : '0';
+                }
+                i++;
+            }
+            return res;
+
+        }
+        /// 1539. Kth Missing Positive Number, #Binary Search
         ///Given an array arr of positive integers sorted in a strictly increasing order, and an integer k.
         ///Find the kth positive integer that is missing from this array.
         public int FindKthPositive(int[] arr, int k)
