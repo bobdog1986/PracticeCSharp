@@ -383,5 +383,38 @@ namespace LeetCodeAlgo
 
         }
 
+
+        ///2100. Find Good Days to Rob the Bank, #Prefix Sum
+        ///The ith day is a good day to rob the bank if:
+        ///There are at least time days before and after the ith day,
+        ///The number of guards at the bank for the time days before i are non-increasing, and
+        ///The number of guards at the bank for the time days after i are non-decreasing.
+        public IList<int> GoodDaysToRobBank(int[] security, int time)
+        {
+            int n = security.Length;
+            //store how many count of continuous days meet the requires
+            int[] left = new int[n];
+            int[] right = new int[n];
+            var res = new List<int>();
+
+            for (int i = 1; i < n; i++)
+            {
+                left[i] = security[i] <= security[i - 1] ? left[i - 1] + 1 : 0;
+            }
+
+            for (int i = n - 2; i >= 0; i--)
+            {
+                right[i] = security[i] <= security[i + 1] ? right[i + 1] + 1 : 0;
+            }
+
+            for (int i = time; i < n - time; i++)
+            {
+                // both left and right bounds are time indices away
+                if (left[i] >= time && right[i] >= time)
+                    res.Add(i);
+            }
+
+            return res;
+        }
     }
 }
