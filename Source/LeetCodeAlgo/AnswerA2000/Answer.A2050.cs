@@ -94,6 +94,8 @@ namespace LeetCodeAlgo
                 if (x > 3 || x < -3) return false;
             return true;
         }
+        ///2069. Walking Robot Simulation II, see Robot
+
         /// 2070. Most Beautiful Item for Each Query, #Binary Search
         /// items[i] = [pricei, beautyi] denotes the price and beauty of an item respectively.
         ///For each queries[j], you want to determine the maximum beauty of an item whose price is less than or equal to queries[j].
