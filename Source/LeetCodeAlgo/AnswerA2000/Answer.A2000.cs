@@ -196,7 +196,44 @@ namespace LeetCodeAlgo
 
             return left;
         }
-        ///2044. Count Number of Maximum Bitwise-OR Subsets,#Backtracking
+        /// 2037. Minimum Number of Moves to Seat Everyone
+        /// Return the minimum number of moves required to move each student to a seat
+        /// such that no two students are in the same seat.
+        /// Note that there may be multiple seats or students in the same position at the beginning.
+        public int MinMovesToSeat(int[] seats, int[] students)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach(var seat in seats)
+            {
+                if (dict.ContainsKey(seat)) dict[seat]++;
+                else dict.Add(seat, 1);
+            }
+
+            int res = 0;
+
+            var keys = dict.Keys.OrderBy(x=>x).ToList();
+            Array.Sort(students);
+
+            var i = 0;
+            foreach(var student in students)
+            {
+                if(student == keys[i])
+                {
+
+                }
+                else
+                {
+                    res += Math.Abs(student - keys[i]);
+                }
+
+                dict[keys[i]]--;
+                if (dict[keys[i]] == 0) i++;
+            }
+
+            return res;
+
+        }
+        /// 2044. Count Number of Maximum Bitwise-OR Subsets,#Backtracking
         ///find the maximum possible bitwise OR of a subset of nums and return the number of different non-empty subsets with the maximum bitwise OR.
         ///An array a is a subset of an array b if a can be obtained from b by deleting some(possibly zero) elements of b.
         public int CountMaxOrSubsets(int[] nums)

@@ -51,7 +51,7 @@ namespace LeetCodeAlgo
             return root;
         }
 
-        /// 3. Longest Substring Without Repeating Characters
+        /// 3. Longest Substring Without Repeating Characters,#Sliding Window
         /// Given a string s, find the length of the longest substring without repeating characters.
         /// s consists of English letters, digits, symbols and spaces.
         public int LengthOfLongestSubstring(string s)
@@ -480,7 +480,6 @@ namespace LeetCodeAlgo
         /// IV            4
         public string IntToRoman(int num)
         {
-            if ((num <= 0) || (num > 3999)) throw new ArgumentOutOfRangeException();
             if (num >= 1000) return "M" + IntToRoman(num - 1000);
             if (num >= 900) return "CM" + IntToRoman(num - 900);
             if (num >= 500) return "D" + IntToRoman(num - 500);
@@ -556,7 +555,7 @@ namespace LeetCodeAlgo
             return new string(ans.ToArray());
         }
 
-        ///15. 3Sum
+        ///15. 3Sum, #Two Pointer
         ///nums[i] + nums[j] + nums[k] == 0. no duplicate values
         ///0 <= nums.length <= 3000, -10^5 <= nums[i] <= 10^5
         public IList<IList<int>> ThreeSum(int[] nums)
@@ -577,7 +576,8 @@ namespace LeetCodeAlgo
                             ans.Add(new List<int> { nums[i], nums[left], nums[right] });
                             while (left < right && nums[left] == nums[left + 1]) left++;
                             while (left < right && nums[right] == nums[right - 1]) right--;
-                            left++; right--;
+                            left++;
+                            right--;
                         }
                         else if (nums[left] + nums[right] < sum) left++;
                         else right--;
