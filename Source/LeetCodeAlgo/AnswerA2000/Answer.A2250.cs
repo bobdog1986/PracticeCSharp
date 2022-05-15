@@ -332,6 +332,24 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///2273. Find Resultant Array After Removing Anagrams
+        public IList<string> RemoveAnagrams(string[] words)
+        {
+            var res=new List<string>();
+            res.Add(words[0]);;
+            string prev =new string(words[0].ToArray().OrderBy(x => x).ToArray());
+
+            for (int i = 1; i < words.Length; i++)
+            {
+                string curr = new string(words[i].ToArray().OrderBy(x => x).ToArray());
+                if (curr != prev)
+                {
+                    prev = curr;
+                    res.Add(words[i]);
+                }
+            }
+            return res;
+        }
     }
 
 }
