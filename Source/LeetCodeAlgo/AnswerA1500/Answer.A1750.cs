@@ -217,6 +217,19 @@ namespace LeetCodeAlgo
             return true;
         }
 
+        ///1791. Find Center of Star Graph
+        public int FindCenter(int[][] edges)
+        {
+            int n = edges.Length + 1;
+            int[] arr = new int[n + 1];
+            foreach (var edge in edges)
+            {
+                if (++arr[edge[0]] == n - 1) return edge[0];
+                if (++arr[edge[1]] == n - 1) return edge[1];
+            }
+            return -1;
+        }
+
         ///1797. Design Authentication Manager, see AuthenticationManager
     }
 }
