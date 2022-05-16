@@ -75,7 +75,12 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///2022. Convert 1D Array Into 2D Array
+        ///2011. Final Value of Variable After Performing Operations
+        public int FinalValueAfterOperations(string[] operations)
+        {
+            return operations.Sum(x => x.Contains("++") ? 1 : -1);
+        }
+        /// 2022. Convert 1D Array Into 2D Array
         public int[][] Construct2DArray(int[] original, int m, int n)
         {
             if (original.Length != m * n)
