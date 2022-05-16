@@ -201,6 +201,29 @@ namespace LeetCodeAlgo
 
             return left;
         }
+        ///2032. Two Out of Three
+        ///return a distinct array containing all the values that in at least two out of the three arrays.
+        public IList<int> TwoOutOfThree(int[] nums1, int[] nums2, int[] nums3)
+        {
+            Dictionary<int, HashSet<int>> dict = new Dictionary<int, HashSet<int>>();
+            foreach(var n in nums1)
+            {
+                if(!dict.ContainsKey(n))dict.Add(n, new HashSet<int>() { 0});
+            }
+            foreach (var n in nums2)
+            {
+                if (!dict.ContainsKey(n)) dict.Add(n, new HashSet<int>() { 1 });
+                else dict[n].Add(1);
+            }
+
+            foreach (var n in nums3)
+            {
+                if (dict.ContainsKey(n))
+                    dict[n].Add(2);
+            }
+
+            return dict.Keys.Where(x => dict[x].Count >= 2).ToList();
+        }
         /// 2037. Minimum Number of Moves to Seat Everyone
         /// Return the minimum number of moves required to move each student to a seat
         /// such that no two students are in the same seat.

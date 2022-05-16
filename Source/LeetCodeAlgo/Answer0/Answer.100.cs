@@ -246,7 +246,7 @@ namespace LeetCodeAlgo
             return SortedArrayToBST_Recursion(nums, 0, nums.Length - 1);
         }
 
-        public TreeNode SortedArrayToBST_Recursion(int[] nums, int start, int end)
+        private TreeNode SortedArrayToBST_Recursion(int[] nums, int start, int end)
         {
             if (start > end)
                 return null;
@@ -506,10 +506,7 @@ namespace LeetCodeAlgo
         {
             if (root == null)
                 return null;
-            List<Node_1> list = new List<Node_1>
-            {
-                root
-            };
+            List<Node_1> list = new List<Node_1> { root };
             while (list.Count != 0)
             {
                 List<Node_1> subs = new List<Node_1>();
@@ -743,46 +740,6 @@ namespace LeetCodeAlgo
             int right = Math.Max(0, MaxPathSum_BackTracking(root.right, ref ans));
             ans = Math.Max(ans, root.val + left + right);
             return Math.Max(root.val + left, root.val + right);
-        }
-
-        public int MaxPathSum_LevelOrder(TreeNode root)
-        {
-            int ans = int.MinValue;
-            //level order
-            List<TreeNode> allNodes = new List<TreeNode>() { };
-            //int[0] max- the max value of this node, can contain left or right or both or none(just itself)
-            //int[1] maxOfEdge-can only contain left or right or none ,will be used by parent node
-            Dictionary<TreeNode,int[]> dict =new Dictionary<TreeNode, int[]>();
-            List<TreeNode> list=new List<TreeNode>() { root};
-            while(list.Count>0)
-            {
-                List<TreeNode> next = new List<TreeNode>();
-                foreach(var i in list)
-                {
-                    if (i != null)
-                    {
-                        allNodes.Add(i);
-                        if(i.left!=null)next.Add(i.left);
-                        if(i.right!=null)next.Add(i.right);
-                    }
-                }
-                list = next;
-            }
-            for(int i=allNodes.Count-1; i>=0; i--)
-            {
-                var curr = allNodes[i];
-                int leftMaxOfEdge = curr.left == null ? 0 : dict[curr.left][1];
-                int rightMaxOfEdge = curr.right == null ? 0 : dict[curr.right][1];
-                var max = Math.Max(curr.val,
-                            Math.Max(curr.val + leftMaxOfEdge,
-                                Math.Max(curr.val + rightMaxOfEdge, curr.val + leftMaxOfEdge + rightMaxOfEdge)));
-                var maxOfEdge = Math.Max(curr.val,
-                                    Math.Max(curr.val + leftMaxOfEdge, curr.val + rightMaxOfEdge));
-                dict.Add(curr, new int[] { max, maxOfEdge });
-                ans = Math.Max(ans, Math.Max(max, maxOfEdge));
-            }
-            return ans;
-            //return dict.Values.Select(x => Math.Max(x[0], x[1])).Max();
         }
 
         /// 125. Valid Palindrome, #Two Pointers
