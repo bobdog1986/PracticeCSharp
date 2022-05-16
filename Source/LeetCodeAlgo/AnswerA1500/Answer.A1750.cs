@@ -173,7 +173,20 @@ namespace LeetCodeAlgo
             return index;
         }
 
-        ///1790. Check if One String Swap Can Make Strings Equal
+        ///1784. Check if Binary String Has at Most One Segment of Ones
+        public bool CheckOnesSegment(string s)
+        {
+            int total = s.Count(x => x == '1');
+            int head = 0;
+            int i = 0;
+            while (i < s.Length)
+            {
+                if (s[i++] == '0') break;
+                else head++;
+            }
+            return head == total;
+        }
+        /// 1790. Check if One String Swap Can Make Strings Equal
         ///Return true if make s2==s1 by performing at most one string swap(swap 2 chars in s2). Or return false.
         public bool AreAlmostEqual(string s1, string s2)
         {
