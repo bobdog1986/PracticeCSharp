@@ -35,7 +35,7 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        public void SolveNQueens_BackTracking(IList<int> list, int n, int len, IList<IList<string>> ans)
+        private void SolveNQueens_BackTracking(IList<int> list, int n, int len, IList<IList<string>> ans)
         {
             if (n == 0)
             {
@@ -84,7 +84,7 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        public void TotalNQueens_Backtracking(IList<int> list, int n, int len, ref int ans)
+        private void TotalNQueens_Backtracking(IList<int> list, int n, int len, ref int ans)
         {
             if (n == 0)
             {
@@ -269,65 +269,6 @@ namespace LeetCodeAlgo
             if (last != null)
                 list.Add(last);
             return list.ToArray();
-        }
-
-        public IList<Interval> Merge(IList<Interval> intervals)
-        {
-            if (intervals == null || intervals.Count <= 1) return intervals;
-
-            IList<Interval> result = new List<Interval>();
-
-            for (int i = 0; i < intervals.Count; i++)
-            {
-                Interval current = intervals[i];
-                result.Add(current);
-                result = TrimIntervalFromEnd(result);
-            }
-            return result;
-        }
-
-        public IList<Interval> TrimIntervalFromEnd(IList<Interval> list)
-        {
-            if (list == null || list.Count <= 1) return list;
-            while (list.Count > 1)
-            {
-                Interval current = list[list.Count - 1];
-                Interval pre = list[list.Count - 2];
-                if (pre.end < current.start)
-                {
-                    break;
-                }
-                else
-                {
-                    if (pre.start <= current.start)
-                    {
-                        pre.start = Math.Min(pre.start, current.start);
-                        pre.end = Math.Max(pre.end, current.end);
-                        list.Remove(current);
-                    }
-                    else
-                    {
-                        SwapIntervalNode(ref pre, ref current);
-                        list.Remove(current);
-                        list = TrimIntervalFromEnd(list);
-                        list.Add(current);
-                    }
-                }
-            }
-
-            return list;
-        }
-
-        public void SwapIntervalNode(ref Interval a, ref Interval b)
-        {
-            var temp = a;
-            a = b;
-            b = temp;
-        }
-
-        public Interval MergeIntervalNodes(Interval current, Interval next)
-        {
-            return new Interval(Math.Min(current.start, next.start), Math.Max(current.end, next.end));
         }
 
         ///57. Insert Interval
@@ -655,7 +596,8 @@ namespace LeetCodeAlgo
             return dp[m, n];
         }
 
-        /// 65
+        /// 65. Valid Number
+        ///Given a string s, return true if s is a valid number.
         public bool IsNumber(string s)
         {
             if (string.IsNullOrEmpty(s)) return false;
@@ -894,22 +836,19 @@ namespace LeetCodeAlgo
         /// 69. Sqrt(x), #Binary Search
         ///Given a non-negative integer x, compute and return the square root of x.
         ///Since the return type is an integer, the decimal digits are truncated, and only the integer part of the result is returned.
-        ///0 <= x <= 231 - 1
+        ///0 <= x <= 2^31 - 1
         public int MySqrt(int x)
         {
-            //int.MaxValue. 2147483647
             long left = 0;
             long right = 50000;
             while (left <= right)
             {
-                long mid = left + (right - left) / 2;
-                if (left == mid)
-                    break;
+                long mid = (left + right) / 2;
                 if (mid * mid == x) return (int)mid;
-                else if (mid * mid > x) right = mid;
-                else left = mid;
+                else if (mid * mid > x) right = mid - 1;
+                else left = mid + 1;
             }
-            return (int)left;
+            return (int)right;
         }
 
         public int MySqrt_Math(int x)
@@ -936,15 +875,6 @@ namespace LeetCodeAlgo
                 curr = temp;
             }
             return curr;
-        }
-
-        public int ClimbStairs_Recursion(int n)
-        {
-            if (n == 0) return 0;
-            if (n == 1) return 1;
-            if (n == 2) return 2;
-
-            return ClimbStairs_Recursion(n - 1) + ClimbStairs_Recursion(n - 2);
         }
 
         ///71. Simplify Path
@@ -1522,25 +1452,69 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        ///84. Largest Rectangle in Histogram -- not done
+        ///84. Largest Rectangle in Histogram, #Monotonic
         ///heights representing the histogram's bar height where the width of each bar is 1,
         ///return the area of the largest rectangle in the histogram.
         /// 0<= height <=10000, heights.Length>=1
         public int LargestRectangleArea(int[] heights)
         {
-            int[] dp = new int[heights.Length];
-
-            int start = 0;
-            int end = 0;
-            int minHeight = heights[0];
-            int curr = (end - start + 1) * minHeight;
-            int max = 0;
-            max = Math.Max(max, curr);
+            if (heights == null || heights.Length == 0)
+            {
+                return 0;
+            }
+            int[] lessFromLeft = new int[heights.Length]; // idx of the first bar the left that is lower than current
+            int[] lessFromRight = new int[heights.Length]; // idx of the first bar the right that is lower than current
+            lessFromRight[heights.Length - 1] = heights.Length;
+            lessFromLeft[0] = -1;
 
             for (int i = 1; i < heights.Length; i++)
             {
+                int p = i - 1;
+
+                while (p >= 0 && heights[p] >= heights[i])
+                {
+                    p = lessFromLeft[p];
+                }
+                lessFromLeft[i] = p;
             }
 
+            for (int i = heights.Length - 2; i >= 0; i--)
+            {
+                int p = i + 1;
+
+                while (p < heights.Length && heights[p] >= heights[i])
+                {
+                    p = lessFromRight[p];
+                }
+                lessFromRight[i] = p;
+            }
+
+            int maxArea = 0;
+            for (int i = 0; i < heights.Length; i++)
+            {
+                maxArea = Math.Max(maxArea, heights[i] * (lessFromRight[i] - lessFromLeft[i] - 1));
+            }
+
+            return maxArea;
+        }
+
+        public int LargestRectangleArea1(int[] heights)
+        {
+            int n = heights.Length;
+            int max = 0;
+            int[] stack = new int[n + 1];
+            int index = -1;
+            for (int i = 0; i <= n; i++)
+            {
+                int height = (i == n) ? 0 : heights[i];
+                while (index != -1 && height < heights[stack[index]])
+                {
+                    int currHeight = heights[stack[index --]];
+                    int width = (index == -1) ? i : i - 1 - stack[index];
+                    max = Math.Max(max, currHeight * width);
+                }
+                stack[++index] = i;
+            }
             return max;
         }
 
