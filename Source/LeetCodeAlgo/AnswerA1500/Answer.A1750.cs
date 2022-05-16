@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -230,6 +231,13 @@ namespace LeetCodeAlgo
             return -1;
         }
 
-        ///1797. Design Authentication Manager, see AuthenticationManager
+        ///1796. Second Largest Digit in a String
+        public int SecondHighest(string s)
+        {
+            var arr = s.Where(x => !char.IsLetter(x)).Select(x => x - '0').OrderBy(x => x).Distinct().ToArray();
+            return arr.Length<=1?-1:arr[arr.Length-2];
+        }
+
+        /// 1797. Design Authentication Manager, see AuthenticationManager
     }
 }
