@@ -186,6 +186,16 @@ namespace LeetCodeAlgo
             }
             return head == total;
         }
+        ///1785. Minimum Elements to Add to Form a Given Sum
+        public int MinElements(int[] nums, int limit, int goal)
+        {
+            long diff = goal - nums.Sum(x=>(long)x);
+            if (diff == 0) return 0;
+            if (diff < 0) diff = -diff;
+            int count =(int)( diff / limit);
+            if (diff % limit != 0) count++;
+            return count;
+        }
         /// 1790. Check if One String Swap Can Make Strings Equal
         ///Return true if make s2==s1 by performing at most one string swap(swap 2 chars in s2). Or return false.
         public bool AreAlmostEqual(string s1, string s2)
