@@ -201,7 +201,22 @@ namespace LeetCodeAlgo
 
             return left;
         }
-        ///2032. Two Out of Three
+        ///2027. Minimum Moves to Convert String
+        public int MinimumMoves(string s)
+        {
+            int res = 0;
+            for(int i = 0; i < s.Length; )
+            {
+                if (s[i] == 'X')
+                {
+                    res++;
+                    i += 3;
+                }
+                else i++;
+            }
+            return res;
+        }
+        /// 2032. Two Out of Three
         ///return a distinct array containing all the values that in at least two out of the three arrays.
         public IList<int> TwoOutOfThree(int[] nums1, int[] nums2, int[] nums3)
         {
