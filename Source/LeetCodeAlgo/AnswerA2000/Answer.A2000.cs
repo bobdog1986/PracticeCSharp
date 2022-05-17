@@ -261,6 +261,14 @@ namespace LeetCodeAlgo
             return res;
 
         }
+        ///2042. Check if Numbers Are Ascending in a Sentence
+        public bool AreNumbersAscending(string s)
+        {
+            var arr = s.Split(" ").Where(x=>char.IsDigit(x[0])).Select(x =>int.Parse(x)).ToList();
+            for (int i = 0; i < arr.Count - 1; i++)
+                if (arr[i] >= arr[i + 1]) return false;
+            return true;
+        }
         /// 2044. Count Number of Maximum Bitwise-OR Subsets,#Backtracking
         ///find the maximum possible bitwise OR of a subset of nums and return the number of different non-empty subsets with the maximum bitwise OR.
         ///An array a is a subset of an array b if a can be obtained from b by deleting some(possibly zero) elements of b.

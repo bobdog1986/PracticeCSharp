@@ -1032,7 +1032,7 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        public void Partition_BackTracking(string s, IList<string> list, IList<IList<string>> ans)
+        private void Partition_BackTracking(string s, IList<string> list, IList<IList<string>> ans)
         {
             for(int i=0; i<s.Length-1; i++)
             {
@@ -1052,7 +1052,7 @@ namespace LeetCodeAlgo
             }
         }
 
-        public bool Partition_IsPalindrome(string str)
+        private bool Partition_IsPalindrome(string str)
         {
             int i = 0;
             while (i < str.Length / 2)
@@ -1429,7 +1429,7 @@ namespace LeetCodeAlgo
             WordBreak139_Backtracking(s, wordDict, new Dictionary<string, int>(), ref ans);
             return ans;
         }
-        public void WordBreak139_Backtracking(string s, IList<string> wordDict, IDictionary<string, int> existLens, ref bool ans)
+        private void WordBreak139_Backtracking(string s, IList<string> wordDict, IDictionary<string, int> existLens, ref bool ans)
         {
             if (ans || existLens.ContainsKey(s)) return;
             existLens.Add(s, 1);

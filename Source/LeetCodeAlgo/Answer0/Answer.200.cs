@@ -717,7 +717,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
-        /// 230. Kth Smallest Element in a BST
+        /// 230. Kth Smallest Element in a BST, #BTree
         ///copy from InorderTraversal_Iteration()
         public int KthSmallest(TreeNode root, int k)
         {
@@ -744,7 +744,7 @@ namespace LeetCodeAlgo
                     node = item.right;
                 }
             }
-            //need happen
+            //never happen
             return values[k - 1];
         }
 
@@ -858,7 +858,7 @@ namespace LeetCodeAlgo
             }
         }
 
-        /// 238. Product of Array Except Self
+        /// 238. Product of Array Except Self, #Prefix Sum
         ///return an array such that answer[i] = product of all the elements of nums except nums[i].
         ///O(n) time and without using the division operation.
         public int[] ProductExceptSelf(int[] nums)
@@ -955,45 +955,31 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
-        /// 240. Search a 2D Matrix II, #Binary Search
+        /// 240. Search a 2D Matrix II
         ///This matrix has the following properties:
         ///ints in each row are sorted in ascending from left to right.
         ///ints in each column are sorted in ascending from top to bottom.
         public bool SearchMatrix(int[][] matrix, int target)
         {
-            int rowLen = matrix.Length;
-            int colLen = matrix[0].Length;
-            if (matrix[0][0] > target || matrix[rowLen - 1][colLen - 1] < target)
-                return false;
-            foreach (var arr in matrix)
+            if (matrix == null || matrix.Length ==0 || matrix[0].Length ==0)
             {
-                if (arr[0] > target || arr[arr.Length - 1] < target)
-                    continue;
-                int col1 = 0;
-                int col2 = colLen - 1;
-                int col = (col2 - col1) / 2;
-                while (col1 <= col2 && col <= col2 && col >= col1)
+                return false;
+            }
+            int col = matrix[0].Length - 1;
+            int row = 0;
+            while (col >= 0 && row <= matrix.Length - 1)
+            {
+                if (target == matrix[row][col])
                 {
-                    if (col1 == col2)
-                    {
-                        if (arr[col1] == target)
-                            return true;
-                        break;
-                    }
-                    if (arr[col] == target)
-                    {
-                        return true;
-                    }
-                    else if (arr[col] > target)
-                    {
-                        col2 = col - 1;
-                        col = (col2 - col1) / 2 + col1;
-                    }
-                    else
-                    {
-                        col1 = col + 1;
-                        col = (col2 - col1) / 2 + col1;
-                    }
+                    return true;
+                }
+                else if (target < matrix[row][col])
+                {
+                    col--;
+                }
+                else if (target > matrix[row][col])
+                {
+                    row++;
                 }
             }
             return false;
