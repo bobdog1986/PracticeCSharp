@@ -309,5 +309,61 @@ namespace LeetCodeAlgo
             CountMaxOrSubsets_BackTracking(nums, i + 1, currOr, maxOr, ref res);
             CountMaxOrSubsets_BackTracking(nums, i + 1, currOr|nums[i], maxOr, ref res);
         }
+
+        ///2047. Number of Valid Words in a Sentence
+
+        public int CountValidWords(string sentence)
+        {
+            int res = 0;
+            var arr = sentence.Split(' ').ToArray();
+            foreach(var str in arr)
+            {
+                if(string.IsNullOrEmpty(str)) continue;
+                bool find = true;
+                int hyphen = 0;
+                int punctuation = 0;
+                for (int i = 0; i < str.Length; i++)
+                {
+                    if(str[i] == ' ' || char.IsDigit(str[i]))
+                    {
+                        find = false;
+                        break;
+                    }
+                    else
+                    {
+                        if (str[i] == '-')
+                        {
+                            hyphen++;
+                            if (hyphen > 1)
+                            {
+                                find = false;
+                                break;
+                            }
+                            if (i == 0||i==str.Length-1||!char.IsLetter( str[i-1])||!char.IsLetter(str[i + 1]))
+                            {
+                                find=false;
+                                break;
+                            }
+                        }
+                        else if(str[i] == '!'|| str[i] == ','|| str[i] == '.')
+                        {
+                            if (i != str.Length - 1)
+                            {
+                                find = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (find)
+                    res++;
+            }
+
+
+            return res;
+        }
+
+
     }
 }
