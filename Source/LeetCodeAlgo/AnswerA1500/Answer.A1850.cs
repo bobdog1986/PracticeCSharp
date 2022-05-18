@@ -105,7 +105,22 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        ///1894. Find the Student that Will Replace the Chalk, #Binary Search
+        ///1887. Reduction Operations to Make the Array Elements Equal
+        public int ReductionOperations(int[] nums)
+        {
+            Dictionary<int,int> dict = new Dictionary<int,int>();
+            foreach(var n in nums)
+            {
+                if (dict.ContainsKey(n)) dict[n]++;
+                else dict.Add(n,1);
+            }
+            int res = 0;
+            var keys = dict.Keys.OrderBy(x => x).ToList();
+            for(int i=1;i<keys.Count;i++)
+                res+=i*dict[keys[i]];
+            return res;
+        }
+        /// 1894. Find the Student that Will Replace the Chalk, #Binary Search
         ///Every time k-=chalk[i], return not enough for index i;
         public int ChalkReplacer(int[] chalk, int k)
         {
