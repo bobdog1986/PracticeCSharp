@@ -83,6 +83,18 @@ namespace LeetCodeAlgo
                 max = Math.Max(max, nums[i] + nums[nums.Length - 1 - i]);
             return max;
         }
+        ///1884. Egg Drop With 2 Eggs and N Floors
+        public int TwoEggDrop(int n)
+        {
+            int res = 0;
+            int seed = 1;
+            while (n > 0)
+            {
+                n -= seed++;
+                res++;
+            }
+            return res;
+        }
         /// 1886. Determine Whether Matrix Can Be Obtained By Rotation
         ///Given two n x n binary matrices mat and target, return true if it is possible to
         ///make mat equal to target by rotating mat in 90-degree increments, or false otherwise.
