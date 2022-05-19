@@ -239,5 +239,22 @@ namespace LeetCodeAlgo
         }
 
         /// 1797. Design Authentication Manager, see AuthenticationManager
+
+        ///1798. Maximum Number of Consecutive Values You Can Make
+        public int GetMaximumConsecutive(int[] coins)
+        {
+            //"Return the maximum number ... you can make with your coins starting from and including 0"
+            //this equals to"Return the minimum number that you can not make .."
+
+            Array.Sort(coins);
+            int res = 1;
+            foreach (var coin in coins)
+            {
+                if (coin > res) break;
+                res += coin;
+            }
+            return res;
+        }
+
     }
 }
