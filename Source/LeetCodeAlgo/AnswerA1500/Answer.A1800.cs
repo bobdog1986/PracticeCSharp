@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System;
 using System.Linq;
+using System.Collections;
+using System.Text;
 
 namespace LeetCodeAlgo
 {
@@ -53,6 +55,46 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///1807. Evaluate the Bracket Pairs of a String
+        public string Evaluate(string s, IList<IList<string>> knowledge)
+        {
+            var sb =new StringBuilder();
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            foreach (var i in knowledge)
+                dict.Add(i[0], i[1]);
+            int left = 0;
+            for(int i = 0; i < s.Length; )
+            {
+                if (s[i] == '(')
+                {
+                    if (i != left)
+                    {
+                        sb.Append(s.Substring(left, i - left));
+                    }
+
+                    int j = i + 1;
+                    while (s[j] != ')')
+                    {
+                        j++;
+                    }
+
+                    var str = s.Substring(i + 1, j - i - 1);
+                    if (dict.ContainsKey(str)) sb.Append(dict[str]);
+                    else sb.Append("?");
+                    i = j + 1;
+                    left = j + 1;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+
+            if (left != s.Length)
+                sb.Append(s.Substring(left));
+
+            return sb.ToString();
+        }
         /// 1814. Count Nice Pairs in an Array
         /// You are given an array nums that consists of non-negative integers.
         /// For example, rev(123) = 321, and rev(120) = 21.
