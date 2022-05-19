@@ -174,7 +174,24 @@ namespace LeetCodeAlgo
             return index;
         }
 
-        ///1784. Check if Binary String Has at Most One Segment of Ones
+        ///1780. Check if Number is a Sum of Powers of Three
+        public bool CheckPowersOfThree(int n)
+        {
+            int seed = 0;
+            while (true)
+            {
+                if (Math.Pow(3, seed) < n) seed++;
+                else break;
+            }
+            int curr = (int)Math.Pow(3, seed);
+            while (n > 0 && curr>0)
+            {
+                if (curr <= n) n -= curr;
+                curr/=3 ;
+            }
+            return n == 0;
+        }
+        /// 1784. Check if Binary String Has at Most One Segment of Ones
         public bool CheckOnesSegment(string s)
         {
             int total = s.Count(x => x == '1');
