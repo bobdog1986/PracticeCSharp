@@ -8,7 +8,23 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1706. Where Will the Ball Fall
+        ///1701. Average Waiting Time
+        ///Only 1 chef, customers[i] = [arrivali, timei], Return the average waiting time of all customers.
+        public double AverageWaitingTime(int[][] customers)
+        {
+            double total = 0;
+            int n = customers.Length;
+            double start = 0;
+            for(int i = 0; i < n; ++i)
+            {
+                start = Math.Max(start, customers[i][0]);
+                double end = start + customers[i][1];
+                total += end - customers[i][0];
+                start = end;
+            }
+            return total / n;
+        }
+        /// 1706. Where Will the Ball Fall
         ///You have a 2-D grid of size m x n representing a box, and you have n balls.
         ///The box is open on the top and bottom sides.
         ///A board = 1, that redirects the ball to the right spans the top-left to the bottom-right
