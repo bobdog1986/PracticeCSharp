@@ -41,6 +41,17 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///1806. Minimum Number of Operations to Reinitialize a Permutation
+        public int ReinitializePermutation(int n)
+        {
+            int res = 0, i = 1;
+            while (res == 0 || i > 1)
+            {
+                i = i * 2 % (n - 1);
+                res++;
+            }
+            return res;
+        }
 
         /// 1814. Count Nice Pairs in an Array
         /// You are given an array nums that consists of non-negative integers.
