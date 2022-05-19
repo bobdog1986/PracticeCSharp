@@ -249,6 +249,22 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///1833. Maximum Ice Cream Bars
+        public int MaxIceCream(int[] costs, int coins)
+        {
+            int res = 0;
+            Array.Sort(costs);
+            foreach(var cost in costs)
+            {
+                if (coins < cost) break;
+                else
+                {
+                    coins -= cost;
+                    res++;
+                }
+            }
+            return res;
+        }
         /// 1838. Frequency of the Most Frequent Element, #Sliding Window
         ///In one operation, you can choose an index of nums and increment the element at that index by 1.
         ///Return the maximum possible frequency of an element after performing at most k operations.
