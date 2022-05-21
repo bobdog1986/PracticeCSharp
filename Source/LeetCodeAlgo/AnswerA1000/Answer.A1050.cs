@@ -251,5 +251,25 @@ namespace LeetCodeAlgo
             }
             return -1;
         }
+
+        ///1094. Car Pooling
+        public bool CarPooling(int[][] trips, int capacity)
+        {
+            int[] arr = new int[1001];
+            foreach(var trip in trips)
+            {
+                arr[trip[1]] -= trip[0];
+                arr[trip[2]] += trip[0];
+            }
+
+            foreach(var n in arr)
+            {
+                capacity += n;
+                if (capacity < 0) return false;
+            }
+
+            return true;
+        }
+
     }
 }
