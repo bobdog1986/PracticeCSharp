@@ -81,6 +81,17 @@ namespace LeetCodeAlgo
             if (index != -1) return RemoveOccurrences(s.Substring(0, index) + s.Substring(index + part.Length), part);
             else return s;
         }
+        ///1920. Build Array from Permutation
+        ///ans[i] = nums[nums[i]], 1 <= nums.length <= 1000, O(1) space
+        public int[] BuildArray(int[] nums)
+        {
+            int mask = (1 << 10) - 1;
+            for (int i = 0; i < nums.Length; i++)
+                nums[i] |= (nums[nums[i]] & mask) << 10;
+            for (int i = 0; i < nums.Length; i++)
+                nums[i] = nums[i] >> 10;
+            return nums;
+        }
         /// 1922. Count Good Numbers- not pass,support to 10^8, but input is 10^15
         ///even indices are even and the digits at odd indices are prime (2, 3, 5, or 7).
         public int CountGoodNumbers(long n)
