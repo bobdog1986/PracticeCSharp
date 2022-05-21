@@ -45,6 +45,11 @@ namespace LeetCodeAlgo
 
             return res;
         }
+        ///1108. Defanging an IP Address
+        public string DefangIPaddr(string address)
+        {
+            return address.Replace(".", "[.]");
+        }
         /// 1129. Shortest Path with Alternating Colors, #Graph, #BFS
         public int[] ShortestAlternatingPaths(int n, int[][] redEdges, int[][] blueEdges)
         {
