@@ -151,7 +151,16 @@ namespace LeetCodeAlgo
             return -1;
         }
 
-        ///1930. Unique Length-3 Palindromic Subsequences
+        ///1929. Concatenation of Array
+        public int[] GetConcatenation(int[] nums)
+        {
+            int n = nums.Length;
+            Array.Resize(ref nums, n * 2);
+            for (int i = 0; i < n; i++)
+                nums[i + n] = nums[i];
+            return nums;
+        }
+        /// 1930. Unique Length-3 Palindromic Subsequences
         ///Given a string s, return the number of unique palindromes of length three that are a subsequence of s.
         public int CountPalindromicSubsequence(string s)
         {
