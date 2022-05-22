@@ -266,6 +266,32 @@ namespace LeetCodeAlgo
             return new int[] { twice, miss };
         }
 
+        ///647. Palindromic Substrings
+        ///Given a string s, return the number of palindromic substrings in it.
+        ///A string is a palindrome when it reads the same backward as forward.
+        ///A substring is a contiguous sequence of characters within the string.
+        public int CountSubstrings(string s)
+        {
+            int res = 0;
+            for(int i = 0; i < s.Length; i++)
+            {
+                res += CountSubstrings(s, i, i);
+                res += CountSubstrings(s, i, i+1);
+            }
+            return res;
+        }
+
+        private int CountSubstrings(string s, int i, int j)
+        {
+            int count = 0;
+            while(i>=0&&j<s.Length && s[i--] == s[j++])
+            {
+                count++;
+            }
+            return count;
+        }
+
+
         /// 648. Replace Words
         ///Return the sentence after the replacement.
         public string ReplaceWords(IList<string> dictionary, string sentence)
