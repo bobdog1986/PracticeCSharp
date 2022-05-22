@@ -414,6 +414,43 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+
+        ///2280. Minimum Lines to Represent a Line Chart
+        public int MinimumLines(int[][] stockPrices)
+        {
+            if (stockPrices.Length == 1) return 0;//edge case
+            int res = 0;
+            stockPrices = stockPrices.OrderBy(x => x[0]).ToArray();//sort prices by day
+            int n = stockPrices.Length;
+            var prev = MinimumLines_GetLine(stockPrices[0], stockPrices[1]);
+            res++;
+            for (int i = 1; i < n-1; i++)
+            {
+                var curr = MinimumLines_GetLine(stockPrices[i], stockPrices[i+1]);
+                if (curr[0] != prev[0] || curr[1] != prev[1])
+                {
+                    res++;
+                    prev = curr;
+                }
+            }
+            return res;
+        }
+
+        private double[] MinimumLines_GetLine(int[] p1, int[] p2)
+        {
+            if (p1[1] == p2[1])
+            {
+                return new double[] { 0, p1[1] };
+            }
+            else
+            {
+                double a = 1.0 * (p1[1] - p2[1]) / (p1[0] - p2[0]);
+                double b = 1.0 * (p2[0] * p1[1] - p1[0] * p2[1]) / (p2[0] - p1[0]);
+                return new double[] { a, b };
+            }
+        }
+
     }
 
 }
