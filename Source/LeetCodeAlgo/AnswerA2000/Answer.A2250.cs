@@ -381,6 +381,39 @@ namespace LeetCodeAlgo
         {
             return s.Count(x => x == letter) * 100 / s.Length;
         }
+
+        ///2279. Maximum Bags With Full Capacity of Rocks
+        public int MaximumBags(int[] capacity, int[] rocks, int additionalRocks)
+        {
+            int n = rocks.Length;
+            int[] arr = new int[n];
+            for(int i=0;i<n; i++)
+            {
+                arr[i] = capacity[i] - rocks[i];
+            }
+            Array.Sort(arr);
+            int res = 0;
+            foreach(var i in arr)
+            {
+                if (i == 0)
+                {
+                    res++;
+                }
+                else
+                {
+                    if (additionalRocks >= i)
+                    {
+                        additionalRocks -= i;
+                        res++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            return res;
+        }
     }
 
 }
