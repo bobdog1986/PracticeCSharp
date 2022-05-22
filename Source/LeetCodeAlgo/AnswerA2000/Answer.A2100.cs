@@ -122,6 +122,24 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2016. Maximum Difference Between Increasing Elements
+        /// find the maximum of ( nums[j] - nums[i]), such that 0 <= i < j < n and nums[i] < nums[j].
+        ///Return the maximum difference.If no such i and j exists, return -1
+        public int MaximumDifference(int[] nums)
+        {
+            int res = -1;
+            int n = nums.Length;
+            int max = nums[n - 1];
+            for(int i = n - 2; i >= 0; --i)
+            {
+                if(nums[i] < max && max - nums[i] > res)
+                {
+                    res = max - nums[i];
+                }
+                max = Math.Max(max, nums[i]);
+            }
+            return res;
+        }
         /// 2108. Find First Palindromic String in the Array
         public string FirstPalindrome(string[] words)
         {
