@@ -511,7 +511,7 @@ namespace LeetCodeAlgo
                 long rSum = preSumPreSum[r] - preSumPreSum[i];
                 res = (res + strength[i] * (rSum * (i - l) % mod - lSum * (r - i) % mod)) % mod;
             }
-            return (int)(res + mod) % mod;
+            return (int)(res % mod);
         }
 
 

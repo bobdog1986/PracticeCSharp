@@ -8,7 +8,38 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1162. As Far from Land as Possible, #Graph, #DP, #BFS
+        ///1161. Maximum Level Sum of a Binary Tree, #BTree
+        ///the level of its root is 1, the level of its children is 2, and so on.
+        ///Return the smallest level x such that the sum of all the values of nodes at level x is maximal.
+        public int MaxLevelSum(TreeNode root)
+        {
+            int max = int.MinValue;
+            int res = 0;
+            int level = 0;
+            var list=new List<TreeNode>() { root};
+            while (list.Count > 0)
+            {
+                var next = new List<TreeNode>();
+                level++;
+                int sum = 0;
+                foreach(var i in list)
+                {
+                    if (i == null) continue;
+                    sum += i.val;
+                    if (i.left != null) next.Add(i.left);
+                    if (i.right != null) next.Add(i.right);
+                }
+                if (sum > max)
+                {
+                    max = sum;
+                    res = level;
+                }
+                list = next;
+            }
+            return res;
+        }
+
+        /// 1162. As Far from Land as Possible, #Graph, #DP, #BFS
         ///0 represents water and 1 represents land,
         ///find a water cell such that its distance to the nearest land cell is maximized,
         ///and return the distance. If no land or water exists in the grid, return -1.
