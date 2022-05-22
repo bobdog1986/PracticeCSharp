@@ -135,6 +135,11 @@ namespace LeetCodeAlgo
 
             return new string(list.ToArray());
         }
+        ///1227. Airplane Seat Assignment Probability
+        public double NthPersonGetsNthSeat(int n)
+        {
+            return n == 1 ? 1.0 : 0.5;
+        }
         /// 1232. Check If It Is a Straight Line
         ///coordinates[i] = [x, y], where [x, y] represents the coordinate of a point.
         ///Check if these points make a straight line in the XY plane.
