@@ -451,6 +451,72 @@ namespace LeetCodeAlgo
             }
         }
 
+
+        ///2281. Sum of Total Strength of Wizards, #Prefix Sum, #Monotonic
+        ///strength[i] denotes the strength of the ith wizard.For a contiguous group of wizards,two values:
+        /// - The strength of the weakest wizard in the group.
+        /// - The total of all the individual strengths of the wizards in the group.
+        ///Return the sum of the total strengths of all contiguous groups of wizards. return it modulo 109 + 7.
+        public int TotalStrength(int[] strength)
+        {
+            int mod = 10_0000_0007;
+            int n = strength.Length;
+
+            int[] right = new int[n];
+            Array.Fill(right, n);
+            Stack<int> stack = new Stack<int>();
+            for (int i = 0; i < n; i++)
+            {
+                while (stack.Count >0 && strength[stack.Peek()] > strength[i])
+                {
+                    right[stack.Pop()] = i;
+                }
+                stack.Push(i);
+            }
+
+            int[] left = new int[n];
+            Array.Fill(left, -1);
+            stack.Clear();
+            for (int i = n - 1; i >= 0; i--)
+            {
+                while (stack.Count > 0 && strength[stack.Peek()] >= strength[i])
+                {
+                    left[stack.Pop()] = i;
+                }
+                stack.Push(i);
+            }
+
+            long res = 0;
+            long[] preSum = new long[n];
+            for (int i = 0; i < n; i++)
+            {
+                preSum[i] = strength[i];
+                if (i > 0)
+                {
+                    preSum[i] = (preSum[i] + preSum[i - 1]) % mod;
+                }
+            }
+
+            long[] preSumPreSum = new long[n + 1];
+            for (int i = 1; i < n + 1; i++)
+            {
+                preSumPreSum[i] = (preSumPreSum[i - 1] + preSum[i - 1]) % mod;
+            }
+
+            for (int i = 0; i < n; i++)
+            {
+                int l = left[i];
+                int r = right[i];
+                long lSum = preSumPreSum[i] - preSumPreSum[Math.Max(l, 0)];
+                long rSum = preSumPreSum[r] - preSumPreSum[i];
+                res = (res + strength[i] * (rSum * (i - l) % mod - lSum * (r - i) % mod)) % mod;
+            }
+            return (int)(res + mod) % mod;
+        }
+
+
+
+
     }
 
 }
