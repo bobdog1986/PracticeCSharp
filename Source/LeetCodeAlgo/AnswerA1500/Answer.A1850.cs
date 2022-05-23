@@ -83,7 +83,17 @@ namespace LeetCodeAlgo
                 max = Math.Max(max, nums[i] + nums[nums.Length - 1 - i]);
             return max;
         }
-        ///1884. Egg Drop With 2 Eggs and N Floors
+        ///1880. Check if Word Equals Summation of Two Words
+        public bool IsSumEqual(string firstWord, string secondWord, string targetWord)
+        {
+            return IsSumEqual(firstWord) + IsSumEqual(secondWord) == IsSumEqual(targetWord);
+        }
+
+        private int IsSumEqual(string str)
+        {
+            return int.Parse(new string(str.Select(x => (char)(x - 'a' + '0')).ToArray()));
+        }
+        /// 1884. Egg Drop With 2 Eggs and N Floors
         public int TwoEggDrop(int n)
         {
             int res = 0;
