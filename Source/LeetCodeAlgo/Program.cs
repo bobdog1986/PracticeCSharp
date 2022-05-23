@@ -35,12 +35,13 @@ namespace LeetCodeAlgo
             };
             var grid0 = new char[][]
             {
-                new char[]{'(', '('},
                 new char[]{')', '('},
                 new char[]{'(', ')'},
             };
             var grid1 = new char[][]
             {
+                new char[]{'*', '#', '*', '.', '.', '.', '#', '.', '*', '.'},
+
                 //new char[]{ 'X', 'O','X','X'},
                 //new char[]{'1','1','1'},
             };
@@ -67,7 +68,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.FindMaxForm(new string[] { "10", "0", "1" },1,1);
+            var result = anwser.RotateTheBox(grid1);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

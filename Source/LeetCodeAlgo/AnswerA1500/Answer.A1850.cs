@@ -49,6 +49,47 @@ namespace LeetCodeAlgo
             return new int[] { i, memory1, memory2 };
         }
 
+        ///1861. Rotating the Box
+        ///A stone '#',A stationary obstacle '*',Empty '.'
+        public char[][] RotateTheBox(char[][] box)
+        {
+            int m = box.Length;
+            int n = box[0].Length;
+            var res = new char[n][];
+            for (int i = 0; i < n; i++)
+                res[i] = new char[m];
+            for (int i = 0; i < m; i++)
+            {
+                int r = 0;
+                int stone = 0;
+                for (int j = 0; j < n; j++)
+                {
+                    if (box[i][j] == '*')
+                    {
+                        while (stone> 0)
+                        {
+                            res[r++][m - 1 - i] = '#';
+                            stone--;
+                        }
+                        res[r++][m - 1 - i] = '*';
+                    }
+                    else if (box[i][j] == '.')
+                    {
+                        res[r++][m - 1 - i] = '.';
+                    }
+                    else
+                    {
+                        stone++;
+                    }
+                }
+                while (stone > 0)
+                {
+                    res[r++][m - 1 - i] = '#';
+                    stone--;
+                }
+            }
+            return res;
+        }
         /// 1876. Substrings of Size Three with Distinct Characters
         ///A string is good if there are no repeated characters.
         ///Given a string s,return the number of good substrings of length three in s.
