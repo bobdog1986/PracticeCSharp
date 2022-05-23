@@ -67,7 +67,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.CountValidWords("cat and  dog");
+            var result = anwser.FindMaxForm(new string[] { "10", "0", "1" },1,1);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

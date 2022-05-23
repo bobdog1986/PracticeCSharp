@@ -64,7 +64,7 @@ namespace LeetCodeAlgo
                     dict.Add(c, new List<char>() { c });
                 }
             }
-            return String.Join("", dict.OrderBy(x => -x.Value.Count).Select(x => string.Join("", x.Value)));
+            return string.Join("", dict.OrderBy(x => -x.Value.Count).Select(x => string.Join("", x.Value)));
         }
 
         /// 452. Minimum Number of Arrows to Burst Balloons, #DP
@@ -138,9 +138,9 @@ namespace LeetCodeAlgo
             Array.Sort(s);
             int i = 0;
             int j = 0;
-            while(i<g.Length && j < s.Length)
+            while (i < g.Length && j < s.Length)
             {
-                if(g[i] <= s[j])
+                if (g[i] <= s[j])
                 {
                     i++;
                     j++;
@@ -153,6 +153,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         ///456. 132 Pattern, #Monotonic
         ///nums[i] < nums[k] < nums[j]. Return true if there is a 132 pattern in nums, otherwise, return false.
         public bool Find132pattern(int[] nums)
@@ -170,6 +171,7 @@ namespace LeetCodeAlgo
             }
             return false;
         }
+
         /// 457. Circular Array Loop
         ///If nums[i]>0, move nums[i] steps forward, If nums[i]<0 move nums[i] steps backward.
         ///Every nums[seq[j]] is either all positive or all negative.
@@ -216,7 +218,7 @@ namespace LeetCodeAlgo
         ///check if s can be constructed by taking a substring of it and appending multiple copies of the substring together.
         public bool RepeatedSubstringPattern(string s)
         {
-            for(int i=1; i <= s.Length/2; i++)
+            for (int i = 1; i <= s.Length / 2; i++)
             {
                 if (s.Length % i != 0) continue;
                 var sub = s.Substring(0, i);
@@ -318,9 +320,9 @@ namespace LeetCodeAlgo
                 dp[0] = true;
                 for (int i = 1; i <= word.Length; i++)
                 {
-                    for (int j = i-1; j >= 0; j--)
+                    for (int j = i - 1; j >= 0; j--)
                     {
-                        if (dp[j] && set.Contains(word.Substring(j, i-j)))
+                        if (dp[j] && set.Contains(word.Substring(j, i - j)))
                         {
                             dp[i] = true;
                             break;
@@ -332,6 +334,7 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
         public List<string> FindAllConcatenatedWordsInADict(string[] words)
         {
             words = words.OrderBy(x => x.Length).Where(x => x.Length > 0).ToArray();
@@ -345,23 +348,44 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        private bool FindAllConcatenatedWordsInADict_dfs(string word,string origin, HashSet<string> set, string previous)
+        private bool FindAllConcatenatedWordsInADict_dfs(string word, string origin, HashSet<string> set, string previous)
         {
             if (!string.IsNullOrEmpty(previous)) set.Add(previous);
-            if (word!=origin && set.Contains(word)) return true;
+            if (word != origin && set.Contains(word)) return true;
 
             for (int i = 1; i < word.Length; i++)
             {
                 string prefix = word.Substring(0, i);
                 if (set.Contains(prefix) &&
-                    FindAllConcatenatedWordsInADict_dfs(word.Substring(i, word.Length-i), origin, set, previous + prefix))
+                    FindAllConcatenatedWordsInADict_dfs(word.Substring(i, word.Length - i), origin, set, previous + prefix))
                 {
                     return true;
                 }
             }
             return false;
         }
-        ///476. Number Complement
+
+        ///474. Ones and Zeroes, #DP
+        ///Return the size of largest subset of strs such that at most m 0's and n 1's in the subset.
+        public int FindMaxForm(string[] strs, int m, int n)
+        {
+            int[,] dp = new int[m + 1, n + 1];
+            foreach (var s in strs)
+            {
+                int count0 = s.Count(x => x == '0');
+                int count1 = s.Length - count0;
+                for (int i = m; i >= count0; i--)
+                {
+                    for (int j = n; j >= count1; j--)
+                    {
+                        dp[i, j] = Math.Max(dp[i, j], 1 + dp[i - count0, j - count1]);
+                    }
+                }
+            }
+            return dp[m, n];
+        }
+
+        /// 476. Number Complement
         ///The complement of an integer is the integer you get when you flip all the 0's to 1's and all the 1's to 0's
         ///For example, The integer 5 is "101" in binary and its complement is "010" which is the integer 2.
         public int FindComplement(int num)
@@ -376,6 +400,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 482. License Key Formatting
         ///Return the reformatted license key.
         public string LicenseKeyFormatting(string s, int k)
@@ -436,13 +461,15 @@ namespace LeetCodeAlgo
         ///Return the number of different expressions that you can build, which evaluates to target.
         public int FindTargetSumWays(int[] nums, int target)
         {
-            Dictionary<int, int> dict = new Dictionary<int, int>();
-            dict.Add(0, 1);//seed data = 1
+            Dictionary<int, int> dict = new Dictionary<int, int>
+            {
+                { 0, 1 }//seed data = 1
+            };
 
-            foreach(var n in nums)
+            foreach (var n in nums)
             {
                 Dictionary<int, int> next = new Dictionary<int, int>();
-                foreach(var k in dict.Keys)
+                foreach (var k in dict.Keys)
                 {
                     if (next.ContainsKey(k + n)) next[k + n] += dict[k];
                     else next.Add(k + n, dict[k]);
@@ -454,7 +481,7 @@ namespace LeetCodeAlgo
                 dict = next;
             }
 
-            return dict.ContainsKey(target)? dict[target]:0;
+            return dict.ContainsKey(target) ? dict[target] : 0;
         }
 
         public int FindTargetSumWays_BackTracking(int[] nums, int target)
