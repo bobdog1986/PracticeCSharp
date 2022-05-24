@@ -74,6 +74,45 @@ namespace LeetCodeAlgo
             }
             return -1;
         }
+        ///1657. Determine if Two Strings Are Close
+        public bool CloseStrings(string word1, string word2)
+        {
+            if (word1.Length != word2.Length)
+                return false;
+
+            Dictionary<char, int> dict1 = new Dictionary<char, int>();
+            Dictionary<char, int> dict2 = new Dictionary<char, int>();
+
+            foreach(var c in word1)
+            {
+                if (dict1.ContainsKey(c)) dict1[c]++;
+                else dict1.Add(c, 1);
+            }
+
+            foreach (var c in word2)
+            {
+                if (dict2.ContainsKey(c)) dict2[c]++;
+                else dict2.Add(c, 1);
+            }
+
+            if (dict1.Count != dict2.Count)
+                return false;
+
+            foreach (var k in dict1.Keys)
+            {
+                if (!dict2.ContainsKey(k)) return false;
+            }
+
+            var list1 = dict1.Values.OrderBy(x => x).ToList();
+            var list2 = dict2.Values.OrderBy(x => x).ToList();
+
+            for (int i = 0; i < list1.Count; i++)
+            {
+                if (list1[i] != list2[i]) return false;
+            }
+
+            return true;
+        }
         /// 1658. Minimum Operations to Reduce X to Zero
         ///Return the minimum number of operations to reduce x to exactly 0 if it is possible, otherwise, return -1.
         ///This problem is equivalent to finding the longest subarray whose sum is == totalSum - x
