@@ -68,7 +68,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.MaxEnvelopes(mat3);
+            var result = anwser.CountNumbersWithUniqueDigits(8);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

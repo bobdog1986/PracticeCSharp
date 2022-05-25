@@ -98,6 +98,30 @@ namespace LeetCodeAlgo
 
 
 
+        ///357. Count Numbers with Unique Digits
+        ///return the count of all numbers with unique digits, x, where 0 <= x < 10^n.
+        public int CountNumbersWithUniqueDigits(int n)
+        {
+            if (n == 0) return 1;
+            //f(0) = 1.(0)
+            //f(1) = 10. (0, 1, 2, 3, ...., 9)
+            //f(2) = 9 * 9.
+            //f(3) = f(2) * 8 = 9 * 9 * 8
+            //f(10) = 9 * 9 * 8 * 7 * 6 * ... * 1
+            //f(11) = 0 = f(12) = f(13)....
+            int res = 10;
+            int uniqueDigits = 9;
+            int availableNumber = 9;
+            while (n-- > 1 && availableNumber > 0)
+            {
+                uniqueDigits = uniqueDigits * availableNumber;
+                res += uniqueDigits;
+                availableNumber--;
+            }
+            return res;
+        }
+
+
         /// 365. Water and Jug Problem
         ///If targetCapacity liters of water are measurable, you must have targetCapacity
         ///liters of water contained within one or both buckets by the end.
