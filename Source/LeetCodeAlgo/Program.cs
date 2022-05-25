@@ -58,7 +58,7 @@ namespace LeetCodeAlgo
             var treeNode = anwser.deserializeTree(bTreeStr);
             //anwser.printTree(treeNode)
 
-            string mat3Str = "[[1,0,0,0],[0,0,0,0],[0,0,2,-1]]";
+            string mat3Str = "[[46,89],[50,53],[52,68],[72,45],[77,81]]";
             var mat3 = anwser.buildMatrix(mat3Str);
             string arrStr3 = "[22,25,39,3,45,45,12,17,32,9]";
             var arr3 = anwser.buildArray(arrStr3);
@@ -68,7 +68,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.RotateTheBox(grid1);
+            var result = anwser.MaxEnvelopes(mat3);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

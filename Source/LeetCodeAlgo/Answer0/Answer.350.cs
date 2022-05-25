@@ -70,7 +70,35 @@ namespace LeetCodeAlgo
             return ans.ToArray();
         }
 
-        ///365. Water and Jug Problem
+        ///354. Russian Doll Envelopes, #Long Increasing Subsequence (LIS)
+        ///Return the maximum envelopes you can Russian doll(i.e., put one inside the other, < ).
+        public int MaxEnvelopes(int[][] envelopes)
+        {
+            Array.Sort(envelopes, (x1, x2) =>
+            {
+                if (x1[0] == x2[0])
+                    return x2[1] - x1[1];
+                else
+                    return x1[0] - x2[0];
+            });
+
+            int[] dp = new int[envelopes.Length];
+            int len = 0;
+            foreach(var envelope in envelopes)
+            {
+                int index = Array.BinarySearch(dp, 0, len, envelope[1]);
+                if(index< 0)
+                    index = -(index + 1);
+                dp[index] = envelope[1];
+                if(index == len)
+                    len++;
+            }
+            return len;
+        }
+
+
+
+        /// 365. Water and Jug Problem
         ///If targetCapacity liters of water are measurable, you must have targetCapacity
         ///liters of water contained within one or both buckets by the end.
         public bool CanMeasureWater(int jug1Capacity, int jug2Capacity, int targetCapacity)
