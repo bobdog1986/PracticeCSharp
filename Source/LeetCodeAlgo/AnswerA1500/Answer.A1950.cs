@@ -88,6 +88,11 @@ namespace LeetCodeAlgo
             }
             return (stack_size + 1) / 2;//both ]][[, ][ need 1 swap
         }
+        ///1967. Number of Strings That Appear as Substrings in Word
+        public int NumOfStrings(string[] patterns, string word)
+        {
+            return patterns.Where(x => word.Contains(x)).Count();
+        }
         /// 1974. Minimum Time to Type Word Using Special Typewriter
         ///Given a string word, return the minimum number of seconds to type out the characters in word.
         public int MinTimeToType(string word)
