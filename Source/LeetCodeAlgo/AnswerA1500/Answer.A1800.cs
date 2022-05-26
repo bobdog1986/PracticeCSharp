@@ -152,7 +152,12 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        ///1817. Finding the Users Active Minutes
+        ///1816. Truncate Sentence
+        public string TruncateSentence(string s, int k)
+        {
+            return string.Join(' ', s.Split(' ').Take(k));
+        }
+        /// 1817. Finding the Users Active Minutes
         public int[] FindingUsersActiveMinutes(int[][] logs, int k)
         {
             int[] res = new int[k];
