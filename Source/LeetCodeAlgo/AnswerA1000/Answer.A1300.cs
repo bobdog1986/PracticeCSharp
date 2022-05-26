@@ -27,6 +27,26 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///1304. Find N Unique Integers Sum up to Zero
+        public int[] SumZero(int n)
+        {
+            var res=new int[n];
+            int seed = 1;
+            int i = 0;
+            while (n > 0)
+            {
+                if (n == 1) res[i++] = 0;
+                else
+                {
+                    res[i++] = seed;
+                    res[i++] = -seed;
+                    seed++;
+                }
+                n -= 2;
+            }
+            return res;
+
+        }
         /// 1305. All Elements in Two Binary Search Trees
         //two binary search trees root1 and root2, return a list containing all the integers from both trees sorted in ascending order.
         public IList<int> GetAllElements(TreeNode root1, TreeNode root2)
