@@ -35,6 +35,11 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///1859. Sorting the Sentence
+        public string SortSentence(string s)
+        {
+            return string.Join(' ', s.Split(' ').OrderBy(x => x.Last()).Select(x => x.Substring(0, x.Length - 1)));
+        }
         /// 1860. Incremental Memory Leak
         ///Return an array containing [crashTime, memory1crash, memory2crash]
         public int[] MemLeak(int memory1, int memory2)
