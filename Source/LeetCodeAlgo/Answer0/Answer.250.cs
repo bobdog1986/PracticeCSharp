@@ -345,5 +345,30 @@ namespace LeetCodeAlgo
 
         /// 297. Serialize and Deserialize Binary Tree, see Codec
 
+        ///299. Bulls and Cows
+        public string GetHint(string secret, string guess)
+        {
+            int[] arr1 = new int[10];
+            int[] arr2 = new int[10];
+            int bull = 0;
+            for(int i = 0; i < secret.Length; i++)
+            {
+                if (secret[i] == guess[i]) bull++;
+                else
+                {
+                    arr1[secret[i] - '0']++;
+                    arr2[guess[i] - '0']++;
+                }
+            }
+
+            int cow = 0;
+            for(int i = 0; i < arr1.Length; i++)
+            {
+                cow += Math.Min(arr1[i], arr2[i]);
+            }
+
+            return $"{bull}A{cow}B";
+        }
+
     }
 }
