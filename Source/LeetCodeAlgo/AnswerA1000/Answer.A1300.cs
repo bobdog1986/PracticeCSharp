@@ -425,6 +425,18 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///1342. Number of Steps to Reduce a Number to Zero
+        ///In one step, if even divide it by 2, otherwise subtract 1 from it.
+        public int NumberOfSteps(int num)
+        {
+            int res = 0;
+            while (num > 0)
+            {
+                num = num % 2 == 0 ? num / 2 : num - 1;
+                res++;
+            }
+            return res;
+        }
         /// 1345. Jump Game IV
         ///Given an array of integers arr, you are initially positioned at the first index of the array.
         ///In one step you can jump from index i to index:
