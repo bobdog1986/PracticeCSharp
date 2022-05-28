@@ -168,6 +168,33 @@ namespace LeetCodeAlgo
             return sb.ToString() + s.Substring(i);
         }
 
+        ///2110. Number of Smooth Descent Periods of a Stock
+        public long GetDescentPeriods(int[] prices)
+        {
+            long res = 0;
+            long left = 0;
+            long right = 1;
+            for(; right < prices.Length; right++)
+            {
+                if(prices[right] == prices[right - 1]-1)
+                {
+                    //
+                }
+                else
+                {
+                    res += GetDescentPeriods(right - left);
+                    left = right;
+                }
+            }
+            res += GetDescentPeriods(right - left);
+            return res;
+        }
+
+        private long GetDescentPeriods(long i)
+        {
+            return (1 + i) * i / 2;
+        }
+
         /// 2114. Maximum Number of Words Found in Sentences
         ///A sentence is a list of words that are separated by a single space with no leading or trailing spaces.
         ///Return the maximum number of words that appear in a single sentence.
