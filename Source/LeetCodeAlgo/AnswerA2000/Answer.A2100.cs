@@ -312,7 +312,7 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        ///2134. Minimum Swaps to Group All 1's Together II,#Sliding Window
+        ///2134. Minimum Swaps to Group All 1's Together II, #Sliding Window
         ///binary circular array nums, return the minimum number of swaps required to group all 1's together.
         public int MinSwaps(int[] nums)
         {
@@ -332,6 +332,48 @@ namespace LeetCodeAlgo
                 count -= nums[i];
             }
             return ones - onesInWindow;
+        }
+        ///2135. Count Words Obtained After Adding a Letter
+        public int WordCount(string[] startWords, string[] targetWords)
+        {
+            int res = 0;
+            HashSet<string> set1= new HashSet<string>(startWords.Select(x => new string(x.OrderBy(o => o).ToArray())));
+            //startWords = startWords.Select(x => new string(x.OrderBy(o => o).ToArray())).ToArray();
+            //targetWords = targetWords.Select(x => new string(x.OrderBy(o => o).ToArray())).ToArray();
+
+            foreach(var word in targetWords)
+            {
+                int[] arr = new int[26];
+                foreach (var c in word)
+                    arr[c - 'a']++;
+
+                for(int i = 0; i < arr.Length; i++)
+                {
+                    if(arr[i] == 1)
+                    {
+                        arr[i]--;
+
+                        var sb = new StringBuilder();
+                        for (int j = 0; j < arr.Length; j++)
+                        {
+                            if (arr[j] > 0)
+                            {
+                                int k = arr[j];
+                                while(k-->0)
+                                    sb.Append((char)(j + 'a'));
+                            }
+                        }
+                        if(set1.Contains(sb.ToString()))
+                        {
+                            res++;
+                            break;
+                        }
+                        arr[i]++;
+                    }
+                }
+            }
+
+            return res;
         }
         /// 2136. Earliest Possible Day of Full Bloom, #Greedy
         ///Planting a seed takes time and so does the growth of a seed,plantTime and growTime, of length n each:
