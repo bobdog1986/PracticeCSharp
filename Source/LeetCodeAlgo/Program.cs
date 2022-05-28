@@ -60,7 +60,7 @@ namespace LeetCodeAlgo
 
             string mat3Str = "[[46,89],[50,53],[52,68],[72,45],[77,81]]";
             var mat3 = anwser.buildMatrix(mat3Str);
-            string arrStr3 = "[22,25,39,3,45,45,12,17,32,9]";
+            string arrStr3 = "[1]";
             var arr3 = anwser.buildArray(arrStr3);
             //Console.WriteLine("Correct Anwser should be : ");
             //Console.WriteLine(string.Join("\r\n", mat1.Select(o => string.Join(",", o))));
@@ -68,7 +68,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.CountNumbersWithUniqueDigits(8);
+            var result = anwser.MinSwaps(arr3);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

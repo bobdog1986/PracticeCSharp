@@ -312,7 +312,28 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        ///2136. Earliest Possible Day of Full Bloom, #Greedy
+        ///2134. Minimum Swaps to Group All 1's Together II,#Sliding Window
+        ///binary circular array nums, return the minimum number of swaps required to group all 1's together.
+        public int MinSwaps(int[] nums)
+        {
+            int ones = nums.Sum();
+            int n = nums.Length;
+            int right = 0;
+            int onesInWindow = 0;
+            int count = 0;
+            for (int i = 0; i < n; ++i)
+            {
+                while(right - i + 1 <= ones)
+                {
+                    count += nums[right%n];
+                    right++;
+                }
+                onesInWindow = Math.Max(count, onesInWindow);
+                count -= nums[i];
+            }
+            return ones - onesInWindow;
+        }
+        /// 2136. Earliest Possible Day of Full Bloom, #Greedy
         ///Planting a seed takes time and so does the growth of a seed,plantTime and growTime, of length n each:
         ///plantTime[i] is the days it takes you to plant the ith seed.Every day,you can work on planting exactly one seed.
         ///You do not have to work on planting the same seed on consecutive days, but the planting of a seed is not complete until you have worked plantTime[i] days on planting it in total.
