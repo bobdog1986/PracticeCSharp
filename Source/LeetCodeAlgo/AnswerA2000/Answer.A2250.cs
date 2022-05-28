@@ -535,6 +535,35 @@ namespace LeetCodeAlgo
         }
 
 
+        ///2284. Sender With Largest Word Count
+        ///Return the sender with the largest word count or lexicographically largest name.
+        public string LargestWordCount(string[] messages, string[] senders)
+        {
+            Dictionary<string, int> dict = new Dictionary<string, int>();
+            for(int i = 0; i < senders.Length; i++)
+            {
+                if (!dict.ContainsKey(senders[i]))
+                    dict.Add(senders[i], 0);
+                dict[senders[i]] += messages[i].Split(' ').Count();
+            }
+
+            int max = 0;
+            var list = new List<string>();
+            foreach(var k in dict.Keys)
+            {
+                if (dict[k] > max)
+                {
+                    list = new List<string>() { k };
+                    max = dict[k];
+                }
+                else if (dict[k] == max)
+                {
+                    list.Add(k);
+                }
+            }
+            list.Sort((x, y) => string.CompareOrdinal(x, y));
+            return list.Last();
+        }
 
     }
 
