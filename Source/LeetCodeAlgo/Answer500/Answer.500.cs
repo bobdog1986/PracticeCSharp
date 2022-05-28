@@ -136,6 +136,32 @@ namespace LeetCodeAlgo
             }
             return score.Select(x => dict[x]).ToArray();
         }
+        ///508. Most Frequent Subtree Sum, #BTree
+        public int[] FindFrequentTreeSum(TreeNode root)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            int maxFreq = 0;
+            FindFrequentTreeSum(root, dict, ref maxFreq);
+            return dict.Keys.Where(x => dict[x]==maxFreq).Select(x=>x).ToArray();
+        }
+
+        private int FindFrequentTreeSum(TreeNode root, Dictionary<int, int> dict, ref int maxFreq)
+        {
+            if (root == null) return 0;
+            else
+            {
+                var leftSum = FindFrequentTreeSum(root.left, dict, ref maxFreq);
+                var rightSum = FindFrequentTreeSum(root.right, dict, ref maxFreq);
+
+                var sum = leftSum + rightSum + root.val;
+                if (dict.ContainsKey(sum)) dict[sum]++;
+                else dict.Add(sum, 1);
+
+                maxFreq = Math.Max(maxFreq, dict[sum]);
+                return sum;
+            }
+        }
+
         /// 509. Fibonacci Number
         ///0 <= n <= 30, F(0) = 0, F(1) = 1, F(n) = F(n - 1) + F(n - 2), for n > 1.
         public int Fib(int n)
