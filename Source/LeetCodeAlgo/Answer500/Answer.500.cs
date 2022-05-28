@@ -163,7 +163,26 @@ namespace LeetCodeAlgo
             return Fib_Recursion(n - 1) + Fib_Recursion(n - 2);
         }
 
-        ///516. Longest Palindromic Subsequence
+        ///513. Find Bottom Left Tree Value, #BTree
+        ///Given the root of a binary tree, return the leftmost value in the last row of the tree.
+        public int FindBottomLeftValue(TreeNode root)
+        {
+            int res = root.val;
+            var list = new List<TreeNode>() {root };
+            while (list.Count > 0)
+            {
+                res = list[0].val;
+                var next = new List<TreeNode>();
+                foreach(var i in list)
+                {
+                    if (i.left != null) next.Add(i.left);
+                    if (i.right != null) next.Add(i.right);
+                }
+                list = next;
+            }
+            return res;
+        }
+        /// 516. Longest Palindromic Subsequence
         ///Given a string s, find the longest palindromic subsequence's length in s.
         ///A subsequence is a sequence that can be derived from another sequence
         ///by deleting some or no elements without changing the order of the remaining elements.
