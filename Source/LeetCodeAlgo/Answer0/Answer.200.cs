@@ -583,6 +583,66 @@ namespace LeetCodeAlgo
             CountNodes(root.right, ref res);
         }
 
+        ///223. Rectangle Area
+        public int ComputeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2)
+        {
+            if (ax1 > bx1)
+                return ComputeArea(bx1, by1, bx2, by2, ax1, ay1, ax2, ay2);
+
+            int res= ComputeArea_Rect(ax1, ay1, ax2, ay2) + ComputeArea_Rect(bx1, by1, bx2, by2);
+            if (by1>=ay2 || by2<=ay1 || bx1 >= ax2)
+            {
+                //if no overlay
+            }
+            else
+            {
+                if (bx2 <= ax2)
+                {
+                    if (by1 <= ay1 && by2 >= ay2)
+                    {
+                        res -= ComputeArea_Rect(bx1, ay1, bx2, ay2);
+                    }
+                    else if (by1 <= ay1)
+                    {
+                        res -= ComputeArea_Rect(bx1, ay1, bx2, by2);
+                    }
+                    else if (by2 >= ay2)
+                    {
+                        res -= ComputeArea_Rect(bx1, by1, bx2, ay2);
+                    }
+                    else
+                    {
+                        res -= ComputeArea_Rect(bx1, by1, bx2, by2);
+                    }
+                }
+                else
+                {
+                    if (by1 <= ay1 && by2 >= ay2)
+                    {
+                        res -= ComputeArea_Rect(bx1, ay1, ax2, ay2);
+                    }
+                    else if (by1 <= ay1)
+                    {
+                        res -= ComputeArea_Rect(bx1, ay1, ax2, by2);
+                    }
+                    else if (by2 >= ay2)
+                    {
+                        res -= ComputeArea_Rect(bx1, by1, ax2, ay2);
+                    }
+                    else
+                    {
+                        res -= ComputeArea_Rect(bx1, by1, ax2, by2);
+                    }
+                }
+            }
+
+            return res;
+        }
+        private int ComputeArea_Rect(int ax1, int ay1, int ax2, int ay2)
+        {
+            return (ax2 - ax1) * (ay2 - ay1);
+        }
+
         /// 225. Implement Stack using Queues, see MyStack
 
         /// 226. Invert Binary Tree
