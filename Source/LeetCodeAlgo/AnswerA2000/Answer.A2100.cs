@@ -362,7 +362,20 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2140. Solving Questions With Brainpower, #DP
+        ///2139. Minimum Moves to Reach Target Score
+        ///Increment the current integer by one (i.e., x = x + 1). Double the current integer(i.e., x = 2 * x).
+        public int MinMoves(int target, int maxDoubles)
+        {
+            int res = 0;
+            while (target > 1 && maxDoubles > 0)
+            {
+                res += 1 + target % 2;
+                maxDoubles--;
+                target >>= 1;
+            }
+            return target - 1 + res;
+        }
+        /// 2140. Solving Questions With Brainpower, #DP
         public long MostPoints_DP(int[][] questions)
         {
             int n = questions.Length;
