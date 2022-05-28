@@ -565,6 +565,24 @@ namespace LeetCodeAlgo
             return list.Last();
         }
 
+        ///2285. Maximum Total Importance of Roads
+        ///Return the maximum total importance of all roads possible after assigning the values optimally.
+        public long MaximumImportance(int n, int[][] roads)
+        {
+            long res = 0;
+            int[] graph = new int[n];
+            foreach(var road in roads)
+            {
+                graph[road[0]]++;
+                graph[road[1]]++;
+            }
+            Array.Sort(graph);
+            for(int i = n; i >= 1; i--)
+            {
+                res+= graph[i - 1] * (long)i;
+            }
+            return res;
+        }
     }
 
 }
