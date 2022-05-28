@@ -182,6 +182,25 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///515. Find Largest Value in Each Tree Row, #BTree
+        public IList<int> LargestValues(TreeNode root)
+        {
+            var res = new List<int>();
+            if (root == null) return res;
+            var list=new List<TreeNode>() { root};
+            while (list.Count > 0)
+            {
+                res.Add(list.Max(x => x.val));
+                var next = new List<TreeNode>();
+                foreach (var i in list)
+                {
+                    if (i.left != null) next.Add(i.left);
+                    if (i.right != null) next.Add(i.right);
+                }
+                list = next;
+            }
+            return res;
+        }
         /// 516. Longest Palindromic Subsequence
         ///Given a string s, find the longest palindromic subsequence's length in s.
         ///A subsequence is a sequence that can be derived from another sequence
