@@ -70,7 +70,27 @@ namespace LeetCodeAlgo
             return false;
         }
 
-        ///1963. Minimum Number of Swaps to Make the String Balanced
+        ///1962. Remove Stones to Minimize the Total, #Heap, #PriorityQueue
+        public int MinStoneSum(int[] piles, int k)
+        {
+            int sum = 0;
+            int total = 0;
+            PriorityQueue<int, int> pq = new PriorityQueue<int, int>();
+            foreach (var pile in piles)
+            {
+                pq.Enqueue(pile, -pile);
+                sum += pile;
+            }
+            while (k-- > 0)
+            {
+                var curr = pq.Dequeue();
+                var remove = curr / 2;
+                total += remove;
+                pq.Enqueue(curr - remove, -curr + remove);
+            }
+            return sum - total;
+        }
+        /// 1963. Minimum Number of Swaps to Make the String Balanced
         ///Return the minimum number of swaps to make s balanced.
         public int MinSwaps(string s)
         {
