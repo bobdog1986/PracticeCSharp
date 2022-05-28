@@ -515,6 +515,25 @@ namespace LeetCodeAlgo
         }
 
 
+        ///2283. Check if Number Has Equal Digit Count and Digit Value
+        ///You are given a 0-indexed string num of length n consisting of digits.
+        ///Return true if every index 0 <= i<n, the digit i occurs num[i] times in num,otherwise return false.
+
+        public bool DigitCount(string num)
+        {
+            int[] arr = new int[10];
+            foreach(var n in num)
+            {
+                arr[n - '0']++;
+            }
+            for(int i = 0; i < num.Length; i++)
+            {
+                if (arr[i] !=( num[i]-'0'))
+                    return false;
+            }
+            return true;
+        }
+
 
 
     }
