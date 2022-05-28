@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -361,7 +362,41 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2144. Minimum Cost of Buying Candies With Discount
+        ///2140. Solving Questions With Brainpower, #DP
+        public long MostPoints_DP(int[][] questions)
+        {
+            int n = questions.Length;
+            long[] dp = new long[n+1];
+            for (int i = n - 1; i >= 0; i--)
+            {
+                int points = questions[i][0];
+                int next = questions[i][1] +i + 1;
+                if (next >= n)
+                    next = n;
+
+                dp[i] = Math.Max(points + dp[next], dp[i + 1]);
+            }
+            return dp[0];
+        }
+
+        public long MostPoints_DFS(int[][] questions)
+        {
+            long[] dp= new long[questions.Length];
+            return MostPoints_DFS(questions, 0, dp);
+        }
+
+        private long MostPoints_DFS(int[][] questions, int i, long[] dp)
+        {
+            if (i >= questions.Length) return 0;
+            if (dp[i] > 0)
+                return dp[i];
+            int points = questions[i][0];
+            int next = questions[i][1]+i+1;
+            dp[i] = Math.Max(MostPoints_DFS(questions, i + 1, dp), points + MostPoints_DFS(questions, next, dp));
+            return dp[i];
+        }
+
+        /// 2144. Minimum Cost of Buying Candies With Discount
         ///For every two candies sold, the shop gives a third candy for free.
         ///return the minimum cost of buying all the candies.
         public int MinimumCost(int[] cost)
