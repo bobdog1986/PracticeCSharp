@@ -666,3 +666,46 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+        ///2290. Minimum Obstacle Removal to Reach Corner, #DP, #BFS
+        ///You are given a 0-indexed 2D integer array grid of size m x n.Each cell has one of two values:
+        ///0 represents an empty cell, 1 represents an obstacle that may be removed.
+        ///You can move up, down, left, or right from and to an empty cell.
+        ///Return the minimum number of obstacles to remove so you can move from (0, 0) to (m - 1, n - 1).
+        public int MinimumObstacles(int[][] grid)
+        {
+            int row = grid.Length;
+            int col = grid[0].Length;
+            int[][] dp = new int[row][];
+            for (int i = 0; i < row; i++)
+            {
+                dp[i] = new int[col];
+                Array.Fill(dp[i], int.MaxValue);
+            }
+
+            dp[row - 1][col - 1] = 0;
+            int[][] dxy = new int[4][] { new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 } };
+            List<int[]> list = new List<int[]>() { new int[] { row - 1, col - 1 } };
+            while (list.Count > 0)
+            {
+                var next = new List<int[]>();
+                foreach (var p in list)
+                {
+                    foreach (var d in dxy)
+                    {
+                        int r = p[0] + d[0];
+                        int c = p[1] + d[1];
+                        if (r >= 0 && r < row && c >= 0 && c < col)
+                        {
+                            int curr = grid[r][c] + dp[p[0]][p[1]];
+                            if (curr < dp[r][c])
+                            {
+                                dp[r][c] = curr;
+                                next.Add(new int[] { r, c });
+                            }
+                        }
+                    }
+                }
+                list = next;
+            }
+            return dp[0][0];
+        }
