@@ -120,6 +120,37 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///872. Leaf-Similar Trees, #BTree
+        public bool LeafSimilar(TreeNode root1, TreeNode root2)
+        {
+            var list1 = new List<int>();
+            var list2 = new List<int>();
+            LeafSimilar(root1, list1);
+            LeafSimilar(root2, list2);
+            if (list1.Count != list2.Count) return false;
+            else
+            {
+                for(int i = 0; i < list1.Count; i++)
+                {
+                    if (list1[i] != list2[i]) return false;
+                }
+                return true;
+            }
+        }
+
+        private void LeafSimilar(TreeNode root, List<int> list)
+        {
+            if (root == null) return;
+            if(root.left==null && root.right == null)
+            {
+                list.Add(root.val);
+            }
+            else
+            {
+                LeafSimilar(root.left, list);
+                LeafSimilar(root.right, list);
+            }
+        }
         /// 875. Koko Eating Bananas
         ///There are n piles of bananas, the ith pile has piles[i] bananas.
         ///The guards have gone and will come back in h hours.
