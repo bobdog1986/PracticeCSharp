@@ -475,5 +475,47 @@ namespace LeetCodeAlgo
             if (pq.Count > 0) secondIndex = pq.Dequeue();
             return secondIndex == -1 || nums[maxIndex] >= nums[secondIndex] * 2 ? maxIndex : -1;
         }
+
+        ///748. Shortest Completing Word
+        public string ShortestCompletingWord(string licensePlate, string[] words)
+        {
+            var res = string.Empty;
+            int[] arr = new int[26];
+            foreach(var c in licensePlate)
+            {
+                if (char.IsLetter(c))
+                    arr[char.ToLower(c) - 'a']++;
+            }
+
+            foreach(var word in words)
+            {
+                int[] curr = new int[26];
+                foreach (var c in word)
+                {
+                    if (char.IsLetter(c))
+                        curr[char.ToLower(c) - 'a']++;
+                }
+                bool find = true;
+                for(int i = 0; i < arr.Length; i++)
+                {
+                    if (arr[i] > 0 && arr[i] > curr[i])
+                    {
+                        find = false;
+                        break;
+                    }
+                }
+
+                if (find)
+                {
+                    if(res.Length==0 || word.Length < res.Length)
+                    {
+                        res = word;
+                    }
+                }
+            }
+
+            return res;
+        }
+
     }
 }

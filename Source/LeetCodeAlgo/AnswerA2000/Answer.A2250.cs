@@ -666,18 +666,17 @@ namespace LeetCodeAlgo
         {
             int n = nums.Length;
             int res = 0;
-            int j = -1;
             int[] dp = new int[n];
-            int[] stack = new int[n];
+            Stack<int> stack = new Stack<int>();
             for (int i = n - 1; i >= 0; --i)
             {
-                while (j >= 0 && nums[i] > nums[stack[j]])
+                while (stack.Count > 0 && nums[i] > nums[stack.Peek()])
                 {
                     dp[i]++;
-                    dp[i] = Math.Max(dp[i], dp[stack[j--]]);
+                    dp[i] = Math.Max(dp[i], dp[stack.Pop()]);
                     res = Math.Max(res, dp[i]);
                 }
-                stack[++j] = i;
+                stack.Push(i);
             }
             return res;
         }
