@@ -58,9 +58,9 @@ namespace LeetCodeAlgo
             var treeNode = anwser.deserializeTree(bTreeStr);
             //anwser.printTree(treeNode)
 
-            string mat3Str = "[[46,89],[50,53],[52,68],[72,45],[77,81]]";
+            string mat3Str = "[[0,1,1],[1,1,0],[1,1,0]]";
             var mat3 = anwser.buildMatrix(mat3Str);
-            string arrStr3 = "[12,11,10,9,8,7,6,5,4,3,4,3,10,9,8,7]";
+            string arrStr3 = "[5,3,4,4,7,3,6,11,8,5,11]";
             var arr3 = anwser.buildArray(arrStr3);
             //Console.WriteLine("Correct Anwser should be : ");
             //Console.WriteLine(string.Join("\r\n", mat1.Select(o => string.Join(",", o))));
@@ -68,7 +68,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.GetDescentPeriods(arr3);
+            var result = anwser.TotalSteps(arr3);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
