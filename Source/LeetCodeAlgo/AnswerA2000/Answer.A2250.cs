@@ -583,6 +583,42 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+
+        ///2287. Rearrange Characters to Make Target String
+        ///You can take some letters from s and rearrange them to form new strings.
+        ///Return the maximum number of copies of target that can be formed by taking letters from s and rearranging them.
+        public int RearrangeCharacters(string s, string target)
+        {
+            var dict1=new Dictionary<char, int>();
+            foreach(var c in target)
+            {
+                if (dict1.ContainsKey(c)) dict1[c]++;
+                else dict1.Add(c, 1);
+            }
+
+            var dict2 = new Dictionary<char, int>();
+            foreach (var c in s)
+            {
+                if (dict2.ContainsKey(c)) dict2[c]++;
+                else dict2.Add(c, 1);
+            }
+
+            int res = int.MaxValue;
+            foreach(var k in dict1.Keys)
+            {
+                if (dict2.ContainsKey(k))
+                {
+                    res = Math.Min(res, dict2[k] / dict1[k]);
+                }
+                else
+                {
+                    res = 0;
+                    break;
+                }
+            }
+            return res;
+        }
     }
 
 }
