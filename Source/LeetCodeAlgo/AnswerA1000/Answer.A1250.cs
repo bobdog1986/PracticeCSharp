@@ -131,6 +131,24 @@ namespace LeetCodeAlgo
 
         ///1261. Find Elements in a Contaminated Binary Tree. see FindElements
 
+        ///1277. Count Square Submatrices with All Ones, #DP
+        ///Given a m * n matrix of ones and zeros, return how many square submatrices have all ones.
+        public int CountSquares(int[][] matrix)
+        {
+            int res = 0;
+            for (int i = 0; i < matrix.Length; ++i)
+            {
+                for (int j = 0; j < matrix[0].Length; ++j)
+                {
+                    if (matrix[i][j] > 0 && i > 0 && j > 0)
+                    {
+                        matrix[i][j] = Math.Max(matrix[i - 1][j - 1], Math.Max(matrix[i - 1][j], matrix[i][j - 1])) + 1;
+                    }
+                    res += matrix[i][j];
+                }
+            }
+            return res;
+        }
         /// 1281. Subtract the Product and Sum of Digits of an Integer
         ///return the difference between the product of its digits and the sum of its digits.
         public int SubtractProductAndSum(int n)
