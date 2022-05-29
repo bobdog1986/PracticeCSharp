@@ -622,3 +622,47 @@ namespace LeetCodeAlgo
     }
 
 }
+        /// 2288. Apply Discount to Prices
+        ///Return a string representing the modified sentence.
+        public string DiscountPrices(string sentence, int discount)
+        {
+            var arr = sentence.Split(' ').Select(x =>
+                {
+                    if (x.Length > 1 && x[0] == '$')
+                    {
+                        var str = x.Substring(1);
+                        if (IsDigitsOnly(str))
+                        {
+                            double a = -1;
+                            double.TryParse(str, out a);
+                            if (a >= 0)
+                            {
+                                return "$" + String.Format("{0:0.00}", Math.Round((a * (100 - discount) / 100), 2));
+                            }
+                            else
+                            {
+                                return x;
+                            }
+                        }
+                        else
+                        {
+                            return x;
+                        }
+                    }
+                    else
+                    {
+                        return x;
+                    }
+                }).ToArray();
+            return string.Join(' ', arr);
+        }
+
+        private bool IsDigitsOnly(string str)
+        {
+            foreach (char c in str)
+            {
+                if (c < '0' || c > '9')
+                    return false;
+            }
+            return true;
+        }
