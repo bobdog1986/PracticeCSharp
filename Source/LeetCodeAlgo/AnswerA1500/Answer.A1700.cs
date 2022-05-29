@@ -63,7 +63,21 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
-        ///1721. Swapping Nodes in a Linked List
+        ///1710. Maximum Units on a Truck
+        public int MaximumUnits(int[][] boxTypes, int truckSize)
+        {
+            int res = 0;
+            boxTypes = boxTypes.OrderBy(x => -x[1]).ToArray();
+            foreach(var i in boxTypes)
+            {
+                int count = Math.Min(truckSize, i[0]);
+                res += count * i[1];
+                truckSize -= count;
+                if (truckSize <= 0) break;
+            }
+            return res;
+        }
+        /// 1721. Swapping Nodes in a Linked List
         ///You are given the head of a linked list, and an integer k.
         ///Return the head of the linked list after swapping the values of the kth node
         ///from the beginning and the kth node from the end(the list is 1-indexed).
