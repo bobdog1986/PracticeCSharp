@@ -205,6 +205,38 @@ namespace LeetCodeAlgo
             return num;
         }
 
+        ///671. Second Minimum Node In a Binary Tree, #BTree
+        public int FindSecondMinimumValue(TreeNode root)
+        {
+            HashSet<int> set = new HashSet<int>();
+            FindSecondMinimumValue(root, set);
+            if (set.Count > 1)
+            {
+                return set.OrderBy(x => x).ToList()[1];
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        private int FindSecondMinimumValue(TreeNode root,HashSet<int> set)
+        {
+            if(root.left==null && root.right == null)
+            {
+                set.Add(root.val);
+                return root.val;
+            }
+            else
+            {
+                var leftMin = FindSecondMinimumValue(root.left, set);
+                var rightMin = FindSecondMinimumValue(root.right, set);
+                var min = Math.Min(leftMin, rightMin);
+                set.Add(min);
+                return min;
+            }
+        }
+
         /// 673. Number of Longest Increasing Subsequence - not understand
         ///return the number of longest increasing subsequences. [1,3,5,4,7]->[1, 3, 4, 7] and [1, 3, 5, 7]. return 2
         public int FindNumberOfLIS(int[] nums)
