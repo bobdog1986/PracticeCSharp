@@ -180,7 +180,25 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///1026. Maximum Difference Between Node and Ancestor, #BTree
+        ///1021. Remove Outermost Parentheses
+        public string RemoveOuterParentheses(string s)
+        {
+            StringBuilder sb = new StringBuilder();
+            int left = 0;
+            int count = 0;
+            for(int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == '(') count++;
+                else count--;
+                if (count == 0)
+                {
+                    sb.Append(s.Substring(left + 1, i - (left + 1)));
+                    left = i + 1;
+                }
+            }
+            return sb.ToString();
+        }
+        /// 1026. Maximum Difference Between Node and Ancestor, #BTree
         public int MaxAncestorDiff(TreeNode root)
         {
             int res = 0;
