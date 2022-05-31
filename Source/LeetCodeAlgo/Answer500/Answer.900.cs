@@ -351,6 +351,35 @@ namespace LeetCodeAlgo
             return min;
         }
 
+        ///938. Range Sum of BST, #BTree
+        public int RangeSumBST(TreeNode root, int low, int high)
+        {
+            int res = 0;
+            RangeSumBST(root, low, high, ref res);
+            return res;
+        }
+
+        private void RangeSumBST(TreeNode root, int low , int high, ref int res)
+        {
+            if(root == null) return;
+            else
+            {
+                if (root.val > high)
+                {
+                    RangeSumBST(root.left, low, high, ref res);
+                }
+                else if (root.val < low)
+                {
+                    RangeSumBST(root.right, low, high, ref res);
+                }
+                else
+                {
+                    res += root.val;
+                    RangeSumBST(root.left, low, high, ref res);
+                    RangeSumBST(root.right, low, high, ref res);
+                }
+            }
+        }
         /// 941. Valid Mountain Array
         ///len>=3, arr[i]> all [0,i-1],and [i+1,len-1]
         public bool ValidMountainArray(int[] arr)
