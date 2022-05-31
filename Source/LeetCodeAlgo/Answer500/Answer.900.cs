@@ -57,6 +57,43 @@ namespace LeetCodeAlgo
             Array.Sort(nums);
             return nums;
         }
+        ///916. Word Subsets
+        //A string b is a subset of string a if every letter in b occurs in a including multiplicity.
+        //A string a from words1 is universal if for every string b in words2, b is a subset of a.
+        //Return an array of all the universal strings in words1. You may return the answer in any order.
+        public IList<string> WordSubsets(string[] words1, string[] words2)
+        {
+            var res=new List<string>();
+
+            int[] arr2 = new int[26];
+            foreach(var w2 in words2)
+            {
+                int[] temp = new int[26];
+                foreach (var c in w2)
+                    temp[c - 'a']++;
+
+                for (int i = 0; i < arr2.Length; i++)
+                    arr2[i] = Math.Max(arr2[i], temp[i]);
+            }
+
+            foreach(var w1 in words1)
+            {
+                int[] arr1 = new int[26];
+                foreach (var c1 in w1)
+                    arr1[c1 - 'a']++;
+                bool find = true;
+                for(int i = 0; i < arr1.Length; i++)
+                {
+                    if (arr1[i] < arr2[i])
+                    {
+                        find = false;
+                        break;
+                    }
+                }
+                if (find) res.Add(w1);
+            }
+            return res;
+        }
         /// 917. Reverse Only Letters
         ///not English letters remain in the same position.English letters(lowercase or uppercase) should be reversed.
         public string ReverseOnlyLetters(string s)
