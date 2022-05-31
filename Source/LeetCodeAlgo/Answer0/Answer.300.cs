@@ -8,7 +8,7 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///300. Longest Increasing Subsequence, #DP, #Binary Search, #Patience Sort
+        ///300. Longest Increasing Subsequence, #DP, #Binary Search, #Patience Sort, #LIS
         /// Patience Sort, https://en.wikipedia.org/wiki/Longest_increasing_subsequence
         ///return the longest length ,by deleting some or no elements without changing the order.
         ///eg. [0,3,1,6,4,4,7].=>[0,1,4,7] or [0,3,4,6] or [0,1,6,7], O(n log(n))

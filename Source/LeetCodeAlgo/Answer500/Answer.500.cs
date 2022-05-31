@@ -305,7 +305,37 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///525. Contiguous Array
+        ///524. Longest Word in Dictionary through Deleting
+        public string FindLongestWord(string s, IList<string> dictionary)
+        {
+            var list =dictionary.ToList();
+            list.Sort((x, y) =>
+            {
+                if (x.Length == y.Length)
+                {
+                    return string.Compare(x, y, StringComparison.Ordinal);
+                }
+                else
+                {
+                    return y.Length - x.Length;
+                }
+            });
+
+            foreach(var word in list)
+            {
+                int i = 0;
+                foreach(var c in s)
+                {
+                    if (c == word[i])
+                    {
+                        i++;
+                        if (i == word.Length) return word;
+                    }
+                }
+            }
+            return string.Empty;
+        }
+        /// 525. Contiguous Array
         ///Given a binary array nums, return the maximum length of a contiguous subarray with an equal number of 0 and 1.
         ///1 <= nums.length <= 105
         ///nums[i] is either 0 or 1.

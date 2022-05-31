@@ -68,7 +68,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.IsAdditiveNumber("199100199");
+            var result = anwser.FindLongestWord("abpcplea", new List<string> { "a", "b", "c" });
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
