@@ -68,7 +68,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.FindLongestWord("abpcplea", new List<string> { "a", "b", "c" });
+            var result = anwser.MinFlipsMonoIncr("00110");
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
