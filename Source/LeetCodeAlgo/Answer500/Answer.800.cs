@@ -41,7 +41,21 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///807. Max Increase to Keep City Skyline
+        ///804. Unique Morse Code Words
+        public int UniqueMorseRepresentations(string[] words)
+        {
+            string[] morseDict = new string[] { ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..",
+                ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-",
+                ".--", "-..-", "-.--", "--.." };
+            var set=new HashSet<string>();
+            foreach (var word in words)
+            {
+                var morseCode = string.Join("", word.Select(x => morseDict[x - 'a']));
+                set.Add(morseCode);
+            }
+            return set.Count;
+        }
+        /// 807. Max Increase to Keep City Skyline
         public int MaxIncreaseKeepingSkyline(int[][] grid)
         {
             int rowLen = grid.Length;
