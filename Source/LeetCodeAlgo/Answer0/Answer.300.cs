@@ -184,7 +184,60 @@ namespace LeetCodeAlgo
 
         /// 304. Range Sum Query 2D - Immutable, see NumMatrix
 
-        ///307. Range Sum Query - Mutable, see NumArray
+        ///306. Additive Number, #Backtracking
+        ///A valid additive sequence should contain at least three numbers.
+        ///Except for the first two numbers, each subsequent number must be the sum of the preceding two.
+        public bool IsAdditiveNumber(string num)
+        {
+            for(int i = 1; i < num.Length-1; i++)
+            {
+                for(int j = i+1; j < num.Length; j++)
+                {
+                    var prev = num.Substring(0, i);
+                    var curr = num.Substring(i, j-i);
+                    if (IsAdditiveNumber(num.Substring(j), prev, curr)) return true;
+                }
+            }
+            return false;
+        }
+        private bool IsAdditiveNumber(string num, string prev, string curr)
+        {
+            if (prev.Length > 1 && prev[0] == '0') return false;
+            if (curr.Length > 1 && curr[0] == '0') return false;
+            if (num.Length > 1 && num[0] == '0') return false;
+            if (num.Length < prev.Length || num.Length < curr.Length) return false;
+
+            var add = IsAdditiveNumber_Add(prev, curr);
+            if (num == add) return true;
+            else
+            {
+                if (num.StartsWith(add))
+                {
+                    return IsAdditiveNumber(num.Substring(add.Length), curr, add);
+                }
+                else return false;
+            }
+        }
+        private string IsAdditiveNumber_Add(string s1,string s2)
+        {
+            List<char> list = new List<char>();
+            int carry = 0;
+            int i = 0;
+            while(i < s1.Length || i < s2.Length)
+            {
+                int c1 = i < s1.Length ? s1[s1.Length - 1 - i] - '0' : 0;
+                int c2 = i < s2.Length ? s2[s2.Length - 1 - i] - '0' : 0;
+                int curr = c1 + c2 + carry;
+                list.Insert(0, (char)(curr % 10 + '0'));
+                carry = curr / 10;
+                i++;
+            }
+            if(carry>0)
+                list.Insert(0, (char)(carry % 10 + '0'));
+            return new string(list.ToArray());
+        }
+
+        /// 307. Range Sum Query - Mutable, see NumArray
 
         /// 309. Best Time to Buy and Sell Stock with Cooldown, #DP
         ///After you sell your stock, you cannot buy stock on the next day (i.e., cooldown one day).
