@@ -51,7 +51,13 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///917. Reverse Only Letters
+        ///912. Sort an Array
+        public int[] SortArray(int[] nums)
+        {
+            Array.Sort(nums);
+            return nums;
+        }
+        /// 917. Reverse Only Letters
         ///not English letters remain in the same position.English letters(lowercase or uppercase) should be reversed.
         public string ReverseOnlyLetters(string s)
         {
