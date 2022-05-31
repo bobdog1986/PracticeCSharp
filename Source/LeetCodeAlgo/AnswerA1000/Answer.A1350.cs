@@ -338,6 +338,48 @@ namespace LeetCodeAlgo
         {
             return arr1.Where(a => !arr2.Any(b => Math.Abs(a - b) <= d)).Count();
         }
+        ///1387. Sort Integers by The Power Value, #PriorityQueue
+        //if x is even then x = x / 2
+        //if x is odd then x = 3 * x + 1
+        public int GetKth(int lo, int hi, int k)
+        {
+            var dict = new Dictionary<int, int>();
+            dict.Add(1, 0);
+            for(int i = lo; i <= hi; i++)
+                GetKth(i, dict);
+
+            var pq = new PriorityQueue<int, int>(Comparer<int>.Create(
+                new Comparison<int>((x, y) =>
+                {
+                    if (dict[x] != dict[y]) return dict[x] - dict[y];
+                    else return x-y;
+                })));
+
+            for (int i = lo; i <= hi; i++)
+                pq.Enqueue(i, i);
+
+            while (--k > 0)
+                pq.Dequeue();
+
+            return pq.Dequeue();
+        }
+
+        private int GetKth(int x, Dictionary<int,int> dict)
+        {
+            if (dict.ContainsKey(x))
+            {
+                return dict[x];
+            }
+            else
+            {
+                var y = x % 2 == 0? x / 2 : 3 * x + 1;
+                var res = 1 + GetKth(y, dict);
+                if (!dict.ContainsKey(x))
+                    dict.Add(x, res);
+                return res;
+            }
+        }
+
         /// 1394. Find Lucky Integer in an Array
         ///Given an array of integers arr, a lucky integer is an integer that has a frequency in the array equal to its value.
         ///Return the largest lucky integer in the array.If there is no lucky integer return -1.
