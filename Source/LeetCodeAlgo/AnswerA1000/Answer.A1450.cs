@@ -18,6 +18,24 @@ namespace LeetCodeAlgo
             }
             return -1;
         }
+        ///1461. Check If a String Contains All Binary Codes of Size K
+        ///return true if every binary code of length k is a substring of s. Otherwise, return false.
+        public bool HasAllCodes(string s, int k)
+        {
+            var set = new HashSet<string>();
+            int count = 1 << k;
+            for(int i = 0; i < s.Length - k + 1; i++)
+            {
+                var curr = s.Substring(i, k);
+                if (!set.Contains(curr))
+                {
+                    set.Add(curr);
+                    if (set.Count == count) break;
+                }
+            }
+            return set.Count == count;
+        }
+
         /// 1464. Maximum Product of Two Elements in an Array
         ///Return the maximum value of (nums[i]-1)*(nums[j]-1).
         ///2 <= nums.length <= 500, 1 <= nums[i] <= 10^3
