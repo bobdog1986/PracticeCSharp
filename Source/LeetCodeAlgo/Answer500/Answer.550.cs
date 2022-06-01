@@ -177,6 +177,27 @@ namespace LeetCodeAlgo
             return sum;
         }
 
+        ///563. Binary Tree Tilt, #BTree
+        //Given the root of a binary tree, return the sum of every tree node's tilt.
+        //The tilt of a tree node is the absolute difference between the sum of all left subtree and all right subtree.
+        //If a node does not have a left child, then the sum of the left subtree node values is treated as 0.
+        //The rule is similar if the node does not have a right child.
+        public int FindTilt(TreeNode root)
+        {
+            int res = 0;
+            FindTilt(root, ref res);
+            return res;
+        }
+
+        private int FindTilt(TreeNode root, ref int res)
+        {
+            if (root == null) return 0;
+            var leftSum = FindTilt(root.left, ref res);
+            var rightSum = FindTilt(root.right, ref res);
+            res += Math.Abs(leftSum-rightSum);
+            return root.val + leftSum + rightSum;
+        }
+
         /// 566. Reshape the Matrix
         /// In MATLAB, reshape an m x n matrix into a new one with a different size r x c keeping its original data.
         public int[][] MatrixReshape(int[][] mat, int r, int c)

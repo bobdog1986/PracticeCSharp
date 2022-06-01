@@ -356,6 +356,7 @@ namespace LeetCodeAlgo
                     }
                     else
                     {
+                        if (i >= arr.Count) break;
                         if (arr[i] > 1000)
                         {
                             node.left = null;

@@ -54,7 +54,7 @@ namespace LeetCodeAlgo
             //var listnode2 = anwser.buildListNode(new int[] { 1000000, 1000001, 1000002 });
             //anwser.printListNode(listnode2);
 
-            string bTreeStr = "[1,1,1]";
+            string bTreeStr = "[21,7,14,1,1,2,2,3,3]";
             var treeNode = anwser.deserializeTree(bTreeStr);
             //anwser.printTree(treeNode)
 
@@ -68,7 +68,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.MinFlipsMonoIncr("00110");
+            var result = anwser.FindTilt(treeNode);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
