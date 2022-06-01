@@ -195,7 +195,15 @@ namespace LeetCodeAlgo
 
         ///622. Design Circular Queue, see MyCircularQueue
 
-        ///633. Sum of Square Numbers
+        ///628. Maximum Product of Three Numbers
+        //find three numbers whose product is maximum and return the maximum product.
+        public int MaximumProduct(int[] nums)
+        {
+            int n = nums.Length;
+            Array.Sort(nums);
+            return Math.Max(nums[0] * nums[1] * nums[n - 1], nums[n - 3] * nums[n - 2] * nums[n - 1]);
+        }
+        /// 633. Sum of Square Numbers
         ///Given a non-negative integer c, decide whether there're two integers a and b such that a2 + b2 = c.
         public bool JudgeSquareSum(int c)
         {
