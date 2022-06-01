@@ -136,7 +136,17 @@ namespace LeetCodeAlgo
             }
             return score.Select(x => dict[x]).ToArray();
         }
-        ///508. Most Frequent Subtree Sum, #BTree
+        ///507. Perfect Number
+        //a positive integer equal to the sum of its positive divisors,excluding the number itself.
+        public bool CheckPerfectNumber(int num)
+        {
+            if (num == 1) return false;
+            int sum = 1;
+            for(int i = 2; i * i <= num; i++)
+                if (num % i == 0) sum += i + num / i;
+            return sum == num;
+        }
+        /// 508. Most Frequent Subtree Sum, #BTree
         public int[] FindFrequentTreeSum(TreeNode root)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
