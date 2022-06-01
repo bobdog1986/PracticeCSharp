@@ -113,6 +113,28 @@ namespace LeetCodeAlgo
         {
             return patterns.Where(x => word.Contains(x)).Count();
         }
+        ///1968. Array With Elements Not Equal to Average of Neighbors
+        public int[] RearrangeArray_1968(int[] nums)
+        {
+            int n = nums.Length;
+            int[] res = new int[n];
+            Array.Sort(nums);
+            int i = 0;
+            int left = 0;
+            int right = n - 1;
+            while(i < n)
+            {
+                if (i % 2 == 0)
+                {
+                    res[i++] = nums[left++];
+                }
+                else
+                {
+                    res[i++] = nums[right--];
+                }
+            }
+            return res;
+        }
         /// 1974. Minimum Time to Type Word Using Special Typewriter
         ///Given a string word, return the minimum number of seconds to type out the characters in word.
         public int MinTimeToType(string word)
