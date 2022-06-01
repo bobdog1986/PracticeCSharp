@@ -257,7 +257,19 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///645. Set Mismatch
+        ///643. Maximum Average Subarray I
+        public double FindMaxAverage(int[] nums, int k)
+        {
+            int sum=nums.Take(k).Sum();
+            int max = sum;
+            for (int i = k; i < nums.Length; i++)
+            {
+                sum += nums[i] - nums[i - k];
+                max = Math.Max(max, sum);
+            }
+            return max * 1.0 / k;
+        }
+        /// 645. Set Mismatch
         ///[1,n] Find the number that occurs twice and the number that is missing and return them in the form of an array.
         public int[] FindErrorNums(int[] nums)
         {
