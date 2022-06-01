@@ -437,6 +437,21 @@ namespace LeetCodeAlgo
         }
         /// 595. Big Countries, see sql script
 
+        ///598. Range Addition II
+        public int MaxCount(int m, int n, int[][] ops)
+        {
+            int row = m;
+            int col = n;
+            if (ops.Length > 0)
+            {
+                foreach (var op in ops)
+                {
+                    row = Math.Min(row, op[0]);
+                    col = Math.Min(col, op[1]);
+                }
+            }
+            return row * col;
+        }
         /// 599. Minimum Index Sum of Two Lists
         /// find out their common interest with the least list index sum.
         public string[] FindRestaurant(string[] list1, string[] list2)
