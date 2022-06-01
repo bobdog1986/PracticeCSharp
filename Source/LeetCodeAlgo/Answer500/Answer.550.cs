@@ -412,7 +412,30 @@ namespace LeetCodeAlgo
             ans.Add(node.val);
         }
 
-        ///595. Big Countries, see sql script
+        ///594. Longest Harmonious Subsequence
+        //difference between its maximum value and its minimum value is exactly 1.
+        //return the length of its longest harmonious subsequence among all its possible subsequences.
+        //A subsequence of array is a sequence that can be derived from the array by deleting some or
+        //no elements without changing the order of the remaining elements.
+        public int FindLHS(int[] nums)
+        {
+            int max = 0;
+            var dict=new Dictionary<int, int>();
+            foreach(var n in nums)
+            {
+                if (dict.ContainsKey(n)) dict[n]++;
+                else dict.Add(n, 1);
+            }
+            foreach(var key in dict.Keys)
+            {
+                if (dict.ContainsKey(key - 1))
+                    max = Math.Max(max, dict[key] + dict[key - 1]);
+                if (dict.ContainsKey(key + 1))
+                    max = Math.Max(max, dict[key] + dict[key + 1]);
+            }
+            return max;
+        }
+        /// 595. Big Countries, see sql script
 
         /// 599. Minimum Index Sum of Two Lists
         /// find out their common interest with the least list index sum.
