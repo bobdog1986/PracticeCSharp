@@ -261,7 +261,7 @@ namespace LeetCodeAlgo
             return found;
         }
 
-        public IList<TreeNode> IsSubtree_Find(TreeNode root, TreeNode subRoot)
+        private IList<TreeNode> IsSubtree_Find(TreeNode root, TreeNode subRoot)
         {
             List<TreeNode> ans = new List<TreeNode>();
 
@@ -286,7 +286,7 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        public bool IsSubtree_Compare(TreeNode root, TreeNode subRoot)
+        private bool IsSubtree_Compare(TreeNode root, TreeNode subRoot)
         {
             bool ans = true;
             List<TreeNode> list = new List<TreeNode>() { root };
@@ -328,7 +328,12 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///581. Shortest Unsorted Continuous Subarray
+        ///575. Distribute Candies
+        public int DistributeCandies(int[] candyType)
+        {
+            return Math.Min(candyType.Length / 2, candyType.ToHashSet().Count);
+        }
+        /// 581. Shortest Unsorted Continuous Subarray
         ///find one continuous subarray that sort this subarray in ascending order,then the whole array sorted.
         ///Return the shortest such subarray and output its length.
         public int FindUnsortedSubarray(int[] nums)
