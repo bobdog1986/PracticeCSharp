@@ -8,7 +8,22 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///556. Next Greater Element III
+        ///551. Student Attendance Record I
+        //'A': Absent.'L': Late.'P': Present.
+        //The student was absent('A') for strictly fewer than 2 days total.
+        //The student was never late ('L') for 3 or more consecutive days.
+        public bool CheckRecord(string s)
+        {
+            int absents = 0;
+            for(int i = 0; i < s.Length; i++)
+            {
+                if(s[i] == 'A')absents++;
+                if (absents >= 2) return false;
+                if (i != 0 && i != s.Length - 1 && s[i] == 'L' && s[i - 1] == 'L' && s[i + 1] == 'L') return false;
+            }
+            return true;
+        }
+        /// 556. Next Greater Element III
         ///Given a positive integer n, find the smallest integer which has exactly the same digits existing in the integer n
         ///and is greater in value than n. If no such positive integer exists, return -1.
         ///Note that if there is a valid answer but it does not fit in 32-bit integer, return -1.
