@@ -447,7 +447,28 @@ namespace LeetCodeAlgo
             return ans.ToArray();
         }
 
-        ///946. Validate Stack Sequences
+        ///944. Delete Columns to Make Sorted
+        public int MinDeletionSize(string[] strs)
+        {
+            int row = strs.Length;
+            int col = strs[0].Length;
+            int res = 0;
+            for(int c = 0; c < col; c++)
+            {
+                char curr = 'a';
+                for(int r = 0; r < row; r++)
+                {
+                    if (strs[r][c] < curr)
+                    {
+                        res++;
+                        break;
+                    }
+                    curr = strs[r][c];
+                }
+            }
+            return res;
+        }
+        /// 946. Validate Stack Sequences
         ///Given two integer arrays pushed and popped each with distinct values,
         ///return true if this could have been the result of a sequence of push and pop operations on an initially empty stack, or false otherwise.
         public bool ValidateStackSequences(int[] pushed, int[] popped)
