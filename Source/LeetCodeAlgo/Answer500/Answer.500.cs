@@ -315,7 +315,12 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///524. Longest Word in Dictionary through Deleting
+        ///521. Longest Uncommon Subsequence I
+        public int FindLUSlength(string a, string b)
+        {
+            return a == b ? -1 : Math.Max(a.Length, b.Length);
+        }
+        /// 524. Longest Word in Dictionary through Deleting
         public string FindLongestWord(string s, IList<string> dictionary)
         {
             var list =dictionary.ToList();
