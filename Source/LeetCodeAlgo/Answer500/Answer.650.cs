@@ -297,7 +297,9 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///678. Valid Parenthesis String
+        ///677. Map Sum Pairs, see MapSum
+
+        /// 678. Valid Parenthesis String
         ///Given a string s containing only three types of characters: '(', ')' and '*', return true if s is valid.
         ///'*' could be treated as a single right parenthesis ')' or a single left parenthesis '(' or an empty string "".
         public bool CheckValidString(string s)

@@ -9,7 +9,7 @@ namespace LeetCodeAlgo
     public partial class Answer
     {
         /// 1. Two Sum
-        /// return indices of the two numbers such that they add up to target.
+        // return indices of the two numbers such that they add up to target.
         public int[] TwoSum(int[] nums, int target)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
@@ -17,15 +17,15 @@ namespace LeetCodeAlgo
             {
                 if (dict.ContainsKey(target - nums[i]))
                     return new int[2] { dict[target - nums[i]], i };
-                else if (!dict.ContainsKey(nums[i]))
+                if (!dict.ContainsKey(nums[i]))
                     dict.Add(nums[i], i);
             }
-            return null;
+            return new int[2];
         }
 
         ///2. Add Two Numbers
-        ///Add the two numbers and return the sum as a linked list.
-        ///Input: l1 = [2,4,3], l2 = [5,6,4], Output: [7,0,8] ,Explanation: 342 + 465 = 807.
+        //Add the two numbers and return the sum as a linked list.
+        //Input: l1 = [2,4,3], l2 = [5,6,4], Output: [7,0,8] ,Explanation: 342 + 465 = 807.
         public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
         {
             ListNode root = new ListNode();
