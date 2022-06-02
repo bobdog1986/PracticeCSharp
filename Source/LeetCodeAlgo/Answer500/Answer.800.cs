@@ -130,6 +130,33 @@ namespace LeetCodeAlgo
             else return false;
         }
 
+        ///821. Shortest Distance to a Character
+        public int[] ShortestToChar(string s, char c)
+        {
+            int n = s.Length;
+            int[] res = new int[n];
+            int[] head = new int[n];
+            int[] tail = new int[n];
+            int left = -1;
+            int right = -1;
+            for(int i = 0; i < n; i++)
+            {
+                if (s[i] == c) left = i;
+                head[i] = left;
+
+                if (s[n-1-i]==c)right = n-1-i;
+                tail[n - 1 - i] = right;
+            }
+
+            for(int i = 0; i < n; i++)
+            {
+                int min = int.MaxValue;
+                if (head[i] != -1) min = Math.Min(min, i - head[i]);
+                if (tail[i] != -1) min = Math.Min(min, tail[i]-i);
+                res[i] = min;
+            }
+            return res;
+        }
         /// 830. Positions of Large Groups
         ///A group is considered large if it has 3 or more characters.
         ///Return the intervals of every large group sorted in increasing order by start index.
