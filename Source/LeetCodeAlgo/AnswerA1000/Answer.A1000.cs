@@ -290,7 +290,43 @@ namespace LeetCodeAlgo
                 res += diff[i];
             return res;
         }
-        ///1038. Binary Search Tree to Greater Sum Tree, #BTree
+        ///1037. Valid Boomerang
+        public bool IsBoomerang(int[][] points)
+        {
+            var x=points[0];
+            var y = points[1];
+            var z = points[2];
+
+            if ((x[0] == y[0] && x[1] == y[1])
+                || (x[0] == z[0] && x[1] == z[1])
+                || (y[0] == z[0] && y[1] == z[1]))
+                return false;
+
+            if (x[1] == y[1] && x[1] == z[1]) return false;
+            if (x[0] == y[0] && x[0] == z[0]) return false;
+
+            var line1 = IsBoomerang_GetLine(x, y);
+            var line2 = IsBoomerang_GetLine(x, z);
+            if (line1[0] == line2[0] && line1[1] == line2[1])
+                return false;
+
+            return true;
+        }
+
+        private double[] IsBoomerang_GetLine(int[] p1, int[] p2)
+        {
+            if (p1[1] == p2[1])
+            {
+                return new double[] { 0, p1[1] };
+            }
+            else
+            {
+                double a = 1.0 * (p1[1] - p2[1]) / (p1[0] - p2[0]);
+                double b = 1.0 * (p2[0] * p1[1] - p1[0] * p2[1]) / (p2[0] - p1[0]);
+                return new double[] { a, b };
+            }
+        }
+        /// 1038. Binary Search Tree to Greater Sum Tree, #BTree
         public TreeNode BstToGst(TreeNode root)
         {
             BstToGst_Recursion(root, 0);
