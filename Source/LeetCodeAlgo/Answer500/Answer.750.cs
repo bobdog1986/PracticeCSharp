@@ -131,7 +131,37 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///771. Jewels and Stones
+        ///767. Reorganize String
+        //rearrange the characters of s so that any two adjacent characters are not the same.
+        //Return any possible rearrangement of s or return "" if not possible.
+        public string ReorganizeString(string s)
+        {
+            Dictionary<char, int> dict = new Dictionary<char, int>();
+            foreach(var c in s)
+            {
+                if (dict.ContainsKey(c)) dict[c] ++;
+                else dict.Add(c, 1);
+            }
+
+            var max = dict.Values.Max();
+            if (max > (s.Length + 1) / 2) return "";
+
+            var keys = dict.Keys.OrderBy(x => -dict[x]).ToList();
+            char[] res = new char[s.Length];
+            int left = 0;
+            for(int i = 0; i < s.Length; i += 2)
+            {
+                res[i] = keys[left];
+                if (--dict[keys[left]] == 0) left++;
+            }
+            for (int i = 1; i < s.Length; i += 2)
+            {
+                res[i] = keys[left];
+                if (--dict[keys[left]] == 0) left++;
+            }
+            return new string(res);
+        }
+        /// 771. Jewels and Stones
         public int NumJewelsInStones(string jewels, string stones)
         {
             int res = 0;
