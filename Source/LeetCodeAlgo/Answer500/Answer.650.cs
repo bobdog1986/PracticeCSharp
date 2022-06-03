@@ -297,7 +297,9 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///677. Map Sum Pairs, see MapSum
+        ///676. Implement Magic Dictionary, see MagicDictionary
+
+        /// 677. Map Sum Pairs, see MapSum
 
         /// 678. Valid Parenthesis String
         ///Given a string s containing only three types of characters: '(', ')' and '*', return true if s is valid.
