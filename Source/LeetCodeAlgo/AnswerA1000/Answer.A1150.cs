@@ -215,7 +215,40 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///1192. Critical Connections in a Network, #Tarjan's
+        ///1190. Reverse Substrings Between Each Pair of Parentheses
+        public string ReverseParentheses(string s)
+        {
+            int n = s.Length;
+            Stack<int> opened = new Stack<int>();
+            int[] pair = new int[n];
+            for (int i = 0; i < n; ++i)
+            {
+                if (s[i] == '(')
+                    opened.Push(i);
+                if (s[i] == ')')
+                {
+                    int j = opened.Pop();
+                    pair[i] = j;
+                    pair[j] = i;
+                }
+            }
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0, d = 1; i < n; i += d)
+            {
+                if (s[i] == '(' || s[i] == ')')
+                {
+                    i = pair[i];
+                    d = -d;
+                }
+                else
+                {
+                    sb.Append(s[i]);
+                }
+            }
+            return sb.ToString();
+        }
+
+        /// 1192. Critical Connections in a Network, #Tarjan's
         ///A critical connection is a connection that, if removed, will make some servers unable to reach some other server.
         /// Return all critical connections in the network in any order.
 
