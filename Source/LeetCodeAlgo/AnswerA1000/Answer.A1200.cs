@@ -135,7 +135,26 @@ namespace LeetCodeAlgo
 
             return new string(list.ToArray());
         }
-        ///1219. Path with Maximum Gold, #DFS
+        ///1218. Longest Arithmetic Subsequence of Given Difference
+        public int LongestSubsequence(int[] arr, int difference)
+        {
+            var dict=new Dictionary<int, int>();
+            foreach(var n in arr)
+            {
+                if (dict.ContainsKey(n - difference))
+                {
+                    if (dict.ContainsKey(n)) dict[n] = Math.Max(dict[n], dict[n - difference] + 1);
+                    else dict.Add(n, dict[n - difference] + 1);
+                }
+                else
+                {
+                    if (dict.ContainsKey(n)) dict[n] = 1;
+                    else dict.Add(n, 1);
+                }
+            }
+            return dict.Values.Max();
+        }
+        /// 1219. Path with Maximum Gold, #DFS
         public int GetMaximumGold(int[][] grid)
         {
             int max = 0;
