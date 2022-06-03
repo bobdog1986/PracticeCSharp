@@ -197,6 +197,27 @@ namespace LeetCodeAlgo
         }
 
 
+        ///1935. Maximum Number of Words You Can Type
+        public int CanBeTypedWords(string text, string brokenLetters)
+        {
+            var set = new HashSet<char>(brokenLetters);
+            var words = text.Split(' ').ToList();
+            int res = 0;
+            foreach(var word in words)
+            {
+                bool type = true;
+                foreach(var c in word)
+                {
+                    if (set.Contains(c))
+                    {
+                        type = false;
+                        break;
+                    }
+                }
+                if (type) res++;
+            }
+            return res;
+        }
         /// 1941. Check if All Characters Have Equal Number of Occurrences
         ///A string s is good if all the characters that appear in s have the same number of occurrences
         public bool AreOccurrencesEqual(string s)
