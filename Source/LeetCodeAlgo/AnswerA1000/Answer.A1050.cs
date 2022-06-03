@@ -8,7 +8,33 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1054. Distant Barcodes, #PriorityQueue, #Heap
+        ///1052. Grumpy Bookstore Owner, #Sliding Window
+        public int MaxSatisfied(int[] customers, int[] grumpy, int minutes)
+        {
+            int n = grumpy.Length;
+            int satisfied = 0;
+            int notSatisfied = 0;
+            int count = 0;
+            int max = 0;
+            for (int i = 0; i < n; i++)
+            {
+                if (grumpy[i] == 0) satisfied += customers[i];
+                else
+                {
+                    notSatisfied += customers[i];
+                    max = Math.Max(max, notSatisfied);
+                }
+                count++;
+                if (count == minutes)
+                {
+                    if (grumpy[i + 1 - minutes] == 1) notSatisfied -= customers[i + 1 - minutes];
+                    count--;
+                }
+            }
+            return max + satisfied;
+        }
+
+        /// 1054. Distant Barcodes, #PriorityQueue, #Heap
         ///Rearrange the barcodes so that no two adjacent barcodes are equal.
         public int[] RearrangeBarcodes(int[] barcodes)
         {
