@@ -424,5 +424,28 @@ namespace LeetCodeAlgo
             }
             return new string(list.ToArray());
         }
+
+        ///1048. Longest String Chain, #DP
+        // chain is word[i]->word[i+1] only add a char
+        public int LongestStrChain(string[] words)
+        {
+            Dictionary<string, int> dp = new Dictionary<string, int>();
+            words = words.Distinct().OrderBy(x => x.Length).ToArray();
+            int res = 0;
+            foreach (var word in words)
+            {
+                int best = 0;
+                for (int i = 0; i < word.Length; ++i)
+                {
+                    string prev = word.Substring(0, i) + word.Substring(i + 1);
+                    int count = dp.ContainsKey(prev) ? dp[prev] +1 : 1;
+                    best = Math.Max(best, count);
+                }
+                dp.Add(word, best);
+                res = Math.Max(res, best);
+            }
+            return res;
+        }
+
     }
 }
