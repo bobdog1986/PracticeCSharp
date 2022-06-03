@@ -114,6 +114,35 @@ namespace LeetCodeAlgo
             return res == 201 ? -1 : res - 1;
         }
 
+        ///1170. Compare Strings by Frequency of the Smallest Character
+        public int[] NumSmallerByFrequency(string[] queries, string[] words)
+        {
+            int n = queries.Length;
+            int[] res = new int[n];
+            var mat = words.Select(x => NumSmallerByFrequency(x)).OrderBy(x => -x).ToList();
+            var qArr = queries.Select(x => NumSmallerByFrequency(x)).ToList();
+            for(int i = 0; i < n; i++)
+            {
+                int count = 0;
+                foreach(var x in mat)
+                {
+                    if (qArr[i] < x) count++;
+                    else break;
+                }
+                res[i]= count;
+            }
+            return res;
+        }
+
+        private int NumSmallerByFrequency(string word)
+        {
+            int[] arr = new int[26];
+            foreach (var c in word)
+                arr[c - 'a']++;
+            for (int i = 0; i < 26; i++)
+                if (arr[i] != 0) return arr[i];
+            return -1;
+        }
         /// 1171. Remove Zero Sum Consecutive Nodes from Linked List
         public ListNode RemoveZeroSumSublists(ListNode head)
         {
