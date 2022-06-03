@@ -135,7 +135,37 @@ namespace LeetCodeAlgo
 
             return new string(list.ToArray());
         }
-        ///1227. Airplane Seat Assignment Probability
+        ///1219. Path with Maximum Gold, #DFS
+        public int GetMaximumGold(int[][] grid)
+        {
+            int max = 0;
+            int[][] dxy = new int[4][] { new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 }};
+            for(int i = 0; i < grid.Length; i++)
+            {
+                for(int j = 0; j < grid[0].Length; j++)
+                {
+                    GetMaximumGold_DFS(grid, i, j, 0, dxy, ref max);
+                }
+            }
+            return max;
+        }
+
+        private void GetMaximumGold_DFS(int[][] grid, int row , int col,int curr,int[][] dxy, ref int max)
+        {
+            if(row>=0 && row<grid.Length && col>=0 && col < grid[0].Length && grid[row][col]>0)
+            {
+                curr += grid[row][col];
+                max = Math.Max(curr, max);
+                int temp = grid[row][col];
+                grid[row][col] = 0;
+                foreach(var d in dxy)
+                {
+                    GetMaximumGold_DFS(grid, row + d[0], col + d[1], curr, dxy, ref max);
+                }
+                grid[row][col] = temp;
+            }
+        }
+        /// 1227. Airplane Seat Assignment Probability
         public double NthPersonGetsNthSeat(int n)
         {
             return n == 1 ? 1.0 : 0.5;
