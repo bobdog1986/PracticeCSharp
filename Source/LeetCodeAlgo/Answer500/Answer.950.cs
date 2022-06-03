@@ -219,7 +219,8 @@ namespace LeetCodeAlgo
         {
             return nums.Select(x => x * x).OrderBy(x => x).ToArray();
         }
-        ///980. Unique Paths III, #DFS
+
+        /// 980. Unique Paths III, #DFS
         ///1 representing the starting square.There is exactly one starting square.
         ///2 representing the ending square. There is exactly one ending square.
         ///0 representing empty squares we can walk over.
@@ -275,6 +276,41 @@ namespace LeetCodeAlgo
                 }
                 grid[row][col] = temp;
             }
+        }
+        ///984. String Without AAA or BBB
+        public string StrWithout3a3b(int a, int b)
+        {
+            var sb = new StringBuilder();
+            while(a>0 && b > 0)
+            {
+                if (a > b)
+                {
+                    sb.Append("aa");
+                    sb.Append('b');
+                    a-=2;
+                    b--;
+                }
+                else if (b > a)
+                {
+                    sb.Append("bb");
+                    sb.Append('a');
+                    a --;
+                    b-=2;
+                }
+                else
+                {
+                    sb.Append('a');
+                    sb.Append('b');
+                    a--;
+                    b--;
+                }
+            }
+
+            while (a-- > 0)
+                sb.Append('a');
+            while (b-- > 0)
+                sb.Append('b');
+            return sb.ToString();
         }
         /// 986. Interval List Intersections
         ///The intersection of two closed intervals is a set of real numbers that are either empty or represented as a closed interval.
