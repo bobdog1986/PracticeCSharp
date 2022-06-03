@@ -323,7 +323,18 @@ namespace LeetCodeAlgo
             }
             return res;
         }
-        ///1833. Maximum Ice Cream Bars
+        ///1832. Check if the Sentence Is Pangram
+        public bool CheckIfPangram(string sentence)
+        {
+            var set = new HashSet<char>();
+            foreach(var c in sentence)
+            {
+                set.Add(c);
+                if (set.Count == 26) return true;
+            }
+            return false;
+        }
+        /// 1833. Maximum Ice Cream Bars
         public int MaxIceCream(int[] costs, int coins)
         {
             int res = 0;
