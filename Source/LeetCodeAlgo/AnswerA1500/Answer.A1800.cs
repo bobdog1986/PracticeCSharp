@@ -274,7 +274,23 @@ namespace LeetCodeAlgo
             return list[0];
         }
 
-        ///1828. Queries on Number of Points Inside a Circle
+        ///1827. Minimum Operations to Make the Array Increasing
+        public int MinOperations(int[] nums)
+        {
+            int res = 0;
+            int prev = 0;
+            foreach(var n in nums)
+            {
+                if (n > prev) prev = n;
+                else
+                {
+                    res += prev + 1 - n;
+                    prev++;
+                }
+            }
+            return res;
+        }
+        /// 1828. Queries on Number of Points Inside a Circle
         public int[] CountPoints(int[][] points, int[][] queries)
         {
             return queries.Select(q => points.Count(p => (p[0] - q[0]) * (p[0] - q[0]) + (p[1] - q[1]) * (p[1] - q[1]) <= q[2] * q[2])) .ToArray();
