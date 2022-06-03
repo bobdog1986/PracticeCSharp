@@ -312,6 +312,32 @@ namespace LeetCodeAlgo
                 sb.Append('b');
             return sb.ToString();
         }
+        ///985. Sum of Even Numbers After Queries
+        public int[] SumEvenAfterQueries(int[] nums, int[][] queries)
+        {
+            int n = queries.Length;
+            int sum = nums.Sum(x => x % 2 == 0 ? x : 0);
+            int[] res = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                var q = queries[i];
+                if (nums[q[1]] % 2 == 0)
+                {
+                    if (q[0] % 2 == 0)
+                        sum += q[0];
+                    else
+                        sum -= nums[q[1]];
+                }
+                else
+                {
+                    if (q[0] % 2 != 0)
+                        sum += nums[q[1]] + q[0];
+                }
+                nums[q[1]] += q[0];
+                res[i] = sum;
+            }
+            return res;
+        }
         /// 986. Interval List Intersections
         ///The intersection of two closed intervals is a set of real numbers that are either empty or represented as a closed interval.
         ///For example, the intersection of [1, 3] and [2, 4] is [2, 3].
