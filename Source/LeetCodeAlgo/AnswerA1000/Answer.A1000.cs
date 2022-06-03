@@ -13,7 +13,7 @@ namespace LeetCodeAlgo
         public IList<string> CommonChars(string[] words)
         {
             var mat = new List<int[]>();
-            foreach(var w in words)
+            foreach (var w in words)
             {
                 var arr = new int[26];
                 foreach (var c in w)
@@ -21,12 +21,12 @@ namespace LeetCodeAlgo
                 mat.Add(arr);
             }
             List<string> res = new List<string>();
-            for(int i = 0; i < 26; i++)
+            for (int i = 0; i < 26; i++)
             {
                 int min = 100;
-                foreach(var arr in mat)
+                foreach (var arr in mat)
                 {
-                    if(arr[i] == 0)
+                    if (arr[i] == 0)
                     {
                         min = 0;
                         break;
@@ -36,11 +36,42 @@ namespace LeetCodeAlgo
                         min = Math.Min(min, arr[i]);
                     }
                 }
-                while(min-- > 0)
+                while (min-- > 0)
                     res.Add(((char)('a' + i)).ToString());
             }
             return res;
         }
+        ///1003. Check If Word Is Valid After Substitutions
+        public bool IsValid_1003(string s)
+        {
+            if (s.Length % 3 != 0) return false;
+            var stack = new Stack<string>();
+            foreach(var c in s)
+            {
+                if (c == 'a') stack.Push("a");
+                else if (c == 'b')
+                {
+                    if (stack.Count == 0) return false;
+                    else
+                    {
+                        if (stack.Peek() != "a") return false;
+                        else stack.Push(stack.Pop() + "b");
+                    }
+                }
+                else
+                {
+                    if (stack.Count == 0) return false;
+                    else
+                    {
+                        if (stack.Peek() != "ab") return false;
+                        else stack.Pop();
+                    }
+                }
+            }
+            return stack.Count == 0;
+        }
+
+
         /// 1004. Max Consecutive Ones III, #Sliding Window
         //return the maximum number of consecutive 1's in the array if you can flip at most k 0's.
         public int LongestOnes(int[] nums, int k)
