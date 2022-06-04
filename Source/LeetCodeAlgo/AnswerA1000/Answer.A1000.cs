@@ -229,6 +229,34 @@ namespace LeetCodeAlgo
             }
             return sb.ToString();
         }
+        ///1022. Sum of Root To Leaf Binary Numbers,#BTree
+        public int SumRootToLeaf(TreeNode root)
+        {
+            int res = 0;
+            SumRootToLeaf(root, 0, ref res);
+            return res;
+        }
+
+        private void SumRootToLeaf(TreeNode root, int curr, ref int res)
+        {
+            if(root == null)
+            {
+                return;
+            }
+            else
+            {
+                curr = (curr << 1) + root.val;
+                if (root.left == null && root.right==null)
+                {
+                    res += curr;
+                }
+                else
+                {
+                    SumRootToLeaf(root.left, curr, ref res);
+                    SumRootToLeaf(root.right, curr, ref res);
+                }
+            }
+        }
         /// 1026. Maximum Difference Between Node and Ancestor, #BTree
         public int MaxAncestorDiff(TreeNode root)
         {
