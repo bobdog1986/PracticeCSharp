@@ -329,6 +329,40 @@ namespace LeetCodeAlgo
             return max;
         }
 
+        ///2131. Longest Palindrome by Concatenating Two Letter Words
+        public int LongestPalindrome(string[] words)
+        {
+            int res = 0;
+            bool same = false;
+            var dict=new Dictionary<string,int>();
+            foreach(var word in words)
+            {
+                if (dict.ContainsKey(word)) dict[word]++;
+                else dict.Add(word, 1);
+            }
+            foreach (var key in dict.Keys)
+            {
+                if (dict[key] == 0) continue;
+                if (key[0] == key[1])
+                {
+                    int pair = dict[key] / 2;
+                    res += pair * 4;
+                    if (dict[key]%2==1)same = true;
+                }
+                else
+                {
+                    var mirror = $"{key[1]}{key[0]}";
+                    if (dict.ContainsKey(mirror))
+                    {
+                        var pair = Math.Min(dict[key], dict[mirror]);
+                        res += pair * 4;
+                        dict[key] -= pair;
+                        dict[mirror] -= pair;
+                    }
+                }
+            }
+            return same? res+2:res;
+        }
         /// 2133. Check if Every Row and Column Contains All Numbers
         ///An n x n matrix is valid if every row and every column contains all the integers from 1 to n (inclusive).
         ///Given an n x n integer matrix matrix, return true if the matrix is valid. Otherwise, return false.
