@@ -170,7 +170,20 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///1020. Number of Enclaves, #DFS, #Graph
+        ///1018. Binary Prefix Divisible By 5
+        public IList<bool> PrefixesDivBy5(int[] nums)
+        {
+            var res = new List<bool>();
+            int curr = 0;
+            foreach(var n in nums)
+            {
+                curr = (curr << 1) + n;
+                res.Add(curr % 5 == 0);
+                curr %= 100;
+            }
+            return res;
+        }
+        /// 1020. Number of Enclaves, #DFS, #Graph
         ///Return the number of land cells in grid for which we cannot walk off the boundary of the grid in any number of moves.
         public int NumEnclaves(int[][] grid)
         {
