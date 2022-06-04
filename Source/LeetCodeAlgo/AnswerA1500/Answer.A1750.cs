@@ -110,7 +110,57 @@ namespace LeetCodeAlgo
             }
         }
 
-        ///1768. Merge Strings Alternately
+        ///1765. Map of Highest Peak, #BFS
+        public int[][] HighestPeak(int[][] isWater)
+        {
+            int m = isWater.Length;
+            int n = isWater[0].Length;
+
+            int[][] res = new int[m][];
+            for (int i = 0; i < m; i++)
+            {
+                res[i] = new int[n];
+                Array.Fill(res[i], -1);
+            }
+
+            int[][] dxy = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { -1, 0 }, new int[] { 1, 0 }};
+
+            List<int[]> list = new List<int[]>();
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (isWater[i][j] == 1)
+                    {
+                        list.Add(new int[] { i, j });
+                        res[i][j] = 0;
+                    }
+                }
+            }
+
+            int height = 1;
+            while (list.Count > 0)
+            {
+                var next = new List<int[]>();
+                foreach(var p in list)
+                {
+                    foreach(var d in dxy)
+                    {
+                        var r = p[0] + d[0];
+                        var c = p[1] + d[1];
+                        if(r>=0&&r<m&&c>=0&&c<n && res[r][c]==-1)
+                        {
+                            next.Add(new int[] { r,c});
+                            res[r][c] = height;
+                        }
+                    }
+                }
+                height++;
+                list = next;
+            }
+            return res;
+        }
+        /// 1768. Merge Strings Alternately
         ///Merge the strings by adding letters in alternating order, starting with word1.
         public string MergeAlternately(string word1, string word2)
         {
