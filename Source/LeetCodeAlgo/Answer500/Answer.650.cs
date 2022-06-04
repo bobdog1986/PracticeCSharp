@@ -107,12 +107,13 @@ namespace LeetCodeAlgo
             }
             return arr.Skip(left).Take(k).ToList();
         }
+
         public IList<int> FindClosestElements_PQ(int[] arr, int k, int x)
         {
             var res = new List<int>();
             var pq = new PriorityQueue<int, int>(Comparer<int>.Create((a, b) =>
             {
-                if (Math.Abs(arr[a]-x) == Math.Abs(arr[b] - x))
+                if (Math.Abs(arr[a] - x) == Math.Abs(arr[b] - x))
                 {
                     return a - b;
                 }
@@ -122,9 +123,9 @@ namespace LeetCodeAlgo
                 }
             }));
 
-            for(int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
-                pq.Enqueue(i,i);
+                pq.Enqueue(i, i);
             }
 
             while (k-- > 0)
@@ -181,7 +182,7 @@ namespace LeetCodeAlgo
             {
                 return TrimBST(root.left, low, high);
             }
-            else if(root.val < low)
+            else if (root.val < low)
             {
                 return TrimBST(root.right, low, high);
             }
@@ -192,6 +193,7 @@ namespace LeetCodeAlgo
                 return root;
             }
         }
+
         /// 670. Maximum Swap
         ///You can swap two digits at most once to get the maximum valued number. Return the max
         public int MaximumSwap(int num)
@@ -246,9 +248,9 @@ namespace LeetCodeAlgo
             }
         }
 
-        private int FindSecondMinimumValue(TreeNode root,HashSet<int> set)
+        private int FindSecondMinimumValue(TreeNode root, HashSet<int> set)
         {
-            if(root.left==null && root.right == null)
+            if (root.left == null && root.right == null)
             {
                 set.Add(root.val);
                 return root.val;
@@ -453,9 +455,9 @@ namespace LeetCodeAlgo
             for (int i = 0; i < graph.Length; i++)
                 graph[i] = new HashSet<int>();
 
-            foreach(var edge in edges)
+            foreach (var edge in edges)
             {
-                if (FindRedundantConnection_BFS(graph,new bool[n+1], edge[0], edge[1])) return edge;
+                if (FindRedundantConnection_BFS(graph, new bool[n + 1], edge[0], edge[1])) return edge;
                 else
                 {
                     graph[edge[0]].Add(edge[1]);
@@ -470,13 +472,44 @@ namespace LeetCodeAlgo
             if (visit[curr]) return false;
             if (graph[curr].Contains(target)) return true;
             visit[curr] = true;
-            foreach(var i in graph[curr])
+            foreach (var i in graph[curr])
             {
                 if (visit[i]) continue;
-                if (FindRedundantConnection_BFS(graph,visit, i, target)) return true;
+                if (FindRedundantConnection_BFS(graph, visit, i, target)) return true;
             }
             return false;
         }
+
+        ///688. Knight Probability in Chessboard, #Memoization
+        public double KnightProbability(int n, int k, int row, int column)
+        {
+            var dxy = new int[][] { new int[] {1,2 }, new int[] { 2, 1 }, new int[] { -1, 2 }, new int[] { -2, 1 },
+                                    new int[] {1,-2 }, new int[] {2,-1 }, new int[] {-1,-2 }, new int[] {-2,-1 },};
+
+            var total = Math.Pow(8, k);
+            var dict = new Dictionary<int, double>();
+            dict.Add(row * 100 + column, 1);
+            while (k-- > 0 && dict.Count > 0)
+            {
+                var next = new Dictionary<int, double>();
+                foreach (var p in dict.Keys)
+                {
+                    foreach (var d in dxy)
+                    {
+                        var r = p / 100 + d[0];
+                        var c = p % 100 + d[1];
+                        if (r >= 0 && r < n && c >= 0 && c < n)
+                        {
+                            if (next.ContainsKey(r * 100 + c)) next[r * 100 + c] += dict[p];
+                            else next.Add(r * 100 + c, dict[p]);
+                        }
+                    }
+                }
+                dict = next;
+            }
+            return dict.Values.Sum() / total;
+        }
+
         /// 692. Top K Frequent Words, #PriorityQueue, #Heap
         ///Given an array of strings words and an integer k, return the k most frequent strings.
         ///Return the answer sorted by the frequency from highest to lowest.
@@ -581,7 +614,7 @@ namespace LeetCodeAlgo
                 }
             }
             res += Math.Min(curr, prev);
-            return res ;
+            return res;
         }
 
         /// 697
