@@ -126,7 +126,23 @@ namespace LeetCodeAlgo
             }
         }
 
-        ///1926. Nearest Exit from Entrance in Maze, #Graph, #BFS
+        ///1925. Count Square Sum Triples
+        //a2 + b2 = c2. 1 <= a, b, c <= n.
+        public int CountTriples(int n)
+        {
+            int res = 0;
+            for (int i = 1; i <= n; i++)
+            {
+                for (int j = 1; j <= n; j++)
+                {
+                    var sqrt = Math.Sqrt(i * i + j * j);
+                    if (sqrt % 1 == 0 && sqrt <= n)
+                        res++;
+                }
+            }
+            return res;
+        }
+        /// 1926. Nearest Exit from Entrance in Maze, #Graph, #BFS
         ///Return the number of steps in the shortest path from the entrance to the nearest exit, or -1 if no such path exists.
         public int NearestExit(char[][] maze, int[] entrance)
         {
