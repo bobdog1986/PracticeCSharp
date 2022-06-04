@@ -561,6 +561,21 @@ namespace LeetCodeAlgo
             }
             return sum;
         }
+        ///2145. Count the Hidden Sequences
+        public int NumberOfArrays(int[] differences, int lower, int upper)
+        {
+            long sum = 0;
+            long max = 0;
+            long min = 0;
+            foreach (var d in differences)
+            {
+                sum += d;
+                max = Math.Max(max, sum);
+                min = Math.Min(min, sum);
+            }
+            if ((upper - lower) < (max - min)) return 0;
+            else return (int)((upper - lower) - (max - min) + 1);
+        }
         /// 2148. Count Elements With Strictly Smaller and Greater Elements
         ///return the number of elements that have both a strictly smaller and a strictly greater element appear in nums.
         ///-100000 <= nums[i] <= 100000
