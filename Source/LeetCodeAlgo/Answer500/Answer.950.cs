@@ -568,6 +568,71 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///996. Number of Squareful Arrays, #Backtracking
+        //An array is squareful if the sum of every pair of adjacent elements is a perfect square.
+        //Given an integer array nums, return the number of permutations of nums that are squareful.
+        //Two permutations perm1 and perm2 are different if there is some index i such that perm1[i] != perm2[i].
+        public int NumSquarefulPerms(int[] nums)
+        {
+            Dictionary<int, int> cntMap = new Dictionary<int, int>();
+            Dictionary<int, HashSet<int>> squareMap = new Dictionary<int, HashSet<int>>();
+            int cnt = 0;
+
+            foreach(int num in nums)
+            {
+                if (!cntMap.ContainsKey(num))
+                {
+                    cntMap.Add(num, 1);
+                    squareMap.Add(num, new HashSet<int>());
+                }
+                else
+                {
+                    cntMap[num]++;
+                }
+            }
+
+            foreach (int num1 in cntMap.Keys)
+            {
+                foreach (int num2 in cntMap.Keys)
+                {
+                    if (NumSquarefulPerms_IsSquare(num1 + num2))
+                    {
+                        squareMap[num1].Add(num2);
+                        squareMap[num2].Add(num1);
+                    }
+                }
+            }
+
+            foreach (int num in cntMap.Keys)
+            {
+                NumSquarefulPerms_DFS(num, nums.Length - 1,cntMap, squareMap, ref cnt);
+            }
+
+            return cnt;
+        }
+
+        private void NumSquarefulPerms_DFS(int num, int left, Dictionary<int, int> cntMap, Dictionary<int, HashSet<int>> squareMap, ref int cnt)
+        {
+            cntMap[num]--;
+            if (left == 0) { cnt++; }
+            else
+            {
+                foreach (int next in squareMap[num])
+                {
+                    if (cntMap[next] != 0)
+                    {
+                        NumSquarefulPerms_DFS(next, left - 1,cntMap,squareMap,ref cnt);
+                    }
+                }
+            }
+            cntMap[num]++;
+        }
+
+        private bool NumSquarefulPerms_IsSquare(int num)
+        {
+            return (Math.Sqrt(num) % 1 == 0);
+        }
+
         /// 997. Find the Town Judge, #Graph
         ///In a town, there are n people labeled from 1 to n. There is a rumor that one of these people is secretly the town judge.
         ///The town judge trusts nobody.Everybody (except for the town judge) trusts the town judge.
