@@ -18,7 +18,27 @@ namespace LeetCodeAlgo
             }
             return -1;
         }
-        ///1461. Check If a String Contains All Binary Codes of Size K
+        ///1456. Maximum Number of Vowels in a Substring of Given Length, #Sliding Window
+        public int MaxVowels(string s, int k)
+        {
+            int len = 0;
+            int count = 0;
+            int max = 0;
+            HashSet<char> set = new HashSet<char>() {'a','e','i','o','u' };
+            for(int i = 0; i < s.Length; i++)
+            {
+                len++;
+                if (set.Contains(s[i])) count++;
+                max = Math.Max(max, count);
+                if (len == k)
+                {
+                    if (set.Contains(s[i + 1 - k])) count--;
+                    len--;
+                }
+            }
+            return max;
+        }
+        /// 1461. Check If a String Contains All Binary Codes of Size K
         ///return true if every binary code of length k is a substring of s. Otherwise, return false.
         public bool HasAllCodes(string s, int k)
         {

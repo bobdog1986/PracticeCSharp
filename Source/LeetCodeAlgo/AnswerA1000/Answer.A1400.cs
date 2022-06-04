@@ -2,6 +2,7 @@
 using System.Linq;
 using System;
 using System.Collections;
+using System.Text;
 
 namespace LeetCodeAlgo
 {
@@ -67,7 +68,7 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///1409. Queries on a Permutation With Key
+        /// 1409. Queries on a Permutation With Key
         public int[] ProcessQueries(int[] queries, int m)
         {
             int[] arr = new int[m];
