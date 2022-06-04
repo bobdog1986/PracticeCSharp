@@ -8,7 +8,16 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1052. Grumpy Bookstore Owner, #Sliding Window
+        ///1051. Height Checker
+        public int HeightChecker(int[] heights)
+        {
+            var expected = heights.OrderBy(x => x).ToArray();
+            int res = 0;
+            for (int i = 0; i < expected.Length; i++)
+                if (heights[i] != expected[i]) res++;
+            return res;
+        }
+        /// 1052. Grumpy Bookstore Owner, #Sliding Window
         public int MaxSatisfied(int[] customers, int[] grumpy, int minutes)
         {
             int n = grumpy.Length;
