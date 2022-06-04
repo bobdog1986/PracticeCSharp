@@ -50,6 +50,31 @@ namespace LeetCodeAlgo
             }
             return i >= s1.Length;
         }
+        ///965. Univalued Binary Tree, #BTree
+        public bool IsUnivalTree(TreeNode root)
+        {
+            HashSet<int> set = new HashSet<int>();
+            bool res = true;
+            IsUnivalTree(root, set, ref res);
+            return res;
+        }
+
+        private void IsUnivalTree(TreeNode root, HashSet<int> set, ref bool res)
+        {
+            if (root == null) return;
+            if (!res) return;
+            if(set.Count>0 && !set.Contains(root.val))
+            {
+                res = false;
+                return;
+            }
+            else
+            {
+                set.Add(root.val);
+                IsUnivalTree(root.left, set, ref res);
+                IsUnivalTree(root.right, set, ref res);
+            }
+        }
         /// 966. Vowel Spellchecker
         ///Given a wordlist, we want to implement a spellchecker that converts a query word into a correct word.
         public string[] Spellchecker(string[] wordlist, string[] queries)
