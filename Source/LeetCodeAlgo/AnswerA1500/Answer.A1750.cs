@@ -110,21 +110,42 @@ namespace LeetCodeAlgo
             }
         }
 
-        ///1765. Map of Highest Peak, #BFS
+        ///1764. Form Array by Concatenating Subarrays of Another Array
+        public bool CanChoose(int[][] groups, int[] nums)
+        {
+            int m = groups.Length;
+            int r = 0;
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if (groups[r][0] == nums[i])
+                {
+                    int j = 0;
+                    for (; j < groups[r].Length && i+j<nums.Length; j++)
+                    {
+                        if (groups[r][j] != nums[i + j]) break;
+                    }
+                    if(j == groups[r].Length)
+                    {
+                        i += j-1;
+                        r++;
+                        if (r == m) break;
+                    }
+                }
+            }
+            return r == m;
+        }
+        /// 1765. Map of Highest Peak, #BFS
         public int[][] HighestPeak(int[][] isWater)
         {
             int m = isWater.Length;
             int n = isWater[0].Length;
-
             int[][] res = new int[m][];
             for (int i = 0; i < m; i++)
             {
                 res[i] = new int[n];
                 Array.Fill(res[i], -1);
             }
-
             int[][] dxy = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { -1, 0 }, new int[] { 1, 0 }};
-
             List<int[]> list = new List<int[]>();
             for (int i = 0; i < m; i++)
             {
@@ -137,7 +158,6 @@ namespace LeetCodeAlgo
                     }
                 }
             }
-
             int height = 1;
             while (list.Count > 0)
             {
