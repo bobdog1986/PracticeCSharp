@@ -6,7 +6,22 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1104. Path In Zigzag Labelled Binary Tree, #BTree
+        ///1103. Distribute Candies to People
+        public int[] DistributeCandies(int candies, int num_people)
+        {
+            int[] res = new int[num_people];
+            int index = 0;
+            int seed = 1;
+            while (candies > 0)
+            {
+                int curr = Math.Min(seed++, candies);
+                res[index++] += curr;
+                index %= num_people;
+                candies -= curr;
+            }
+            return res;
+        }
+        /// 1104. Path In Zigzag Labelled Binary Tree, #BTree
         ///Zigzag sequence: 1-> 3,2 -> 4, 5, 6, 7 -> 15,14....8->...
         public IList<int> PathInZigZagTree(int label)
         {
