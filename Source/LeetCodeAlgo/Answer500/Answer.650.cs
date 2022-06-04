@@ -445,6 +445,38 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///684. Redundant Connection, #Graph,#BFS
+        public int[] FindRedundantConnection(int[][] edges)
+        {
+            int n = edges.Length;
+            HashSet<int>[] graph = new HashSet<int>[n + 1];
+            for (int i = 0; i < graph.Length; i++)
+                graph[i] = new HashSet<int>();
+
+            foreach(var edge in edges)
+            {
+                if (FindRedundantConnection_BFS(graph,new bool[n+1], edge[0], edge[1])) return edge;
+                else
+                {
+                    graph[edge[0]].Add(edge[1]);
+                    graph[edge[1]].Add(edge[0]);
+                }
+            }
+            return null;
+        }
+
+        private bool FindRedundantConnection_BFS(HashSet<int>[] graph, bool[] visit, int curr, int target)
+        {
+            if (visit[curr]) return false;
+            if (graph[curr].Contains(target)) return true;
+            visit[curr] = true;
+            foreach(var i in graph[curr])
+            {
+                if (visit[i]) continue;
+                if (FindRedundantConnection_BFS(graph,visit, i, target)) return true;
+            }
+            return false;
+        }
         /// 692. Top K Frequent Words, #PriorityQueue, #Heap
         ///Given an array of strings words and an integer k, return the k most frequent strings.
         ///Return the answer sorted by the frequency from highest to lowest.
