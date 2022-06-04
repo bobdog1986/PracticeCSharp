@@ -321,7 +321,24 @@ namespace LeetCodeAlgo
                 res += diff[i];
             return res;
         }
-        ///1037. Valid Boomerang
+        ///1030. Matrix Cells in Distance Order
+        public int[][] AllCellsDistOrder(int rows, int cols, int rCenter, int cCenter)
+        {
+            PriorityQueue<int[],int> pq = new PriorityQueue<int[],int>();
+            for(int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    pq.Enqueue(new int[] { i, j }, Math.Abs(rCenter - i) + Math.Abs(cCenter - j));
+                }
+            }
+            var res = new int[rows * cols][];
+            int index = 0;
+            while(pq.Count>0)
+                res[index++]=pq.Dequeue();
+            return res;
+        }
+        /// 1037. Valid Boomerang
         public bool IsBoomerang(int[][] points)
         {
             var x=points[0];
