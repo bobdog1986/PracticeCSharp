@@ -171,6 +171,20 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///1009. Complement of Base 10 Integer
+        public int BitwiseComplement(int n)
+        {
+            if (n == 0) return 1;
+            int res = 0;
+            int seed = 1;
+            while (n >0)
+            {
+                if ((n & 1) == 0) res += seed;
+                seed <<= 1;
+                n >>= 1;
+            }
+            return res;
+        }
         /// 1014. Best Sightseeing Pair
         ///find max = values[i] + values[j] + i - j, 1 <= values[i] <= 1000
         public int MaxScoreSightseeingPair(int[] values)
