@@ -95,7 +95,23 @@ namespace LeetCodeAlgo
             return max;
         }
 
-        ///1007. Minimum Domino Rotations For Equal Row
+        ///1005. Maximize Sum Of Array After K Negations
+        public int LargestSumAfterKNegations(int[] nums, int k)
+        {
+            var pq = new PriorityQueue<int, int>();
+            foreach (var n in nums)
+                pq.Enqueue(n, n);
+            while (k-- > 0)
+            {
+                var top = pq.Dequeue();
+                pq.Enqueue(-top, -top);
+            }
+            int sum = 0;
+            while (pq.Count > 0)
+                sum += pq.Dequeue();
+            return sum;
+        }
+        /// 1007. Minimum Domino Rotations For Equal Row
         ///Return the minimum number of rotations so that all the values in tops are the same,
         ///or all the values in bottoms are the same.If it cannot be done, return -1.
         public int MinDominoRotations(int[] tops, int[] bottoms)
