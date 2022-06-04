@@ -268,7 +268,43 @@ namespace LeetCodeAlgo
             return sell[len - 1];
         }
 
-        ///312. Burst Balloons, #DP, #Divide And Conquer
+        ///310. Minimum Height Trees, #Graph, #BFS
+        public IList<int> FindMinHeightTrees(int n, int[][] edges)
+        {
+            if (n == 1) return new List<int>() { 0 };
+
+            List<int>[] graph = new List<int>[n];
+            for (int i = 0; i < n; ++i)
+                graph[i]=new List<int>();
+
+            foreach (var edge in edges)
+            {
+                graph[edge[0]].Add(edge[1]);
+                graph[edge[1]].Add(edge[0]);
+            }
+
+            List<int> leaves = new List<int>();
+            for (int i = 0; i < n; i++)
+                if (graph[i].Count == 1) leaves.Add(i);
+
+            //eat leaves every loop, finally we got the center 1 or 2 nodes
+            while (n > 2)
+            {
+                n -= leaves.Count;
+                List<int> nextLeaves = new List<int>();
+                foreach (int i in leaves)
+                {
+                    int j = graph[i][0];
+                    graph[j].Remove(i);
+                    if (graph[j].Count == 1) nextLeaves.Add(j);
+                }
+                leaves = nextLeaves;
+            }
+            return leaves;
+        }
+
+
+        /// 312. Burst Balloons, #DP, #Divide And Conquer
         ///You are given n balloons, indexed from 0 to n - 1. Each balloon is painted with a number
         ///on it represented by an array nums. You are asked to burst all the balloons.
         ///If you burst the ith balloon, you will get nums[i - 1] * nums[i] * nums[i + 1] coins.
@@ -439,13 +475,15 @@ namespace LeetCodeAlgo
         ///return the max of length(word[i]) * length(word[j]) where the two words do not share common letters.
         public int MaxProduct(string[] words)
         {
-            int[][] matrix=new int[words.Length][];
-            for(int i=0; i<matrix.Length; i++)
+            int[] arr=new int[words.Length];
+            for(int i=0; i<arr.Length; i++)
             {
-                int[] arr = new int[26];
+                int bit = 0;
                 foreach(var c in words[i])
-                    arr[c - 'a']++;
-                matrix[i] = arr;
+                {
+                    bit|= 1<<( c - 'a');
+                }
+                arr[i] = bit;
             }
 
             int max = 0;
@@ -453,22 +491,12 @@ namespace LeetCodeAlgo
             {
                 for(int j = i + 1; j < words.Length; j++)
                 {
-                    if (MaxProduct_CanProduct(matrix[i], matrix[j]))
+                    if ((arr[i] & arr[j]) == 0)
                         max = Math.Max(max, words[i].Length * words[j].Length);
                 }
             }
             return max;
         }
-
-        public bool MaxProduct_CanProduct(int[] arr1, int[] arr2)
-        {
-            for(int i = 0; i < arr1.Length; i++)
-            {
-                if (arr1[i] > 0 && arr2[i] > 0) return false;
-            }
-            return true;
-        }
-
 
         /// 319. Bulb Switcher
         public int BulbSwitch(int n)
