@@ -63,7 +63,6 @@ namespace LeetCodeAlgo
         {
             if (result.Count() > 0)
             {
-                //Console.WriteLine(String.Join("\r\n\r\n", result.Select(o => String.Join("\r\n", o))));
                 Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
             }
             else Console.WriteLine("!!!Result count = 0");
@@ -73,7 +72,6 @@ namespace LeetCodeAlgo
         {
             if (result.Count() > 0)
             {
-                //Console.WriteLine(String.Join("\r\n\r\n", result.Select(o => String.Join("\r\n", o))));
                 Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
             }
             else Console.WriteLine("!!!Result count = 0");
@@ -82,7 +80,6 @@ namespace LeetCodeAlgo
         {
             if (result.Count() > 0)
             {
-                //Console.WriteLine(String.Join("\r\n\r\n", result.Select(o => String.Join("\r\n", o))));
                 Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
             }
             else Console.WriteLine("!!!Result count = 0");
@@ -91,7 +88,6 @@ namespace LeetCodeAlgo
         {
             if (result.Count() > 0)
             {
-                //Console.WriteLine(String.Join("\r\n\r\n", result.Select(o => String.Join("\r\n", o))));
                 Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
             }
             else Console.WriteLine("!!!Result count = 0");
@@ -101,7 +97,6 @@ namespace LeetCodeAlgo
         {
             if (result.Count() > 0)
             {
-                //Console.WriteLine(String.Join("\r\n\r\n", result.Select(o => String.Join("\r\n", o))));
                 Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
             }
             else Console.WriteLine("!!!Result count = 0");

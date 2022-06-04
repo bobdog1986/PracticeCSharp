@@ -281,6 +281,19 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2126. Destroying Asteroids
+        public bool AsteroidsDestroyed(int mass, int[] asteroids)
+        {
+            Array.Sort(asteroids);
+            long curr = mass;
+            foreach(var n in asteroids)
+            {
+                if (curr >= n) curr += n;
+                else return false;
+                if (curr >= int.MaxValue) return true;
+            }
+            return true;
+        }
         /// 2129. Capitalize the Title
         /// Capitalize the string by changing the capitalization of each word such that:
         ///If the length of the word is 1 or 2 letters, change all letters to lowercase.
