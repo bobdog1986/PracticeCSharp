@@ -284,5 +284,27 @@ namespace LeetCodeAlgo
 
             return res.ToArray();
         }
+
+        ///1995. Count Special Quadruplets
+        //nums[a] + nums[b] + nums[c] == nums[d], and a<b<c<d
+        public int CountQuadruplets(int[] nums)
+        {
+            int res = 0;
+            for(int i = 0; i < nums.Length - 3; i++)
+            {
+                for(int j=i+1; j < nums.Length-2; j++)
+                {
+                    for(int k = j + 1; k < nums.Length - 1; k++)
+                    {
+                        for(int m = k + 1; m < nums.Length; m++)
+                        {
+                            if (nums[i] + nums[j] + nums[k] == nums[m]) res++;
+                        }
+                    }
+                }
+            }
+            return res;
+        }
+
     }
 }
