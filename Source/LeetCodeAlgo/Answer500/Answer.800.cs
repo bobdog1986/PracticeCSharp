@@ -263,6 +263,20 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///832. Flipping an Image
+        public int[][] FlipAndInvertImage(int[][] image)
+        {
+            int m = image.Length;
+            int n = image[0].Length;
+            int[][] res = new int[m][];
+            for(int i = 0; i < m; i++)
+            {
+                res[i] = new int[n];
+                for(int j=0;j<n;j++)
+                    res[i][j]= image[i][n-1-j]^1 ;
+            }
+            return res;
+        }
         /// 841. Keys and Rooms
         ///Given an array rooms where rooms[i] is the set of keys that you can obtain if you visited room i,
         ///return true if you can visit all the rooms, or false otherwise.
