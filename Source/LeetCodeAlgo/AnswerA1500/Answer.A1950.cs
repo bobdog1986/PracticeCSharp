@@ -135,6 +135,39 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///1971. Find if Path Exists in Graph,#BFS
+        public bool ValidPath(int n, int[][] edges, int source, int destination)
+        {
+            if (source == destination) return true;
+            List<int>[] graph=new List<int>[n];
+            for (int i = 0; i < n; i++)
+                graph[i] = new List<int>();
+            foreach(var e in edges)
+            {
+                graph[e[0]].Add(e[1]);
+                graph[e[1]].Add(e[0]);
+            }
+
+            bool[] visit = new bool[n];
+            var list = new List<int>() { source};
+            visit[source] = true;
+            while (list.Count > 0)
+            {
+                var next=new List<int>();
+                foreach(var i in list)
+                {
+                    foreach(var j in graph[i])
+                    {
+                        if (j == destination) return true;
+                        if (visit[j]) continue;
+                        visit[j] = true;
+                        next.Add(j);
+                    }
+                }
+                list = next;
+            }
+            return false;
+        }
         /// 1974. Minimum Time to Type Word Using Special Typewriter
         ///Given a string word, return the minimum number of seconds to type out the characters in word.
         public int MinTimeToType(string word)
