@@ -55,6 +55,26 @@ namespace LeetCodeAlgo
             }
             return set.Count;
         }
+        ///806. Number of Lines To Write String
+        public int[] NumberOfLines(int[] widths, string s)
+        {
+            int lines = 0;
+            int curr = 0;
+            foreach(var c in s)
+            {
+                if(curr + widths[c-'a'] > 100)
+                {
+                    lines++;
+                    curr = widths[c - 'a'];
+                }
+                else
+                {
+                    curr += widths[c - 'a'];
+                }
+            }
+            lines++;
+            return new int[]{ lines,curr};
+        }
         /// 807. Max Increase to Keep City Skyline
         public int MaxIncreaseKeepingSkyline(int[][] grid)
         {
