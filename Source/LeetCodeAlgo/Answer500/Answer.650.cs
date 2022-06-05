@@ -134,6 +134,40 @@ namespace LeetCodeAlgo
             return res.OrderBy(o => o).Select(o => arr[o]).ToList();
         }
 
+        ///661. Image Smoother
+        public int[][] ImageSmoother(int[][] img)
+        {
+            int m = img.Length;
+            int n = img[0].Length;
+
+            int[][] res = new int[m][];
+            for (int i = 0; i < m; i++)
+                res[i] = new int[n];
+
+            for(int i = 0; i < m; i++)
+            {
+                for(int j=0; j < n; j++)
+                {
+                    int sum = 0;
+                    int count = 0;
+                    for(int k = -1; k <= 1; k++)
+                    {
+                        for(int l = -1; l <= 1; l++)
+                        {
+                            int r = i + k;
+                            int c = j + l;
+                            if(r>=0 && r<m && c>=0 && c < n)
+                            {
+                                sum += img[r][c];
+                                count++;
+                            }
+                        }
+                    }
+                    res[i][j] = sum/count;
+                }
+            }
+            return res;
+        }
         /// 662. Maximum Width of Binary Tree
         ///The maximum width of a tree is the maximum width among all levels.
         ///The width of one level is defined as the length between the end-nodes(the leftmost and rightmost non-null nodes),
