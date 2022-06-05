@@ -772,5 +772,31 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2295. Replace Elements in an Array
+        //in the ith operation you replace the number operations[i][0] with operations[i][1].
+        public int[] ArrayChange(int[] nums, int[][] operations)
+        {
+            int n = nums.Length;
+            var dict=new Dictionary<int, int>();
+            for(int i = 0; i < nums.Length; i++)
+            {
+                dict.Add(nums[i], i);
+            }
+
+            foreach(var op in operations)
+            {
+                var index = dict[op[0]];
+                dict.Remove(op[0]);
+                dict.Add(op[1], index);
+            }
+
+            int[] res = new int[n];
+            foreach(var k in dict.Keys)
+            {
+                res[dict[k]] = k;
+            }
+            return res;
+        }
+
     }
 }
