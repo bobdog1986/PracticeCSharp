@@ -798,5 +798,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2296. Design a Text Editor, see TextEditor
+
     }
 }
