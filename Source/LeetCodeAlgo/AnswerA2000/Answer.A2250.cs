@@ -723,6 +723,7 @@ namespace LeetCodeAlgo
             }
             return dp[0][0];
         }
+
         ///2293. Min Max Game
         public int MinMaxGame(int[] nums)
         {
@@ -744,5 +745,32 @@ namespace LeetCodeAlgo
             }
             return nums[0];
         }
+        ///2294. Partition Array Such That Maximum Difference Is K
+        //Return the minimum number of subsequences needed such that the difference
+        //between the maximum and minimum values in each subsequence is at most k.
+        public int PartitionArray(int[] nums, int k)
+        {
+            Array.Sort(nums);
+            int res = 0;
+            int min = -1;
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if (min == -1)
+                {
+                    min = nums[i];
+                    res++;
+                }
+                else
+                {
+                    if (nums[i] - min > k)
+                    {
+                        res++;
+                        min = nums[i];
+                    }
+                }
+            }
+            return res;
+        }
+
     }
 }
