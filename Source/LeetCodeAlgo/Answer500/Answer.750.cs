@@ -131,7 +131,19 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///767. Reorganize String
+        ///766. Toeplitz Matrix
+        public bool IsToeplitzMatrix(int[][] matrix)
+        {
+            for (int i = 0; i < matrix.Length - 1; i++)
+            {
+                for (int j = 0; j < matrix[i].Length - 1; j++)
+                {
+                    if (matrix[i][j] != matrix[i + 1][j + 1]) return false;
+                }
+            }
+            return true;
+        }
+        /// 767. Reorganize String
         //rearrange the characters of s so that any two adjacent characters are not the same.
         //Return any possible rearrangement of s or return "" if not possible.
         public string ReorganizeString(string s)

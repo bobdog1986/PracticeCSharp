@@ -60,7 +60,7 @@ namespace LeetCodeAlgo
 
             string mat3Str = "[[0,1,1],[1,1,0],[1,1,0]]";
             var mat3 = anwser.buildMatrix(mat3Str);
-            string arrStr3 = "[5,3,4,4,7,3,6,11,8,5,11]";
+            string arrStr3 = "[2,1,-1]";
             var arr3 = anwser.buildArray(arrStr3);
             //Console.WriteLine("Correct Anwser should be : ");
             //Console.WriteLine(string.Join("\r\n", mat1.Select(o => string.Join(",", o))));
@@ -68,7 +68,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.FindTilt(treeNode);
+            var result = anwser.PivotIndex(arr3);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
