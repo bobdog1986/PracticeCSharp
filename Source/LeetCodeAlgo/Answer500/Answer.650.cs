@@ -333,7 +333,29 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///676. Implement Magic Dictionary, see MagicDictionary
+        ///674. Longest Continuous Increasing Subsequence
+        public int FindLengthOfLCIS(int[] nums)
+        {
+            int max = 0;
+            int prev = int.MinValue;
+            int curr = 0;
+            foreach(var n in nums)
+            {
+                if (n > prev)
+                {
+                    curr++;
+                }
+                else
+                {
+                    curr = 1;
+                }
+                max = Math.Max(max, curr);
+                prev = n;
+            }
+            return max;
+        }
+
+        /// 676. Implement Magic Dictionary, see MagicDictionary
 
         /// 677. Map Sum Pairs, see MapSum
 
