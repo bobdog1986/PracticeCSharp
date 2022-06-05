@@ -129,6 +129,24 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///812. Largest Triangle Area
+        //return the area of the largest triangle that can be formed by any three different points.
+        public double LargestTriangleArea(int[][] points)
+        {
+            double res = 0;
+            int n = points.Length;
+            for(int i=0;i<n-2;i++)
+                for(int j=0;j<n-1;j++)
+                    for(int k=0;k<n;k++)
+                        res = Math.Max(res, 0.5 * Math.Abs(
+                            points[i][0] * points[j][1] +
+                            points[j][0] * points[k][1] +
+                            points[k][0] * points[i][1] -
+                            points[j][0] * points[i][1] -
+                            points[k][0] * points[j][1] -
+                            points[i][0] * points[k][1]));
+            return res;
+        }
         /// 814. Binary Tree Pruning, #BTree
         ///return the same tree where every subtree (of the given tree) not containing a 1 has been removed.
         ///A subtree of a node node is node plus every node that is a descendant of node.
