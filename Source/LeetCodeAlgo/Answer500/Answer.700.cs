@@ -174,7 +174,20 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///725. Split Linked List in Parts
+        ///724. Find Pivot Index
+        // leftSum = rightSum , exclude current number
+        public int PivotIndex(int[] nums)
+        {
+            int sum = nums.Sum();
+            int curr = 0;
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if (curr == sum - curr - nums[i]) return i;
+                curr += nums[i];
+            }
+            return -1;
+        }
+        /// 725. Split Linked List in Parts
         ///The number of nodes in the list is in the range [0, 1000]. 1 <= k <= 50
         public ListNode[] SplitListToParts(ListNode head, int k)
         {
