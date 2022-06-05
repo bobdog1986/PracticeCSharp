@@ -168,7 +168,24 @@ namespace LeetCodeAlgo
             else return false;
         }
 
-        ///821. Shortest Distance to a Character
+        ///819. Most Common Word
+        public string MostCommonWord(string paragraph, string[] banned)
+        {
+            var words = paragraph.Split(" !?',;.".ToCharArray()).Select(x=>x.ToLower()).ToList();
+            var set = new HashSet<string>(banned.Select(x=>x.ToLower()));
+            var dict = new Dictionary<string, int>();
+            foreach(var w in words)
+            {
+                if (string.IsNullOrEmpty(w)) continue;
+                if (set.Contains(w)) continue;
+                if (dict.ContainsKey(w)) dict[w]++;
+                else dict.Add(w, 1);
+            }
+
+            var keys = dict.Keys.OrderBy(x => -dict[x]).ToList();
+            return keys[0];
+        }
+        /// 821. Shortest Distance to a Character
         public int[] ShortestToChar(string s, char c)
         {
             int n = s.Length;
