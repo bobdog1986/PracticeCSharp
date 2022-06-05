@@ -236,7 +236,19 @@ namespace LeetCodeAlgo
             return min;
         }
 
-        ///1992. Find All Groups of Farmland, #BFS
+        ///1991. Find the Middle Index in Array
+        public int FindMiddleIndex(int[] nums)
+        {
+            int sum = nums.Sum();
+            int curr = 0;
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if (curr == sum - curr - nums[i]) return i;
+                curr += nums[i];
+            }
+            return -1;
+        }
+        /// 1992. Find All Groups of Farmland, #BFS
         ///Return a 2D array containing the 4-length arrays for each group of farmland in land(1s rectangle area.).
         public int[][] FindFarmland(int[][] land)
         {
