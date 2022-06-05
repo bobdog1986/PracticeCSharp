@@ -212,6 +212,28 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///824. Goat Latin
+        public string ToGoatLatin(string sentence)
+        {
+            var set = new HashSet<char>() { 'a', 'e', 'i', 'o',  'u', 'A', 'E', 'I', 'O', 'U' };
+            var curr = "a";
+            var words = sentence.Split(' ').Select(x =>
+            {
+                var str = x;
+                if (set.Contains(x[0]))
+                {
+                    str += "ma";
+                }
+                else
+                {
+                    str = $"{x.Substring(1, x.Length - 1)}{x[0]}ma";
+                }
+                str += curr;
+                curr += "a";
+                return str;
+            });
+            return string.Join(" ", words);
+        }
         /// 830. Positions of Large Groups
         ///A group is considered large if it has 3 or more characters.
         ///Return the intervals of every large group sorted in increasing order by start index.
