@@ -723,5 +723,26 @@ namespace LeetCodeAlgo
             }
             return dp[0][0];
         }
+        ///2293. Min Max Game
+        public int MinMaxGame(int[] nums)
+        {
+            while (nums.Length > 1)
+            {
+                var next = new int[nums.Length / 2];
+                for(int i = 0; i < next.Length; i++)
+                {
+                    if (i % 2 == 0)
+                    {
+                        next[i] = Math.Min(nums[2 * i], nums[2 * i + 1]);
+                    }
+                    else
+                    {
+                        next[i] = Math.Max(nums[2 * i], nums[2 * i + 1]);
+                    }
+                }
+                nums = next;
+            }
+            return nums[0];
+        }
     }
 }
