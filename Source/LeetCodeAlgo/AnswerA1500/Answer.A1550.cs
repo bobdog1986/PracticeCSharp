@@ -245,5 +245,21 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///1592. Rearrange Spaces Between Words
+        public string ReorderSpaces(string text)
+        {
+            int n = text.Length;
+            var words=text.Split(' ').Where(x=>x.Length>0).ToArray();
+            if (words.Length == 1)
+                return words[0].PadRight(n, ' ');
+            int len = words.Sum(x => x.Length);
+            int spaces = n - len;
+            int interval = spaces / (words.Length - 1);
+            string str = "";
+            while (interval-- > 0)
+                str += " ";
+            return string.Join(str, words).PadRight(n, ' ');
+        }
     }
 }
