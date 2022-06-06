@@ -95,6 +95,45 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///1870. Minimum Speed to Arrive on Time, #Binary Search
+        //Return the minimum positive integer speed (in kilometers per hour) that all the trains
+        //must travel at for you to reach the office on time, or -1 if it is impossible to be on time.
+        // result must <= 10_000_000
+        public int MinSpeedOnTime(int[] dist, double hour)
+        {
+            int left = 1;
+            int right = 10_000_000;
+            int n = dist.Length;
+            if ((n - 1 + dist.Last() * 1.0 / right) > hour) return -1;
+
+            while (left < right)
+            {
+                int mid = (left + right) / 2;
+                double sum = 0;
+                for (int i = 0; i < n; i++)
+                {
+                    if (i == n - 1)
+                    {
+                        sum += dist[i] * 1.0 / mid;
+                    }
+                    else
+                    {
+                        sum += (int)Math.Ceiling(dist[i] * 1.0 / mid);
+                    }
+                }
+
+                if (sum <= hour)
+                {
+                    right = mid;
+                }
+                else
+                {
+                    left = mid + 1;
+                }
+            }
+            return left;
+        }
+
         /// 1876. Substrings of Size Three with Distinct Characters
         ///A string is good if there are no repeated characters.
         ///Given a string s,return the number of good substrings of length three in s.
@@ -219,7 +258,7 @@ namespace LeetCodeAlgo
         }
 
         ///1898. Maximum Number of Removable Characters, #Binary Search
-        //removable[] is indexes of s tha can be removed 
+        //removable[] is indexes of s tha can be removed
         //Return the maximum k [0,n] you can choose such that p is still a subsequence of s after the removals.
         public int MaximumRemovals(string s, string p, int[] removable)
         {
