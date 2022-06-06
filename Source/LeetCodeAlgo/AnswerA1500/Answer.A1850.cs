@@ -217,5 +217,45 @@ namespace LeetCodeAlgo
             }
             return left;
         }
+
+        ///1898. Maximum Number of Removable Characters, #Binary Search
+        //removable[] is indexes of s tha can be removed 
+        //Return the maximum k [0,n] you can choose such that p is still a subsequence of s after the removals.
+        public int MaximumRemovals(string s, string p, int[] removable)
+        {
+            int left = 0;
+            int right = removable.Length;
+            bool[] mask = new bool[s.Length];
+            while (left < right)
+            {
+                int mid = (left + right+1) / 2;
+                for (int i = left; i < mid; i++)
+                    mask[removable[i]] = true;
+
+                if (MaximumRemovals_IsSub(s, p, mask))
+                {
+                    left = mid;
+                }
+                else
+                {
+                    right = mid - 1;
+                    for (int i = left; i < mid; i++)
+                        mask[removable[i]] = false;
+                }
+            }
+            return left;
+        }
+
+        private bool MaximumRemovals_IsSub(string s, string p, bool[] mask)
+        {
+            int i = 0, j = 0;
+            for (; i < s.Length && j < p.Length; i++)
+            {
+                if (mask[i]) continue;
+                if (s[i] == p[j]) j++;
+            }
+            return j == p.Length;
+        }
+
     }
 }
