@@ -18,6 +18,42 @@ namespace LeetCodeAlgo
                 res += right-- - left++;
             return res;
         }
+        ///1552. Magnetic Force Between Two Balls, #Binary Search
+        //that magnetic force between two different balls at positions x and y is |x - y|
+        //Given the integer array position and the integer m.Return the max force.
+        public int MaxDistance(int[] position, int m)
+        {
+            Array.Sort(position);
+            int n = position.Length;
+            int left = 1;
+            int right = position[n - 1] - position[0];
+            while (left < right)
+            {
+                int mid = (left+right+1) / 2;//must select right side
+                if (MaxDistance_Count(mid, position) >= m)
+                    left = mid;
+                else
+                    right = mid - 1;
+            }
+            return left;
+        }
+
+        private int MaxDistance_Count(int minDist, int[] position)
+        {
+            int res = 1;
+            int curr = position[0];
+            for (int i = 1; i < position.Length; i++)
+            {
+                if (position[i] - curr >= minDist)
+                {
+                    res++;
+                    curr = position[i];
+                }
+            }
+            return res;
+        }
+
+
         /// 1557. Minimum Number of Vertices to Reach All Nodes, #Graph
         ///Given a directed acyclic graph, with n vertices numbered from 0 to n-1,
         ///and an array edges where edges[i] = [fromi, toi] represents a directed edge from node fromi to node toi.
