@@ -196,5 +196,26 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+
+        ///1748. Sum of Unique Elements
+        public int SumOfUnique(int[] nums)
+        {
+            var dict = new Dictionary<int, int>();
+            int sum = 0;
+            foreach(var n in nums)
+            {
+                if (dict.ContainsKey(n))
+                {
+                    if (dict[n] == 1) sum -= n;
+                    dict[n]++;
+                }
+                else
+                {
+                    sum += n;
+                    dict.Add(n, 1);
+                }
+            }
+            return sum;
+        }
     }
 }
