@@ -110,7 +110,33 @@ namespace LeetCodeAlgo
             }
         }
 
-        ///1764. Form Array by Concatenating Subarrays of Another Array
+        ///1760. Minimum Limit of Balls in a Bag, #Binary Search
+        //Take any bag of balls and divide it into two new bags with a positive number of balls
+        //penalty is max of nums, Return the minimum possible penalty after performing the operations.
+        public int MinimumSize(int[] nums, int maxOperations)
+        {
+            //O(nlog10^9)
+            //The number of operation we need is sum of (n - 1) / mid
+            //If the total operation > max operations,the size of bag is too small, set left = mid + 1
+            //Otherwise,this size of bag is big enough, we set right = mid
+            //We return the final result, where result = left = right.
+            int left = 1, right = 1_000_000_000;
+            while (left < right)
+            {
+                int mid = (left + right) / 2;
+                int count = 0;
+                foreach (var n in nums)
+                    count += (n - 1) / mid;
+
+                if (count > maxOperations)
+                    left = mid + 1;
+                else
+                    right = mid;
+            }
+            return left;
+        }
+
+        /// 1764. Form Array by Concatenating Subarrays of Another Array
         public bool CanChoose(int[][] groups, int[] nums)
         {
             int m = groups.Length;
