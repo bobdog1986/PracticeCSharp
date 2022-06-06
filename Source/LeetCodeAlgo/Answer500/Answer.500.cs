@@ -490,6 +490,23 @@ namespace LeetCodeAlgo
             root.val = root.val + right;
             return left;
         }
+        ///540. Single Element in a Sorted Array, #Binary Search
+        //only 1 num once, others twice, find it
+        public int SingleNonDuplicate(int[] nums)
+        {
+            int n = nums.Length;
+            int left = 0;
+            int right =n - 1;
+            while (left < right)
+            {
+                int mid = (left + right) / 2;
+                if ((mid % 2 == 0 && nums[mid] == nums[mid + 1]) || (mid % 2 == 1 && nums[mid] == nums[mid - 1]))
+                    left = mid + 1;//left half is ok
+                else
+                    right = mid;//left half miss one
+            }
+            return nums[left];
+        }
         /// 541. Reverse String II
         ///Given a string s and an integer k, reverse the first k characters for every 2k characters
         public string ReverseStr(string s, int k)

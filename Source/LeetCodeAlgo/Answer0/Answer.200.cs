@@ -1021,13 +1021,13 @@ namespace LeetCodeAlgo
         ///ints in each column are sorted in ascending from top to bottom.
         public bool SearchMatrix(int[][] matrix, int target)
         {
-            if (matrix == null || matrix.Length ==0 || matrix[0].Length ==0)
-            {
+            if (target < matrix.First().First() || target > matrix.Last().Last())
                 return false;
-            }
+            int m = matrix.Length;
             int col = matrix[0].Length - 1;
             int row = 0;
-            while (col >= 0 && row <= matrix.Length - 1)
+            //serach form top-right
+            while (col >= 0 && row <= m - 1)
             {
                 if (target == matrix[row][col])
                 {
@@ -1035,11 +1035,11 @@ namespace LeetCodeAlgo
                 }
                 else if (target < matrix[row][col])
                 {
-                    col--;
+                    col--;//move left
                 }
                 else if (target > matrix[row][col])
                 {
-                    row++;
+                    row++;//move down
                 }
             }
             return false;

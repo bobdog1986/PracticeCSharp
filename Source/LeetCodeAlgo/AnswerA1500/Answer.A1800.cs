@@ -368,18 +368,18 @@ namespace LeetCodeAlgo
         {
             //the key is to find out the valid condition:
             //k + sum >= size * max which is k + sum >= (j - i + 1) * nums[j]
-            int res = 1, i = 0, j;
-            long sum = 0;
             Array.Sort(nums);
-            for (j = 0; j < nums.Length; ++j)
+            int res = 1;
+            int left = 0;
+            long sum = 0;
+            for (int right = 0; right < nums.Length; ++right)
             {
-                sum += nums[j];
-                while (sum + k < (long)nums[j] * (j - i + 1))
+                sum += nums[right];
+                while (sum + k < (long)nums[right] * (right - left + 1))
                 {
-                    sum -= nums[i];
-                    i++;
+                    sum -= nums[left++];
                 }
-                res = Math.Max(res, j - i + 1);
+                res = Math.Max(res, right - left + 1);
             }
             return res;
         }
