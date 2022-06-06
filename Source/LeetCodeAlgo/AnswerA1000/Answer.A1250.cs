@@ -183,7 +183,27 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///1284. Minimum Number of Flips to Convert Binary Matrix to Zero Matrix, #DFS
+        ///1283. Find the Smallest Divisor Given a Threshold, #Binary Search
+        //a positive integer divisor, divide all the array by it, and sum the division's result.
+        //Find the smallest divisor such that the result mentioned above is less than or equal to threshold.
+        public int SmallestDivisor(int[] nums, int threshold)
+        {
+            int left = 1;
+            int right = 1_000_000;
+            while (left < right)
+            {
+                int mid = (left + right) / 2;
+                int sum = 0;
+                foreach (var n in nums)
+                    sum += (int)Math.Ceiling( 1.0*n / mid);
+                if (sum <= threshold)
+                    right = mid;
+                else
+                    left = mid+1;
+            }
+            return left;
+        }
+        /// 1284. Minimum Number of Flips to Convert Binary Matrix to Zero Matrix, #DFS
         ///Given a m x n binary matrix mat. In one step, you can choose one cell and
         ///flip it and all the four neighbors of it if they exist (Flip is changing 1 to 0 and 0 to 1).
         ///Return the minimum number of steps required to convert mat to a zero matrix or -1 if you cannot.
