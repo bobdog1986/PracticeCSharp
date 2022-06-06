@@ -171,6 +171,18 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///1078. Occurrences After Bigram
+        public string[] FindOcurrences(string text, string first, string second)
+        {
+            var res = new List<string>();
+            var words = text.Split(' ').ToArray();
+            for(int i = 2; i < words.Length; i++)
+            {
+                if (words[i - 2] == first && words[i - 1] == second)
+                    res.Add(words[i]);
+            }
+            return res.ToArray();
+        }
         /// 1079. Letter Tile Possibilities, #Backtracking, #DFS
         ///You have n  tiles, where each tile has one letter tiles[i] printed on it.
         ///Return the number of possible non-empty sequences can make using the letters printed on those tiles.

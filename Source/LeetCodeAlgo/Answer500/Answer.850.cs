@@ -169,7 +169,7 @@ namespace LeetCodeAlgo
                 LeafSimilar(root.right, list);
             }
         }
-        /// 875. Koko Eating Bananas
+        /// 875. Koko Eating Bananas, #Binary Search
         ///There are n piles of bananas, the ith pile has piles[i] bananas.
         ///The guards have gone and will come back in h hours.
         ///Find min numb to eat all bananas in h hours. each time can only eat 1 index;
@@ -178,10 +178,10 @@ namespace LeetCodeAlgo
             if (piles.Length == h)
                 return piles.Max();
 
-            int low = 1, high = 1000000000;
-            int mid = (low + high) / 2;
-            while (low <= high)
+            int low = 1, high = 1_000_000_000;
+            while (low < high)
             {
+                int mid = (low + high) / 2;
                 int sum = 0;
                 for (int i = 0; i < piles.Length; i++)
                     sum += (int)Math.Ceiling(1.0 * piles[i] / mid);
@@ -189,9 +189,7 @@ namespace LeetCodeAlgo
                 if (sum > h)
                     low = mid + 1;
                 else
-                    high = mid - 1;
-
-                mid = (low + high) / 2;
+                    high = mid;
             }
             return low;
         }
