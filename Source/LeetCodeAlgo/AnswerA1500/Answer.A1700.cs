@@ -15,7 +15,7 @@ namespace LeetCodeAlgo
             double total = 0;
             int n = customers.Length;
             double start = 0;
-            for(int i = 0; i < n; ++i)
+            for (int i = 0; i < n; ++i)
             {
                 start = Math.Max(start, customers[i][0]);
                 double end = start + customers[i][1];
@@ -24,6 +24,7 @@ namespace LeetCodeAlgo
             }
             return total / n;
         }
+
         /// 1706. Where Will the Ball Fall
         ///You have a 2-D grid of size m x n representing a box, and you have n balls.
         ///The box is open on the top and bottom sides.
@@ -35,8 +36,8 @@ namespace LeetCodeAlgo
         {
             var rowLen = grid.Length;
             var colLen = grid[0].Length;
-            var ans=new int[colLen];
-            for(int i = 0; i < colLen; i++)
+            var ans = new int[colLen];
+            for (int i = 0; i < colLen; i++)
             {
                 int col = i;
                 int row = 0;
@@ -48,14 +49,14 @@ namespace LeetCodeAlgo
                         col = -1;
                         break;
                     }
-                    else if (adjacentCol+ grid[row][adjacentCol]== col)
+                    else if (adjacentCol + grid[row][adjacentCol] == col)
                     {
                         col = -1;
                         break;
                     }
                     else
                     {
-                        col=adjacentCol;
+                        col = adjacentCol;
                         row++;
                     }
                 }
@@ -63,12 +64,13 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
         ///1710. Maximum Units on a Truck
         public int MaximumUnits(int[][] boxTypes, int truckSize)
         {
             int res = 0;
             boxTypes = boxTypes.OrderBy(x => -x[1]).ToArray();
-            foreach(var i in boxTypes)
+            foreach (var i in boxTypes)
             {
                 int count = Math.Min(truckSize, i[0]);
                 res += count * i[1];
@@ -77,6 +79,75 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///1712. Ways to Split Array Into Three Subarrays, #Binary Search
+        //split into three non-empty contiguous subarrays - named left, mid, right, sum of left<=mid<=right,
+        //return the number of good ways to split nums, modulo 10^9 + 7.
+        //3 <= nums.length <= 10^5,0 <= nums[i] <= 10^4
+        public int WaysToSplit(int[] nums)
+        {
+            int n = nums.Length;
+            int[] arr = new int[n];//create prefixSum array
+            int sum = 0;
+            for (int i = 0; i < n; i++)
+            {
+                sum += nums[i];
+                arr[i] = sum;
+            }
+            long res = 0;
+            long mod = 10_0000_0007;
+            //find index i and j , than sum of [0,i]<= (i,j]<=(j,n-1]
+            //equal to prefix array : arr[i]<=arr[j]-arr[i]<=arr[n-1]-arr[j]
+            for (int i = 0; i < n - 2; i++)
+            {
+                //skip three invalid condition
+                if (arr[i] > sum / 3)
+                    break;
+                if (arr[i + 1] - arr[i] > sum - arr[i + 1])
+                    break;
+                if (arr[i] > arr[n - 2] - arr[i])
+                    break;
+
+                int left1 = i + 1;
+                int right1 = n - 2;
+                while (left1 < right1)
+                {
+                    int mid1 = (left1 + right1) / 2;
+                    if (arr[mid1] - arr[i] >= arr[i])
+                    {
+                        right1 = mid1;
+                    }
+                    else
+                    {
+                        left1 = mid1 + 1;
+                    }
+                }
+                //search valid index left1, that arr[left1]-arr[i]>=arr[i]
+                if (arr[left1] - arr[i] < arr[i]) continue;
+
+                int left2 = i + 1;
+                int right2 = n - 2;
+                while (left2 < right2)
+                {
+                    int mid2 = (left2 + right2 + 1) / 2;//select the right side center
+                    if (sum - arr[mid2] >= arr[mid2] - arr[i])
+                    {
+                        left2 = mid2;
+                    }
+                    else
+                    {
+                        right2 = mid2 - 1;
+                    }
+                }
+                //valid index left2 meet the condition: sum-arr[left2] < arr[left2] - arr[i]
+                if (sum - arr[left2] < arr[left2] - arr[i]) continue;
+
+                res += left2 - left1 + 1;// add range count [left1,left2]
+                res %= mod;
+            }
+            return (int)(res % mod);
+        }
+
         /// 1721. Swapping Nodes in a Linked List
         ///You are given the head of a linked list, and an integer k.
         ///Return the head of the linked list after swapping the values of the kth node
@@ -85,7 +156,7 @@ namespace LeetCodeAlgo
         {
             List<ListNode> list = new List<ListNode>();
             var node = head;
-            while(node != null)
+            while (node != null)
             {
                 list.Add(node);
                 node = node.next;
@@ -110,7 +181,7 @@ namespace LeetCodeAlgo
                 list[k - 2].next = list[k - 1];
                 list[k - 1].next = list[k];
 
-                list[list.Count - k -1].next = list[list.Count - k];
+                list[list.Count - k - 1].next = list[list.Count - k];
                 list[list.Count - k].next = list[list.Count - k + 1];
             }
             return list[0];
@@ -124,7 +195,7 @@ namespace LeetCodeAlgo
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
             int ans = 0;
-            for(int i = lowLimit; i <= highLimit; i++)
+            for (int i = lowLimit; i <= highLimit; i++)
             {
                 var boxIndex = CountBalls_GetBoxIndex(i);
                 if (dict.ContainsKey(boxIndex))
@@ -135,6 +206,7 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
         public int CountBalls_GetBoxIndex(int ball)
         {
             int ans = 0;
@@ -152,23 +224,24 @@ namespace LeetCodeAlgo
         public bool CheckPartitioning(string s)
         {
             int n = s.Length;
-            bool[,] dp = new bool[n,n];
+            bool[,] dp = new bool[n, n];
             for (int i = n - 1; i >= 0; i--)
             {
                 for (int j = 0; j < n; j++)
                 {
                     if (i >= j)
-                        dp[i,j] = true;
+                        dp[i, j] = true;
                     else if (s[i] == s[j])
-                        dp[i,j] = dp[i + 1,j - 1];
+                        dp[i, j] = dp[i + 1, j - 1];
                 }
             }
             for (int i = 1; i < n; i++)
                 for (int j = i + 1; j < n; j++)
-                    if (dp[0,i - 1] && dp[i,j - 1] && dp[j,n - 1])
+                    if (dp[0, i - 1] && dp[i, j - 1] && dp[j, n - 1])
                         return true;
             return false;
         }
+
         public bool CheckPartitioning_MyOn3(string s)
         {
             bool ans = false;
@@ -188,7 +261,7 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        public bool CheckPartitioning(string s, int start,int end)
+        public bool CheckPartitioning(string s, int start, int end)
         {
             while (start < end)
             {
@@ -202,7 +275,7 @@ namespace LeetCodeAlgo
         {
             var dict = new Dictionary<int, int>();
             int sum = 0;
-            foreach(var n in nums)
+            foreach (var n in nums)
             {
                 if (dict.ContainsKey(n))
                 {
