@@ -386,7 +386,9 @@ namespace LeetCodeAlgo
             return max;
         }
 
-        ///530. Minimum Absolute Difference in BST, #BTree
+        ///528. Random Pick with Weight, see Solution_RandomPick
+
+        /// 530. Minimum Absolute Difference in BST, #BTree
         ///Given the root of a Binary Search Tree (BST), return the minimum absolute difference between any two nodes in the tree.
         public int GetMinimumDifference(TreeNode root)
         {
