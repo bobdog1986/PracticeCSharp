@@ -773,7 +773,56 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///437. Path Sum III, #BTree, #Prefix Sum
+        ///436. Find Right Interval, #Binary Search
+        //intervals[i] = [starti, endi] and each starti is unique.
+        //The right interval for an interval i is an interval j such that startj >= endi and startj is minimized.
+        //Note that i may equal j.
+        //Return an array of right interval indices for each interval i.
+        //If no right interval exists for interval i, then put -1 at index i.
+        public int[] FindRightInterval(int[][] intervals)
+        {
+            int n = intervals.Length;
+            if (n == 1) return new int[] { -1 };
+            int[] res = new int[n];
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            for(int i = 0; i < n; i++)
+                dict.Add(intervals[i][0], i);
+
+            var keys=dict.Keys.OrderBy(x=>x).ToArray();
+
+            for(int i = 0; i < n; i++)
+            {
+                int currEnd = intervals[i][1];
+                if (currEnd <= keys[0])
+                {
+                    res[i] = dict[keys[0]];
+                }
+                else if (currEnd > keys[n - 1])
+                {
+                    res[i] = -1;
+                }
+                else
+                {
+                    int left = 0;
+                    int right = n - 1;
+                    while (left < right)
+                    {
+                        int mid =(left + right)/2;
+                        if (keys[mid] >= currEnd)
+                        {
+                            right = mid;
+                        }
+                        else
+                        {
+                            left = mid + 1;
+                        }
+                    }
+                    res[i] = dict[keys[left]];
+                }
+            }
+            return res;
+        }
+        /// 437. Path Sum III, #BTree, #Prefix Sum
         ///return the number of paths where the sum of the values along the path equals targetSum.
         ///The path does not need to start or end at the root or a leaf, but it must go downwards.
 
