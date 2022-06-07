@@ -234,6 +234,57 @@ namespace LeetCodeAlgo
             });
             return string.Join(" ", words);
         }
+        ///826. Most Profit Assigning Work, #Binary Search
+        //worker[i]>=difficulty[j], then can take profit[j]
+        public int MaxProfitAssignment(int[] difficulty, int[] profit, int[] worker)
+        {
+            var dict=new Dictionary<int, int>();
+            for(int i = 0; i < difficulty.Length; i++)
+            {
+                if (!dict.ContainsKey(difficulty[i])) dict.Add(difficulty[i],0);
+                dict[difficulty[i]] = Math.Max(dict[difficulty[i]], profit[i]);
+            }
+
+            var keys=dict.Keys.OrderBy(x=>x).ToList();
+            int[] maxProfit = new int[keys.Count];
+            int max = 0;
+            for(int i = 0; i < keys.Count; i++)
+            {
+                max = Math.Max(max, dict[keys[i]]);
+                maxProfit[i] = max;
+            }
+
+            int res = 0;
+            foreach(var w in worker)
+            {
+                if (w < keys[0]) continue;
+                if (w >= keys.Last())
+                {
+                    res += maxProfit.Last();
+                }
+                else
+                {
+                    int left = 0;
+                    int right = keys.Count - 1;
+                    while (left < right)
+                    {
+                        var mid = (left + right+1) / 2;
+                        if (w>=keys[mid])
+                        {
+                            left = mid;
+                        }
+                        else
+                        {
+                            right = mid-1;
+                        }
+                    }
+                    res += maxProfit[left];
+                }
+            }
+
+            return res;
+
+        }
         /// 830. Positions of Large Groups
         ///A group is considered large if it has 3 or more characters.
         ///Return the intervals of every large group sorted in increasing order by start index.
