@@ -91,7 +91,19 @@ namespace LeetCodeAlgo
             return shot;
         }
 
-        ///454. 4Sum II -- O(n^4) --> O(n^2), using Dictionary
+        ///453. Minimum Moves to Equal Array Elements
+        //return the minimum number of moves required to make all array elements equal.
+        //In one move, you can increment n - 1 elements of the array by 1.
+        public int MinMoves(int[] nums)
+        {
+            // sum + m * (n - 1) = x * n
+            // x = min + m;
+            //sum+m*n-m = m*n+min*n=> m = sum- min*n;
+            return nums.Sum() - nums.Min() * nums.Length;
+        }
+
+
+        /// 454. 4Sum II -- O(n^4) --> O(n^2), using Dictionary
         ///Given four integer arrays nums1, nums2, nums3, and nums4 all of length n,
         ///return the number of tuples (i, j, k, l) such that:nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
         public int FourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4)
