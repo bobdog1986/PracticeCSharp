@@ -413,6 +413,28 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///477. Total Hamming Distance
+        //The Hamming distance between two integers is the number of positions at which the corresponding bits are different.
+        //return the sum of Hamming distances between all the pairs of the integers in nums.
+        //0 <= nums[i] <= 109
+        public int TotalHammingDistance(int[] nums)
+        {
+            int res = 0;
+            int[] ones = new int[32];
+            foreach(var n in nums)
+            {
+                for(int i = 0; i < 31; i++)
+                {
+                    if((n&(1<<i))!=0) ones[i]++;
+                }
+            }
+
+            for (int i = 0; i < 31; i++)
+                res += ones[i] * (nums.Length - ones[i]);
+            return res;
+        }
+
+
         /// 482. License Key Formatting
         ///Return the reformatted license key.
         public string LicenseKeyFormatting(string s, int k)
