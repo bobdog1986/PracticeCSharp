@@ -9,7 +9,49 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///2255. Count Prefixes of a Given String
+        ///2250. Count Number of Rectangles Containing Each Point, #Binary Search
+        //1 <= li, xj <= 10^9 , 1 <= hi, yj <= 100
+        public int[] CountRectangles(int[][] rectangles, int[][] points)
+        {
+            List<int>[] mat = new List<int>[101];
+            for (int i = 0; i < mat.Length; i++)
+                mat[i] = new List<int>();
+
+            foreach (var rect in rectangles)
+                mat[rect[1]].Add(rect[0]);
+
+            foreach (var row in mat)
+                row.Sort();
+
+            int[] res = new int[points.Length];
+            for(int i = 0; i < points.Length; i++)
+            {
+                var p = points[i];
+                int sum = 0;
+                for(int j =p[1]; j < mat.Length; j++)
+                {
+                    if (mat[j].Count == 0) continue;
+                    if (mat[j].Last() < p[0]) continue;
+                    if (mat[j].First() >= p[0]) sum += mat[j].Count;
+                    else
+                    {
+                        int left = 0;
+                        int right = mat[j].Count - 1;
+                        while (left < right)
+                        {
+                            int mid = (left + right) / 2;
+                            if (mat[j][mid] >= p[0]) right = mid;
+                            else left = mid + 1;
+                        }
+                        sum+=mat[j].Count - left;
+                    }
+                }
+                res[i] = sum;
+            }
+            return res;
+        }
+
+        /// 2255. Count Prefixes of a Given String
         public int CountPrefixes(string[] words, string s)
         {
             return words.Where(x => s.StartsWith(x)).Count();
