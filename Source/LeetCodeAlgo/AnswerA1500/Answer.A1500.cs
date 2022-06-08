@@ -18,6 +18,31 @@ namespace LeetCodeAlgo
                 if (arr[i] - arr[i - 1] != diff) return false;
             return true;
         }
+        ///1508. Range Sum of Sorted Subarray Sums, #PriorityQueue
+        //Create new int[] of all range of subarrays,then get sum of [left,right], 1-indexed
+        public int RangeSum(int[] nums, int n, int left, int right)
+        {
+            PriorityQueue<int, int> pq = new PriorityQueue<int, int>();
+            for(int i = 0; i < nums.Length; i++)
+            {
+                int sum = 0;
+                for(int j=i;j<nums.Length; j++)
+                {
+                    sum += nums[j];
+                    pq.Enqueue(sum, sum);
+                }
+            }
+            long res = 0;
+            long mod = 10_0000_0007;
+            int k = 1;
+            while (k <= right)
+            {
+                if (k < left) pq.Dequeue();
+                else res += pq.Dequeue();
+                k++;
+            }
+            return (int)(res % mod);
+        }
         /// 1512. Number of Good Pairs
         ///Given an array of integers nums, return the number of good pairs.
         ///A pair(i, j) is called good if nums[i] == nums[j] and i<j.
