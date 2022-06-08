@@ -248,6 +248,35 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///1774. Closest Dessert Cost, #PriorityQueue
+        //must has 1 baseCosts, can has any types of topping,each type can select [0,2]
+        //return closest to target, if same return the smaller
+        public int ClosestCost(int[] baseCosts, int[] toppingCosts, int target)
+        {
+            PriorityQueue<int,double> pq = new PriorityQueue<int,double>();
+            foreach(var bCost in baseCosts)
+            {
+                var set = new HashSet<int>() { bCost };
+                foreach(var topping in toppingCosts)
+                {
+                    var next = new HashSet<int>();
+                    foreach(var i in set)
+                    {
+                        next.Add(i);
+                        next.Add(i + topping);
+                        next.Add(i + topping * 2);
+                    }
+                    set = next;
+                    foreach(var i in set)
+                    {
+                        if (i == target) return i;
+                        else if (i < target) pq.Enqueue(i, target - i);
+                        else pq.Enqueue(i,i- target+0.5);
+                    }
+                }
+            }
+            return pq.Peek();
+        }
         /// 1779. Find Nearest Point That Has the Same X or Y Coordinate
         public int NearestValidPoint(int x, int y, int[][] points)
         {
