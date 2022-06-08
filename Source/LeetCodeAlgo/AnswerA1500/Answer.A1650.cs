@@ -254,7 +254,30 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///1689. Partitioning Into Minimum Number Of Deci-Binary Numbers
+        ///1685. Sum of Absolute Differences in a Sorted Array, #Prefix Sum
+        //nums sorted in non-decreasing order.
+        //result[i] is equal to sum(|nums[i]-nums[j]|) where 0 <= j < nums.length and j != i (0-indexed).
+        public int[] GetSumAbsoluteDifferences(int[] nums)
+        {
+            int n = nums.Length;
+            int sum = 0;
+            int[] arr = new int[n];
+            for(int i = 0; i < n; i++)
+            {
+                sum += nums[i];
+                arr[i] = sum;
+            }
+
+            int[] res = new int[n];
+            for(int i = 0; i < n; i++)
+            {
+                int head = (i+1) * nums[i] - arr[i];
+                int tail = (sum - arr[i]) - (n - (i + 1)) * nums[i];
+                res[i] = head + tail;
+            }
+            return res;
+        }
+        /// 1689. Partitioning Into Minimum Number Of Deci-Binary Numbers
         public int MinPartitions(string n)
         {
             int res = 0;
