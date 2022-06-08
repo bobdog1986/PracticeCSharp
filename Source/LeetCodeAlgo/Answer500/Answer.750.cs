@@ -185,7 +185,26 @@ namespace LeetCodeAlgo
                 if (set.Contains(s)) res++;
             return res;
         }
-        ///783. Minimum Distance Between BST Nodes
+        ///781. Rabbits in Forest, #Greedy
+        //We asked n rabbits "How many rabbits have the same color as you?" and
+        //collected the answers in an integer array answers where answers[i] is the answer of the ith rabbit.
+        //Given the array answers, return the minimum number of rabbits that could be in the forest.
+        public int NumRabbits(int[] answers)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach(var n in answers)
+            {
+                if (dict.ContainsKey(n)) dict[n]++;
+                else dict.Add(n, 1);
+            }
+            int res = 0;
+            foreach(var k in dict.Keys)
+            {
+                res += (k+1)*(int)(Math.Ceiling(1.0 * dict[k] / (k + 1)));
+            }
+            return res;
+        }
+        /// 783. Minimum Distance Between BST Nodes
         ///root of a Binary Search Tree (BST), return the minimum difference between any two different nodes
         public int MinDiffInBST(TreeNode root)
         {
