@@ -395,7 +395,12 @@ namespace LeetCodeAlgo
             }
             return arr;
         }
-        ///1337. The K Weakest Rows in a Matrix, #PriorityQueue, #Heap
+        ///1332. Remove Palindromic Subsequences
+        public int RemovePalindromeSub(string s)
+        {
+            return s.Length == 0 ? 0 : (new string(s.Reverse().ToArray()) == s ? 1 : 2);
+        }
+        /// 1337. The K Weakest Rows in a Matrix, #PriorityQueue, #Heap
         ///A row i is weaker than a row j if one of the following is true:
         ///The number of soldiers(1) in row i is less than the number of soldiers in row j.
         ///Both rows have the same number of soldiers and i<j.
