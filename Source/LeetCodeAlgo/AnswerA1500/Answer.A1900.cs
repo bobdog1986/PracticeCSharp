@@ -286,5 +286,18 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///1945. Sum of Digits of String After Convert
+        public int GetLucky(string s, int k)
+        {
+            var sb =new StringBuilder();
+            foreach(var c in s)
+                sb.Append($"{c - 'a' + 1}");
+            var str = sb.ToString();
+            while (k-- > 0 && str.Length>1)
+                str = str.Sum(x => x - '0').ToString();
+
+            return int.Parse(str);
+        }
     }
 }
