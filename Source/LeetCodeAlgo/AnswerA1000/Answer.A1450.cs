@@ -209,5 +209,39 @@ namespace LeetCodeAlgo
             return list.Count >= k ? list[k - 1] : -1;
         }
 
+        ///1498. Number of Subsequences That Satisfy the Given Sum Condition, #Two Pointers
+        //Return the number of non-empty subsequences of nums such that minimum + maximum <= target. modulo 109 + 7
+        public int NumSubseq(int[] nums, int target)
+        {
+            long res = 0;
+            long mod = 10_0000_0007;
+            Array.Sort(nums);
+            int n = nums.Length;
+            int left = 0;
+            int right =n - 1;
+
+            //Math.Pow(2, right-left) will overflow, using dp
+            long[] dp = new long[n];
+            dp[0] = 1;
+            for (int i = 1; i < n; i++)
+                dp[i] = dp[i - 1] * 2 % mod;
+
+            while (left <= right)
+            {
+                int sum = nums[left] + nums[right];
+                if (sum > target)
+                {
+                    right--;
+                }
+                else
+                {
+                    res += dp[right-left];
+                    left++;
+                    res %= mod;
+                }
+            }
+            return (int)(res % mod);
+        }
+
     }
 }
