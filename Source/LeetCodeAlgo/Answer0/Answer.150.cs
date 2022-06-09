@@ -261,6 +261,8 @@ namespace LeetCodeAlgo
             for(int i = 0; i < n-1; i++)
             {
                 int goal = target - numbers[i];
+                if (goal < numbers[i]) break;
+                if (goal > numbers.Last()) continue;
                 int left = i + 1;
                 int right = n - 1;
                 while (left <= right)
@@ -270,6 +272,8 @@ namespace LeetCodeAlgo
                     else if (numbers[mid] > goal) right = mid - 1;
                     else left = mid + 1;
                 }
+
+                //if left<right, must check if left is valid answer 
             }
             return new int[] { };
         }
@@ -286,7 +290,7 @@ namespace LeetCodeAlgo
                 else if (sum < target) left++;
                 else right--;
             }
-            return new int[] { left+1,right+1};
+            return new int[] { };
         }
 
 

@@ -81,7 +81,14 @@ namespace LeetCodeAlgo
             if (index != -1) return RemoveOccurrences(s.Substring(0, index) + s.Substring(index + part.Length), part);
             else return s;
         }
-        ///1920. Build Array from Permutation
+        ///1913. Maximum Product Difference Between Two Pairs
+        public int MaxProductDifference(int[] nums)
+        {
+            Array.Sort(nums);
+            int n = nums.Length;
+            return nums[n - 1] * nums[n - 2] - nums[0] * nums[1];
+        }
+        /// 1920. Build Array from Permutation
         ///ans[i] = nums[nums[i]], 1 <= nums.length <= 1000, O(1) space
         public int[] BuildArray(int[] nums)
         {

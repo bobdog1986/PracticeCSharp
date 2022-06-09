@@ -10,7 +10,7 @@ namespace LeetCodeAlgo
     {
         /// 1. Two Sum
         // return indices of the two numbers such that they add up to target.
-        public int[] TwoSum(int[] nums, int target)
+        public int[] TwoSum_1(int[] nums, int target)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
             for (int i = 0; i < nums.Length; i++)
@@ -650,7 +650,7 @@ namespace LeetCodeAlgo
 
         /// 18. 4Sum
         ///Given an array nums of n integers, return an array of all the unique
-        ///quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:
+        ///quadruplets [nums[a], nums[b], nums[c], nums[d]] sum to target
         ///Input: nums = [2,2,2,2,2], target = 8
         ///Output: [[2,2,2,2]]
         public IList<IList<int>> FourSum(int[] nums, int target)
