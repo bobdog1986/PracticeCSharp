@@ -8,7 +8,32 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1855. Maximum Distance Between a Pair of Values
+        ///1854. Maximum Population Year
+        public int MaximumPopulation(int[][] logs)
+        {
+            int start = 1950;
+            int[] years = new int[101];
+            foreach(var log in logs)
+            {
+                years[log[0] - start]++;
+                years[log[1] - start]--;
+            }
+
+            int max = 0;
+            int sum = 0;
+            int res = -1;
+            for(int i = 0; i < years.Length; i++)
+            {
+                sum += years[i];
+                if (sum > max)
+                {
+                    max = sum;
+                    res = i;
+                }
+            }
+            return res + start;
+        }
+        /// 1855. Maximum Distance Between a Pair of Values
         ///You are given two non-increasing 0-indexed integer arrays nums1 and nums2​​​​​​
         ///i <= j and nums1[i] <= nums2[j]. The distance of the pair is j - i​​​​.
         ///Return the maximum distance of any valid pair(i, j). If there are no valid pairs, return 0.

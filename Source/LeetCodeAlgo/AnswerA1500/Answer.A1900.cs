@@ -103,7 +103,7 @@ namespace LeetCodeAlgo
         ///even indices are even and the digits at odd indices are prime (2, 3, 5, or 7).
         public int CountGoodNumbers(long n)
         {
-            long Modulo = 1000000007;
+            long Modulo = 10_0000_0007;
 
             long even = n / 2;
 
