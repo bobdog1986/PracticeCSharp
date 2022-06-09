@@ -468,6 +468,28 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///945. Minimum Increment to Make Array Unique, #Greedy
+        //In one move, you can pick an index i where 0 <= i < nums.length and increment nums[i] by 1.
+        //Return the minimum number of moves to make every value in nums unique.
+        public int MinIncrementForUnique(int[] nums)
+        {
+            Array.Sort(nums);
+            int res = 0;
+            int prev = int.MinValue;
+            foreach(var n in nums)
+            {
+                if (n <= prev)
+                {
+                    res+= prev+1-n;
+                    prev++;
+                }
+                else
+                {
+                    prev = n;
+                }
+            }
+            return res;
+        }
         /// 946. Validate Stack Sequences
         ///Given two integer arrays pushed and popped each with distinct values,
         ///return true if this could have been the result of a sequence of push and pop operations on an initially empty stack, or false otherwise.
