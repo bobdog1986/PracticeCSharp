@@ -68,7 +68,29 @@ namespace LeetCodeAlgo
             }
         }
 
-        ///611. Valid Triangle Number, #Two Pointers, #Binary Search
+        ///609. Find Duplicate File in System
+        public IList<IList<string>> FindDuplicate(string[] paths)
+        {
+            var dict = new Dictionary<string, IList<string>>();
+
+            foreach(var p in paths)
+            {
+                var arr = p.Split(' ');
+                var root = arr[0];
+
+                for(int i=1;i<arr.Length; i++)
+                {
+                    var j = arr[i].IndexOf('(');
+
+                    var file = arr[i].Substring(0, j);
+                    var content = arr[i].Substring(j+1, arr[i].Length-j-1);
+                    if (!dict.ContainsKey(content)) dict.Add(content, new List<string>());
+                    dict[content].Add(root + "/" + file);
+                }
+            }
+            return dict.Values.Where(x=>x.Count>1).ToList();
+        }
+        /// 611. Valid Triangle Number, #Two Pointers, #Binary Search
         ///return the number of triplets chosen from the array that can make triangles.
         public int TriangleNumber(int[] nums)
         {
