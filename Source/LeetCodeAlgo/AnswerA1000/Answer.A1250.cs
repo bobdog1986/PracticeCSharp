@@ -374,7 +374,34 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///1295. Find Numbers with Even Number of Digits
+        ///1292. Maximum Side Length of a Square with Sum Less than or Equal to Threshold, #Prefix Sum
+        //return the maximum side-length of a square with a sum <= threshold or return 0 if there is no such square.
+        public int MaxSideLength(int[][] mat, int threshold)
+        {
+            int m = mat.Length;
+            int n = mat[0].Length;
+            int[][] prefixSum = new int[m + 1][];
+            for (int i = 0; i <= m; i++)
+                prefixSum[i] = new int[n + 1];
+
+            int len = 0;
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    prefixSum[i + 1][j + 1] = prefixSum[i + 1][j] + prefixSum[i][j + 1] - prefixSum[i][j] + mat[i][j];
+                    if (i - len >= 0 && j - len >= 0 &&
+                        prefixSum[i + 1][j + 1] - prefixSum[i - len][j + 1] - prefixSum[i + 1][j - len] + prefixSum[i - len][j - len] <= threshold
+                       )
+                    {
+                        len++;
+                    }
+                }
+            }
+            return len;
+        }
+
+        /// 1295. Find Numbers with Even Number of Digits
         ///Given an array nums of integers, return how many of them contain an even number of digits.
         public int FindNumbers(int[] nums)
         {
