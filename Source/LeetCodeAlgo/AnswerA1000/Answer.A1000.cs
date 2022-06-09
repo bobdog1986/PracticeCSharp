@@ -300,6 +300,55 @@ namespace LeetCodeAlgo
                 }
             }
         }
+        ///1023. Camelcase Matching
+        //can insert any lower chars to queries[i]
+        public IList<bool> CamelMatch(string[] queries, string pattern)
+        {
+            int n=queries.Length;
+            bool[] res=new bool[n];
+            for(int i = 0; i < queries.Length; i++)
+            {
+                res[i] = CamelMatch(queries[i], pattern);
+            }
+
+            return res.ToList();
+        }
+
+        private bool CamelMatch(string query, string pattern)
+        {
+            int i = 0;
+            int j = 0;
+            while (i<query.Length && j<pattern.Length)
+            {
+                if(query[i] == pattern[j])
+                {
+                    i++;
+                    j++;
+                }
+                else
+                {
+                    if (char.IsUpper(query[i])) return false;
+                    else
+                    {
+                        i++;
+                    }
+                }
+            }
+
+            if (j == pattern.Length)
+            {
+                while (i < query.Length)
+                {
+                    if (char.IsUpper(query[i])) return false;
+                    else i++;
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         /// 1026. Maximum Difference Between Node and Ancestor, #BTree
         public int MaxAncestorDiff(TreeNode root)
         {
