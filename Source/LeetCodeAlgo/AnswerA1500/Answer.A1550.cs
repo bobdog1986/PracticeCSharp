@@ -168,6 +168,53 @@ namespace LeetCodeAlgo
                 res-=mat[mat.Length/2][mat.Length / 2];
             return res;
         }
+        ///1574. Shortest Subarray to be Removed to Make Array Sorted, #Two Pointers
+        //remove a subarray(can be empty) from arr such that the remaining elements in arr are non-decreasing.
+        //Return the length of the shortest subarray(contiguous) to remove.
+        public int FindLengthOfShortestSubarray(int[] arr)
+        {
+            int n = arr.Length;
+            int right = n - 1;
+            while (right > 0 && arr[right] >= arr[right - 1])
+                right--;
+
+            int res = right; //[0,right-1]
+            for (int left = 0; left < right && (left == 0 || arr[left - 1] <= arr[left]); left++)
+            {
+                while (right < n && arr[right] < arr[left])
+                    right++;
+                res = Math.Min(res, right - left - 1);
+            }
+            return res;
+        }
+
+        public int FindLengthOfShortestSubarray_My(int[] arr)
+        {
+            int n = arr.Length;
+            if (n == 1) return 0;
+
+            int right = n - 1;
+            while (right > 0 && arr[right] >= arr[right - 1])
+                right--;
+
+            if (right == 0) return 0;
+
+            int res = right;//[0,right-1]
+
+            for (int left = 0; left < n && left < right; left++)
+            {
+                while (right < n && arr[right] < arr[left])
+                    right++;
+
+                if (left == n - 1) break;
+                res = Math.Min(res, right - left - 1); //remove all [left+1,right-1]
+                if (arr[left] > arr[left + 1])
+                    break;
+            }
+            return res;
+        }
+
+
         /// 1576. Replace All ?'s to Avoid Consecutive Repeating Characters
         /// replace ? to not same as previous or next char
         public string ModifyString(string s)
