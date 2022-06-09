@@ -412,7 +412,40 @@ namespace LeetCodeAlgo
             return c - '0';
         }
 
-        ///417. Pacific Atlantic Water Flow. #Graph, #BFS
+        ///416. Partition Equal Subset Sum, #DP, #knapsack
+        //non-empty nums(nums[i]>=1), find can be partitioned into two subsets such that the sum of elements in both subsets is equal.
+        public bool CanPartition(int[] nums)
+        {
+            int sum = nums.Sum();
+            if ((sum & 1) == 1) return false;
+
+            sum = sum /2;
+
+            int n = nums.Length;
+            bool[][] dp = new bool[n + 1][];
+            for (int i = 0; i < dp.Length; i++)
+                dp[i] = new bool[sum + 1];
+
+            dp[0][0] = true;
+
+            for (int i = 1; i < dp.Length; i++)
+                dp[i][0] = true;
+
+            for (int i = 1; i < dp.Length; i++)
+            {
+                for (int j = 1; j < dp[0].Length; j++)
+                {
+                    dp[i][j] = dp[i - 1][j];
+                    if (j >= nums[i - 1])
+                    {
+                        dp[i][j] = dp[i][j] || dp[i - 1][j - nums[i - 1]];
+                    }
+                }
+            }
+            return dp[n][sum];
+        }
+
+        /// 417. Pacific Atlantic Water Flow. #Graph, #BFS
         ///Return a 2D list where result[i] = [ri, ci] denotes that rain water can flow to both the Pacific and Atlantic.
         public IList<IList<int>> PacificAtlantic(int[][] heights)
         {
