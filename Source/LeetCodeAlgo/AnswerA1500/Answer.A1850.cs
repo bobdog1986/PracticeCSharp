@@ -120,7 +120,10 @@ namespace LeetCodeAlgo
             }
             return res;
         }
-        ///1870. Minimum Speed to Arrive on Time, #Binary Search
+
+        ///1865. Finding Pairs With a Certain Sum, see FindSumPairs
+
+        /// 1870. Minimum Speed to Arrive on Time, #Binary Search
         //Return the minimum positive integer speed (in kilometers per hour) that all the trains
         //must travel at for you to reach the office on time, or -1 if it is impossible to be on time.
         // result must <= 10_000_000
