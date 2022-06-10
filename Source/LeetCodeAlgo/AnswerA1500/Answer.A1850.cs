@@ -121,7 +121,42 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///1865. Finding Pairs With a Certain Sum, see FindSumPairs
+        ///1864. Minimum Number of Swaps to Make the Binary String Alternating
+        public int MinSwaps_1864(string s)
+        {
+            int n = s.Length;
+            int zeros = s.Count(x => x == '0');
+            if (n % 2 == 0)
+            {
+                if (zeros != n / 2) return -1;
+
+                int diff0 = 0;
+                int diff1 = 0;
+
+                int seed = 0;
+                for(int i = 0; i < n; i++)
+                {
+                    if (s[i] - '0' != seed) diff0++;
+                    if (s[i] - '0' == seed) diff1++;
+                    seed ^= 1;
+                }
+                return Math.Min(diff0, diff1) / 2;
+            }
+            else
+            {
+                if(zeros<n/2 || zeros>(n/2+1)) return -1;
+
+                int seed = zeros == n / 2 ? 1 : 0;
+                int diff = 0;
+                for (int i = 0; i < n; i++)
+                {
+                    if (s[i] - '0' != seed) diff++;
+                    seed ^= 1;
+                }
+                return diff / 2;
+            }
+        }
+        /// 1865. Finding Pairs With a Certain Sum, see FindSumPairs
 
         /// 1870. Minimum Speed to Arrive on Time, #Binary Search
         //Return the minimum positive integer speed (in kilometers per hour) that all the trains
