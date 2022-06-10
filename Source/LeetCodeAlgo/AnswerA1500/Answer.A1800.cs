@@ -384,6 +384,44 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///1839. Longest Substring Of All Vowels in Order, #Sliding Window
+        //Each of the 5 English vowels('a', 'e', 'i', 'o', 'u') must appear at least once in it.
+        //The letters must be sorted in alphabetical order(i.e.all 'a's before 'e's, all 'e's before 'i's, etc.).
+        //return the length of the longest beautiful substring of word.If no such substring exists, return 0.
+        public int LongestBeautifulSubstring(string word)
+        {
+            int res = 0;
+            int len = 0;
+            char prev = 'a';
+            Dictionary<char, int> map = new Dictionary<char, int>()
+            {
+                { 'a',1},{ 'e',2},{ 'i',3},{ 'o',4},{ 'u',5},
+            };
+
+            foreach(var c in word)
+            {
+                if(len > 0)
+                {
+                    if (map[c] == map[prev] || map[c]== map[prev] + 1)
+                    {
+                        len++;
+                        prev = c;
+                        if (c == 'u')
+                            res = Math.Max(res, len);
+                    }
+                    else
+                    {
+                        len = c == 'a' ? 1 : 0;
+                        prev = 'a';
+                    }
+                }
+                else
+                {
+                    if (c == 'a') len++;
+                }
+            }
+            return res;
+        }
         /// 1844. Replace All Digits with Characters
         ///For every odd index i, you want to replace the digit s[i] with shift(s[i-1], s[i]).
         public string ReplaceDigits(string s)
