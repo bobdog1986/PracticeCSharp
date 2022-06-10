@@ -397,5 +397,21 @@ namespace LeetCodeAlgo
         }
 
         ///1845. Seat Reservation Manager, see SeatManager
+
+        ///1846. Maximum Element After Decreasing and Rearranging
+        //any times of rearrange and decrease, |arr[n]- arr[n-1]|<= 1, return the max
+        public int MaximumElementAfterDecrementingAndRearranging(int[] arr)
+        {
+            Array.Sort(arr);
+            arr[0] = 1;
+            int n = arr.Length;
+            int curr = 1;
+            for(int i = 1; i < n; i++)
+            {
+                if (arr[i] - curr <= 1) curr = arr[i];
+                else curr++;
+            }
+            return curr;
+        }
     }
 }
