@@ -290,6 +290,23 @@ namespace LeetCodeAlgo
                 res+=i*dict[keys[i]];
             return res;
         }
+        ///1893. Check if All the Integers in a Range Are Covered
+        public bool IsCovered(int[][] ranges, int left, int right)
+        {
+            var set = new HashSet<int>();
+            for (int i = left; i <= right; i++)
+                set.Add(i);
+
+            foreach(var range in ranges)
+            {
+                int start = Math.Max(left, range[0]);
+                int end = Math.Min(right, range[1]);
+                for (int j = start; j <= end; j++)
+                    if (set.Contains(j)) set.Remove(j);
+                if (set.Count == 0) return true;
+            }
+            return set.Count == 0;
+        }
         /// 1894. Find the Student that Will Replace the Chalk, #Binary Search
         ///Every time k-=chalk[i], return not enough for index i;
         public int ChalkReplacer(int[] chalk, int k)
