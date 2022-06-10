@@ -26,6 +26,20 @@ namespace LeetCodeAlgo
             return list.ToArray();
         }
 
+        ///951. Flip Equivalent Binary Trees, #BTree
+        public bool FlipEquiv(TreeNode root1, TreeNode root2)
+        {
+            if (root1 == null && root2 == null) return true;
+            else if (root1 == null || root2 == null) return false;
+            else
+            {
+                if (root1.val != root2.val) return false;
+                return (FlipEquiv(root1.left, root2.left) && FlipEquiv(root1.right, root2.right))
+                    || (FlipEquiv(root1.left, root2.right) && FlipEquiv(root1.right, root2.left));
+            }
+        }
+
+
         /// 953. Verifying an Alien Dictionary
         ///Given a sequence of words written in the alien language, and the order of the alphabet,
         ///return true if and only if the given words are sorted lexicographically in this alien language.

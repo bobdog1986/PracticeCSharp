@@ -6,8 +6,6 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-
-
         ///1302. Deepest Leaves Sum, #BTree
         public int DeepestLeavesSum(TreeNode root)
         {
