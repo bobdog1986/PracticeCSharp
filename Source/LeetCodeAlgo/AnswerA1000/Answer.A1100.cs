@@ -65,6 +65,28 @@ namespace LeetCodeAlgo
         {
             return address.Replace(".", "[.]");
         }
+        ///1124. Longest Well-Performing Interval , #HashMap
+        //>8 is tiring day, well-performing interval is tiring days > non-tiring days
+        //Return the length of the longest well-performing interval.
+        public int LongestWPI(int[] hours)
+        {
+            int res = 0;
+            int count = 0;//we need reset count ,but store count-1 to dict
+            //so index of (count-1)(exclusive) to current index(inclusive) is 1 more 8 hour-day
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            for(int i = 0; i < hours.Length; i++)
+            {
+                count += hours[i] > 8 ? 1 : -1;
+                if (count > 0) res = i + 1;
+                else
+                {
+                    if(!dict.ContainsKey(count))dict.Add(count, i);
+                    if (dict.ContainsKey(count - 1))
+                        res = Math.Max(res, i - dict[count - 1]);
+                }
+            }
+            return res;
+        }
         /// 1129. Shortest Path with Alternating Colors, #Graph, #BFS
         public int[] ShortestAlternatingPaths(int n, int[][] redEdges, int[][] blueEdges)
         {
