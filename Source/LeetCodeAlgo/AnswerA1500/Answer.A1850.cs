@@ -320,7 +320,16 @@ namespace LeetCodeAlgo
             return left;
         }
 
-        ///1898. Maximum Number of Removable Characters, #Binary Search
+        ///1897. Redistribute Characters to Make All Strings Equal
+        public bool MakeEqual(string[] words)
+        {
+            int[] arr = new int[26];
+            foreach(var word in words)
+                foreach (var c in word)
+                    arr[c - 'a']++;
+            return arr.Where(x => x % words.Length != 0).Count() == 0;
+        }
+        /// 1898. Maximum Number of Removable Characters, #Binary Search
         //removable[] is indexes of s tha can be removed
         //Return the maximum k [0,n] you can choose such that p is still a subsequence of s after the removals.
         public int MaximumRemovals(string s, string p, int[] removable)

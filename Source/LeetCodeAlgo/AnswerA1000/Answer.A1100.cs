@@ -65,7 +65,7 @@ namespace LeetCodeAlgo
         {
             return address.Replace(".", "[.]");
         }
-        ///1124. Longest Well-Performing Interval , #HashMap
+        /// 1124. Longest Well-Performing Interval , #HashMap
         //>8 is tiring day, well-performing interval is tiring days > non-tiring days
         //Return the length of the longest well-performing interval.
         public int LongestWPI(int[] hours)
