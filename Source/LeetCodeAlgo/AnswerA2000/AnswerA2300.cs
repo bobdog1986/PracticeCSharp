@@ -48,5 +48,47 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///2301. Match Substring After Replacement, #DP
+        //mappings[i] = [oldi, newi],you may replace any number of oldi characters of sub with newi any times.
+        //Return true if it is possible to make sub a substring of s.Otherwise, return false.
+        //A substring is a contiguous non-empty sequence of characters within a string.
+        public bool MatchReplacement(string s, string sub, char[][] mappings)
+        {
+            var dict = new Dictionary<char, HashSet<char>>();
+            foreach (var map in mappings)
+            {
+                if (!dict.ContainsKey(map[0])) dict.Add(map[0], new HashSet<char>());
+                dict[map[0]].Add(map[1]);
+            }
+
+            int m = s.Length;
+            int n = sub.Length;
+            bool[][] dp = new bool[m][];
+            for (int i = 0; i < m; i++)
+            {
+                dp[i] = new bool[n + 1];
+                dp[i][0] = true;
+            }
+
+            for (int i = 0; i < m - n + 1; i++)
+            {
+                for (int j = 1; j <= n; j++)
+                {
+                    if (dp[i][j - 1])
+                    {
+                        if (s[i + j - 1] == sub[j - 1] ||
+                            (dict.ContainsKey(sub[j - 1]) && dict[sub[j - 1]].Contains(s[i + j - 1])))
+                        {
+                            dp[i][j] = true;
+                        }
+                        else break;
+                    }
+                    else break;
+                }
+                if (dp[i][n]) return true;
+            }
+            return false;
+        }
     }
 }
