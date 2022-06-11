@@ -40,8 +40,12 @@ namespace LeetCodeAlgo
             };
             var grid1 = new char[][]
             {
-                new char[]{'*', '#', '*', '.', '.', '.', '#', '.', '*', '.'},
-
+                new char[]{'o','0'},
+                //new char[]{'e','3'},
+                //new char[]{'t','7'},
+                //new char[]{'t','8'},
+                //new char[]{'p','b'},
+                //new char[]{'d','b'},
                 //new char[]{ 'X', 'O','X','X'},
                 //new char[]{'1','1','1'},
             };
@@ -68,7 +72,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.CanPartition(arr3);
+            var result = anwser.CountSubarrays(new int[] { 1,1,1 },5);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

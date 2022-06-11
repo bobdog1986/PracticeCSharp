@@ -70,13 +70,14 @@ namespace LeetCodeAlgo
                 dp[i] = new bool[n + 1];
                 dp[i][0] = true;
             }
-
+            //we donot need to check all index of s as start of substring, just i<m-n+1
             for (int i = 0; i < m - n + 1; i++)
             {
                 for (int j = 1; j <= n; j++)
                 {
                     if (dp[i][j - 1])
                     {
+                        // if two chars are equal or could be mapped
                         if (s[i + j - 1] == sub[j - 1] ||
                             (dict.ContainsKey(sub[j - 1]) && dict[sub[j - 1]].Contains(s[i + j - 1])))
                         {
@@ -89,6 +90,30 @@ namespace LeetCodeAlgo
                 if (dp[i][n]) return true;
             }
             return false;
+        }
+
+
+        ///2302. Count Subarrays With Score Less Than K, #Sliding Window
+        //The score of an array is defined as the product of its sum and its length.
+        //For example, the score of[1, 2, 3, 4, 5] is (1 + 2 + 3 + 4 + 5) * 5 = 75.
+        //Given a positive integer array nums and an integer k,
+        //return the number of non-empty subarrays of nums whose score is strictly less than k.
+        //A subarray is a contiguous sequence of elements within an array.
+        public long CountSubarrays(int[] nums, long k)
+        {
+            long res = 0;
+            long sum = 0;
+            int left = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                sum += nums[i];
+                while (left <= i && sum * (i - left + 1) >= k)
+                {
+                    sum -= nums[left++];
+                }
+                res += (i - left + 1);//count all subarrays which end at i , and start in [left,i]
+            }
+            return res;
         }
     }
 }
