@@ -62,6 +62,35 @@ namespace LeetCodeAlgo
             }
             return list.Count >= 2 ? new int[] { min, list.Last() - list.First() } : new int[] { -1, -1 };
         }
+        ///2059. Minimum Operations to Convert Number, #BFS
+        //if 0 <= x <= 1000, x+nums[i], x-nums[i] , x^nums[i], any time
+        public int MinimumOperations(int[] nums, int start, int goal)
+        {
+            Queue<int> queue = new Queue<int>();
+            queue.Enqueue(start);
+            HashSet<int> set = new HashSet<int>();
+            int op = 0;
+            while(queue.Count > 0)
+            {
+                int size = queue.Count;
+                while (size-- > 0)
+                {
+                    var top = queue.Dequeue();
+                    if (top == goal) return op;
+                    if (top < 0 || top > 1000) continue;
+                    if (set.Contains(top)) continue;
+                    set.Add(top);
+                    foreach(var n in nums)
+                    {
+                        queue.Enqueue(top + n);
+                        queue.Enqueue(top - n);
+                        queue.Enqueue(top ^ n);
+                    }
+                }
+                op++;
+            }
+            return -1;
+        }
         /// 2063. Vowels of All Substrings, O(n)
         ///Given a string word, return the sum of the number of vowels ('a', 'e', 'i', 'o', and 'u') in every substring of word.
         public long CountVowels(string word)
