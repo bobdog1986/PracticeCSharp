@@ -8,7 +8,33 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1161. Maximum Level Sum of a Binary Tree, #BTree
+        ///1154. Day of the Year
+        public int DayOfYear(string date)
+        {
+            var arr = date.Split('-');
+            int year = int.Parse(arr[0]);
+            int month = int.Parse(arr[1]);
+            int day=int.Parse(arr[2]);
+            var dt = new DateTime(year, month, day);
+            int res = 0;
+            Dictionary<int, int> map = new Dictionary<int, int>()
+            {
+                {1,31 },{3,31 },{5,31 },{7,31 },{8,31 },{10,31 },{12,31 },
+                {4,30 },{6,30 },{9,30 },{11,30 },
+            };
+            for(int i = 1; i < month; i++)
+            {
+                if (i == 2)
+                {
+                    if (DateTime.IsLeapYear(dt.Year)) res += 29;
+                    else res += 28;
+                }
+                else res += map[i];
+            }
+            res += day;
+            return res;
+        }
+        /// 1161. Maximum Level Sum of a Binary Tree, #BTree
         ///the level of its root is 1, the level of its children is 2, and so on.
         ///Return the smallest level x such that the sum of all the values of nodes at level x is maximal.
         public int MaxLevelSum(TreeNode root)

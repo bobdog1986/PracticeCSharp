@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
     <BaseOutputPath>..\..\Artifacts</BaseOutputPath>
   </PropertyGroup>
+  <ItemGroup>
+    <None Update="Input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

@@ -156,6 +156,87 @@ namespace LeetCodeAlgo
             return res.ToArray();
         }
 
+        public long[][] buildLongMatrix(string str)
+        {
+            str = str.Replace(" ", "");
+            if (str[0] == '[') str = str.Substring(1);
+            if (str[str.Length - 1] == ']') str = str.Substring(0, str.Length - 1);
+            var arr = str.Split("],[").Select(x => x.Trim()).Where(x => !string.IsNullOrEmpty(x)).ToList();
+            var res = new List<long[]>();
+            foreach (var a in arr)
+            {
+                res.Add(buildLongArray(a));
+            }
+            return res.ToArray();
+        }
+
+        public long[] buildLongArray(string str)
+        {
+            str = str.Replace(" ", "");
+            if (str[0] == '[') str = str.Substring(1);
+            if (str[str.Length - 1] == ']') str = str.Substring(0, str.Length - 1);
+            var arr = str.Split(",").Select(x => x.Trim()).Where(x => !string.IsNullOrEmpty(x)).ToList();
+            var res = new List<long>();
+            foreach (var a in arr)
+            {
+                res.Add(long.Parse(a));
+            }
+            return res.ToArray();
+        }
+
+        public string[][] buildStringMatrix(string str)
+        {
+            str = str.Replace(" ", "");
+            if (str[0] == '[') str = str.Substring(1);
+            if (str[str.Length - 1] == ']') str = str.Substring(0, str.Length - 1);
+            var arr = str.Split("],[").Select(x => x.Trim()).Where(x => !string.IsNullOrEmpty(x)).ToList();
+            var res = new List<string[]>();
+            foreach (var a in arr)
+            {
+                res.Add(buildStringArray(a));
+            }
+            return res.ToArray();
+        }
+
+        public string[] buildStringArray(string str)
+        {
+            str = str.Replace(" ", "");
+            if (str[0] == '[') str = str.Substring(1);
+            if (str[str.Length - 1] == ']') str = str.Substring(0, str.Length - 1);
+            var arr = str.Split(",").Select(x => x.Trim()).Where(x => !string.IsNullOrEmpty(x)).ToList();
+            return arr.ToArray();
+        }
+
+        //leetcode using "" wrap char, just move them
+        public char[][] buildCharMatrix(string str)
+        {
+            str = str.Replace("\"", "");//remove all double quote "
+            str = str.Replace(" ", "");
+            if (str[0] == '[') str = str.Substring(1);
+            if (str[str.Length - 1] == ']') str = str.Substring(0, str.Length - 1);
+            var arr = str.Split("],[").Select(x => x.Trim()).Where(x => !string.IsNullOrEmpty(x)).ToList();
+            var res = new List<char[]>();
+            foreach (var a in arr)
+            {
+                res.Add(buildCharArray(a));
+            }
+            return res.ToArray();
+        }
+
+        public char[] buildCharArray(string str)
+        {
+            str = str.Replace(" ", "");
+            if (str[0] == '[') str = str.Substring(1);
+            if (str[str.Length - 1] == ']') str = str.Substring(0, str.Length - 1);
+            var arr = str.Split(",").Select(x => x.Trim()).Where(x => !string.IsNullOrEmpty(x)).ToList();
+            var res = new List<char>();
+            foreach (var a in arr)
+            {
+                res.Add(a[0]);
+            }
+            return res.ToArray();
+        }
+
         ///ListNode, build and print
         public static void printListNode(ListNode listNode, int maxLen = 20)
         {
