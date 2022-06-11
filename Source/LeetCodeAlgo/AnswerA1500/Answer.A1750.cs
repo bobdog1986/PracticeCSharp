@@ -251,9 +251,10 @@ namespace LeetCodeAlgo
         ///1773. Count Items Matching a Rule
         public int CountMatches(IList<IList<string>> items, string ruleKey, string ruleValue)
         {
-            return items.Count(x => (ruleKey== "type" && ruleValue == x[0])
-            || (ruleKey == "color" && ruleValue == x[1])
-            || (ruleKey == "name" && ruleValue == x[2]));
+            return items.Count(x =>
+                                (ruleKey== "type" && ruleValue == x[0])
+                            || (ruleKey == "color" && ruleValue == x[1])
+                            || (ruleKey == "name" && ruleValue == x[2]));
         }
         /// 1774. Closest Dessert Cost, #PriorityQueue
         //must has 1 baseCosts, can has any types of topping,each type can select [0,2]

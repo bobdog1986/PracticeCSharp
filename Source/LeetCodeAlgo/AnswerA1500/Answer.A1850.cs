@@ -158,6 +158,30 @@ namespace LeetCodeAlgo
         }
         /// 1865. Finding Pairs With a Certain Sum, see FindSumPairs
 
+        ///1869. Longer Contiguous Segments of Ones than Zeros
+        public bool CheckZeroOnes(string s)
+        {
+            int max0 = 0;
+            int max1 = 0;
+            int ones = 0;
+            int zeros = 0;
+            foreach(var c in s)
+            {
+                if (c == '0')
+                {
+                    zeros++;
+                    ones = 0;
+                }
+                else
+                {
+                    ones++;
+                    zeros = 0;
+                }
+                max0 = Math.Max(max0, zeros);
+                max1 = Math.Max(max1, ones);
+            }
+            return max1 > max0;
+        }
         /// 1870. Minimum Speed to Arrive on Time, #Binary Search
         //Return the minimum positive integer speed (in kilometers per hour) that all the trains
         //must travel at for you to reach the office on time, or -1 if it is impossible to be on time.
