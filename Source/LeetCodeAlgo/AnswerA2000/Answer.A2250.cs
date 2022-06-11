@@ -842,5 +842,29 @@ namespace LeetCodeAlgo
 
         ///2296. Design a Text Editor, see TextEditor
 
+
+        ///2299. Strong Password Checker II
+        //at least 8 characters, one lowercase, one uppercase, one digit, one special in "!@#$%^&*()-+".
+        //It does not contain 2 of the same character in adjacent positions
+        //Given a string password, return true if it is a strong password.Otherwise, return false.
+        public bool StrongPasswordCheckerII(string password)
+        {
+            int n = password.Length;
+            if (n < 8) return false;
+            var set = new HashSet<char>("!@#$%^&*()-+");
+            bool hasUpper = false;
+            bool hasLower = false;
+            bool hasDigit = false;
+            bool hasSpec = false;
+            for(int i = 0; i < n; i++)
+            {
+                if (char.IsUpper(password[i])) hasUpper = true;
+                if (char.IsLower(password[i])) hasLower = true;
+                if (char.IsDigit(password[i])) hasDigit = true;
+                if (set.Contains(password[i])) hasSpec = true;
+                if (i > 0 && password[i] == password[i - 1]) return false;
+            }
+            return hasUpper && hasLower && hasSpec && hasDigit;
+        }
     }
 }
