@@ -92,7 +92,7 @@ namespace LeetCodeAlgo
             return -1;
         }
         /// 2063. Vowels of All Substrings, O(n)
-        ///Given a string word, return the sum of the number of vowels ('a', 'e', 'i', 'o', and 'u') in every substring of word.
+        ///return the sum of the number of vowels ('a', 'e', 'i', 'o', and 'u') in every substring of word.
         public long CountVowels(string word)
         {
             //For each vowels s[i], it could be in the substring starting at s[x] and ending at s[y],
@@ -104,13 +104,11 @@ namespace LeetCodeAlgo
                 if (set.Contains(word[i]))
                     res += (i + 1) * (n - i);
             return res;
-
         }
 
         /// 2068. Check Whether Two Strings are Almost Equivalent
-        ///Given two strings word1 and word2, each of length n, return true if word1 and word2 are almost equivalent or false
+        ///strings word1 and word2, each of length n, return true if word1 and word2 are almost equivalent or false
         ///differences between the frequencies of each letter from 'a' to 'z' between word1 and word2 is at most 3.
-
         public bool CheckAlmostEquivalent(string word1, string word2)
         {
             int[] arr=new int[26];
