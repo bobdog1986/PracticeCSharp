@@ -8,7 +8,19 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1905. Count Sub Islands, #Graph, #DFS
+        ///1903. Largest Odd Number in String
+        public string LargestOddNumber(string num)
+        {
+            for(int i=num.Length-1; i>=0; i--)
+            {
+                if ((num[i] - '0') % 2 == 1)
+                {
+                    return num.Substring(0, i + 1);
+                }
+            }
+            return string.Empty;
+        }
+        /// 1905. Count Sub Islands, #Graph, #DFS
         ///Return the number of islands in grid2 that are considered sub-islands.
         public int CountSubIslands_My(int[][] grid1, int[][] grid2)
         {
