@@ -138,6 +138,27 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///868. Binary Gap
+        //return the longest distance between any two adjacent 1's of n. If no two adjacent 1's, return 0.
+        public int BinaryGap(int n)
+        {
+            List<int> list = new List<int>();
+            int index = 0;
+            while (n > 0)
+            {
+                if ((n & 1) == 1) list.Add(index);
+                index++;
+                n >>= 1;
+            }
+            if (list.Count <= 1) return 0;
+            else
+            {
+                int res = 0;
+                for (int i = 0; i < list.Count - 1; i++)
+                    res = Math.Max(res, list[i + 1] - list[i]);
+                return res;
+            }
+        }
         /// 872. Leaf-Similar Trees, #BTree
         public bool LeafSimilar(TreeNode root1, TreeNode root2)
         {

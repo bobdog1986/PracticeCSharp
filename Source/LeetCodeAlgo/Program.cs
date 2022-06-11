@@ -51,7 +51,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.MatchReplacement();
+            var result = anwser.BinaryGap(5);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
