@@ -44,14 +44,14 @@ namespace LeetCodeAlgo
             ///build int[][] and int[] from string
             string matStrInt = "[[0,1,1],[1,1,0],[1,1,0]]";
             var matInt = anwser.buildMatrix(matStrInt);
-            string arrStrInt = "[1,5,11,5]";
+            string arrStrInt = "[5,2,1,2,5,2,1,2,5]";
             var arrInt = anwser.buildArray(arrStrInt);
 
             Stopwatch sw = new Stopwatch();
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.BinaryGap(5);
+            var result = anwser.MaximumUniqueSubarray(arrInt);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

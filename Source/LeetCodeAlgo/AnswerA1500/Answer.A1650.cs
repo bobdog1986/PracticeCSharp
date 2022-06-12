@@ -305,7 +305,7 @@ namespace LeetCodeAlgo
             return ReformatNumber(list, list.Count);
         }
 
-        public string ReformatNumber(List<char> list, int count)
+        private string ReformatNumber(List<char> list, int count)
         {
             if (count == 2)
             {
@@ -324,6 +324,31 @@ namespace LeetCodeAlgo
                 return new String(new char[] { list[list.Count - count], list[list.Count - count + 1], list[list.Count - count + 2] })
                     + "-" + ReformatNumber(list, count - 3);
             }
+        }
+
+        ///1695. Maximum Erasure Value,#Sliding Window
+        //positive integers nums and want to erase a subarray containing unique elements.
+        //The score you get by erasing the subarray is equal to the sum of its elements.
+        //Return the maximum score you can get by erasing exactly one subarray.
+        public int MaximumUniqueSubarray(int[] nums)
+        {
+            int res = 0;
+            int left = 0;
+            var dict=new Dictionary<int,int>();
+            int sum = 0;
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if (dict.ContainsKey(nums[i]))
+                {
+                    while (left <= dict[nums[i]])
+                        sum -= nums[left++];
+                    dict[nums[i]] = i;
+                }
+                else dict.Add(nums[i], i);
+                sum += nums[i];
+                res=Math.Max(sum, res);
+            }
+            return res;
         }
     }
 }
