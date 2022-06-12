@@ -6,7 +6,25 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1302. Deepest Leaves Sum, #BTree
+        ///1300. Sum of Mutated Array Closest to Target, #Binary Search
+        //return the integer value such that when we change all > value to value,
+        //the sum of the array gets as close as possible (in absolute difference) to target.
+        public int FindBestValue(int[] arr, int target)
+        {
+            return -1;
+            //Array.Sort(arr);
+            //int n = arr.Length;
+            //int[] prefix = new int[n];
+            //int sum = 0;
+            //for(int i = 0; i < n; i++)
+            //{
+            //    sum += arr[i];
+            //    prefix[i] = sum;
+            //}
+
+            //return left;
+        }
+        /// 1302. Deepest Leaves Sum, #BTree
         public int DeepestLeavesSum(TreeNode root)
         {
             int res = 0;

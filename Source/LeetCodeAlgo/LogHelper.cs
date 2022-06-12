@@ -42,22 +42,26 @@ namespace LeetCodeAlgo
 
         public static void log(IEnumerable<long> result)
         {
-            Console.WriteLine(string.Join(",", result));
+            if(result.Count()==0) Console.WriteLine("!!!Result count = 0");
+            else  Console.WriteLine(string.Join(",", result));
         }
 
         public static void log(IEnumerable<int> result)
         {
-            Console.WriteLine(string.Join(",", result));
+            if (result.Count() == 0) Console.WriteLine("!!!Result count = 0");
+            else Console.WriteLine(string.Join(",", result));
         }
 
         public static void log(IEnumerable<double> result)
         {
-            Console.WriteLine(string.Join(",", result));
+            if (result.Count() == 0) Console.WriteLine("!!!Result count = 0");
+            else Console.WriteLine(string.Join(",", result));
         }
 
         public static void log(IEnumerable<string> result)
         {
-            Console.WriteLine(string.Join(",", result));
+            if (result.Count() == 0) Console.WriteLine("!!!Result count = 0");
+            else Console.WriteLine(string.Join(",", result));
         }
         public static void log(int[][] result)
         {

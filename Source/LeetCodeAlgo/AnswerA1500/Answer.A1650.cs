@@ -276,6 +276,25 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///1688. Count of Matches in Tournament
+        public int NumberOfMatches(int n)
+        {
+            int res = 0;
+            while (n > 1)
+            {
+                if (n % 2 == 0)
+                {
+                    res += n / 2;
+                    n /= 2;
+                }
+                else
+                {
+                    res += n / 2;
+                    n = (n + 1) / 2;
+                }
+            }
+            return res;
+        }
         /// 1689. Partitioning Into Minimum Number Of Deci-Binary Numbers
         public int MinPartitions(string n)
         {
