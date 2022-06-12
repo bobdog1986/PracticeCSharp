@@ -48,22 +48,22 @@ namespace LeetCodeAlgo
         ///Return all distinct indices that have the highest possible division score.
         public IList<int> MaxScoreIndices(int[] nums)
         {
-            int[] arr = new int[nums.Length+1];
+            int[] arr = new int[nums.Length + 1];
             int zeros = 0;
-            for(int i=0; i<nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 arr[i] = zeros;
                 if (nums[i] == 0) zeros++;
             }
-            arr[nums.Length]=zeros;
-            int ones = nums.Length-zeros;
+            arr[nums.Length] = zeros;
+            int ones = nums.Length - zeros;
             int max = 0;
-            var res=new List<int>();
+            var res = new List<int>();
 
-            for(int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
                 int divide = arr[i] + ones - (i - arr[i]);
-                if(divide == max)res.Add(i);
+                if (divide == max) res.Add(i);
                 else if (divide > max)
                 {
                     res.Clear();
@@ -73,8 +73,8 @@ namespace LeetCodeAlgo
             }
 
             return res;
-
         }
+
         ///2160. Minimum Sum of Four Digit Number After Splitting Digits
         ///You are given a positive integer num consisting of exactly four digits.
         ///Split num into two new integers new1 and new2 by using the digits found in num.
@@ -82,26 +82,27 @@ namespace LeetCodeAlgo
         ///Return the minimum possible sum of new1 and new2.
         public int MinimumSum(int num)
         {
-            List<int> list=new List<int>();
-            for(int i=0; i<4; i++)
+            List<int> list = new List<int>();
+            for (int i = 0; i < 4; i++)
             {
                 var curr = num % 10;
-                if(curr > 0)
+                if (curr > 0)
                     list.Add(curr);
                 num /= 10;
             }
             list.Sort();
             int sum1 = 0;
             int sum2 = 0;
-            for(var i = 0; i < list.Count;i++ )
+            for (var i = 0; i < list.Count; i++)
             {
-                sum1 = sum1*10+ list[i++];
+                sum1 = sum1 * 10 + list[i++];
                 if (i >= list.Count)
                     break;
                 sum2 = sum2 * 10 + list[i++];
             }
             return sum1 + sum2;
         }
+
         /// 2161. Partition Array According to Given Pivot
         ///smaller than pivot on left, same as pivot on mid, larger on right
         public int[] PivotArray(int[] nums, int pivot)
@@ -113,23 +114,22 @@ namespace LeetCodeAlgo
             int[] res = new int[nums.Length];
             foreach (var n in nums)
             {
-                if (n < pivot) res[left++]=n;
+                if (n < pivot) res[left++] = n;
                 else if (n == pivot) mid++;
-                else arr[right++]=n;
+                else arr[right++] = n;
             }
             while (mid-- > 0)
             {
                 res[left++] = pivot;
             }
             int j = 0;
-            while (j<right)
+            while (j < right)
             {
                 res[left + j] = arr[j];
                 j++;
             }
             return res;
         }
-
 
         ///2162. Minimum Cost to Set Cooking Time
         public int MinCostSetTime(int startAt, int moveCost, int pushCost, int targetSeconds)
@@ -146,8 +146,8 @@ namespace LeetCodeAlgo
 
             int res = MinCostSetTime(startAt, moveCost, pushCost, minutes, second);
             //if exist another minutes:seconds combine
-            if (minutes >0 && second < 40)
-                res = Math.Min(res, MinCostSetTime(startAt,moveCost,pushCost,minutes-1,second+60));
+            if (minutes > 0 && second < 40)
+                res = Math.Min(res, MinCostSetTime(startAt, moveCost, pushCost, minutes - 1, second + 60));
             return res;
         }
 
@@ -156,7 +156,7 @@ namespace LeetCodeAlgo
             //if over flow ,return int.MaxValue
             if (minutes >= 100 || seconds >= 100) return int.MaxValue;
             int res = 0;
-            if (minutes >0)
+            if (minutes > 0)
             {
                 if (minutes >= 10)
                 {
@@ -180,9 +180,9 @@ namespace LeetCodeAlgo
             }
             else
             {
-                if (seconds >0)
+                if (seconds > 0)
                 {
-                    if(seconds >= 10)
+                    if (seconds >= 10)
                     {
                         if (startAt != seconds / 10) res += moveCost;
                         res += pushCost;
@@ -200,14 +200,15 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         ///2164. Sort Even and Odd Indices Independently, #PriorityQueue, #Heap
         ///Sort the values at odd indices of nums in non-increasing order., Even indices in non-decreasing
         public int[] SortEvenOdd(int[] nums)
         {
-            int[] res= new int[nums.Length];
+            int[] res = new int[nums.Length];
             PriorityQueue<int, int> q1 = new PriorityQueue<int, int>();
             PriorityQueue<int, int> q2 = new PriorityQueue<int, int>();
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 if (i % 2 == 0)
                     q2.Enqueue(nums[i], nums[i]);
@@ -215,9 +216,9 @@ namespace LeetCodeAlgo
                     q1.Enqueue(nums[i], -nums[i]);
             }
 
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
-                if(i % 2 == 0)
+                if (i % 2 == 0)
                     res[i] = q2.Dequeue();
                 else
                     res[i] = q1.Dequeue();
@@ -225,6 +226,7 @@ namespace LeetCodeAlgo
 
             return res;
         }
+
         /// 2165. Smallest Value of the Rearranged Number
         ///Rearrange the digits of num such that its value is minimized and it does not contain any leading zeros.
         ///Return the rearranged number with minimal value. the sign does not change after rearranging the digits.
@@ -233,12 +235,12 @@ namespace LeetCodeAlgo
         {
             if (num <= 10 && num >= -10) return num;
             long res = 0;
-            long sign = num < 0?-1:1;
+            long sign = num < 0 ? -1 : 1;
 
             var str = Math.Abs(num).ToString();
-            var arr = str.OrderBy(x => sign*x).ToArray();
+            var arr = str.OrderBy(x => sign * x).ToArray();
 
-            if (sign==1)
+            if (sign == 1)
             {
                 int i = 0;
                 while (i < arr.Length)
@@ -252,14 +254,14 @@ namespace LeetCodeAlgo
                 arr[i] = temp;
             }
             res = long.Parse(new string(arr));
-            return sign *res;
-
+            return sign * res;
         }
+
         ///2169. Count Operations to Obtain Zero
         public int CountOperations(int num1, int num2)
         {
             int res = 0;
-            while(num1!=0&& num2 != 0)
+            while (num1 != 0 && num2 != 0)
             {
                 if (num1 >= num2) num1 -= num2;
                 else num2 -= num1;
@@ -267,12 +269,13 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         ///2170. Minimum Operations to Make the Array Alternating
         public int MinimumOperations(int[] nums)
         {
             Dictionary<int, int> dict1 = new Dictionary<int, int>();
             Dictionary<int, int> dict2 = new Dictionary<int, int>();
-            for(int i = 0; i < nums.Length; ++i)
+            for (int i = 0; i < nums.Length; ++i)
             {
                 if (i % 2 == 0)
                 {
@@ -290,9 +293,9 @@ namespace LeetCodeAlgo
             int len2 = nums.Length - len1;
 
             int res = int.MaxValue;
-            foreach(var k1 in dict1.Keys)
+            foreach (var k1 in dict1.Keys)
             {
-                foreach(var k2 in dict2.Keys)
+                foreach (var k2 in dict2.Keys)
                 {
                     if (k1 == k2) continue;
                     int count = (len1 - dict1[k1]) + (len2 - dict2[k2]);
@@ -302,6 +305,7 @@ namespace LeetCodeAlgo
 
             return res;
         }
+
         /// 2171. Removing Minimum Number of Magic Beans, #Prefix Sum
         public long MinimumRemoval(int[] beans)
         {
@@ -318,6 +322,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 2176. Count Equal and Divisible Pairs in an Array
         ///return the number of pairs (i, j) where 0 <= i < j < n, such that nums[i] == nums[j] and (i * j) is divisible by k.
         public int CountPairs(int[] nums, int k)
@@ -350,12 +355,13 @@ namespace LeetCodeAlgo
         {
             return num % 3 == 0 ? new long[] { num / 3 - 1, num / 3, num / 3 + 1 } : new long[] { };
         }
+
         ///2178. Maximum Split of Positive Even Integers
         public IList<long> MaximumEvenSplit(long finalSum)
         {
             if (finalSum % 2 == 1) return new List<long>();
 
-            var res =new HashSet<long>();
+            var res = new HashSet<long>();
             int seed = 2;
             while (finalSum > 0)
             {
@@ -368,12 +374,13 @@ namespace LeetCodeAlgo
                 else
                 {
                     res.Remove(seed - 2);
-                    res.Add(finalSum+seed-2);
+                    res.Add(finalSum + seed - 2);
                     break;
                 }
             }
             return res.ToList();
         }
+
         /// 2180. Count Integers With Even Digit Sum, nums<=1000
         public int CountEven(int num)
         {
@@ -392,10 +399,10 @@ namespace LeetCodeAlgo
         ///2181. Merge Nodes in Between Zeros
         public ListNode MergeNodes(ListNode head)
         {
-            if (head == null||head.next==null) return null;
+            if (head == null || head.next == null) return null;
             var node = head.next;
             int sum = 0;
-            while(node != null && node.val!=0)
+            while (node != null && node.val != 0)
             {
                 sum += node.val;
                 node = node.next;
@@ -404,6 +411,7 @@ namespace LeetCodeAlgo
             res.next = MergeNodes(node);
             return res;
         }
+
         ///2182. Construct String With Repeat Limit
         ///Return the lexicographically largest repeatLimitedString possible.
         public string RepeatLimitedString(string s, int repeatLimit)
@@ -411,7 +419,7 @@ namespace LeetCodeAlgo
             int[] arr = new int[26];
             foreach (var c in s)
                 arr[c - 'a']++;
-            List<char> list=new List<char>();
+            List<char> list = new List<char>();
             bool isStop = false;
             int maxIndex = 25;
             int minIndex = 0;
@@ -447,7 +455,7 @@ namespace LeetCodeAlgo
                         }
                     }
                 }
-                if(list.Count == s.Length)
+                if (list.Count == s.Length)
                     isStop = true;
             }
             return new string(list.ToArray());
@@ -472,6 +480,7 @@ namespace LeetCodeAlgo
                 arr[c - 'a']--;
             return arr.Sum(x => Math.Abs(x));
         }
+
         ///2187. Minimum Time to Complete Trips, #Binary Search
         /// Return the minimum time required for all buses to complete at least totalTrips trips.
         public long MinimumTime(int[] time, int totalTrips)
@@ -489,6 +498,7 @@ namespace LeetCodeAlgo
             }
             return left;
         }
+
         /// 2190. Most Frequent Number Following Key In an Array
         ///0 <= i <= n - 2, nums[i] == key and, nums[i + 1] == target.
         ///Return the target with the maximum count.
@@ -533,12 +543,13 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         ///2192. All Ancestors of a Node in a Directed Acyclic Graph, #Graph, #DFS
         ///edges[i] = [fromi, toi] denotes that there is a unidirectional edge from fromi to toi in the graph.
         ///Return a list answer, where answer[i] is the list of ancestors of the ith node, sorted in ascending order.
         public IList<IList<int>> GetAncestors(int n, int[][] edges)
         {
-            IList<int>[] res=new List<int>[n];
+            IList<int>[] res = new List<int>[n];
             bool[][] graph = new bool[n][];
             for (int i = 0; i < n; i++)
                 graph[i] = new bool[n];
@@ -546,23 +557,24 @@ namespace LeetCodeAlgo
             foreach (var edge in edges)
                 graph[edge[1]][edge[0]] = true;
 
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
-                bool[] parent =new bool[n];
+                bool[] parent = new bool[n];
                 GetAncestors_DFS(graph, i, parent, res);
-                List<int> list=new List<int>();
-                for(int j = 0; j < n; j++)
+                List<int> list = new List<int>();
+                for (int j = 0; j < n; j++)
                 {
-                    if(parent[j])
+                    if (parent[j])
                         list.Add(j);
                 }
                 res[i] = list;
             }
             return res.ToList();
         }
+
         private void GetAncestors_DFS(bool[][] graph, int index, bool[] parent, IList<int>[] res)
         {
-            for(int i = 0; i < graph[index].Length; i++)
+            for (int i = 0; i < graph[index].Length; i++)
             {
                 if (graph[index][i] && !parent[i])
                 {
@@ -594,6 +606,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 2195. Append K Integers With Minimal Sum, #PriorityQueue, #Heap
         ///You are given an integer array nums and an integer k.
         ///Append k unique positive integers that do not appear in nums to nums such that the resulting total sum is minimum.

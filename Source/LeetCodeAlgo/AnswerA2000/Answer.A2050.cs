@@ -14,18 +14,19 @@ namespace LeetCodeAlgo
         public string KthDistinct(string[] arr, int k)
         {
             Dictionary<string, int> dict = new Dictionary<string, int>();
-            foreach(var w in arr)
+            foreach (var w in arr)
             {
-                if(dict.ContainsKey(w))dict[w] ++;
-                else dict.Add(w,1);
+                if (dict.ContainsKey(w)) dict[w]++;
+                else dict.Add(w, 1);
             }
-            foreach(var d in dict)
+            foreach (var d in dict)
             {
                 if (d.Value > 1) continue;
                 if (--k == 0) return d.Key;
             }
             return string.Empty;
         }
+
         ///2057. Smallest Index With Equal Value
         ///Given a 0-indexed integer array nums, return the smallest index i of nums such that
         ///i mod 10 == nums[i], or -1 if such index does not exist.
@@ -42,15 +43,15 @@ namespace LeetCodeAlgo
         {
             int min = int.MaxValue;
             ListNode prev = null;
-            List<int> list=new List<int>();
+            List<int> list = new List<int>();
             int index = 1;
-            var node=head;
-            while(node != null && node.next != null)
+            var node = head;
+            while (node != null && node.next != null)
             {
                 if (prev != null)
                 {
-                    if((node.val>prev.val && node.val>node.next.val)
-                        ||(node.val < prev.val && node.val < node.next.val))
+                    if ((node.val > prev.val && node.val > node.next.val)
+                        || (node.val < prev.val && node.val < node.next.val))
                     {
                         if (list.Count > 0) min = Math.Min(min, index - list.Last());
                         list.Add(index);
@@ -62,6 +63,7 @@ namespace LeetCodeAlgo
             }
             return list.Count >= 2 ? new int[] { min, list.Last() - list.First() } : new int[] { -1, -1 };
         }
+
         ///2059. Minimum Operations to Convert Number, #BFS
         //if 0 <= x <= 1000, x+nums[i], x-nums[i] , x^nums[i], any time
         public int MinimumOperations(int[] nums, int start, int goal)
@@ -70,7 +72,7 @@ namespace LeetCodeAlgo
             queue.Enqueue(start);
             HashSet<int> set = new HashSet<int>();
             int op = 0;
-            while(queue.Count > 0)
+            while (queue.Count > 0)
             {
                 int size = queue.Count;
                 while (size-- > 0)
@@ -80,7 +82,7 @@ namespace LeetCodeAlgo
                     if (top < 0 || top > 1000) continue;
                     if (set.Contains(top)) continue;
                     set.Add(top);
-                    foreach(var n in nums)
+                    foreach (var n in nums)
                     {
                         queue.Enqueue(top + n);
                         queue.Enqueue(top - n);
@@ -91,6 +93,7 @@ namespace LeetCodeAlgo
             }
             return -1;
         }
+
         /// 2063. Vowels of All Substrings, O(n)
         ///return the sum of the number of vowels ('a', 'e', 'i', 'o', and 'u') in every substring of word.
         public long CountVowels(string word)
@@ -111,16 +114,17 @@ namespace LeetCodeAlgo
         ///differences between the frequencies of each letter from 'a' to 'z' between word1 and word2 is at most 3.
         public bool CheckAlmostEquivalent(string word1, string word2)
         {
-            int[] arr=new int[26];
-            for(int i=0; i<word1.Length; i++)
+            int[] arr = new int[26];
+            for (int i = 0; i < word1.Length; i++)
             {
                 arr[word1[i] - 'a']++;
                 arr[word2[i] - 'a']--;
             }
-            foreach(var x in arr)
+            foreach (var x in arr)
                 if (x > 3 || x < -3) return false;
             return true;
         }
+
         ///2069. Walking Robot Simulation II, see Robot
 
         /// 2070. Most Beautiful Item for Each Query, #Binary Search
@@ -134,14 +138,14 @@ namespace LeetCodeAlgo
 
             int[][] arr = new int[items.Length][];
             int beauty = int.MinValue; ;
-            for(int i = 0; i < items.Length; i++)
+            for (int i = 0; i < items.Length; i++)
             {
                 beauty = Math.Max(beauty, items[i][1]);
                 arr[i] = new int[] { items[i][0], beauty };
             }
 
             var res = new int[queries.Length];
-            for (int i=0;i< queries.Length; i++)
+            for (int i = 0; i < queries.Length; i++)
             {
                 if (queries[i] < arr[0][0])
                 {
@@ -158,7 +162,7 @@ namespace LeetCodeAlgo
                 int right = items.Length - 1;
                 while (left < right)
                 {
-                    int mid = (left + right+1) / 2;
+                    int mid = (left + right + 1) / 2;
                     if (arr[mid][0] > queries[i])
                     {
                         right = mid - 1;
@@ -172,12 +176,13 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 2073. Time Needed to Buy Tickets
         public int TimeRequiredToBuy(int[] tickets, int k)
         {
             int res = 0;
             int count = tickets[k];
-            for(int i = 0; i < tickets.Length; i++)
+            for (int i = 0; i < tickets.Length; i++)
             {
                 if (i <= k)
                 {
@@ -190,6 +195,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 2078. Two Furthest Houses With Different Colors
         ///There are n houses evenly lined up on the street, and each house is beautifully painted.
         ///You are given a 0-indexed integer array colors of length n, where colors[i] represents
@@ -210,10 +216,10 @@ namespace LeetCodeAlgo
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
             int res = 0;
-            for(int i = 0; i < colors.Length; i++)
+            for (int i = 0; i < colors.Length; i++)
             {
-                if(!dict.ContainsKey(colors[i]))dict.Add(colors[i], i);
-                foreach(var key in dict.Keys)
+                if (!dict.ContainsKey(colors[i])) dict.Add(colors[i], i);
+                foreach (var key in dict.Keys)
                 {
                     if (key != colors[i])
                         res = Math.Max(res, i - dict[key]);
@@ -244,25 +250,26 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 2085. Count Common Words With One Occurrence
         ///return the number of strings that appear exactly once in each of the two arrays.
         public int CountWords(string[] words1, string[] words2)
         {
             Dictionary<string, int> dict1 = new Dictionary<string, int>();
             Dictionary<string, int> dict2 = new Dictionary<string, int>();
-            foreach(var w1 in words1)
+            foreach (var w1 in words1)
             {
                 if (dict1.ContainsKey(w1)) dict1[w1]++;
-                else dict1.Add(w1,1);
+                else dict1.Add(w1, 1);
             }
             foreach (var w2 in words2)
             {
                 if (dict2.ContainsKey(w2)) dict2[w2]++;
                 else dict2.Add(w2, 1);
             }
-            var keys1=dict1.Where(x=>x.Value==1).Select(x=>x.Key).ToList();
+            var keys1 = dict1.Where(x => x.Value == 1).Select(x => x.Key).ToList();
             int count = 0;
-            foreach(var key in keys1)
+            foreach (var key in keys1)
             {
                 if (dict2.ContainsKey(key) && dict2[key] == 1) count++;
             }
@@ -278,25 +285,25 @@ namespace LeetCodeAlgo
         {
             int ans = 0;
             var arr = street.ToCharArray();
-            bool[] buckets=new bool[arr.Length];
-            for(int i=0; i<arr.Length; i++)
+            bool[] buckets = new bool[arr.Length];
+            for (int i = 0; i < arr.Length; i++)
             {
                 //if start with 'HH...' or end with '...HH' or contain 'HHH', return -1
-                if (arr[i]=='H'
-                    &&(i==0 || arr[i-1]=='H')
-                    &&(i==arr.Length-1 || arr[i+1]=='H'))
+                if (arr[i] == 'H'
+                    && (i == 0 || arr[i - 1] == 'H')
+                    && (i == arr.Length - 1 || arr[i + 1] == 'H'))
                     return -1;
 
                 if (arr[i] == 'H')
                 {
-                    if (i >0 && buckets[i-1])
+                    if (i > 0 && buckets[i - 1])
                     {
                         continue;
                     }
                     ans++;
                     if (i < arr.Length - 1)
                     {
-                        buckets[i+1] = true;
+                        buckets[i + 1] = true;
                     }
                 }
             }
@@ -306,9 +313,9 @@ namespace LeetCodeAlgo
         ///2089. Find Target Indices After Sorting Array
         public IList<int> TargetIndices(int[] nums, int target)
         {
-            var ans=new List<int>();
+            var ans = new List<int>();
             Array.Sort(nums);
-            for(int i=0; i<nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 if (nums[i] > target) break;
                 if (nums[i] == target) ans.Add(i);
@@ -326,9 +333,9 @@ namespace LeetCodeAlgo
             int min = int.MaxValue;
             int maxIndex = 0;
             int minIndex = 0;
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
-                if(nums[i] > max)
+                if (nums[i] > max)
                 {
                     max = nums[i];
                     maxIndex = i;
@@ -343,34 +350,35 @@ namespace LeetCodeAlgo
             int left = Math.Min(maxIndex, minIndex);
             int right = Math.Max(maxIndex, minIndex);
 
-            return Math.Min(right + 1, Math.Min(nums.Length - left, left+1+ nums.Length - right));
+            return Math.Min(right + 1, Math.Min(nums.Length - left, left + 1 + nums.Length - right));
         }
+
         /// 2094. Finding 3-Digit Even Numbers
         ///if the given digits were [1, 2, 3], integers 132 and 312 follow the requirements.
         ///Return a sorted array of the unique integers.
         public int[] FindEvenNumbers(int[] digits)
         {
-            List<int> ans=new List<int>();
-            int[] arr=new int[10];
+            List<int> ans = new List<int>();
+            int[] arr = new int[10];
             foreach (var d in digits)
                 arr[d]++;
 
-            for(int i = 100; i <= 998; i += 2)
+            for (int i = 100; i <= 998; i += 2)
             {
                 int[] curr = new int[10];
                 curr[i / 100]++;
                 curr[i / 10 % 10]++;
                 curr[i % 10]++;
                 bool valid = true;
-                for(int j = 0; j < curr.Length; j++)
+                for (int j = 0; j < curr.Length; j++)
                 {
-                    if(curr[j] > arr[j])
+                    if (curr[j] > arr[j])
                     {
                         valid = false;
                         break;
                     }
                 }
-                if(valid) ans.Add(i);
+                if (valid) ans.Add(i);
             }
             return ans.ToArray();
         }
@@ -401,7 +409,7 @@ namespace LeetCodeAlgo
         public int[] MaxSubsequence(int[] nums, int k)
         {
             PriorityQueue<int, int> pq = new PriorityQueue<int, int>();
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
                 pq.Enqueue(i, -nums[i]);
 
             var list = new List<int>();
@@ -409,9 +417,7 @@ namespace LeetCodeAlgo
                 list.Add(pq.Dequeue());
 
             return list.OrderBy(x => x).Select(x => nums[x]).ToArray();
-
         }
-
 
         ///2100. Find Good Days to Rob the Bank, #Prefix Sum
         ///The ith day is a good day to rob the bank if:

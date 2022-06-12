@@ -148,10 +148,18 @@ namespace LeetCodeAlgo
             return (int)(res % mod);
         }
 
+        ///1716. Calculate Money in Leetcode Bank
+        public int TotalMoney(int n)
+        {
+            int weeks = n / 7;
+            int days = n % 7;
+            return days * (1 + days) / 2 + days * weeks + 7 * (1 + 7) / 2 * weeks + 7 * weeks * (weeks - 1) / 2;
+        }
+
         /// 1721. Swapping Nodes in a Linked List
-        ///You are given the head of a linked list, and an integer k.
-        ///Return the head of the linked list after swapping the values of the kth node
-        ///from the beginning and the kth node from the end(the list is 1-indexed).
+        //You are given the head of a linked list, and an integer k.
+        //Return the head of the linked list after swapping the values of the kth node
+        //from the beginning and the kth node from the end(the list is 1-indexed).
         public ListNode SwapNodes(ListNode head, int k)
         {
             List<ListNode> list = new List<ListNode>();
@@ -192,13 +200,14 @@ namespace LeetCodeAlgo
         {
             int res = 0;
             int curr = 0;
-            foreach(var g in gain)
+            foreach (var g in gain)
             {
                 curr += g;
                 res = Math.Max(res, curr);
             }
             return res;
         }
+
         /// 1742. Maximum Number of Balls in a Box
         ///For example, the ball number 321 will be put in the box number 3 + 2 + 1 = 6 and
         ///the ball number 10 will be put in the box number 1 + 0 = 1.

@@ -11,14 +11,14 @@ namespace LeetCodeAlgo
         ///If the character ch does not exist in word, do nothing.
         public string ReversePrefix(string word, char ch)
         {
-            List<char> list=new List<char>();
-            for(int i = 0; i < word.Length; i++)
+            List<char> list = new List<char>();
+            for (int i = 0; i < word.Length; i++)
             {
                 list.Add(word[i]);
                 if (ch == word[i])
                 {
                     list.Reverse();
-                    return new string(list.ToArray()) + word.Substring(i+1);
+                    return new string(list.ToArray()) + word.Substring(i + 1);
                 }
             }
             return word;
@@ -55,19 +55,19 @@ namespace LeetCodeAlgo
         {
             if (nums.Length <= 1)
                 return 0;
-            int[] arr=new int[101];
+            int[] arr = new int[101];
             int start = 100;
             int end = 1;
-            foreach(var num in nums)
+            foreach (var num in nums)
             {
                 arr[num]++;
                 start = Math.Min(start, num);
-                end= Math.Max(end, num);
+                end = Math.Max(end, num);
             }
             int ans = 0;
             for (int i = start; i <= end - k; i++)
             {
-                if(arr[i] > 0 && arr[i + k] > 0)
+                if (arr[i] > 0 && arr[i + k] > 0)
                 {
                     ans += arr[i] * arr[i + k];
                 }
@@ -80,6 +80,7 @@ namespace LeetCodeAlgo
         {
             return operations.Sum(x => x.Contains("++") ? 1 : -1);
         }
+
         /// 2022. Convert 1D Array Into 2D Array
         public int[][] Construct2DArray(int[] original, int m, int n)
         {
@@ -101,25 +102,26 @@ namespace LeetCodeAlgo
         public int NumOfPairs(string[] nums, string target)
         {
             Dictionary<string, List<int>> dict = new Dictionary<string, List<int>>();
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
-                if(!dict.ContainsKey(nums[i]))dict.Add(nums[i], new List<int>());
+                if (!dict.ContainsKey(nums[i])) dict.Add(nums[i], new List<int>());
                 dict[nums[i]].Add(i);
             }
             int res = 0;
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 if (target.StartsWith(nums[i]))
                 {
                     var str = target.Substring(nums[i].Length, target.Length - nums[i].Length);
                     if (dict.ContainsKey(str))
                     {
-                        res+= dict[str].Where(x=>x!=i).Count();
+                        res += dict[str].Where(x => x != i).Count();
                     }
                 }
             }
             return res;
         }
+
         /// 2024. Maximize the Confusion of an Exam, #Sliding Window ,#Binary Search
         ///See 424. Longest Repeating Character Replacement
         ///Change the answer key for any question to 'T' or 'F' (i.e., set answerKey[i] to 'T' or 'F').
@@ -144,17 +146,17 @@ namespace LeetCodeAlgo
 
         public int MaxConsecutiveAnswers_BinarySearch(string answerKey, int k)
         {
-            int n=answerKey.Length;
+            int n = answerKey.Length;
             if (n == k)
                 return n;
 
-            List<int[]> list=new List<int[]>();
+            List<int[]> list = new List<int[]>();
             int countT = 0;
             int countF = 0;
             list.Add(new int[] { 0, 0 });
             for (int i = 0; i < n; i++)
             {
-                if(answerKey[i] == 'T')
+                if (answerKey[i] == 'T')
                 {
                     countT++;
                 }
@@ -165,7 +167,7 @@ namespace LeetCodeAlgo
                 list.Add(new int[] { countT, countF });
             }
 
-            int left = k+1;
+            int left = k + 1;
             int right = n;
 
             int mid = (left + right + 1) / 2;
@@ -173,14 +175,14 @@ namespace LeetCodeAlgo
             while (left < right)
             {
                 bool exist = false;
-                for(int i = 0; i < n-mid+1; i++)
+                for (int i = 0; i < n - mid + 1; i++)
                 {
                     var a = list[i];
                     var b = list[i + mid];
 
                     int count1 = b[0] - a[0];
                     int count2 = b[1] - a[1];
-                    if(count1+k>=mid || count2 + k >= mid)
+                    if (count1 + k >= mid || count2 + k >= mid)
                     {
                         exist = true;
                         break;
@@ -190,22 +192,23 @@ namespace LeetCodeAlgo
                 if (exist)
                 {
                     left = mid;
-                    mid= (left + right + 1) / 2;
+                    mid = (left + right + 1) / 2;
                 }
                 else
                 {
-                    right= mid-1;
+                    right = mid - 1;
                     mid = (left + right + 1) / 2;
                 }
             }
 
             return left;
         }
+
         ///2027. Minimum Moves to Convert String
         public int MinimumMoves(string s)
         {
             int res = 0;
-            for(int i = 0; i < s.Length; )
+            for (int i = 0; i < s.Length;)
             {
                 if (s[i] == 'X')
                 {
@@ -216,14 +219,15 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 2032. Two Out of Three
         ///return a distinct array containing all the values that in at least two out of the three arrays.
         public IList<int> TwoOutOfThree(int[] nums1, int[] nums2, int[] nums3)
         {
             Dictionary<int, HashSet<int>> dict = new Dictionary<int, HashSet<int>>();
-            foreach(var n in nums1)
+            foreach (var n in nums1)
             {
-                if(!dict.ContainsKey(n))dict.Add(n, new HashSet<int>() { 0});
+                if (!dict.ContainsKey(n)) dict.Add(n, new HashSet<int>() { 0 });
             }
             foreach (var n in nums2)
             {
@@ -239,6 +243,7 @@ namespace LeetCodeAlgo
 
             return dict.Keys.Where(x => dict[x].Count >= 2).ToList();
         }
+
         /// 2037. Minimum Number of Moves to Seat Everyone
         /// Return the minimum number of moves required to move each student to a seat
         /// such that no two students are in the same seat.
@@ -246,7 +251,7 @@ namespace LeetCodeAlgo
         public int MinMovesToSeat(int[] seats, int[] students)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
-            foreach(var seat in seats)
+            foreach (var seat in seats)
             {
                 if (dict.ContainsKey(seat)) dict[seat]++;
                 else dict.Add(seat, 1);
@@ -254,15 +259,14 @@ namespace LeetCodeAlgo
 
             int res = 0;
 
-            var keys = dict.Keys.OrderBy(x=>x).ToList();
+            var keys = dict.Keys.OrderBy(x => x).ToList();
             Array.Sort(students);
 
             var i = 0;
-            foreach(var student in students)
+            foreach (var student in students)
             {
-                if(student == keys[i])
+                if (student == keys[i])
                 {
-
                 }
                 else
                 {
@@ -274,16 +278,17 @@ namespace LeetCodeAlgo
             }
 
             return res;
-
         }
+
         ///2042. Check if Numbers Are Ascending in a Sentence
         public bool AreNumbersAscending(string s)
         {
-            var arr = s.Split(" ").Where(x=>char.IsDigit(x[0])).Select(x =>int.Parse(x)).ToList();
+            var arr = s.Split(" ").Where(x => char.IsDigit(x[0])).Select(x => int.Parse(x)).ToList();
             for (int i = 0; i < arr.Count - 1; i++)
                 if (arr[i] >= arr[i + 1]) return false;
             return true;
         }
+
         /// 2044. Count Number of Maximum Bitwise-OR Subsets,#Backtracking
         ///find the maximum possible bitwise OR of a subset of nums and return the number of different non-empty subsets with the maximum bitwise OR.
         ///An array a is a subset of an array b if a can be obtained from b by deleting some(possibly zero) elements of b.
@@ -291,13 +296,13 @@ namespace LeetCodeAlgo
         {
             int res = 0;
             int maxOr = 0;
-            foreach(var n in nums)
-                maxOr|=n;
+            foreach (var n in nums)
+                maxOr |= n;
             CountMaxOrSubsets_BackTracking(nums, 0, 0, maxOr, ref res);
             return res;
         }
 
-        private void CountMaxOrSubsets_BackTracking(int[] nums,int i, int currOr, int maxOr, ref int res)
+        private void CountMaxOrSubsets_BackTracking(int[] nums, int i, int currOr, int maxOr, ref int res)
         {
             if (currOr == maxOr && i == nums.Length)
             {
@@ -307,7 +312,7 @@ namespace LeetCodeAlgo
 
             if (i >= nums.Length) return;
             CountMaxOrSubsets_BackTracking(nums, i + 1, currOr, maxOr, ref res);
-            CountMaxOrSubsets_BackTracking(nums, i + 1, currOr|nums[i], maxOr, ref res);
+            CountMaxOrSubsets_BackTracking(nums, i + 1, currOr | nums[i], maxOr, ref res);
         }
 
         ///2047. Number of Valid Words in a Sentence
@@ -316,15 +321,15 @@ namespace LeetCodeAlgo
         {
             int res = 0;
             var arr = sentence.Split(' ').ToArray();
-            foreach(var str in arr)
+            foreach (var str in arr)
             {
-                if(string.IsNullOrEmpty(str)) continue;
+                if (string.IsNullOrEmpty(str)) continue;
                 bool find = true;
                 int hyphen = 0;
                 int punctuation = 0;
                 for (int i = 0; i < str.Length; i++)
                 {
-                    if(str[i] == ' ' || char.IsDigit(str[i]))
+                    if (str[i] == ' ' || char.IsDigit(str[i]))
                     {
                         find = false;
                         break;
@@ -339,13 +344,13 @@ namespace LeetCodeAlgo
                                 find = false;
                                 break;
                             }
-                            if (i == 0||i==str.Length-1||!char.IsLetter( str[i-1])||!char.IsLetter(str[i + 1]))
+                            if (i == 0 || i == str.Length - 1 || !char.IsLetter(str[i - 1]) || !char.IsLetter(str[i + 1]))
                             {
-                                find=false;
+                                find = false;
                                 break;
                             }
                         }
-                        else if(str[i] == '!'|| str[i] == ','|| str[i] == '.')
+                        else if (str[i] == '!' || str[i] == ',' || str[i] == '.')
                         {
                             if (i != str.Length - 1)
                             {
@@ -360,10 +365,7 @@ namespace LeetCodeAlgo
                     res++;
             }
 
-
             return res;
         }
-
-
     }
 }

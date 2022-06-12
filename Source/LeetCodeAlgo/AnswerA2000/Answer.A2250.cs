@@ -24,11 +24,11 @@ namespace LeetCodeAlgo
                 row.Sort();
 
             int[] res = new int[points.Length];
-            for(int i = 0; i < points.Length; i++)
+            for (int i = 0; i < points.Length; i++)
             {
                 var p = points[i];
                 int sum = 0;
-                for(int j =p[1]; j < mat.Length; j++)
+                for (int j = p[1]; j < mat.Length; j++)
                 {
                     if (mat[j].Count == 0) continue;
                     if (mat[j].Last() < p[0]) continue;
@@ -43,7 +43,7 @@ namespace LeetCodeAlgo
                             if (mat[j][mid] >= p[0]) right = mid;
                             else left = mid + 1;
                         }
-                        sum+=mat[j].Count - left;
+                        sum += mat[j].Count - left;
                     }
                 }
                 res[i] = sum;
@@ -772,7 +772,7 @@ namespace LeetCodeAlgo
             while (nums.Length > 1)
             {
                 var next = new int[nums.Length / 2];
-                for(int i = 0; i < next.Length; i++)
+                for (int i = 0; i < next.Length; i++)
                 {
                     if (i % 2 == 0)
                     {
@@ -787,6 +787,7 @@ namespace LeetCodeAlgo
             }
             return nums[0];
         }
+
         ///2294. Partition Array Such That Maximum Difference Is K
         //Return the minimum number of subsequences needed such that the difference
         //between the maximum and minimum values in each subsequence is at most k.
@@ -795,7 +796,7 @@ namespace LeetCodeAlgo
             Array.Sort(nums);
             int res = 0;
             int min = -1;
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 if (min == -1)
                 {
@@ -819,13 +820,13 @@ namespace LeetCodeAlgo
         public int[] ArrayChange(int[] nums, int[][] operations)
         {
             int n = nums.Length;
-            var dict=new Dictionary<int, int>();
-            for(int i = 0; i < nums.Length; i++)
+            var dict = new Dictionary<int, int>();
+            for (int i = 0; i < nums.Length; i++)
             {
                 dict.Add(nums[i], i);
             }
 
-            foreach(var op in operations)
+            foreach (var op in operations)
             {
                 var index = dict[op[0]];
                 dict.Remove(op[0]);
@@ -833,7 +834,7 @@ namespace LeetCodeAlgo
             }
 
             int[] res = new int[n];
-            foreach(var k in dict.Keys)
+            foreach (var k in dict.Keys)
             {
                 res[dict[k]] = k;
             }
@@ -841,7 +842,6 @@ namespace LeetCodeAlgo
         }
 
         ///2296. Design a Text Editor, see TextEditor
-
 
         ///2299. Strong Password Checker II
         //at least 8 characters, one lowercase, one uppercase, one digit, one special in "!@#$%^&*()-+".
@@ -856,7 +856,7 @@ namespace LeetCodeAlgo
             bool hasLower = false;
             bool hasDigit = false;
             bool hasSpec = false;
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
                 if (char.IsUpper(password[i])) hasUpper = true;
                 if (char.IsLower(password[i])) hasLower = true;

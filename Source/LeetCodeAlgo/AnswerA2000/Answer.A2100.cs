@@ -131,9 +131,9 @@ namespace LeetCodeAlgo
             int res = -1;
             int n = nums.Length;
             int max = nums[n - 1];
-            for(int i = n - 2; i >= 0; --i)
+            for (int i = n - 2; i >= 0; --i)
             {
-                if(nums[i] < max && max - nums[i] > res)
+                if (nums[i] < max && max - nums[i] > res)
                 {
                     res = max - nums[i];
                 }
@@ -141,6 +141,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 2108. Find First Palindromic String in the Array
         public string FirstPalindrome(string[] words)
         {
@@ -174,9 +175,9 @@ namespace LeetCodeAlgo
             long res = 0;
             long left = 0;
             long right = 1;
-            for(; right < prices.Length; right++)
+            for (; right < prices.Length; right++)
             {
-                if(prices[right] == prices[right - 1]-1)
+                if (prices[right] == prices[right - 1] - 1)
                 {
                     //
                 }
@@ -215,12 +216,12 @@ namespace LeetCodeAlgo
         public int[] ExecuteInstructions(int n, int[] startPos, string s)
         {
             int[] res = new int[s.Length];
-            for(int i = 0; i < s.Length; i++)
+            for (int i = 0; i < s.Length; i++)
             {
                 int r = startPos[0];
-                int c= startPos[1];
+                int c = startPos[1];
                 int count = 0;
-                for(int j = i; j < s.Length; j++)
+                for (int j = i; j < s.Length; j++)
                 {
                     if (s[j] == 'U') r--;
                     else if (s[j] == 'D') r++;
@@ -233,6 +234,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 2124. Check if All A's Appears Before All B's
         public bool CheckString(string s)
         {
@@ -286,7 +288,7 @@ namespace LeetCodeAlgo
         {
             Array.Sort(asteroids);
             long curr = mass;
-            foreach(var n in asteroids)
+            foreach (var n in asteroids)
             {
                 if (curr >= n) curr += n;
                 else return false;
@@ -294,6 +296,7 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+
         /// 2129. Capitalize the Title
         /// Capitalize the string by changing the capitalization of each word such that:
         ///If the length of the word is 1 or 2 letters, change all letters to lowercase.
@@ -334,8 +337,8 @@ namespace LeetCodeAlgo
         {
             int res = 0;
             bool same = false;
-            var dict=new Dictionary<string,int>();
-            foreach(var word in words)
+            var dict = new Dictionary<string, int>();
+            foreach (var word in words)
             {
                 if (dict.ContainsKey(word)) dict[word]++;
                 else dict.Add(word, 1);
@@ -347,7 +350,7 @@ namespace LeetCodeAlgo
                 {
                     int pair = dict[key] / 2;
                     res += pair * 4;
-                    if (dict[key]%2==1)same = true;
+                    if (dict[key] % 2 == 1) same = true;
                 }
                 else
                 {
@@ -361,8 +364,9 @@ namespace LeetCodeAlgo
                     }
                 }
             }
-            return same? res+2:res;
+            return same ? res + 2 : res;
         }
+
         /// 2133. Check if Every Row and Column Contains All Numbers
         ///An n x n matrix is valid if every row and every column contains all the integers from 1 to n (inclusive).
         ///Given an n x n integer matrix matrix, return true if the matrix is valid. Otherwise, return false.
@@ -397,9 +401,9 @@ namespace LeetCodeAlgo
             int count = 0;
             for (int i = 0; i < n; ++i)
             {
-                while(right - i + 1 <= ones)
+                while (right - i + 1 <= ones)
                 {
-                    count += nums[right%n];
+                    count += nums[right % n];
                     right++;
                 }
                 onesInWindow = Math.Max(count, onesInWindow);
@@ -407,23 +411,24 @@ namespace LeetCodeAlgo
             }
             return ones - onesInWindow;
         }
+
         ///2135. Count Words Obtained After Adding a Letter
         public int WordCount(string[] startWords, string[] targetWords)
         {
             int res = 0;
-            HashSet<string> set1= new HashSet<string>(startWords.Select(x => new string(x.OrderBy(o => o).ToArray())));
+            HashSet<string> set1 = new HashSet<string>(startWords.Select(x => new string(x.OrderBy(o => o).ToArray())));
             //startWords = startWords.Select(x => new string(x.OrderBy(o => o).ToArray())).ToArray();
             //targetWords = targetWords.Select(x => new string(x.OrderBy(o => o).ToArray())).ToArray();
 
-            foreach(var word in targetWords)
+            foreach (var word in targetWords)
             {
                 int[] arr = new int[26];
                 foreach (var c in word)
                     arr[c - 'a']++;
 
-                for(int i = 0; i < arr.Length; i++)
+                for (int i = 0; i < arr.Length; i++)
                 {
-                    if(arr[i] == 1)
+                    if (arr[i] == 1)
                     {
                         arr[i]--;
 
@@ -433,11 +438,11 @@ namespace LeetCodeAlgo
                             if (arr[j] > 0)
                             {
                                 int k = arr[j];
-                                while(k-->0)
+                                while (k-- > 0)
                                     sb.Append((char)(j + 'a'));
                             }
                         }
-                        if(set1.Contains(sb.ToString()))
+                        if (set1.Contains(sb.ToString()))
                         {
                             res++;
                             break;
@@ -449,6 +454,7 @@ namespace LeetCodeAlgo
 
             return res;
         }
+
         /// 2136. Earliest Possible Day of Full Bloom, #Greedy
         ///Planting a seed takes time and so does the growth of a seed,plantTime and growTime, of length n each:
         ///plantTime[i] is the days it takes you to plant the ith seed.Every day,you can work on planting exactly one seed.
@@ -480,6 +486,7 @@ namespace LeetCodeAlgo
 
             return res;
         }
+
         /// 2138. Divide a String Into Groups of Size k
         ///If last str.length < k, pad right with char fill
         public string[] DivideString(string s, int k, char fill)
@@ -512,15 +519,16 @@ namespace LeetCodeAlgo
             }
             return target - 1 + res;
         }
+
         /// 2140. Solving Questions With Brainpower, #DP
         public long MostPoints_DP(int[][] questions)
         {
             int n = questions.Length;
-            long[] dp = new long[n+1];
+            long[] dp = new long[n + 1];
             for (int i = n - 1; i >= 0; i--)
             {
                 int points = questions[i][0];
-                int next = questions[i][1] +i + 1;
+                int next = questions[i][1] + i + 1;
                 if (next >= n)
                     next = n;
 
@@ -531,7 +539,7 @@ namespace LeetCodeAlgo
 
         public long MostPoints_DFS(int[][] questions)
         {
-            long[] dp= new long[questions.Length];
+            long[] dp = new long[questions.Length];
             return MostPoints_DFS(questions, 0, dp);
         }
 
@@ -541,7 +549,7 @@ namespace LeetCodeAlgo
             if (dp[i] > 0)
                 return dp[i];
             int points = questions[i][0];
-            int next = questions[i][1]+i+1;
+            int next = questions[i][1] + i + 1;
             dp[i] = Math.Max(MostPoints_DFS(questions, i + 1, dp), points + MostPoints_DFS(questions, next, dp));
             return dp[i];
         }
@@ -551,9 +559,9 @@ namespace LeetCodeAlgo
         ///return the minimum cost of buying all the candies.
         public int MinimumCost(int[] cost)
         {
-            var arr=cost.OrderBy(x => -x).ToArray();
+            var arr = cost.OrderBy(x => -x).ToArray();
             int sum = 0;
-            for(int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
                 sum += arr[i++];
                 if (i >= arr.Length) break;
@@ -561,6 +569,7 @@ namespace LeetCodeAlgo
             }
             return sum;
         }
+
         ///2145. Count the Hidden Sequences
         public int NumberOfArrays(int[] differences, int lower, int upper)
         {
@@ -576,6 +585,7 @@ namespace LeetCodeAlgo
             if ((upper - lower) < (max - min)) return 0;
             else return (int)((upper - lower) - (max - min) + 1);
         }
+
         /// 2148. Count Elements With Strictly Smaller and Greater Elements
         ///return the number of elements that have both a strictly smaller and a strictly greater element appear in nums.
         ///-100000 <= nums[i] <= 100000

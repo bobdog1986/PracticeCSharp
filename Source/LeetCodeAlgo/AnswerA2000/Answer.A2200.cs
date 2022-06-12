@@ -93,6 +93,7 @@ namespace LeetCodeAlgo
             //res + max possible of p0 or p1
             return res + Math.Max(cnt1, cnt2);
         }
+
         /// 2208. Minimum Operations to Halve Array Sum, #PriorityQueue, #Heap
         ///In one operation, you can choose any number from nums and reduce it to exactly half the number.
         ///(Note that you may choose this reduced number in future operations.)
@@ -102,7 +103,7 @@ namespace LeetCodeAlgo
             int res = 0;
             PriorityQueue<double, double> pq = new PriorityQueue<double, double>();
             double sum = 0;
-            foreach(var n in nums)
+            foreach (var n in nums)
             {
                 pq.Enqueue(n, -n);
                 sum += n;
@@ -111,7 +112,7 @@ namespace LeetCodeAlgo
             while (diff < sum / 2)
             {
                 res++;
-                var val =pq.Dequeue();
+                var val = pq.Dequeue();
                 diff += val / 2;
                 pq.Enqueue(val / 2, -val / 2);
             }
@@ -148,13 +149,13 @@ namespace LeetCodeAlgo
             int res = 0;
             char prev = 'L';
             int rights = 0;
-            for(int i = 0; i < directions.Length; i++)
+            for (int i = 0; i < directions.Length; i++)
             {
-                if(directions[i] == 'L')
+                if (directions[i] == 'L')
                 {
-                    if(prev=='R')
+                    if (prev == 'R')
                     {
-                        res+= rights;
+                        res += rights;
                         res++;
                         rights = 0;
                         prev = 'R';
@@ -169,7 +170,7 @@ namespace LeetCodeAlgo
                         prev = 'L';
                     }
                 }
-                else if(directions[i] == 'S')
+                else if (directions[i] == 'S')
                 {
                     if (prev == 'R')
                     {
@@ -177,9 +178,8 @@ namespace LeetCodeAlgo
                         rights = 0;
                     }
                     prev = directions[i];
-
                 }
-                else if(directions[i] == 'R')
+                else if (directions[i] == 'R')
                 {
                     rights++;
                     prev = directions[i];
@@ -187,19 +187,20 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 2212. Maximum Points in an Archery Competition, #Backtracking
         ///Return the array bobArrows which represents the number of arrows Bob shot on each scoring section from 0 to 11.
         ///The sum of the values in bobArrows should equal numArrows.
         ///If there are multiple ways for Bob to earn the maximum total points, return any one of them.
         public int[] MaximumBobPoints(int numArrows, int[] aliceArrows)
         {
-            int[] res=new int[aliceArrows.Length];
+            int[] res = new int[aliceArrows.Length];
             int max = int.MinValue;
             MaximumBobPoints_BackTracking(numArrows, aliceArrows, new int[aliceArrows.Length], aliceArrows.Length - 1, 0, ref max, ref res);
             return res;
         }
 
-        private void MaximumBobPoints_BackTracking(int numArrows, int[] aliceArrows, int[] bobArrows,int index,int total, ref int max, ref int[] res)
+        private void MaximumBobPoints_BackTracking(int numArrows, int[] aliceArrows, int[] bobArrows, int index, int total, ref int max, ref int[] res)
         {
             if (index == 0)
             {
@@ -212,8 +213,8 @@ namespace LeetCodeAlgo
             }
             else
             {
-                MaximumBobPoints_BackTracking(numArrows, aliceArrows, bobArrows,index-1,total,ref max, ref res);
-                if(numArrows > aliceArrows[index])
+                MaximumBobPoints_BackTracking(numArrows, aliceArrows, bobArrows, index - 1, total, ref max, ref res);
+                if (numArrows > aliceArrows[index])
                 {
                     var nextArr = new int[bobArrows.Length];
                     Array.Copy(bobArrows, nextArr, nextArr.Length);
@@ -541,7 +542,7 @@ namespace LeetCodeAlgo
                     }
                 }
             }
-            return arr[0].Insert(x,"(")+"+"+arr[1].Insert(y+1,")");
+            return arr[0].Insert(x, "(") + "+" + arr[1].Insert(y + 1, ")");
         }
 
         ///2233. Maximum Product After K Increments, #PriorityQueue, #Heap
@@ -559,12 +560,12 @@ namespace LeetCodeAlgo
             {
                 var min = pq.Dequeue();
                 min++;
-                pq.Enqueue(min,min);
+                pq.Enqueue(min, min);
             }
             long res = 1;
             while (pq.Count > 0)
             {
-                res*=pq.Dequeue();
+                res *= pq.Dequeue();
                 res %= 10_0000_0007;
             }
             return (int)res;
@@ -582,22 +583,22 @@ namespace LeetCodeAlgo
         //    return root.val == root.left.val + root.right.val;
         //}
 
-
         ///2239. Find Closest Number to Zero
         public int FindClosestNumber(int[] nums)
         {
-            int abs=Math.Abs(nums[0]);
-            int res=nums[0];
-            for(int i=1;i<nums.Length;i++)
+            int abs = Math.Abs(nums[0]);
+            int res = nums[0];
+            for (int i = 1; i < nums.Length; i++)
             {
-                if(Math.Abs(nums[i])<abs||(Math.Abs(nums[i])==abs&& nums[i]>res ))
+                if (Math.Abs(nums[i]) < abs || (Math.Abs(nums[i]) == abs && nums[i] > res))
                 {
-                    abs=Math.Abs(nums[i]);
-                    res=nums[i];
+                    abs = Math.Abs(nums[i]);
+                    res = nums[i];
                 }
             }
             return res;
         }
+
         ///2240. Number of Ways to Buy Pens and Pencils
         ///Return the number of distinct ways you can buy some number of pens and pencils.
         public long WaysToBuyPensPencils(int total, int cost1, int cost2)
@@ -623,7 +624,7 @@ namespace LeetCodeAlgo
                 for (int i = 0; i < s.Length; i += k)
                 {
                     int sum = 0;
-                    for (int j = i; j < k + i && j<s.Length ; j++)
+                    for (int j = i; j < k + i && j < s.Length; j++)
                         sum += s[j] - '0';
                     temp += sum.ToString();
                 }
@@ -631,24 +632,24 @@ namespace LeetCodeAlgo
             }
             return s;
         }
+
         /// 2244. Minimum Rounds to Complete All Tasks
         ///Everytime you can complete 2 or 3 same level tasks, if task count of level is 1, return -1
         public int MinimumRounds(int[] tasks)
         {
             int res = 0;
             Dictionary<int, int> dict = new Dictionary<int, int>();
-            foreach(var task in tasks)
+            foreach (var task in tasks)
             {
                 if (dict.ContainsKey(task)) dict[task]++;
-                else dict.Add(task,1);
+                else dict.Add(task, 1);
             }
 
-            foreach(var key in dict.Keys)
+            foreach (var key in dict.Keys)
             {
                 if (dict[key] == 1) return -1;
                 if (dict[key] % 3 == 0) res += dict[key] / 3;
                 else res += dict[key] / 3 + 1;
-
             }
             return res;
         }
@@ -658,15 +659,15 @@ namespace LeetCodeAlgo
         ///return the list of integers that are present in each array of nums sorted in ascending order.
         public IList<int> Intersection_2248(int[][] nums)
         {
-            HashSet<int> set=new HashSet<int>(nums[0]);
-            for(int i = 1; i < nums.Length; i++)
+            HashSet<int> set = new HashSet<int>(nums[0]);
+            for (int i = 1; i < nums.Length; i++)
             {
                 HashSet<int> currSet = new HashSet<int>(nums[i]);
-                foreach(var j in set)
-                    if(!currSet.Contains(j))set.Remove(j);
+                foreach (var j in set)
+                    if (!currSet.Contains(j)) set.Remove(j);
                 if (set.Count == 0) break;
             }
-            return set.OrderBy(x=>x).ToList();
+            return set.OrderBy(x => x).ToList();
         }
 
         /// 2249. Count Lattice Points Inside a Circle
@@ -675,12 +676,12 @@ namespace LeetCodeAlgo
         public int CountLatticePoints(int[][] circles)
         {
             HashSet<int> set = new HashSet<int>();
-            foreach(var c in circles)
+            foreach (var c in circles)
             {
                 int x = c[0];
-                int y= c[1];
+                int y = c[1];
                 int r = c[2];
-                for(int i = x - r; i <= x + r; i++)
+                for (int i = x - r; i <= x + r; i++)
                 {
                     for (int j = y; j <= y + r; j++)
                     {
@@ -688,7 +689,7 @@ namespace LeetCodeAlgo
                         if ((i - x) * (i - x) + (j - y) * (j - y) > r * r) break;
                         set.Add(i * 1000 + j);
                     }
-                    for(int j = y - 1; j >= y - r; j--)
+                    for (int j = y - 1; j >= y - r; j--)
                     {
                         if (set.Contains(i * 1000 + j)) continue;
                         if ((i - x) * (i - x) + (j - y) * (j - y) > r * r) break;
