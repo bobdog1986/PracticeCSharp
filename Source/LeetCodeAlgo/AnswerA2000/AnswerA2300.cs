@@ -115,5 +115,23 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///2303. Calculate Amount Paid in Taxes
+        //brackets[i] = [upperi, percenti] means that the ith tax bracket has an upper bound of upperi and
+        //is taxed at a rate of percenti.
+        //The brackets are sorted by upper bound (i.e. upperi-1 < upperi for 0 < i < brackets.length).
+        public double CalculateTax(int[][] brackets, int income)
+        {
+            double res = 0;
+            int prev = 0;
+            foreach(var bracket in brackets)
+            {
+                int curr =Math.Min(bracket[0],income) - prev;
+                res += curr * 1.0 * bracket[1] / 100;
+                prev = bracket[0];
+                if (bracket[0] >= income) break;
+            }
+            return res;
+        }
     }
 }
