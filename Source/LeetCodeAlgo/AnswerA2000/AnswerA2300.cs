@@ -133,5 +133,30 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///2304. Minimum Path Cost in a Grid, #DP, #HashMap
+        public int MinPathCost(int[][] grid, int[][] moveCost)
+        {
+            Dictionary<int,int> dict = new Dictionary<int,int>();
+            for(int i = 0; i < grid[0].Length; i++)
+                dict.Add(i, grid[0][i]);
+
+            for (int i = 1; i < grid.Length; i++)
+            {
+                var next = new Dictionary<int, int>();
+                foreach(var k in dict.Keys)
+                {
+                    for(int j = 0; j < grid[0].Length; j++)
+                    {
+                        var cost = dict[k] + moveCost[grid[i-1][k]][j] + grid[i][j];
+                        if (next.ContainsKey(j)) next[j] = Math.Min(cost, next[j]);
+                        else next.Add(j, cost);
+                    }
+                }
+                dict = next;
+            }
+            return dict.Values.Min();
+        }
+
     }
 }
