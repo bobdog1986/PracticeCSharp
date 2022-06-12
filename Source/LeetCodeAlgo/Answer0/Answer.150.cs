@@ -105,7 +105,40 @@ namespace LeetCodeAlgo
             return nums[left];
         }
 
-        ///155. Min Stack , see MinStack
+        ///154. Find Minimum in Rotated Sorted Array II, #Binary Search
+        //may rotate and contain duplicates, return the min
+        public int FindMin_154(int[] nums)
+        {
+            int n = nums.Length;
+            int left = 0;
+            int right = n - 1;
+            while (left < right)
+            {
+                int mid = (left + right) / 2;
+                int prev = mid == 0 ? n - 1 : mid - 1;
+                int next = mid == n - 1 ? 0 : mid + 1;
+                if (nums[mid] <= nums[next] && nums[mid] < nums[prev])
+                    return nums[mid];
+                else
+                {
+                    if (nums[mid]> nums[right])
+                    {
+                        left = mid + 1;
+                    }
+                    else if(nums[mid]< nums[right])
+                    {
+                        right = mid;
+                    }
+                    else
+                    {
+                        right--;//??
+                    }
+                }
+            }
+
+            return nums[left];
+        }
+        /// 155. Min Stack , see MinStack
 
         ///160. Intersection of Two Linked Lists, #Two Pointers
         ///return the node at which the two lists intersect. If not, return null.
@@ -273,7 +306,7 @@ namespace LeetCodeAlgo
                     else left = mid + 1;
                 }
 
-                //if left<right, must check if left is valid answer 
+                //if left<right, must check if left is valid answer
             }
             return new int[] { };
         }
