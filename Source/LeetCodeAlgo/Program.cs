@@ -42,16 +42,18 @@ namespace LeetCodeAlgo
             //var arrChar = anwser.buildCharArray(arrStrChar);
 
             ///build int[][] and int[] from string
-            string matStrInt = "[[0,1,1],[1,1,0],[1,1,0]]";
+            string matStrInt = "[[5,3],[4,0],[2,1]]";
             var matInt = anwser.buildMatrix(matStrInt);
-            string arrStrInt = "[5,2,1,2,5,2,1,2,5]";
+            string matStrInt2 = "[[9,8],[1,5],[10,12],[18,6],[2,4],[14,3]]";
+            var matInt2 = anwser.buildMatrix(matStrInt2);
+            string arrStrInt = "[76265,7826,16834,63341,68901,58882,50651,75609]";
             var arrInt = anwser.buildArray(arrStrInt);
 
             Stopwatch sw = new Stopwatch();
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.MaximumUniqueSubarray(arrInt);
+            var result = anwser.DistributeCookies(arrInt,8);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
