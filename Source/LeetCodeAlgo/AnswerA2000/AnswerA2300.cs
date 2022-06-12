@@ -158,5 +158,37 @@ namespace LeetCodeAlgo
             return dict.Values.Min();
         }
 
+        ///2305. Fair Distribution of Cookies, #Backtracking
+        //k that denotes the number of children to distribute all the bags of cookies to.
+        //Return the minimum unfairness(max-total-cookies) of all distributions.
+        //2 <= cookies.length <= 8
+        public int DistributeCookies(int[] cookies, int k)
+        {
+            int res = int.MaxValue;
+            int[] arr = new int[k];
+            DistributeCookies(cookies, 0, arr, k, ref res);
+            return res;
+        }
+
+        private void DistributeCookies(int[] cookies,int index, int[] arr,int k, ref int res)
+        {
+            if(index == cookies.Length)
+            {
+                res = Math.Min(res, arr.Max());
+                return;
+            }
+            else
+            {
+                for(int i = 0; i < k; i++)
+                {
+                    var next = new int[k];
+                    Array.Copy(arr, next,k);
+                    next[i]+= cookies[index];
+                    if (next[i] >= res) continue;
+                    DistributeCookies(cookies, index + 1, next, k, ref res);
+                }
+            }
+        }
+
     }
 }
