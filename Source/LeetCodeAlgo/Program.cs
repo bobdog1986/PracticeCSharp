@@ -53,7 +53,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.DistributeCookies(arrInt,8);
+            var result = anwser.DistinctNames(new string[] { "coffee", "donuts", "time", "toffee" });
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

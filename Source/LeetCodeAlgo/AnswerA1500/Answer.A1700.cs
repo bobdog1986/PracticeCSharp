@@ -187,6 +187,18 @@ namespace LeetCodeAlgo
             return list[0];
         }
 
+        ///1732. Find the Highest Altitude
+        public int LargestAltitude(int[] gain)
+        {
+            int res = 0;
+            int curr = 0;
+            foreach(var g in gain)
+            {
+                curr += g;
+                res = Math.Max(res, curr);
+            }
+            return res;
+        }
         /// 1742. Maximum Number of Balls in a Box
         ///For example, the ball number 321 will be put in the box number 3 + 2 + 1 = 6 and
         ///the ball number 10 will be put in the box number 1 + 0 = 1.

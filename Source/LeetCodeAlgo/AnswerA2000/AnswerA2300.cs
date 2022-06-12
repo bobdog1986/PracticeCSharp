@@ -135,7 +135,7 @@ namespace LeetCodeAlgo
         }
 
         ///2304. Minimum Path Cost in a Grid, #DP, #HashMap
-        public int MinPathCost(int[][] grid, int[][] moveCost)
+        public int MinPathCost_Dict(int[][] grid, int[][] moveCost)
         {
             Dictionary<int,int> dict = new Dictionary<int,int>();
             for(int i = 0; i < grid[0].Length; i++)
@@ -158,6 +158,27 @@ namespace LeetCodeAlgo
             return dict.Values.Min();
         }
 
+        public int MinPathCost(int[][] grid, int[][] moveCost)
+        {
+            int colLen = grid[0].Length;
+            int[] arr = grid[0];
+
+            for (int i = 1; i < grid.Length; i++)
+            {
+                var next = new int[colLen];
+                Array.Fill(next, int.MaxValue);
+                for(int j = 0; j < colLen; j++)
+                {
+                    for(int k=0;k<colLen; k++)
+                    {
+                        var cost = arr[j] + moveCost[grid[i - 1][j]][k] + grid[i][k];
+                        next[k] = Math.Min(cost, next[k]);
+                    }
+                }
+                arr = next;
+            }
+            return arr.Min();
+        }
         ///2305. Fair Distribution of Cookies, #Backtracking
         //k that denotes the number of children to distribute all the bags of cookies to.
         //Return the minimum unfairness(max-total-cookies) of all distributions.
@@ -190,13 +211,13 @@ namespace LeetCodeAlgo
             }
         }
 
-        ///2306. Naming a Company
+        ///2306. Naming a Company, #HashMap
         //Choose 2 distinct names from ideas, call them ideaA and ideaB.
         //Swap the first letters of ideaA and ideaB with each other.
         //If both of the new names are not found in the original ideas, then the name ideaA ideaBis a valid company name.
         //Otherwise, it is not a valid name.
         //Return the number of distinct valid names for the company.
-        public long DistinctNames(string[] ideas)
+        public long DistinctNames_Dict(string[] ideas)
         {
             long res = 0;
             Dictionary<char, HashSet<string>> dict = new Dictionary<char, HashSet<string>>();
@@ -232,5 +253,45 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        public long DistinctNames(string[] ideas)
+        {
+            long res = 0;
+            HashSet<string>[] maps = new HashSet<string>[26];
+            for (int i = 0; i < maps.Length; i++)
+                maps[i] = new HashSet<string>();
+
+            foreach (var idea in ideas)
+                maps[idea[0] - 'a'].Add(idea);
+
+            long[][] set = new long[26][];
+            for (int i = 0; i < set.Length; i++)
+                set[i] = new long[26];
+
+            for(int i = 0; i < maps.Length; i++)
+            {
+                for(int j = 0; j < maps.Length; j++)
+                {
+                    if (i == j) continue;
+                    foreach (var s in maps[j])
+                    {
+                        var s2 = $"{(char)(i+'a')}" + s.Substring(1);
+                        if (!maps[i].Contains(s2)) set[i][j]++;
+                    }
+                }
+            }
+
+            for (int i = 0; i < set.Length; i++)
+            {
+                for (int j = 0; j < set[0].Length; j++)
+                {
+                    if (i == j) continue;
+                    res += set[i][j] * set[j][i];
+                }
+            }
+
+            return res;
+        }
+
     }
 }
