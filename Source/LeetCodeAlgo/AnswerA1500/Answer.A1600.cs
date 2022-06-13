@@ -303,5 +303,59 @@ namespace LeetCodeAlgo
         {
             return (n + 1) * (n + 2) * (n + 3) * (n + 4) / 24;
         }
+
+        ///1648. Sell Diminishing-Valued Colored Balls, #Binary Search
+        // if you own 6 yellow balls, the customer would pay 6 for the first yellow ball.
+        // After the transaction, there are only 5 yellow balls left, so the next yellow ball is then valued at 5
+        //1 <= inventory.length <= 10^5, 1 <= inventory[i] <= 10^9 ,1 <= orders <= min(sum(inventory[i]), 10^9)
+        public int MaxProfit_1648(int[] inventory, int orders)
+        {
+            long res = 0;
+            long mod = 10_0000_0007;
+            inventory = inventory.OrderBy(x => -x).ToArray();//sort desc
+            int n = inventory.Length;
+
+            int left = 1;
+            int right = 10_0000_0000;
+            while (left < right)
+            {
+                int mid = (left + right + 1) / 2;//select the right center
+                long sum = 0;
+                foreach (var i in inventory)
+                {
+                    if (i < mid) break;//select all balls which count >=mid
+                    else sum += i - mid + 1;//all balls [mid,i]
+                }
+
+                if (sum == orders)
+                {
+                    left = mid;
+                    break;
+                }
+                else if (sum > orders)
+                {
+                    left = mid;
+                }
+                else
+                {
+                    right = mid - 1;//this cause we choose the right center
+                }
+            }
+            //now we have the left-value, so we must :
+            //First, select all >=left+1, if these balls not enough...
+            //Then ,orders still >0, select orders count of left
+            for (int i = 0; i < n && orders > 0; i++)
+            {
+                long a = inventory[i];
+                if (a <= left) break;
+                int count = Math.Min(inventory[i] - left, orders);//count is of range [left+1,inventory[i]]
+                res += (a + (a - count + 1)) * count / 2;
+                res %= mod;
+                orders -= count;
+            }
+
+            res += orders % mod * left;//must % mod, or cause overflow
+            return (int)(res % mod);
+        }
     }
 }

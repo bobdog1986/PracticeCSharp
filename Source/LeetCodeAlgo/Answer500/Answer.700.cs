@@ -105,7 +105,7 @@ namespace LeetCodeAlgo
 
         ///714. Best Time to Buy and Sell Stock with Transaction Fee
         ///https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/discuss/108870/Most-consistent-ways-of-dealing-with-the-series-of-stock-problems
-        public int MaxProfit(int[] prices, int fee)
+        public int MaxProfit_714(int[] prices, int fee)
         {
             int len = prices.Length;
             if (len <= 1)

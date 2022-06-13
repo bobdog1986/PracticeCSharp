@@ -242,7 +242,7 @@ namespace LeetCodeAlgo
         /// 309. Best Time to Buy and Sell Stock with Cooldown, #DP
         ///After you sell your stock, you cannot buy stock on the next day (i.e., cooldown one day).
         ///0 <= prices[i] <= 1000, 1<=length<=5000
-        public int MaxProfit(int[] prices)
+        public int MaxProfit_309(int[] prices)
         {
             int len = prices.Length;
             if (len <=1)
