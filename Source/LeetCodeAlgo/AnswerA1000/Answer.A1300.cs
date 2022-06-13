@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,18 +12,50 @@ namespace LeetCodeAlgo
         //the sum of the array gets as close as possible (in absolute difference) to target.
         public int FindBestValue(int[] arr, int target)
         {
-            return -1;
-            //Array.Sort(arr);
-            //int n = arr.Length;
-            //int[] prefix = new int[n];
-            //int sum = 0;
-            //for(int i = 0; i < n; i++)
-            //{
-            //    sum += arr[i];
-            //    prefix[i] = sum;
-            //}
+            int n = arr.Length;
+            Array.Sort(arr);
+            int sum = arr.Sum();
+            if (sum <= target) return arr[n - 1];
+            // The answer would lie between 0 and maximum value in the array.
+            int left = 0;
+            int right = arr[n - 1];
+            int res = 1;
+            int diff = sum-target;
+            while (left <= right)
+            {
+                int mid = (left+right) / 2;
+                sum = FindBestValue_GetSum(arr, mid);
+                if (sum == target) return mid;
+                else if (sum > target)
+                {
+                    right = mid - 1;
+                }
+                else
+                {
+                    left = mid + 1;
+                }
 
-            //return left;
+                // If current difference is less than diff;
+                // or current difference==diff but mid < res.(choose the smaller one.)
+                if (Math.Abs(sum - target) < diff || (Math.Abs(sum - target) == diff && mid < res))
+                {
+                    res = mid;
+                    diff = Math.Abs(sum - target);
+                }
+            }
+            return res;
+        }
+
+        private int FindBestValue_GetSum(int[] arr, int mid)
+        {
+            int sum = 0;
+            int i = 0;
+            for (;i<arr.Length;i++)
+            {
+                if (arr[i] >= mid) break;
+                sum += arr[i];
+            }
+            return sum+(arr.Length-i)*mid;
         }
         /// 1302. Deepest Leaves Sum, #BTree
         public int DeepestLeavesSum(TreeNode root)
