@@ -8,7 +8,56 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1805. Number of Different Integers in a String
+        ///1802. Maximum Value at a Given Index in a Bounded Array, #Binary Search
+        //You are given three positive integers: n, index, and maxSum.
+        //You want to construct an array nums (0-indexed) that satisfies the following conditions:
+        //nums.length == n, nums[i] >0. abs(nums[i] - nums[i + 1]) <= 1.
+        //The sum of all the elements of nums does not exceed maxSum.
+        //Return nums[index] is maximized.
+        //1 <= n <= maxSum <= 10^9 ,0 <= index<n
+        public int MaxValue(int n, int index, int maxSum)
+        {
+            int left = 1;
+            int right = maxSum - (n - 1);
+            int count1 = index + 1;// [0,index]]
+            int count2 = n - index - 1;//[index+1,n-1]
+            while (left < right)
+            {
+                long mid = (left + right + 1) / 2;
+                long sum1 = 0;
+                if (mid - (count1 - 1) >= 1)
+                {
+                    sum1 = (mid - (count1 - 1) + mid) * count1 / 2;
+                }
+                else
+                {
+                    sum1 = (1 + mid) * mid / 2 + (count1 - mid);
+                }
+                long sum2 = 0;
+                if (mid - count2 >= 1)
+                {
+                    sum2 = (mid - 1 + mid - count2) * count2 / 2;
+                }
+                else
+                {
+                    sum2 = (mid - 1 + 1) * (mid - 1) / 2 + count2 - (mid - 1);
+                }
+
+                long sum = sum1 + sum2;
+                if (sum == maxSum) return (int)mid;
+                else if (sum > maxSum)
+                {
+                    right = (int)mid - 1;
+                }
+                else
+                {
+                    left = (int)mid;
+                }
+            }
+            return left;
+        }
+
+        /// 1805. Number of Different Integers in a String
         public int NumDifferentIntegers(string word)
         {
             HashSet<string> set = new HashSet<string>();
