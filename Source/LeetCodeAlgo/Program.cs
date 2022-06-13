@@ -42,7 +42,7 @@ namespace LeetCodeAlgo
             //var arrChar = anwser.buildCharArray(arrStrChar);
 
             ///build int[][] and int[] from string
-            string matStrInt = "[[5,3],[4,0],[2,1]]";
+            string matStrInt = "[[78,96,64],[37,100,30],[78,46,29],[82,25,80],[33,87,97],[93,99,85],[88,18,81],[13,81,83],[6,40,57],[5,75,47],[94,17,12],[38,42,96],[54,23,26],[17,70,47],[68,65,35],[22,33,62],[38,96,44],[15,60,10],[19,97,29],[87,93,87],[51,72,47],[12,51,2],[34,69,16],[59,48,87],[96,87,34]]";
             var matInt = anwser.buildMatrix(matStrInt);
 
             string arrStrInt = "[1,2,0,1,2]";
@@ -57,7 +57,7 @@ namespace LeetCodeAlgo
             Console.WriteLine("**************start watch ms*******");
             sw.Start();
 
-            var result = anwser.AvoidFlood(arrInt);
+            var result = anwser.FindPeakGrid(matInt);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

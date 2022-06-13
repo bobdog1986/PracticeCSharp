@@ -189,25 +189,32 @@ namespace LeetCodeAlgo
             return node1;
         }
 
-        /// 162. Find Peak Element
-        ///return the index to any of the peaks which greater than its neighbors.
-        ///nums[-1] = nums[n] = int.Min
+        /// 162. Find Peak Element, #Binary Search
+        //A peak element is an element that is strictly greater than its neighbors.
+        //Given an integer array nums, find a peak element, and return its index any of the peaks..
+        //You may imagine that nums[-1] = nums[n] = -∞. nums[i] != nums[i + 1] for all valid i.
         public int FindPeakElement(int[] nums)
         {
-            for (int i = 0; i < nums.Length; i++)
+            int left = 0;
+            int right = nums.Length - 1;
+
+            while (left < right)
             {
-                bool left = i == 0 || nums[i] > nums[i - 1];
-                bool right = i == nums.Length - 1 || nums[i] > nums[i + 1];
-                if (left && right)
+                int mid = (left + right) / 2;
+                //there is no nums[mid] == nums[mid+1]
+                if (nums[mid] < nums[mid + 1])
                 {
-                    return i;
+                    //index n-1 must > n(invalid),so must exist in [mid+1,n-1]
+                    left = mid + 1;
+
                 }
-                else if (right)
+                else if(nums[mid] > nums[mid + 1])
                 {
-                    i++;
+                    //index 0 must > -1(invalid), so must exist in [0,mid]
+                    right = mid;
                 }
             }
-            return 0;
+            return left;
         }
 
         ///165. Compare Version Numbers

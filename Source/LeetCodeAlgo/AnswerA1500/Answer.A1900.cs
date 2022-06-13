@@ -8,7 +8,36 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1903. Largest Odd Number in String
+        ///1901. Find a Peak Element II, #Binary Search
+        //A peak element in a 2D grid is an element that is > all of its 4-directions neighbors.
+        //matrix mat no two adjacent cells are equal, find any peak element and return the length 2 array[i, j].
+        public int[] FindPeakGrid(int[][] mat)
+        {
+            int rowLen = mat.Length;
+            int colLen = mat[0].Length;
+            int left = 0;
+            int right = colLen - 1;
+            while (left <= right)
+            {
+                int mid = left + (right - left) / 2;
+                int max_row = 0;
+                for (int i = 0; i < rowLen; ++i)
+                {
+                    if (mat[max_row][mid] < mat[i][mid])
+                        max_row = i;
+                }
+                if ((mid == 0 || mat[max_row][mid] > mat[max_row][mid - 1]) &&
+                    (mid == colLen - 1 || mat[max_row][mid] > mat[max_row][mid + 1]))
+                    return new int[] { max_row, mid };
+                else if (mid > 0 && mat[max_row][mid - 1] > mat[max_row][mid])
+                    right = mid - 1;
+                else
+                    left = mid + 1;
+            }
+            return new int[] { -1, -1 };
+        }
+
+        /// 1903. Largest Odd Number in String
         public string LargestOddNumber(string num)
         {
             for(int i=num.Length-1; i>=0; i--)
