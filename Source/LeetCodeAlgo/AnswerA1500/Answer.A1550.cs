@@ -83,6 +83,93 @@ namespace LeetCodeAlgo
                 res += piles[right--];
             return res;
         }
+        ///1562. Find Latest Group of Size M
+        //Given an array arr(indexed-1) that represents a permutation of numbers from 1 to n.
+        //binary string of size n that initially its bits set to zero.
+        //At each step (indexed-1) from 1 to n, the bit at position arr[i] is set to 1.
+        //Find the latest step at which there exists a group of ones of length m. Or return -1.
+        public int FindLatestStep(int[] arr, int m)
+        {
+            int res = -1;
+            int n = arr.Length;
+            if (m == n) return n;
+            Dictionary<int, int> head = new Dictionary<int, int>();
+            Dictionary<int, int> tail = new Dictionary<int, int>();
+            for (int i = 0; i < n; ++i)
+            {
+                if(head.ContainsKey(arr[i]+1) && tail.ContainsKey(arr[i]-1))
+                {
+                    var start1= tail[arr[i]-1];
+                    var end1= arr[i]-1;
+                    var start2 = arr[i] + 1;
+                    var end2 = head[arr[i]+1];
+
+                    tail.Remove(head[arr[i] + 1]);
+                    head.Remove(tail[arr[i] - 1]);
+                    head.Remove(arr[i] + 1);
+                    tail.Remove(arr[i] - 1);
+
+                    head.Add(start1, end2);
+                    tail.Add(end2, start1);
+
+                    if (end1 - start1 + 1 == m) res = i;
+                    if (end2 - start2 + 1 == m) res = i;
+                }
+                else if(head.ContainsKey(arr[i] + 1))
+                {
+                    var start2 = arr[i] + 1;
+                    var end2 = head[arr[i] + 1];
+
+                    tail.Remove(head[arr[i] + 1]);
+                    head.Remove(arr[i] + 1);
+
+                    head.Add(arr[i], end2);
+                    tail.Add(end2, arr[i]);
+
+                    if (end2 - start2 + 1 == m) res = i;
+                }
+                else if(tail.ContainsKey(arr[i] - 1))
+                {
+                    var start1 = tail[arr[i] - 1];
+                    var end1 = arr[i] - 1;
+
+                    head.Remove(tail[arr[i] - 1]);
+                    tail.Remove(arr[i] - 1);
+
+                    tail.Add(arr[i], start1);
+                    head.Add(start1, arr[i]);
+
+                    if (end1 - start1 + 1 == m) res = i;
+                }
+                else
+                {
+                    head.Add(arr[i], arr[i]);
+                    tail.Add(arr[i], arr[i]);
+                }
+            }
+            return res;
+        }
+
+        public int FindLatestStep_Lee215(int[] arr, int m)
+        {
+            int res = -1;
+            int n = arr.Length;
+            int[] length = new int[n + 2];
+            int[] count = new int[n + 1];
+            for (int i = 0; i < n; ++i)
+            {
+                int a = arr[i];
+                int left = length[a - 1];
+                int right = length[a + 1];
+                length[a] = length[a - left] = length[a + right] = left + right + 1;
+                count[left]--;
+                count[right]--;
+                count[length[a]]++;
+                if (count[m] > 0)
+                    res = i + 1;
+            }
+            return res;
+        }
         /// 1567. Maximum Length of Subarray With Positive Product
         public int GetMaxLen(int[] nums)
         {
