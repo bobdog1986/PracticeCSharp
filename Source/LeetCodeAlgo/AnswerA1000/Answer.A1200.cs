@@ -27,7 +27,38 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///1202. Smallest String With Swaps, #Disjoint Set, #Union Find
+        ///1201. Ugly Number III, #Binary Search
+        //An ugly number is a positive integer that is divisible by a, b, or c.
+        //Given four integers n, a, b, and c, return the nth ugly number.
+        //1 <= n, a, b, c <= 10^9, 1 <= a* b * c <= 10^18
+        ///It is guaranteed that the result will be in range[1, 2 * 109].
+        public int NthUglyNumber(int n, int a, int b, int c)
+        {
+            int start = 0, end = int.MaxValue;
+            long ab = LCM(a, b), bc = LCM(b, c), ca = LCM(c, a), abc = LCM(a, bc);
+            while (start < end)
+            {
+                int mid = start + (end - start) / 2;
+                int count = (int)(mid / a + mid / b + mid / c - mid / ab - mid / bc - mid / ca + mid / abc);
+                if (count < n)
+                    start = mid + 1;
+                else
+                    end = mid;
+            }
+
+            return start;
+        }
+
+        private long GCD(long x, long y)
+        {
+            return y == 0 ? x : GCD(y, x % y);
+        }
+
+        private long LCM(long x, long y)
+        {
+            return (x * y) / GCD(x, y);
+        }
+        /// 1202. Smallest String With Swaps, #Disjoint Set, #Union Find
         ///an array of pairs of indices where pairs[i] = [a, b] indicates 2 indices(0-indexed) of the string.
         ///You can swap the characters at any pair of indices in the given pairs any number of times.
         ///Return the lexicographically smallest string that s can be changed to after using the swaps.
