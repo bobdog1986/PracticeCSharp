@@ -219,7 +219,13 @@ namespace LeetCodeAlgo
             return head;
         }
 
-        ///1189. Maximum Number of Balloons
+        ///1185. Day of the Week
+        public string DayOfTheWeek(int day, int month, int year)
+        {
+            var dt = new DateTime(year, month, day);
+            return dt.DayOfWeek.ToString();
+        }
+        /// 1189. Maximum Number of Balloons
         ///Given a string text, you want to use the characters of text to form as many instances of the word "balloon" as possible.
         ///You can use each character in text at most once.Return the maximum number of instances that can be formed.
         public int MaxNumberOfBalloons(string text)
