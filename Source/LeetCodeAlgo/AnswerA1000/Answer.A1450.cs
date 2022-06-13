@@ -11,21 +11,22 @@ namespace LeetCodeAlgo
         ///1455. Check If a Word Occurs As a Prefix of Any Word in a Sentence
         public int IsPrefixOfWord(string sentence, string searchWord)
         {
-            var arr=sentence.Split(' ');
-            for(int i=0; i<arr.Length; i++)
+            var arr = sentence.Split(' ');
+            for (int i = 0; i < arr.Length; i++)
             {
-                if (arr[i].StartsWith(searchWord)) return i+1;
+                if (arr[i].StartsWith(searchWord)) return i + 1;
             }
             return -1;
         }
+
         ///1456. Maximum Number of Vowels in a Substring of Given Length, #Sliding Window
         public int MaxVowels(string s, int k)
         {
             int len = 0;
             int count = 0;
             int max = 0;
-            HashSet<char> set = new HashSet<char>() {'a','e','i','o','u' };
-            for(int i = 0; i < s.Length; i++)
+            HashSet<char> set = new HashSet<char>() { 'a', 'e', 'i', 'o', 'u' };
+            for (int i = 0; i < s.Length; i++)
             {
                 len++;
                 if (set.Contains(s[i])) count++;
@@ -38,13 +39,14 @@ namespace LeetCodeAlgo
             }
             return max;
         }
+
         /// 1461. Check If a String Contains All Binary Codes of Size K
         ///return true if every binary code of length k is a substring of s. Otherwise, return false.
         public bool HasAllCodes(string s, int k)
         {
             var set = new HashSet<string>();
             int count = 1 << k;
-            for(int i = 0; i < s.Length - k + 1; i++)
+            for (int i = 0; i < s.Length - k + 1; i++)
             {
                 var curr = s.Substring(i, k);
                 if (!set.Contains(curr))
@@ -77,6 +79,7 @@ namespace LeetCodeAlgo
             }
             return (max1 - 1) * (max2 - 1);
         }
+
         ///1466. Reorder Routes to Make All Paths Lead to the City Zero, #Graph, #DFS
         public int MinReorder(int n, int[][] connections)
         {
@@ -109,11 +112,11 @@ namespace LeetCodeAlgo
         ///Return the array in the form[x1, y1, x2, y2, ..., xn, yn].
         public int[] Shuffle(int[] nums, int n)
         {
-            int[] res=new int[n*2];
-            for(int i = 0; i < n ; i++)
+            int[] res = new int[n * 2];
+            for (int i = 0; i < n; i++)
             {
                 res[i * 2] = nums[i];
-                res[i * 2 + 1] = nums[i + n ];
+                res[i * 2 + 1] = nums[i + n];
             }
             return res;
         }
@@ -126,13 +129,14 @@ namespace LeetCodeAlgo
         public int[] RunningSum(int[] nums)
         {
             int sum = 0;
-            for(int i = 0; i < nums.Length; ++i)
+            for (int i = 0; i < nums.Length; ++i)
             {
                 sum += nums[i];
                 nums[i] = sum;
             }
             return nums;
         }
+
         /// 1482. Minimum Number of Days to Make m Bouquets , # Binary Search
         ///You want to make m bouquets. To make a bouquet, you need to use k adjacent flowers from the garden.
         ///The garden consists of n flowers, the ith flower will bloom in the bloomDay[i] and then can be used in exactly one bouquet.
@@ -179,14 +183,73 @@ namespace LeetCodeAlgo
             }
             return left;
         }
-        ///1491. Average Salary Excluding the Minimum and Maximum Salary
+
+        ///1488. Avoid Flood in The City
+        //rains[i] > 0 means there will be rains over the rains[i] lake.
+        //rains[i] == 0 means there are no rains this day and you can choose one lake this day and dry it.
+        //Return an array ans where:
+        //ans[i] == -1 if rains[i] > 0.
+        //ans[i] is the lake you choose to dry in the ith day if rains[i] == 0.
+        public int[] AvoidFlood(int[] rains)
+        {
+            List<int> dryDays = new List<int>();
+            int[] res = new int[rains.Length];
+            Dictionary<int, int> lastRained = new Dictionary<int, int>();
+
+            for (int i = 0; i < rains.Length; i++)
+            {
+                int lake = rains[i];
+                if (lake == 0)
+                {
+                    dryDays.Add(i);
+                    res[i] = 1;
+                }
+                else
+                {
+                    // There is already rain on this lake
+                    if (lastRained.ContainsKey(lake))
+                    {
+                        int low = lastRained[lake];
+                        int index = -1;
+
+                        foreach (var dryDay in dryDays)
+                        {
+                            if (dryDay > low)
+                            {
+                                index = dryDay;
+                                break;
+                            }
+                        }
+
+                        if (index >= 0)
+                        {
+                            res[index] = lake;
+                            dryDays.Remove(index);
+                        }
+                        else
+                        {
+                            return Array.Empty<int>();
+                        }
+                    }
+                    //remember to update lastRained day of lake
+                    //equal to dict.Add or update
+                    lastRained[lake] = i;
+                    res[i] = -1;
+                }
+            }
+
+            return res;
+
+        }
+
+        /// 1491. Average Salary Excluding the Minimum and Maximum Salary
         ///1000 <= salary[i] <= 10^6,
         public double Average(int[] salary)
         {
             int sum = 0;
             int max = 1000;
             int min = 1000000;
-            foreach(var n in salary)
+            foreach (var n in salary)
             {
                 max = Math.Max(max, n);
                 min = Math.Min(min, n);
@@ -195,7 +258,7 @@ namespace LeetCodeAlgo
 
             sum = sum - max - min;
 
-            return sum*1.0 / (salary.Length - 2);
+            return sum * 1.0 / (salary.Length - 2);
         }
 
         ///1492. The kth Factor of n
@@ -218,7 +281,7 @@ namespace LeetCodeAlgo
             Array.Sort(nums);
             int n = nums.Length;
             int left = 0;
-            int right =n - 1;
+            int right = n - 1;
 
             //Math.Pow(2, right-left) will overflow, using dp
             long[] dp = new long[n];
@@ -235,13 +298,12 @@ namespace LeetCodeAlgo
                 }
                 else
                 {
-                    res += dp[right-left];
+                    res += dp[right - left];
                     left++;
                     res %= mod;
                 }
             }
             return (int)(res % mod);
         }
-
     }
 }

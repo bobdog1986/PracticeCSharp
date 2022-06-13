@@ -45,7 +45,7 @@ namespace LeetCodeAlgo
             string matStrInt = "[[5,3],[4,0],[2,1]]";
             var matInt = anwser.buildMatrix(matStrInt);
 
-            string arrStrInt = "[0,1,1]";
+            string arrStrInt = "[1,2,0,1,2]";
             var arrInt = anwser.buildArray(arrStrInt);
 
             //string matStrInt2 = "[[9,8],[1,5],[10,12],[18,6],[2,4],[14,3]]";
