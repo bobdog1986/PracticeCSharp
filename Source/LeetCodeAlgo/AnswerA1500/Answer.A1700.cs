@@ -28,17 +28,18 @@ namespace LeetCodeAlgo
         ///1704. Determine if String Halves Are Alike
         public bool HalvesAreAlike(string s)
         {
+            int res = 0;
             Dictionary<char, int> dict = new Dictionary<char, int>()
             {
                 { 'a', 0 },{ 'e', 0 },{ 'i', 0 },{ 'o', 0 },{ 'u', 0 },
+                { 'A', 0 },{ 'E', 0 },{ 'I', 0 },{ 'O', 0 },{ 'U', 0 },
             };
             for(int i = 0; i < s.Length; ++i)
             {
-                var c = char.ToLower(s[i]);
-                if (dict.ContainsKey(c))
-                    dict[c] += i < s.Length / 2 ? 1 : -1;
+                if (dict.ContainsKey(s[i]))
+                    res += i < s.Length / 2 ? 1 : -1;
             }
-            return dict.Values.Sum()==0;
+            return res == 0;
         }
         /// 1706. Where Will the Ball Fall
         ///You have a 2-D grid of size m x n representing a box, and you have n balls.
@@ -223,6 +224,55 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///1736. Latest Time by Replacing Hidden Digits
+        public string MaximumTime(string time)
+        {
+            //The valid times are those inclusively between 00:00 and 23:59.
+            for(int i = 0; i < 5; i++)
+            {
+                if(time[i] == '?')
+                {
+                    if (i == 0)
+                    {
+                        if (time[1] == '?')
+                        {
+                            time = "23" + time.Substring(2);
+                        }
+                        else
+                        {
+                            if (time[1] > '3')
+                            {
+                                time = "1" + time.Substring(1);
+                            }
+                            else
+                            {
+                                time = "2"+ time.Substring(1);
+                            }
+                        }
+                    }
+                    else if (i == 1)
+                    {
+                        if (time[0] == '2')
+                        {
+                            time = time[0] + "3" + time.Substring(2);
+                        }
+                        else
+                        {
+                            time = time[0] + "9" + time.Substring(2);
+                        }
+                    }
+                    else if (i == 3)
+                    {
+                        time = time.Substring(0, 3) + "5" + time[4];
+                    }
+                    else if (i == 4)
+                    {
+                        time = time.Substring(0, 4) + "9";
+                    }
+                }
+            }
+            return time;
+        }
         /// 1742. Maximum Number of Balls in a Box
         ///For example, the ball number 321 will be put in the box number 3 + 2 + 1 = 6 and
         ///the ball number 10 will be put in the box number 1 + 0 = 1.
