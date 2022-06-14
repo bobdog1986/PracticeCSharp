@@ -257,7 +257,9 @@ namespace LeetCodeAlgo
             return sign * res;
         }
 
-        ///2169. Count Operations to Obtain Zero
+        ///2166. Design Bitset, see Bitset
+
+        /// 2169. Count Operations to Obtain Zero
         public int CountOperations(int num1, int num2)
         {
             int res = 0;
