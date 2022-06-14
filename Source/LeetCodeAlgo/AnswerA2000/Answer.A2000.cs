@@ -289,6 +289,8 @@ namespace LeetCodeAlgo
             return true;
         }
 
+        ///2043. Simple Bank System, see Bank
+
         /// 2044. Count Number of Maximum Bitwise-OR Subsets,#Backtracking
         ///find the maximum possible bitwise OR of a subset of nums and return the number of different non-empty subsets with the maximum bitwise OR.
         ///An array a is a subset of an array b if a can be obtained from b by deleting some(possibly zero) elements of b.
