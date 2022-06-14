@@ -671,7 +671,112 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2248. Intersection of Multiple Arrays
+        ///2245. Maximum Trailing Zeros in a Cornered Path, #DP, #Prefix Sum
+        //max count of trailing zeros with at most 1 turn, Max of Min(count2,count5), grid[i][j]>=1
+        public int MaxTrailingZeros(int[][] grid)
+        {
+            int ans = 0;
+
+            int m = grid.Length;
+            int n = grid[0].Length;
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    int count2 = CountOfVal(grid[i][j], 2);
+                    int count5 = CountOfVal(grid[i][j], 5);
+                    grid[i][j] = count2 * 100 + count5;
+                }
+            }
+
+            //matrix count of 2, in row i, from j to k (j<=k) matrix2[i+1][k+1] - matrix2[i+1][j]
+            int[][] matrix2row = new int[m + 1][];
+            for (int i = 0; i <=m; i++)
+                matrix2row[i] = new int[n + 1];
+            int[][] matrix5row = new int[m + 1][];
+            for (int i = 0; i <= m; i++)
+                matrix5row[i] = new int[n + 1];
+
+            //matrix count of 2, in col i, from j to k (j<=k) matrix[k+1][i+1] - matrix[j][i+1]
+            int[][] matrix2col = new int[m + 1][];
+            for (int i = 0; i <= m; i++)
+                matrix2col[i] = new int[n + 1];
+            int[][] matrix5col = new int[m + 1][];
+            for (int i = 0; i <= m; i++)
+                matrix5col[i] = new int[n + 1];
+
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    matrix2row[i + 1][j + 1] = matrix2row[i + 1][j] + grid[i][j]/100;
+                    matrix5row[i + 1][j + 1] = matrix5row[i + 1][j] + grid[i][j]% 100;
+                }
+            }
+
+            for (int j = 0; j < n; j++)
+            {
+                for (int i = 0; i < m; i++)
+                {
+                    matrix2col[i + 1][j + 1] = matrix2col[i][j + 1] + grid[i][j] / 100;
+                    matrix5col[i + 1][j + 1] = matrix5col[i][j + 1] + grid[i][j] % 100;
+                }
+            }
+
+            //move only horizontal, max of each row's Min(count2,count5)
+            for (int i = 0; i < m; i++)
+                ans = Math.Max(ans, Math.Min(matrix2row[i + 1][n], matrix5row[i + 1][n]));
+
+            //move only vertically, max of each col's Min(count2,count5)
+            for (int j = 0; j < n; j++)
+                ans = Math.Max(ans, Math.Min(matrix2col[m][j + 1], matrix5col[m][j + 1]));
+
+            //Find center of + then there are 4 directions
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    //up (i,j) to (0,j)
+                    int count2Up = matrix2col[i + 1][j + 1] - matrix2col[0][j + 1];
+                    int count5Up = matrix5col[i + 1][j + 1] - matrix5col[0][j + 1];
+                    //down (i,j) to (m-1,j)
+                    int count2Down = matrix2col[m][j + 1] - matrix2col[i][j + 1];
+                    int count5Down = matrix5col[m][j + 1] - matrix5col[i][j + 1];
+                    //left (i,0) to (i,j)
+                    int count2Left = matrix2row[i + 1][j + 1] - matrix2row[i + 1][0];
+                    int count5Left = matrix5row[i + 1][j + 1] - matrix5row[i + 1][0];
+                    //right (i,j) to (i,n-1)
+                    int count2Right = matrix2row[i + 1][n] - matrix2row[i + 1][j];
+                    int count5Right = matrix5row[i + 1][n] - matrix5row[i + 1][j];
+                    //3.1 L turn
+                    ans = Math.Max(ans, Math.Min((count2Up + count2Right - grid[i][j]/100), count5Up + count5Right - grid[i][j]%100));
+                    //3.2 7 turn
+                    ans = Math.Max(ans, Math.Min((count2Up + count2Left - grid[i][j] / 100), count5Up + count5Left - grid[i][j] % 100));
+                    //3.3 |` turn
+                    ans = Math.Max(ans, Math.Min((count2Down + count2Right - grid[i][j] / 100), count5Down + count5Right - grid[i][j] % 100));
+                    //3.4 J turn
+                    ans = Math.Max(ans, Math.Min((count2Down + count2Left - grid[i][j] / 100), count5Down + count5Left - grid[i][j] % 100));
+                }
+            }
+            return ans;
+        }
+
+        private int CountOfVal(int x,int val)
+        {
+            int res = 0;
+            while (x > 0)
+            {
+                if (x % val != 0) break;
+                else
+                {
+                    res++;
+                    x /= val;
+                }
+            }
+            return res;
+        }
+
+        /// 2248. Intersection of Multiple Arrays
         ///Given a 2D integer array nums where nums[i] is a non-empty array of distinct positive integers,
         ///return the list of integers that are present in each array of nums sorted in ascending order.
         public IList<int> Intersection_2248(int[][] nums)

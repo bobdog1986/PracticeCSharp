@@ -50,9 +50,9 @@ namespace LeetCodeAlgo
             //anwser.printTree(treeNode1)
 
             ///build int[][] and int[] from string
-            string matStrInt1 = "[[78,96,64],[37,100,30]]";
+            string matStrInt1 = "[[1,5,2,4,25]]";
             var matInt1 = anwser.buildMatrix(matStrInt1);
-            string arrStrInt1 = "[1,2,0,1,2]";
+            string arrStrInt1 = "[1,5,2,4,25]";
             var arrInt1 = anwser.buildArray(arrStrInt1);
 
             ///build int[][] and int[] from file
@@ -65,7 +65,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = anwser.MaximumTop(arrInt2,34);
+            var result = anwser.MaxTrailingZeros(matInt1);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
