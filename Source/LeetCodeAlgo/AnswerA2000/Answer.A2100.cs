@@ -586,6 +586,83 @@ namespace LeetCodeAlgo
             else return (int)((upper - lower) - (max - min) + 1);
         }
 
+        ///2146. K Highest Ranked Items Within a Price Range, #BFS
+        public IList<IList<int>> HighestRankedKItems(int[][] grid, int[] pricing, int[] start, int k)
+        {
+            var items = new List<int[]>();
+            int m = grid.Length;
+            int n = grid[0].Length;
+            int[][] distance = new int[m][];
+            for(int i = 0; i < m; i++)
+            {
+                distance[i] = new int[n];
+                Array.Fill(distance[i], -1);
+            }
+
+            var dxy = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { -1, 0 }, new int[] { 1, 0 }, };
+            var q = new Queue<int[]>();
+            q.Enqueue(start);
+
+            int step = 0;
+            while (q.Count > 0)
+            {
+                int size = q.Count;
+                for(int i = 0; i < size; i++)
+                {
+                    var curr = q.Dequeue();
+                    distance[curr[0]][curr[1]] = step;
+                    foreach(var d in dxy)
+                    {
+                        int r = curr[0] + d[0];
+                        int c = curr[1] + d[1];
+                        if(r>=0 && r<m && c>=0 && c<n && grid[r][c]!=0 && distance[r][c] == -1)
+                        {
+                            distance[r][c] = 0;
+                            q.Enqueue(new int[] { r, c });
+                        }
+                    }
+                }
+                step++;
+            }
+
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (grid[i][j] >= pricing[0] && grid[i][j] <= pricing[1] && distance[i][j]!=-1)
+                        items.Add(new int[] { i, j });
+                }
+            }
+
+            items.Sort((x, y) =>
+            {
+                int distX = distance[x[0]][x[1]];
+                int distY = distance[y[0]][y[1]];
+                if (distX < distY) return -1;
+                else if (distX > distY) return 1;
+                else
+                {
+                    if (grid[x[0]][x[1]] < grid[y[0]][y[1]]) return -1;
+                    else if (grid[x[0]][x[1]] > grid[y[0]][y[1]]) return 1;
+                    else
+                    {
+                        if (x[0] < y[0]) return -1;
+                        else if (x[0] > y[0]) return 1;
+                        else
+                        {
+                            if (x[1] < y[1]) return -1;
+                            else if (x[1] > y[1]) return 1;
+                            else return 0;//no possible
+                        }
+                    }
+                }
+            });
+
+            var res = new List<IList<int>>();
+            for (int i = 0; i < items.Count && i < k; i++)
+                res.Add(items[i].ToList());
+            return res;
+        }
         /// 2148. Count Elements With Strictly Smaller and Greater Elements
         ///return the number of elements that have both a strictly smaller and a strictly greater element appear in nums.
         ///-100000 <= nums[i] <= 100000
