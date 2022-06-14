@@ -136,6 +136,49 @@ namespace LeetCodeAlgo
             return left;
         }
 
+        ///1763. Longest Nice Substring, #Divide And Conquer
+        //A string s is nice if, for every letter of the alphabet that s contains,
+        //it appears both in uppercase and lowercase.
+        //return the earliest longest nice substring of s or empty, 1 <= s.length <= 100
+        public string LongestNiceSubstring(string s)
+        {
+            if (s.Length < 2) return string.Empty;
+            var set = new HashSet<char>(s);
+            for (int i = 0; i < s.Length; i++)
+            {
+                char c = s[i];
+                if (set.Contains(char.ToUpper(c)) && set.Contains(char.ToLower(c))) continue;
+                var sub1 = LongestNiceSubstring(s.Substring(0, i));
+                var sub2 = LongestNiceSubstring(s.Substring(i + 1));
+                return sub1.Length >= sub2.Length ? sub1 : sub2;
+            }
+            return s;
+        }
+
+        public string LongestNiceSubstring_BruteForce(string s)
+        {
+            int[] res = new int[2] { 0, 0 };//store {startIndex,len} of result
+            int max = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                int[][] mat = new int[26][];
+                for (int j = 0; j < mat.Length; j++)
+                    mat[j] = new int[2] { 0, 0 };
+                for (int j = i; j < s.Length; j++)
+                {
+                    int index = char.IsUpper(s[j]) ? 0 : 1;
+                    mat[char.ToLower(s[j]) - 'a'][index]++;
+                    bool nice = !mat.Any(x => (x[0] == 0 && x[1] != 0) || (x[0] != 0 && x[1] == 0));
+                    if (nice && j - i + 1 > max)
+                    {
+                        max = j - i + 1;
+                        res = new int[] { i, j - i + 1 };
+                    }
+                }
+            }
+            return res[1] == 0 ? string.Empty : s.Substring(res[0], res[1]);
+        }
+
         /// 1764. Form Array by Concatenating Subarrays of Another Array
         public bool CanChoose(int[][] groups, int[] nums)
         {
