@@ -201,7 +201,7 @@ namespace LeetCodeAlgo
             Console.WriteLine(str);
         }
 
-        public void printRandomNode(Node node, int maxLen = 20)
+        public static void printRandomNode(Node node, int maxLen = 20)
         {
             if (node == null)
             {
@@ -236,6 +236,18 @@ namespace LeetCodeAlgo
             Console.WriteLine(sb.ToString());
 
         }
+        public ListNode buildListNode(string arrStr)
+        {
+            if (string.IsNullOrEmpty(arrStr))
+            {
+                Console.WriteLine("Cannot build listnode, due to arrStr is empty!");
+                return null;
+            }
+            else
+            {
+                return buildListNode(buildArray(arrStr));
+            }
+        }
 
         public ListNode buildListNode(int[] arr)
         {
@@ -257,7 +269,7 @@ namespace LeetCodeAlgo
         }
 
         // Encodes a tree to a single string. eg. 1,2,3,,,4,5, Null will be ""
-        public string serializeTree(TreeNode root, int invalid=1000001)
+        public static string serializeTree(TreeNode root, int invalid=1000001)
         {
             if (root == null)
                 return string.Empty;
@@ -358,7 +370,7 @@ namespace LeetCodeAlgo
         }
 
         // Decodes your encoded data to tree.
-        public TreeNode deserializeTree(string data)
+        public static TreeNode deserializeTree(string data)
         {
             if (string.IsNullOrEmpty(data))
                 return null;

@@ -25,6 +25,21 @@ namespace LeetCodeAlgo
             return total / n;
         }
 
+        ///1704. Determine if String Halves Are Alike
+        public bool HalvesAreAlike(string s)
+        {
+            Dictionary<char, int> dict = new Dictionary<char, int>()
+            {
+                { 'a', 0 },{ 'e', 0 },{ 'i', 0 },{ 'o', 0 },{ 'u', 0 },
+            };
+            for(int i = 0; i < s.Length; ++i)
+            {
+                var c = char.ToLower(s[i]);
+                if (dict.ContainsKey(c))
+                    dict[c] += i < s.Length / 2 ? 1 : -1;
+            }
+            return dict.Values.Sum()==0;
+        }
         /// 1706. Where Will the Ball Fall
         ///You have a 2-D grid of size m x n representing a box, and you have n balls.
         ///The box is open on the top and bottom sides.

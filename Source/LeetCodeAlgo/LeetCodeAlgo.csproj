@@ -7,7 +7,16 @@
     <BaseOutputPath>..\..\Artifacts</BaseOutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <None Update="Input.txt">
+    <None Update="StringMat.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="StringArr.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="IntMat.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="IntArr.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

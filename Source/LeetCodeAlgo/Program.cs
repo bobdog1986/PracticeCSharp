@@ -11,50 +11,58 @@ namespace LeetCodeAlgo
         private static void Main(string[] args)
         {
             Console.WriteLine("Run\r\n****************************\r\n");
-            //read data from file
-            string filename = "Input.txt";
-            var lines = File.ReadLines(filename).ToList();
-
             var anwser = new Answer();
+
             uint uintVal =0b10000000_00000000_00000000_00000000;
-            var str1 = @"ababbbabbaba";
-            var word1 = new string[] { "01", "10" };
+
+            ///!!!*** read from string files
+
+            //var strMatLines = File.ReadLines("StringMat.txt").ToList();
+            //var strArrLines = File.ReadLines("StringArr.txt").ToList();
+
+            ///build string[][] from file
+            //string matStrStr1 = strMatLines[0];
+            //var matStr1 = anwser.buildStringMatrix(matStrStr1);
+
+            ///build string[] from file
+            //string arrStrStr1 = strArrLines[0];
+            //var arrStr1 = anwser.buildStringArray(arrStrStr1);
+
+            ///build char[][] and char[] by file, due to leetcode using double quote "" wrap a char
+            //string matStrChar1 = strMatLines[0];
+            //var matChar1 = anwser.buildCharMatrix(matStrChar1);
+            //string arrStrChar1 = strArrLines[0];
+            //var arrChar1 = anwser.buildCharArray(arrStrChar1);
+
+            ///!!!*** read from int files
+
+            //var intArrLines = File.ReadLines("IntArr.txt").ToList();
+            //var intMatLines = File.ReadLines("IntMat.txt").ToList();
 
             ///build listnode
-            //var listnode1 = anwser.buildListNode(new int[] { 1, 3, 2, 2, 3, 2, 2, 2, 7});
+            //string listNodeStr1 = "[1,2,3,4]";//intArrLines[0]
+            //var listnode1 = anwser.buildListNode(listNodeStr1);
             //anwser.printListNode(listnode1);
 
             ///build treenode
-            //string bTreeStr = "[21,7,14,1,1,2,2,3,3]";
-            //var treeNode = anwser.deserializeTree(bTreeStr);
-            //anwser.printTree(treeNode)
-
-            ///build string[][] and int[] from string
-            //string matStrStr = lines[0];
-            //var matStr = anwser.buildMatrix(matStrInt);
-            //string arrStrStr = lines[0];
-            //var arrStr= anwser.buildArray(arrStrInt);
-
-            ///build char[][] and char[] due to leetcode using double quote "" wrap a char
-            //string matStrChar = lines[0];
-            //var matChar = anwser.buildCharMatrix(matStrChar);
-            //string arrStrChar = lines[0];
-            //var arrChar = anwser.buildCharArray(arrStrChar);
+            //string bTreeStr1 = "[21,7,14,1,1,2,2,3,3]";//intArrLines[0]
+            //var treeNode1 = anwser.deserializeTree(bTreeStr1);
+            //anwser.printTree(treeNode1)
 
             ///build int[][] and int[] from string
-            string matStrInt = "[[78,96,64],[37,100,30],[78,46,29],[82,25,80],[33,87,97],[93,99,85],[88,18,81],[13,81,83],[6,40,57],[5,75,47],[94,17,12],[38,42,96],[54,23,26],[17,70,47],[68,65,35],[22,33,62],[38,96,44],[15,60,10],[19,97,29],[87,93,87],[51,72,47],[12,51,2],[34,69,16],[59,48,87],[96,87,34]]";
-            var matInt = anwser.buildMatrix(matStrInt);
+            string matStrInt1 = "[[78,96,64],[37,100,30]]";
+            var matInt1 = anwser.buildMatrix(matStrInt1);
+            string arrStrInt1 = "[1,2,0,1,2]";
+            var arrInt1 = anwser.buildArray(arrStrInt1);
 
-            string arrStrInt = "[1,2,0,1,2]";
-            var arrInt = anwser.buildArray(arrStrInt);
-
-            //string matStrInt2 = "[[9,8],[1,5],[10,12],[18,6],[2,4],[14,3]]";
+            ///build int[][] and int[] from file
+            //string matStrInt2 = intMatLines[0];
             //var matInt2 = anwser.buildMatrix(matStrInt2);
-            //string arrStrInt2 = "[1,2,3,4]";
+            //string arrStrInt2 = intArrLines[0];
             //var arrInt2 = anwser.buildArray(arrStrInt);
 
-            Stopwatch sw = new Stopwatch();
             Console.WriteLine("**************start watch ms*******");
+            Stopwatch sw = new Stopwatch();
             sw.Start();
 
             var result = anwser.MaxValue(6,1,10);

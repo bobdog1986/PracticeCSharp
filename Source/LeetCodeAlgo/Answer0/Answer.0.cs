@@ -51,7 +51,7 @@ namespace LeetCodeAlgo
             return root;
         }
 
-        /// 3. Longest Substring Without Repeating Characters,#Sliding Window
+        /// 3. Longest Substring Without Repeating Characters, #Sliding Window
         /// Given a string s, find the length of the longest substring without repeating characters.
         /// s consists of English letters, digits, symbols and spaces.
         public int LengthOfLongestSubstring(string s)
@@ -74,38 +74,26 @@ namespace LeetCodeAlgo
         }
 
         ///4. Median of Two Sorted Arrays, #Two Pointers
-        ///Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
-        ///The overall run time complexity should be O(log (m+n)).
+        //Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
+        //The overall run time complexity should be O(log (m+n)).
         public double FindMedianSortedArrays(int[] nums1, int[] nums2)
         {
-            if (nums1.Length == 0 && nums2.Length == 0)
-                return 0;
+            int n1 = nums1.Length, n2 = nums2.Length, n = n1 + n2;
+            if (n1 == 0 && n2 == 0) return 0;
             int i = 0, j = 0;
-            int[] nums = new int[nums1.Length + nums2.Length];
-            while (i < nums1.Length || j < nums2.Length)
+            int[] nums = new int[n];
+            while (i+j < n)
             {
-                if (i == nums1.Length)
-                {
-                    nums[i + j] = nums2[j];
-                    j++;
-                }
-                else if (j == nums2.Length)
-                {
-                    nums[i + j] = nums1[i];
-                    i++;
-                }
+                if (i == n1)
+                    nums[i + j] = nums2[j++];
+                else if (j == n2)
+                    nums[i + j] = nums1[i++];
                 else
                 {
                     if (nums1[i] <= nums2[j])
-                    {
-                        nums[i + j] = nums1[i];
-                        i++;
-                    }
+                        nums[i + j] = nums1[i++];
                     else
-                    {
-                        nums[i + j] = nums2[j];
-                        j++;
-                    }
+                        nums[i + j] = nums2[j++];
                 }
             }
 
@@ -120,8 +108,8 @@ namespace LeetCodeAlgo
         }
 
         ///5. Longest Palindromic Substring
-        ///Given a string s, return the longest palindromic substring in s.
-        ///Input: s = "babad" Output: "bab"
+        //Given a string s, return the longest palindromic substring in s.
+        //Input: s = "babad" Output: "bab"
         public string LongestPalindrome(string s)
         {
             if (s.Length <= 1)
