@@ -115,11 +115,9 @@ namespace LeetCodeAlgo
         //penalty is max of nums, Return the minimum possible penalty after performing the operations.
         public int MinimumSize(int[] nums, int maxOperations)
         {
-            //O(nlog10^9)
             //The number of operation we need is sum of (n - 1) / mid
             //If the total operation > max operations,the size of bag is too small, set left = mid + 1
             //Otherwise,this size of bag is big enough, we set right = mid
-            //We return the final result, where result = left = right.
             int left = 1, right = 1_000_000_000;
             while (left < right)
             {

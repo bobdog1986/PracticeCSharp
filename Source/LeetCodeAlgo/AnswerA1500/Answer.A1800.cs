@@ -8,7 +8,23 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///1802. Maximum Value at a Given Index in a Bounded Array, #Binary Search
+        ///1800. Maximum Ascending Subarray Sum
+        //return the maximum possible sum of an ascending subarray in nums.
+        public int MaxAscendingSum(int[] nums)
+        {
+            int res = 0;
+            int sum = 0;
+            int prev = int.MinValue;
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if(nums[i] <= prev) sum = 0;
+                sum += nums[i];
+                res = Math.Max(res, sum);
+                prev = nums[i];
+            }
+            return res;
+        }
+        /// 1802. Maximum Value at a Given Index in a Bounded Array, #Binary Search
         //You are given three positive integers: n, index, and maxSum.
         //You want to construct an array nums (0-indexed) that satisfies the following conditions:
         //nums.length == n, nums[i] >0. abs(nums[i] - nums[i + 1]) <= 1.
