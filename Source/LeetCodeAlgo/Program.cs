@@ -36,7 +36,7 @@ namespace LeetCodeAlgo
 
             ///!!!*** read from int files
 
-            //var intArrLines = File.ReadLines("IntArr.txt").ToList();
+            var intArrLines = File.ReadLines("IntArr.txt").ToList();
             //var intMatLines = File.ReadLines("IntMat.txt").ToList();
 
             ///build listnode
@@ -58,14 +58,14 @@ namespace LeetCodeAlgo
             ///build int[][] and int[] from file
             //string matStrInt2 = intMatLines[0];
             //var matInt2 = anwser.buildMatrix(matStrInt2);
-            //string arrStrInt2 = intArrLines[0];
-            //var arrInt2 = anwser.buildArray(arrStrInt);
+            string arrStrInt2 = intArrLines[0];
+            var arrInt2 = anwser.buildArray(arrStrInt2);
 
             Console.WriteLine("**************start watch ms*******");
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = anwser.MaxValue(6,1,10);
+            var result = anwser.MaximumTop(arrInt2,34);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

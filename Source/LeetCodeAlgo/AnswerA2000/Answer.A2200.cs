@@ -56,6 +56,23 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2202. Maximize the Topmost Element After K Moves
+        public int MaximumTop(int[] nums, int k)
+        {
+            int n = nums.Length;
+            if (k == 0) return nums[0];
+            if (k == 1) return n == 1 ? -1 : nums[1];
+            if (n == 1) return k % 2 == 0 ? nums[0] : -1;
+
+            int max = 0;
+            for (int i = 0; i < Math.Min(k - 1, n); i++)
+                //finding the max element from first k-1 elelment or len -1 if len is less than k
+                max = Math.Max(max, nums[i]);
+
+            if (k < n)  // check for scenario where we dont have to put back Max out of k-1 element
+                max = Math.Max(max, nums[k]);
+            return max;
+        }
         /// 2206. Divide Array Into Equal Pairs
         public bool DivideArray(int[] nums)
         {
