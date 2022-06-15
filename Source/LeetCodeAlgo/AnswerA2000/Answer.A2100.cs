@@ -235,6 +235,40 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2121. Intervals Between Identical Elements, #Prefix Sum
+        //the interval between arr[i] and arr[j] is |i - j|.
+        //Return an array intervals of length n where intervals[i] is the sum of intervals
+        //between arr[i] and each element in arr with the same value as arr[i].
+        public long[] GetDistances(int[] arr)
+        {
+            int n = arr.Length;
+            var res = new long[n];
+            var dict=new Dictionary<int,List<long>>();
+            for(int i = 0; i < n; ++i)
+            {
+                if (!dict.ContainsKey(arr[i])) dict.Add(arr[i], new List<long>());
+                dict[arr[i]].Add(i);
+            }
+            foreach(var k in dict.Keys)
+            {
+                //init sum from index-0 to others
+                var sum = dict[k].Sum(x => x - dict[k][0]);
+                int count = dict[k].Count;
+                for (int i = 0; i < count; ++i)
+                {
+                    res[dict[k][i]] = sum;
+                    //when move from i to i+1, the gap between i to i+1 is (dict[k][i + 1] - dict[k][i])
+                    //count-1-i nodes on right range [i+1,count-1], need subtract (count - 1 - i) * gap
+                    //and i+1 nodes on left range [0,i], need add (i+1)*gap
+                    if (i< dict[k].Count - 1)
+                    {
+                        sum -= (count - 1 - i) * (dict[k][i + 1] - dict[k][i]);
+                        sum += (i + 1) * (dict[k][i + 1] - dict[k][i]);
+                    }
+                }
+            }
+            return res;
+        }
         /// 2124. Check if All A's Appears Before All B's
         public bool CheckString(string s)
         {
