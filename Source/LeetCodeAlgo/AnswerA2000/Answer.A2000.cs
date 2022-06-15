@@ -81,6 +81,90 @@ namespace LeetCodeAlgo
             return operations.Sum(x => x.Contains("++") ? 1 : -1);
         }
 
+        ///2018. Check if Word Can Be Placed In Crossword
+        public bool PlaceWordInCrossword(char[][] board, string word)
+        {
+            int m = board.Length;
+            int n = board[0].Length;
+            int len = word.Length;
+            for (int i = 0; i < m; i++)
+            {
+                for(int j=0;j< n; j++)
+                {
+                    if (board[i][j] == '#') continue;
+                    if (i == 0 || board[i - 1][j] == '#')
+                    {
+                        int l = 0;
+                        for (int k=i;k< m && l<len;k++)
+                        {
+                            if (board[k][j] == '#') break;
+                            if (board[k][j] != word[l] && board[k][j] != ' ') break;
+                            l++;
+                            if (l==len && k!=m-1 && board[k+1][j]!='#')
+                            {
+                                l = -1;
+                                break;
+                            }
+                        }
+                        if (l == len) return true;
+                    }
+
+                    if (i == m-1 || board[i + 1][j] == '#')
+                    {
+                        int l = 0;
+                        for (int k = i; k >=0 && l < len; k--)
+                        {
+                            if (board[k][j] == '#') break;
+                            if (board[k][j] != word[l] && board[k][j] != ' ') break;
+                            l++;
+                            if (l == len && k != 0 && board[k - 1][j] != '#')
+                            {
+                                l = -1;
+                                break;
+                            }
+                        }
+                        if (l == len) return true;
+                    }
+
+                    if (j == 0 || board[i][j-1] == '#')
+                    {
+                        int l = 0;
+                        for (int k = j; k < n && l < len; k++)
+                        {
+                            if (board[i][k] == '#') break;
+                            if (board[i][k] != word[l] && board[i][k] != ' ') break;
+                            l++;
+                            if (l == len && k != n-1 && board[i][k+1] != '#')
+                            {
+                                l = -1;
+                                break;
+                            }
+                        }
+                        if (l == len) return true;
+
+                    }
+
+                    if (j == n-1 || board[i][j + 1] == '#')
+                    {
+                        int l = 0;
+                        for (int k = j; k >=0 && l < len; k--)
+                        {
+                            if (board[i][k] == '#') break;
+                            if (board[i][k] != word[l] && board[i][k] != ' ') break;
+                            l++;
+                            if (l == len && k !=0 && board[i][k - 1] != '#')
+                            {
+                                l = -1;
+                                break;
+                            }
+                        }
+                        if (l == len) return true;
+                    }
+                }
+            }
+
+            return false;
+        }
         /// 2022. Convert 1D Array Into 2D Array
         public int[][] Construct2DArray(int[] original, int m, int n)
         {
