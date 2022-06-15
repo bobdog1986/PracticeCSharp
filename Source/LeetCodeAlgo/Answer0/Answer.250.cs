@@ -116,9 +116,64 @@ namespace LeetCodeAlgo
             }
             return -1;
         }
-        ///274. H-Index
-        ///Given an array of integers citations where citations[i] is the number of citations
-        ///a researcher received for their ith paper, return compute the researcher's h-index.
+        ///273. Integer to English Words
+        //Convert a non-negative integer num to its English words representation. 0 <= num <= 231 - 1
+        public string NumberToWords(int num)
+        {
+            if (num == 0) return "Zero";
+            var list = new List<string>();
+            //one-string value
+            Dictionary<int, string> dict1 = new Dictionary<int, string>()
+            {
+                {0,"Zero" }, {1,"One" }, {2,"Two" }, {3,"Three" }, {4,"Four" },
+                {5,"Five" }, {6,"Six" }, {7,"Seven" }, {8,"Eight" }, {9,"Nine" },
+                {10,"Ten" }, {11,"Eleven" }, {12,"Twelve" }, {13,"Thirteen" }, {14,"Fourteen" },
+                {15,"Fifteen" }, {16,"Sixteen" }, {17,"Seventeen" }, {18,"Eighteen" },
+                {19,"Nineteen" },
+            };
+            //two-string value
+            Dictionary<int, string> dict2 = new Dictionary<int, string>()
+            {
+                {2,"Twenty" }, {3,"Thirty" }, {4,"Forty" }, {5,"Fifty" }, {6,"Sixty" },
+                {7,"Seventy" }, {8,"Eighty" }, {9,"Ninety" }
+            };
+            int mod = 1_000_000_000;
+            for (int i = 0; i < 4; i++)
+            {
+                int curr = num / mod;
+                if (curr > 0)
+                {
+                    if (curr >= 100)
+                    {
+                        list.Add(dict1[curr / 100]);
+                        list.Add("Hundred");
+                        curr %= 100;
+                    }
+                    if (curr >= 20)
+                    {
+                        list.Add(dict2[curr / 10]);
+                        curr %= 10;
+                        if (curr > 0)
+                            list.Add(dict1[curr]);
+                    }
+                    else if (curr > 0)
+                    {
+                        list.Add(dict1[curr]);
+                    }
+                    //add unit
+                    if (mod == 1_000_000_000) list.Add("Billion");
+                    else if (mod == 1_000_000) list.Add("Million");
+                    else if (mod == 1_000) list.Add("Thousand");
+                }
+                num %= mod;
+                mod /= 1000;
+            }
+            return string.Join(' ', list);
+        }
+
+        /// 274. H-Index
+        //Given an array of integers citations where citations[i] is the number of citations
+        //a researcher received for their ith paper, return compute the researcher's h-index.
         public int HIndex_274_O_N(int[] citations)
         {
             int n = citations.Length;
