@@ -787,13 +787,78 @@ namespace LeetCodeAlgo
             return true;
         }
 
+        ///126. Word Ladder II, #Graph , #BFS
+        //A transformation sequence from beginWord to endWord is a sequence beginWord -> s1 -> s2 -> ... -> sk such that:
+        //adjacent pair of words differs by a single letter. sk == endWord, beginWord does not need to be in wordList.
+        //return all the shortest transformation sequences from beginWord to endWord, or an empty list
+        public IList<IList<string>> FindLadders(string beginWord, string endWord, IList<string> wordList)
+        {
+            if (!wordList.Contains(endWord)) return new List<IList<string>>();
+
+            Dictionary<string, HashSet<string>> graph = new Dictionary<string, HashSet<string>>();
+            graph.Add(beginWord, new HashSet<string>());
+            foreach (var w in wordList)
+            {
+                if (!graph.ContainsKey(w)) graph.Add(w, new HashSet<string>());
+                if (oneCharDiff(beginWord, w))
+                    graph[beginWord].Add(w);
+            }
+
+            foreach (var w1 in wordList)
+            {
+                foreach (var w2 in wordList)
+                {
+                    if (oneCharDiff(w1, w2))
+                    {
+                        graph[w1].Add(w2);
+                        graph[w2].Add(w1);
+                    }
+                }
+            }
+
+            var res = new List<IList<string>>();
+            res.Add(new List<string>() { beginWord });
+            var visit = new HashSet<string>() { beginWord };
+            while (res.Count > 0)
+            {
+                var next = new List<IList<string>>();
+                foreach (var list in res)
+                {
+                    var prev = list.Last();
+                    foreach (var word in graph[prev])
+                    {
+                        if (visit.Contains(word)) continue;
+                        next.Add(new List<string>(list) { word });
+                    }
+                }
+                res = next;
+                foreach(var list in next)
+                {
+                    visit.Add(list.Last());
+                }
+                if (visit.Contains(endWord)) break;
+            }
+            return res.Where(x=>x.Last()==endWord).ToList();
+        }
+
+        private bool oneCharDiff(string origin, string target)
+        {
+            if (origin == target) return false;
+            int diff = 0;
+            for (int i = 0; i < origin.Length; i++)
+            {
+                if (origin[i] != target[i]) diff++;
+                if (diff > 1) return false;
+            }
+            return diff == 1;
+        }
         /// 127. Word Ladder, #Graph, #BFS,
-        /// A transformation sequence from word beginWord to word endWord using a dictionary wordList
-        /// is a sequence of words beginWord -> s1 -> s2 -> ... -> sk such that:
-        /// Every adjacent pair of words differs by a single letter.
-        /// Note that beginWord does not need to be in wordList, endWord = wordlist.Last()
-        /// return the number of words in the shortest transformation sequence from beginWord to endWord, or 0 if not exists.
-        /// 1 <= beginWord.length <= 10, beginWord != endWord
+        // A transformation sequence from word beginWord to word endWord using a dictionary wordList
+        // is a sequence of words beginWord -> s1 -> s2 -> ... -> sk such that:
+        // Every adjacent pair of words differs by a single letter.
+        // Note that beginWord does not need to be in wordList, endWord = wordlist.Last()
+        // return the number of words in the shortest transformation sequence from beginWord to endWord, or 0 if not exists.
+        // 1 <= beginWord.length <= 10, beginWord != endWord
         public int LadderLength(string beginWord, string endWord, IList<string> wordList)
         {
             if (!wordList.Contains(endWord)) return 0;
@@ -811,7 +876,7 @@ namespace LeetCodeAlgo
                 {
                     foreach(var word in canVisitWords)
                     {
-                        if (LadderLength_CanMove(curr, word))
+                        if (oneCharDiff(curr, word))
                         {
                             if (word == endWord) return depth+1;
                             if (dict.ContainsKey(word)) continue;
@@ -824,20 +889,6 @@ namespace LeetCodeAlgo
                 if (list.Count == 0) return 0;
             }
             return depth;
-        }
-
-        public bool LadderLength_CanMove(string curr, string next)
-        {
-            int diff = 0;
-            for(int i = 0; i < curr.Length; i++)
-            {
-                if (curr[i] != next[i])
-                {
-                    diff++;
-                }
-                if (diff > 1) return false;
-            }
-            return diff == 1;
         }
 
 

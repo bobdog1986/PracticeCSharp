@@ -65,7 +65,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = anwser.MaxTrailingZeros(matInt1);
+            var result = anwser.FindLadders("hit","cog", arrStr1);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
