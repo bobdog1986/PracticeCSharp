@@ -84,6 +84,34 @@ SELECT DISTINCT author_id AS id FROM Views
 where author_id = viewer_id
 ORDER BY id
 
+///1158. Market Analysis I
+
+SELECT u.user_id AS buyer_id, join_date, COUNT(order_date) AS orders_in_2019
+FROM Users as u
+LEFT JOIN Orders as o
+ON u.user_id = o.buyer_id
+AND YEAR(order_date) = '2019'
+GROUP BY u.user_id
+
+///1393. Capital Gain/Loss
+
+SELECT stock_name, SUM(
+	CASE
+		WHEN operation = 'Buy' THEN -price
+		ELSE price
+	END
+) AS capital_gain_loss
+FROM Stocks
+GROUP BY stock_name
+
+///1407. Top Travellers
+
+select u.name, IfNull(sum(r.distance),0) as travelled_distance
+from users u left OUTER join rides r
+on u.id = r.user_id
+group by u.id
+order by travelled_distance desc, name asc
+
 ///1484. Group Sold Products By The Date
 
 SELECT
