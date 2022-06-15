@@ -201,7 +201,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2164. Sort Even and Odd Indices Independently, #PriorityQueue, #Heap
+        ///2164. Sort Even and Odd Indices Independently, #PriorityQueue, 
         ///Sort the values at odd indices of nums in non-increasing order., Even indices in non-decreasing
         public int[] SortEvenOdd(int[] nums)
         {
@@ -609,7 +609,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        /// 2195. Append K Integers With Minimal Sum, #PriorityQueue, #Heap
+        /// 2195. Append K Integers With Minimal Sum, #PriorityQueue, 
         ///You are given an integer array nums and an integer k.
         ///Append k unique positive integers that do not appear in nums to nums such that the resulting total sum is minimum.
         ///Return the sum of the k integers appended to nums.

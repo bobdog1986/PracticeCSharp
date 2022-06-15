@@ -196,7 +196,7 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        /// 373. Find K Pairs with Smallest Sums, #Heap ,#Priority Queue
+        /// 373. Find K Pairs with Smallest Sums,  ,#Priority Queue
         /// You are given two integer arrays nums1 and nums2 sorted in ascending order and an integer k.
         ///Define a pair(u, v) which consists of one element from the first array and one element from the second array.
         ///Return the k pairs (u1, v1), (u2, v2), ..., (uk, vk) with the smallest sums.
@@ -290,7 +290,7 @@ namespace LeetCodeAlgo
             return dp.Last();
         }
 
-        ///378. Kth Smallest Element in a Sorted Matrix, #Heap, #Priority Queue
+        ///378. Kth Smallest Element in a Sorted Matrix, , #Priority Queue
         ///Given an n x n matrix where each of the rows and columns is sorted in ascending order,
         ///return the kth smallest element in the matrix. O(n^2)
         public int KthSmallest(int[][] matrix, int k)

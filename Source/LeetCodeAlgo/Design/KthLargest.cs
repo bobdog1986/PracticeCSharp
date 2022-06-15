@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo.Design
 {
-    ///703. Kth Largest Element in a Stream, #PriorityQueue, #Heap
+    ///703. Kth Largest Element in a Stream, #PriorityQueue, 
     ///Design a class to find the kth largest element in a stream.
     ///Note that it is the kth largest element in the sorted order, not the kth distinct element.
     public class KthLargest

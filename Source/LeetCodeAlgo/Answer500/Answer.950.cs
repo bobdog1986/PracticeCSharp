@@ -225,7 +225,7 @@ namespace LeetCodeAlgo
                 return 0;
             }
         }
-        /// 973. K Closest Points to Origin, #PriorityQueue, #Heap
+        /// 973. K Closest Points to Origin, #PriorityQueue, 
         ///return the k closest points to the origin (0, 0).
         public int[][] KClosest(int[][] points, int k)
         {

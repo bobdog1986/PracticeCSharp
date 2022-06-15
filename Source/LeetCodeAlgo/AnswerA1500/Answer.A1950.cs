@@ -70,7 +70,7 @@ namespace LeetCodeAlgo
             return false;
         }
 
-        ///1962. Remove Stones to Minimize the Total, #Heap, #PriorityQueue
+        ///1962. Remove Stones to Minimize the Total, , #PriorityQueue
         public int MinStoneSum(int[] piles, int k)
         {
             int sum = 0;

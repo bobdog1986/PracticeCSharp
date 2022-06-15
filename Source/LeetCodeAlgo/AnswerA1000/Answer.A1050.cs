@@ -43,7 +43,7 @@ namespace LeetCodeAlgo
             return max + satisfied;
         }
 
-        /// 1054. Distant Barcodes, #PriorityQueue, #Heap
+        /// 1054. Distant Barcodes, #PriorityQueue, 
         ///Rearrange the barcodes so that no two adjacent barcodes are equal.
         public int[] RearrangeBarcodes(int[] barcodes)
         {

@@ -472,7 +472,7 @@ namespace LeetCodeAlgo
             return Math.Min(dp[cost.Length - 1], dp[cost.Length - 2]);
         }
 
-        ///747. Largest Number At Least Twice of Others, #PriorityQueue, #Heap
+        ///747. Largest Number At Least Twice of Others, #PriorityQueue, 
         ///Determine whether the largest element in the array is at least twice as much as every other number
         ///If it is, return the index of the largest element, or return -1 otherwise.
         public int DominantIndex(int[] nums)

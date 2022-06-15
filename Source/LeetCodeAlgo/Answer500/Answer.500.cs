@@ -73,6 +73,37 @@ namespace LeetCodeAlgo
             return res.ToArray();
         }
 
+        ///502. IPO, #PriorityQueue
+        //ith project has a pure profit profits[i] and a minimum capital of capital[i] is needed to start it.
+        //Pick at most k projects to maximize your final capital, and return the final maximized capital.
+        public int FindMaximizedCapital(int k, int w, int[] profits, int[] capital)
+        {
+            int n = profits.Length;
+            int[][] arr = new int[n][];
+            for (int i = 0; i < n; i++)
+            {
+                arr[i] = new int[] { capital[i], profits[i] };
+            }
+            arr = arr.OrderBy(x => x[0]).ToArray();
+
+            var pq = new PriorityQueue<int, int>();
+            int j = 0;
+            for (; j < n; j++)
+            {
+                if (w < arr[j][0]) break;
+                pq.Enqueue(arr[j][1], -arr[j][1]);
+            }
+            while (k-- > 0 && pq.Count > 0)
+            {
+                w += pq.Dequeue();
+                for (; j < n; j++)
+                {
+                    if (w < arr[j][0]) break;
+                    pq.Enqueue(arr[j][1], -arr[j][1]);
+                }
+            }
+            return w;
+        }
         /// 503. Next Greater Element II ,#Monotonic
         ///Given a circular integer array nums (i.e., the next element of nums[nums.length - 1] is nums[0]),
         ///return the next greater number for every element in nums.

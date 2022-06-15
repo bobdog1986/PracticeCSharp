@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo.Design
 {
-    ///1845. Seat Reservation Manager, #PriorityQueue, #Heap
+    ///1845. Seat Reservation Manager, #PriorityQueue, 
     ///Design a system that manages the reservation state of n seats that are numbered from 1 to n.
     ///SeatManager(int n) Initializes a SeatManager object that will manage n seats numbered from 1 to n.
     ///int reserve() Fetches the smallest-numbered unreserved seat, reserves it, and returns its number.

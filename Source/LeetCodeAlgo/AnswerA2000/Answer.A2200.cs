@@ -111,7 +111,7 @@ namespace LeetCodeAlgo
             return res + Math.Max(cnt1, cnt2);
         }
 
-        /// 2208. Minimum Operations to Halve Array Sum, #PriorityQueue, #Heap
+        /// 2208. Minimum Operations to Halve Array Sum, #PriorityQueue, 
         ///In one operation, you can choose any number from nums and reduce it to exactly half the number.
         ///(Note that you may choose this reduced number in future operations.)
         ///Return the minimum number of operations to reduce the sum of nums by at least half.
@@ -562,7 +562,7 @@ namespace LeetCodeAlgo
             return arr[0].Insert(x, "(") + "+" + arr[1].Insert(y + 1, ")");
         }
 
-        ///2233. Maximum Product After K Increments, #PriorityQueue, #Heap
+        ///2233. Maximum Product After K Increments, #PriorityQueue, 
         ///You are given an array of non-negative integers nums and an integer k.
         ///In one operation, you may choose any element from nums and increment it by 1.
         ///Return the maximum product of nums after at most k operations.Since the answer may be very large, return it modulo 109 + 7

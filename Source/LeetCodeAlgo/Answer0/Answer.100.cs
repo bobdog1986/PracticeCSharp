@@ -862,33 +862,27 @@ namespace LeetCodeAlgo
         public int LadderLength(string beginWord, string endWord, IList<string> wordList)
         {
             if (!wordList.Contains(endWord)) return 0;
-            int depth = 0;
-            Dictionary<string, int> dict = new Dictionary<string, int>();
             List<string> list = new List<string>() { beginWord };
-            dict.Add(beginWord, 0);
+            var words = new HashSet<string>(wordList);
+            words.Remove(beginWord);
+            int depth = 1;
             while (list.Count > 0)
             {
                 depth++;
                 List<string> next = new List<string>();
-                var canVisitWords = wordList.Where(x => !dict.ContainsKey(x)).ToList();
-                if (canVisitWords.Count == 0) return 0;
                 foreach(var curr in list)
                 {
-                    foreach(var word in canVisitWords)
+                    var canVisitWords = words.Where(x => oneCharDiff(curr, x));
+                    foreach (var word in canVisitWords)
                     {
-                        if (oneCharDiff(curr, word))
-                        {
-                            if (word == endWord) return depth+1;
-                            if (dict.ContainsKey(word)) continue;
-                            dict.Add(word, 1);
-                            next.Add(word);
-                        }
+                        if (word == endWord) return depth;
+                        next.Add(word);
+                        words.Remove(word);
                     }
                 }
                 list = next;
-                if (list.Count == 0) return 0;
             }
-            return depth;
+            return 0;
         }
 
 
