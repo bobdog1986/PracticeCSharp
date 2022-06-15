@@ -138,9 +138,14 @@ namespace LeetCodeAlgo
             return len == -1 ? -1 : nums.Length - len;
         }
 
-        ///1663. Smallest String With A Given Numeric Value
-        ///The numeric value of a lowercase character is defined as its position (1-indexed) in the alphabet, a is 1,etc...
-        ///Return the lexicographically smallest string with length equal to n and numeric value equal to k.
+        ///1662. Check If Two String Arrays are Equivalent
+        public bool ArrayStringsAreEqual(string[] word1, string[] word2)
+        {
+            return string.Join("", word1) == string.Join("", word2);
+        }
+        /// 1663. Smallest String With A Given Numeric Value
+        //The numeric value of a lowercase character is defined as its position (1-indexed) in the alphabet, a is 1,etc...
+        //Return the lexicographically smallest string with length equal to n and numeric value equal to k.
         public string GetSmallestString(int n, int k)
         {
             List<char> list = new List<char>();

@@ -146,6 +146,7 @@ namespace LeetCodeAlgo
         public string[] buildStringArray(string str)
         {
             str = str.Replace(" ", "");
+            str = str.Replace("\"", "");
             if (str[0] == '[') str = str.Substring(1);
             if (str[str.Length - 1] == ']') str = str.Substring(0, str.Length - 1);
             var arr = str.Split(",").Select(x => x.Trim()).Where(x => !string.IsNullOrEmpty(x)).ToList();

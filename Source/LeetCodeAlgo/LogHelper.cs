@@ -88,6 +88,16 @@ namespace LeetCodeAlgo
             }
             else Console.WriteLine("!!!Result count = 0");
         }
+
+        public static void log(IList<IList<string>> result)
+        {
+            if (result.Count() > 0)
+            {
+                Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+            }
+            else Console.WriteLine("!!!Result count = 0");
+        }
+
         public static void log(string[][] result)
         {
             if (result.Count() > 0)

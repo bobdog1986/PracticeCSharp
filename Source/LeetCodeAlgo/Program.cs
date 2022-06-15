@@ -18,15 +18,15 @@ namespace LeetCodeAlgo
             ///!!!*** read from string files
 
             //var strMatLines = File.ReadLines("StringMat.txt").ToList();
-            //var strArrLines = File.ReadLines("StringArr.txt").ToList();
+            var strArrLines = File.ReadLines("StringArr.txt").ToList();
 
             ///build string[][] from file
             //string matStrStr1 = strMatLines[0];
             //var matStr1 = anwser.buildStringMatrix(matStrStr1);
 
             ///build string[] from file
-            //string arrStrStr1 = strArrLines[0];
-            //var arrStr1 = anwser.buildStringArray(arrStrStr1);
+            string arrStrStr1 = strArrLines[0];
+            var arrStr1 = anwser.buildStringArray(arrStrStr1);
 
             ///build char[][] and char[] by file, due to leetcode using double quote "" wrap a char
             //string matStrChar1 = strMatLines[0];
