@@ -81,7 +81,32 @@ namespace LeetCodeAlgo
             return operations.Sum(x => x.Contains("++") ? 1 : -1);
         }
 
-        ///2018. Check if Word Can Be Placed In Crossword
+        ///2017. Grid Game, #Prefix Sum
+        //2-row matrix, robot1 take all visited cell to 0, robot2 take the max path of left cells
+        //only go right or down, return minimium of robot2's score
+        public long GridGame(int[][] grid)
+        {
+            long res = long.MaxValue;
+            int n = grid[0].Length;
+            long[] prefixSum0 = new long[n];
+            long[] prefixSum1 = new long[n];
+            long sum0 = 0;
+            long sum1 = 0;
+            for (int i = 0; i < n; i++)
+            {
+                sum0 += grid[0][i];
+                prefixSum0[i] = sum0;
+                sum1 += grid[1][i];
+                prefixSum1[i] = sum1;
+            }
+            for (int i = 0; i < n; i++)
+            {
+                long max = Math.Max(sum0- prefixSum0[i], i==0?0: prefixSum1[i-1]);
+                res = Math.Min(res, max);
+            }
+            return res;
+        }
+        /// 2018. Check if Word Can Be Placed In Crossword
         public bool PlaceWordInCrossword(char[][] board, string word)
         {
             int m = board.Length;

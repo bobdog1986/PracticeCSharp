@@ -50,7 +50,7 @@ namespace LeetCodeAlgo
             //anwser.printTree(treeNode1)
 
             ///build int[][] and int[] from string
-            string matStrInt1 = "[[1,5,2,4,25]]";
+            string matStrInt1 = "[[1,3,1,15],[1,3,3,1]]";
             var matInt1 = anwser.buildMatrix(matStrInt1);
             string arrStrInt1 = "[1,5,2,4,25]";
             var arrInt1 = anwser.buildArray(arrStrInt1);
@@ -65,7 +65,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = anwser.FindLadders("hit","cog", arrStr1);
+            var result = anwser.GridGame(matInt1);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
