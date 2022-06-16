@@ -498,42 +498,40 @@ namespace LeetCodeAlgo
         ///Return the sum of the total strengths of all contiguous groups of wizards. return it modulo 109 + 7.
         public int TotalStrength(int[] strength)
         {
-            int mod = 10_0000_0007;
+            long res = 0;
+            long mod = 10_0000_0007;
             int n = strength.Length;
 
-            int[] right = new int[n];
+            int[] right = new int[n];//first index that <= current on right side, n is out of array
             Array.Fill(right, n);
-            Stack<int> stack = new Stack<int>();
+            Stack<int> stack1 = new Stack<int>();
             for (int i = 0; i < n; i++)
             {
-                while (stack.Count > 0 && strength[stack.Peek()] > strength[i])
+                while (stack1.Count > 0 && strength[stack1.Peek()] > strength[i])
                 {
-                    right[stack.Pop()] = i;
+                    right[stack1.Pop()] = i;
                 }
-                stack.Push(i);
+                stack1.Push(i);
             }
 
-            int[] left = new int[n];
+            int[] left = new int[n];//first index that < current on left side, -1 is out of array
             Array.Fill(left, -1);
-            stack.Clear();
+            Stack<int> stack2 = new Stack<int>();
             for (int i = n - 1; i >= 0; i--)
             {
-                while (stack.Count > 0 && strength[stack.Peek()] >= strength[i])
+                while (stack2.Count > 0 && strength[stack2.Peek()] >= strength[i])
                 {
-                    left[stack.Pop()] = i;
+                    left[stack2.Pop()] = i;
                 }
-                stack.Push(i);
+                stack2.Push(i);
             }
 
-            long res = 0;
             long[] preSum = new long[n];
+            long sum1 = 0;
             for (int i = 0; i < n; i++)
             {
-                preSum[i] = strength[i];
-                if (i > 0)
-                {
-                    preSum[i] = (preSum[i] + preSum[i - 1]) % mod;
-                }
+                sum1 = (sum1 + strength[i]) % mod;
+                preSum[i] = sum1;
             }
 
             long[] preSumPreSum = new long[n + 1];
@@ -550,7 +548,7 @@ namespace LeetCodeAlgo
                 long rSum = preSumPreSum[r] - preSumPreSum[i];
                 res = (res + strength[i] * (rSum * (i - l) % mod - lSum * (r - i) % mod)) % mod;
             }
-            return (int)(res % mod);
+            return (int)((res + mod) % mod);//must add mod, or return negative
         }
 
         ///2283. Check if Number Has Equal Digit Count and Digit Value

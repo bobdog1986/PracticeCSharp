@@ -113,9 +113,36 @@ namespace LeetCodeAlgo
             return ans & grid1[i][j];
         }
 
-        ///1910. Remove All Occurrences of a Substring
-        ///Find the leftmost occurrence of the substring part and remove it from s.
-        ///Return s after removing all occurrences of part.
+        ///1909. Remove One Element to Make the Array Strictly Increasing
+        public bool CanBeIncreasing(int[] nums)
+        {
+            int prev = int.MinValue;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] <= prev)
+                {
+                    return CanBeIncreasing(nums, i) || CanBeIncreasing(nums, i - 1);
+                }
+                prev = nums[i];
+            }
+            return true;
+        }
+
+        private bool CanBeIncreasing(int[] nums, int skip)
+        {
+            int prev = int.MinValue;
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if (i == skip) continue;
+                if(nums[i]<=prev) return false;
+                prev = nums[i];
+            }
+            return true;
+        }
+
+        /// 1910. Remove All Occurrences of a Substring
+        // Find the leftmost occurrence of the substring part and remove it from s.
+        // Return s after removing all occurrences of part.
         public string RemoveOccurrences(string s, string part)
         {
             var index=s.IndexOf(part);
