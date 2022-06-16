@@ -11,6 +11,13 @@ select (
 	select distinct Salary from Employee order by Salary Desc limit 1 offset 1
 ) as SecondHighestSalary
 
+///182. Duplicate Emails
+
+select email as Email
+from Person
+group by email
+having count(*) > 1
+
 ///183. Customers Who Never Order
 
 select name as Customers from Customers where NOT EXISTS (SELECT * FROM Orders WHERE Customers.id=Orders.customerId)
@@ -70,6 +77,23 @@ from tree
 ///627. Swap Salary
 
 update salary set sex = CHAR(ASCII('f') ^ ASCII('m') ^ ASCII(sex));
+
+///1050. Actors and Directors Who Cooperated At Least Three Times
+
+SELECT actor_id, director_id
+FROM ActorDirector
+GROUP BY actor_id, director_id
+HAVING COUNT(*)>=3
+
+///1084. Sales Analysis III
+
+SELECT s.product_id, product_name
+FROM Sales s
+LEFT JOIN Product p
+ON s.product_id = p.product_id
+GROUP BY s.product_id
+HAVING MIN(sale_date) >= CAST('2019-01-01' AS DATE) AND
+		MAX(sale_date) <= CAST('2019-03-31' AS DATE)
 
 ///1141. User Activity for the Past 30 Days I
 
@@ -134,6 +158,22 @@ select customer_id, count(visit_id) as count_no_trans
 from visits
 where visit_id not in (select visit_id from transactions)
 group by customer_id
+
+///1587. Bank Account Summary II
+
+select
+	a.name,
+	sum(b.amount) balance
+from
+	Users a
+join
+	Transactions b
+on
+	a.account = b.account
+group by
+	a.account
+having
+	balance > 10000;
 
 ///1667. Fix Names in a Table
 
