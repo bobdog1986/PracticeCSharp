@@ -52,7 +52,7 @@ namespace LeetCodeAlgo
             ///build int[][] and int[] from string
             string matStrInt1 = "[[1,3,1,15],[1,3,3,1]]";
             var matInt1 = anwser.buildMatrix(matStrInt1);
-            string arrStrInt1 = "[2,1,3,1,2,3,3]";
+            string arrStrInt1 = "[1,2,3,4,5]";
             var arrInt1 = anwser.buildArray(arrStrInt1);
 
             ///build int[][] and int[] from file
@@ -65,7 +65,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = anwser.GetDistances(arrInt1);
+            var result = anwser.SplitArray(arrInt1,2);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
