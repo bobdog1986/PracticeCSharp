@@ -224,6 +224,20 @@ namespace LeetCodeAlgo
             return list[0];
         }
 
+        ///1725. Number Of Rectangles That Can Form The Largest Square
+        public int CountGoodRectangles(int[][] rectangles)
+        {
+            int max = 0;
+            int res = 0;
+            foreach(var rect in rectangles)
+            {
+                var len = Math.Min(rect[0], rect[1]);
+                if (len > max) res = 1;
+                else if (len == max) res++;
+                max=Math.Max(max, len);
+            }
+            return res;
+        }
         ///1732. Find the Highest Altitude
         public int LargestAltitude(int[] gain)
         {
