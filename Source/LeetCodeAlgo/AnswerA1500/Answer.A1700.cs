@@ -172,6 +172,19 @@ namespace LeetCodeAlgo
             return days * (1 + days) / 2 + days * weeks + 7 * (1 + 7) / 2 * weeks + 7 * weeks * (weeks - 1) / 2;
         }
 
+        ///1720. Decode XORed Array
+        //encoded[i]= res[i]^res[i+1]
+        public int[] Decode(int[] encoded, int first)
+        {
+            int n = encoded.Length;
+            int[] res = new int[n + 1];
+            res[0] = first;
+            for(int i=1; i < res.Length; i++)
+            {
+                res[i] = encoded[i - 1] ^ res[i-1];
+            }
+            return res;
+        }
         /// 1721. Swapping Nodes in a Linked List
         //You are given the head of a linked list, and an integer k.
         //Return the head of the linked list after swapping the values of the kth node
