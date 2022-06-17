@@ -389,7 +389,185 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2042. Check if Numbers Are Ascending in a Sentence
+        ///2040. Kth Smallest Product of Two Sorted Arrays, #Binary Search
+        //Given two sorted 0-indexed integer arrays nums1 and nums2 as well as an integer k,
+        //return the kth (1-based) smallest product of nums1[i] * nums2[j],-10^5 <= nums1[i], nums2[j] <= 10^5
+        public long KthSmallestProduct(int[] nums1, int[] nums2, long k)
+        {
+            int n1 = nums1.Length;
+            int n2 = nums2.Length;
+            int neg1 = 0, zero1 = 0, neg2 = 0, zero2 = 0;
+            foreach (var x in nums1)
+            {
+                if (x < 0) neg1++;
+                else if (x == 0) zero1++;
+                else break;
+            }
+            foreach (var x in nums2)
+            {
+                if (x < 0) neg2++;
+                else if (x == 0) zero2++;
+                else break;
+            }
+
+            long totalNeg = (long)neg1 * (n2 - neg2 - zero2) + (long)neg2 * (n1 - neg1 - zero1);
+            long totalZero = (long)zero1 * n2 + (long)zero2 * n1 - (long)zero1 * zero2;
+            if (k<= totalNeg)
+            {
+                long left = -10_000_000_000;
+                long right = 0;
+                while (left < right)
+                {
+                    long mid = left + (right - left )/ 2;
+                    long count = 0;
+                    if(neg1>0 && n2-neg2-zero2 > 0)
+                    {
+                        for (int i = 0; i < neg1 && count < k; i++)
+                        {
+                            if ((long)nums1[i] * nums2[n2 - 1] > mid) break;//min out of range
+                            if((long)nums1[i] * nums2[neg2+zero2] <= mid)
+                            {
+                                count += n2 - neg2 - zero2;
+                            }
+                            else
+                            {
+                                int low = neg2 + zero2;
+                                int high = n2 - 1;
+                                while (low < high)
+                                {
+                                    int center = (low + high) / 2;
+                                    if((long)nums1[i] * nums2[center] <= mid)
+                                    {
+                                        high=center;
+                                    }
+                                    else
+                                    {
+                                        low = center+1;
+                                    }
+                                }
+                                count += n2-low; //[low,n2-1]
+                            }
+                        }
+                    }
+
+                    if(neg2>0 && n1 - neg1 - zero1 > 0)
+                    {
+                        for (int i = 0; i < neg2 && count < k; i++)
+                        {
+                            if ((long)nums2[i] * nums1[n1 - 1] > mid) break;//min out of range
+                            if ((long)nums2[i] * nums1[neg1 + zero1] <= mid)
+                            {
+                                count += n1 - neg1 - zero1;
+                            }
+                            else
+                            {
+                                int low = neg1 + zero1;
+                                int high = n1 - 1;
+                                while (low < high)
+                                {
+                                    int center = (low + high) / 2;
+                                    if ((long)nums2[i] * nums1[center] <= mid)
+                                    {
+                                        high = center;
+                                    }
+                                    else
+                                    {
+                                        low = center+1;
+                                    }
+                                }
+                                count += n1 - low; //[low,n1-1]
+                            }
+                        }
+                    }
+
+                    if (count >= k)
+                        right = mid;
+                    else
+                        left = mid+1;
+                }
+                return left;
+            }
+            else
+            {
+                k -= totalNeg;
+                if (k <= totalZero) return 0;
+                k -= totalZero;
+
+                long left = 0;
+                long right = 10_000_000_000;
+                while (left < right)
+                {
+                    long mid = left + (right - left) / 2;
+                    long count = 0;
+                    if(neg1>0 && neg2 > 0)
+                    {
+                        for (int i = neg1 - 1; i >= 0 && count < k; i--)
+                        {
+                            if ((long)nums1[i] * nums2[neg2 - 1] > mid) break;//min out of range
+                            if ((long)nums1[i] * nums2[0] <= mid)
+                            {
+                                count += neg2;
+                            }
+                            else
+                            {
+                                int low = 0;
+                                int high = neg2 - 1;
+                                while (low < high)
+                                {
+                                    int center = (low + high) / 2;
+                                    if ((long)nums1[i] * nums2[center] <= mid)
+                                    {
+                                        high = center;
+                                    }
+                                    else
+                                    {
+                                        low = center+1;
+                                    }
+                                }
+                                count += neg2 - low; //[low,neg2-1]
+                            }
+                        }
+                    }
+
+                    if(n1-neg1-zero1>0 && n2 - neg2 - zero2 > 0)
+                    {
+                        for (int i = neg1 + zero1; i<n1 && count < k; i++)
+                        {
+                            if ((long)nums1[i] * nums2[neg2 +zero2] > mid) break;//min out of range
+                            if ((long)nums1[i] * nums2[n2-1] <= mid)
+                            {
+                                count += n2-neg2-zero2;
+                            }
+                            else
+                            {
+                                int low = neg2 + zero2;
+                                int high = n2 - 1;
+                                while (low < high)
+                                {
+                                    int center = (low + high+1) / 2;
+                                    if ((long)nums1[i] * nums2[center] <= mid)
+                                    {
+                                        low = center;
+                                    }
+                                    else
+                                    {
+                                        high = center -1;
+                                    }
+                                }
+                                count += low-neg2-zero2+1; //[neg2+zero2,low]
+                            }
+                        }
+                    }
+
+                    if (count >= k)
+                        right = mid;
+                    else
+                        left = mid + 1;
+                }
+                return left;
+            }
+        }
+        /// 2042. Check if Numbers Are Ascending in a Sentence
         public bool AreNumbersAscending(string s)
         {
             var arr = s.Split(" ").Where(x => char.IsDigit(x[0])).Select(x => int.Parse(x)).ToList();
