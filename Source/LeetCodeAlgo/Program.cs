@@ -12,32 +12,18 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine("Run\r\n****************************\r\n");
             var anwser = new Answer();
-
-            uint uintVal =0b10000000_00000000_00000000_00000000;
-
             ///!!!*** read from string files
+            var strMatLines = File.ReadLines("StringMatrix.txt").ToList();
+            //var matStr1 = anwser.buildStringMatrix(strMatLines[0]);//build string[][] from file
+            var matChar1 = anwser.buildCharMatrix(strMatLines[0]);//build char[][] from file due to leetcode using ""
 
-            //var strMatLines = File.ReadLines("StringMat.txt").ToList();
             //var strArrLines = File.ReadLines("StringArr.txt").ToList();
-
-            ///build string[][] from file
-            //string matStrStr1 = strMatLines[0];
-            //var matStr1 = anwser.buildStringMatrix(matStrStr1);
-
-            ///build string[] from file
-            //string arrStrStr1 = ;
-            //var arrStrLine0 = anwser.buildStringArray(strArrLines[0]);
-
-            ///build char[][] and char[] by file, due to leetcode using double quote "" wrap a char
-            //string matStrChar1 = strMatLines[0];
-            //var matChar1 = anwser.buildCharMatrix(matStrChar1);
-            //string arrStrChar1 = strArrLines[0];
-            //var arrChar1 = anwser.buildCharArray(arrStrChar1);
+            //var arrStr1 = anwser.buildStringArray(strArrLines[0]);
+            //var arrChar1 = anwser.buildCharArray(strArrLines[0]);
 
             ///!!!*** read from int files
-
             var intArrLines = File.ReadLines("IntArr.txt").ToList();
-            //var intMatLines = File.ReadLines("IntMat.txt").ToList();
+            //var intMatLines = File.ReadLines("IntMatrix.txt").ToList();
 
             ///build listnode
             //string listNodeStr1 = "[1,2,3,4]";//intArrLines[0]
@@ -59,8 +45,7 @@ namespace LeetCodeAlgo
             string arrStrInt2 = "[-10, -8, -7, -6]";
             var arrInt2 = anwser.buildArray(arrStrInt2);
             ///build int[][] and int[] from file
-            //string matStrInt2 = intMatLines[0];
-            //var matInt2 = anwser.buildMatrix(matStrInt2);
+            //var matIntLine0 = anwser.buildMatrix(intMatLines[0]);
             var arrIntLine0 = anwser.buildArray(intArrLines[0]);
             var arrIntLine1 = anwser.buildArray(intArrLines[1]);
 
@@ -68,7 +53,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = anwser.KthSmallestProduct(arrIntLine0, arrIntLine1, 15);
+            var result = anwser.HasValidPath(matChar1);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

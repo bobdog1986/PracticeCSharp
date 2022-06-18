@@ -324,6 +324,51 @@ namespace LeetCodeAlgo
             return (int)(dp.Last());
         }
 
+        ///2267. Check if There Is a Valid Parentheses String Path, #DP
+        //1 <= m, n <= 100
+        public bool HasValidPath(char[][] grid)
+        {
+            int m = grid.Length;
+            int n = grid[0].Length;
+            if ((m + n - 1) % 2 == 1) return false;
+            if (grid[0][0] == ')' || grid[m - 1][n - 1] == '(') return false;
+
+            int len = (m + n - 1) / 2 + 1;
+            bool[][][] dp = new bool[m + 1][][];
+            for(int i = 0; i <= m; i++)
+            {
+                dp[i] = new bool[n + 1][];
+                for(int j=0;j<= n; j++)
+                {
+                    dp[i][j] = new bool[len+1];
+                }
+            }
+
+            dp[0][0][0] = true;
+            for (int i = 0; i < m; ++i)
+                for (int j = 0; j < n; ++j)
+                    for (int k = 0; k <len; ++k)
+                    {
+                        if(dp[i][j][k] == true)
+                        {
+                            if(grid[i][j] == '(')
+                            {
+                                dp[i][j + 1][k + 1] |= dp[i][j][k];
+                                dp[i+1][j ][k + 1] |= dp[i][j][k];
+                            }
+                            else
+                            {
+                                if (k > 0)
+                                {
+                                    dp[i][j + 1][k - 1] |= dp[i][j][k];
+                                    dp[i + 1][j][k - 1] |= dp[i][j][k];
+                                }
+                            }
+                        }
+                    }
+            return dp[m][n-1][0];//or dp[n][m-1][0]
+        }
+
         ///2269 Find the K-Beauty of a Number
         /// It has a length of k. It is a divisor of num.
         public int DivisorSubstrings(int num, int k)
