@@ -451,6 +451,8 @@ namespace LeetCodeAlgo
             return letters[left];
         }
 
+        ///745. Prefix and Suffix Search, see WordFilter
+
         /// 746. Min Cost Climbing Stairs
         ///cost[i] is the cost of ith step on a staircase.
         ///You can either start from the step with index 0, or the step with index 1
@@ -472,7 +474,7 @@ namespace LeetCodeAlgo
             return Math.Min(dp[cost.Length - 1], dp[cost.Length - 2]);
         }
 
-        ///747. Largest Number At Least Twice of Others, #PriorityQueue, 
+        ///747. Largest Number At Least Twice of Others, #PriorityQueue,
         ///Determine whether the largest element in the array is at least twice as much as every other number
         ///If it is, return the index of the largest element, or return -1 otherwise.
         public int DominantIndex(int[] nums)
