@@ -121,6 +121,25 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///1863. Sum of All Subset XOR Totals, #Backtracking
+        public int SubsetXORSum(int[] nums)
+        {
+            int res = 0;
+            SubsetXORSum(nums, 0, 0, ref res);
+            return res;
+        }
+        private void SubsetXORSum(int[] nums,int i,int curr, ref int res)
+        {
+            if (i == nums.Length)
+            {
+                res += curr;
+            }
+            else
+            {
+                SubsetXORSum(nums, i + 1, curr, ref res);
+                SubsetXORSum(nums, i + 1, curr ^ nums[i], ref res);
+            }
+        }
         ///1864. Minimum Number of Swaps to Make the Binary String Alternating
         public int MinSwaps_1864(string s)
         {
