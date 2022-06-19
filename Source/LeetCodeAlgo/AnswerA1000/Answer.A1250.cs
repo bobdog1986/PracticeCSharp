@@ -131,6 +131,50 @@ namespace LeetCodeAlgo
 
         ///1261. Find Elements in a Contaminated Binary Tree. see FindElements
 
+        ///1268. Search Suggestions System, #Trie
+        //Design a system that suggests at most three product names after each character of searchWord is typed.
+        //Suggested products should have common prefix with searchWord. return lexicographically minimums products.
+        public IList<IList<string>> SuggestedProducts(string[] products, string searchWord)
+        {
+            var res = new IList<string>[searchWord.Length];
+            for(int i = 0; i < searchWord.Length; i++)
+                res[i]=new List<string>();
+            products = products.OrderBy(x => x).ToArray();
+            var root = new Trie1268();
+            foreach(var product in products)
+            {
+                SuggestedProducts_build(product, root);
+            }
+            var curr = root;
+            for(int i = 0; i < searchWord.Length; i++)
+            {
+                var c = searchWord[i];
+                if (!curr.dict.ContainsKey(c))
+                    break;
+                res[i]=curr.dict[c].list.Take(3).ToList();
+                curr = curr.dict[c];
+            }
+            return res;
+        }
+
+        private class Trie1268
+        {
+            public Dictionary<char, Trie1268> dict = new Dictionary<char, Trie1268>();
+            public List<string> list = new List<string>();
+        }
+
+        private void SuggestedProducts_build(string product, Trie1268 root)
+        {
+            var curr = root;
+            foreach(var c in product)
+            {
+                if(!curr.dict.ContainsKey(c))
+                    curr.dict.Add(c, new Trie1268());
+                curr.dict[c].list.Add(product);
+                curr = curr.dict[c];
+            }
+        }
+
         ///1277. Count Square Submatrices with All Ones, #DP
         ///Given a m * n matrix of ones and zeros, return how many square submatrices have all ones.
         public int CountSquares(int[][] matrix)
