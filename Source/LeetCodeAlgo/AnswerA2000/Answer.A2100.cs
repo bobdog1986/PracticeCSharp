@@ -205,6 +205,39 @@ namespace LeetCodeAlgo
             return sentences.Max(x => x.Where(x => x == ' ').Count()) + 1;
         }
 
+        ///2116. Check if a Parentheses String Can Be Valid
+        //If locked[i] is '1', you cannot change s[i]. if =='0' you can change s[i] to '(' or ')'
+        //Return true if you can make s a valid parentheses string. Otherwise, return false.
+        public bool CanBeValid(string s, string locked)
+        {
+            int n = s.Length;
+            if (n % 2 == 1) return false;
+            int changes = 0, open = 0, closed = 0;
+
+            for (int i = n - 1; i >= 0; i--)
+            {
+                if (locked[i]== '0') changes++;
+                else
+                {
+                    if (s[i] == '(') open ++;
+                    else if (s[i] == ')') closed++;
+                }
+                if (changes + closed - open  < 0) return false;//not enough to valid
+            }
+
+            changes = open = closed = 0;
+            for (int i = 0; i < n; i++)
+            {
+                if (locked[i] == '0') changes++;
+                else
+                {
+                    if (s[i] == '(') open ++;
+                    else if (s[i] == ')') closed ++;
+                }
+                if (changes + open - closed < 0) return false;//not enough to valid
+            }
+            return true;
+        }
         /// 2119. A Number After a Double Reversal
         ///eg. 1234 reverse to 4321, then again to 1234== origin 1234, return true
         public bool IsSameAfterReversals(int num)
