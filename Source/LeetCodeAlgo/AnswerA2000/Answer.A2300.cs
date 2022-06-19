@@ -315,5 +315,43 @@ namespace LeetCodeAlgo
             }
         }
 
+
+        ///2311. Longest Binary Subsequence Less Than or Equal to K, #Greedy
+        //Return the length of the longest subsequence of s that makes up a binary number <= k.
+        //The subsequence can contain leading zeroes.
+        //The empty string is considered to be equal to 0.
+        public int LongestSubsequence(string s, int k)
+        {
+            int totalZeros = s.Count(x => x == '0');
+            int ones = 0;
+            int zeros = 0;
+            long curr = 0;
+            for(int i = s.Length - 1; i >= 0; i--)
+            {
+                if (s[i] == '0')
+                {
+                    zeros++;
+                }
+                else
+                {
+                    long val = (long)1 << (zeros + ones);
+                    if(curr+val> k)
+                    {
+                        break;
+                    }
+                    else if (curr + val == k)
+                    {
+                        ones++;
+                        break;
+                    }
+                    else
+                    {
+                        ones++;
+                        curr += val;
+                    }
+                }
+            }
+            return totalZeros + ones;
+        }
     }
 }
