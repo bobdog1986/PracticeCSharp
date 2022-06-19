@@ -331,6 +331,40 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///1743. Restore the Array From Adjacent Pairs
+        public int[] RestoreArray(int[][] adjacentPairs)
+        {
+            int n = adjacentPairs.Length + 1;
+            int[] res = new int[n];
+            var dict = new Dictionary<int, List<int>>();
+            foreach(var adj in adjacentPairs)
+            {
+                if (!dict.ContainsKey(adj[0])) dict.Add(adj[0], new List<int>());
+                if (!dict.ContainsKey(adj[1])) dict.Add(adj[1], new List<int>());
+                dict[adj[0]].Add(adj[1]);
+                dict[adj[1]].Add(adj[0]);
+            }
+
+            var prev = dict.Keys.Where(x => dict[x].Count == 1).First();
+            var curr = dict[prev].First();
+            res[0] = prev;
+            for(int i=1; i < n; i++)
+            {
+                res[i] = curr;
+                if (dict[curr].First() == prev)
+                {
+                    prev = curr;
+                    curr = dict[curr].Last();
+                }
+                else
+                {
+                    prev = curr;
+                    curr = dict[curr].First();
+                }
+            }
+            return res;
+        }
+
         ///1745. Palindrome Partitioning IV, #DP
         ///return true if split the string s into three non-empty palindromic substrings.
 
