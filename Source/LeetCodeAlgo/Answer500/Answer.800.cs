@@ -328,9 +328,20 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///836. Rectangle Overlap
+        //[x1, y1, x2, y2],  (x1, y1) bottom-left corner and (x2, y2) top-right corner.
+        public bool IsRectangleOverlap(int[] rec1, int[] rec2)
+        {
+            if (rec1[0] > rec2[0])
+            {
+                return IsRectangleOverlap(rec2, rec1);
+            }
+            return rec2[0] < rec1[2] && rec2[1]<rec1[3] && rec2[3] > rec1[1];
+        }
         /// 841. Keys and Rooms
-        ///Given an array rooms where rooms[i] is the set of keys that you can obtain if you visited room i,
-        ///return true if you can visit all the rooms, or false otherwise.
+        //Given an array rooms where rooms[i] is the set of keys that you can obtain if you visited room i,
+        //return true if you can visit all the rooms, or false otherwise.
         public bool CanVisitAllRooms(IList<IList<int>> rooms)
         {
             int count = rooms.Count;
