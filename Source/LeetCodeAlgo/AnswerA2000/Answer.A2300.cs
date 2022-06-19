@@ -375,5 +375,44 @@ namespace LeetCodeAlgo
             }
             return totalZeros + ones;
         }
+
+        ///2312. Selling Pieces of Wood, #DP
+        //You are given two integers m and n that represent the height and width of a rectangular piece of wood.
+        //You are also given prices, where prices[i] = [hi, wi, pricei] that height hi and width wi for pricei dollars.
+        //To cut a piece of wood, cut across the entire height or width of the piece to split it into two smaller pieces.
+        //After cutting a piece of wood into some number of smaller pieces, you can sell pieces according to prices.
+        //You may sell multiple pieces of the same shape, and you do not have to sell all the shapes.
+        //The grain of the wood makes a difference, so you cannot rotate a piece to swap its height and width.
+        //Return the maximum money you can earn after cutting an m x n piece of wood.
+        //1 <= m, n <= 200
+        public long SellingWood(int m, int n, int[][] prices)
+        {
+            int[,] priceMat = new int[201,201];
+            foreach (var p in prices)
+            {
+                priceMat[p[0],p[1]] = Math.Max(priceMat[p[0], p[1]], p[2]);
+            }
+
+            long[,] dp = new long[m + 1,n + 1];
+            for (int i = 1; i <= m; i++)
+            {
+                for (int j = 1; j <= n; j++)
+                {
+                    dp[i,j] = priceMat[i,j];
+                    //because cut across the entire height or width of the piece
+                    for (int k = 1; k < i; k++)
+                    {
+                        dp[i,j] = Math.Max(dp[i,j], dp[k,j] + dp[i - k,j]);
+                    }
+                    for (int k = 1; k < j; k++)
+                    {
+                        dp[i,j] = Math.Max(dp[i,j], dp[i,k] + dp[i,j - k]);
+                    }
+                }
+            }
+            return dp[m,n];
+        }
+
+
     }
 }

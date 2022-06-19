@@ -36,7 +36,7 @@ namespace LeetCodeAlgo
             //anwser.printTree(treeNode1)
 
             ///build int[][] and int[] from string
-            string matStrInt1 = "[[1,3,1,15],[1,3,3,1]]";
+            string matStrInt1 = "[[4,3,2],[5,3,16],[4,4,18],[8,7,6]]";
             var matInt1 = anwser.buildMatrix(matStrInt1);
             string matStrInt2 = "[[1,3,1,15],[1,3,3,1]]";
             var matInt2 = anwser.buildMatrix(matStrInt2);
@@ -53,7 +53,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = anwser.HasValidPath(matChar1);
+            var result = anwser.SellingWood(9,7, matInt1);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
