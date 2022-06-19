@@ -109,26 +109,19 @@ namespace LeetCodeAlgo
             }
         }
 
-        /// 53. Maximum Subarray, #DP
-        /// find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+        /// 53. Maximum Subarray, #DP,#Kadane
+        // find the contiguous subarray which has the largest sum and return its sum.
         public int MaxSubArray(int[] nums)
         {
             int sum = 0;
-            int max = nums[0];
+            int max = int.MinValue; //if all negtive num ,return nums.Max()
             for (int i = 0; i < nums.Length; i++)
             {
                 sum += nums[i];
-                if (sum <= 0)
-                {
-                    sum = 0;
-                }
-                else
-                {
-                    max = Math.Max(max, sum);
-                }
+                max = Math.Max(max, sum);
+                if (sum <= 0) sum = 0;
             }
-            //if all negtive num ,return nums.Max()
-            return max > 0 ? max : nums.Max();
+            return max;
         }
 
         ///54. Spiral Matrix

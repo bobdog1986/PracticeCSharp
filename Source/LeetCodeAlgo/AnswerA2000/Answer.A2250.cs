@@ -404,6 +404,52 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2272. Substring With Largest Variance, #Kadane
+        //The variance of a string is defined as the largest difference between counts of any 2 chars in the string.
+        //return the largest variance among all substrings of s. 1 <= s.length <= 104 ,lowercase letters.
+        public int LargestVariance(string s)
+        {
+            int[] freq = new int[26];
+            for (int i = 0; i < s.Length; i++)
+                freq[s[i] - 'a']++;
+
+            int maxVariance = 0;
+            for (int a = 0; a < 26; a++)
+            {
+                for (int b = 0; b < 26; b++)
+                {
+                    int remainingA = freq[a];
+                    int remainingB = freq[b];
+                    if (a == b || remainingA == 0 || remainingB == 0) continue;
+
+                    // run kadanes on each possible character pairs (A & B)
+                    int currAFreq = 0;
+                    int currBFreq = 0;
+                    for (int i = 0; i < s.Length; i++)
+                    {
+                        int c = s[i] - 'a';
+                        if (c == b) currBFreq++;
+                        if (c == a)
+                        {
+                            currAFreq++;
+                            remainingA--;
+                        }
+
+                        if (currAFreq > 0)
+                            maxVariance = Math.Max(maxVariance, currBFreq - currAFreq);
+                        //only remainingA can reset counters
+                        if (currBFreq < currAFreq && remainingA >= 1)
+                        {
+                            currBFreq = 0;
+                            currAFreq = 0;
+                        }
+                    }
+                }
+            }
+            return maxVariance;
+        }
+
+
         ///2273. Find Resultant Array After Removing Anagrams
         public IList<string> RemoveAnagrams(string[] words)
         {

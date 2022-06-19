@@ -122,33 +122,30 @@ namespace LeetCodeAlgo
         ///Kadane algorithm, find max-of-positive and min-of-negtive, return max-of-positive or Sum()- min-of-neg
         public int MaxSubarraySumCircular(int[] nums)
         {
-            if (nums.Length == 1)
-                return nums[0];
-
-            int sumOfPositive = nums[0];
-            int max = nums[0];
-            int allSum = nums[0];
-            for (int i = 1; i < nums.Length; i++)
+            int sumOfPositive = 0;
+            int max = int.MinValue;
+            for (int i = 0; i < nums.Length; i++)
             {
-                sumOfPositive = Math.Max(sumOfPositive + nums[i], nums[i]);
+                sumOfPositive += nums[i];
                 max = Math.Max(sumOfPositive, max);
-                allSum += nums[i];
+                if (sumOfPositive < 0)
+                    sumOfPositive = 0;
             }
 
+            //all elements are negative
             if (max < 0)
-            {
                 return max;
-            }
 
-            int sumOfNegative = nums[0];
-            int min = nums[0];
-            for (int i = 1; i < nums.Length; i++)
+            int sumOfNegative = 0;
+            int min = int.MaxValue;
+            for (int i = 0; i < nums.Length; i++)
             {
-                sumOfNegative = Math.Min(sumOfNegative + nums[i], nums[i]);
+                sumOfNegative+= nums[i];
                 min = Math.Min(sumOfNegative, min);
+                if(sumOfNegative >0)
+                    sumOfNegative = 0;
             }
-
-            return Math.Max(max, allSum - min);
+            return Math.Max(max, nums.Sum() - min);
         }
 
         ///921. Minimum Add to Make Parentheses Valid

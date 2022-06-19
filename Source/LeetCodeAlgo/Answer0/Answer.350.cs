@@ -379,21 +379,12 @@ namespace LeetCodeAlgo
             int sLen = s.Length;
             int tLen = t.Length;
             if (sLen > tLen) return false;
-            for (int i = 0; i <= tLen - sLen; i++)
+            int j = 0;
+            for (int i = 0; i < tLen && j<sLen; i++)
             {
-                if (t[i] == s[0])
-                {
-                    int j = 1;
-                    int k = i + 1;
-                    while (j < s.Length && k <= tLen - (sLen - j))
-                    {
-                        if (s[j] == t[k]) { j++; }
-                        k++;
-                    }
-                    if (j == s.Length) return true;
-                }
+                if (s[j] == t[i]) j++;
             }
-            return false;
+            return j==sLen;
         }
 
         ///394. Decode String
