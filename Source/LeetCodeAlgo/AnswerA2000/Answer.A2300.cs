@@ -316,6 +316,28 @@ namespace LeetCodeAlgo
         }
 
 
+        ///2310. Sum of Numbers With Units Digit K
+        //The units digit of each integer is k.
+        //The sum of the integers is num.
+        //Return the minimum possible size of such a set, or -1 if no such set exists.
+        public int MinimumNumbers(int num, int k)
+        {
+            if (num == 0)
+                return 0;
+            if (k == 0)
+                return num % 10 == 0 ? 1 : -1;
+            if (num % 10 == k) return 1;
+            //max of result is 10, because if exist valid result, we must fint it in [1,10]
+            //start with 1 and look for the target i that make unit k
+            for (int i = 1; i <= num / k && i<=10; i++)
+            {
+                //if unit equal to k, we can pick any number in set to add the cap to num
+                if (num % 10 == ((i * k) % 10)) // Look for equal unit's digit
+                    return i;
+            }
+            return -1;
+        }
+
         ///2311. Longest Binary Subsequence Less Than or Equal to K, #Greedy
         //Return the length of the longest subsequence of s that makes up a binary number <= k.
         //The subsequence can contain leading zeroes.
