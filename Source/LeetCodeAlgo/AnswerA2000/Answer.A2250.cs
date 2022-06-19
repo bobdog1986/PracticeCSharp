@@ -51,6 +51,74 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2251. Number of Flowers in Full Bloom, #Binary Search
+        //flowers[i] = [starti, endi] means the ith flower will be in full bloom from starti to endi (inclusive).
+        //persons[i] is the time that the ith person will arrive to see the flowers.
+        //Return array answer[i] is the number of flowers that are in full bloom when the ith person arrives.
+        public int[] FullBloomFlowers(int[][] flowers, int[] persons)
+        {
+            int n=flowers.Length;
+            int[] opened = flowers.Select(x => x[0]).OrderBy(x => x).ToArray();
+            int[] closed = flowers.Select(x => x[1]).OrderBy(x => x).ToArray();
+
+            int[] res = new int[persons.Length];
+            for(int i = 0; i < res.Length; i++)
+            {
+                var p = persons[i];
+                if (opened[0] > p || closed[n - 1] < p) continue;
+                int k1 = 0;
+                if (opened[n - 1] <= p)
+                {
+                    k1 = n;
+                }
+                else
+                {
+                    int left = 0;
+                    int right = n - 1;
+                    while (left < right)
+                    {
+                        int mid = right - (right - left) / 2;
+                        if(opened[mid] <= p)
+                        {
+                            left = mid;
+                        }
+                        else
+                        {
+                            right = mid - 1;
+                        }
+                    }
+                    k1 = left + 1;
+                }
+
+                int k2 = 0;
+                if (closed[0] >= p)
+                {
+                    k2 = 0;
+                }
+                else
+                {
+                    int left = 0;
+                    int right = n - 1;
+                    while (left < right)
+                    {
+                        int mid = right - (right - left) / 2;
+                        if (closed[mid] < p)
+                        {
+                            left = mid;
+                        }
+                        else
+                        {
+                            right = mid - 1;
+                        }
+                    }
+                    k2 = left + 1;
+                }
+
+                res[i] = k1-k2;
+            }
+            return res;
+        }
+
         /// 2255. Count Prefixes of a Given String
         public int CountPrefixes(string[] words, string s)
         {
