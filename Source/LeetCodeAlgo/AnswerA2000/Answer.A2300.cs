@@ -291,5 +291,29 @@ namespace LeetCodeAlgo
 
             return res;
         }
+
+
+        ///2309. Greatest English Letter in Upper and Lower Case
+        public string GreatestLetter(string s)
+        {
+            var dict = new Dictionary<char, int[]>();
+            foreach(var c in s)
+            {
+                if (!dict.ContainsKey(char.ToUpper(c)))
+                    dict.Add(char.ToUpper(c),new int[] {0,0 });
+                int index = char.IsUpper(c) ? 0 : 1;
+                dict[char.ToUpper(c)][index] = 1;
+            }
+            var keys = dict.Keys.Where(x => dict[x].Sum() == 2).OrderBy(x=>-x).ToList();
+            if (keys.Count() == 0)
+            {
+                return String.Empty;
+            }
+            else
+            {
+                return keys[0].ToString();
+            }
+        }
+
     }
 }
