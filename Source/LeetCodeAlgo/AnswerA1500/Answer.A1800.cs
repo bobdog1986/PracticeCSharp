@@ -160,13 +160,21 @@ namespace LeetCodeAlgo
 
             return sb.ToString();
         }
+        ///1812. Determine Color of a Chessboard Square
+        public bool SquareIsWhite(string coordinates)
+        {
+            int row = coordinates[1] - '1';
+            int col = coordinates[0] - 'a';
+            return row % 2 != col % 2;
+        }
+
         /// 1814. Count Nice Pairs in an Array
-        /// You are given an array nums that consists of non-negative integers.
-        /// For example, rev(123) = 321, and rev(120) = 21.
-        /// A pair of indices(i, j) is nice if it satisfies all of the following conditions:
-        ///0 <= i<j<nums.length
-        ///nums[i] + rev(nums[j]) == nums[j] + rev(nums[i])
-        ///Return the number of nice pairs of indices.Since that number can be too large, return it modulo 109 + 7.
+        // You are given an array nums that consists of non-negative integers.
+        // For example, rev(123) = 321, and rev(120) = 21.
+        // A pair of indices(i, j) is nice if it satisfies all of the following conditions:
+        // 0 <= i<j<nums.length
+        // nums[i] + rev(nums[j]) == nums[j] + rev(nums[i])
+        // Return the number of nice pairs of indices.Since that number can be too large, return it modulo 109 + 7.
 
         public int CountNicePairs(int[] nums)
         {
