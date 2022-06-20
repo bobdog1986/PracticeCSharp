@@ -251,6 +251,8 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2080. Range Frequency Queries, see RangeFreqQuery
+
         /// 2085. Count Common Words With One Occurrence
         ///return the number of strings that appear exactly once in each of the two arrays.
         public int CountWords(string[] words1, string[] words2)
