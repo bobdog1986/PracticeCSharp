@@ -303,6 +303,13 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+
+        ///789. Escape The Ghosts
+        public bool EscapeGhosts(int[][] ghosts, int[] target)
+        {
+            return !ghosts.Any(g => Math.Abs(g[0] - target[0]) + Math.Abs(g[1] - target[1]) <= Math.Abs(target[0]) + Math.Abs(target[1]));
+        }
+
         ///796. Rotate String
         ///Given two strings s and goal, return true if and only if s can become goal after some number of shifts on s.
         public bool RotateString(string s, string goal)
