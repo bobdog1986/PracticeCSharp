@@ -405,6 +405,48 @@ namespace LeetCodeAlgo
             return head;
         }
 
+        ///2096. Step-By-Step Directions From a Binary Tree Node to Another, #BTree, #DFS
+        public string GetDirections(TreeNode root, int startValue, int destValue)
+        {
+            StringBuilder res = new StringBuilder();
+            StringBuilder sb1 = new StringBuilder();
+            StringBuilder sb2 = new StringBuilder();
+            GetDirections_DFS(root, sb1, startValue);
+            GetDirections_DFS(root, sb2, destValue);
+            int i = sb1.Length-1, j = sb2.Length-1;
+            while(i>=0 && j >=0)
+            {
+                if (sb1[i] == sb2[j])
+                {
+                    i--;
+                    j--;
+                }
+                else break;
+            }
+            while (i-- >=0)
+                res.Append('U');
+            while (j >=0)
+                res.Append(sb2[j--]);
+            return res.ToString();
+        }
+
+        private bool GetDirections_DFS(TreeNode root,StringBuilder sb, int target)
+        {
+            if(root == null) return false;
+            if (root.val==target) return true;
+            if (GetDirections_DFS(root.left, sb, target))
+            {
+                sb.Append('L');
+                return true;
+            }
+            if (GetDirections_DFS(root.right, sb, target))
+            {
+                sb.Append('R');
+                return true;
+            }
+            return false;
+        }
+
         ///2099. Find Subsequence of Length K With the Largest Sum, #PriorityQueue
         public int[] MaxSubsequence(int[] nums, int k)
         {

@@ -270,7 +270,7 @@ namespace LeetCodeAlgo
         }
 
         // Encodes a tree to a single string. eg. 1,2,3,,,4,5, Null will be ""
-        public static string serializeTree(TreeNode root, int invalid=1000001)
+        public string serializeTree(TreeNode root, int invalid=1000001)
         {
             if (root == null)
                 return string.Empty;
@@ -371,13 +371,13 @@ namespace LeetCodeAlgo
         }
 
         // Decodes your encoded data to tree.
-        public static TreeNode deserializeTree(string data)
+        public TreeNode deserializeTree(string data, int invalid=int.MinValue)
         {
             if (string.IsNullOrEmpty(data))
                 return null;
 
             data = data.Replace("null", "").Replace("-", "").Replace(" ", "").Replace("[", "").Replace("]", "");
-            var arr = data.Split(',').Select(x => x == string.Empty ? 1001 : int.Parse(x)).ToList();
+            var arr = data.Split(',').Select(x => x == string.Empty ? int.MinValue : int.Parse(x)).ToList();
             int i = 0;
             var root = new TreeNode(arr[i]);
             List<TreeNode> list = new List<TreeNode>() { root };
@@ -396,7 +396,7 @@ namespace LeetCodeAlgo
                     else
                     {
                         if (i >= arr.Count) break;
-                        if (arr[i] > 1000)
+                        if (arr[i] == invalid)
                         {
                             node.left = null;
                             //too many nodes in list, will out of memory
@@ -409,7 +409,8 @@ namespace LeetCodeAlgo
                             next.Add(node.left);
                             i++;
                         }
-                        if (arr[i] > 1000)
+                        if (i >= arr.Count) break;
+                        if (arr[i] == invalid)
                         {
                             node.right = null;
                             //too many nodes in list, will out of memory
