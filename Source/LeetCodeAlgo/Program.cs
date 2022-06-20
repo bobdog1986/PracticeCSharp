@@ -14,16 +14,16 @@ namespace LeetCodeAlgo
             var anwser = new Answer();
             ///!!!*** read from string files
             var strMatLines = File.ReadLines("StringMatrix.txt").ToList();
-            //var matStr1 = anwser.buildStringMatrix(strMatLines[0]);//build string[][] from file
-            var matChar1 = anwser.buildCharMatrix(strMatLines[0]);//build char[][] from file due to leetcode using ""
-
             //var strArrLines = File.ReadLines("StringArr.txt").ToList();
-            //var arrStr1 = anwser.buildStringArray(strArrLines[0]);
-            //var arrChar1 = anwser.buildCharArray(strArrLines[0]);
-
-            ///!!!*** read from int files
             var intArrLines = File.ReadLines("IntArr.txt").ToList();
             var intMatLines = File.ReadLines("IntMatrix.txt").ToList();
+
+
+            //var matStrLine0 = anwser.buildStringMatrix(strMatLines[0]);//build string[][] from file
+            var matCharLine0 = anwser.buildCharMatrix(strMatLines[0]);//build char[][] from file due to leetcode using ""
+
+            //var arrStrLine0 = anwser.buildStringArray(strArrLines[0]);
+            //var arrCharLine0 = anwser.buildCharArray(strArrLines[0]);
 
             ///build listnode
             //string listNodeStr1 = "[1,2,3,4]";//intArrLines[0]
@@ -55,7 +55,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = anwser.FullBloomFlowers(matInt1, arrInt1);
+            var result = anwser.MinimumLengthEncoding(new string[] { "atime", "time", "btime" });
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

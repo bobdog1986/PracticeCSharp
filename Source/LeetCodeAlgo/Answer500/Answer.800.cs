@@ -185,6 +185,43 @@ namespace LeetCodeAlgo
             var keys = dict.Keys.OrderBy(x => -dict[x]).ToList();
             return keys[0];
         }
+
+        ///820. Short Encoding of Words, #Trie
+        //from tail to head,if not match, add '#'. return the total length
+        public int MinimumLengthEncoding(string[] words)
+        {
+            var root = new Trie820();
+            var set =new HashSet<string>();
+            foreach(var w in words.ToHashSet())
+            {
+                var curr = root;
+                bool add = false;
+                for(int i = w.Length-1; i >= 0; --i)
+                {
+                    if (!curr.dict.ContainsKey(w[i]))
+                    {
+                        add = true;
+                        curr.dict.Add(w[i], new Trie820());
+                    }
+                    curr=curr.dict[w[i]];
+                    if (curr.str != string.Empty && set.Contains(curr.str) )
+                    {
+                        set.Remove(curr.str);
+                    }
+                }
+                curr.str = w;
+                if (add)
+                    set.Add(w);
+            }
+            return set.Sum(x=>x.Length+1);
+        }
+
+        private class Trie820
+        {
+            public Dictionary<char, Trie820> dict = new Dictionary<char, Trie820>();
+            public string str = string.Empty;
+        }
+
         /// 821. Shortest Distance to a Character
         public int[] ShortestToChar(string s, char c)
         {
