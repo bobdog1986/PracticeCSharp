@@ -18,10 +18,8 @@ namespace LeetCodeAlgo
             var intArrLines = File.ReadLines("IntArr.txt").ToList();
             //var intMatLines = File.ReadLines("IntMatrix.txt").ToList();
 
-
             //var matStrLine0 = answer.buildStringMatrix(strMatLines[0]);//build string[][] from file
             //var matCharLine0 = answer.buildCharMatrix(strMatLines[0]);//build char[][] from file due to leetcode using ""
-
             //var arrStrLine0 = answer.buildStringArray(strArrLines[0]);
             //var arrCharLine0 = answer.buildCharArray(strArrLines[0]);
 

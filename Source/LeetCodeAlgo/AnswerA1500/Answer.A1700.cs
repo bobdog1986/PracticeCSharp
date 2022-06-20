@@ -8,6 +8,43 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
+        ///1700. Number of Students Unable to Eat Lunch
+        //student[i] = 1 want 1, or =0 want 0. if cannot goback to end of queue
+        //return how many students cannot get sanwiches
+        public int CountStudents(int[] students, int[] sandwiches)
+        {
+            int n = students.Length;
+            int squares = students.Sum();
+            int circulars = n-squares;
+            var q = new Queue<int>();
+            foreach (var student in students)
+                q.Enqueue(student);
+
+            int i = 0;
+            for (; i < n; i++)
+            {
+                if (q.Peek() == sandwiches[i])
+                {
+                    var top = q.Dequeue();
+                    if (top == 0) circulars--;
+                    else squares--;
+                }
+                else
+                {
+                    if (sandwiches[i] == 0 && squares == q.Count) break;
+                    if (sandwiches[i] == 1 && circulars == q.Count) break;
+                    while(q.Peek()!= sandwiches[i])
+                    {
+                        q.Enqueue(q.Dequeue());
+                    }
+                    var top = q.Dequeue();
+                    if (top == 0) circulars--;
+                    else squares--;
+                }
+            }
+            return n - i;
+        }
+
         ///1701. Average Waiting Time
         ///Only 1 chef, customers[i] = [arrivali, timei], Return the average waiting time of all customers.
         public double AverageWaitingTime(int[][] customers)

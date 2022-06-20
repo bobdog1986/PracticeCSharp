@@ -9,6 +9,39 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
+        ///2100. Find Good Days to Rob the Bank, #Prefix Sum
+        //The ith day is a good day to rob the bank if:
+        //There are at least time days before and after the ith day,
+        //The number of guards at the bank for the time days before i are non-increasing, and
+        //The number of guards at the bank for the time days after i are non-decreasing.
+        public IList<int> GoodDaysToRobBank(int[] security, int time)
+        {
+            int n = security.Length;
+            //store how many count of continuous days meet the requires
+            int[] left = new int[n];
+            int[] right = new int[n];
+            var res = new List<int>();
+
+            for (int i = 1; i < n; i++)
+            {
+                left[i] = security[i] <= security[i - 1] ? left[i - 1] + 1 : 0;
+            }
+
+            for (int i = n - 2; i >= 0; i--)
+            {
+                right[i] = security[i] <= security[i + 1] ? right[i + 1] + 1 : 0;
+            }
+
+            for (int i = time; i < n - time; i++)
+            {
+                // both left and right bounds are time indices away
+                if (left[i] >= time && right[i] >= time)
+                    res.Add(i);
+            }
+
+            return res;
+        }
+
         ///2101. Detonate the Maximum Bombs,#Graph, #DFS
         ///You may choose to detonate a single bomb. When a bomb is detonated,
         ///it will detonate all bombs that lie in its range. These bombs will
@@ -119,25 +152,6 @@ namespace LeetCodeAlgo
                     res += (long)nums[j] * (i - j) * (j - k);//how many times nums[j] works as max
                 }
                 s.Push(i);
-            }
-            return res;
-        }
-
-        ///2016. Maximum Difference Between Increasing Elements
-        /// find the maximum of ( nums[j] - nums[i]), such that 0 <= i < j < n and nums[i] < nums[j].
-        ///Return the maximum difference.If no such i and j exists, return -1
-        public int MaximumDifference(int[] nums)
-        {
-            int res = -1;
-            int n = nums.Length;
-            int max = nums[n - 1];
-            for (int i = n - 2; i >= 0; --i)
-            {
-                if (nums[i] < max && max - nums[i] > res)
-                {
-                    res = max - nums[i];
-                }
-                max = Math.Max(max, nums[i]);
             }
             return res;
         }
