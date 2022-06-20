@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Collections;
+using System.Text;
 
 namespace LeetCodeAlgo
 {
@@ -209,6 +211,97 @@ namespace LeetCodeAlgo
             if (n == 2)
                 return 1;
             return Tribonacci_Recursion(n - 3) + Tribonacci_Recursion(n - 2) + Tribonacci_Recursion(n - 1);
+        }
+
+
+        ///1138. Alphabet Board Path
+        public string AlphabetBoardPath(string target)
+        {
+            var sb = new StringBuilder();
+            int row = 0;
+            int col = 0;
+            foreach(var t in target)
+            {
+                int r = (t - 'a') / 5;
+                int c = (t - 'a') % 5;
+
+                if (t == 'z')
+                {
+                    if (c > col)
+                    {
+                        while (col < c)
+                        {
+                            sb.Append('R');
+                            col++;
+                        }
+                    }
+                    else if (c < col)
+                    {
+                        while (col > c)
+                        {
+                            sb.Append('L');
+                            col--;
+                        }
+                    }
+
+                    if (r > row)
+                    {
+                        while (row < r)
+                        {
+                            sb.Append('D');
+                            row++;
+                        }
+                    }
+                    else if (r < row)
+                    {
+                        while (row > r)
+                        {
+                            sb.Append('U');
+                            row--;
+                        }
+                    }
+                }
+                else
+                {
+                    if (r > row)
+                    {
+                        while (row < r)
+                        {
+                            sb.Append('D');
+                            row++;
+                        }
+                    }
+                    else if (r < row)
+                    {
+                        while (row > r)
+                        {
+                            sb.Append('U');
+                            row--;
+                        }
+                    }
+
+                    if (c > col)
+                    {
+                        while (col < c)
+                        {
+                            sb.Append('R');
+                            col++;
+                        }
+                    }
+                    else if (c < col)
+                    {
+                        while (col > c)
+                        {
+                            sb.Append('L');
+                            col--;
+                        }
+                    }
+
+                }
+
+                sb.Append('!');
+            }
+            return sb.ToString();
         }
 
         ///1143. Longest Common Subsequence
