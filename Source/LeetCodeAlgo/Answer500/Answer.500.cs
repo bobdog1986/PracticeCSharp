@@ -39,7 +39,6 @@ namespace LeetCodeAlgo
             return result.ToArray();
         }
 
-
         ///501. Find Mode in Binary Search Tree, #BTree
         ///Given the root of a binary search tree (BST) with duplicates, return all the most frequently occurred elements.
         ///If the tree has more than one mode, return them in any order.
@@ -209,25 +208,30 @@ namespace LeetCodeAlgo
         {
             if (n <= 1)
                 return n;
-            int dp = 0;
-            int a1 = 0;
-            int a2 = 1;
-            int i = 2;
-            while (i <= n)
+            int a = 0;
+            int dp = 1;
+            int temp = 0;
+            while (n-->1)
             {
-                dp = a1 + a2;
-                a1 = a2;
-                a2 = dp;
-                i++;
+                temp = dp;
+                dp += a;
+                a=temp;
             }
             return dp;
         }
 
         public int Fib_Recursion(int n)
         {
+            return Fib_Memo(n,new Dictionary<int, int>());
+        }
+        private int Fib_Memo(int n, Dictionary<int,int> dict)
+        {
             if (n == 0) return 0;
             if (n == 1) return 1;
-            return Fib_Recursion(n - 1) + Fib_Recursion(n - 2);
+            if (dict.ContainsKey(n)) return dict[n];
+            var x = Fib_Memo(n - 1,dict) + Fib_Memo(n - 2,dict);
+            dict.Add(n, x);
+            return x;
         }
 
         ///513. Find Bottom Left Tree Value, #BTree

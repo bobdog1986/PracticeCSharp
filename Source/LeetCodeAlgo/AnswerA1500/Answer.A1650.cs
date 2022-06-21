@@ -170,6 +170,26 @@ namespace LeetCodeAlgo
             }
             return new string(list.ToArray());
         }
+        ///1668. Maximum Repeating Substring
+        public int MaxRepeating(string sequence, string word)
+        {
+            int res = 0;
+            int n = word.Length;
+            for(int i = 0; i < sequence.Length-n+1; i++)
+            {
+                if (sequence.Substring(i, n) == word)
+                {
+                    int k = 1;
+                    while(i+k*n< sequence.Length - n + 1)
+                    {
+                        if (sequence.Substring(i + k*n, n) == word) k++;
+                        else break;
+                    }
+                    res = Math.Max(res, k);
+                }
+            }
+            return res;
+        }
         /// 1669. Merge In Between Linked Lists
         ///Remove list1's nodes from the ath node to the bth node, and put list2 in their place.
         public ListNode MergeInBetween(ListNode list1, int a, int b, ListNode list2)
