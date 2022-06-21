@@ -882,7 +882,15 @@ namespace LeetCodeAlgo
 
             return head;
         }
-
+        public ListNode SwapPairs_Recursion(ListNode head)
+        {
+            if (head == null || head.next == null)
+                return head;
+            ListNode next = head.next;
+            head.next = SwapPairs_Recursion(head.next.next);
+            next.next = head;
+            return next;
+        }
         ///25. Reverse Nodes in k-Group
         ///
         public ListNode ReverseKGroup(ListNode head, int k)

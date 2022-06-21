@@ -587,27 +587,33 @@ namespace LeetCodeAlgo
         ///In Pascal's triangle, each number is the sum of the two numbers directly above it as shown:
         public IList<int> GetRow(int rowIndex)
         {
-            List<int> currentRow = new List<int>() { 1 };
+            List<int> list = new List<int>() { 1 };
             int lastRowIndex = 0;
-            while (lastRowIndex < rowIndex)
+            while (lastRowIndex++ < rowIndex)
             {
-                var list2 = new List<int>();
-                int j = 0;
-                list2.Add(1);
-                j++;
-                while (j < lastRowIndex + 1)
-                {
-                    list2.Add(currentRow[j - 1] + currentRow[j]);
-                    j++;
-                }
-                list2.Add(1);
-                currentRow = list2;
-                lastRowIndex++;
+                var next = new List<int>();
+                next.Add(1);
+                for (int i = 0; i < list.Count - 1; i++)
+                    next.Add(list[i] + list[i + 1]);
+                next.Add(1);
+                list = next;
             }
-
-            return currentRow;
+            return list;
         }
-
+        public IList<int> GetRow_Recursion(int rowIndex)
+        {
+            return GetRow_Recursion(new List<int>() { 1 }, rowIndex);
+        }
+        private IList<int> GetRow_Recursion(List<int> list,int rowIndex)
+        {
+            if (rowIndex == list.Count - 1) return list;
+            var next = new List<int>();
+            next.Add(1);
+            for (int i = 0; i < list.Count - 1; i++)
+                next.Add(list[i] + list[i + 1]);
+            next.Add(1);
+            return GetRow_Recursion(next, rowIndex);
+        }
         ///120. Triangle
         ///Given a triangle array, return the minimum path sum from top to bottom.
         ///   2

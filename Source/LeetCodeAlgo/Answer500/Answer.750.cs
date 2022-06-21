@@ -185,6 +185,37 @@ namespace LeetCodeAlgo
                 if (set.Contains(s)) res++;
             return res;
         }
+
+        ///777. Swap Adjacent in LR String, #Two Pointers
+        //"XL" with "LX", and "RX"=>"XR"
+        public bool CanTransform(string start, string end)
+        {
+            int n = start.Length;
+            int i = 0;
+            int j = 0;
+
+            while (i < n || j < n)
+            {
+                // stop at char that is not 'X'
+                while (i < n && start[i] == 'X') { i++; }
+                while (j < n && end[j] == 'X') { j++; }
+
+                if (i >= n || j >= n) { break; }
+
+                // relative order for 'R' and 'L' in 2 strings should be the same
+                if (start[i] != end[j]) { return false; }
+                // R can only move to right
+                if (start[i] == 'R' && i > j) { return false; }
+                // L can only move to left
+                if (start[i] == 'L' && i < j) { return false; }
+                // check next
+                i++;
+                j++;
+            }
+
+            return i == j;
+        }
+
         ///781. Rabbits in Forest, #Greedy
         //We asked n rabbits "How many rabbits have the same color as you?" and
         //collected the answers in an integer array answers where answers[i] is the answer of the ith rabbit.

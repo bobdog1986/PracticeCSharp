@@ -183,7 +183,7 @@ namespace LeetCodeAlgo
         /// 206. Reverse Linked List
         ///Given the head of a singly linked list, reverse the list, and return the reversed list.
         ///The number of nodes in the list is the range [0, 5000].
-        public ListNode ReverseList(ListNode head)
+        public ListNode ReverseList_My(ListNode head)
         {
             if (head == null)
                 return null;
@@ -201,6 +201,37 @@ namespace LeetCodeAlgo
             list[0].next = null;
             return list.Last();
         }
+        public ListNode ReverseList(ListNode head)
+        {
+            ListNode prev = null;
+            ListNode node = head;
+            while (node != null)
+            {
+                var next = node.next;
+                node.next = prev;
+
+                prev = node;
+                node = next;
+            }
+            return prev;
+        }
+
+        public ListNode ReverseList_Recursion(ListNode head)
+        {
+            return ReverseList_Recursion(null, head);
+        }
+
+        private ListNode ReverseList_Recursion(ListNode prev, ListNode node)
+        {
+            if (node == null)
+                return prev;
+
+            var next = node.next;
+            node.next = prev;
+            return ReverseList_Recursion(node, next);
+        }
+
+
 
         ///207. Course Schedule, #Graph
         ///You are given an array prerequisites where prerequisites[i] = [ai, bi]

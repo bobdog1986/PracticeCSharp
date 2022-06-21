@@ -6,7 +6,7 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///700. Search in a Binary Search Tree
+        ///700. Search in a Binary Search Tree, #BST
         ///You are given the root of a binary search tree (BST) and an integer val.
         ///Find the node in the BST equals val and return the subtree rooted with that node.
         ///If such a node does not exist, return null.
@@ -14,16 +14,21 @@ namespace LeetCodeAlgo
         {
             if (root == null)
                 return null;
-
             while (root != null)
             {
                 if (val == root.val)
                     return root;
-
                 root = val > root.val ? root.right : root.left;
             }
-
             return root;
+        }
+
+        public TreeNode SearchBST_Recursion(TreeNode root, int val)
+        {
+            if (root == null)
+                return null;
+            if (root.val == val) return root;
+            return root.val > val? SearchBST_Recursion (root.left,val): SearchBST_Recursion(root.right, val);
         }
 
         ///701. Insert into a Binary Search Tree
