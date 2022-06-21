@@ -1598,38 +1598,25 @@ namespace LeetCodeAlgo
         ///If there is no cycle, return null.
         public ListNode DetectCycle(ListNode head)
         {
-            ListNode walker = head;
-            ListNode runner = head;
-            //if there is any cycle, runner will never end, then meet walker
-            //walkerLen =  (lenBeforeCycle + lenInCycle)
-            //runnerLen =  2* (lenBeforeCycle + lenInCycle)
-            //runnerlen - walkerLen = lenBeforeCycle + lenInCycle = N* cycleLen
-            while (runner.next != null && runner.next.next != null)
+            ListNode slow = head;
+            ListNode fast = head;
+            while (fast != null && fast.next != null)
             {
-                walker = walker.next;
-                runner = runner.next.next;
-                if (walker == runner)
-                    break;
-            }
-            if (runner == null || runner.next == null)
-            {
-                return null;
-            }
-            else
-            {
-                //it will multiple of cycle length because it have to run cycle n-times till when slow will be equal to fast.
-                // so it will be always some multiple of cycle for fast pointer.
-                // nodeLen = lenBeforeCycle + X*cycleLen, if node is begin
-                // walkerLen = N* cycleLen + lenBeforeCycle + X*cycleLen = lenBeforeCycle + lenInCycle + lenBeforeCycle + X*cycleLen
-                // after N*cycleLen, they will meet
-                var node = head;
-                while (node != walker)
+                fast = fast.next.next;
+                slow = slow.next;
+
+                if (fast == slow)
                 {
-                    node = node.next;
-                    walker = walker.next;
+                    ListNode slow2 = head;
+                    while (slow2 != slow)
+                    {
+                        slow = slow.next;
+                        slow2 = slow2.next;
+                    }
+                    return slow;
                 }
-                return node;
             }
+            return null;
         }
         ///143. Reorder List
         ///Reorder the list: 1->2->3->4 to 1->4->2->3, 1->2->3->4->5 to 1->5->2->4->3

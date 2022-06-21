@@ -304,6 +304,31 @@ namespace LeetCodeAlgo
             return (n + 1) * (n + 2) * (n + 3) * (n + 4) / 24;
         }
 
+        ///1642. Furthest Building You Can Reach, #PriorityQueue
+        //Start from building index-0, If h[i + 1] > h[i], you can either use one ladder or(h[i + 1] - h[i]) bricks.
+        //Return the furthest building index(0-indexed) you can reach if you use the given ladders and bricks optimally.
+        public int FurthestBuilding(int[] heights, int bricks, int ladders)
+        {
+            int n = heights.Length;
+            var minHeap = new PriorityQueue<int, int>();
+            int total = 0;
+            for(int i = 0; i < n - 1; i++)
+            {
+                int gap = heights[i + 1] - heights[i];
+                if (gap > 0)
+                {
+                    minHeap.Enqueue(gap, gap);
+                    if (minHeap.Count > ladders)
+                    {
+                        var top=minHeap.Dequeue();
+                        total += top;
+                        if (total > bricks) return i;
+                    }
+                }
+            }
+            return n - 1;
+        }
+
         ///1648. Sell Diminishing-Valued Colored Balls, #Binary Search
         // if you own 6 yellow balls, the customer would pay 6 for the first yellow ball.
         // After the transaction, there are only 5 yellow balls left, so the next yellow ball is then valued at 5
