@@ -216,6 +216,20 @@ namespace LeetCodeAlgo
             return i == j;
         }
 
+        ///779. K-th Symbol in Grammar
+        //row[1]=0, row[i] to row[i+1] =>  0 with 01, and 1 with 10. return k(1-idnex) in row[n]
+        public int KthGrammar(int n, int k)
+        {
+            return KthGrammar1(n, k - 1);
+        }
+
+        private int KthGrammar1(int n, int k)
+        {
+            if (n == 1) return 0;
+            if (k % 2 == 0) return KthGrammar1(n - 1, k / 2) == 0 ? 0 : 1;
+            else return KthGrammar1(n - 1, k / 2) == 0 ? 1 : 0;
+        }
+
         ///781. Rabbits in Forest, #Greedy
         //We asked n rabbits "How many rabbits have the same color as you?" and
         //collected the answers in an integer array answers where answers[i] is the answer of the ith rabbit.
