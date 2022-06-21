@@ -1612,8 +1612,7 @@ namespace LeetCodeAlgo
         public void Merge(int[] nums1, int m, int[] nums2, int n)
         {
             int[] temp = new int[m];
-            for (int k = 0; k < m; k++)
-                temp[k] = nums1[k];
+            Array.Copy(nums1, temp, m);
 
             int i = 0, j = 0;
             while (i < m || j < n)

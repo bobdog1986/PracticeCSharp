@@ -7,16 +7,10 @@ namespace LeetCodeAlgo
     public partial class Answer
     {
         ///905. Sort Array By Parity
-        ///Given an integer array nums, move all the even integers at the beginning of the array followed by all the odd integers.
+        ///move all the evens at the beginning then followed by all the odds.
         public int[] SortArrayByParity(int[] nums)
         {
-            var res = new List<int>();
-            for (int i = 0; i < nums.Length; i++)
-            {
-                if (nums[i] % 2 == 0) res.Insert(0, nums[i]);
-                else res.Add(nums[i]);
-            }
-            return res.ToArray();
+            return nums.OrderBy(x => x % 2).ToArray();
         }
 
         ///908. Smallest Range I
@@ -379,8 +373,32 @@ namespace LeetCodeAlgo
                 }
             }
         }
-        /// 941. Valid Mountain Array
+        /// 941. Valid Mountain Array, #Two Pointers
         ///len>=3, arr[i]> all [0,i-1],and [i+1,len-1]
+        public bool ValidMountainArray_TwoPointer(int[] arr)
+        {
+            int n = arr.Length;
+            int i = 0;
+            while (i < n-1)
+            {
+                if (arr[i] < arr[i + 1]) i++;
+                else if (arr[i] == arr[i + 1]) return false;
+                else break;
+            }
+            if (i == 0 || i == n - 1) return false;
+
+            int j = n-1;
+            while (j >0)
+            {
+                if (arr[j] < arr[j - 1]) j--;
+                else if (arr[j] == arr[j - 1]) return false;
+                else break;
+            }
+            if (j == 0 || j == n - 1) return false;
+
+            return i == j;
+        }
+
         public bool ValidMountainArray(int[] arr)
         {
             if (arr.Length < 3)

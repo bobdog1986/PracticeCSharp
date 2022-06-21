@@ -74,6 +74,9 @@ namespace LeetCodeAlgo
             }
             return -1;
         }
+
+        ///1656. Design an Ordered Stream, see OrderedStream
+
         ///1657. Determine if Two Strings Are Close
         public bool CloseStrings(string word1, string word2)
         {

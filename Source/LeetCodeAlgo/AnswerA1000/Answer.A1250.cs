@@ -449,13 +449,11 @@ namespace LeetCodeAlgo
         ///Given an array nums of integers, return how many of them contain an even number of digits.
         public int FindNumbers(int[] nums)
         {
-            int res = 0;
-            foreach (var n in nums)
-                if (FindNumbers_isEvenDigit(n)) res++;
-            return res;
+            //return nums.Count(x=> (x>=10&&x<100)||(x>=1000&&x<10000) ||x==100000 );
+            return nums.Count(x => FindNumbers_isEvenDigit(x));
         }
 
-        public bool FindNumbers_isEvenDigit(int n)
+        private bool FindNumbers_isEvenDigit(int n)
         {
             while (n > 0)
             {
@@ -473,7 +471,7 @@ namespace LeetCodeAlgo
         }
 
         ///1299. Replace Elements with Greatest Element on Right Side
-        ///replace every element with the greatest element among the elements to its right, and replace the last element with -1.
+        ///replace every element with the greatest element on its right, and replace the last element with -1.
         public int[] ReplaceElements(int[] arr)
         {
             int max = -1;

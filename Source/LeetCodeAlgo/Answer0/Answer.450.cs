@@ -456,18 +456,14 @@ namespace LeetCodeAlgo
         ///Given a binary array nums, return the maximum number of consecutive 1's in the array.
         public int FindMaxConsecutiveOnes(int[] nums)
         {
-            var max = 0;
+            int max = 0;
             int count = 0;
             foreach (var n in nums)
             {
                 if (n == 1) count++;
-                else
-                {
-                    max = Math.Max(max, count);
-                    count = 0;
-                }
+                else count = 0;
+                max = Math.Max(max, count);
             }
-            max = Math.Max(max, count);
             return max;
         }
 

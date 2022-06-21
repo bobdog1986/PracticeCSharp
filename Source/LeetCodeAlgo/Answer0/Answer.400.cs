@@ -387,12 +387,18 @@ namespace LeetCodeAlgo
         ///If the third maximum does not exist, return the maximum number.
         public int ThirdMax(int[] nums)
         {
-            SortedSet<int> set = new SortedSet<int>();
-            foreach(var n in nums)
-                set.Add(n);
-
-            if(set.Count>=3)return set.ElementAt(set.Count-3);
-            else return set.ElementAt(set.Count - 1);
+            var pq = new PriorityQueue<int, long>();
+            var set = new HashSet<int>();
+            foreach (var x in nums)
+            {
+                if (!set.Contains(x))
+                    pq.Enqueue(x, 0l - x);
+                set.Add(x);
+            }
+            if (set.Count < 3) return pq.Dequeue();
+            pq.Dequeue();
+            pq.Dequeue();
+            return pq.Dequeue();
         }
 
 

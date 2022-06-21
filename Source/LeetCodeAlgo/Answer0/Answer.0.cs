@@ -941,7 +941,7 @@ namespace LeetCodeAlgo
         ///-100 <= nums[i] <= 100
         public int RemoveDuplicates_26_OnlyOnce(int[] nums)
         {
-            int prev = -10000;
+            int prev = int.MinValue;
             int begin = 0;
             for (int i = 0; i < nums.Length; i++)
             {
