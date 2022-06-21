@@ -173,6 +173,15 @@ namespace LeetCodeAlgo
         ///1668. Maximum Repeating Substring
         public int MaxRepeating(string sequence, string word)
         {
+
+            int ans = 1;
+            while (sequence.Contains(string.Join("", Enumerable.Repeat(word, ans))))
+                ans++;
+            return ans - 1;
+        }
+
+        public int MaxRepeating_My(string sequence, string word)
+        {
             int res = 0;
             int n = word.Length;
             for(int i = 0; i < sequence.Length-n+1; i++)

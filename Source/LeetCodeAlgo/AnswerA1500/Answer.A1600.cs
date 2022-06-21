@@ -132,6 +132,22 @@ namespace LeetCodeAlgo
             }
             return max;
         }
+
+        ///1619. Mean of Array After Removing Some Elements
+        // return the mean of the remaining integers after removing the smallest 5% and the largest 5% of the elements.
+        public double TrimMean(int[] arr)
+        {
+            Array.Sort(arr);
+            int sum = arr.Sum();
+            int skips = arr.Length / 20;
+            for(int i = 0; i < skips; i++)
+            {
+                sum -= arr[i];
+                sum -= arr[arr.Length - 1 - i];
+            }
+            return sum * 1.0 / (arr.Length - 2 * skips);
+        }
+
         ///1630. Arithmetic Subarrays
         ///Return a list of boolean elements answer, where answer[i] is true if the subarray
         ///nums[l[i]], nums[l[i]+1], ... , nums[r[i]] can be rearranged to form an arithmetic sequence or false.
