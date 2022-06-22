@@ -452,7 +452,23 @@ namespace LeetCodeAlgo
             Array.Sort(nums);
             return nums[nums.Length - k];
         }
-
+        public int FindKthLargest_Heap(int[] nums, int k)
+        {
+            var pq = new PriorityQueue<int, int>();
+            foreach(var n in nums)
+            {
+                if (pq.Count < k) pq.Enqueue(n, n);
+                else
+                {
+                    if (n > pq.Peek())
+                    {
+                        pq.Enqueue(n, n);
+                        pq.Dequeue();
+                    }
+                }
+            }
+            return pq.Peek();
+        }
         ///216. Combination Sum III, #Backtracking
         ///Find all valid combinations of k numbers that sum up to n :
         ///Only numbers 1 through 9 are used.And Each number is used at most once.
