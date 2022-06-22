@@ -525,25 +525,25 @@ namespace LeetCodeAlgo
             return false;
         }
 
-        /// 220. Contains Duplicate III
+        /// 220. Contains Duplicate III， #Bucket
         /// return true if abs(nums[i] - nums[j]) <= t and abs(i - j) <= k.
         ///  1 <= nums.length <= 2 * 10^4,-2^31 <= nums[i] <= 2^31 - 1, 0 <= k <= 10^4, 0 <= t <= 2^31 - 1
         public bool ContainsNearbyAlmostDuplicate(int[] nums, int k, int t)
         {
             if (k ==0 || nums.Length==1) return false;
-            Dictionary<long, long> map = new Dictionary<long, long>();
-            //split whole [-2^31, 2^31 - 1] range to t+1 width units
+            Dictionary<long, long> map = new Dictionary<long, long>();//hold {bucketId,index} pairs
             for (int i = 0; i < nums.Length; i++)
             {
+                //split whole int range [-2^31, 2^31 - 1] to t+1 width buckets
+                //using t+1 as width, the distance bewteen left-0 and right-t is t, same bucket return true
+                //And, if t not plus 1, when t == 0, num divide by 0 will cause crash.
                 long remappedNum = (long)nums[i] - int.MinValue;
-                // if t not plus 1, when t == 0, num divide by 0 will cause crash.
                 long bucket = remappedNum / ((long)t + 1);
                 if (map.ContainsKey(bucket)) return true;
                 // if the two different numbers are located in two adjacent bucket, the value still might be less than t
                 if (map.ContainsKey(bucket - 1) && remappedNum - map[bucket - 1] <= t)return true;
                 if((map.ContainsKey(bucket + 1) && map[bucket + 1] - remappedNum <= t)) return true;
-
-                //update buckets
+                //update buckets,remove the i-k ,only hold at most k elements
                 if (map.Count >= k)
                 {
                     long lastBucket = ((long)nums[i - k] - int.MinValue) / ((long)t + 1);
@@ -1077,17 +1077,12 @@ namespace LeetCodeAlgo
             while (col >= 0 && row <= m - 1)
             {
                 if (target == matrix[row][col])
-                {
                     return true;
-                }
                 else if (target < matrix[row][col])
-                {
                     col--;//move left
-                }
+
                 else if (target > matrix[row][col])
-                {
                     row++;//move down
-                }
             }
             return false;
         }

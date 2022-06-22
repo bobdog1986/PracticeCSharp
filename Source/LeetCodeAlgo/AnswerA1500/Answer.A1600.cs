@@ -289,6 +289,26 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///1640. Check Array Formation Through Concatenation
+        public bool CanFormArray(int[] arr, int[][] pieces)
+        {
+            Dictionary<int, int[]> dict = new Dictionary<int, int[]>();
+            foreach(var p in pieces)
+                dict.Add(p[0], p);
+
+            for(int i = 0; i < arr.Length;)
+            {
+                if(!dict.ContainsKey(arr[i]))return false;
+                var curr = dict[arr[i]];
+                for(int j=0; j < curr.Length; j++)
+                {
+                    if (arr[i + j] != curr[j]) return false;
+                }
+                i += curr.Length;
+            }
+            return true;
+        }
+
         ///1641. Count Sorted Vowel Strings, #DP
         ///return the number of strings of length n that consist only of vowels (a, e, i, o, u) and are lexicographically sorted.
         public int CountVowelStrings(int n)
