@@ -350,6 +350,17 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2028. Find Missing Observations
+        public int[] MissingRolls(int[] rolls, int mean, int n)
+        {
+            int diff= (rolls.Length + n) * mean - rolls.Sum();
+            if (diff > 6 * n || diff < n) return new int[0];
+            int mod = diff % n;
+            int[] res = Enumerable.Repeat(diff / n, n).ToArray();
+            for (int i = 0; i < mod; i++)
+                res[i]++;
+            return res;
+        }
         /// 2032. Two Out of Three
         ///return a distinct array containing all the values that in at least two out of the three arrays.
         public IList<int> TwoOutOfThree(int[] nums1, int[] nums2, int[] nums3)
@@ -387,7 +398,9 @@ namespace LeetCodeAlgo
                 Array.Copy(grid[i], 0, arr, i * n, n);
             Array.Sort(arr);
             if (arr.Any(i => (i - arr[0]) % x != 0)) return -1;
-            //why median works?
+            //why median works? when move to right, all left-elements add and right-elements subtract
+            //so when left-elements count = right-elements, stop move
+            //https://asvrada.github.io/blog/median-shortest-distance-sum/
             if (m * n % 2 == 1)
                 return arr.Sum(i => Math.Abs(i - arr[m * n / 2]) / x);
             else
