@@ -780,15 +780,36 @@ namespace LeetCodeAlgo
         ///22. Generate Parentheses, #Backtracking
         ///Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
         ///1 <= n <= 8, if n=3, return ["((()))","(()())","(())()","()(())","()()()"]
-        public List<String> GenerateParenthesis(int n)
+        public List<string> GenerateParenthesis_Iteration(int n)
+        {
+            List<List<string>> res = new List<List<string>>();
+            res.Add(new List<string>() { ""});
+            for (int i = 1; i <= n; ++i)
+            {
+                List<string> list = new List<string>();
+                for (int j = 0; j < i; ++j)
+                {
+                    foreach (var first in res[j])
+                    {
+                        foreach (var second in res[i - 1 - j])
+                        {
+                            list.Add("(" + first + ")" + second);
+                        }
+                    }
+                }
+                res.Add(list);
+            }
+            return res.Last();
+        }
+
+        public List<string> GenerateParenthesis(int n)
         {
             List<string> ans = new List<string>();
             GenerateParenthesis_Backtracking(ans, "", 0, 0, n);
             return ans;
         }
-
         ///string is immutable , best for this question
-        public void GenerateParenthesis_Backtracking(IList<string> list, string str, int left, int right, int count)
+        private void GenerateParenthesis_Backtracking(IList<string> list, string str, int left, int right, int count)
         {
             if (left == count && right == count)
             {

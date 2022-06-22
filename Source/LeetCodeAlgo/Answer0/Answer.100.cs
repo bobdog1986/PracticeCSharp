@@ -7,51 +7,39 @@ namespace LeetCodeAlgo
     public partial class Answer
     {
         ///100. Same Tree, #BTree
-        public bool IsSameTree(TreeNode p, TreeNode q)
+        public bool IsSameTree_Recursion(TreeNode p, TreeNode q)
         {
-            if (p == null && q == null)
-                return true;
-            if (p == null || q == null)
-                return false;
+            if (p == null && q == null) return true;
+            if (p == null || q == null) return false;
+            if (p.val != q.val) return false;
+            return IsSameTree_Recursion(p.left, q.left) && IsSameTree_Recursion(p.right, q.right);
+        }
 
-            List<TreeNode> list1 = new List<TreeNode>() { p};
-            List<TreeNode> list2 = new List<TreeNode>() { q};
-
-            while(list1.Count>0|| list2.Count > 0)
+        public bool IsSameTree_Iteration(TreeNode p, TreeNode q)
+        {
+            var q1 = new Queue<TreeNode>();
+            var q2 = new Queue<TreeNode>();
+            q1.Enqueue(p);
+            q2.Enqueue(q);
+            while(q1.Count >0 )
             {
-                if (list1.Count != list2.Count)
-                    return false;
-
-                List<TreeNode> next1 = new List<TreeNode>();
-                List<TreeNode> next2 = new List<TreeNode>();
-                for (int i=0; i<list1.Count; i++)
+                var size= q1.Count;
+                while (size-- > 0)
                 {
-                    if (list1[i].val != list2[i].val)
-                        return false;
-
-                    if ((list1[i].left == null && list2[i].left != null)
-                        || (list1[i].left != null && list2[i].left == null)
-                        || (list1[i].right == null && list2[i].right != null)
-                        || (list1[i].right != null && list2[i].right == null))
-                        return false;
-
-                    if (list1[i].left != null)
-                    {
-                        next1.Add(list1[i].left);
-                        next2.Add(list2[i].left);
-                    }
-                    if (list1[i].right != null)
-                    {
-                        next1.Add(list1[i].right);
-                        next2.Add(list2[i].right);
-                    }
+                    var n1 = q1.Dequeue();
+                    var n2 = q2.Dequeue();
+                    if (n1 == null && n2 == null) continue;
+                    if (n1 == null || n2 == null) return false;
+                    if (n1.val != n2.val) return false;
+                    q1.Enqueue(n1.left);
+                    q1.Enqueue(n1.right);
+                    q2.Enqueue(n2.left);
+                    q2.Enqueue(n2.right);
                 }
-
-                list1 = next1;
-                list2 = next2;
             }
             return true;
         }
+
         /// 101. Symmetric Tree, #BTree
         ///Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
         public bool IsSymmetric(TreeNode root)

@@ -1123,125 +1123,26 @@ namespace LeetCodeAlgo
             return min > s.Length ? string.Empty : ans;
         }
 
-        /// 77. Combinations
+        /// 77. Combinations, #Backtracking
+        //Given two integers n and k, return all possible combinations of k numbers out of the range [1, n].
+        //1 <= n <= 20, 1 <= k <= n
         public IList<IList<int>> Combine(int n, int k)
         {
-            if (n == 0)
-                return null;
-
-            if (k == 0)
-                return null;
-
-            if (n < k)
-                return null;
-
-            List<IList<int>> result = new List<IList<int>>();
-
-            if (n == k)
-            {
-                List<int> list = new List<int>();
-
-                for (int i = 1; i <= n; i++)
-                    list.Add(i);
-
-                result.Add(list);
-                return result;
-            }
-
-            if (k == 1)
-            {
-                for (int i = 1; i <= n; i++)
-                {
-                    List<int> list = new List<int>
-                    {
-                        i
-                    };
-                    result.Add(list);
-                }
-
-                return result;
-            }
-
-            for (int i = 1; i <= n - k + 1; i++)
-            {
-                var list1 = Combine(n - 1, k, i);
-                var list2 = Combine(n - 1, k - 1, i);
-
-                if (list1 != null && list1.Count > 0)
-                {
-                    foreach (var item in list1)
-                        result.Add(item);
-                }
-
-                if (list2 != null && list2.Count > 0)
-                {
-                    foreach (var item in list2)
-                    {
-                        item.Add(n);
-                    }
-
-                    foreach (var item in list2)
-                        result.Add(item);
-                }
-            }
-
-            return result;
+            var res = new List<IList<int>>();
+            Combine(n, 1, k, new List<int>(), res);
+            return res;
         }
 
-        public IList<IList<int>> Combine(int n, int k, int start)
+        private void Combine(int n, int curr, int k, List<int> list, IList<IList<int>> res)
         {
-            if (n == 0)
-                return null;
-
-            if (k == 0)
-                return null;
-
-            if (n - start + 1 < k)
-                return null;
-
-            if (n - start + 1 == k)
+            if (list.Count == k)
             {
-                List<IList<int>> result = new List<IList<int>>();
-
-                List<int> list = new List<int>();
-
-                for (int i = start; i <= n; i++)
-                    list.Add(i);
-
-                result.Add(list);
-                return result;
+                res.Add(list);
+                return;
             }
-
-            var list1 = Combine(n - 1, k, start);
-            var list2 = Combine(n - 1, k - 1, start);
-
-            if (list2 != null && list2.Count > 0)
-            {
-                foreach (var i in list2)
-                {
-                    i.Add(n);
-                }
-            }
-
-            if (list1 != null && list1.Count > 0)
-            {
-                if (list2 != null && list2.Count > 0)
-                {
-                    foreach (var i in list2)
-                    {
-                        list1.Add(i);
-                    }
-                }
-
-                return list1;
-            }
-
-            if (list2 != null && list2.Count > 0)
-            {
-                return list2;
-            }
-
-            return null;
+            if (curr > n) return;
+            Combine(n, curr + 1, k, list, res);
+            Combine(n, curr + 1, k, new List<int>(list) { curr}, res);
         }
 
         ///78. Subsets - Unique nums, #Backtracking
@@ -1458,19 +1359,15 @@ namespace LeetCodeAlgo
         /// 0<= height <=10000, heights.Length>=1
         public int LargestRectangleArea(int[] heights)
         {
-            if (heights == null || heights.Length == 0)
-            {
-                return 0;
-            }
-            int[] lessFromLeft = new int[heights.Length]; // idx of the first bar the left that is lower than current
-            int[] lessFromRight = new int[heights.Length]; // idx of the first bar the right that is lower than current
-            lessFromRight[heights.Length - 1] = heights.Length;
+            int n = heights.Length;
+            int[] lessFromLeft = new int[n]; // idx of the first bar the left that is lower than current
+            int[] lessFromRight = new int[n]; // idx of the first bar the right that is lower than current
+            lessFromRight[n - 1] = n;
             lessFromLeft[0] = -1;
 
             for (int i = 1; i < heights.Length; i++)
             {
                 int p = i - 1;
-
                 while (p >= 0 && heights[p] >= heights[i])
                 {
                     p = lessFromLeft[p];
@@ -1502,18 +1399,17 @@ namespace LeetCodeAlgo
         {
             int n = heights.Length;
             int max = 0;
-            int[] stack = new int[n + 1];
-            int index = -1;
+            var stack = new Stack<int>();
             for (int i = 0; i <= n; i++)
             {
                 int height = (i == n) ? 0 : heights[i];
-                while (index != -1 && height < heights[stack[index]])
+                while (stack.Count>0 && height < heights[stack.Peek()])
                 {
-                    int currHeight = heights[stack[index --]];
-                    int width = (index == -1) ? i : i - 1 - stack[index];
+                    int currHeight = heights[stack.Pop()];
+                    int width = (stack.Count==0) ? i : i - 1 - stack.Peek();
                     max = Math.Max(max, currHeight * width);
                 }
-                stack[++index] = i;
+                stack.Push(i);
             }
             return max;
         }

@@ -148,6 +148,24 @@ namespace LeetCodeAlgo
             return sum * 1.0 / (arr.Length - 2 * skips);
         }
 
+        ///1629. Slowest Key
+        public char SlowestKey(int[] releaseTimes, string keysPressed)
+        {
+            Dictionary<char, int> dict = new Dictionary<char, int>();
+            for(int i = 0; i < releaseTimes.Length; i++)
+            {
+                int duration = i == 0? releaseTimes[i]: releaseTimes[i]- releaseTimes[i-1];
+                if (dict.ContainsKey(keysPressed[i]))
+                    dict[keysPressed[i]] = Math.Max(duration, dict[keysPressed[i]]);
+                else dict.Add(keysPressed[i], duration);
+            }
+
+            var keys =dict.Keys.OrderBy(k => -dict[k]).ThenBy(k=>-k).ToArray();
+            return keys[0];
+        }
+
+
+
         ///1630. Arithmetic Subarrays
         ///Return a list of boolean elements answer, where answer[i] is true if the subarray
         ///nums[l[i]], nums[l[i]+1], ... , nums[r[i]] can be rearranged to form an arithmetic sequence or false.
