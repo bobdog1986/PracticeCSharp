@@ -201,7 +201,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2164. Sort Even and Odd Indices Independently, #PriorityQueue, 
+        ///2164. Sort Even and Odd Indices Independently, #PriorityQueue,
         ///Sort the values at odd indices of nums in non-increasing order., Even indices in non-decreasing
         public int[] SortEvenOdd(int[] nums)
         {
@@ -275,36 +275,57 @@ namespace LeetCodeAlgo
         ///2170. Minimum Operations to Make the Array Alternating
         public int MinimumOperations(int[] nums)
         {
-            Dictionary<int, int> dict1 = new Dictionary<int, int>();
-            Dictionary<int, int> dict2 = new Dictionary<int, int>();
+            if (nums.Length <= 1) return 0;
+            Dictionary<int, int> evenDict = new Dictionary<int, int>();
+            Dictionary<int, int> oddDict = new Dictionary<int, int>();
             for (int i = 0; i < nums.Length; ++i)
             {
                 if (i % 2 == 0)
                 {
-                    if (dict1.ContainsKey(nums[i])) dict1[nums[i]]++;
-                    else dict1.Add(nums[i], 1);
+                    if (evenDict.ContainsKey(nums[i])) evenDict[nums[i]]++;
+                    else evenDict.Add(nums[i], 1);
                 }
                 else
                 {
-                    if (dict2.ContainsKey(nums[i])) dict2[nums[i]]++;
-                    else dict2.Add(nums[i], 1);
+                    if (oddDict.ContainsKey(nums[i])) oddDict[nums[i]]++;
+                    else oddDict.Add(nums[i], 1);
                 }
             }
-
-            int len1 = (nums.Length + 1) / 2;
-            int len2 = nums.Length - len1;
-
+            int lenOfEven = (nums.Length + 1) / 2;
+            int lenOfOdd = nums.Length - lenOfEven;
+            var evenKeys = evenDict.Keys.OrderBy(x => -evenDict[x]).ToList();
+            var oddKeys = oddDict.Keys.OrderBy(x => -oddDict[x]).ToList();
             int res = int.MaxValue;
-            foreach (var k1 in dict1.Keys)
+            if(evenKeys.Count==1 && oddKeys.Count == 1)
             {
-                foreach (var k2 in dict2.Keys)
+                if (evenKeys[0] == oddKeys[0]) res = oddDict[oddKeys[0]];
+                else res = 0;
+            }
+            else if (evenKeys.Count == 1 || oddKeys.Count==1)
+            {
+                if (evenKeys.Count == 1)
                 {
-                    if (k1 == k2) continue;
-                    int count = (len1 - dict1[k1]) + (len2 - dict2[k2]);
-                    res = Math.Min(res, count);
+                    if (evenKeys[0] == oddKeys[0]) res = lenOfOdd - oddDict[oddKeys[1]];
+                    else res = lenOfOdd - oddDict[oddKeys[0]];
+                }
+                else
+                {
+                    if (evenKeys[0] == oddKeys[0]) res = Math.Min(lenOfEven - evenDict[evenKeys[0]] + lenOfOdd, lenOfEven - evenDict[evenKeys[1]]);
+                    else res = lenOfEven - evenDict[evenKeys[0]];
                 }
             }
-
+            else
+            {
+                if (evenKeys[0] == oddKeys[0])
+                {
+                    res = Math.Min(lenOfEven - evenDict[evenKeys[0]] + lenOfOdd - oddDict[oddKeys[1]],
+                                    lenOfEven - evenDict[evenKeys[1]] + lenOfOdd - oddDict[oddKeys[0]]);
+                }
+                else
+                {
+                    res=lenOfEven- evenDict[evenKeys[0]] + lenOfOdd - oddDict[oddKeys[0]];
+                }
+            }
             return res;
         }
 
@@ -609,7 +630,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        /// 2195. Append K Integers With Minimal Sum, #PriorityQueue, 
+        /// 2195. Append K Integers With Minimal Sum, #PriorityQueue,
         ///You are given an integer array nums and an integer k.
         ///Append k unique positive integers that do not appear in nums to nums such that the resulting total sum is minimum.
         ///Return the sum of the k integers appended to nums.

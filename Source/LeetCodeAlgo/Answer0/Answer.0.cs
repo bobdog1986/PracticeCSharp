@@ -606,7 +606,7 @@ namespace LeetCodeAlgo
         }
 
         ///17. Letter Combinations of a Phone Number, #Backtracking
-        ///digits[i] is a digit in the range['2', '9'].
+        ///digits[i] is a digit in the range['2', '9']. 0 <= digits.length <= 4
         /// 2- ABC, 3-DEF, 4-GHI, 5-JKL,6-MNO,7-PQRS,8-TUV 9-WXYZ
         public IList<string> LetterCombinations(string digits)
         {
@@ -623,17 +623,19 @@ namespace LeetCodeAlgo
                 { '8', "tuv" } ,
                 { '9', "wxyz" } ,
             };
-            var ans = new List<List<char>>();
-            ans.Add(new List<char>());
+            var q = new Queue<string>();
+            q.Enqueue("");
             foreach (var d in digits)
             {
-                List<List<char>> next = new List<List<char>>();
-                foreach (var entry in ans)
+                int size = q.Count;
+                while (size-- > 0)
+                {
+                    var curr = q.Dequeue();
                     foreach (char c in dict[d])
-                        next.Add(new List<char>(entry) { c });
-                ans = next;
+                        q.Enqueue(curr + c);
+                }
             }
-            return ans.Select(x => new string(x.ToArray())).ToList();
+            return q.ToList();
         }
 
         /// 18. 4Sum
@@ -1833,28 +1835,24 @@ namespace LeetCodeAlgo
         ///All the integers of nums are unique.
         public IList<IList<int>> Permute(int[] nums)
         {
-            var ans = new List<IList<int>>();
-            var list = new List<int>();
-            bool[] visit = new bool[nums.Length];
-            Permute_Backtracking(ans, list, nums, visit, 0);
-            return ans;
+            var res = new List<IList<int>>();
+            Permute_Backtracking(new HashSet<int>(), nums, res);
+            return res;
         }
 
-        public void Permute_Backtracking(IList<IList<int>> ans, IList<int> list, int[] nums, bool[] visit, int count)
+        private void Permute_Backtracking(HashSet<int> set, int[] nums, List<IList<int>> res)
         {
-            if (count == nums.Length)
+            if (set.Count == nums.Length)
             {
-                ans.Add(list);
+                res.Add(set.ToList());
                 return;
             }
-            for (int i = 0; i < visit.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
-                if (visit[i]) continue;
-                var nextVisit = new bool[visit.Length];
-                Array.Copy(visit, nextVisit, visit.Length);
-                nextVisit[i] = true;
-                var nextList = new List<int>(list) { nums[i] };
-                Permute_Backtracking(ans, nextList, nums, nextVisit, count + 1);
+                if (set.Contains(nums[i])) continue;
+                set.Add(nums[i]);
+                Permute_Backtracking( set, nums,res);
+                set.Remove(nums[i]);
             }
         }
 

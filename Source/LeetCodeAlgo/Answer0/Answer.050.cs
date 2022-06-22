@@ -1357,6 +1357,41 @@ namespace LeetCodeAlgo
         ///heights representing the histogram's bar height where the width of each bar is 1,
         ///return the area of the largest rectangle in the histogram.
         /// 0<= height <=10000, heights.Length>=1
+        public int LargestRectangleArea_My(int[] heights)
+        {
+            int n = heights.Length;
+            int[] lessFromLeft = new int[n]; // idx of the first bar the left that is lower than current
+            int[] lessFromRight = new int[n]; // idx of the first bar the right that is lower than current
+
+            var stack = new Stack<int>();//stack only store strictly increase elements
+            for (int i = 0; i < n; i++)
+            {
+                while (stack.Count > 0 && heights[stack.Peek()] >= heights[i])
+                    stack.Pop();
+
+                lessFromLeft[i] = stack.Count > 0 ? stack.Peek() : -1;
+                stack.Push(i);
+            }
+
+            stack.Clear();
+            for (int i = n - 1; i >= 0; i--)
+            {
+                while (stack.Count > 0 && heights[stack.Peek()] >= heights[i])
+                    stack.Pop();
+
+                lessFromRight[i] = stack.Count > 0 ? stack.Peek() : n;
+                stack.Push(i);
+            }
+            int maxArea = 0;
+            for (int i = 0; i < n; i++)
+            {
+                //if lessFromLeft[i]==-1, start from 0; if lessFromRight[i]=n, end with n-1
+                // width is range [lessFromLeft[i]+1,lessFromRight[i]-1]
+                maxArea = Math.Max(maxArea, heights[i] * (lessFromRight[i] - 1 - (lessFromLeft[i] + 1) + 1));
+            }
+            return maxArea;
+        }
+
         public int LargestRectangleArea(int[] heights)
         {
             int n = heights.Length;
@@ -1367,35 +1402,39 @@ namespace LeetCodeAlgo
 
             for (int i = 1; i < heights.Length; i++)
             {
-                int p = i - 1;
-                while (p >= 0 && heights[p] >= heights[i])
+                int prev = i - 1;
+                while (prev >= 0 && heights[prev] >= heights[i])
                 {
-                    p = lessFromLeft[p];
+                    //prev--;time out
+                    prev = lessFromLeft[prev];//this will save time
                 }
-                lessFromLeft[i] = p;
+                lessFromLeft[i] = prev;
             }
 
             for (int i = heights.Length - 2; i >= 0; i--)
             {
-                int p = i + 1;
+                int next = i + 1;
 
-                while (p < heights.Length && heights[p] >= heights[i])
+                while (next < heights.Length && heights[next] >= heights[i])
                 {
-                    p = lessFromRight[p];
+                    //next++;time out
+                    next = lessFromRight[next];//this will save time
                 }
-                lessFromRight[i] = p;
+                lessFromRight[i] = next;
             }
 
             int maxArea = 0;
             for (int i = 0; i < heights.Length; i++)
             {
-                maxArea = Math.Max(maxArea, heights[i] * (lessFromRight[i] - lessFromLeft[i] - 1));
+                //if lessFromLeft[i]==-1, start from 0; if lessFromRight[i]=n, end with n-1
+                // width is range [lessFromLeft[i]+1,lessFromRight[i]-1]
+                maxArea = Math.Max(maxArea, heights[i] * (lessFromRight[i]-1 - (lessFromLeft[i]+1) + 1));
             }
 
             return maxArea;
         }
 
-        public int LargestRectangleArea1(int[] heights)
+        public int LargestRectangleArea_HardToLearn(int[] heights)
         {
             int n = heights.Length;
             int max = 0;
@@ -1403,9 +1442,12 @@ namespace LeetCodeAlgo
             for (int i = 0; i <= n; i++)
             {
                 int height = (i == n) ? 0 : heights[i];
+                // stack is only store ascending heights
+                //if current height[i] is small , calculate max of top, then discard top
                 while (stack.Count>0 && height < heights[stack.Peek()])
                 {
                     int currHeight = heights[stack.Pop()];
+                    //width is [top+1, i-1]
                     int width = (stack.Count==0) ? i : i - 1 - stack.Peek();
                     max = Math.Max(max, currHeight * width);
                 }
