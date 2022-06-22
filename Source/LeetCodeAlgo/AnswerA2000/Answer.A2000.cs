@@ -374,6 +374,27 @@ namespace LeetCodeAlgo
             return dict.Keys.Where(x => dict[x].Count >= 2).ToList();
         }
 
+        ///2033. Minimum Operations to Make a Uni-Value Grid
+        //In one operation, you can add x to or subtract x from any element in the grid.
+        //A uni-value grid is a grid where all the elements of it are equal.
+        //Return the minimum number of operations to make the grid uni-value. If it is not possible, return -1.
+        public int MinOperations(int[][] grid, int x)
+        {
+            int m = grid.Length;
+            int n = grid[0].Length;
+            var arr = new int[m * n];//convert 2D array to 1D
+            for (int i = 0; i < m; i++)
+                Array.Copy(grid[i], 0, arr, i * n, n);
+            Array.Sort(arr);
+            if (arr.Any(i => (i - arr[0]) % x != 0)) return -1;
+            //why median works?
+            if (m * n % 2 == 1)
+                return arr.Sum(i => Math.Abs(i - arr[m * n / 2]) / x);
+            else
+                return Math.Min(arr.Sum(i => Math.Abs(i - arr[m * n / 2]) / x),
+                    arr.Sum(i => Math.Abs(i - arr[m * n / 2 - 1]) / x));
+        }
+
         /// 2037. Minimum Number of Moves to Seat Everyone
         /// Return the minimum number of moves required to move each student to a seat
         /// such that no two students are in the same seat.
