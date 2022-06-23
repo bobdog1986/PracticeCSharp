@@ -179,6 +179,27 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///720. Longest Word in Dictionary
+        public string LongestWord(string[] words)
+        {
+            Dictionary<int, HashSet<string>> dict = new Dictionary<int, HashSet<string>>();
+            foreach(var w in words)
+            {
+                if (dict.ContainsKey(w.Length)) dict[w.Length].Add(w);
+                else dict.Add(w.Length, new HashSet<string>() { w });
+            }
+            if (!dict.ContainsKey(1)) return string.Empty;
+            var curr = dict[1];
+            for(int i = 2; i <= 1000; i++)
+            {
+                if (!dict.ContainsKey(i)) break;
+                var next = dict[i].Where(x => curr.Contains(x.Substring(0, x.Length - 1))).ToHashSet();
+                if (next.Count > 0) curr = next;
+                else break;
+            }
+            return curr.OrderBy(x => x).First();
+        }
+
         ///724. Find Pivot Index
         // leftSum = rightSum , exclude current number
         public int PivotIndex(int[] nums)
