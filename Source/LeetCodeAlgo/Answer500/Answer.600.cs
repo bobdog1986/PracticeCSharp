@@ -225,6 +225,27 @@ namespace LeetCodeAlgo
             Array.Sort(nums);
             return Math.Max(nums[0] * nums[1] * nums[n - 1], nums[n - 3] * nums[n - 2] * nums[n - 1]);
         }
+
+        ///630. Course Schedule III, #PriorityQueue
+        //courses[i] = [durationi, lastDayi] indicate that the ith course should be taken continuously
+        //for durationi days and must be finished before or on lastDayi.
+        //You will start on the 1st day and you cannot take two or more courses simultaneously.
+        //Return the maximum number of courses that you can take.
+        public int scheduleCourse(int[][] courses)
+        {
+            courses = courses.OrderBy(x => x[1]).ToArray();//sort by lastDayi
+            PriorityQueue<int, int> pq = new PriorityQueue<int, int>();
+            int time = 0;
+            foreach (var  c in courses)
+            {
+                time += c[0];
+                pq.Enqueue(c[0], -c[0]); // add current course to max heap
+                //If time exceeds, drop the previous course which costs the most time. (That must be the best choice!)
+                if (time > c[1]) time -= pq.Dequeue();
+            }
+            return pq.Count;
+        }
+
         /// 633. Sum of Square Numbers
         ///Given a non-negative integer c, decide whether there're two integers a and b such that a2 + b2 = c.
         public bool JudgeSquareSum(int c)
