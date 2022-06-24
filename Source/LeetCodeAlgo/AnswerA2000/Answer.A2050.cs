@@ -312,6 +312,25 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///2087. Minimum Cost Homecoming of a Robot in a Grid
+        public int MinCost_2087(int[] startPos, int[] homePos, int[] rowCosts, int[] colCosts)
+        {
+            int dr = homePos[0] - startPos[0] > 0 ? 1 : -1;
+            int dc = homePos[1] - startPos[1] > 0 ? 1 : -1;
+            int res = 0;
+            while(startPos[0]!= homePos[0])
+            {
+                startPos[0] += dr;
+                res += rowCosts[startPos[0]];
+            }
+            while (startPos[1] != homePos[1])
+            {
+                startPos[1] += dc;
+                res += colCosts[startPos[1]];
+            }
+            return res;
+        }
+
         ///2089. Find Target Indices After Sorting Array
         public IList<int> TargetIndices(int[] nums, int target)
         {
