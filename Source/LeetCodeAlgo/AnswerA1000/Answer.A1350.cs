@@ -44,6 +44,50 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///1354. Construct Target Array With Multiple Sums, #PriorityQueue
+        //array start with all 1, choose index i and set arr[i]=sum. return true if can transfer to target
+        public bool IsPossible(int[] target)
+        {
+            //Now we can consider it from the other side:
+            //We first find the max one, then we subtract the other nums.
+            //Then we will get the last round num in the current position.
+            //Then we change it to the last round's num, and recursively call the function.
+            //eg.1: [9,3,5] ->[1,3,5]->[1,3,1]->[1,1,1]
+            //[9,3,5]: max = 9, index = 0, subtract the other nums, 9 - 5 - 3 = 1 , 1 > 0, so we then change target[0] to 1.
+            //[1, 3, 5]: max = 5, index = 2, subtract the other nums, 5 - 1 - 3 = 1 , 1 > 0, so we then change target[2] to 1.
+            //[1, 3, 1]: max = 3, index = 1, subtract the other nums, 3 - 1 - 1 = 1 , 1 > 0, so we then change target[1] to 1.
+            //[1, 1, 1]: max = 1 ,then return true;
+
+            //eg.2 : [8,5] ->[3,5]->[3,2]->[1,2]->[1,1]
+            //[8,5]: max = 8, index = 0, subtract the other nums, 8 - 5 = 3 , 3 > 0, so we then change target[0] to 3
+            //[3, 5]: max = 5, index = 1, subtract the other nums, 5 - 3 = 2 , 2 > 0, so we then change target[1] to 2
+            //[3, 2]: max = 3, index = 0, subtract the other nums, 3 - 2 = 1 , 1 > 0, so we then change target[0] to 1
+            //[1, 2]: max = 2, index = 1,subtract the other nums, 2 - 1 = 1 , 1 > 0, so we then change target[1] to 1
+            //[1, 1]: max = 1 ,then return true;
+            PriorityQueue<long, long> pq = new PriorityQueue<long, long>();
+            long sum = 0;
+            long n = target.Length;
+            foreach (var x in target)
+            {
+                sum += x;
+                pq.Enqueue(x,-x);
+            }
+            while (true)
+            {
+                if (sum == n) return true;
+                long max = pq.Dequeue();
+                sum -= max;//sum exclude the max
+                if (sum == 1) return true;//becuase max%1 ==0, if sum==1, only 2 elements, [1,1] can tansfer to any
+                //max must >= sum ? why? max = curr + others, this will cause infinition loops
+                if (max < sum || sum <= 0)
+                    return false;
+                max %= sum;//avoid TLE for very large number
+                if (max <= 0) return false;
+                sum += max;
+                pq.Enqueue(max,-max);
+            }
+        }
+
         /// 1356. Sort Integers by The Number of 1 Bits
         ///1 <= arr.length <= 500, 0 <= arr[i] <= 10^4
         public int[] SortByBits(int[] arr)
