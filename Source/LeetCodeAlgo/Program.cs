@@ -46,14 +46,14 @@ namespace LeetCodeAlgo
             ///build int[][] and int[] from file
             //var matIntLine0 = answer.buildMatrix(intMatLines[0]);
             //var matIntLine1 = answer.buildMatrix(intMatLines[1]);
-            //var arrIntLine0 = answer.buildArray(intArrLines[0]);
+            var arrIntLine0 = answer.buildArray(intArrLines[0]);
             //var arrIntLine1 = answer.buildArray(intArrLines[1]);
 
             Console.WriteLine("**************start watch ms*******");
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.AlphabetBoardPath("zdz");
+            var result = answer.NumPairsDivisibleBy60(arrIntLine0);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

@@ -7,7 +7,7 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        public int getFactorial(int n)
+        public long getFactorial(int n)
         {
             if (n == 0 || n == 1) return 1;
             int r = 1;
@@ -19,9 +19,9 @@ namespace LeetCodeAlgo
             return r;
         }
 
-        public int getFactorial(int n, int count)
+        public long getFactorial(int n, int count)
         {
-            int r = 1;
+            long r = 1;
 
             while (count > 0 && n > 0)
             {
@@ -33,7 +33,7 @@ namespace LeetCodeAlgo
             return r;
         }
 
-        public int getCombines(int n, int count)
+        public long getCombines(int n, int count)
         {
             return getFactorial(n, count) / getFactorial(count);
         }

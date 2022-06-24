@@ -185,6 +185,36 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///1010. Pairs of Songs With Total Durations Divisible by 60
+        //Return the number of pairs of songs for which their total duration in seconds is divisible by 60.
+        //Formally, we want the number of indices i, j such that i < j with (time[i] + time[j]) % 60 == 0.
+        public int NumPairsDivisibleBy60(int[] time)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            for(int i=0;i<60;i++)
+                dict.Add(i, 0);
+            long res = 0;
+            foreach(var n in time)
+            {
+                int mod = n % 60;
+                dict[mod]++;
+            }
+            if (dict[0] >= 2)
+            {
+                res += getFactorial(dict[0], 2) / 2;
+            }
+            if (dict[30] >= 2)
+            {
+                res += getFactorial(dict[30], 2) / 2;
+            }
+            for (int i = 1; i <= 29; i++)
+            {
+                res += dict[i] * dict[60 - i];
+            }
+            return (int)res;
+        }
+
         /// 1014. Best Sightseeing Pair
         ///find max = values[i] + values[j] + i - j, 1 <= values[i] <= 1000
         public int MaxScoreSightseeingPair(int[] values)

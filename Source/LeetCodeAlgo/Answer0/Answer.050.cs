@@ -450,7 +450,7 @@ namespace LeetCodeAlgo
                     break;
                 }
 
-                var nextFactor = getFactorial(x - 1);
+                var nextFactor = (int)getFactorial(x - 1);
                 if (k <= nextFactor)
                 {
                     //add digits[0], then call next loop
