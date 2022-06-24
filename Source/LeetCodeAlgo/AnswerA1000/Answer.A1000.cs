@@ -314,6 +314,39 @@ namespace LeetCodeAlgo
             return res.ToList();
         }
 
+        /// 1024. Video Stitching, #Greedy
+        //clips[i] = [starti, endi] indicates that the ith clip started at starti and ended at endi.
+        //For example, a clip [0, 7] can be cut into segments[0, 1] + [1, 3] + [3, 7].
+        //Return the minimum number of clips needed so that we can cut the clips into segments
+        //that cover the entire sporting event [0, time]. If the task is impossible, return -1.
+        public int VideoStitching(int[][] clips, int time)
+        {
+            clips = clips.OrderBy(x => x[0]).ThenBy(x => -x[1]).ToArray();
+            if (clips[0][0] > 0) return -1;
+            int curr = clips[0][1];
+            int res = 1;
+            int n = clips.Length;
+            for (int i = 1; i <n  && curr<time; i++)
+            {
+                if (clips[i][0] > curr) return -1;
+                else if (clips[i][1] < curr) continue;
+                else
+                {
+                    int j = i;
+                    int max = curr;
+                    while (j < n)
+                    {
+                        if (clips[j][0] > curr) break;
+                        max = Math.Max(max, clips[j++][1]);
+                    }
+                    res++;
+                    curr = max;
+                    i = j - 1;
+                }
+            }
+            return curr>=time?res:-1;
+        }
+
         private bool CamelMatch(string query, string pattern)
         {
             int i = 0;
