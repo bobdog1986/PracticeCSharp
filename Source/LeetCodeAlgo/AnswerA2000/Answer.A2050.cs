@@ -325,6 +325,26 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///2090. K Radius Subarray Averages,#Sliding Window
+        //avgs[i] is the k-radius average for the subarray centered at index i.
+        public int[] GetAverages(int[] nums, int k)
+        {
+            int n = nums.Length;
+            int[] res = new int[n];
+            Array.Fill(res, -1);//if not enough count, assign -1;
+            int len = 2 * k + 1;
+            if (n < len) return res;
+            long sum = nums.Take(len).Sum(x => (long)x);
+            for(int i = k; i < n - k; i++)
+            {
+                res[i] = (int)(sum / len);
+                sum -= nums[i - k];
+                if(i + k + 1<n)
+                    sum += nums[i + k + 1];
+            }
+            return res;
+        }
+
         ///2091. Removing Minimum and Maximum From Array
         ///A deletion is defined as either removing an element from the front of
         ///the array or removing an element from the back of the array.
