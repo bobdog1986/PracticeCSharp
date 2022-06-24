@@ -156,6 +156,35 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2105. Watering Plants II, #Two Pointers
+        //return how many times need to refill
+        public int MinimumRefill(int[] plants, int capacityA, int capacityB)
+        {
+            int refills = 0;
+            int left = 0;
+            int right = plants.Length - 1;
+            int waterA = capacityA;
+            int waterB = capacityB;
+            while (left < right)
+            {
+                if (waterA < plants[left])
+                {
+                    refills++;
+                    waterA = capacityA;
+                }
+                waterA -= plants[left++];
+                if (waterB < plants[right])
+                {
+                    refills++;
+                    waterB = capacityB;
+                }
+                waterB -= plants[right--];
+            }
+            if (left == right && Math.Max(waterA, waterB) < plants[left])
+                refills++;
+            return refills;
+        }
+
         /// 2108. Find First Palindromic String in the Array
         public string FirstPalindrome(string[] words)
         {

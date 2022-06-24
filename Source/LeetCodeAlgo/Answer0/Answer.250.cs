@@ -223,7 +223,7 @@ namespace LeetCodeAlgo
         }
 
         /// 278. First Bad Version, #Binary Search
-        /// 1 <= bad <= n <= 2^31 - 1
+        /// 1 <= bad <= n <= 2^31 - 1,all the versions after a bad version are also bad.
         public int FirstBadVersion(int n)
         {
             int left = 1;
@@ -232,18 +232,14 @@ namespace LeetCodeAlgo
             {
                 int mid = left + (right - left) / 2;
                 if (IsBadVersion(mid))
-                {
                     right = mid;
-                }
                 else
-                {
                     left = mid + 1;
-                }
             }
             return left;
         }
 
-        public bool IsBadVersion(int n)//API provides by leetcode
+        private bool IsBadVersion(int n)//API provides by leetcode
         {
             return (n >= 1702766719);
         }
