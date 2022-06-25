@@ -899,35 +899,24 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        /// 235. Lowest Common Ancestor of a Binary Search Tree
+        /// 235. Lowest Common Ancestor of a Binary Search Tree, #BTree, #BST
         ///Given a binary search tree (BST), find the lowest common ancestor (LCA) of two given nodes in the BST.
         public TreeNode LowestCommonAncestor_235BST(TreeNode root, TreeNode p, TreeNode q)
         {
             TreeNode left = p.val < q.val ? p : q;
             TreeNode right = p.val < q.val ? q : p;
-
             return LowestCommonAncestor_235BST_Recursion(root, left, right);
         }
 
-        public TreeNode LowestCommonAncestor_235BST_Recursion(TreeNode root, TreeNode left, TreeNode right)
+        private TreeNode LowestCommonAncestor_235BST_Recursion(TreeNode root, TreeNode left, TreeNode right)
         {
-            if (left.val < root.val && right.val > root.val)
-                return root;
-
-            if (left.val == root.val)
-                return left;
-
-            if (right.val == root.val)
-                return right;
-
+            if (left.val < root.val && right.val > root.val) return root;
+            if (left.val == root.val) return left;
+            if (right.val == root.val) return right;
             if (left.val < root.val && right.val < root.val)
-            {
                 return LowestCommonAncestor_235BST_Recursion(root.left, left, right);
-            }
             else
-            {
                 return LowestCommonAncestor_235BST_Recursion(root.right, left, right);
-            }
         }
 
         ///236. Lowest Common Ancestor of a Binary Tree - NOT BST, using Recursion

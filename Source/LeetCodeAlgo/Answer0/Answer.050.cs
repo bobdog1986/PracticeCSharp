@@ -1986,7 +1986,7 @@ namespace LeetCodeAlgo
             return IsValidBST_Recursion(root);
         }
 
-        public bool IsValidBST_Recursion(TreeNode root, TreeNode left = null, TreeNode right = null)
+        private bool IsValidBST_Recursion(TreeNode root, TreeNode left = null, TreeNode right = null)
         {
             if (root == null)
                 return true;
