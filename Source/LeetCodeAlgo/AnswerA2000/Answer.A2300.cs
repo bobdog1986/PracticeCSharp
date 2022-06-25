@@ -473,5 +473,12 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///2317. Maximum XOR After Operations
+        //update nums[i] to be equal to nums[i] AND (nums[i] XOR x).
+        //Return the maximum possible bitwise XOR of all elements of nums after applying the operation any number of times.
+        public int MaximumXOR(int[] nums)
+        {
+            return nums.Aggregate((x, y) => x | y);
+        }
     }
 }
