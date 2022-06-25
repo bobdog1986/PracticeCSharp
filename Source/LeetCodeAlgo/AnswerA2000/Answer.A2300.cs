@@ -429,5 +429,49 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2316. Count Unreachable Pairs of Nodes in an Undirected Graph, #DFS
+        //undirected graph with n nodes from 0 to n - 1. edges where edges[i] = [ai, bi]
+        //Return the number of pairs of different nodes that are unreachable from each other.
+        public long CountPairs(int n, int[][] edges)
+        {
+            long res = 0;
+            var graph = new List<int>[n];
+            for (int i = 0; i < n; i++)
+                graph[i] = new List<int>();
+
+            foreach(var edge in edges)
+            {
+                graph[edge[0]].Add(edge[1]);
+                graph[edge[1]].Add(edge[0]);
+            }
+
+            var visit = new HashSet<int>();
+            long left = 0;
+            for (int i = 0; i < n; i++)
+            {
+                if (visit.Contains(i)) continue;
+                var set = new HashSet<int>();
+                CountPairs_DFS(graph, i, set);
+                left = (n - visit.Count);
+                res += (long)set.Count*(left- set.Count);
+                foreach (var x in set)
+                    visit.Add(x);
+            }
+            left = (n - visit.Count);
+            if (left > 1)
+                res += getFactorial((int)left, 2) / 2;
+            return res;
+        }
+
+        private void CountPairs_DFS(List<int>[] graph,int i,HashSet<int> set)
+        {
+            foreach(var x in graph[i])
+            {
+                if (set.Contains(x)) continue;
+                set.Add(x);
+                CountPairs_DFS(graph, x, set);
+            }
+        }
+
     }
 }
