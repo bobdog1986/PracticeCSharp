@@ -34,7 +34,7 @@ namespace LeetCodeAlgo
             //Answer.printTree(treeNode1);
 
             ///build int[][] and int[] from string
-            string matStrInt1 = "[[1,10],[3,3]]";
+            string matStrInt1 = "[[1,2,3,4]]";
             var matInt1 = answer.buildMatrix(matStrInt1);
             //string matStrInt2 = "[[1,3,1,15],[1,3,3,1]]";
             //var matInt2 = answer.buildMatrix(matStrInt2);
@@ -53,7 +53,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.NumPairsDivisibleBy60(arrIntLine0);
+            var result = answer.FindDiagonalOrder(matInt1);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

@@ -102,7 +102,6 @@ namespace LeetCodeAlgo
             return nums.Sum() - nums.Min() * nums.Length;
         }
 
-
         /// 454. 4Sum II -- O(n^4) --> O(n^2), using Dictionary
         ///Given four integer arrays nums1, nums2, nums3, and nums4 all of length n,
         ///return the number of tuples (i, j, k, l) such that:nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
@@ -421,11 +420,11 @@ namespace LeetCodeAlgo
         {
             int res = 0;
             int[] ones = new int[32];
-            foreach(var n in nums)
+            foreach (var n in nums)
             {
-                for(int i = 0; i < 31; i++)
+                for (int i = 0; i < 31; i++)
                 {
-                    if((n&(1<<i))!=0) ones[i]++;
+                    if ((n & (1 << i)) != 0) ones[i]++;
                 }
             }
 
@@ -433,7 +432,6 @@ namespace LeetCodeAlgo
                 res += ones[i] * (nums.Length - ones[i]);
             return res;
         }
-
 
         /// 482. License Key Formatting
         ///Return the reformatted license key.
@@ -585,6 +583,45 @@ namespace LeetCodeAlgo
                 ans[i] = k;
             }
             return ans;
+        }
+
+        ///498. Diagonal Traverse
+        public int[] FindDiagonalOrder(int[][] mat)
+        {
+            int m = mat.Length;
+            int n = mat[0].Length;
+            int[] res = new int[m * n];
+            int row = 0, col = 0, d = 0;
+            int[][] dirs = new int[][] { new int[] { -1, 1 }, new int[] { 1, -1 } };
+            for (int i = 0; i < m * n; i++)
+            {
+                res[i] = mat[row][col];
+                row += dirs[d][0];
+                col += dirs[d][1];
+                if (col >= n)
+                {
+                    col = n - 1;
+                    row += 2;
+                    d = 1 - d;
+                }
+                if (row >= m)
+                {
+                    row = m - 1;
+                    col += 2;
+                    d = 1 - d;
+                }
+                if (row < 0)
+                {
+                    row = 0;
+                    d = 1 - d;
+                }
+                if (col < 0)
+                {
+                    col = 0;
+                    d = 1 - d;
+                }
+            }
+            return res;
         }
     }
 }
