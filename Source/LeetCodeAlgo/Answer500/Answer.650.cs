@@ -207,6 +207,34 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///665. Non-decreasing Array
+        // check if it could become non-decreasing by modifying at most one element.
+        public bool CheckPossibility(int[] nums)
+        {
+            int prev = int.MinValue;
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] < prev)
+                {
+                    return CheckPossibility(nums, i - 1, i) || CheckPossibility(nums, i - 2, i - 1);
+                }
+                prev = nums[i];
+            }
+            return true;
+        }
+
+        private bool CheckPossibility(int[] nums,int index ,int skip)
+        {
+            int prev = int.MinValue;
+            for (int i = Math.Max(0, index); i < nums.Length; i++)
+            {
+                if (i == skip) continue;
+                if (nums[i] < prev) return false;
+                prev = nums[i];
+            }
+            return true;
+        }
+
         ///669. Trim a Binary Search Tree, #BTree, #BST
         ///Given the root of a binary search tree, trim the tree so that all elements in [low, high].
         public TreeNode TrimBST(TreeNode root, int low, int high)
@@ -566,7 +594,7 @@ namespace LeetCodeAlgo
             return dict.Values.Sum() / total;
         }
 
-        /// 692. Top K Frequent Words, #PriorityQueue, 
+        /// 692. Top K Frequent Words, #PriorityQueue
         ///Given an array of strings words and an integer k, return the k most frequent strings.
         ///Return the answer sorted by the frequency from highest to lowest.
         ///Sort the words with the same frequency by their lexicographical order.
