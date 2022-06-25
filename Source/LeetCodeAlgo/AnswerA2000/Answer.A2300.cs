@@ -413,6 +413,21 @@ namespace LeetCodeAlgo
             return dp[m,n];
         }
 
+        //2315. Count Asterisks
+        //Return the number of '*' in s, excluding the '*' between each pair of '|'.
+        public int CountAsterisks(string s)
+        {
+            bool open = false;
+            int res = 0;
+            foreach(var c in s)
+            {
+                if(c== '|')
+                    open = !open;
+                else if (c == '*' && !open)
+                    res++;
+            }
+            return res;
+        }
 
     }
 }
