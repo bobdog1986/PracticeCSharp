@@ -49,15 +49,18 @@ namespace LeetCodeAlgo
             return start;
         }
 
+        //Greatest Common Divisor
         private long GCD(long x, long y)
         {
             return y == 0 ? x : GCD(y, x % y);
         }
 
+        //Least Common Multiple
         private long LCM(long x, long y)
         {
             return (x * y) / GCD(x, y);
         }
+
         /// 1202. Smallest String With Swaps, #Disjoint Set, #Union Find
         ///an array of pairs of indices where pairs[i] = [a, b] indicates 2 indices(0-indexed) of the string.
         ///You can swap the characters at any pair of indices in the given pairs any number of times.

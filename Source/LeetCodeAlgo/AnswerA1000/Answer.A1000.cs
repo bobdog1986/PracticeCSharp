@@ -521,6 +521,34 @@ namespace LeetCodeAlgo
                 res[index++]=pq.Dequeue();
             return res;
         }
+
+        ///1035. Uncrossed Lines , #DP
+        /// straight line connecting two numbers nums1[i] and nums2[j] such that:
+        //nums1[i] == nums2[j], and the line we draw does not intersect any other connecting(non-horizontal) line.
+        //Return the maximum number of connecting lines we can draw in this way.
+        public int MaxUncrossedLines(int[] nums1, int[] nums2)
+        {
+            //The Longest Common Subsequence
+            int m = nums1.Length;
+            int n = nums2.Length;
+            var dp = new int[m+1, n+1];
+            for(int i = 1; i <= m; i++)
+            {
+                for(int j = 1; j <= n; j++)
+                {
+                    if(nums1[i-1] == nums2[j-1])
+                    {
+                        dp[i, j] = dp[i - 1, j - 1] + 1;
+                    }
+                    else
+                    {
+                        dp[i, j] = Math.Max(dp[i - 1, j], dp[i, j - 1]);
+                    }
+                }
+            }
+            return dp[m, n];
+        }
+
         /// 1037. Valid Boomerang
         public bool IsBoomerang(int[][] points)
         {
