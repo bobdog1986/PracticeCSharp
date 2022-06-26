@@ -520,5 +520,26 @@ namespace LeetCodeAlgo
             return (int)(dp * dp % mod);
         }
 
+        ///2321. Maximum Score Of Spliced Array, #Kadane
+        ///1 <= nums1[i], nums2[i] <= 104
+        public int MaximumsSplicedArray(int[] nums1, int[] nums2)
+        {
+            int n = nums1.Length;
+            int[] diff1 = new int[n];
+            int[] diff2 = new int[n];
+            int sum1 = 0;
+            int sum2 = 0;
+            for (int i = 0; i < n; i++)
+            {
+                diff1[i] = nums1[i] - nums2[i];
+                diff2[i] = nums2[i] - nums1[i];
+                sum1 += nums1[i];
+                sum2 += nums2[i];
+            }
+            int max1 = MaxSubArray(diff1);
+            int max2 = MaxSubArray(diff2);
+            return Math.Max(sum2+max1,sum1+max2);
+        }
+
     }
 }
