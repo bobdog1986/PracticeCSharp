@@ -221,6 +221,32 @@ namespace LeetCodeAlgo
             return max;
         }
 
+        ///1423. Maximum Points You Can Obtain from Cards, #Sliding Window
+        //In one step, you can take one card from the beginning or from the end of the row.
+        //You have to take exactly k cards.Your score is the sum of the points of the cards you have taken.
+        //Given the integer array cardPoints and the integer k, return the maximum score you can obtain.
+        public int MaxScore(int[] cardPoints, int k)
+        {
+            //equal to find the min continuous subArray contains n-k elements
+            int n = cardPoints.Length;
+            if (k == n) return cardPoints.Sum();
+            int min = int.MaxValue;
+            int count = 0;
+            int sum = 0;
+            for (int i = 0; i < n; i++)
+            {
+                sum += cardPoints[i];
+                count++;
+                if (count ==n- k)
+                {
+                    min = Math.Min(min, sum);
+                    sum -= cardPoints[i - count+1];
+                    count--;
+                }
+            }
+            return cardPoints.Sum() - min;
+        }
+
         ///1437. Check If All 1's Are at Least Length K Places Away
         ///Given an binary array nums and an integer k, return true if all 1's are at least k places away from each other
         public bool KLengthApart(int[] nums, int k)
