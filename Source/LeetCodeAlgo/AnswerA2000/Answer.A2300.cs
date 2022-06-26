@@ -481,6 +481,23 @@ namespace LeetCodeAlgo
             return nums.Aggregate((x, y) => x | y);
         }
 
+        ///2319. Check if Matrix Is X-Matrix
+        //All the elements in the diagonals of the matrix are non-zero. All other elements are 0.
+        public bool CheckXMatrix(int[][] grid)
+        {
+            int n = grid.Length;
+            for(int i = 0; i < n; i++)
+            {
+                for(int j = 0; j < n; j++)
+                {
+                    bool drag = i == j || n - 1 - i == j;
+                    if ((drag && grid[i][j] == 0)
+                        ||(!drag && grid[i][j] != 0)) return false;
+                }
+            }
+            return true;
+        }
+
         ///2320. Count Number of Ways to Place Houses, #DP
         //There is a street with n * 2 plots, where there are n plots on each side of the street.
         //The plots on each side are numbered from 1 to n.On each plot, a house can be placed.
