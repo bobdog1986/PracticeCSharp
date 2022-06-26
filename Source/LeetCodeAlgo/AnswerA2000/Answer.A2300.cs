@@ -480,5 +480,28 @@ namespace LeetCodeAlgo
         {
             return nums.Aggregate((x, y) => x | y);
         }
+
+        ///2320. Count Number of Ways to Place Houses, #DP
+        //There is a street with n * 2 plots, where there are n plots on each side of the street.
+        //The plots on each side are numbered from 1 to n.On each plot, a house can be placed.
+        //Return the number of ways houses can be placed such that no two houses are adjacent to
+        //each other on the same side of the street. return modulo 109 + 7.
+        //Note that if a house is placed on the ith plot on one side of the street,
+        //a house can also be placed on the ith plot on the other side of the street.
+        public int CountHousePlacements(int n)
+        {
+            //dp[i]=dp[i-1]+dp[i-2], fibnacci
+            long mod = 10_0000_0007;
+            long a = 1;
+            long dp = 1;
+            for(int i = 1; i <= n; i++)
+            {
+                long b = a + dp;
+                a = dp;
+                dp = b% mod;
+            }
+            return (int)(dp * dp % mod);
+        }
+
     }
 }
