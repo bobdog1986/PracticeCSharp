@@ -12,39 +12,35 @@ namespace LeetCodeAlgo
         ///You may assume all four edges of the grid are all surrounded by water.
         public int NumIslands(char[][] grid)
         {
-            int ans = 0;
-            int rowlen = grid.Length;
-            int colLen = grid[0].Length;
+            int res = 0;
+            int m = grid.Length;
+            int n = grid[0].Length;
             int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
-            var queue = new Queue<int[]>();
-            for (int i = 0; i < rowlen; i++)
+            var q = new Queue<int[]>();
+            for (int i = 0; i < m; i++)
             {
-                for (int j = 0; j < colLen; j++)
+                for (int j = 0; j < n; j++)
                 {
                     if (grid[i][j] == '1')
                     {
-                        ans++;
-                        queue.Clear();
-                        queue.Enqueue(new int[] { i, j });
-                        while (queue.Count > 0)
+                        res++;
+                        q.Clear();
+                        q.Enqueue(new int[] { i, j });
+                        while (q.Count > 0)
                         {
-                            var node = queue.Dequeue();
+                            var node = q.Dequeue();
                             var row = node[0];
                             var col = node[1];
-
                             if (grid[row][col] == '1')
                             {
                                 grid[row][col] = '0';
                                 foreach (var d in dxy4)
                                 {
-                                    int r = row + d[0];
-                                    int c = col + d[1];
-                                    if (r >= 0 && r < rowlen && c >= 0 && c < colLen)
+                                    var r = row + d[0];
+                                    var c = col + d[1];
+                                    if (r >= 0 && r < m && c >= 0 && c < n && grid[r][c] == '1')
                                     {
-                                        if (grid[r][c] == '1')
-                                        {
-                                            queue.Enqueue(new int[] { r, c });
-                                        }
+                                        q.Enqueue(new int[] { r, c });
                                     }
                                 }
                             }
@@ -52,7 +48,7 @@ namespace LeetCodeAlgo
                     }
                 }
             }
-            return ans;
+            return res;
         }
 
         ///201. Bitwise AND of Numbers Range

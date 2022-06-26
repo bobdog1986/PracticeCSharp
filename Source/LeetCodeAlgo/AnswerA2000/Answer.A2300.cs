@@ -481,6 +481,58 @@ namespace LeetCodeAlgo
             return nums.Aggregate((x, y) => x | y);
         }
 
+        ///2318. Number of Distinct Roll Sequences, #DP
+        //You are given an integer n. You roll a fair 6-sided dice n times.
+        //Determine the total number of distinct sequences of rolls possible such that the following rules:
+        //The greatest common divisor of any adjacent values in the sequence is equal to 1.
+        //There is at least a gap of 2 rolls between equal valued rolls. abs(i - j) > 2.
+        //Return the total number of distinct sequences possible. return it modulo 109 + 7.
+        public int DistinctSequences(int n)
+        {
+            long res = 0;
+            long mod = 10_0000_0007;
+            //init non-GCD dictionary either same dictionary
+            //eg. for 1, all [1,6] meet the GCD<=1 rule , but 1 is same , so dict[1] = {2,3,4,5,6}
+            Dictionary<int, List<int>> dict = new Dictionary<int, List<int>>();
+            dict.Add(1, new List<int>() { 2, 3, 4, 5, 6 });
+            dict.Add(2, new List<int>() { 1, 3, 5, });
+            dict.Add(3, new List<int>() { 1, 2, 4, 5 });
+            dict.Add(4, new List<int>() { 1, 3, 5 });
+            dict.Add(5, new List<int>() { 1, 2, 3, 4, 6 });
+            dict.Add(6, new List<int>() { 1, 5, });
+            //must use 3D matrix array, init seed data
+            long[,,] dp = new long[n + 1,7,7];
+            for(int i=1;i<=6;i++)
+                dp[1, i, i] = 1;// normally index1 cannot equal index2, this is a tricky
+            //i is round
+            for (int i = 2; i <= n; i++)
+            {
+                //j means current number
+                for (int j = 1; j <= 6; j++)
+                {
+                    //k means that last row number, eg dp[i,j,k] came from dp[i-1,k,x], x cannot be j due to abs(i,j)>2 rule
+                    for (int k=1;k<=6; k++)
+                    {
+                        if (!dict[j].Contains(k)) continue;
+                        for (int l = 1; l <= 6; l++)
+                        {
+                            if (l == j) continue;//no need check l==k, this will make the tricky work
+                            dp[i, j, k] += dp[i - 1, k, l];
+                            dp[i, j, k] %= mod;
+                        }
+                    }
+                }
+            }
+            for (int i=1;i<=6;i++)
+            {
+                for(int j = 1; j <= 6; j++)
+                {
+                    res = (res + dp[n,i,j]) % mod;
+                }
+            }
+            return (int)((res + mod) % mod);
+        }
+
         ///2319. Check if Matrix Is X-Matrix
         //All the elements in the diagonals of the matrix are non-zero. All other elements are 0.
         public bool CheckXMatrix(int[][] grid)

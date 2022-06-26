@@ -34,14 +34,14 @@ namespace LeetCodeAlgo
             //Answer.printTree(treeNode1);
 
             ///build int[][] and int[] from string
-            string matStrInt1 = "[[1,2,3,4]]";
+            string matStrInt1 = " [[3,1],[2,3],[4,1],[0,4]]";
             var matInt1 = answer.buildMatrix(matStrInt1);
             //string matStrInt2 = "[[1,3,1,15],[1,3,3,1]]";
             //var matInt2 = answer.buildMatrix(matStrInt2);
-            string arrStrInt1 = "[3,3,2]";
+            string arrStrInt1 = "[29,29,23,32,17]";
             var arrInt1 = answer.buildArray(arrStrInt1);
-            //string arrStrInt2 = "[-10, -8, -7, -6]";
-            //var arrInt2 = answer.buildArray(arrStrInt2);
+            string arrStrInt2 = "[1,1,1]";
+            var arrInt2 = answer.buildArray(arrStrInt2);
 
             ///build int[][] and int[] from file
             //var matIntLine0 = answer.buildMatrix(intMatLines[0]);
@@ -53,7 +53,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.FindDiagonalOrder(matInt1);
+            var result = answer.DistinctSequences(4);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

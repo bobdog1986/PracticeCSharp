@@ -317,22 +317,22 @@ namespace LeetCodeAlgo
             int color = image[sr][sc];
             if (color == newColor)
                 return image;
-            int rowLen = image.Length;
-            int colLen = image[0].Length;
-            int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
+            int m = image.Length;
+            int n = image[0].Length;
+            int[] dxy4 = new int[] { 0,1,0,-1,0 };
             Queue<int[]> queue = new Queue<int[]>();
             queue.Enqueue(new int[] { sr, sc });
             while (queue.Count > 0)
             {
-                var point = queue.Dequeue();
-                if (image[point[0]][point[1]] == color)
+                var p = queue.Dequeue();
+                if (image[p[0]][p[1]] == color)
                 {
-                    image[point[0]][point[1]] = newColor;
-                    foreach (var d in dxy4)
+                    image[p[0]][p[1]] = newColor;
+                    for (int i=0;i<4;i++)
                     {
-                        var r = point[0] + d[0];
-                        var c = point[1] + d[1];
-                        if (r >= 0 && r < rowLen && c >= 0 && c < colLen && image[r][c] == color)
+                        var r = p[0] + dxy4[i];
+                        var c = p[1] + dxy4[i+1];
+                        if (r >= 0 && r < m && c >= 0 && c < n && image[r][c] == color)
                         {
                             queue.Enqueue(new int[] { r, c });
                         }
