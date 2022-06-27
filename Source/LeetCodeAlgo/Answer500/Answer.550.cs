@@ -452,45 +452,28 @@ namespace LeetCodeAlgo
             }
             return row * col;
         }
+
         /// 599. Minimum Index Sum of Two Lists
         /// find out their common interest with the least list index sum.
         public string[] FindRestaurant(string[] list1, string[] list2)
         {
-            Dictionary<int, List<string>> dict = new Dictionary<int, List<string>>();
-            Dictionary<string, int> map1 = new Dictionary<string, int>();
-            Dictionary<string, int> map2 = new Dictionary<string, int>();
-            for (int i = 0; i < list1.Length || i < list2.Length; i++)
+            Dictionary<int, List<string>> res = new Dictionary<int, List<string>>();
+            Dictionary<string, int> dict1 = new Dictionary<string, int>();
+            Dictionary<string, int> dict2 = new Dictionary<string, int>();
+            for(int i = 0; i < list1.Length; i++)
+                dict1.Add(list1[i], i);
+            for (int i = 0; i < list2.Length; i++)
+                dict2.Add(list2[i], i);
+            foreach(var k in dict1.Keys)
             {
-                if (i < list1.Length)
+                if (dict2.ContainsKey(k))
                 {
-                    if (!map1.ContainsKey(list1[i])) map1.Add(list1[i], i);
-                }
-                if (i < list2.Length)
-                {
-                    if (!map2.ContainsKey(list2[i])) map2.Add(list2[i], i);
-                }
-                if(i < list1.Length)
-                {
-                    if (map2.ContainsKey(list1[i]))
-                    {
-                        var index = map2[list1[i]] + i;
-                        if (!dict.ContainsKey(index)) dict.Add(index, new List<string>());
-                        if(!dict[index].Contains(list1[i]))
-                            dict[index].Add(list1[i]);
-                    }
-                }
-                if (i < list2.Length)
-                {
-                    if (map1.ContainsKey(list2[i]))
-                    {
-                        var index = map1[list2[i]] + i;
-                        if (!dict.ContainsKey(index)) dict.Add(index, new List<string>());
-                        if (!dict[index].Contains(list2[i]))
-                            dict[index].Add(list2[i]);
-                    }
+                    int i = dict1[k] + dict2[k];
+                    if (!res.ContainsKey(i)) res.Add(i, new List<string>());
+                    res[i].Add(k);
                 }
             }
-            return dict.Count == 0 ? new string[0] : dict[dict.Keys.Min()].ToArray();
+            return res.Count == 0 ? new string[0] : res[res.Keys.Min()].ToArray();
         }
     }
 }

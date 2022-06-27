@@ -9,32 +9,26 @@ namespace LeetCodeAlgo.Design
     /// 705. Design HashSet
     public class MyHashSet
     {
-        private readonly byte[] arr;
-        private const int LEN = 1000000;
+        private readonly bool[] arr;
+        private const int LEN = 1000001;
         public MyHashSet()
         {
-            arr=new byte[LEN/8+1];
+            arr=new bool[LEN];
         }
 
         public void Add(int key)
         {
-            int index = key / 8;
-            int offset = key % 8;
-            arr[index] |= (byte)(1 << offset);
+            arr[key] = true;
         }
 
         public void Remove(int key)
         {
-            int index = key / 8;
-            int offset = key % 8;
-            arr[index] &= (byte)(~(1 << offset));
+            arr[key] = false;
         }
 
         public bool Contains(int key)
         {
-            int index = key / 8;
-            int offset = key % 8;
-            return (arr[index] & (1<<offset))!=0;
+            return arr[key];
         }
     }
 }

@@ -29,17 +29,16 @@ namespace LeetCodeAlgo
                 else
                     dict2.Add(n, 1);
             }
-            var ans=new List<int>();
+            var res=new List<int>();
             foreach(var key in dict1.Keys)
             {
                 if (!dict2.ContainsKey(key))
                     continue;
-                int i = 0;
                 int count = Math.Min(dict1[key], dict2[key]);
-                while (i++< count)
-                    ans.Add(key);
+                while (count-->0)
+                    res.Add(key);
             }
-            return ans.ToArray();
+            return res.ToArray();
         }
         public int[] Intersect_350_TwoPointers(int[] nums1, int[] nums2)
         {

@@ -75,20 +75,20 @@ namespace LeetCodeAlgo
         /// Those numbers for which this process ends in 1 are happy. Return true if n is a happy number, and false if not.
         public bool IsHappy(int n)
         {
-            Dictionary<int, int> dict = new Dictionary<int, int>();
-            return IsHappy(n, dict);
+            HashSet<int> set = new HashSet<int>();
+            return IsHappy(n, set);
         }
 
-        public bool IsHappy(int n, Dictionary<int, int> dict)
+        private bool IsHappy(int n, HashSet<int> set)
         {
             if (n == 1) return true;
-            if (dict.ContainsKey(n))
+            if (set.Contains(n))
                 return false;
-            dict.Add(n, 1);
-            return IsHappy(GetDigitSquare(n), dict);
+            set.Add(n);
+            return IsHappy(GetDigitSquare(n), set);
         }
 
-        public int GetDigitSquare(int n)
+        private int GetDigitSquare(int n)
         {
             int result = 0;
             int last;
@@ -495,13 +495,13 @@ namespace LeetCodeAlgo
         /// 217. Contains Duplicate
         public bool ContainsDuplicate(int[] nums)
         {
-            Dictionary<int, int> dict = new Dictionary<int, int>();
+            HashSet<int> set = new HashSet<int>();
             foreach (var n in nums)
             {
-                if (dict.ContainsKey(n)) dict[n]++;
-                else dict.Add(n, 1);
+                if (set.Contains(n)) return true;
+                else set.Add(n);
             }
-            return dict.Values.Max() > 1;
+            return false;
         }
 
         ///219. Contains Duplicate II

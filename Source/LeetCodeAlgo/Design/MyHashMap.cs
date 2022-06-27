@@ -14,15 +14,13 @@ namespace LeetCodeAlgo.Design
         public MyHashMap()
         {
             map = new int[LEN];
-            for (int i = 0; i < map.Length; i++)
-                map[i] = -1;
+            Array.Fill(map, -1);
         }
 
         public void Put(int key, int value)
         {
             if (key < 0 || key >= LEN)
                 return;
-
             map[key] = value;
         }
 

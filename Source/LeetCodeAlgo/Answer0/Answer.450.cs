@@ -315,6 +315,27 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///467. Unique Substrings in Wraparound String, #DP
+        //We define the string s to be the infinite wraparound string of "abcdefghijklmnopqrstuvwxyz",
+        //so s will look like this: "...zabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcd....".
+        //Given a string p, return the number of unique non-empty substrings of p are present in s.
+        public int FindSubstringInWraproundString(string p)
+        {
+            int[] dp = new int[26];//store longest length of strings which endWith char i+'a'
+            int prev = p[0]-'a'-1;
+            int count = 0;
+            for(int i = 0; i < p.Length; i++)
+            {
+                int curr = p[i] - 'a';
+                if(curr== (prev + 1) % 26)
+                    count++;
+                else
+                    count = 1;
+                dp[curr] = Math.Max(dp[curr], count);
+                prev = curr;
+            }
+            return dp.Sum();
+        }
         ///472. Concatenated Words, #DP, #BFS
         ///Given an array of strings words (without duplicates), return all the concatenated words in the given list of words.
         ///A concatenated word is defined as a string that is comprised entirely of at least two shorter words in the given array.
