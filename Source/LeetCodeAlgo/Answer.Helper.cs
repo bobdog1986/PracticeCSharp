@@ -81,6 +81,13 @@ namespace LeetCodeAlgo
                 visit[i] = new bool[n];
             return visit;
         }
+        private List<int>[] createListGraph(int n)
+        {
+            List<int>[] graph = new List<int>[n];
+            for (int i = 0; i < n; i++)
+                graph[i] = new List<int>();
+            return graph;
+        }
 
         private int[][] createIntMatrix(int m,int n)
         {

@@ -678,6 +678,45 @@ namespace LeetCodeAlgo
             return BstToGst_Recursion(root.left, root.val);
         }
 
+        ///1042. Flower Planting With No Adjacent, #Greedy
+        //for any two gardens connected by a path, they have different types of flowers.
+        //Return any answer, where answer[i] is the type of flower planted in the (i+1)th garden.
+        //The flower types are denoted 1, 2, 3, or 4
+        public int[] GardenNoAdj(int n, int[][] paths)
+        {
+            //Create a graph
+            var graph = createListGraph(n);
+
+            //Add the edges
+            foreach (var path in paths)
+            {
+                int x = path[0] - 1;
+                int y = path[1] - 1;
+                graph[x].Add(y);
+                graph[y].Add(x);
+            }
+
+            int[] res = new int[n];
+            //For each garden
+            for (int i = 0; i < n; i++)
+            {
+                //Use 5 instead of 4 so we can easily use 1-based indexing of the garden colors
+                int[] colors = new int[5];
+                foreach (var adj in graph[i])
+                {
+                    colors[res[adj]] = 1; //Mark the color as used if neighbor has used it before.
+                }
+
+                //Now just use a color that has not been used yet
+                for (int c = 1; c<=4; c++)
+                {
+                    if (colors[c] ==0) //colors[c] == 0 => the color has not been used yet,
+                        res[i] = c; //so let's use that one
+                }
+            }
+            return res;
+        }
+
         /// 1046. Last Stone Weight, #PriorityQueue
         /// x == y, both stones are destroyed, and
         ///If x != y, the stone of weight x is destroyed, and the stone of weight y has new weight y - x.
