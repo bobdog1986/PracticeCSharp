@@ -111,6 +111,7 @@ namespace LeetCodeAlgo
                 sum += pq.Dequeue();
             return sum;
         }
+
         /// 1007. Minimum Domino Rotations For Equal Row
         ///Return the minimum number of rotations so that all the values in tops are the same,
         ///or all the values in bottoms are the same.If it cannot be done, return -1.
@@ -243,6 +244,35 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///1019. Next Greater Node In Linked List, #Monotonic Stack
+        //find the next greater value of current listnode
+        public int[] NextLargerNodes(ListNode head)
+        {
+            var curr = head;
+            List<int> list = new List<int>();
+            while (curr != null)
+            {
+                list.Add(curr.val);
+                curr = curr.next;
+            }
+            int[] res = new int[list.Count];
+            var stack = new Stack<int>();
+            for(int i = 0; i < list.Count; i++)
+            {
+                while (stack.Count > 0 && list[stack.Peek()] < list[i])
+                {
+                    res[stack.Pop()] = list[i];
+                }
+                stack.Push(i);
+            }
+            while (stack.Count > 0)
+            {
+                res[stack.Pop()] = 0;
+            }
+            return res;
+        }
+
         /// 1020. Number of Enclaves, #DFS, #Graph
         ///Return the number of land cells in grid for which we cannot walk off the boundary of the grid in any number of moves.
         public int NumEnclaves(int[][] grid)
