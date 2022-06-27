@@ -60,15 +60,15 @@ namespace LeetCodeAlgo
             Dictionary<char, int> map = new Dictionary<char, int>();
             int max = 0;
             int left = 0;
-            for (int right = 0; right < s.Length; ++right)
+            for (int i = 0; i < s.Length; ++i)
             {
-                if (map.ContainsKey(s[right]))
+                if (map.ContainsKey(s[i]))
                 {
-                    left = Math.Max(left, map[s[right]] + 1);
-                    map[s[right]] = right;
+                    left = Math.Max(left, map[s[i]] + 1);
+                    map[s[i]] = i;
                 }
-                else map.Add(s[right], right);
-                max = Math.Max(max, right - left + 1);
+                else map.Add(s[i], i);
+                max = Math.Max(max, i - left + 1);
             }
             return max;
         }

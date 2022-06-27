@@ -176,14 +176,8 @@ namespace LeetCodeAlgo
         /// 771. Jewels and Stones
         public int NumJewelsInStones(string jewels, string stones)
         {
-            int res = 0;
-            HashSet<char> set = new HashSet<char>();
-            foreach (var j in jewels)
-                set.Add(j);
-
-            foreach (var s in stones)
-                if (set.Contains(s)) res++;
-            return res;
+            var set = jewels.ToHashSet();
+            return stones.Count(c=>set.Contains(c));
         }
 
         ///777. Swap Adjacent in LR String, #Two Pointers
