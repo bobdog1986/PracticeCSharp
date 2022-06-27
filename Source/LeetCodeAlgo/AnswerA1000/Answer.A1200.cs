@@ -35,7 +35,7 @@ namespace LeetCodeAlgo
         public int NthUglyNumber(int n, int a, int b, int c)
         {
             int start = 0, end = int.MaxValue;
-            long ab = LCM(a, b), bc = LCM(b, c), ca = LCM(c, a), abc = LCM(a, bc);
+            long ab = LCM_Long(a, b), bc = LCM_Long(b, c), ca = LCM_Long(c, a), abc = LCM_Long(a, bc);
             while (start < end)
             {
                 int mid = start + (end - start) / 2;
@@ -49,17 +49,7 @@ namespace LeetCodeAlgo
             return start;
         }
 
-        //Greatest Common Divisor
-        private long GCD(long x, long y)
-        {
-            return y == 0 ? x : GCD(y, x % y);
-        }
 
-        //Least Common Multiple
-        private long LCM(long x, long y)
-        {
-            return (x * y) / GCD(x, y);
-        }
 
         /// 1202. Smallest String With Swaps, #Disjoint Set, #Union Find
         ///an array of pairs of indices where pairs[i] = [a, b] indicates 2 indices(0-indexed) of the string.

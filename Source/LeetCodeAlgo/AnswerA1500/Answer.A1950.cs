@@ -221,7 +221,7 @@ namespace LeetCodeAlgo
                 max=Math.Max(max, n);
                 min=Math.Min(min, n);
             }
-            return getGcb(max, min);
+            return GCD(max, min);
         }
 
         ///1980. Find Unique Binary String

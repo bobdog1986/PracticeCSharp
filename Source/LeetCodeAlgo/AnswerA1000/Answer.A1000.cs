@@ -522,6 +522,52 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///1034. Coloring A Border, #BFS
+        //border cell is on edge(r[0],r[m-1],c[0],c[n-1]) or any adjacent not same color
+        public int[][] ColorBorder(int[][] grid, int row, int col, int color)
+        {
+            int m = grid.Length;
+            int n = grid[0].Length;
+            var visit = createVisit(m,n);
+            var dxy4 = createDxy4();
+            var queue = new Queue<int[]>();
+            queue.Enqueue(new int[] { row, col });
+
+            visit[row][col] = true;
+            var list = new List<int[]>();
+            while (queue.Count > 0)
+            {
+                int size = queue.Count;
+                while (size-- > 0)
+                {
+                    var cell = queue.Dequeue();
+                    bool isBorder = cell[0] == 0 || cell[1] == 0 || cell[0] == m - 1 || cell[1] == n - 1;
+                    foreach (var d in dxy4)
+                    {
+                        var r = cell[0] + d[0];
+                        var c = cell[1] + d[1];
+                        if (r >= 0 && c >= 0 && r < m && c < n)
+                        {
+                            if (grid[r][c] == grid[row][col])
+                            {
+                                if (!visit[r][c])
+                                {
+                                    visit[r][c] = true;
+                                    queue.Enqueue(new int[] { r, c });
+                                }
+                            }
+                            else isBorder=true;
+                        }
+                    }
+                    if (isBorder)
+                        list.Add(cell);
+                }
+            }
+            foreach(var cell in list)
+                grid[cell[0]][cell[1]] = color;
+            return grid;
+        }
+
         ///1035. Uncrossed Lines , #DP
         /// straight line connecting two numbers nums1[i] and nums2[j] such that:
         //nums1[i] == nums2[j], and the line we draw does not intersect any other connecting(non-horizontal) line.
@@ -585,12 +631,14 @@ namespace LeetCodeAlgo
                 return new double[] { a, b };
             }
         }
+
         /// 1038. Binary Search Tree to Greater Sum Tree, #BTree
         public TreeNode BstToGst(TreeNode root)
         {
             BstToGst_Recursion(root, 0);
             return root;
         }
+
         private int BstToGst_Recursion(TreeNode root,int sum)
         {
             if (root == null)

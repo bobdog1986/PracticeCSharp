@@ -33,7 +33,7 @@ namespace LeetCodeAlgo
             Dictionary<string, long> pairs = new Dictionary<string, long>();
             foreach (var rect in rectangles)
             {
-                var gcb = getGcb(rect[0], rect[1]);
+                var gcb = GCD(rect[0], rect[1]);
                 var key = rect[0] / gcb + ":" + rect[1] / gcb;
                 if (pairs.ContainsKey(key))
                     pairs[key]++;
