@@ -328,6 +328,29 @@ namespace LeetCodeAlgo
             return String.Join("", arr);
         }
 
+        ///1578. Minimum Time to Make Rope Colorful, #Greedy
+        public int MinCost(string colors, int[] neededTime)
+        {
+            int res = 0;
+            int sum = 0;
+            int max = 0;
+            int n = colors.Length;
+            for(int i = 0; i < n; i++)
+            {
+                if(i>0 && colors[i] != colors[i - 1])
+                {
+                    //remove all but exclude the max of consecutive same color balloons
+                    res += sum - max;
+                    sum = 0;
+                    max = 0;
+                }
+                sum += neededTime[i];
+                max = Math.Max(max, neededTime[i]);
+            }
+            res += sum - max;
+            return res;
+        }
+
         ///1584. Min Cost to Connect All Points, #Greedy, #Prim's algorithm,
         ///Return the minimum cost to make all points connected.
         public int MinCostConnectPoints(int[][] points)
