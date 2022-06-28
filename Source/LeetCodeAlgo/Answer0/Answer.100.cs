@@ -21,9 +21,9 @@ namespace LeetCodeAlgo
             var q2 = new Queue<TreeNode>();
             q1.Enqueue(p);
             q2.Enqueue(q);
-            while(q1.Count >0 )
+            while (q1.Count > 0)
             {
-                var size= q1.Count;
+                var size = q1.Count;
                 while (size-- > 0)
                 {
                     var n1 = q1.Dequeue();
@@ -88,16 +88,16 @@ namespace LeetCodeAlgo
         ///(i.e., from left to right, then right to left for the next level and alternate between).
         public IList<IList<int>> ZigzagLevelOrder(TreeNode root)
         {
-            var ans=new List<IList<int>>();
+            var ans = new List<IList<int>>();
             if (root == null) return ans;
 
-            var nodes=new List<TreeNode>() { root};
+            var nodes = new List<TreeNode>() { root };
             bool forward = true;
             while (nodes.Count > 0)
             {
                 var nexts = new List<TreeNode>();
                 var vals = new List<int>();
-                foreach(var node in nodes)
+                foreach (var node in nodes)
                 {
                     vals.Add(node.val);
                     if (forward)
@@ -145,6 +145,7 @@ namespace LeetCodeAlgo
             }
             return depth;
         }
+
         public int MaxDepth_104_Recursion(TreeNode root)
         {
             int maxDepth = 0;
@@ -164,12 +165,12 @@ namespace LeetCodeAlgo
         ///105. Construct Binary Tree from Preorder and Inorder Traversal, #BTree
         public TreeNode BuildTree_My(int[] preorder, int[] inorder)
         {
-            return BuildTree_PreorderAndInorder(preorder,  0, preorder.Length - 1, inorder, 0, preorder.Length - 1);
+            return BuildTree_PreorderAndInorder(preorder, 0, preorder.Length - 1, inorder, 0, preorder.Length - 1);
         }
 
         private TreeNode BuildTree_PreorderAndInorder(int[] preorder, int preLeft, int preRight, int[] inorder, int inLeft, int inRight)
         {
-            if(preLeft == preRight || inLeft == inRight)
+            if (preLeft == preRight || inLeft == inRight)
                 return new TreeNode(preorder[preLeft]);
 
             TreeNode node = new TreeNode(preorder[preLeft]);
@@ -177,19 +178,19 @@ namespace LeetCodeAlgo
             for (; i <= inRight; i++)
                 if (preorder[preLeft] == inorder[i]) break;
 
-            int countLeft = i-1 - inLeft+1;
+            int countLeft = i - 1 - inLeft + 1;
             if (i > inLeft)
             {
                 node.left = BuildTree_PreorderAndInorder(preorder, preLeft + 1, preLeft + countLeft, inorder, inLeft, i - 1);
             }
             if (i < inRight)
             {
-                node.right = BuildTree_PreorderAndInorder(preorder, preLeft + countLeft +1, preRight, inorder, i +1, inRight);
+                node.right = BuildTree_PreorderAndInorder(preorder, preLeft + countLeft + 1, preRight, inorder, i + 1, inRight);
             }
             return node;
         }
 
-        public TreeNode BuildTree(int[] preorder, int[] inorder)
+        public TreeNode BuildTree_Iteration_PreorderAndInorder(int[] preorder, int[] inorder)
         {
             if (preorder.Length == 0) return null;
             Stack<TreeNode> stack = new Stack<TreeNode>();
@@ -206,7 +207,7 @@ namespace LeetCodeAlgo
                 else
                 {
                     j++;
-                    while (stack.Count>0 && stack.Peek().val == inorder[j])
+                    while (stack.Count > 0 && stack.Peek().val == inorder[j])
                     {
                         curr = stack.Pop();
                         j++;
@@ -214,6 +215,59 @@ namespace LeetCodeAlgo
                     curr.right = new TreeNode(preorder[i]);
                     curr = curr.right;
                 }
+            }
+            return root;
+        }
+
+        ///106. Construct Binary Tree from Inorder and Postorder Traversal, #BTree
+        public TreeNode BuildTree_InorderAndPostOrder(int[] inorder, int[] postorder)
+        {
+            return BuildTree_InorderAndPostOrder(inorder, postorder, 0, inorder.Length - 1, 0, postorder.Length - 1);
+        }
+
+        private TreeNode BuildTree_InorderAndPostOrder(int[] inorder, int[] postorder, int inLeft, int inRight, int postL, int postR)
+        {
+            if (inLeft > inRight) return null;
+            else if (inLeft == inRight) return new TreeNode(inorder[inLeft]);
+            else
+            {
+                var node = new TreeNode(postorder[postR]);
+                int i = inLeft;
+                for (; i <= inRight; i++)
+                    if (inorder[i] == node.val) break;
+                int count = i - inLeft;
+                node.left = BuildTree_InorderAndPostOrder(inorder, postorder, inLeft, i - 1, postL, postL + count - 1);
+                node.right = BuildTree_InorderAndPostOrder(inorder, postorder, i + 1, inRight, postL + count, postR - 1);
+                return node;
+            }
+        }
+
+        public TreeNode BuildTree_Iteration_InorderAndPostOrder(int[] inorder, int[] postorder)
+        {
+            if (inorder.Length == 0) return null;
+            int j = postorder.Length - 1;
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            TreeNode root = new TreeNode(postorder[j--]);
+            stack.Push(root);
+            TreeNode node = null;
+            for (int i = inorder.Length - 1; j >= 0; j--)
+            {
+                TreeNode curr = new TreeNode(postorder[j]);
+                while (stack.Count > 0 && stack.Peek().val == inorder[i])
+                {
+                    node = stack.Pop();
+                    i--;
+                }
+                if (node != null)
+                {
+                    node.left = curr;
+                    node = null;
+                }
+                else
+                {
+                    stack.Peek().right = curr;
+                }
+                stack.Push(curr);
             }
             return root;
         }
@@ -238,10 +292,11 @@ namespace LeetCodeAlgo
                     if (node.right != null) next.Add(node.right);
                 }
                 nodes = next;
-                ans.Insert(0,list);
+                ans.Insert(0, list);
             }
             return ans;
         }
+
         /// 108. Convert Sorted Array to Binary Search Tree, #BTree
         public TreeNode SortedArrayToBST(int[] nums)
         {
@@ -267,6 +322,7 @@ namespace LeetCodeAlgo
             }
             return node;
         }
+
         ///109. Convert Sorted List to Binary Search Tree, #BTree
         ///Given the head of a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
         ///a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
@@ -282,7 +338,7 @@ namespace LeetCodeAlgo
             if (count == 0)
             {
                 var node = head;
-                while(node != null)
+                while (node != null)
                 {
                     count++;
                     node = node.next;
@@ -293,11 +349,11 @@ namespace LeetCodeAlgo
             {
                 return new TreeNode(head.val);
             }
-            else if(count == 2)
+            else if (count == 2)
             {
-                return new TreeNode(head.next.val,new TreeNode(head.val));
+                return new TreeNode(head.next.val, new TreeNode(head.val));
             }
-            else if(count ==3)
+            else if (count == 3)
             {
                 return new TreeNode(head.next.val, new TreeNode(head.val), new TreeNode(head.next.next.val));
             }
@@ -307,7 +363,7 @@ namespace LeetCodeAlgo
                 var node = head;
                 while (mid > 0)
                 {
-                    node=node.next;
+                    node = node.next;
                     mid--;
                 }
                 return new TreeNode(node.val, SortedListToBST(head, count / 2), SortedListToBST(node.next, count - count / 2 - 1));
@@ -329,7 +385,7 @@ namespace LeetCodeAlgo
             }
             else
             {
-                if(leftDeep-rightDeep>=-1 && leftDeep - rightDeep <= 1)
+                if (leftDeep - rightDeep >= -1 && leftDeep - rightDeep <= 1)
                 {
                     return true;
                 }
@@ -339,6 +395,7 @@ namespace LeetCodeAlgo
                 }
             }
         }
+
         public int IsBalanced_Deep(TreeNode root, int deep)
         {
             if (root == null)
@@ -363,18 +420,19 @@ namespace LeetCodeAlgo
                 }
             }
         }
+
         ///111. Minimum Depth of Binary Tree, #BTree
         ///The minimum depth shortest path from the root node down to the nearest leaf node.
         public int MinDepth(TreeNode root)
         {
             if (root == null) return 0;
             int ans = 0;
-            List<TreeNode> list=new List<TreeNode>() { root};
+            List<TreeNode> list = new List<TreeNode>() { root };
             while (list.Count > 0)
             {
                 ans++;
                 List<TreeNode> next = new List<TreeNode>();
-                foreach(var node in list)
+                foreach (var node in list)
                 {
                     if (node.left == null && node.right == null) return ans;
                     if (node.left != null) next.Add(node.left);
@@ -384,7 +442,6 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
-
 
         /// 112. Path Sum, #BTree
         /// Given the root of a binary tree and an integer targetSum,
@@ -427,7 +484,7 @@ namespace LeetCodeAlgo
         ///return all root-to-leaf paths where the sum of the node values in the path equals targetSum
         public IList<IList<int>> PathSum_113(TreeNode root, int targetSum)
         {
-            var ans=new List<IList<int>>();
+            var ans = new List<IList<int>>();
             PathSum_Recursion(root, targetSum, new List<int>(), ans);
             return ans;
         }
@@ -454,6 +511,7 @@ namespace LeetCodeAlgo
         {
             Flatten(root, null);
         }
+
         public TreeNode Flatten(TreeNode root, TreeNode pre)
         {
             if (root == null) return pre;
@@ -470,6 +528,7 @@ namespace LeetCodeAlgo
             Stack<TreeNode> stack = new Stack<TreeNode>();
             Flatten_My(root, stack);
         }
+
         public void Flatten_My(TreeNode root, Stack<TreeNode> stack)
         {
             if (root != null)
@@ -501,6 +560,7 @@ namespace LeetCodeAlgo
                 }
             }
         }
+
         /// 116. Populating Next Right Pointers in Each Node
         /// You are given a perfect binary tree where all leaves are on the same level
         /// Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
@@ -594,8 +654,10 @@ namespace LeetCodeAlgo
             int lastRowIndex = 0;
             while (lastRowIndex++ < rowIndex)
             {
-                var next = new List<int>();
-                next.Add(1);
+                var next = new List<int>
+                {
+                    1
+                };
                 for (int i = 0; i < list.Count - 1; i++)
                     next.Add(list[i] + list[i + 1]);
                 next.Add(1);
@@ -603,20 +665,25 @@ namespace LeetCodeAlgo
             }
             return list;
         }
+
         public IList<int> GetRow_Recursion(int rowIndex)
         {
             return GetRow_Recursion(new List<int>() { 1 }, rowIndex);
         }
-        private IList<int> GetRow_Recursion(List<int> list,int rowIndex)
+
+        private IList<int> GetRow_Recursion(List<int> list, int rowIndex)
         {
             if (rowIndex == list.Count - 1) return list;
-            var next = new List<int>();
-            next.Add(1);
+            var next = new List<int>
+            {
+                1
+            };
             for (int i = 0; i < list.Count - 1; i++)
                 next.Add(list[i] + list[i + 1]);
             next.Add(1);
             return GetRow_Recursion(next, rowIndex);
         }
+
         ///120. Triangle
         ///Given a triangle array, return the minimum path sum from top to bottom.
         ///   2
@@ -691,13 +758,12 @@ namespace LeetCodeAlgo
             bool isHold = true;
             int buy = prices[0];
 
-            for(int i = 1; i < prices.Length; i++)
+            for (int i = 1; i < prices.Length; i++)
             {
                 if (isHold)
                 {
-                    if (i < prices.Length - 1 )
+                    if (i < prices.Length - 1)
                     {
-
                         if (prices[i] < buy)
                         {
                             buy = prices[i];
@@ -716,14 +782,13 @@ namespace LeetCodeAlgo
                     }
                     else
                     {
-                        if(prices[i] > buy)
-                            sum+=prices[i]-buy;
+                        if (prices[i] > buy)
+                            sum += prices[i] - buy;
                     }
-
                 }
                 else
                 {
-                    buy=prices[i];
+                    buy = prices[i];
                     isHold = true;
                 }
             }
@@ -742,6 +807,7 @@ namespace LeetCodeAlgo
             MaxPathSum_BackTracking(root, ref ans);
             return ans;
         }
+
         public int MaxPathSum_BackTracking(TreeNode root, ref int ans)
         {
             if (root == null) return 0;
@@ -804,8 +870,10 @@ namespace LeetCodeAlgo
         {
             if (!wordList.Contains(endWord)) return new List<IList<string>>();
 
-            Dictionary<string, HashSet<string>> graph = new Dictionary<string, HashSet<string>>();
-            graph.Add(beginWord, new HashSet<string>());
+            Dictionary<string, HashSet<string>> graph = new Dictionary<string, HashSet<string>>
+            {
+                { beginWord, new HashSet<string>() }
+            };
             foreach (var w in wordList)
             {
                 if (!graph.ContainsKey(w)) graph.Add(w, new HashSet<string>());
@@ -825,8 +893,10 @@ namespace LeetCodeAlgo
                 }
             }
 
-            var res = new List<IList<string>>();
-            res.Add(new List<string>() { beginWord });
+            var res = new List<IList<string>>
+            {
+                new List<string>() { beginWord }
+            };
             var visit = new HashSet<string>() { beginWord };
             while (res.Count > 0)
             {
@@ -841,13 +911,13 @@ namespace LeetCodeAlgo
                     }
                 }
                 res = next;
-                foreach(var list in next)
+                foreach (var list in next)
                 {
                     visit.Add(list.Last());
                 }
                 if (visit.Contains(endWord)) break;
             }
-            return res.Where(x=>x.Last()==endWord).ToList();
+            return res.Where(x => x.Last() == endWord).ToList();
         }
 
         private bool oneCharDiff(string origin, string target)
@@ -861,6 +931,7 @@ namespace LeetCodeAlgo
             }
             return diff == 1;
         }
+
         /// 127. Word Ladder, #Graph, #BFS,
         // A transformation sequence from word beginWord to word endWord using a dictionary wordList
         // is a sequence of words beginWord -> s1 -> s2 -> ... -> sk such that:
@@ -879,7 +950,7 @@ namespace LeetCodeAlgo
             {
                 depth++;
                 List<string> next = new List<string>();
-                foreach(var curr in list)
+                foreach (var curr in list)
                 {
                     var canVisitWords = words.Where(x => oneCharDiff(curr, x));
                     foreach (var word in canVisitWords)
@@ -893,7 +964,6 @@ namespace LeetCodeAlgo
             }
             return 0;
         }
-
 
         /// 128. Longest Consecutive Sequence
         /// Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence. O(n) time.
@@ -938,9 +1008,9 @@ namespace LeetCodeAlgo
                     // extend the length to the boundary(s)
                     // of the sequence
                     // will do nothing if n has no neighbors
-                    if(dict.ContainsKey(n - left))
+                    if (dict.ContainsKey(n - left))
                     {
-                        dict[n - left]=sum;
+                        dict[n - left] = sum;
                     }
                     else
                     {
@@ -981,6 +1051,7 @@ namespace LeetCodeAlgo
                 SumNumbers(root.right, curr * 10 + root.val, ref res);
             }
         }
+
         /// 130. Surrounded Regions
         ///Given an m x n matrix board containing 'X' and 'O',
         ///capture all regions that are 4-directionally surrounded by 'X'.
@@ -988,7 +1059,6 @@ namespace LeetCodeAlgo
         ///Tips: If 'O's connect to 4-direction edges , escape; or captured
         public void Solve(char[][] board)
         {
-
             int rowLen = board.Length;
             int colLen = board[0].Length;
 
@@ -1031,7 +1101,6 @@ namespace LeetCodeAlgo
 
                             foreach (var cell in list)
                             {
-
                                 foreach (var d in dxy)
                                 {
                                     int r = cell[0] + d[0];
@@ -1065,12 +1134,9 @@ namespace LeetCodeAlgo
                             foreach (var cell in list)
                                 board[cell[0]][cell[1]] = 'X';
                         }
-
                     }
-
                 }
             }
-
         }
 
         ///131. Palindrome Partitioning, #Backtracking
@@ -1080,7 +1146,7 @@ namespace LeetCodeAlgo
         ///1 <= s.length <= 16, lowercase
         public IList<IList<string>> Partition(string s)
         {
-            var ans=new List<IList<string>>();
+            var ans = new List<IList<string>>();
             var list = new List<string>();
             Partition_BackTracking(s, list, ans);
             return ans;
@@ -1088,9 +1154,9 @@ namespace LeetCodeAlgo
 
         private void Partition_BackTracking(string s, IList<string> list, IList<IList<string>> ans)
         {
-            for(int i=0; i<s.Length-1; i++)
+            for (int i = 0; i < s.Length - 1; i++)
             {
-                var str=s.Substring(0,i+1);
+                var str = s.Substring(0, i + 1);
                 if (Partition_IsPalindrome(str))
                 {
                     var sub = s.Substring(i + 1);
@@ -1184,9 +1250,9 @@ namespace LeetCodeAlgo
         {
             if (node == null) return null;
             Node_Neighbors res = null;
-            Dictionary<Node_Neighbors,int> dict= new Dictionary<Node_Neighbors, int>();
-            List<Node_Neighbors> list= new List<Node_Neighbors>();
-            res=new Node_Neighbors(node.val);
+            Dictionary<Node_Neighbors, int> dict = new Dictionary<Node_Neighbors, int>();
+            List<Node_Neighbors> list = new List<Node_Neighbors>();
+            res = new Node_Neighbors(node.val);
             dict.Add(node, list.Count);
             list.Add(res);
             res.neighbors = CloneGraph_DFS(node.neighbors, dict, list);
@@ -1196,9 +1262,9 @@ namespace LeetCodeAlgo
         private IList<Node_Neighbors> CloneGraph_DFS(IList<Node_Neighbors> neighbors, IDictionary<Node_Neighbors, int> dict, IList<Node_Neighbors> list)
         {
             if (neighbors == null) return null;
-            if(neighbors.Count==0) return new List<Node_Neighbors>();
-            var res=new List<Node_Neighbors>();
-            foreach(var node in neighbors)
+            if (neighbors.Count == 0) return new List<Node_Neighbors>();
+            var res = new List<Node_Neighbors>();
+            foreach (var node in neighbors)
             {
                 if (dict.ContainsKey(node))
                 {
@@ -1248,6 +1314,7 @@ namespace LeetCodeAlgo
 
             return ans;
         }
+
         ///135. Candy ,#DP, #DFS
         ///There are n children standing in a line. Each child is assigned a rating value given in the integer array ratings.
         ///Each child must have at least one candy, Children with a higher rating get more candies than their neighbors.
@@ -1255,13 +1322,13 @@ namespace LeetCodeAlgo
         public int Candy(int[] ratings)
         {
             int n = ratings.Length;
-            int[] dp=new int[n];
+            int[] dp = new int[n];
             List<int> list = new List<int>();
 
-            for (int i=0;i<n;i++)
+            for (int i = 0; i < n; i++)
             {
-                if((i==0 || ratings[i] <=ratings[i-1])
-                    && (i == n-1 || ratings[i] <= ratings[i + 1]))
+                if ((i == 0 || ratings[i] <= ratings[i - 1])
+                    && (i == n - 1 || ratings[i] <= ratings[i + 1]))
                 {
                     list.Add(i);
                     dp[i] = 1;
@@ -1271,14 +1338,14 @@ namespace LeetCodeAlgo
             while (list.Count > 0)
             {
                 var next = new List<int>();
-                foreach(var i in list)
+                foreach (var i in list)
                 {
-                    if(i>0 && ratings[i - 1] > ratings[i])
+                    if (i > 0 && ratings[i - 1] > ratings[i])
                     {
                         dp[i - 1] = Math.Max(dp[i - 1], dp[i] + 1);
                         next.Add(i - 1);
                     }
-                    if (i < n-1 && ratings[i + 1] > ratings[i])
+                    if (i < n - 1 && ratings[i + 1] > ratings[i])
                     {
                         dp[i + 1] = Math.Max(dp[i + 1], dp[i] + 1);
                         next.Add(i + 1);
@@ -1288,6 +1355,7 @@ namespace LeetCodeAlgo
             }
             return dp.Sum();
         }
+
         /// 136. Single Number
         /// Given a non - empty array of integers nums, every element appears twice except for one.Find that single one.
         /// You must implement a solution with a linear runtime complexity and use only constant extra space.
@@ -1301,12 +1369,12 @@ namespace LeetCodeAlgo
         ///Find the single element and return it.
         public int SingleNumber_137(int[] nums)
         {
-            Dictionary<int,int> dict=new Dictionary<int, int>();
-            foreach(var n in nums)
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach (var n in nums)
             {
                 if (dict.ContainsKey(n))
                 {
-                    if(dict[n] ==2)dict.Remove(n);
+                    if (dict[n] == 2) dict.Remove(n);
                     else dict[n]++;
                 }
                 else
@@ -1331,7 +1399,7 @@ namespace LeetCodeAlgo
             var node = head;
             while (node != null)
             {
-                if(brand == null)
+                if (brand == null)
                 {
                     brand = new Node(node.val);
                     tail = brand;
@@ -1363,7 +1431,7 @@ namespace LeetCodeAlgo
                     var index = inputs.IndexOf(node);
                     if (index == -1)
                     {
-                        tail.next =new Node(node.val);
+                        tail.next = new Node(node.val);
                         tail = tail.next;
                         list.Add(tail);
                         inputs.Add(node);
@@ -1381,7 +1449,7 @@ namespace LeetCodeAlgo
                     else
                     {
                         var rIndex = inputs.IndexOf(node.random);
-                        if(rIndex == -1)
+                        if (rIndex == -1)
                         {
                             tail.random = new Node(node.random.val);
                             list.Add(tail.random);
@@ -1389,7 +1457,7 @@ namespace LeetCodeAlgo
                         }
                         else
                         {
-                            tail.random=list[rIndex];
+                            tail.random = list[rIndex];
                         }
                     }
                 }
@@ -1449,6 +1517,7 @@ namespace LeetCodeAlgo
 
             return pseudoHead.next;
         }
+
         /// 139. Word Break, #DP, #Backtracking
         ///return true if s can be segmented into a space-separated sequence of one or more dictionary words.
         ///Note that the same word in the dictionary may be reused multiple times in the segmentation.
@@ -1456,11 +1525,11 @@ namespace LeetCodeAlgo
         {
             bool[] dp = new bool[s.Length + 1];
             dp[0] = true;
-            for(int i = 0; i < s.Length; i++)
+            for (int i = 0; i < s.Length; i++)
             {
                 if (dp[i])
                 {
-                    foreach(var word in wordDict)
+                    foreach (var word in wordDict)
                     {
                         if (i + word.Length <= s.Length)
                         {
@@ -1469,7 +1538,6 @@ namespace LeetCodeAlgo
                                 dp[i + word.Length] = true;
                                 if (i + word.Length == s.Length) return true;
                             }
-
                         }
                     }
                 }
@@ -1483,6 +1551,7 @@ namespace LeetCodeAlgo
             WordBreak139_Backtracking(s, wordDict, new Dictionary<string, int>(), ref ans);
             return ans;
         }
+
         private void WordBreak139_Backtracking(string s, IList<string> wordDict, IDictionary<string, int> existLens, ref bool ans)
         {
             if (ans || existLens.ContainsKey(s)) return;
@@ -1508,15 +1577,15 @@ namespace LeetCodeAlgo
         public IList<string> WordBreak_DP(string s, IList<string> wordDict)
         {
             bool[] dp = new bool[s.Length + 1];
-            Dictionary<int, List<List<string>>> map = new Dictionary<int, List<List<string>>> ();
+            Dictionary<int, List<List<string>>> map = new Dictionary<int, List<List<string>>>();
             Dictionary<string, int> dict = new Dictionary<string, int>();
             foreach (var w in wordDict)
             {
-                if(!string.IsNullOrEmpty(w))
+                if (!string.IsNullOrEmpty(w))
                     dict.Add(w, 1);
             }
             dp[0] = true;
-            map.Add(0, new List<List<string>>() );
+            map.Add(0, new List<List<string>>());
             for (int i = 0; i < s.Length; i++)
             {
                 if (dp[i])
@@ -1537,7 +1606,7 @@ namespace LeetCodeAlgo
                                 }
                                 else
                                 {
-                                    foreach(var list in map[i])
+                                    foreach (var list in map[i])
                                     {
                                         map[index].Add(new List<string>(list) { key });
                                     }
@@ -1550,7 +1619,7 @@ namespace LeetCodeAlgo
             }
             if (map.ContainsKey(s.Length))
             {
-                return map[s.Length].Select(x=>String.Join(" ",x)).ToList();
+                return map[s.Length].Select(x => string.Join(" ", x)).ToList();
             }
             else
             {
@@ -1560,18 +1629,19 @@ namespace LeetCodeAlgo
 
         public IList<string> WordBreak140_Backtracking(string s, IList<string> wordDict)
         {
-            var ans=new Dictionary<string, int>();
-            var list=new List<string>();
+            var ans = new Dictionary<string, int>();
+            var list = new List<string>();
             WordBreak140_Backtracking(s, wordDict, list, ans);
             return ans.Keys.ToList();
         }
-        public void WordBreak140_Backtracking(string s, IList<string> wordDict, IList<string> list,IDictionary<string,int> ans)
+
+        public void WordBreak140_Backtracking(string s, IList<string> wordDict, IList<string> list, IDictionary<string, int> ans)
         {
             if (s.Length == 0)
             {
                 var str = string.Join(" ", list);
                 if (!ans.ContainsKey(str))
-                    ans.Add(str,1);
+                    ans.Add(str, 1);
                 return;
             }
             foreach (var w in wordDict)
@@ -1627,30 +1697,31 @@ namespace LeetCodeAlgo
             }
             return null;
         }
+
         ///143. Reorder List
         ///Reorder the list: 1->2->3->4 to 1->4->2->3, 1->2->3->4->5 to 1->5->2->4->3
         public void ReorderList(ListNode head)
         {
             Stack<ListNode> stack = new Stack<ListNode>();
-            var node=head;
-            while(node != null)
+            var node = head;
+            while (node != null)
             {
                 stack.Push(node);
-                node=node.next;
+                node = node.next;
             }
-            int i=stack.Count;
+            int i = stack.Count;
             node = head;
             if (i <= 2)
                 return;
             while (i > 0)
             {
                 var next = node.next;
-                var pop=stack.Pop();
+                var pop = stack.Pop();
                 pop.next = next;
                 node.next = pop;
                 //last = pop;
-                node= next;
-                i-=2;
+                node = next;
+                i -= 2;
                 if (i == 2)
                 {
                     node.next.next = null;
@@ -1663,6 +1734,7 @@ namespace LeetCodeAlgo
                 }
             }
         }
+
         /// 144. Binary Tree Preorder Traversal, #BTree
         /// Node -> Left -> Right
         public IList<int> PreorderTraversal_Iteratively(TreeNode root)
@@ -1680,6 +1752,7 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
         public IList<int> PreorderTraversal_Recursion(TreeNode root)
         {
             var result = new List<int>();
@@ -1763,7 +1836,7 @@ namespace LeetCodeAlgo
         {
             ListNode res = null;
             var node = head;
-            while(node != null)
+            while (node != null)
             {
                 var temp = node.next;
                 if (res == null)
@@ -1781,13 +1854,12 @@ namespace LeetCodeAlgo
                     else
                     {
                         var prev = res;
-                        while (prev != null && prev.next!=null && prev.next.val<node.val)
+                        while (prev != null && prev.next != null && prev.next.val < node.val)
                         {
                             prev = prev.next;
                         }
                         node.next = prev.next;
                         prev.next = node;
-
                     }
                 }
                 node = temp;
@@ -1803,10 +1875,10 @@ namespace LeetCodeAlgo
             if (head == null) return null;
             ListNode ans = null;
             var node = head;
-            List<ListNode> list=new List<ListNode> ();
-            while(node != null)
+            List<ListNode> list = new List<ListNode>();
+            while (node != null)
             {
-                list.Add (node);
+                list.Add(node);
                 node = node.next;
             }
             list.Sort((x, y) =>
@@ -1814,7 +1886,7 @@ namespace LeetCodeAlgo
                 return x.val - y.val;
             });
             ans = list[0];
-            for(int i = 0; i < list.Count; i++)
+            for (int i = 0; i < list.Count; i++)
             {
                 list[i].next = i < list.Count - 1 ? list[i + 1] : null;
             }
@@ -1837,12 +1909,12 @@ namespace LeetCodeAlgo
             {
                 if (i == 0)
                 {
-                    dictX.Add(points[i][0], new List<int>() { i});
+                    dictX.Add(points[i][0], new List<int>() { i });
                     continue;
                 }
 
                 List<string> findKeys = new List<string>();
-                foreach(var d in dict.Keys)
+                foreach (var d in dict.Keys)
                 {
                     var strs = d.Split(',');
                     var a = double.Parse(strs[0]);
@@ -1870,7 +1942,7 @@ namespace LeetCodeAlgo
                         continue;
 
                     var a = 1.0 * (points[i][1] - points[j][1]) / (points[i][0] - points[j][0]);
-                    var b = 1.0 * (points[j][1]* points[i][0] - points[j][0]* points[i][1]) / (points[i][0] - points[j][0]);
+                    var b = 1.0 * (points[j][1] * points[i][0] - points[j][0] * points[i][1]) / (points[i][0] - points[j][0]);
 
                     string key = $"{a},{b}";
 
@@ -1880,7 +1952,7 @@ namespace LeetCodeAlgo
                     }
                     else
                     {
-                        if(!dict[key].Contains(i))
+                        if (!dict[key].Contains(i))
                             dict[key].Add(i);
                         if (!dict[key].Contains(j))
                             dict[key].Add(j);
@@ -1908,7 +1980,7 @@ namespace LeetCodeAlgo
             {
                 count2 = dictX.Values.Select(x => x.Count).Max();
             }
-            return Math.Max(count1,count2);
+            return Math.Max(count1, count2);
         }
     }
 }

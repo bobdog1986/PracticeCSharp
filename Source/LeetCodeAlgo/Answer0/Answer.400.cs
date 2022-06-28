@@ -285,10 +285,11 @@ namespace LeetCodeAlgo
 
             return ans;
         }
+
         ///410. Split Array Largest Sum, #Binary Search
         //non-negative integers and an integer m, you can split the array into m non-empty continuous subarrays.
         //Write an algorithm to minimize the largest sum among these m subarrays.
-        //0 <= nums[i] <= 106, 1 <= nums.length <= 1000
+        //0 <= nums[i] <= 10^6, 1 <= nums.length <= 1000
         public int SplitArray(int[] nums, int m)
         {
             int n = nums.Length;
