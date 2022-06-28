@@ -196,6 +196,45 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2074. Reverse Nodes in Even Length Groups
+        //group len increasing by 1, eg 1,2,3,...,n
+        //real len of each group is even? reverse that group
+        public ListNode ReverseEvenLengthGroups(ListNode head)
+        {
+            var node = head;
+            int len = 1;
+            ListNode prev = null;
+            var stack =new Stack<ListNode>();
+            while (node != null)
+            {
+                stack.Clear();
+                int i = len++;
+                while (i-- > 0 && node != null)
+                {
+                    stack.Push(node);
+                    node = node.next;
+                }
+                if (stack.Count %2==1)
+                {
+                    prev = stack.Peek();
+                }
+                else
+                {
+                    var subHead = stack.Pop();
+                    var curr = subHead;
+                    while (stack.Count > 0)
+                    {
+                        curr.next = stack.Pop();
+                        curr = curr.next;
+                    }
+                    curr.next = node;
+                    prev.next = subHead;
+                    prev = curr;
+                }
+            }
+            return head;
+        }
+
         /// 2078. Two Furthest Houses With Different Colors
         ///There are n houses evenly lined up on the street, and each house is beautifully painted.
         ///You are given a 0-indexed integer array colors of length n, where colors[i] represents

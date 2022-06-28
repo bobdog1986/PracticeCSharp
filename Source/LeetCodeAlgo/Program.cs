@@ -24,9 +24,9 @@ namespace LeetCodeAlgo
             //var arrCharLine0 = answer.buildCharArray(strArrLines[0]);
 
             ///build listnode
-            //string listNodeStr1 = "[1,2,3,4]";//intArrLines[0]
-            //var listnode1 = answer.buildListNode(listNodeStr1);
-            //answer.printListNode(listnode1);
+            string listNodeStr1 = "[5,2,6,3,9,1,7,3,8]";//intArrLines[0]
+            var listnode1 = answer.buildListNode(listNodeStr1);
+            Answer.printListNode(listnode1);
 
             ///build treenode
             string bTreeStr1 = "[5,1,2,3,null,6,4]";//intArrLines[0];
@@ -53,7 +53,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.ConstructFromPrePost(arrInt1, arrInt2);
+            var result = answer.ReverseEvenLengthGroups(listnode1);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
