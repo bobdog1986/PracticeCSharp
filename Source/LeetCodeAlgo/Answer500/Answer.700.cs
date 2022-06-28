@@ -466,21 +466,20 @@ namespace LeetCodeAlgo
             return Math.Min(dp[n - 1], dp[n]);
         }
 
-        ///747. Largest Number At Least Twice of Others, #PriorityQueue,
+        ///747. Largest Number At Least Twice of Others, #PriorityQueue
         ///Determine whether the largest element in the array is at least twice as much as every other number
         ///If it is, return the index of the largest element, or return -1 otherwise.
         public int DominantIndex(int[] nums)
         {
+            if (nums.Length == 1) return 0;
             PriorityQueue<int, int> pq = new PriorityQueue<int, int>();
             for (int i = 0; i < nums.Length; i++)
             {
                 pq.Enqueue(i, -nums[i]);
             }
-            int maxIndex = -1;
-            int secondIndex = -1;
-            if (pq.Count > 0) maxIndex = pq.Dequeue();
-            if (pq.Count > 0) secondIndex = pq.Dequeue();
-            return secondIndex == -1 || nums[maxIndex] >= nums[secondIndex] * 2 ? maxIndex : -1;
+            int maxIndex =  pq.Dequeue();
+            int secondIndex = pq.Dequeue();
+            return nums[maxIndex] >= nums[secondIndex] * 2 ? maxIndex : -1;
         }
 
         ///748. Shortest Completing Word

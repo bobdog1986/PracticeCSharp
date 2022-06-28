@@ -295,21 +295,18 @@ namespace LeetCodeAlgo
             return depth;
         }
 
-        /// 283. Move Zeroes
+        /// 283. Move Zeroes, #Two Pointers
         /// move all 0's to the end of it while maintaining the relative order of the non-zero elements.
         public void MoveZeroes(int[] nums)
         {
-            int i = 0;
-            int[] temp=new int[nums.Length];
-            foreach(var n in nums)
+            int slow = 0;
+            for(int i = 0; i < nums.Length; i++)
             {
-                if(n != 0)
-                    temp[i++] = n;
+                if (nums[i] != 0)
+                    nums[slow++] = nums[i];
             }
-            for (int j=0;j < nums.Length; j++)
-            {
-                nums[j] = j < i ? temp[j] : 0;
-            }
+            while (slow < nums.Length)
+                nums[slow++] = 0;
         }
 
         ///284. Peeking Iterator， see PeekingIterator

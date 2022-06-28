@@ -663,112 +663,22 @@ namespace LeetCodeAlgo
         ///1 <= a.Length, b.Length <= 104, no leading zero
         public string AddBinary(string a, string b)
         {
-            if (string.IsNullOrEmpty(a) && string.IsNullOrEmpty(b))
-                return string.Empty;
-
-            if (string.IsNullOrEmpty(a))
-                return b;
-            if (string.IsNullOrEmpty(b))
-                return a;
-
-            string s1;
-            string s2;
-            if (a.Length <= b.Length)
+            List<char> list = new List<char>();
+            int i = a.Length - 1;
+            int j = b.Length - 1;
+            int carry = 0;
+            while(i>=0 || j >= 0)
             {
-                s1 = a;
-                s2 = b;
+                int c1 = i >= 0 ? a[i--] - '0' : 0;
+                int c2 = j >= 0 ? b[j--] - '0' : 0;
+                int c = c1 + c2 + carry;
+                if (c %2==0) list.Insert(0, '0');
+                else list.Insert(0, '1');
+                carry = c / 2;
             }
-            else
-            {
-                s1 = b;
-                s2 = a;
-            }
-
-            int i = 0;
-
-            List<char> result = new List<char>();
-
-            bool carry = false;
-            while (i <= s2.Length - 1)
-            {
-                if (i >= s1.Length)
-                {
-                    if (s2[s2.Length - 1 - i] == '0')
-                    {
-                        if (carry)
-                        {
-                            result.Insert(0, '1');
-                            carry = false;
-                        }
-                        else
-                        {
-                            result.Insert(0, '0');
-                        }
-                    }
-                    else
-                    {
-                        if (carry)
-                        {
-                            result.Insert(0, '0');
-                            carry = true;
-                        }
-                        else
-                        {
-                            result.Insert(0, '1');
-                        }
-                    }
-                }
-                else
-                {
-                    if (s1[s1.Length - 1 - i] == '0' && s2[s2.Length - 1 - i] == '0')
-                    {
-                        if (carry)
-                        {
-                            result.Insert(0, '1');
-                            carry = false;
-                        }
-                        else
-                        {
-                            result.Insert(0, '0');
-                        }
-                    }
-                    else if (s1[s1.Length - 1 - i] == '1' && s2[s2.Length - 1 - i] == '1')
-                    {
-                        if (carry)
-                        {
-                            result.Insert(0, '1');
-                            carry = true;
-                        }
-                        else
-                        {
-                            result.Insert(0, '0');
-                            carry = true;
-                        }
-                    }
-                    else
-                    {
-                        if (carry)
-                        {
-                            result.Insert(0, '0');
-                            carry = true;
-                        }
-                        else
-                        {
-                            result.Insert(0, '1');
-                            carry = false;
-                        }
-                    }
-                }
-
-                i++;
-            }
-
-            if (carry)
-            {
-                result.Insert(0, '1');
-            }
-
-            return string.Join("", result);
+            if (carry==1)
+                list.Insert(0, '1');
+            return new string(list.ToArray());
         }
 
         ///68. Text Justification

@@ -68,6 +68,50 @@ namespace LeetCodeAlgo
             return address.Replace(".", "[.]");
         }
 
+        ///1109. Corporate Flight Bookings
+        //There are n flights that are labeled from 1 to n.
+        //bookings[i] = [firsti, lasti, seatsi] ,flights range [firsti, lasti] with seatsi seats reserved
+        //Return an array answer of length n, where answer[i] is the total number of seats reserved for flight i.
+        public int[] CorpFlightBookings(int[][] bookings, int n)
+        {
+            var pq1 = new PriorityQueue<int[], int>();
+            var pq2 = new PriorityQueue<int[], int>();
+            foreach (var book in bookings)
+            {
+                pq1.Enqueue(new int[] { book[0], book[2] }, book[0]);
+                pq2.Enqueue(new int[] { book[1], book[2] }, book[1]);
+            }
+
+            int[] res = new int[n];
+            int curr = 0;
+            for (int i = 0; i < n; i++)
+            {
+                while (pq1.Count>0 && i + 1 == pq1.Peek()[0])
+                {
+                    curr += pq1.Dequeue()[1];
+                }
+                res[i] = curr;
+                while (pq2.Count > 0 && i + 1 == pq2.Peek()[0])
+                {
+                    curr -= pq2.Dequeue()[1];
+                }
+            }
+            return res;
+        }
+
+        public int[] CorpFlightBookings_Lee215_SweepLine(int[][] bookings, int n)
+        {
+            int[] res = new int[n];
+            foreach (var book in bookings)
+            {
+                res[book[0] - 1] += book[2];
+                if (book[1] < n) res[book[1]] -= book[2];
+            }
+            for (int i = 1; i < n; ++i)
+                res[i] += res[i - 1];
+            return res;
+        }
+
         ///1122. Relative Sort Array
         //Given two arrays arr1 and arr2, the elements of arr2 are distinct, and all elements in arr2 are also in arr1.
         //Sort the elements of arr1 such that the relative ordering of items in arr1 are the same as in arr2.

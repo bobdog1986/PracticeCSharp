@@ -522,7 +522,7 @@ namespace LeetCodeAlgo
         /// 1 <= strs.length <= 200, 0 <= strs[i].length <= 200
         public string LongestCommonPrefix(string[] strs)
         {
-            var ans = new List<char>();
+            var res = new List<char>();
             for (int i = 0; i < strs[0].Length; i++)
             {
                 bool fail = false;
@@ -538,9 +538,9 @@ namespace LeetCodeAlgo
                 if (fail)
                     break;
                 else
-                    ans.Add(c);
+                    res.Add(c);
             }
-            return new string(ans.ToArray());
+            return new string(res.ToArray());
         }
 
         ///15. 3Sum, #Two Pointer

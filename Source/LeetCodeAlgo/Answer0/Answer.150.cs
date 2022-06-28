@@ -37,30 +37,7 @@ namespace LeetCodeAlgo
         ///Given an input string s, reverse the order of the words.
         public string ReverseWords(string s)
         {
-            List<string> ans = new List<string>();
-            List<char> word = new List<char>();
-            foreach (var c in s)
-            {
-                if (c == ' ')
-                {
-                    if (word.Count > 0)
-                    {
-                        ans.Insert(0, new string(word.ToArray()));
-                        word.Clear();
-                    }
-                }
-                else
-                {
-                    word.Add(c);
-                }
-            }
-
-            if (word.Count > 0)
-            {
-                ans.Insert(0, new string(word.ToArray()));
-                word.Clear();
-            }
-            return string.Join(" ", ans);
+            return string.Join(' ', s.Split(' ').Where(x=>x.Length>0).Reverse());
         }
 
         /// 152. Maximum Product Subarray, #DP
@@ -292,30 +269,6 @@ namespace LeetCodeAlgo
         ///Given a 1-indexed array sorted in non-decreasing order, find two numbers add up to target number.
         //numbers[index1] and numbers[index2] where 1 <= index1<index2 <= numbers.length.
         ///Return the indices of the two numbers, index1 and index2, added by one as an integer array[index1, index2] of length 2.
-
-        public int[] TwoSum167_BinarySearch(int[] numbers, int target)
-        {
-            int n=numbers.Length;
-            for(int i = 0; i < n-1; i++)
-            {
-                int goal = target - numbers[i];
-                if (goal < numbers[i]) break;
-                if (goal > numbers.Last()) continue;
-                int left = i + 1;
-                int right = n - 1;
-                while (left <= right)
-                {
-                    int mid = (left + right) / 2;
-                    if (numbers[mid] == goal) return new int[] { i + 1, mid + 1 };
-                    else if (numbers[mid] > goal) right = mid - 1;
-                    else left = mid + 1;
-                }
-
-                //if left<right, must check if left is valid answer
-            }
-            return new int[] { };
-        }
-
         public int[] TwoSum167_TwoPointers(int[] numbers, int target)
         {
             int left = 0;
@@ -330,7 +283,6 @@ namespace LeetCodeAlgo
             }
             return new int[] { };
         }
-
 
         /// 168. Excel Sheet Column Title
         ///Given an integer columnNumber, return its corresponding column title as it appears in an Excel sheet.

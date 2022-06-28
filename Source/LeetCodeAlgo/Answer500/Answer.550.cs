@@ -102,18 +102,7 @@ namespace LeetCodeAlgo
         /// 557. Reverse Words in a String III
         public string ReverseWords_557(string s)
         {
-            var arr = s.Split(' ');
-            if (arr.Length == 0)
-                return s;
-
-            for (int i = 0; i < arr.Length; i++)
-            {
-                var carr = arr[i].ToCharArray();
-                ReverseString(carr);
-                arr[i] = string.Join("", carr);
-            }
-
-            return string.Join(" ", arr);
+            return string.Join(' ', s.Split(' ').Select(x => new string(x.Reverse().ToArray())));
         }
 
         ///559. Maximum Depth of N-ary Tree
