@@ -401,6 +401,33 @@ namespace LeetCodeAlgo
             return arr.Max();
         }
 
+        ///1647. Minimum Deletions to Make Character Frequencies Unique, #Greedy
+        // no two different characters in s that have the same frequency.
+        //return the minimum number of characters you need to delete to make s good.
+        public int MinDeletions_1647(string s)
+        {
+            var dict = new Dictionary<char, int>();
+            foreach(var c in s)
+            {
+                if (dict.ContainsKey(c)) dict[c]++;
+                else dict.Add(c, 1);
+            }
+            int res = 0;
+            var freqs = dict.Values.OrderBy(x => -x).ToList();
+            int prev = int.MaxValue;
+            foreach(var freq in freqs)
+            {
+                if (freq >= prev)
+                {
+                    res += freq - (prev - 1);
+                    prev--;
+                    if (prev <= 0) prev = 1;
+                }
+                else prev = freq;
+            }
+            return res;
+        }
+
         ///1648. Sell Diminishing-Valued Colored Balls, #Binary Search
         // if you own 6 yellow balls, the customer would pay 6 for the first yellow ball.
         // After the transaction, there are only 5 yellow balls left, so the next yellow ball is then valued at 5
