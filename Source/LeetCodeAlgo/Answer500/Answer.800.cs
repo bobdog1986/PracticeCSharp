@@ -376,31 +376,32 @@ namespace LeetCodeAlgo
             }
             return rec2[0] < rec1[2] && rec2[1]<rec1[3] && rec2[3] > rec1[1];
         }
-        /// 841. Keys and Rooms
-        //Given an array rooms where rooms[i] is the set of keys that you can obtain if you visited room i,
+        /// 841. Keys and Rooms, #BFS
+        //all the rooms are locked except room[0], rooms[i] is the set of keys that you can obtain if visited room i,
         //return true if you can visit all the rooms, or false otherwise.
         public bool CanVisitAllRooms(IList<IList<int>> rooms)
         {
-            int count = rooms.Count;
-            int[] arr = new int[count];
-            arr[0] = 1;
-            count--;
-            List<int> list = new List<int>(rooms[0]);
-            while (list.Count > 0 && count > 0)
+            int n = rooms.Count;
+            Queue<int> q = new Queue<int>();
+            q.Enqueue(0);
+            HashSet<int> visit = new HashSet<int>() { 0 };
+            while (q.Count > 0)
             {
-                List<int> next = new List<int>();
-                foreach (var key in list)
+                int size = q.Count;
+                while (size-- > 0)
                 {
-                    if (arr[key] == 0)
+                    var top = q.Dequeue();
+                    foreach(var i in rooms[top])
                     {
-                        arr[key] = 1;
-                        count--;
-                        next.AddRange(rooms[key]);
+                        if (!visit.Contains(i))
+                        {
+                            visit.Add(i);
+                            q.Enqueue(i);
+                        }
                     }
                 }
-                list = next;
             }
-            return count == 0;
+            return visit.Count==n;
         }
 
         /// 844. Backspace String Compare

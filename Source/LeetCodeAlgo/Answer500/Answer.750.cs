@@ -8,10 +8,12 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///752. Open the Lock, #Graph
+        ///752. Open the Lock, #Graph, #BFS
+        //The lock initially starts at '0000',deadends dead ends;
+        //return the minimum number of turns required to open the lock, or -1 if impossible.
         public int OpenLock(string[] deadends, string target)
         {
-            int res = 0;
+            int steps = 0;
             HashSet<string> dead = new HashSet<string>(deadends);
             HashSet<string> visit = new HashSet<string>() { "0000" };
 
@@ -20,49 +22,25 @@ namespace LeetCodeAlgo
             while (queue.Count > 0)
             {
                 int size = queue.Count;
-                for (int i = 0; i < size; i++)
+                while (size-- > 0)
                 {
-                    var str = queue.Dequeue();
-                    if (str == target) return res;
-                    if (dead.Contains(str)) continue;
+                    var curr = queue.Dequeue();
+                    if (curr == target) return steps;
+                    if (dead.Contains(curr)) continue;
                     for (int j = 0; j < 4; j++)
                     {
-                        var upKey = str;
-                        var downKey = str;
-                        if (str[j] == '9')
-                        {
-                            var arr = str.ToArray();
-                            arr[j] = '0';
-                            upKey = new string(arr);
-                        }
-                        else
-                        {
-                            var arr = str.ToArray();
-
-                            arr[j] = (char)(arr[j] + 1);
-                            upKey = new string(arr);
-                        }
-
-                        if (str[j] == '0')
-                        {
-                            var arr = str.ToArray();
-
-                            arr[j] = '9';
-                            downKey = new string(arr);
-                        }
-                        else
-                        {
-                            var arr = str.ToArray();
-
-                            arr[j] = (char)(arr[j] - 1);
-                            downKey = new string(arr);
-                        }
-
+                        var up = curr.ToArray();
+                        up[j] = (char)((up[j] - '0' + 1) % 10 + '0');
+                        var upKey = new string(up);
                         if (!dead.Contains(upKey) && !visit.Contains(upKey))
                         {
                             queue.Enqueue(upKey);
                             visit.Add(upKey);
                         }
+
+                        var down = curr.ToArray();
+                        down[j] = (char)((down[j] - '0' - 1+10) % 10 + '0');
+                        var downKey = new string(down);
                         if (!dead.Contains(downKey) && !visit.Contains(downKey))
                         {
                             queue.Enqueue(downKey);
@@ -70,9 +48,8 @@ namespace LeetCodeAlgo
                         }
                     }
                 }
-                res++;
+                steps++;
             }
-
             return -1;
         }
 

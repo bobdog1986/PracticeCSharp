@@ -247,12 +247,11 @@ namespace LeetCodeAlgo
         ///279. Perfect Squares, #DP
         ///Given an integer n, return the least number of perfect square numbers that sum to n.
         ///A perfect square is an integer that is the square of an integer;
-        public int NumSquares(int n)
+        public int NumSquares_DP(int n)
         {
             int[] dp = new int[n + 1];
-            for (int i = 1; i <= n; i++)
-                dp[i] = int.MaxValue;
-
+            Array.Fill(dp, int.MaxValue);
+            dp[0] = 0;
             for (int i = 1; i <= n; i++)
             {
                 for (int j = 1; j * j <= i; j++)
@@ -261,6 +260,39 @@ namespace LeetCodeAlgo
                 }
             }
             return dp[n];
+        }
+
+        public int NumSquares_BFS(int n)
+        {
+            Queue<int> q = new Queue<int>();
+            HashSet<int> visit = new HashSet<int>();
+            q.Enqueue(0);
+            visit.Add(0);
+            int depth = 0;
+            while (q.Count>0)
+            {
+                int size = q.Count;
+                depth++;
+                while (size-- > 0)
+                {
+                    int curr = q.Dequeue();
+                    for (int i = 1; i * i <= n; i++)
+                    {
+                        int v = curr + i * i;
+                        if (v == n) return depth;
+                        else if (v > n) break;//over flow
+                        else
+                        {
+                            if (!visit.Contains(v))
+                            {
+                                q.Enqueue(v);
+                                visit.Add(v);
+                            }
+                        }
+                    }
+                }
+            }
+            return depth;
         }
 
         /// 283. Move Zeroes

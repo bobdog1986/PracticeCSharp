@@ -10,7 +10,7 @@ namespace LeetCodeAlgo
         ///Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands.
         ///An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.
         ///You may assume all four edges of the grid are all surrounded by water.
-        public int NumIslands(char[][] grid)
+        public int NumIslands_BFS(char[][] grid)
         {
             int res = 0;
             int m = grid.Length;
@@ -49,6 +49,38 @@ namespace LeetCodeAlgo
                 }
             }
             return res;
+        }
+
+        public int NumIslands_DFS(char[][] grid)
+        {
+            int res = 0;
+            int m = grid.Length;
+            int n = grid[0].Length;
+            int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (grid[i][j] == '1')
+                    {
+                        res++;
+                        NumIslands_DFS(grid, i, j, dxy4);
+                    }
+                }
+            }
+            return res;
+        }
+
+        private void NumIslands_DFS(char[][] grid, int i,int j, int[][] dxy4)
+        {
+            grid[i][j] = '0';
+            foreach(var d in dxy4)
+            {
+                int r = i + d[0];
+                int c = j + d[1];
+                if (r >= 0 && r < grid.Length && c >= 0 && c < grid[0].Length && grid[r][c] == '1')
+                    NumIslands_DFS(grid, r, c, dxy4);
+            }
         }
 
         ///201. Bitwise AND of Numbers Range

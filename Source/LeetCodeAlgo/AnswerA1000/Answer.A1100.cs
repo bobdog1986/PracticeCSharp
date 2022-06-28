@@ -67,6 +67,38 @@ namespace LeetCodeAlgo
         {
             return address.Replace(".", "[.]");
         }
+
+        ///1122. Relative Sort Array
+        //Given two arrays arr1 and arr2, the elements of arr2 are distinct, and all elements in arr2 are also in arr1.
+        //Sort the elements of arr1 such that the relative ordering of items in arr1 are the same as in arr2.
+        //Elements that do not appear in arr2 should be placed at the end of arr1 in ascending order.
+        public int[] RelativeSortArray(int[] arr1, int[] arr2)
+        {
+            var set = arr2.ToHashSet();
+            var tails=new List<int>();
+            var dict = new Dictionary<int, int>();
+            foreach(var n in arr1)
+            {
+                if (set.Contains(n))
+                {
+                    if (dict.ContainsKey(n)) dict[n]++;
+                    else dict.Add(n, 1);
+                }
+                else tails.Add(n);
+            }
+            int i = 0;
+            int[] res = new int[arr1.Length];
+            foreach(var n in arr2)
+            {
+                while (dict[n]-->0)
+                    res[i++] = n;
+            }
+            tails = tails.OrderBy(x => x).ToList();
+            foreach (var n in tails)
+                res[i++] = n;
+            return res;
+        }
+
         /// 1124. Longest Well-Performing Interval , #HashMap
         //>8 is tiring day, well-performing interval is tiring days > non-tiring days
         //Return the length of the longest well-performing interval.

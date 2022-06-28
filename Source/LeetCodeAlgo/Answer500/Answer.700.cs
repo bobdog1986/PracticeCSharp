@@ -317,22 +317,22 @@ namespace LeetCodeAlgo
             int color = image[sr][sc];
             if (color == newColor)
                 return image;
-            int m = image.Length;
-            int n = image[0].Length;
-            int[] dxy4 = new int[] { 0,1,0,-1,0 };
+            int rowLen = image.Length;
+            int colLen = image[0].Length;
+            int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
             Queue<int[]> queue = new Queue<int[]>();
             queue.Enqueue(new int[] { sr, sc });
             while (queue.Count > 0)
             {
-                var p = queue.Dequeue();
-                if (image[p[0]][p[1]] == color)
+                var point = queue.Dequeue();
+                if (image[point[0]][point[1]] == color)
                 {
-                    image[p[0]][p[1]] = newColor;
-                    for (int i=0;i<4;i++)
+                    image[point[0]][point[1]] = newColor;
+                    foreach (var d in dxy4)
                     {
-                        var r = p[0] + dxy4[i];
-                        var c = p[1] + dxy4[i+1];
-                        if (r >= 0 && r < m && c >= 0 && c < n && image[r][c] == color)
+                        var r = point[0] + d[0];
+                        var c = point[1] + d[1];
+                        if (r >= 0 && r < rowLen && c >= 0 && c < colLen && image[r][c] == color)
                         {
                             queue.Enqueue(new int[] { r, c });
                         }
@@ -342,32 +342,14 @@ namespace LeetCodeAlgo
             return image;
         }
 
-        ///739. Daily Temperatures, #Monotonic
+        ///739. Daily Temperatures, #Monotonic Stack
         ///Given an array of integers temperatures represents the daily temperatures,
         ///return an array answer such that answer[i] is the number of days you have to wait after the ith day to get a warmer temperature.
         ///If there is no future day for which this is possible, keep answer[i] == 0 instead.
+
         public int[] DailyTemperatures(int[] temperatures)
         {
             int n = temperatures.Length;
-            int[] arr = new int[n];
-            int top = -1;
-            int[] res = new int[n];
-            for (int i = 0; i < n; i++)
-            {
-                while (top > -1 && temperatures[i] > temperatures[arr[top]])
-                {
-                    int idx = arr[top--];
-                    res[idx] = i - idx;
-                }
-                arr[++top] = i;
-            }
-            return res;
-        }
-
-        public int[] DailyTemperatures_Stack(int[] temperatures)
-        {
-            int n = temperatures.Length;
-
             Stack<int> stack = new Stack<int>();
             int[] res = new int[n];
             for (int i = 0; i < n; i++)
@@ -482,25 +464,21 @@ namespace LeetCodeAlgo
 
         ///745. Prefix and Suffix Search, see WordFilter
 
-        /// 746. Min Cost Climbing Stairs
-        ///cost[i] is the cost of ith step on a staircase.
+        /// 746. Min Cost Climbing Stairs, #DP
+        ///cost[i] is the cost of ith step on a staircase. pay the cost, you can either climb one or two steps.
         ///You can either start from the step with index 0, or the step with index 1
-        ///target stair is N-th, out of arr
+        ///Return the minimum cost to reach the top of the floor. 2 <= cost.length <= 1000
         public int MinCostClimbingStairs(int[] cost)
         {
-            int[] dp = new int[cost.Length];
-
-            dp[0] = cost[0];
-            dp[1] = cost[1];
-
-            for (int i = 2; i < cost.Length; i++)
+            int n = cost.Length;
+            int[] dp = new int[n+1];
+            dp[1] = cost[0];
+            dp[2] = cost[1];
+            for (int i = 3; i <= n; i++)
             {
-                //every point cost must to last1 or last2
-                dp[i] = cost[i] + Math.Min(dp[i - 2], dp[i - 1]);
+                dp[i] = cost[i-1] + Math.Min(dp[i - 2], dp[i - 1]);
             }
-
-            //every solution must to last1 or last2
-            return Math.Min(dp[cost.Length - 1], dp[cost.Length - 2]);
+            return Math.Min(dp[n - 1], dp[n]);
         }
 
         ///747. Largest Number At Least Twice of Others, #PriorityQueue,

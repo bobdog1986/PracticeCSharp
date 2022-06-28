@@ -510,11 +510,8 @@ namespace LeetCodeAlgo
         ///Return the number of different expressions that you can build, which evaluates to target.
         public int FindTargetSumWays(int[] nums, int target)
         {
-            Dictionary<int, int> dict = new Dictionary<int, int>
-            {
-                { 0, 1 }//seed data = 1
-            };
-
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            dict.Add(0, 1);//seed data = 1
             foreach (var n in nums)
             {
                 Dictionary<int, int> next = new Dictionary<int, int>();
@@ -526,10 +523,8 @@ namespace LeetCodeAlgo
                     if (next.ContainsKey(k - n)) next[k - n] += dict[k];
                     else next.Add(k - n, dict[k]);
                 }
-
                 dict = next;
             }
-
             return dict.ContainsKey(target) ? dict[target] : 0;
         }
 
@@ -540,7 +535,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        public void FindTargetSumWays_BackTracking(int[] nums, int target, int index, ref int res)
+        private void FindTargetSumWays_BackTracking(int[] nums, int target, int index, ref int res)
         {
             if (index == nums.Length)
             {

@@ -43,7 +43,7 @@ namespace LeetCodeAlgo.Design
             {
                 while(q1.Count>1)
                     EnqueueInternal(q2,q1.Dequeue());
-                return q1.Dequeue(); 
+                return q1.Dequeue();
             }
         }
 

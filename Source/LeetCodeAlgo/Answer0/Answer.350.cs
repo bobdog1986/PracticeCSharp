@@ -423,6 +423,48 @@ namespace LeetCodeAlgo
             return s;
         }
 
+        public string DecodeString_Stack(string s)
+        {
+            var curr = "";
+            Stack<int> countStack = new Stack<int>();
+            Stack<String> strStack = new Stack<string>();
+            int idx = 0;
+            while (idx < s.Length)
+            {
+                if (char.IsDigit(s[idx]))
+                {
+                    int val = 0;
+                    while (char.IsDigit(s[idx]))
+                    {
+                        val = 10 * val + (s[idx++] - '0');
+                    }
+                    countStack.Push(val);
+                }
+                else if (s[idx] == '[')
+                {
+                    strStack.Push(curr);
+                    curr = "";
+                    idx++;
+                }
+                else if (s[idx] == ']')
+                {
+                    StringBuilder sb = new StringBuilder();
+                    int repeatTimes = countStack.Pop();
+                    for (int i = 0; i < repeatTimes; i++)
+                    {
+                        sb.Append(curr);
+                    }
+                    curr = strStack.Pop() + sb.ToString();
+                    idx++;
+                }
+                else
+                {
+                    curr += s[idx++];
+                }
+            }
+            return curr;
+        }
+
         ///395. Longest Substring with At Least K Repeating Characters, #Divide And Conquer
         ///return the length of the longest substring of s such that the frequency of each character >= k.
         public int LongestSubstring(string s, int k)

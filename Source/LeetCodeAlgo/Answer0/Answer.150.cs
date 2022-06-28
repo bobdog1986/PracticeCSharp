@@ -12,27 +12,25 @@ namespace LeetCodeAlgo
         public int EvalRPN(string[] tokens)
         {
             Stack<int> stack = new Stack<int>();
-            int ans = 0;
+            int res = 0;
             foreach (var str in tokens)
             {
                 if (str == "+" || str == "-" || str == "*" || str == "/")
                 {
                     var b = stack.Pop();
                     var a = stack.Pop();
-                    if (str == "+") ans = a + b;
-                    else if (str == "-") ans = a - b;
-                    else if (str == "*") ans = a * b;
-                    else if (str == "/") ans = a / b;
-                    stack.Push(ans);
+                    if (str == "+") res = a + b;
+                    else if (str == "-") res = a - b;
+                    else if (str == "*") res = a * b;
+                    else if (str == "/") res = a / b;
+                    stack.Push(res);
                 }
                 else
                 {
                     stack.Push(int.Parse(str));
                 }
             }
-            if (stack.Count > 0)
-                return stack.Pop();
-            return ans;
+            return stack.Count > 0 ? stack.Pop() :res;
         }
 
         ///151. Reverse Words in a String

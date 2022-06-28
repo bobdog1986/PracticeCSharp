@@ -12,46 +12,50 @@ namespace LeetCodeAlgo.Design
     ///the last position is connected back to the first position to make a circle.It is also called "Ring Buffer".
     public class MyCircularQueue
     {
-        private readonly int MAX_COUNT;
-        private readonly List<int> list;
+        private readonly int[] arr;
+        private int index;
+        private int count;
         public MyCircularQueue(int k)
         {
-            MAX_COUNT = k;
-            list = new List<int>();
+            index = 0;
+            count = 0;
+            arr = new int[k];
         }
 
         public bool EnQueue(int value)
         {
-            if (list.Count >= MAX_COUNT) return false;
-            list.Add(value);
+            if (count == arr.Length) return false;
+            arr[index++] = value;
+            index %= arr.Length;
+            count++;
             return true;
         }
 
         public bool DeQueue()
         {
-            if(list.Count == 0) return false;
-            list.RemoveAt(0);
+            if (count == 0) return false;
+            count--;
             return true;
         }
 
         public int Front()
         {
-            return list.Count > 0 ? list.First() : -1;
+            return IsEmpty() ? -1 : arr[(index - count + arr.Length) % arr.Length];
         }
 
         public int Rear()
         {
-            return list.Count > 0 ? list.Last() : -1;
+            return IsEmpty() ? -1 : arr[(index - 1 + arr.Length) % arr.Length];
         }
 
         public bool IsEmpty()
         {
-            return list.Count == 0;
+            return count == 0;
         }
 
         public bool IsFull()
         {
-            return list.Count == MAX_COUNT;
+            return count == arr.Length;
         }
     }
 }

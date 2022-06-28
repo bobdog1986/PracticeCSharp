@@ -59,45 +59,53 @@ namespace LeetCodeAlgo.Design
             return (int)min;
         }
     }
+
     public class MinStack_Node
     {
-        private Node_minStack head;
+        private class Node_minStack
+        {
+            public int val;
+            public int min;
+            public Node_minStack prev=null;
+
+            public Node_minStack(int val, int min)
+            {
+                this.val = val;
+                this.min = Math.Min(val, min);
+            }
+        }
+
+        private Node_minStack top=null;
 
         public void Push(int x)
         {
-            if (head == null)
-                head = new Node_minStack(x, x, null);
+            if (top == null)
+            {
+                top = new Node_minStack(x, x);
+            }
             else
-                head = new Node_minStack(x, Math.Min(x, head.min), head);
+            {
+                var next = new Node_minStack(x, top.min);
+                next.prev = top;
+                top = next;
+            }
         }
 
         public void Pop()
         {
-            head = head.next;
+            top = top.prev;
         }
 
         public int Top()
         {
-            return head.val;
+            return top.val;
         }
 
         public int GetMin()
         {
-            return head.min;
+            return top.min;
         }
     }
 
-    public class Node_minStack
-    {
-        public int val;
-        public int min;
-        public Node_minStack next;
 
-        public Node_minStack(int val, int min, Node_minStack next)
-        {
-            this.val = val;
-            this.min = min;
-            this.next = next;
-        }
-    }
 }
