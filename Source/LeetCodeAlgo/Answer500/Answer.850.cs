@@ -421,6 +421,91 @@ namespace LeetCodeAlgo
             return null;
         }
 
+        ///889. Construct Binary Tree from Preorder and Postorder Traversal, #BTree
+        public TreeNode ConstructFromPrePost_My(int[] preorder, int[] postorder)
+        {
+            return BuildTree_PreorderAndPostorder(preorder, 0, preorder.Length - 1, postorder, 0, postorder.Length - 1);
+        }
+
+        private TreeNode BuildTree_PreorderAndPostorder(int[] preorder,int preL,int preR, int[] postorder,int postL,int postR)
+        {
+            if (preL > preR) return null;
+            else if (preL == preR) return new TreeNode(preorder[preL]);
+            else
+            {
+                var node = new TreeNode(preorder[preL]);
+                int i = postL;
+                for (; i < postR; i++)
+                    if (postorder[i] == preorder[preL+1]) break;
+                int count = i - postL + 1;
+                if(count == preR - preL)
+                {
+                    //assign all to left sub tree
+                    node.left = BuildTree_PreorderAndPostorder(preorder, preL + 1, preR, postorder, postL, postR - 1);
+                }
+                else
+                {
+                    node.left = BuildTree_PreorderAndPostorder(preorder, preL + 1, preL+count, postorder, postL, postL+count-1);
+                    node.right = BuildTree_PreorderAndPostorder(preorder, preL + count + 1, preR, postorder, postL + count, postR - 1);
+                }
+                return node;
+            }
+        }
+
+        public TreeNode ConstructFromPrePost_Lee215(int[] preorder, int[] postorder)
+        {
+            int preIndex = 0;
+            int postIndex = 0;
+            return ConstructFromPrePost_Lee215(preorder, postorder, ref preIndex, ref postIndex);
+        }
+
+        private TreeNode ConstructFromPrePost_Lee215(int[] preorder, int[] postorder, ref int preIndex, ref int postIndex)
+        {
+            //Create a node TreeNode(pre[preIndex]) as the root.
+            //Becasue root node will be lastly iterated in post order,
+            //if root.val == post[posIndex],
+            //it means we have constructed the whole tree,
+
+            //If we haven't completed constructed the whole tree,
+            //So we recursively constructFromPrePost for left sub tree and right sub tree.
+
+            //And finally, we'll reach the posIndex that root.val == post[posIndex].
+            //We increment posIndex and return our root node.
+            TreeNode root = new TreeNode(preorder[preIndex++]);
+            if (root.val != postorder[postIndex])
+                root.left = ConstructFromPrePost_Lee215(preorder, postorder, ref preIndex, ref postIndex);
+            if (root.val != postorder[postIndex])
+                root.right = ConstructFromPrePost_Lee215(preorder, postorder, ref preIndex, ref postIndex);
+            postIndex++;
+            return root;
+        }
+
+        public TreeNode ConstructFromPrePost(int[] preorder, int[] postorder)
+        {
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            TreeNode root = new TreeNode(preorder[0]);
+            stack.Push(root);
+            for (int i = 1, j = 0; i < preorder.Length; ++i)
+            {
+                TreeNode node = new TreeNode(preorder[i]);
+                while (stack.Peek().val == postorder[j])
+                {
+                    stack.Pop();
+                    j++;
+                }
+                if (stack.Peek().left == null)
+                {
+                    stack.Peek().left = node;
+                }
+                else
+                {
+                    stack.Peek().right = node;
+                }
+                stack.Push(node);
+            }
+            return root;
+        }
+
         ///890. Find and Replace Pattern
         ///Given a list of strings words and a string pattern, return a list of words[i] that match pattern
         public IList<string> FindAndReplacePattern(string[] words, string pattern)

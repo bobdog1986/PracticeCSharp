@@ -38,9 +38,9 @@ namespace LeetCodeAlgo
             var matInt1 = answer.buildMatrix(matStrInt1);
             //string matStrInt2 = "[[1,3,1,15],[1,3,3,1]]";
             //var matInt2 = answer.buildMatrix(matStrInt2);
-            string arrStrInt1 = "[29,29,23,32,17]";
+            string arrStrInt1 = "[1,2,4,5,3,6,7]";
             var arrInt1 = answer.buildArray(arrStrInt1);
-            string arrStrInt2 = "[1,1,1]";
+            string arrStrInt2 = "[4,5,2,6,7,3,1]";
             var arrInt2 = answer.buildArray(arrStrInt2);
 
             ///build int[][] and int[] from file
@@ -53,7 +53,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.DistinctSequences(4);
+            var result = answer.ConstructFromPrePost(arrInt1, arrInt2);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

@@ -162,45 +162,60 @@ namespace LeetCodeAlgo
         }
 
         ///105. Construct Binary Tree from Preorder and Inorder Traversal, #BTree
-        public TreeNode BuildTree(int[] preorder, int[] inorder)
+        public TreeNode BuildTree_My(int[] preorder, int[] inorder)
         {
-            return BuildTree(preorder, inorder, 0, preorder.Length - 1, 0, preorder.Length - 1);
+            return BuildTree_PreorderAndInorder(preorder,  0, preorder.Length - 1, inorder, 0, preorder.Length - 1);
         }
-        public TreeNode BuildTree(int[] preorder, int[] inorder, int preLeft, int preRight, int inLeft, int inRight)
-        {
-            if (preLeft > preRight||inLeft>inRight)
-                return null;
 
+        private TreeNode BuildTree_PreorderAndInorder(int[] preorder, int preLeft, int preRight, int[] inorder, int inLeft, int inRight)
+        {
             if(preLeft == preRight || inLeft == inRight)
-            {
                 return new TreeNode(preorder[preLeft]);
-            }
 
             TreeNode node = new TreeNode(preorder[preLeft]);
-            var index = BuildTree_FindIndex(preorder[preLeft], inorder, inLeft,inRight);
-            var countLeft = index - inLeft;
-            var countRight = inRight-index;
+            int i = inLeft;
+            for (; i <= inRight; i++)
+                if (preorder[preLeft] == inorder[i]) break;
 
-            if (countLeft > 0)
+            int countLeft = i-1 - inLeft+1;
+            if (i > inLeft)
             {
-                node.left = BuildTree(preorder, inorder, preLeft + 1, preLeft + 1+countLeft-1, inLeft, index - 1);
+                node.left = BuildTree_PreorderAndInorder(preorder, preLeft + 1, preLeft + countLeft, inorder, inLeft, i - 1);
             }
-
-            if (countRight > 0)
+            if (i < inRight)
             {
-                node.right = BuildTree(preorder, inorder,
-                    preLeft + 1 + countLeft - 1+1, preLeft + 1 + countLeft - 1 + 1 + countRight-1,
-                    index+1, inRight);
+                node.right = BuildTree_PreorderAndInorder(preorder, preLeft + countLeft +1, preRight, inorder, i +1, inRight);
             }
             return node;
         }
-        public int BuildTree_FindIndex(int target, int[] array, int start, int end)
+
+        public TreeNode BuildTree(int[] preorder, int[] inorder)
         {
-            for (int i = start; i <= end; i++)
+            if (preorder.Length == 0) return null;
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            TreeNode root = new TreeNode(preorder[0]);
+            TreeNode curr = root;
+            for (int i = 1, j = 0; i < preorder.Length; i++)
             {
-                if (target == array[i]) return i;
+                if (curr.val != inorder[j])
+                {
+                    curr.left = new TreeNode(preorder[i]);
+                    stack.Push(curr);
+                    curr = curr.left;
+                }
+                else
+                {
+                    j++;
+                    while (stack.Count>0 && stack.Peek().val == inorder[j])
+                    {
+                        curr = stack.Pop();
+                        j++;
+                    }
+                    curr.right = new TreeNode(preorder[i]);
+                    curr = curr.right;
+                }
             }
-            throw new ArgumentOutOfRangeException();
+            return root;
         }
 
         ///107. Binary Tree Level Order Traversal II, #BTree
