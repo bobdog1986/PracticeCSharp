@@ -377,33 +377,24 @@ namespace LeetCodeAlgo
         {
             if (root == null)
                 return true;
-            var leftDeep = IsBalanced_Deep(root.left, 1);
-            var rightDeep = IsBalanced_Deep(root.right, 1);
+            var leftDeep = IsBalanced_Depth(root.left, 1);
+            var rightDeep = IsBalanced_Depth(root.right, 1);
             if (leftDeep == -1 || rightDeep == -1)
             {
                 return false;
             }
             else
             {
-                if (leftDeep - rightDeep >= -1 && leftDeep - rightDeep <= 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return leftDeep - rightDeep >= -1 && leftDeep - rightDeep <= 1;
             }
         }
 
-        public int IsBalanced_Deep(TreeNode root, int deep)
+        private int IsBalanced_Depth(TreeNode root, int depth)
         {
             if (root == null)
-                return deep;
-
-            int leftDeep = IsBalanced_Deep(root.left, deep + 1);
-            int rightDeep = IsBalanced_Deep(root.right, deep + 1);
-
+                return depth;
+            int leftDeep = IsBalanced_Depth(root.left, depth + 1);
+            int rightDeep = IsBalanced_Depth(root.right, depth + 1);
             if (leftDeep == -1 || rightDeep == -1)
             {
                 return -1;
@@ -562,17 +553,17 @@ namespace LeetCodeAlgo
         }
 
         /// 116. Populating Next Right Pointers in Each Node
-        /// You are given a perfect binary tree where all leaves are on the same level
-        /// Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
-        /// Initially, all next pointers are set to NULL.
-        public Node_1 Connect_116(Node_1 root)
+        // You are given a perfect binary tree where all leaves are on the same level
+        // Populate each next pointer to point to its next right node.
+        // If there is no next right node, the next pointer should be set to NULL.
+        public Node_Next Connect_116(Node_Next root)
         {
             if (root == null)
                 return null;
-            List<Node_1> list = new List<Node_1> { root };
+            List<Node_Next> list = new List<Node_Next> { root };
             while (list.Count != 0)
             {
-                List<Node_1> subs = new List<Node_1>();
+                List<Node_Next> subs = new List<Node_Next>();
                 for (int i = 0; i < list.Count; i++)
                 {
                     list[i].next = i == list.Count - 1 ? null : list[i + 1];
@@ -590,17 +581,14 @@ namespace LeetCodeAlgo
         /// 117. Populating Next Right Pointers in Each Node II
         /// Populate each next pointer to point to its next right node.
         /// If there is no next right node, the next pointer should be set to NULL.
-        public Node_1 Connect(Node_1 root)
+        public Node_Next Connect(Node_Next root)
         {
             if (root == null)
                 return null;
-            List<Node_1> list = new List<Node_1>
-            {
-                root
-            };
+            List<Node_Next> list = new List<Node_Next> { root };
             while (list.Count != 0)
             {
-                List<Node_1> subs = new List<Node_1>();
+                List<Node_Next> subs = new List<Node_Next>();
                 for (int i = 0; i < list.Count; i++)
                 {
                     list[i].next = i == list.Count - 1 ? null : list[i + 1];
@@ -611,7 +599,6 @@ namespace LeetCodeAlgo
                 }
                 list = subs;
             }
-
             return root;
         }
 

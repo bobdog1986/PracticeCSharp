@@ -52,6 +52,82 @@ namespace LeetCodeAlgo
             }
             return 0;//never happen
         }
+
+        ///858. Mirror Reflection
+        public int MirrorReflection_My(int p, int q)
+        {
+            int res = -1;
+            bool right = true;
+            int sign = 1;
+            int h = 0;
+            while (true)
+            {
+                h += sign*q;
+                if (right)
+                {
+                    if (h == p)
+                    {
+                        res = 1;
+                        break;
+                    }
+                    else if (h > p)
+                    {
+                        h = p - (h - p);
+                        sign = -1;
+                        if (h == 0)
+                        {
+                            res=0;
+                            break;
+                        }
+                    }
+                    else if (h == 0)
+                    {
+                        res = 0;
+                        break;
+                    }
+                    else if (h < 0)
+                    {
+                        h = -h;
+                        sign = 1;
+                    }
+                }
+                else
+                {
+                    if (h == p)
+                    {
+                        res = 2;
+                        break;
+                    }
+                    else if (h > p)
+                    {
+                        h = p - (h - p);
+                        sign = -1;
+                    }
+                    else if (h < 0)
+                    {
+                        h = -h;
+                        sign = 1;
+                    }
+                }
+                right = !right;
+            }
+            return res;
+        }
+
+        public int MirrorReflection(int p, int q)
+        {
+            int m = 1, n = 1;
+            while (m * p != n * q)
+            {
+                n++;
+                m = n * q / p;
+            }
+            if (m % 2 == 0 && n % 2 == 1) return 0;
+            if (m % 2 == 1 && n % 2 == 1) return 1;
+            if (m % 2 == 1 && n % 2 == 0) return 2;
+            return -1;
+        }
+
         /// 859. Buddy Strings
         ///return true if you can swap two letters in s so the result is equal to goal, otherwise, return false.
         public bool BuddyStrings(string s, string goal)

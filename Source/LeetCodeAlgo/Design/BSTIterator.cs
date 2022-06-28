@@ -9,11 +9,45 @@ namespace LeetCodeAlgo.Design
     /// 173. Binary Search Tree Iterator
     public class BSTIterator
     {
+        private Stack<TreeNode> stack = new Stack<TreeNode>();
+
+        public BSTIterator(TreeNode root)
+        {
+            pushAll(root);
+        }
+
+        /** @return whether we have a next smallest number */
+        public bool HasNext()
+        {
+            return stack.Count>0;
+        }
+
+        /** @return the next smallest number */
+        public int Next()
+        {
+            TreeNode top = stack.Pop();
+            pushAll(top.right);
+            return top.val;
+        }
+
+        private void pushAll(TreeNode node)
+        {
+            var curr = node;
+            while (curr != null)
+            {
+                stack.Push(curr);
+                curr = curr.left;
+            }
+        }
+    }
+
+    public class BSTIterator_My
+    {
 
         private int index = -1;
         private readonly IList<int> list;
 
-        public BSTIterator(TreeNode root)
+        public BSTIterator_My(TreeNode root)
         {
             list = InorderTraversal_Iteration(root);
         }

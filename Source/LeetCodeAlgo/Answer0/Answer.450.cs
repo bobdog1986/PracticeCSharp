@@ -8,43 +8,47 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///450. Delete Node in a BST
+        ///450. Delete Node in a BST, #BST
         ///The number of nodes in the tree is in the range [0, 10^4].
         public TreeNode DeleteNode(TreeNode root, int key)
         {
             if (root == null)
                 return null;
             if (root.val == key)
-            {
                 return DeleteNode(root);
-            }
             else if (key > root.val)
-            {
                 root.right = DeleteNode(root.right, key);
-            }
             else
-            {
                 root.left = DeleteNode(root.left, key);
-            }
             return root;
         }
 
-        public TreeNode DeleteNode(TreeNode root)
+        private TreeNode DeleteNode(TreeNode root)
         {
             if (root.left == null)
                 return root.right;
             if (root.right == null)
                 return root.left;
 
-            //inset the right subtree to left subtree
-            var ans = root.left;
-            var node = root.left;
-            while (node.right != null)
+            //insert the right subtree as the rightmost of left subtree
+            //var res = root.left;
+            //var node = root.left;
+            //while (node.right != null)
+            //{
+            //    node = node.right;
+            //}
+            //node.right = root.right;
+            //return res;
+
+            //or, reverse, insert the left subtree as the leftmost of right subtree
+            var res = root.right;
+            var node = root.right;
+            while (node.left != null)
             {
-                node = node.right;
+                node = node.left;
             }
-            node.right = root.right;
-            return ans;
+            node.left = root.left;
+            return res;
         }
 
         ///451. Sort Characters By Frequency

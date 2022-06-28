@@ -74,22 +74,22 @@ namespace LeetCodeAlgo
         }
     }
 
-    public class Node_1
+    public class Node_Next
     {
         public int val;
-        public Node_1 left;
-        public Node_1 right;
-        public Node_1 next;
+        public Node_Next left;
+        public Node_Next right;
+        public Node_Next next;
 
-        public Node_1()
+        public Node_Next()
         { }
 
-        public Node_1(int _val)
+        public Node_Next(int _val)
         {
             val = _val;
         }
 
-        public Node_1(int _val, Node_1 _left, Node_1 _right, Node_1 _next)
+        public Node_Next(int _val, Node_Next _left, Node_Next _right, Node_Next _next)
         {
             val = _val;
             left = _left;
