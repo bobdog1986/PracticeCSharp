@@ -208,11 +208,49 @@ namespace LeetCodeAlgo
                 grid[row][col] = temp;
             }
         }
+
+        ///1222. Queens That Can Attack the King
+        public IList<IList<int>> QueensAttacktheKing(int[][] queens, int[] king)
+        {
+            var res=new List<IList<int>>();
+
+            var rights = queens.Where(q => q[0] == king[0] && q[1] > king[1]).OrderBy(q => q[1] - king[1]);
+            if (rights.Any()) res.Add(rights.First().ToList());
+
+            var lefts = queens.Where(q => q[0] == king[0] && q[1] < king[1]).OrderBy(q => king[1] - q[1] );
+            if (lefts.Any()) res.Add(lefts.First().ToList());
+
+            var downs = queens.Where(q => q[1] == king[1] && q[0] > king[0]).OrderBy(q => q[0] - king[0]);
+            if (downs.Any()) res.Add(downs.First().ToList());
+
+            var ups = queens.Where(q => q[1] == king[1] && q[0] < king[0]).OrderBy(q => king[0] - q[0] );
+            if (ups.Any()) res.Add(ups.First().ToList());
+
+            var rightDowns = queens.Where(q => q[0] > king[0] && q[0]- king[0] == q[1] - king[1])
+                                    .OrderBy(q => q[0] - king[0]);
+            if (rightDowns.Any()) res.Add(rightDowns.First().ToList());
+
+            var rightUps = queens.Where(q => q[0] > king[0] && q[0] - king[0] == king[1] -q[1])
+                                    .OrderBy(q => q[0] - king[0]);
+            if (rightUps.Any()) res.Add(rightUps.First().ToList());
+
+            var leftDowns = queens.Where(q => q[0] < king[0] && king[0] - q[0]  == q[1] - king[1])
+                                    .OrderBy(q => king[0] -q[0] );
+            if (leftDowns.Any()) res.Add(leftDowns.First().ToList());
+
+            var leftUps = queens.Where(q => q[0] <king[0] && king[0] - q[0] == king[1]- q[1])
+                                    .OrderBy(q => king[0] - q[0]);
+            if (leftUps.Any()) res.Add(leftUps.First().ToList());
+
+            return res;
+        }
+
         /// 1227. Airplane Seat Assignment Probability
         public double NthPersonGetsNthSeat(int n)
         {
             return n == 1 ? 1.0 : 0.5;
         }
+
         /// 1232. Check If It Is a Straight Line
         ///coordinates[i] = [x, y], where [x, y] represents the coordinate of a point.
         ///Check if these points make a straight line in the XY plane.
