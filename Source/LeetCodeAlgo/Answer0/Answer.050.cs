@@ -737,16 +737,17 @@ namespace LeetCodeAlgo
         ///0 <= x <= 2^31 - 1
         public int MySqrt(int x)
         {
+            if (x <= 1) return x;
             long left = 0;
             long right = 50000;
-            while (left <= right)
+            while (left < right)
             {
-                long mid = (left + right) / 2;
+                long mid = (left + right+1) / 2;
                 if (mid * mid == x) return (int)mid;
                 else if (mid * mid > x) right = mid - 1;
-                else left = mid + 1;
+                else left = mid;
             }
-            return (int)right;
+            return (int)left;
         }
 
         public int MySqrt_Math(int x)

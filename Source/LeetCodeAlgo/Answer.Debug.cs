@@ -138,7 +138,7 @@ namespace LeetCodeAlgo
             Console.WriteLine(str);
         }
 
-        public static void printRandomNode(Node node, int maxLen = 20)
+        public static void printRandomNode(Node_Random node, int maxLen = 20)
         {
             if (node == null)
             {
@@ -146,7 +146,7 @@ namespace LeetCodeAlgo
                 return;
             }
             List<int> list = new List<int>();
-            List<Node> rList = new List<Node>();
+            List<Node_Random> rList = new List<Node_Random>();
             while (node != null && list.Count <= maxLen)
             {
                 list.Add(node.val);

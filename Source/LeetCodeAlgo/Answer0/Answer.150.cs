@@ -96,21 +96,20 @@ namespace LeetCodeAlgo
                     return nums[mid];
                 else
                 {
-                    if (nums[mid]> nums[right])
+                    if (nums[mid]> nums[right])//rotated, in range [mid+1,right]
                     {
                         left = mid + 1;
                     }
                     else if(nums[mid]< nums[right])
                     {
-                        right = mid;
+                        right = mid;//must in range [left, mid]
                     }
-                    else
+                    else// nums[mid] == nums[right]
                     {
-                        right--;//??
+                        right--;//duplicate, move to the head
                     }
                 }
             }
-
             return nums[left];
         }
         /// 155. Min Stack , see MinStack
@@ -121,7 +120,6 @@ namespace LeetCodeAlgo
         {
             var node1 = headA;
             var node2 = headB;
-
             int len1 = 0;
             int len2 = 0;
             while (node1 != null)
@@ -134,10 +132,8 @@ namespace LeetCodeAlgo
                 node2 = node2.next;
                 len2++;
             }
-
             node1 = headA;
             node2 = headB;
-
             if (len1 > len2)
             {
                 while (len1 > len2)
@@ -154,13 +150,11 @@ namespace LeetCodeAlgo
                     len2--;
                 }
             }
-
             while (node1 != node2)
             {
                 node1 = node1.next;
                 node2 = node2.next;
             }
-
             return node1;
         }
 

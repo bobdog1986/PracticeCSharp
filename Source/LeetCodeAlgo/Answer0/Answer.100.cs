@@ -1373,135 +1373,54 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///138. Copy List with Random Pointer
+        ///138. Copy List with Random Pointer, #Good!
         ///Random may pointer to itself
-        public Node CopyRandomList_My(Node head)
+        public Node_Random CopyRandomList(Node_Random head)
         {
-            if (head == null) return null;
-            Node brand = null;
-            Node tail = null;
-
-            List<Node> inputs = new List<Node>();
-            List<Node> list = new List<Node>();
-            var node = head;
-            while (node != null)
-            {
-                if (brand == null)
-                {
-                    brand = new Node(node.val);
-                    tail = brand;
-
-                    inputs.Add(node);
-                    list.Add(tail);
-
-                    if (node.random == null)
-                    {
-                        tail.random = null;
-                    }
-                    else
-                    {
-                        var rIndex = inputs.IndexOf(node.random);
-                        if (rIndex == -1)
-                        {
-                            tail.random = new Node(node.random.val);
-                            list.Add(tail.random);
-                            inputs.Add(node.random);
-                        }
-                        else
-                        {
-                            tail.random = list[rIndex];
-                        }
-                    }
-                }
-                else
-                {
-                    var index = inputs.IndexOf(node);
-                    if (index == -1)
-                    {
-                        tail.next = new Node(node.val);
-                        tail = tail.next;
-                        list.Add(tail);
-                        inputs.Add(node);
-                    }
-                    else
-                    {
-                        tail.next = list[index];
-                        tail = tail.next;
-                    }
-
-                    if (node.random == null)
-                    {
-                        tail.random = null;
-                    }
-                    else
-                    {
-                        var rIndex = inputs.IndexOf(node.random);
-                        if (rIndex == -1)
-                        {
-                            tail.random = new Node(node.random.val);
-                            list.Add(tail.random);
-                            inputs.Add(node.random);
-                        }
-                        else
-                        {
-                            tail.random = list[rIndex];
-                        }
-                    }
-                }
-                node = node.next;
-            }
-
-            return brand;
-        }
-
-        public Node CopyRandomList(Node head)
-        {
-            Node iter = head, next;
-
+            Node_Random curr = head;
+            Node_Random next = null;
             // First round: make copy of each node,
             // and link them together side-by-side in a single list.
-            while (iter != null)
+            while (curr != null)
             {
-                next = iter.next;
+                next = curr.next;
 
-                Node copy1 = new Node(iter.val);
-                iter.next = copy1;
+                Node_Random copy1 = new Node_Random(curr.val);
+                curr.next = copy1;
                 copy1.next = next;
 
-                iter = next;
+                curr = next;
             }
 
             // Second round: assign random pointers for the copy nodes.
-            iter = head;
-            while (iter != null)
+            curr = head;
+            while (curr != null)
             {
-                if (iter.random != null)
+                if (curr.random != null)
                 {
-                    iter.next.random = iter.random.next;
+                    //every copy node is the next of prev node in origin sequence
+                    curr.next.random = curr.random.next;
                 }
-                iter = iter.next.next;
+                curr = curr.next.next;
             }
 
             // Third round: restore the original list, and extract the copy list.
-            iter = head;
-            Node pseudoHead = new Node(0);
-            Node copy, copyIter = pseudoHead;
-
-            while (iter != null)
+            curr = head;
+            Node_Random pseudoHead = new Node_Random(0);
+            Node_Random copyPrev = pseudoHead;
+            while (curr != null)
             {
-                next = iter.next.next;
+                next = curr.next.next;//real next in origin sequence
 
                 // extract the copy
-                copy = iter.next;
-                copyIter.next = copy;
-                copyIter = copy;
+                copyPrev.next = curr.next;
+                copyPrev = copyPrev.next;
 
                 // restore the original list
-                iter.next = next;
+                curr.next = next;
 
-                iter = next;
+                curr = next;
             }
-
             return pseudoHead.next;
         }
 
@@ -1642,7 +1561,7 @@ namespace LeetCodeAlgo
         }
 
         /// 141. Linked List Cycle, #Two Pointers ->O(1) space
-        /// Return true if there is a cycle in the linked list. Otherwise, return false.
+        // Return true if there is a cycle in the linked list. Otherwise, return false.
         public bool HasCycle(ListNode head)
         {
             ListNode walker = head;
@@ -1670,7 +1589,6 @@ namespace LeetCodeAlgo
             {
                 fast = fast.next.next;
                 slow = slow.next;
-
                 if (fast == slow)
                 {
                     ListNode slow2 = head;

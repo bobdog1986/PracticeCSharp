@@ -7,91 +7,82 @@ using System.Threading.Tasks;
 namespace LeetCodeAlgo.Design
 {
     ///707. Design Linked List
+
     public class MyLinkedList
     {
 
-        private List<ListNode> nodes=new List<ListNode> ();
+        private class MyListNode
+        {
+            public int val;
+            public MyListNode next;
+
+            public MyListNode(int val,MyListNode next = null)
+            {
+                this.val = val;
+                this.next = next;
+            }
+        }
+
+        private int count;
+        private MyListNode head;
         public MyLinkedList()
         {
-
+            head = new MyListNode(-1);
+            count = 0;
         }
 
         public int Get(int index)
         {
-            if (index >= nodes.Count)
-                return -1;
-
-            return nodes[index].val;
+            if (index < 0 || index >= count) return -1;
+            var node = head;
+            while (index-- >= 0)
+            {
+                node = node.next;
+            }
+            return node.val;
         }
 
         public void AddAtHead(int val)
         {
-            var head = nodes.Count > 0 ? nodes[0] : null;
-            nodes.Insert(0, new ListNode(val, head));
+            var curr = new MyListNode(val,head.next);
+            head.next = curr;
+            count++;
         }
 
         public void AddAtTail(int val)
         {
-            var tail = nodes.Count > 0 ? nodes[nodes.Count - 1]: null;
-            var add = new ListNode(val);
-            nodes.Add(add);
-            if(tail != null)
-                tail.next = add;
+            var node = head;
+            while (node.next!=null)
+            {
+                node = node.next;
+            }
+            node.next = new MyListNode(val);
+            count++;
         }
 
         public void AddAtIndex(int index, int val)
         {
-            if (index > nodes.Count)
+            if (index < 0 || index > count) return;
+            var node = head;
+            while (index-- > 0)
             {
-                //
+                node = node.next;
             }
-            else if (index == nodes.Count)
-            {
-                AddAtTail(val);
-            }
-            else
-            {
-                if (index == 0)
-                {
-                    AddAtHead(val);
-                }
-                else
-                {
-                    var prev=nodes[index-1];
-                    var next=nodes[index];
-                    var add=new ListNode(val);
-                    nodes.Insert(index, add);
-                    prev.next = add;
-                    add.next = next;
-                }
-            }
+            var insert = new MyListNode(val, node.next);
+            node.next = insert;
+            count++;
         }
 
         public void DeleteAtIndex(int index)
         {
-            if(index >= nodes.Count)
+            if (index < 0 || index >= count) return;
+            var node = head;
+            while (index-- > 0)
             {
-                //
+                node = node.next;
             }
-            else
-            {
-                if (index == 0)
-                {
-                    nodes.RemoveAt(index);
-                }
-                else if(index == nodes.Count - 1)
-                {
-                    nodes.RemoveAt(index);
-                    nodes.Last().next = null;
-                }
-                else
-                {
-                    var prev = nodes[index - 1];
-                    var next = nodes[index + 1];
-                    nodes.RemoveAt(index);
-                    prev.next = next;
-                }
-            }
+            node.next = node.next.next;
+            count--;
         }
     }
 }

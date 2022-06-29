@@ -94,7 +94,7 @@ namespace LeetCodeAlgo
         ///Given a sorted integer array arr, two integers k and x,
         ///return the k closest integers to x in the array. The result should also be sorted in ascending order.
         ///An integer a is closer to x than an integer b if:|a - x| < |b - x|, or |a - x| == |b - x| and a<b
-        public IList<int> FindClosestElements_BinarySearch(int[] arr, int k, int x)
+        public IList<int> FindClosestElements(int[] arr, int k, int x)
         {
             int left = 0, right = arr.Length - k;
             while (left < right)

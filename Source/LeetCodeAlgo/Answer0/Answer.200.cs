@@ -136,35 +136,20 @@ namespace LeetCodeAlgo
         //203. Remove Linked List Elements
         public ListNode RemoveElements(ListNode head, int val)
         {
-            while (head != null)
-            {
-                if (val == head.val)
-                {
-                    head = head.next;
-                }
-                else
-                {
-                    break;
-                }
-            }
+            while (head != null && head.val==val)
+                head = head.next;
 
             if (head == null)
                 return null;
 
-            var current = head;
-
-            while (current.next != null)
+            var curr = head;
+            while (curr.next != null)
             {
-                if (current.next.val == val)
-                {
-                    current.next = current.next.next;
-                }
+                if (curr.next.val == val)
+                    curr.next = curr.next.next;
                 else
-                {
-                    current = current.next;
-                }
+                    curr = curr.next;
             }
-
             return head;
         }
 
@@ -211,24 +196,6 @@ namespace LeetCodeAlgo
         /// 206. Reverse Linked List
         ///Given the head of a singly linked list, reverse the list, and return the reversed list.
         ///The number of nodes in the list is the range [0, 5000].
-        public ListNode ReverseList_My(ListNode head)
-        {
-            if (head == null)
-                return null;
-            List<ListNode> list = new List<ListNode>();
-            var node = head;
-            while (node != null)
-            {
-                list.Add(node);
-                node = node.next;
-            }
-            for (int i = list.Count - 1; i > 0; i--)
-            {
-                list[i].next = list[i - 1];
-            }
-            list[0].next = null;
-            return list.Last();
-        }
         public ListNode ReverseList(ListNode head)
         {
             ListNode prev = null;
@@ -258,8 +225,6 @@ namespace LeetCodeAlgo
             node.next = prev;
             return ReverseList_Recursion(node, next);
         }
-
-
 
         ///207. Course Schedule, #Graph
         ///You are given an array prerequisites where prerequisites[i] = [ai, bi]

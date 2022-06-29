@@ -431,9 +431,10 @@ namespace LeetCodeAlgo
 
 
         /// 744. Find Smallest Letter Greater Than Target, #Binary Search
+        //letters are wrap around, eg. a>z
         public char NextGreatestLetter(char[] letters, char target)
         {
-            if (target >= letters[letters.Length - 1])
+            if (target >= letters[letters.Length - 1] || target < letters[0])
                 return letters[0];
 
             int n = letters.Length;

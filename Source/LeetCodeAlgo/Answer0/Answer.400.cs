@@ -773,6 +773,54 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///430. Flatten a Multilevel Doubly Linked List
+        public Node Flatten(Node head)
+        {
+            if (head == null) return null;
+            Node curr = head;
+            Node prev = null;
+            Node childHead = null;
+            Stack<Node> stack = new Stack<Node>();
+            Stack<Node> subHeads = new Stack<Node>();
+            while (curr != null || stack.Count > 0)
+            {
+                if (curr == null)
+                {
+                    var top = stack.Pop();
+                    var next = top.next;
+                    if (prev != null)
+                        prev.next = next;
+                    if (next != null)
+                        next.prev = prev;
+
+                    top.next = childHead;
+                    childHead.prev = top;
+
+                    childHead = subHeads.Count > 0 ? subHeads.Pop() : null;
+
+                    curr = next;
+                }
+                else
+                {
+                    if (curr.child == null)
+                    {
+                        prev = curr;
+                        curr = curr.next;
+                    }
+                    else
+                    {
+                        if (childHead != null)
+                            subHeads.Push(childHead);
+
+                        childHead = curr.child;
+                        curr.child = null;
+                        stack.Push(curr);
+                        curr = childHead;
+                    }
+                }
+            }
+            return head;
+        }
 
         ///433. Minimum Genetic Mutation, #BFS, #Graph
         ///return the minimum number of mutations needed to mutate from start to end.Or return -1 if not exist
@@ -803,7 +851,7 @@ namespace LeetCodeAlgo
             }
             return -1;
         }
-        public bool MinMutation_Can(string s1, string s2)
+        private bool MinMutation_Can(string s1, string s2)
         {
             int diff = 0;
             for(int i=0;i<s1.Length; i++)
@@ -813,7 +861,6 @@ namespace LeetCodeAlgo
             }
             return diff == 1;
         }
-
 
         /// 434. Number of Segments in a String
         ///return the number of segments , segment is a contiguous sequence of non-space characters.0 <= s.length <= 300
@@ -894,10 +941,10 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 437. Path Sum III, #BTree, #Prefix Sum
         ///return the number of paths where the sum of the values along the path equals targetSum.
         ///The path does not need to start or end at the root or a leaf, but it must go downwards.
-
         public int PathSum_437(TreeNode root, int targetSum)
         {
             int res = 0;

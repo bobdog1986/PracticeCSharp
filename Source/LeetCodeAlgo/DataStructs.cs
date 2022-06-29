@@ -60,18 +60,26 @@ namespace LeetCodeAlgo
     //    { x = a; y = b; }
     //}
 
-    public class Node
+    public class Node_Random
     {
         public int val;
-        public Node next;
-        public Node random;
+        public Node_Random next;
+        public Node_Random random;
 
-        public Node(int _val)
+        public Node_Random(int _val)
         {
             val = _val;
             next = null;
             random = null;
         }
+    }
+
+    public class Node
+    {
+        public int val;
+        public Node prev;
+        public Node next;
+        public Node child;
     }
 
     public class Node_Next

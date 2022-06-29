@@ -611,82 +611,41 @@ namespace LeetCodeAlgo
             return n == 1;
         }
 
-        /// 327. Count of Range Sum --- not pass
-        ///return the number of range sums that lie in [lower, upper] inclusive.
-        public int CountRangeSum(int[] nums, int lower, int upper)
-        {
-            int ans = 0;
-            int n = nums.Length;
-            int sum1 = 0;
-            int sum2 = 0;
-            int[] dp1=new int[n];
-            int[] dp2=new int[n];
-            for (int i = 0; i < n; i++)
-            {
-                sum1 += nums[i];
-                sum2 += nums[n - 1 - i];
-                dp1[i] = sum1;
-                dp2[n - 1 - i] = sum2;
-            }
-
-
-
-
-            return ans;
-        }
-
         ///328. Odd Even Linked List
-        ///group all the nodes with odd indices together followed by the nodes with even indices, then return.
+        //group all the nodes with odd indices together followed by the nodes with even indices, then return.
         //The first node is considered odd, and the second node is even, and so on.
-        //You must solve the problem in O(1) extra space complexity and O(n) time complexity.
-        ///head = [1,2,3,4,5] -> Output: [1,3,5,2,4], 0<=n<=10^4
+        //head = [1,2,3,4,5] -> Output: [1,3,5,2,4], 0<=n<=10^4
         public ListNode OddEvenList(ListNode head)
         {
-            ListNode oddsHead = null;
-            ListNode evensHead = null;
-            ListNode currOdd = null;
-            ListNode currEven = null;
+            if (head == null || head.next == null || head.next.next == null)
+                return head;
 
+            ListNode oddsHead = head;
+            ListNode evensHead = head.next;
+            ListNode currOdd = head;
+            ListNode currEven = head.next;
             bool isOdd = true;
-            var node = head;
+            var node = head.next.next;
             while(node != null)
             {
                 if (isOdd)
                 {
-                    if(currOdd == null)
-                    {
-                        oddsHead = node;
-                        currOdd = node;
-                    }
-                    else
-                    {
-                        currOdd.next = node;
-                        currOdd=node;
-                    }
+                    currOdd.next = node;
+                    currOdd = node;
                 }
                 else
                 {
-                    if (currEven == null)
-                    {
-                        evensHead = node;
-                        currEven = node;
-                    }
-                    else
-                    {
-                        currEven.next = node;
-                        currEven = node;
-                    }
+                    currEven.next = node;
+                    currEven = node;
                 }
                 isOdd = !isOdd;
                 node = node.next;
             }
-            if(currOdd != null)
-                currOdd.next = evensHead;
-            if(currEven!=null)
-                currEven.next = null;
-
+            currOdd.next = evensHead;
+            currEven.next = null;
             return oddsHead;
         }
+
         ///329. Longest Increasing Path in a Matrix, #BFS
         ///Given an m x n integers matrix, return the length of the longest increasing path in matrix.
         ///From each cell, you can either move in four directions: left, right, up, or down.
