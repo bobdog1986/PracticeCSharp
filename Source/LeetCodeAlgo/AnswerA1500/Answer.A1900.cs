@@ -253,6 +253,36 @@ namespace LeetCodeAlgo
             return -1;
         }
 
+        ///1927. Sum Game, #Greedy
+        //a string num of even length consisting of digits and '?' characters.
+        //each turn , player can pick a '?' to replace any [0,9] digit
+        //alice first, return true if sum of first half != sum of second half
+        public bool SumGame(string num)
+        {
+            int sum1 = 0;
+            int count1 = 0;
+            int sum2 = 0;
+            int count2 = 0;
+            for(int i = 0; i < num.Length; i++)
+            {
+                if (i < num.Length / 2)
+                {
+                    if (num[i] == '?') count1++;
+                    else sum1 += num[i] - '0';
+                }
+                else
+                {
+                    if (num[i] == '?') count2++;
+                    else sum2 += num[i] - '0';
+                }
+            }
+            //alice must win
+            if ((count1 + count2) % 2 == 1) return true;
+            //alice must add 0 or 9
+            if (sum1 + (count1 - count2) / 2 * 9 != sum2) return true;
+            else return false;
+        }
+
         ///1929. Concatenation of Array
         public int[] GetConcatenation(int[] nums)
         {

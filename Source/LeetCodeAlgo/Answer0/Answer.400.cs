@@ -730,38 +730,25 @@ namespace LeetCodeAlgo
             }
         }
 
-
         ///424. Longest Repeating Character Replacement, #Sliding Window
         ///You can choose any character of the string and change it to any other uppercase English character at most k times.
         ///Return the length of the longest substring containing the same letter you can get after performing the above operations.
         ///1 <= s.length <= 10^5, 0 <= k <= s.length, s consists of only uppercase English letters.
         public int CharacterReplacement(string s, int k)
         {
-            if (k == s.Length)
-                return k;
-
-            int ans = k;
-            int count = 0;
+            int res = 0;
             int[] arr = new int[26];
             int left = 0;
-            int max = 0;
-            for (int i = 0; i < s.Length; i++)
+            for(int i = 0; i < s.Length; i++)
             {
                 arr[s[i] - 'A']++;
-                count++;
-                max = arr.Max();
-                if (max + k >= count)
+                while(left<=i && arr.Max()+k< i-left+1)
                 {
-                    ans = Math.Max(ans, count);
+                    arr[s[left++] - 'A']--;
                 }
-                else
-                {
-                    arr[s[left] - 'A']--;
-                    left++;
-                    count--;
-                }
+                res = Math.Max(res, i - left + 1);
             }
-            return ans;
+            return res;
         }
 
         ///429. N-ary Tree Level Order Traversal
@@ -944,132 +931,47 @@ namespace LeetCodeAlgo
             PathSum_Recur(root.left, nextDict, targetSum, ref res);
             PathSum_Recur(root.right, nextDict, targetSum, ref res);
         }
+
         /// 438. Find All Anagrams in a string, #Sliding Window
-        /// Input: s = "cbaebabacd", p = "abc", Output: [0,6]
-        /// The substring with start index = 0 is "cba", which is an anagram of "abc".
-        /// The substring with start index = 6 is "bac", which is an anagram of "abc".
+        // Input: s = "cbaebabacd", p = "abc", Output: [0,6]
+        // The substring with start index = 0 is "cba", which is an anagram of "abc".
+        // The substring with start index = 6 is "bac", which is an anagram of "abc".
         public List<int> FindAnagrams(string s, string p)
         {
-            var ans = new List<int>();
+            var res = new List<int>();
             if (p.Length > s.Length)
-                return ans;
-            int left = 0, right = 0;
+                return res;
+            int left = 0;
             int[] arr = new int[26];
             int[] target = new int[26];
 
-            while (right < p.Length)
+            for(int i = 0; i < p.Length; i++)
             {
-                arr[s[right] - 'a']++;
-                target[p[right] - 'a']++;
-                right++;
+                arr[s[i] - 'a']++;
+                target[p[i] - 'a']++;
             }
-            right--;
 
-            while (right < s.Length)
+            for(int i = p.Length - 1; i < s.Length; i++)
             {
-                bool isEqual = true;
-                for (int i = 0; i < 26; i++)
+                if (i > p.Length - 1)
                 {
-                    if (arr[i] != target[i])
+                    arr[s[i] - 'a']++;
+                    arr[s[left++] - 'a']--;
+                }
+
+                bool isEqual = true;
+                for (int j = 0; j < 26; j++)
+                {
+                    if (arr[j] != target[j])
                     {
                         isEqual = false;
                         break;
                     }
                 }
                 if (isEqual)
-                    ans.Add(left);
-
-                right++;
-                if (right < s.Length)
-                    arr[s[right] - 'a']++;
-
-                arr[s[left] - 'a']--;
-                left++;
+                    res.Add(left);
             }
-            return ans;
-        }
-
-        public IList<int> FindAnagrams_My(string s, string p)
-        {
-            List<int> ans = new List<int>();
-
-            var arr1 = s.ToArray();
-            var arr2 = p.ToArray();
-
-            Dictionary<char, int> dict = new Dictionary<char, int>();
-            foreach (var i in arr2)
-            {
-                if (dict.ContainsKey(i))
-                {
-                    dict[i]++;
-                }
-                else
-                {
-                    dict.Add(i, 1);
-                }
-            }
-
-            Dictionary<char, List<int>> match = new Dictionary<char, List<int>>();
-
-            int len = 0;
-            int start = 0;
-            for (int i = 0; i < arr1.Length; i++)
-            {
-                if (arr2.Contains(arr1[i]))
-                {
-                    if (len == 0)
-                        start = i;
-
-                    if (match.ContainsKey(arr1[i]))
-                    {
-                        if (match[arr1[i]].Count < dict[arr1[i]])
-                        {
-                            match[arr1[i]].Add(i);
-                            len++;
-                        }
-                        else
-                        {
-                            int j = match[arr1[i]][0];
-                            foreach (var pair in match)
-                            {
-                                int k = pair.Value.RemoveAll(x => x <= j);
-                                len = len - k;
-                                start += k;
-                            }
-
-                            match[arr1[i]].Add(i);
-                            len++;
-                        }
-                    }
-                    else
-                    {
-                        match.Add(arr1[i], new List<int>() { i });
-                        len++;
-                    }
-
-                    if (len == arr2.Length)
-                    {
-                        ans.Add(start);
-                        foreach (var m in match)
-                        {
-                            if (m.Value.Contains(start))
-                            {
-                                m.Value.Remove(start);
-                                break;
-                            }
-                        }
-                        start++;
-                        len--;
-                    }
-                }
-                else
-                {
-                    match.Clear();
-                    len = 0;
-                }
-            }
-
-            return ans;
+            return res;
         }
 
         ///441. Arranging Coins, #Binary Search
