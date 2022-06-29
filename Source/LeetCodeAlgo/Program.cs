@@ -53,7 +53,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.SmallestDistancePair(arr1,2);
+            var result = answer.MinimumSwap("xx","yx");
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

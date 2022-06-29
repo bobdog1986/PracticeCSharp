@@ -292,7 +292,7 @@ namespace LeetCodeAlgo
         ///1233. Remove Sub-Folders from the Filesystem, #Trie
         public IList<string> RemoveSubfolders(string[] folder)
         {
-            var root = new Trie1123();
+            var root = new Trie1233();
             foreach(var name in folder)
             {
                 var strs = name.Split('/').Where(x => x.Length > 0).ToList();
@@ -300,7 +300,7 @@ namespace LeetCodeAlgo
                 foreach(var s in strs)
                 {
                     if (!string.IsNullOrEmpty(curr.name)) break;
-                    if (!curr.dict.ContainsKey(s)) curr.dict.Add(s, new Trie1123());
+                    if (!curr.dict.ContainsKey(s)) curr.dict.Add(s, new Trie1233());
                     curr = curr.dict[s];
                 }
                 if (!string.IsNullOrEmpty(curr.name)) continue;
@@ -311,7 +311,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        private void RemoveSubfolders(Trie1123 root, List<string> res)
+        private void RemoveSubfolders(Trie1233 root, List<string> res)
         {
             if (root == null) return;
             if (!string.IsNullOrEmpty(root.name))
@@ -325,10 +325,10 @@ namespace LeetCodeAlgo
             }
         }
 
-        public class Trie1123
+        public class Trie1233
         {
             public string name = "";
-            public Dictionary<string, Trie1123> dict = new Dictionary<string, Trie1123>();
+            public Dictionary<string, Trie1233> dict = new Dictionary<string, Trie1233>();
         }
 
         public IList<string> RemoveSubfolders_Sort(string[] folder)
@@ -347,6 +347,38 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///1247. Minimum Swaps to Make Strings Equal
+        //s1 and s2 of equal length consisting of letters "x" and "y" only.
+        //You can swap any two characters that belong to different strings, which means: swap s1[i] and s2[j].
+        //Return the minimum number of swaps required to make s1 and s2 equal, or return -1 if impossible.
+        public int MinimumSwap(string s1, string s2)
+        {
+            int res = 0;
+            int n = s1.Length;
+            Dictionary<string, int> dict1 = new Dictionary<string, int>();
+            Dictionary<char, int> map = new Dictionary<char, int>();
+            for(int i = 0; i < n; i++)
+            {
+                if (s1[i] != s2[i])
+                {
+                    var k = $"{s1[i]}{s2[i]}";
+                    if (dict1.ContainsKey(k)) dict1[k]++;
+                    else dict1.Add(k, 1);
+
+                    //all chars on these index
+                    if (map.ContainsKey(s1[i])) map[s1[i]]++;
+                    else map.Add(s1[i], 1);
+                    if (map.ContainsKey(s2[i])) map[s2[i]]++;
+                    else map.Add(s2[i], 1);
+                }
+            }
+            if (map.Keys.Any(x =>map[x]  % 2 != 0)) return -1;//case3, invalid, eg. s1 = "xx", s2 = "xy"
+            res += dict1.Keys.Select(x => dict1[x] / 2).Sum();//case1, eg. s1 = "xx", s2 = "yy"
+            res += dict1.Keys.Select(x => dict1[x] % 2).Sum();//case2, eg. s1 = "xy", s2 = "yx"
+            return res;
+        }
+
         /// 1249. Minimum Remove to Make Valid Parentheses
         ///Given a string s of '(' , ')' and lowercase English characters.
         ///remove the minimum number of parentheses  '(' or ')', in any positions, to make it valid string
