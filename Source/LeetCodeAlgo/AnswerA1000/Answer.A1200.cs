@@ -228,12 +228,70 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        public bool CheckStraightLine_onLine(int[] p1, int[] p2, int[] p3)
+        private bool CheckStraightLine_onLine(int[] p1, int[] p2, int[] p3)
         {
             int x = p1[0], y = p1[1], x1 = p2[0], y1 = p2[1], x2 = p3[0], y2 = p3[1];
             return ((y - y1) * (x2 - x1) == (y2 - y1) * (x - x1));
         }
 
+        ///1233. Remove Sub-Folders from the Filesystem, #Trie
+        public IList<string> RemoveSubfolders(string[] folder)
+        {
+            var root = new Trie1123();
+            foreach(var name in folder)
+            {
+                var strs = name.Split('/').Where(x => x.Length > 0).ToList();
+                var curr = root;
+                foreach(var s in strs)
+                {
+                    if (!string.IsNullOrEmpty(curr.name)) break;
+                    if (!curr.dict.ContainsKey(s)) curr.dict.Add(s, new Trie1123());
+                    curr = curr.dict[s];
+                }
+                if (!string.IsNullOrEmpty(curr.name)) continue;
+                curr.name = name;
+            }
+            List<string> res = new List<string>();
+            RemoveSubfolders(root, res);
+            return res;
+        }
+
+        private void RemoveSubfolders(Trie1123 root, List<string> res)
+        {
+            if (root == null) return;
+            if (!string.IsNullOrEmpty(root.name))
+            {
+                res.Add(root.name);
+            }
+            else
+            {
+                foreach(var pair in root.dict)
+                    RemoveSubfolders(pair.Value, res);
+            }
+        }
+
+        public class Trie1123
+        {
+            public string name = "";
+            public Dictionary<string, Trie1123> dict = new Dictionary<string, Trie1123>();
+        }
+
+        public IList<string> RemoveSubfolders_Sort(string[] folder)
+        {
+            Array.Sort(folder);
+            string prev = folder[0];
+            var res = new List<string>() { prev };
+            for (int i = 1; i < folder.Length; i++)
+            {
+                // Check if the string StartsWith or not. If not, add to the result list
+                if (! folder[i].StartsWith(prev + "/"))
+                {
+                    res.Add(folder[i]);
+                    prev = folder[i];
+                }
+            }
+            return res;
+        }
         /// 1249. Minimum Remove to Make Valid Parentheses
         ///Given a string s of '(' , ')' and lowercase English characters.
         ///remove the minimum number of parentheses  '(' or ')', in any positions, to make it valid string
