@@ -38,10 +38,10 @@ namespace LeetCodeAlgo
             var matInt1 = answer.buildMatrix(matStrInt1);
             //string matStrInt2 = "[[1,3,1,15],[1,3,3,1]]";
             //var matInt2 = answer.buildMatrix(matStrInt2);
-            string arrStrInt1 = "[1,2,4,5,3,6,7]";
-            var arrInt1 = answer.buildArray(arrStrInt1);
+            string arrStrInt1 = "[62,100,4]";
+            var arr1 = answer.buildArray(arrStrInt1);
             string arrStrInt2 = "[4,5,2,6,7,3,1]";
-            var arrInt2 = answer.buildArray(arrStrInt2);
+            var arr2 = answer.buildArray(arrStrInt2);
 
             ///build int[][] and int[] from file
             //var matIntLine0 = answer.buildMatrix(intMatLines[0]);
@@ -53,7 +53,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.ReverseEvenLengthGroups(listnode1);
+            var result = answer.SmallestDistancePair(arr1,2);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

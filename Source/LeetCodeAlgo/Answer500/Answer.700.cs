@@ -167,6 +167,57 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///719. Find K-th Smallest Pair Distance, #Binary Search
+        //The distance of a pair of integers a and b is the absolute difference between a and b.
+        //return the kth smallest distance among all pairs nums[i] and nums[j] where 0 <= i<j<nums.length.
+        //2 <= n <= 10^4, 1 <= k <= n * (n - 1) / 2
+        public int SmallestDistancePair(int[] nums, int k)
+        {
+            int n = nums.Length;
+            Array.Sort(nums);
+            int max = nums[n - 1] - nums[0];
+            if (k == n * (n - 1) / 2)
+                return max;
+            int min = nums[1] - nums[0];
+            for (int i = 1; i < n; i++)
+                min = Math.Min(min, nums[i] - nums[i - 1]);
+            if (k == 1)
+                return min;
+
+            int left=min;
+            int right = max;
+            while (left < right)
+            {
+                int mid = (left + right+1) / 2;
+                int count = 0;
+                for(int i = 0; i < n-1; i++)
+                {
+                    int target = nums[i]+mid;
+                    if (nums[i + 1] >= target) continue;
+                    else if (nums[n - 1] < target) count += n - i - 1;//all range [i+1,n-1]
+                    else
+                    {
+                        int low = i + 1;
+                        int high = n - 1;
+                        while (low < high)
+                        {
+                            int center = (low + high+1) / 2;
+                            if (nums[center] >= target) high = center - 1;
+                            else low = center;
+                        }
+                        count+= low - i;//range [i+1,low]
+                    }
+                    if (count >= k) break;
+                }
+
+                if (count >= k)
+                    right = mid - 1;
+                else
+                    left = mid;
+            }
+            return left;
+        }
+
         ///720. Longest Word in Dictionary
         public string LongestWord(string[] words)
         {

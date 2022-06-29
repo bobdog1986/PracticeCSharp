@@ -114,7 +114,7 @@ namespace LeetCodeAlgo
             return 1 + MaxDepth(root.children);
         }
 
-        public int MaxDepth(IList<Node_Childs> nodes)
+        private int MaxDepth(IList<Node_Childs> nodes)
         {
             if(nodes == null||nodes.Count==0)
                 return 0;
@@ -372,7 +372,7 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        public void PreorderNaryTree(Node_Childs node, IList<int> ans)
+        private void PreorderNaryTree(Node_Childs node, IList<int> ans)
         {
             if (node == null) return;
             ans.Add(node.val);
@@ -380,6 +380,25 @@ namespace LeetCodeAlgo
             {
                 if (child != null) PreorderNaryTree(child, ans);
             }
+        }
+
+        public IList<int> Preorder_Iteration(Node_Childs root)
+        {
+            List<int> list = new List<int> ();
+            if (root == null) return list;
+            var stack = new Stack<Node_Childs>();
+            stack.Push(root);
+            while (stack.Count>0)
+            {
+                var node = stack.Pop();
+                list.Add(node.val);
+                if(node.children!=null && node.children.Count > 0)
+                {
+                    for (int i = node.children.Count - 1; i >= 0; i--)
+                        stack.Push(node.children[i]);
+                }
+            }
+            return list;
         }
 
         ///590. N-ary Tree Postorder Traversal
@@ -391,7 +410,7 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        public void PostorderNaryTree(Node_Childs node, IList<int> ans)
+        private void PostorderNaryTree(Node_Childs node, IList<int> ans)
         {
             if (node == null) return;
             foreach (var child in node.children)
@@ -399,6 +418,26 @@ namespace LeetCodeAlgo
                 if (child != null) PostorderNaryTree(child, ans);
             }
             ans.Add(node.val);
+        }
+
+        public IList<int> Postorder_Iteration(Node_Childs root)
+        {
+            List<int> list = new List<int>();
+            if (root == null)
+                return list;
+
+            var stack = new Stack<Node_Childs>();
+            stack.Push(root);
+            while (stack.Count>0)
+            {
+                var curr = stack.Pop();
+                list.Insert(0,curr.val);
+                foreach (var child in curr.children)
+                {
+                    stack.Push(child);
+                }
+            }
+            return list;
         }
 
         ///594. Longest Harmonious Subsequence
