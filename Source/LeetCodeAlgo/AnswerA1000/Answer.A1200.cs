@@ -49,8 +49,6 @@ namespace LeetCodeAlgo
             return start;
         }
 
-
-
         /// 1202. Smallest String With Swaps, #Disjoint Set, #Union Find
         ///an array of pairs of indices where pairs[i] = [a, b] indicates 2 indices(0-indexed) of the string.
         ///You can swap the characters at any pair of indices in the given pairs any number of times.
@@ -118,6 +116,25 @@ namespace LeetCodeAlgo
                 index = parents[index];
             }
             return index;
+        }
+
+        ///1208. Get Equal Substrings Within Budget, #Sliding Window
+        public int EqualSubstring(string s, string t, int maxCost)
+        {
+            int n = s.Length;
+            int left = 0;
+            int res = 0;
+            for(int i = 0; i < n; i++)
+            {
+                maxCost -= Math.Abs( s[i] - t[i]);
+                while(maxCost < 0 && left <= i)
+                {
+                    maxCost += Math.Abs(s[left] - t[left]);
+                    left++;
+                }
+                res = Math.Max(res, i - left + 1);
+            }
+            return res;
         }
 
         ///1209. Remove All Adjacent Duplicates in String II
