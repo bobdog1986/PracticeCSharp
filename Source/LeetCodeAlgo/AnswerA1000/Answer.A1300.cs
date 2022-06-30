@@ -276,6 +276,31 @@ namespace LeetCodeAlgo
             SumEvenGrandparent(root.left, ref res);
             SumEvenGrandparent(root.right, ref res);
         }
+
+        ///1318. Minimum Flips to Make a OR b Equal to c, #Bit
+        public int MinFlips(int a, int b, int c)
+        {
+            //make a|b=c;
+            int res = 0;
+            for(int i= 0; i <= 30; i++)
+            {
+                int j = 1 << i;
+                bool x = (a & j) != 0;
+                bool y = (b & j) != 0;
+                bool z = (c & j) != 0;
+                if (z)
+                {
+                    if (!x &&! y) res++;
+                }
+                else
+                {
+                    if (x) res++;
+                    if (y) res++;
+                }
+            }
+            return res;
+        }
+
         /// 1319. Number of Operations to Make Network Connected, #Union-Find, #Graph, DFS, #BFS
         public int MakeConnected(int n, int[][] connections)
         {
