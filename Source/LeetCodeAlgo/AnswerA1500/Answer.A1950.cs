@@ -269,6 +269,26 @@ namespace LeetCodeAlgo
             return min;
         }
 
+        ///1985. Find the Kth Largest Integer in the Array
+        //1 <= k <= nums.length, 1 <= nums[i].length <= 100,nums[i] only digits withour leading 0
+        public string KthLargestNumber(string[] nums, int k)
+        {
+            Array.Sort(nums, (x, y) =>
+            {
+                if (x.Length == y.Length)
+                {
+                    for(int i = 0; i < x.Length; i++)
+                    {
+                        if (x[i] > y[i]) return -1;
+                        else if (x[i] < y[i]) return 1;
+                    }
+                    return 0;
+                }
+                else return y.Length - x.Length;
+            });
+            return nums[k - 1];
+        }
+
         ///1991. Find the Middle Index in Array
         public int FindMiddleIndex(int[] nums)
         {
