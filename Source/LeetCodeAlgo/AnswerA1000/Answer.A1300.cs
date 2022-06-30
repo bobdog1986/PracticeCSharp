@@ -513,6 +513,26 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///1343. Number of Sub-arrays of Size K and Average Greater than or Equal to Threshold
+        public int NumOfSubarrays(int[] arr, int k, int threshold)
+        {
+            int res = 0;
+            long m = (long)k * threshold;
+            long sum = 0;
+            int left = 0;
+            for(int i = 0; i < arr.Length; i++)
+            {
+                sum += arr[i];
+                if (i - left + 1 == k)
+                {
+                    if (sum >= m) res++;
+                    sum -= arr[left++];
+                }
+            }
+            return res;
+        }
+
         /// 1345. Jump Game IV
         ///Given an array of integers arr, you are initially positioned at the first index of the array.
         ///In one step you can jump from index i to index:
