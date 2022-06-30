@@ -167,6 +167,29 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///718. Maximum Length of Repeated Subarray, #DP, #Longest Common Substring
+        //return the maximum length of a subarray that appears in both arrays.
+        public int FindLength(int[] nums1, int[] nums2)
+        {
+            int m = nums1.Length;
+            int n = nums2.Length;
+            int[,] dp = new int[m + 1, n + 1];
+            int max = 0;
+            for(int i = 1; i <= m; i++)
+            {
+                for(int j = 1; j <= n; j++)
+                {
+                    if (nums1[i - 1] == nums2[j - 1])
+                    {
+                        dp[i, j] = dp[i - 1, j - 1] + 1;
+                        max = Math.Max(max, dp[i, j]);
+                    }
+                }
+            }
+            return max;
+        }
+
+
         ///719. Find K-th Smallest Pair Distance, #Binary Search
         //The distance of a pair of integers a and b is the absolute difference between a and b.
         //return the kth smallest distance among all pairs nums[i] and nums[j] where 0 <= i<j<nums.length.
