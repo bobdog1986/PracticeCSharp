@@ -131,6 +131,40 @@ namespace LeetCodeAlgo
 
         ///1261. Find Elements in a Contaminated Binary Tree. see FindElements
 
+        ///1267. Count Servers that Communicate
+        public int CountServers(int[][] grid)
+        {
+            int m = grid.Length;
+            int n = grid[0].Length;
+            int[] rows = new int[m];
+            int[] cols = new int[n];
+            int res = 0;
+            for(int i = 0; i < m; i++)
+            {
+                for(int j = 0; j < n; j++)
+                {
+                    if (grid[i][j] == 1)
+                    {
+                        res++;
+                        rows[i]++;
+                        cols[j]++;
+                    }
+                }
+            }
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (grid[i][j] == 1)
+                    {
+                        if (rows[i] == 1 && cols[j] == 1)
+                            res--;
+                    }
+                }
+            }
+            return res;
+        }
+
         ///1268. Search Suggestions System, #Trie
         //Design a system that suggests at most three product names after each character of searchWord is typed.
         //Suggested products should have common prefix with searchWord. return lexicographically minimums products.
