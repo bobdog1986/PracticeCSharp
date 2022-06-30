@@ -486,8 +486,22 @@ namespace LeetCodeAlgo
 
         ///535. Encode and Decode TinyURL, see Codec
 
+        ///537. Complex Number Multiplication
+        //A complex number as a string on the form "real+imaginaryi"
+        public string ComplexNumberMultiply(string num1, string num2)
+        {
+            var str1 = num1.Split('+').ToList();
+            var str2 = num2.Split('+').ToList();
+            int real1 = int.Parse(str1[0]);
+            int real2 = int.Parse(str2[0]);
+            int img1 = int.Parse(str1[1].Substring(0, str1[1].Length - 1));
+            int img2 = int.Parse(str2[1].Substring(0, str2[1].Length - 1));
+            int real = real1 * real2 - img1 * img2;
+            int img = real1 * img2 + img1 * real2;
+            return $"{real}+{img}i";
+        }
+
         /// 538. Convert BST to Greater Tree, #BTree, #BST
-        ///
         public TreeNode ConvertBST1(TreeNode root)
         {
             TreeNode node = root;
