@@ -751,6 +751,94 @@ namespace LeetCodeAlgo
             return false;
         }
 
+        ///336. Palindrome Pairs, #Trie
+        public IList<IList<int>> PalindromePairs(string[] words)
+        {
+            var res=new List<IList<int>>();
+            var root = new TrieItem();
+            root.val = -1;
+            for(int i = 0; i < words.Length; i++)
+            {
+                var curr = root;
+                foreach(var c in words[i])
+                {
+                    if (!curr.dict.ContainsKey(c))
+                        curr.dict.Add(c, new TrieItem());
+                    curr = curr.dict[c];
+                }
+                curr.val = i;
+            }
+
+            for(int i = 0; i < words.Length; i++)
+            {
+                string str = words[i];
+                int n = str.Length;
+                //word[i]+target, word[i]=head+tail, length of head >= tail's length
+                for(int k = n - 1; k>=0 && k + 1 >= n - 1 - k; k--)
+                {
+                    var head = str.Substring(0, k + 1);// [0,k]
+                    var tail = str.Substring(k + 1); // [k+1,n-1]
+                    bool fail1 = false;
+                    for (int l = 0; l<tail.Length; l++)
+                    {
+                        if(head[head.Length-1-l] != tail[l])
+                        {
+                            fail1 = true;
+                            break;
+                        }
+                    }
+                    if (!fail1)
+                    {
+                        var target = new string(head.Substring(0, head.Length - tail.Length).Reverse().ToArray());
+                        int j = PalindromePairs(root, target);
+                        if (j !=i && j!=-1)
+                        {
+                            res.Add(new List<int>() { i, j });
+                        }
+                    }
+
+                    if (k < n - 1 - k) break;
+                    head = str.Substring(0, k);
+                    bool fail2 = false;
+                    for (int l = 0; l < tail.Length; l++)
+                    {
+                        if (head[head.Length - 1 - l] != tail[l])
+                        {
+                            fail2 = true;
+                            break;
+                        }
+                    }
+                    if (!fail2)
+                    {
+                        var target = new string(head.Substring(0, head.Length - tail.Length).Reverse().ToArray());
+                        int j = PalindromePairs(root, target);
+                        if (j != i && j != -1)
+                        {
+                            res.Add(new List<int>() { i, j });
+                        }
+                    }
+                }
+            }
+            return res;
+        }
+
+        private int PalindromePairs(TrieItem root,string target)
+        {
+            var curr = root;
+            if (target.Length == 0) return root.val;
+            int j = -1;
+            foreach (var c in target)
+            {
+                if (!curr.dict.ContainsKey(c))
+                {
+                    j = -1;
+                    break;
+                }
+                curr = curr.dict[c];
+                j = curr.val;
+            }
+            return j;
+        }
         ///338. Counting Bits, #DP
         ///return an array ans of length n + 1 ,ans[i] is the number of 1's in the binary representation of i.
         /// O(n log n). Can you do it in linear time O(n) and possibly in a single pass?

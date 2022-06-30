@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace LeetCodeAlgo
 {
@@ -361,6 +362,27 @@ namespace LeetCodeAlgo
             }
             return 1;
         }
+
+        ///1324. Print Words Vertically
+        public IList<string> PrintVertically(string s)
+        {
+            List<string> res = new List<string>();
+            var arr = s.Split(' ').ToArray();
+            int n = arr.Max(x => x.Length);
+            List<char> list = new List<char>();
+            for(int i = 0; i < n; i++)
+            {
+                list.Clear();
+                for(int j=0; j < arr.Length; j++)
+                {
+                    if (i >= arr[j].Length) list.Add(' ');
+                    else list.Add(arr[j][i]);
+                }
+                res.Add(new string(list.ToArray()).TrimEnd());//remove trailing spaces
+            }
+            return res;
+        }
+
         ///1325. Delete Leaves With a Given Value, #BTree
         ///Given a binary tree root and an integer target, delete all the leaf nodes with value target.
         ///Note that once you delete a leaf node with value target,
@@ -449,7 +471,7 @@ namespace LeetCodeAlgo
         {
             return s.Length == 0 ? 0 : (new string(s.Reverse().ToArray()) == s ? 1 : 2);
         }
-        /// 1337. The K Weakest Rows in a Matrix, #PriorityQueue, 
+        /// 1337. The K Weakest Rows in a Matrix, #PriorityQueue,
         ///A row i is weaker than a row j if one of the following is true:
         ///The number of soldiers(1) in row i is less than the number of soldiers in row j.
         ///Both rows have the same number of soldiers and i<j.

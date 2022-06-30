@@ -700,7 +700,7 @@ namespace LeetCodeAlgo
                     }
                     else
                     {
-                        curr = curr.set[1 - requiredBit];
+                        curr = curr.set[1 - requiredBit];//must exist itself, every level trie set contain at least 1 element
                     }
                 }
                 max = Math.Max(max, currSum); // get max number

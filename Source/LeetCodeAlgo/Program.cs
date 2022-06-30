@@ -14,13 +14,13 @@ namespace LeetCodeAlgo
             var answer = new Answer();
             ///!!!*** read from string files
             //var strMatLines = File.ReadLines("StringMatrix.txt").ToList();
-            //var strArrLines = File.ReadLines("StringArr.txt").ToList();
+            var strArrLines = File.ReadLines("StringArr.txt").ToList();
             var intArrLines = File.ReadLines("IntArr.txt").ToList();
             //var intMatLines = File.ReadLines("IntMatrix.txt").ToList();
 
             //var matStrLine0 = answer.buildStringMatrix(strMatLines[0]);//build string[][] from file
             //var matCharLine0 = answer.buildCharMatrix(strMatLines[0]);//build char[][] from file due to leetcode using ""
-            //var arrStrLine0 = answer.buildStringArray(strArrLines[0]);
+            var arrStrLine0 = answer.buildStringArray(strArrLines[0]);
             //var arrCharLine0 = answer.buildCharArray(strArrLines[0]);
 
             ///build listnode
@@ -53,7 +53,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.MinimumSwap("xx","yx");
+            var result = answer.PalindromePairs(arrStrLine0);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
