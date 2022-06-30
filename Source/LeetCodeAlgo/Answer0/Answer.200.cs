@@ -334,67 +334,42 @@ namespace LeetCodeAlgo
         ///Each word must be constructed from letters of sequentially adjacent cells,
         ///where adjacent cells are horizontally or vertically neighboring.
         ///The same letter cell may not be used more than once in a word.
-        public IList<string> FindWords212(char[][] board, string[] words)
+        public IList<string> FindWords(char[][] board, string[] words)
         {
-            List<string> res = new List<string> ();
-            TrieNode root = buildTrie(words);
+            HashSet<string> res = new HashSet<string> ();
+            int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
+
+            var root = new TrieItem();
+            insertToTrie(root, words);
             for (int i = 0; i < board.Length; i++)
             {
                 for (int j = 0; j < board[0].Length; j++)
                 {
-                    FindWords212_dfs(board, i, j, root, res);
+                    FindWords212_dfs(board, i, j, root, dxy4, res);
                 }
             }
-            return res;
+            return res.ToList();
         }
 
-        public void FindWords212_dfs(char[][] board, int i, int j, TrieNode p, List<string> res)
+        private void FindWords212_dfs(char[][] board, int i, int j, TrieItem p, int[][] dxy4, HashSet<string> res)
         {
             char c = board[i][j];
-            if (c == '#' || p.next[c - 'a'] == null) return;
-            p = p.next[c - 'a'];
-            if (p.word != null)
-            {
-                // found one
-                res.Add(p.word);
-                p.word = null;// de-duplicate
-            }
-            board[i][j] = '#';
-            int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
+            //already used or cannot match
+            if (c == '#' || !p.dict.ContainsKey(c)) return;
+            p = p.dict[c];
+            if (!string.IsNullOrEmpty(p.word))
+                res.Add(p.word);// found one
+            board[i][j] = '#';//change to invalid char to avoid duplicate visit
             foreach(var d in dxy4)
             {
-                var row = i + d[0];
-                var col = j + d[1];
-                if(row>=0&&row<board.Length && col>=0 && col<board[0].Length)
+                int row = i + d[0];
+                int col = j + d[1];
+                if(row>=0 && row<board.Length && col>=0 && col<board[0].Length)
                 {
-                    FindWords212_dfs(board, row, col, p, res);
+                    FindWords212_dfs(board, row, col, p, dxy4, res);
                 }
             }
-            //if failed to match a word , we need recovery it back
-            board[i][j] = c;
-        }
-
-        public TrieNode buildTrie(string[] words)
-        {
-            TrieNode root = new TrieNode();
-            foreach (var w in words)
-            {
-                TrieNode curr = root;
-                foreach (char c in w)
-                {
-                    int i = c - 'a';
-                    if (curr.next[i] == null) curr.next[i] = new TrieNode();
-                    curr = curr.next[i];
-                }
-                curr.word = w;
-            }
-            return root;
-        }
-
-        public class TrieNode
-        {
-            public TrieNode[] next = new TrieNode[26];
-            public string word;
+            board[i][j] = c;//restore back
         }
 
         /// 213. House Robber II, #DP

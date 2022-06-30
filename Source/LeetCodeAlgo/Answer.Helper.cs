@@ -7,6 +7,7 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
+        private const long MOD = 10_0000_0007;
         private int getFibonacci(int n)
         {
             if (n <= 1)
@@ -96,7 +97,47 @@ namespace LeetCodeAlgo
                 dp[i] = new int[n];
             return dp;
         }
-
+        private int[][][] create3DMatrix(int m, int n,int k, int seed=0)
+        {
+            var dp = new int[m][][];
+            for (int i = 0; i < m; i++)
+            {
+                dp[i] = new int[n][];
+                for(int j = 0; j < n; j++)
+                {
+                    dp[i][j] = new int[k];
+                    if(seed!=0)
+                        Array.Fill(dp[i][j], seed);
+                }
+            }
+            return dp;
+        }
+        private long[][] create2DLongMatrix(int m, int n,  long seed = 0)
+        {
+            var dp = new long[m][];
+            for (int i = 0; i < m; i++)
+            {
+                dp[i] = new long[n];
+                if (seed != 0)
+                    Array.Fill(dp[i], seed);
+            }
+            return dp;
+        }
+        private long[][][] create3DLongMatrix(int m, int n, int k, long seed = 0)
+        {
+            var dp = new long[m][][];
+            for (int i = 0; i < m; i++)
+            {
+                dp[i] = new long[n][];
+                for (long j = 0; j < n; j++)
+                {
+                    dp[i][j] = new long[k];
+                    if (seed != 0)
+                        Array.Fill(dp[i][j], seed);
+                }
+            }
+            return dp;
+        }
         private int[][] createIntMatrix(int m, int n, int seed)
         {
             var dp = new int[m][];
@@ -119,5 +160,54 @@ namespace LeetCodeAlgo
                                     new int[] { 1, 1 }, new int[] { -1,-1 }, new int[] { -1, 1 }, new int[] { 1, -1 }};
         }
 
+        public TrieItem buildTrieRoot(IEnumerable<string> words)
+        {
+            var root = new TrieItem();
+            insertToTrie(root, words);
+            return root;
+        }
+
+        public void insertToTrie(TrieItem root, IEnumerable<string> words)
+        {
+            foreach(var word in words)
+            {
+                insertToTrie(root, word);
+            }
+        }
+
+        public void insertToTrie(TrieItem root, string word)
+        {
+            var curr = root;
+            foreach (var c in word)
+            {
+                if (!curr.dict.ContainsKey(c))
+                    curr.dict.Add(c, new TrieItem());
+                curr = curr.dict[c];
+            }
+            curr.word = word;
+            curr.exist = true;
+        }
+
+        public bool searchPrefixInTrie(TrieItem root, string word)
+        {
+            var curr = root;
+            foreach (var c in word)
+            {
+                if (!curr.dict.ContainsKey(c)) return false;
+                curr = curr.dict[c];
+            }
+            return true;
+        }
+
+        public bool searchWholeWordInTrie(TrieItem root, string word)
+        {
+            var curr = root;
+            foreach (var c in word)
+            {
+                if (!curr.dict.ContainsKey(c)) return false;
+                curr = curr.dict[c];
+            }
+            return curr.exist||word==curr.word;
+        }
     }
 }

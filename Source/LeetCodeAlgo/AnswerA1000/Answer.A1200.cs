@@ -292,43 +292,37 @@ namespace LeetCodeAlgo
         ///1233. Remove Sub-Folders from the Filesystem, #Trie
         public IList<string> RemoveSubfolders(string[] folder)
         {
-            var root = new Trie1233();
-            foreach(var name in folder)
+            var root = new TrieItem();
+            foreach(var word in folder)
             {
-                var strs = name.Split('/').Where(x => x.Length > 0).ToList();
+                var strs = word.Split('/').Where(x => x.Length > 0).ToList();
                 var curr = root;
                 foreach(var s in strs)
                 {
-                    if (!string.IsNullOrEmpty(curr.name)) break;
-                    if (!curr.dict.ContainsKey(s)) curr.dict.Add(s, new Trie1233());
-                    curr = curr.dict[s];
+                    if (!string.IsNullOrEmpty(curr.word)) break;
+                    if (!curr.map.ContainsKey(s)) curr.map.Add(s, new TrieItem());
+                    curr = curr.map[s];
                 }
-                if (!string.IsNullOrEmpty(curr.name)) continue;
-                curr.name = name;
+                if (!string.IsNullOrEmpty(curr.word)) continue;
+                curr.word = word;
             }
             List<string> res = new List<string>();
-            RemoveSubfolders(root, res);
+            RemoveSubfolders_Search(root, res);
             return res;
         }
 
-        private void RemoveSubfolders(Trie1233 root, List<string> res)
+        private void RemoveSubfolders_Search(TrieItem root, List<string> res)
         {
             if (root == null) return;
-            if (!string.IsNullOrEmpty(root.name))
+            if (!string.IsNullOrEmpty(root.word))
             {
-                res.Add(root.name);
+                res.Add(root.word);
             }
             else
             {
-                foreach(var pair in root.dict)
-                    RemoveSubfolders(pair.Value, res);
+                foreach(var pair in root.map)
+                    RemoveSubfolders_Search(pair.Value, res);
             }
-        }
-
-        public class Trie1233
-        {
-            public string name = "";
-            public Dictionary<string, Trie1233> dict = new Dictionary<string, Trie1233>();
         }
 
         public IList<string> RemoveSubfolders_Sort(string[] folder)

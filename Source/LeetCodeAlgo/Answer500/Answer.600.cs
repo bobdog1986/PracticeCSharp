@@ -354,30 +354,41 @@ namespace LeetCodeAlgo
             return count;
         }
 
-
-        /// 648. Replace Words
-        ///Return the sentence after the replacement.
+        /// 648. Replace Words, #Trie
+        // when the root "an" is followed by the successor word "other", we can form a new word "another".
+        //If a successor can be replaced by more than one root, replace it with the root that has the shortest length.
+        //Return the sentence after the replacement.
         public string ReplaceWords(IList<string> dictionary, string sentence)
         {
-            var words = dictionary.OrderBy(x => x).ThenBy(x => x.Length).ToList();
+            var root = new TrieItem();
+            foreach(var word in dictionary)
+            {
+                var curr = root;
+                foreach(var c in word)
+                {
+                    if (!curr.dict.ContainsKey(c)) curr.dict.Add(c, new TrieItem());
+                    curr = curr.dict[c];
+                }
+                curr.exist = true;
+                curr.word = word;
+            }
+
             var list = sentence.Split(' ').Where(x => x.Length > 0).ToList();
             var res = new List<string>();
-            foreach (var i in list)
+            foreach (var word in list)
             {
-                bool match = false;
-                foreach (var word in words)
+                var curr = root;
+                foreach(var c in word)
                 {
-                    if (i.StartsWith(word))
-                    {
-                        match = true;
-                        res.Add(word);
-                        break;
-                    }
+                    if (!string.IsNullOrEmpty(curr.word)) break;
+                    if (!curr.dict.ContainsKey(c)) break;
+                    curr = curr.dict[c];
                 }
-                if (!match)
-                    res.Add(i);
+                if (!string.IsNullOrEmpty(curr.word)) res.Add(curr.word);
+                else res.Add(word);
             }
             return string.Join(" ", res);
         }
+
     }
 }

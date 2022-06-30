@@ -612,10 +612,10 @@ namespace LeetCodeAlgo
                 }
             }
         }
-        /// 421. Maximum XOR of Two Numbers in an Array, #Trie
-        ///return the maximum result of nums[i] XOR nums[j], where 0 <= i <= j < n.
-        ///1 <= nums.length <= 2 * 10^5, 0 <= nums[i] <= 2^31 - 1
-        public int FindMaximumXOR1(int[] nums)
+        /// 421. Maximum XOR of Two Numbers in an Array, #Trie, #Greedy, #Bit
+        //return the maximum result of nums[i] XOR nums[j], where 0 <= i <= j < n.
+        //1 <= nums.length <= 2 * 10^5, 0 <= nums[i] <= 2^31 - 1
+        public int FindMaximumXOR_Greedy(int[] nums)
         {
             int maxResult = 0;
             int mask = 0;
@@ -667,67 +667,45 @@ namespace LeetCodeAlgo
             return maxResult;
         }
 
-        public int FindMaximumXOR(int[] nums)
+        public int FindMaximumXOR_Trie(int[] nums)
         {
-            Trie421 trie = new Trie421();
-            trie.insert(nums);
-
-            int max = 0;
-
+            var root = new TrieItem();
+            nums = nums.ToHashSet().ToArray();
             foreach (int num in nums)
             {
-                var curr = trie.root;
-                int currSum = 0;
-                for (int i = 31; i >= 0; i--)
+                var curr = root;
+                for (int i = 30; i >= 0; i--)
                 {
-                    int requiredBit = 1 - ((num >> i) & 1); // if A[i] is 0, we need 1 and if A[i] is 1, we need 0. Thus, 1 - A[i]
-                    if (curr.children.ContainsKey(requiredBit))
+                    int currBit = (num >> i) & 1;
+                    if (!curr.set.ContainsKey(currBit))
+                        curr.set.Add(currBit, new TrieItem());
+                    curr = curr.set[currBit];
+                }
+            }
+
+            int max = 0;
+            foreach (int num in nums)
+            {
+                var curr = root;
+                int currSum = 0;
+                for (int i = 30; i >= 0; i--)
+                {
+                    if (i != 30 &&  (long)currSum + (1 << (i + 1)) -1 <= max) break;
+                    // if A[i] is 0, we need 1 and if A[i] is 1, we need 0. Thus, 1 - A[i]
+                    int requiredBit = 1 - ((num >> i) & 1);
+                    if (curr.set.ContainsKey(requiredBit))
                     {
                         currSum |= (1 << i); // set ith bit of curr result
-                        curr = curr.children[requiredBit];
+                        curr = curr.set[requiredBit];
                     }
                     else
                     {
-                        curr = curr.children[1 - requiredBit];
+                        curr = curr.set[1 - requiredBit];
                     }
                 }
                 max = Math.Max(max, currSum); // get max number
             }
             return max;
-        }
-
-        private class Node421
-        {
-            public Dictionary<int, Node421> children;
-            public Node421()
-            {
-                this.children = new Dictionary<int, Node421>();
-            }
-        }
-
-        private class Trie421
-        {
-            public Node421 root;
-
-            public Trie421()
-            {
-                this.root = new Node421();
-            }
-
-            public void insert(int[] nums)
-            {
-                foreach (int num in nums)
-                {
-                    Node421 curr = this.root;
-                    for (int i = 31; i >= 0; i--)
-                    {
-                        int currBit = (num >> i) & 1;
-                        if (!curr.children.ContainsKey(currBit))
-                            curr.children.Add(currBit, new Node421());
-                        curr = curr.children[currBit];
-                    }
-                }
-            }
         }
 
         ///424. Longest Repeating Character Replacement, #Sliding Window

@@ -13,11 +13,12 @@ namespace LeetCodeAlgo.Design
     /// or decrypt a 0-indexed string.
     public class Encrypter
     {
+
         private readonly Dictionary<char, string> encryptDict;
         private readonly Dictionary<string, List<char>> decryptDict;
         private readonly HashSet<string> set;
         private readonly Dictionary<string, string> dict1;
-        private readonly TrieOfEncrypt root;
+        private readonly TrieItem root;
 
         public Encrypter(char[] keys, string[] values, string[] dictionary)
         {
@@ -31,22 +32,22 @@ namespace LeetCodeAlgo.Design
             }
             set = new HashSet<string>(dictionary);
             dict1 = new Dictionary<string, string>();
-            root = new TrieOfEncrypt();
-            BuildTrieTree();
+            root = new TrieItem();
+            buildTrieTreeInternal();
         }
 
-        private void BuildTrieTree()
+        private void buildTrieTreeInternal()
         {
             foreach (var key in set)
             {
                 var curr = root;
                 foreach (var c in key)
                 {
-                    if (!curr.childs.ContainsKey(c)) curr.childs.Add(c, new TrieOfEncrypt());
-                    curr = curr.childs[c];
+                    if (!curr.dict.ContainsKey(c)) curr.dict.Add(c, new TrieItem());
+                    curr = curr.dict[c];
                 }
                 //only trie node with valid == true count 1 in Decrypt()
-                curr.valid = true;
+                curr.exist = true;
             }
         }
 
@@ -66,38 +67,25 @@ namespace LeetCodeAlgo.Design
 
         public int Decrypt(string word2)
         {
-            var list = new List<TrieOfEncrypt>() { root };
+            var list = new List<TrieItem>() { root };
             for (int i = 0; i < word2.Length; i += 2)
             {
                 var str = word2.Substring(i, 2);
                 if (!decryptDict.ContainsKey(str)) return 0;//cannot decrypt
-                var next = new List<TrieOfEncrypt>();
+                var next = new List<TrieItem>();
                 foreach (var curr in list)
                 {
                     foreach (var c in decryptDict[str])
                     {
-                        if (curr.childs.ContainsKey(c))
-                            next.Add(curr.childs[c]);
+                        if (curr.dict.ContainsKey(c))
+                            next.Add(curr.dict[c]);
                     }
                 }
 
                 list = next;
                 if (list.Count == 0) return 0;
             }
-            return list.Where(x => x.valid).Count();
-        }
-    }
-
-    public class TrieOfEncrypt
-    {
-        //indicate if current trie node is valid
-        public bool valid = false;
-
-        public readonly Dictionary<char, TrieOfEncrypt> childs;
-
-        public TrieOfEncrypt()
-        {
-            childs = new Dictionary<char, TrieOfEncrypt>();
+            return list.Where(x => x.exist).Count();
         }
     }
 

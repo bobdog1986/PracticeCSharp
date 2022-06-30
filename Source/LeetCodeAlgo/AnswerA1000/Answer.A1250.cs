@@ -174,7 +174,7 @@ namespace LeetCodeAlgo
             for(int i = 0; i < searchWord.Length; i++)
                 res[i]=new List<string>();
             products = products.OrderBy(x => x).ToArray();
-            var root = new Trie1268();
+            var root = new TrieItem();
             foreach(var product in products)
             {
                 SuggestedProducts_build(product, root);
@@ -191,19 +191,13 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        private class Trie1268
-        {
-            public Dictionary<char, Trie1268> dict = new Dictionary<char, Trie1268>();
-            public List<string> list = new List<string>();
-        }
-
-        private void SuggestedProducts_build(string product, Trie1268 root)
+        private void SuggestedProducts_build(string product, TrieItem root)
         {
             var curr = root;
             foreach(var c in product)
             {
                 if(!curr.dict.ContainsKey(c))
-                    curr.dict.Add(c, new Trie1268());
+                    curr.dict.Add(c, new TrieItem());
                 curr.dict[c].list.Add(product);
                 curr = curr.dict[c];
             }

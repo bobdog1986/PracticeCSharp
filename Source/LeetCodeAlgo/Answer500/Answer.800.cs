@@ -190,36 +190,28 @@ namespace LeetCodeAlgo
         //from tail to head,if not match, add '#'. return the total length
         public int MinimumLengthEncoding(string[] words)
         {
-            var root = new Trie820();
-            var set =new HashSet<string>();
-            foreach(var w in words.ToHashSet())
+            var root = new TrieItem();
+            words = words.ToHashSet().ToArray();
+            var set = new HashSet<string>();
+            foreach(var word in words)
             {
                 var curr = root;
-                bool add = false;
-                for(int i = w.Length-1; i >= 0; --i)
+                for(int i = word.Length-1; i >= 0; --i)
                 {
-                    if (!curr.dict.ContainsKey(w[i]))
-                    {
-                        add = true;
-                        curr.dict.Add(w[i], new Trie820());
-                    }
-                    curr=curr.dict[w[i]];
-                    if (curr.str != string.Empty && set.Contains(curr.str) )
-                    {
-                        set.Remove(curr.str);
-                    }
+                    if(!string.IsNullOrEmpty(curr.word))
+                        set.Remove(curr.word);
+
+                    if (!curr.dict.ContainsKey(word[i]))
+                        curr.dict.Add(word[i], new TrieItem());
+                    curr =curr.dict[word[i]];
                 }
-                curr.str = w;
-                if (add)
-                    set.Add(w);
+                if (curr.dict.Count == 0)
+                {
+                    curr.word = word;
+                    set.Add(word);
+                }
             }
             return set.Sum(x=>x.Length+1);
-        }
-
-        private class Trie820
-        {
-            public Dictionary<char, Trie820> dict = new Dictionary<char, Trie820>();
-            public string str = string.Empty;
         }
 
         /// 821. Shortest Distance to a Character

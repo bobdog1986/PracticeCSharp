@@ -34,6 +34,31 @@ namespace LeetCodeAlgo
             res += day;
             return res;
         }
+
+        ///1155. Number of Dice Rolls With Target Sum, #DP
+        //You have n dice and each die has k faces numbered from 1 to k.
+        //Given three integers n, k, and target, return the number of possible ways(out of the kn total ways)
+        //to roll the dice so the sum of the face-up numbers equals target. return it modulo 109 + 7.
+        //1 <= n, k <= 30, 1 <= target <= 1000
+        public int NumRollsToTarget(int n, int k, int target)
+        {
+            long mod = 10_0000_0007;
+            var dp = create2DLongMatrix(n + 1, target + 1);
+            dp[0][0] = 1;
+            for (int i = 1; i <= n; i++)
+            {
+                for (int j = 1; j <= target; j++)
+                {
+                    for (int x = Math.Max(0, j - k); x <= j - 1; x++)
+                    {
+                        dp[i][j] += dp[i - 1][x];
+                        dp[i][j] %= mod;
+                    }
+                }
+            }
+            return (int)(dp[n][target] % mod);
+        }
+
         /// 1161. Maximum Level Sum of a Binary Tree, #BTree
         ///the level of its root is 1, the level of its children is 2, and so on.
         ///Return the smallest level x such that the sum of all the values of nodes at level x is maximal.
