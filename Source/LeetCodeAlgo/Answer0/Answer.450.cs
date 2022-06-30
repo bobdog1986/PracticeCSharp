@@ -266,6 +266,30 @@ namespace LeetCodeAlgo
             return count;
         }
 
+        ///462. Minimum Moves to Equal Array Elements II
+        //move to median
+        public int MinMoves2(int[] nums)
+        {
+            int n = nums.Length;
+            Array.Sort(nums);
+            int mid = n % 2 == 0 ? (nums[n / 2] + nums[n / 2 + 1]) / 2 : nums[n / 2];
+            return nums.Select(x => Math.Abs(x - mid)).Sum();
+        }
+
+        public int MinMoves2_TwoPointers(int[] nums)
+        {
+            Array.Sort(nums);
+            int i = 0, j = nums.Length - 1;
+            int count = 0;
+            while (i < j)
+            {
+                count += nums[j] - nums[i];
+                i++;
+                j--;
+            }
+            return count;
+        }
+
         ///463. Island Perimeter, #BFS
         ///Determine the perimeter of the island.
         public int IslandPerimeter(int[][] grid)
