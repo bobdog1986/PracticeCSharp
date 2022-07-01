@@ -272,14 +272,16 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 516. Longest Palindromic Subsequence
         ///Given a string s, find the longest palindromic subsequence's length in s.
         ///A subsequence is a sequence that can be derived from another sequence
         ///by deleting some or no elements without changing the order of the remaining elements.
         public int LongestPalindromeSubseq(string s)
         {
+            if(s == null||s.Length==0) return 0;
+            if (s.Length == 1) return 1;
             int[,] dp = new int[s.Length, s.Length];
-
             for (int i = s.Length - 1; i >= 0; i--)
             {
                 dp[i, i] = 1;

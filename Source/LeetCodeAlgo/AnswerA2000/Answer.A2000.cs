@@ -50,6 +50,40 @@ namespace LeetCodeAlgo
             return sum;
         }
 
+        ///2002. Maximum Product of the Length of Two Palindromic Subsequences, #Backtracking, #DP
+        //2 <= s.length <= 12
+        public int MaxProduct(string s)
+        {
+            int res = 0;
+            MaxProduct_DFS(s, 0, new bool[s.Length], ref res);
+            return res;
+        }
+
+        private void MaxProduct_DFS(string s, int index, bool[] visit,ref int res)
+        {
+            if (index == s.Length)
+            {
+                var list1 = new List<char>();
+                var list2 = new List<char>();
+                for (int i = 0; i < s.Length; i++)
+                {
+                    if (visit[i]) list1.Add(s[i]);
+                    else list2.Add(s[i]);
+                }
+                //using existed other question
+                var len1 = LongestPalindromeSubseq(new string(list1.ToArray()));
+                var len2 = LongestPalindromeSubseq(new string(list2.ToArray()));
+                res = Math.Max(res, len1 * len2);
+            }
+            else
+            {
+                visit[index] = false;
+                MaxProduct_DFS(s, index + 1, visit, ref res);
+                visit[index] = true;
+                MaxProduct_DFS(s, index + 1, visit, ref res);
+            }
+        }
+
         ///2006. Count Number of Pairs With Absolute Difference K
         ///return the number of pairs (i, j) where i < j such that |nums[i] - nums[j]| == k.
         ///1 <= k <= 99, 1 <= nums[i] <= 100, 1 <= nums.length <= 200
