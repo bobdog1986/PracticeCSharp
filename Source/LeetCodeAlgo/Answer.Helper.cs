@@ -7,7 +7,8 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        private const long MOD = 10_0000_0007;
+        public const long MOD = 10_0000_0007;
+
         private int getFibonacci(int n)
         {
             if (n <= 1)
@@ -25,25 +26,25 @@ namespace LeetCodeAlgo
         }
 
         //Greatest Common Divisor
-        private long GCD_Long(long x, long y)
+        private long getGCD_Long(long x, long y)
         {
-            return y == 0 ? x : GCD_Long(y, x % y);
+            return y == 0 ? x : getGCD_Long(y, x % y);
         }
 
-        private int GCD(int x, int y)
+        private int getGCD(int x, int y)
         {
-            return y == 0 ? x : GCD(y, x % y);
+            return y == 0 ? x : getGCD(y, x % y);
         }
 
         //Least Common Multiple
-        private long LCM_Long(long x, long y)
+        private long getLCM_Long(long x, long y)
         {
-            return (x * y) / GCD_Long(x, y);
+            return (x * y) / getGCD_Long(x, y);
         }
 
-        private int LCM(int x, int y)
+        private int getLCM(int x, int y)
         {
-            return (int)(((long)x * y) / GCD(x, y));
+            return (int)(((long)x * y) / getGCD(x, y));
         }
 
         private long getFactorial(long n)
@@ -75,14 +76,27 @@ namespace LeetCodeAlgo
             return getFactorial(n, count) / getFactorial(count);
         }
 
-        private bool[][] createVisit(int m,int n)
+        private bool[][] initVisitMatrix(int m,int n)
         {
             var visit=new bool[m][];
             for (int i = 0; i < m; i++)
                 visit[i] = new bool[n];
             return visit;
         }
-        private List<int>[] createListGraph(int n)
+
+        private bool[][][] initVisitMatrix(int m, int n, int k)
+        {
+            var visit = new bool[m][][];
+            for (int i = 0; i < m; i++)
+            {
+                visit[i] = new bool[n][];
+                for (int j = 0; j < n; j++)
+                    visit[i][j] = new bool[k];
+            }
+            return visit;
+        }
+
+        private List<int>[] initListGraph(int n)
         {
             List<int>[] graph = new List<int>[n];
             for (int i = 0; i < n; i++)
@@ -90,14 +104,19 @@ namespace LeetCodeAlgo
             return graph;
         }
 
-        private int[][] createIntMatrix(int m,int n)
+        private int[][] init2DMatrix(int m, int n, int seed=0)
         {
             var dp = new int[m][];
             for (int i = 0; i < m; i++)
+            {
                 dp[i] = new int[n];
+                if(seed!=0)
+                    Array.Fill(dp[i], seed);
+            }
             return dp;
         }
-        private int[][][] create3DMatrix(int m, int n,int k, int seed=0)
+
+        private int[][][] init3DMatrix(int m, int n,int k, int seed=0)
         {
             var dp = new int[m][][];
             for (int i = 0; i < m; i++)
@@ -112,7 +131,8 @@ namespace LeetCodeAlgo
             }
             return dp;
         }
-        private long[][] create2DLongMatrix(int m, int n,  long seed = 0)
+
+        private long[][] init2DLongMatrix(int m, int n,  long seed = 0)
         {
             var dp = new long[m][];
             for (int i = 0; i < m; i++)
@@ -123,7 +143,8 @@ namespace LeetCodeAlgo
             }
             return dp;
         }
-        private long[][][] create3DLongMatrix(int m, int n, int k, long seed = 0)
+
+        private long[][][] init3DLongMatrix(int m, int n, int k, long seed = 0)
         {
             var dp = new long[m][][];
             for (int i = 0; i < m; i++)
@@ -138,29 +159,19 @@ namespace LeetCodeAlgo
             }
             return dp;
         }
-        private int[][] createIntMatrix(int m, int n, int seed)
-        {
-            var dp = new int[m][];
-            for (int i = 0; i < m; i++)
-            {
-                dp[i] = new int[n];
-                Array.Fill(dp[i], seed);
-            }
-            return dp;
-        }
 
-        private int[][] createDxy4()
+        private int[][] initDxy4()
         {
             return new int[4][] { new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 } };
         }
 
-        private int[][] createDxy8()
+        private int[][] initDxy8()
         {
             return new int[8][] { new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 },
                                     new int[] { 1, 1 }, new int[] { -1,-1 }, new int[] { -1, 1 }, new int[] { 1, -1 }};
         }
 
-        public TrieItem buildTrieRoot(IEnumerable<string> words)
+        public TrieItem initTrieRoot(IEnumerable<string> words)
         {
             var root = new TrieItem();
             insertToTrie(root, words);
@@ -209,5 +220,6 @@ namespace LeetCodeAlgo
             }
             return curr.exist||word==curr.word;
         }
+
     }
 }

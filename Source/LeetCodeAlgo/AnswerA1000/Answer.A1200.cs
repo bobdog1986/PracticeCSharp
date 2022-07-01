@@ -35,7 +35,7 @@ namespace LeetCodeAlgo
         public int NthUglyNumber(int n, int a, int b, int c)
         {
             int start = 0, end = int.MaxValue;
-            long ab = LCM_Long(a, b), bc = LCM_Long(b, c), ca = LCM_Long(c, a), abc = LCM_Long(a, bc);
+            long ab = getLCM_Long(a, b), bc = getLCM_Long(b, c), ca = getLCM_Long(c, a), abc = getLCM_Long(a, bc);
             while (start < end)
             {
                 int mid = start + (end - start) / 2;

@@ -43,7 +43,7 @@ namespace LeetCodeAlgo
         public int NumRollsToTarget(int n, int k, int target)
         {
             long mod = 10_0000_0007;
-            var dp = create2DLongMatrix(n + 1, target + 1);
+            var dp = init2DLongMatrix(n + 1, target + 1);
             dp[0][0] = 1;
             for (int i = 1; i <= n; i++)
             {

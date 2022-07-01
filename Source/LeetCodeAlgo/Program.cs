@@ -11,27 +11,25 @@ namespace LeetCodeAlgo
         private static void Main(string[] args)
         {
             Console.WriteLine("Run\r\n****************************\r\n");
-            var answer = new Answer();
+            Answer answer = new Answer();
             ///!!!*** read from string files
             //var strMatLines = File.ReadLines("StringMatrix.txt").ToList();
-            var strArrLines = File.ReadLines("StringArr.txt").ToList();
-            var intArrLines = File.ReadLines("IntArr.txt").ToList();
-            //var intMatLines = File.ReadLines("IntMatrix.txt").ToList();
+            List<string> strArrLines = File.ReadLines("StringArr.txt").ToList();
+            List<string> intArrLines = File.ReadLines("IntArr.txt").ToList();
+            //List<string> intMatLines = File.ReadLines("IntMatrix.txt").ToList();
 
             //var matStrLine0 = answer.buildStringMatrix(strMatLines[0]);//build string[][] from file
             //var matCharLine0 = answer.buildCharMatrix(strMatLines[0]);//build char[][] from file due to leetcode using ""
             var arrStrLine0 = answer.buildStringArray(strArrLines[0]);
             //var arrCharLine0 = answer.buildCharArray(strArrLines[0]);
 
-            ///build listnode
-            string listNodeStr1 = "[5,2,6,3,9,1,7,3,8]";//intArrLines[0]
-            var listnode1 = answer.buildListNode(listNodeStr1);
-            Answer.printListNode(listnode1);
+            ///build ListNode, auto print
+            //string listNodeStr1 = "[5,2,6,3,9,1,7,3,8]";//intArrLines[0]
+            //ListNode listnode1 = answer.buildListNode(listNodeStr1);
 
-            ///build treenode
-            string bTreeStr1 = "[5,1,2,3,null,6,4]";//intArrLines[0];
-            var treeNode1 = answer.deserializeTree(bTreeStr1);
-            //Answer.printTree(treeNode1);
+            ///build TreeNode, auto print
+            //string bTreeStr1 = "[5,1,2,3,null,6,4]";//intArrLines[0];
+            //TreeNode treeNode1 = answer.deserializeTree(bTreeStr1);
 
             ///build int[][] and int[] from string
             string matStrInt1 = " [[3,1],[2,3],[4,1],[0,4]]";
@@ -53,7 +51,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.PalindromePairs(arrStrLine0);
+            var result = answer.SolveEquation("2x=x");
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

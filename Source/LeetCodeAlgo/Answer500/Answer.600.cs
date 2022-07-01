@@ -300,6 +300,101 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///640. Solve the Equation
+        //Input: equation = "x+5-3+x=6+x-2" Output: "x=2"
+        //Input: equation = "x=x" Output: "Infinite solutions"
+        public string SolveEquation(string equation)
+        {
+            var arr = equation.Split('=');
+            string leftStr = arr[0];
+            string rightStr = arr[1];
+            int xLeft = 0;
+            int sumLeft = 0;
+            int xRight = 0;
+            int sumRight = 0;
+            int sign = 1;
+            int start = 0;
+            int end = 0;
+            string str = "";
+            for(; end < leftStr.Length; end++)
+            {
+                if(leftStr[end] == '+' || leftStr[end] == '-')
+                {
+                    str = leftStr.Substring(start, end - start);// [start,end-1]
+                    if (!string.IsNullOrEmpty(str))
+                    {
+                        if (str.Last() == 'x')
+                        {
+                            xLeft += (str.Length == 1 ? 1 : int.Parse(str.Substring(0, str.Length - 1))) * sign;
+                        }
+                        else
+                        {
+                            sumLeft += int.Parse(str) * sign;
+                        }
+                    }
+                    sign = leftStr[end] == '-' ? -1 : 1;
+                    start = end + 1;
+                }
+            }
+            str = leftStr.Substring(start, end - start);// [start,end-1]
+            if (!string.IsNullOrEmpty(str))
+            {
+                if (str.Last() == 'x')
+                {
+                    xLeft += (str.Length == 1 ? 1 : int.Parse(str.Substring(0, str.Length - 1))) * sign;
+                }
+                else
+                {
+                    sumLeft += int.Parse(str) * sign;
+                }
+            }
+
+            start = 0;
+            end = 0;
+            sign = 1;
+            for (; end < rightStr.Length; end++)
+            {
+                if (rightStr[end] == '+' || rightStr[end] == '-')
+                {
+                    str = rightStr.Substring(start, end - start);// [start,end-1]
+                    if (!string.IsNullOrEmpty(str))
+                    {
+                        if (str.Last() == 'x')
+                        {
+                            xRight += (str.Length == 1 ? 1 : int.Parse(str.Substring(0, str.Length - 1))) * sign;
+                        }
+                        else
+                        {
+                            sumRight += int.Parse(str) * sign;
+                        }
+                    }
+                    sign = rightStr[end] == '-' ? -1 : 1;
+                    start = end + 1;
+                }
+            }
+            str = rightStr.Substring(start, end - start);// [start,end-1]
+            if (!string.IsNullOrEmpty(str))
+            {
+                if (str.Last() == 'x')
+                {
+                    xRight += (str.Length == 1 ? 1 : int.Parse(str.Substring(0, str.Length - 1))) * sign;
+                }
+                else
+                {
+                    sumRight += int.Parse(str) * sign;
+                }
+            }
+
+            int xCount = xLeft - xRight;
+            int sum = sumRight - sumLeft;
+            if (xCount == 0)
+            {
+                if (sum != 0) return "No solution";
+                else return "Infinite solutions";
+            }
+            return $"x={sum/xCount}";
+        }
+
         ///643. Maximum Average Subarray I
         public double FindMaxAverage(int[] nums, int k)
         {

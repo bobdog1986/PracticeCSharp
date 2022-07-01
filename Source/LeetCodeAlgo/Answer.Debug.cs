@@ -122,7 +122,7 @@ namespace LeetCodeAlgo
         }
 
         ///ListNode, build and print
-        public static void printListNode(ListNode listNode, int maxLen = 20)
+        public static void printListNode(ListNode listNode, int maxLen = 30)
         {
             if (listNode == null)
             {
@@ -204,6 +204,7 @@ namespace LeetCodeAlgo
                 current = current.next;
             }
 
+            Answer.printListNode(head);
             return head;
         }
 
@@ -365,6 +366,7 @@ namespace LeetCodeAlgo
                 }
                 list = next;
             }
+            Answer.printTree(root);
             return root;
         }
     }

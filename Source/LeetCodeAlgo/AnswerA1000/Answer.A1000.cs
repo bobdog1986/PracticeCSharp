@@ -558,8 +558,8 @@ namespace LeetCodeAlgo
         {
             int m = grid.Length;
             int n = grid[0].Length;
-            var visit = createVisit(m,n);
-            var dxy4 = createDxy4();
+            var visit = initVisitMatrix(m,n);
+            var dxy4 = initDxy4();
             var queue = new Queue<int[]>();
             queue.Enqueue(new int[] { row, col });
 
@@ -685,7 +685,7 @@ namespace LeetCodeAlgo
         public int[] GardenNoAdj(int n, int[][] paths)
         {
             //Create a graph
-            var graph = createListGraph(n);
+            var graph = initListGraph(n);
 
             //Add the edges
             foreach (var path in paths)

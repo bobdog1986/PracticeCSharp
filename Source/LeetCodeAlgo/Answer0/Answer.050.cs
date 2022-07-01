@@ -523,7 +523,7 @@ namespace LeetCodeAlgo
         ///A(m-1+n-1)/A(m-1)/A(n-1)
         public int UniquePaths(int m, int n)
         {
-            var dp = createIntMatrix(m, n, 1);
+            var dp = init2DMatrix(m, n, 1);
             for (int i = 1; i < m; i++)
                 for (int j = 1; j < n; j++)
                     dp[i] [j] = dp[i - 1][ j] + dp[i][ j - 1];
