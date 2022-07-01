@@ -250,6 +250,40 @@ namespace LeetCodeAlgo
             var dt = new DateTime(year, month, day);
             return dt.DayOfWeek.ToString();
         }
+
+        ///1186. Maximum Subarray Sum with One Deletion, #Kadane
+        public int MaximumSum(int[] arr)
+        {
+            int n = arr.Length;
+            int[] dp1 = new int[n];
+            int[] dp2 = new int[n];
+
+            dp1[0] = arr[0];
+            dp2[n - 1] = arr[n - 1];
+            int max = arr[0];
+
+            for (int i = 1; i < n; i++)
+            {
+                //contain at least one element
+                dp1[i] = dp1[i - 1] > 0 ? dp1[i - 1] + arr[i] : arr[i];
+                max = Math.Max(max, dp1[i]);
+            }
+            for (int i = n - 2; i >= 0; i--)
+            {
+                dp2[i] = dp2[i + 1] > 0 ? dp2[i + 1] + arr[i] : arr[i];
+                max = Math.Max(max, dp2[i]);
+            }
+
+            for (int i = 1; i < n - 1; i++)
+            {
+                if (arr[i] < 0)
+                {
+                    max = Math.Max(max, dp1[i - 1] + dp2[i + 1]);
+                }
+            }
+            return max;
+        }
+
         /// 1189. Maximum Number of Balloons
         ///Given a string text, you want to use the characters of text to form as many instances of the word "balloon" as possible.
         ///You can use each character in text at most once.Return the maximum number of instances that can be formed.
