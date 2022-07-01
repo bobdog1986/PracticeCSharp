@@ -284,6 +284,44 @@ namespace LeetCodeAlgo
         {
             return int.Parse(new string(str.Select(x => (char)(x - 'a' + '0')).ToArray()));
         }
+
+        ///1881. Maximum Value after Insertion, #Greedy
+        //1 <= x <= 9, 1 <= n.length <= 10^5, n may negative startwith '-'
+        public string MaxValue(string n, int x)
+        {
+            if (n[0] == '-')
+            {
+                n = n.Substring(1);
+                if (x == 1) return $"-{x}{n}";
+                else if (x == 9) return $"-{n}{x}";
+                else
+                {
+                    int i = 0;
+                    while (i < n.Length)
+                    {
+                        if (n[i] - '0' <= x) i++;
+                        else break;
+                    }
+                    return $"-{n.Substring(0, i)}{x}{n.Substring(i)}";
+                }
+            }
+            else
+            {
+                if (x == 1) return $"{n}{x}";
+                else if (x == 9) return $"{x}{n}";
+                else
+                {
+                    int i = 0;
+                    while(i < n.Length)
+                    {
+                        if (n[i] - '0' >= x) i++;
+                        else break;
+                    }
+                    return $"{n.Substring(0, i)}{x}{n.Substring(i)}";
+                }
+            }
+        }
+
         /// 1884. Egg Drop With 2 Eggs and N Floors
         public int TwoEggDrop(int n)
         {

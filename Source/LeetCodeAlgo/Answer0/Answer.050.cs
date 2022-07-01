@@ -124,6 +124,22 @@ namespace LeetCodeAlgo
             return max;
         }
 
+        public int MaxSubArray_DP(int[] nums)
+        {
+            int n = nums.Length;
+            int[] dp = new int[n];
+            dp[0] = nums[0];
+            int max = nums[0];
+            for (int i = 1; i <n; i++)
+            {
+                if (dp[i - 1] > 0) dp[i] = dp[i - 1] + nums[i];
+                else dp[i] = nums[i];
+                max = Math.Max(max, dp[i]);
+            }
+            //return dp.Max();
+            return max;
+        }
+
         ///54. Spiral Matrix
         ///Given an m x n matrix, return all elements of the matrix in spiral order.
         public IList<int> SpiralOrder(int[][] matrix)
