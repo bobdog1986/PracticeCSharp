@@ -275,6 +275,25 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///1726. Tuple with Same Product
+        //nums[i] distinct, i!=j!=k!=l, nums[i]*nums[j]==nums[k]*nums[l], each count 8;
+        public int TupleSameProduct(int[] nums)
+        {
+            int res = 0;
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            for (int i = 0; i < nums.Length - 1; i++)
+            {
+                for (int j = i + 1; j < nums.Length; j++)
+                {
+                    var product = nums[i] * nums[j];
+                    if (dict.ContainsKey(product)) res += 8 * dict[product]++;
+                    else dict.Add(product, 1);
+                }
+            }
+            return res;
+        }
+
         ///1732. Find the Highest Altitude
         public int LargestAltitude(int[] gain)
         {
