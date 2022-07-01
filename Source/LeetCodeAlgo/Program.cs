@@ -36,7 +36,7 @@ namespace LeetCodeAlgo
             var mat1 = answer.buildMatrix(matStrInt1);
             //string matStrInt2 = "[[1,3,1,15],[1,3,3,1]]";
             //var matInt2 = answer.buildMatrix(matStrInt2);
-            string arrStrInt1 = "[62,100,4]";
+            string arrStrInt1 = "[3,1,2]";
             var arr1 = answer.buildArray(arrStrInt1);
             string arrStrInt2 = "[4,5,2,6,7,3,1]";
             var arr2 = answer.buildArray(arrStrInt2);
@@ -51,7 +51,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.MaxAverageRatio(mat1,2);
+            var result = answer.MinimumDifference(arrIntLine0);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

@@ -201,6 +201,59 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2163. Minimum Difference in Sums After Removal of Elements, #PriorityQueue, #Prefix Sum
+        ///Return the minimum difference possible between the sums of the two parts after the removal of n elements.
+        ///nums.length == 3 * n,1 <= n <= 10^5 ,1 <= nums[i] <= 10^5
+        public long MinimumDifference(int[] nums)
+        {
+            long res = long.MaxValue;
+            int m = nums.Length;
+            int n = m / 3;
+
+            long maxSum = 0;
+            long sum1 = 0;
+            long[] prefixSum1 = new long[m];//max removed sum from 0 to i (inclusive), [0,i]
+            PriorityQueue<long, long> maxHeap = new PriorityQueue<long, long>();
+            for (int i = 0; i < n; i++)
+            {
+                sum1 += nums[i];
+                maxHeap.Enqueue(nums[i], -nums[i]);
+            }
+            prefixSum1[n - 1] = sum1;//sum1-0
+            //i must <m-1 due to right side [m-n,m-1] contain n elements
+            for (int i = n; i < m - n; i++)
+            {
+                sum1 += nums[i];
+                maxHeap.Enqueue(nums[i], -nums[i]);
+                maxSum += maxHeap.Dequeue();
+                prefixSum1[i] = sum1 - maxSum;
+            }
+
+            long sum2 = 0;
+            long minSum = 0;
+            long[] prefixSum2 = new long[m];//min removed sum from i(exclusive) to m-1 , (i,m-1]
+            PriorityQueue<long, long> minHeap = new PriorityQueue<long, long>();
+            for (int i = m - 1; i >= m - n; i--)
+            {
+                sum2 += nums[i];
+                minHeap.Enqueue(nums[i], nums[i]);
+            }
+            //i must >=n-1 ,due to left side [0,n-1] contains n elements
+            for (int i = m - n - 1; i >= n - 1; i--)
+            {
+                prefixSum2[i] = sum2 - minSum;
+                sum2 += nums[i];
+                minHeap.Enqueue(nums[i], nums[i]);
+                minSum += minHeap.Dequeue();
+            }
+            //i must >=n-1 and i<m-n to ensure left and right both atleast contain n elements
+            for (int i = n - 1; i < m - n; i++)
+            {
+                res = Math.Min(res, prefixSum1[i] - prefixSum2[i]);
+            }
+            return res;
+        }
+
         ///2164. Sort Even and Odd Indices Independently, #PriorityQueue,
         ///Sort the values at odd indices of nums in non-increasing order., Even indices in non-decreasing
         public int[] SortEvenOdd(int[] nums)
