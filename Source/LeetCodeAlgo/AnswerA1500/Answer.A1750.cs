@@ -422,6 +422,32 @@ namespace LeetCodeAlgo
             return -1;
         }
 
+        ///1792. Maximum Average Pass Ratio, #PriorityQueue
+        //classes[i] = [passi, totali], max ratio = (sum of all ratio)/n
+        public double MaxAverageRatio(int[][] classes, int extraStudents)
+        {
+            int n = classes.Length;
+            var pq = new PriorityQueue<int, double>();
+            for (int i = 0; i < n; i++)
+            {
+                //delta = x+1/y+1 - x/y, max heap , equal to minHeap of x/y -x+1/y+1
+                if (classes[i][0] < classes[i][1])
+                    pq.Enqueue(i, 1.0 * (classes[i][0]) / (classes[i][1]) - 1.0*(classes[i][0]+1)/ (classes[i][1] + 1));
+            }
+
+            if(pq.Count==0)
+                return 1;
+
+            while (extraStudents-- > 0)
+            {
+                var i = pq.Dequeue();
+                classes[i][0]++;
+                classes[i][1]++;
+                pq.Enqueue(i, 1.0 * (classes[i][0]) / (classes[i][1]) - 1.0 * (classes[i][0] + 1) / (classes[i][1] + 1));
+            }
+            return classes.Sum(x => 1.0 * x[0] / x[1]) / n;
+        }
+
         ///1796. Second Largest Digit in a String
         public int SecondHighest(string s)
         {

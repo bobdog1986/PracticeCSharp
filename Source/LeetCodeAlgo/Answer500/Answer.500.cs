@@ -273,7 +273,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        /// 516. Longest Palindromic Subsequence
+        /// 516. Longest Palindromic Subsequence, #DP
         ///Given a string s, find the longest palindromic subsequence's length in s.
         ///A subsequence is a sequence that can be derived from another sequence
         ///by deleting some or no elements without changing the order of the remaining elements.
@@ -281,11 +281,17 @@ namespace LeetCodeAlgo
         {
             if(s == null||s.Length==0) return 0;
             if (s.Length == 1) return 1;
-            int[,] dp = new int[s.Length, s.Length];
-            for (int i = s.Length - 1; i >= 0; i--)
+
+            //dp[i][j]: the longest palindromic subsequence's length of substring in range [i, j]
+            //dp[i][j] = dp[i + 1][j - 1] + 2, if s.charAt(i) == s.charAt(j)
+            //otherwise, dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1])
+            //Initialization: dp[i][i] = 1
+            int n = s.Length;
+            int[,] dp = new int[n, n];
+            for (int i = n - 1; i >= 0; i--)
             {
                 dp[i, i] = 1;
-                for (int j = i + 1; j < s.Length; j++)
+                for (int j = i + 1; j < n; j++)
                 {
                     if (s[i] == s[j])
                     {
@@ -298,6 +304,54 @@ namespace LeetCodeAlgo
                 }
             }
             return dp[0, s.Length - 1];
+        }
+
+        public int LongestPalindromeSubseq2(string s)
+        {
+            if (s == null || s.Length == 0) return 0;
+            if (s.Length == 1) return 1;
+
+            int[,] dp = new int[s.Length, s.Length];
+            for (int i = 0; i < s.Length; i++)
+            {
+                dp[i, i] = 1;
+                for (int j = i - 1; j >= 0; j--)
+                {
+                    if (s[i] == s[j])
+                    {
+                        dp[i, j] = 2 + dp[i - 1, j + 1];
+                    }
+                    else
+                    {
+                        dp[i, j] = Math.Max(dp[i - 1, j], dp[i, j + 1]);
+                    }
+                }
+            }
+            return dp[s.Length - 1, 0];
+        }
+
+        public int LongestPalindromeSubseq_Memo(string s)
+        {
+            return LongestPalindromeSubseq_Memo(s, 0, s.Length - 1, new int[s.Length,s.Length]);
+        }
+
+        private int LongestPalindromeSubseq_Memo(string s, int i, int j, int[,] memo)
+        {
+            if (memo[i,j] != 0)
+            {
+                return memo[i,j];
+            }
+            if (i > j) return 0;
+            if (i == j) return 1;
+            if (s[i] == s[j])
+            {
+                memo[i,j] = LongestPalindromeSubseq_Memo(s, i + 1, j - 1, memo) + 2;
+            }
+            else
+            {
+                memo[i,j] = Math.Max(LongestPalindromeSubseq_Memo(s, i + 1, j, memo), LongestPalindromeSubseq_Memo(s, i, j - 1, memo));
+            }
+            return memo[i,j];
         }
 
         ///518. Coin Change 2, #DP
