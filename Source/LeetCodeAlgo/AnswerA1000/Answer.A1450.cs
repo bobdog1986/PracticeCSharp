@@ -80,6 +80,23 @@ namespace LeetCodeAlgo
             return (max1 - 1) * (max2 - 1);
         }
 
+        ///1465. Maximum Area of a Piece of Cake After Horizontal and Vertical Cuts
+        public int MaxArea(int h, int w, int[] horizontalCuts, int[] verticalCuts)
+        {
+            Array.Sort(horizontalCuts);
+            Array.Sort(verticalCuts);
+
+            long maxH = Math.Max(horizontalCuts[0], h- horizontalCuts.Last());
+            for(int i = 1; i < horizontalCuts.Length; i++)
+                maxH = Math.Max(maxH, horizontalCuts[i] - horizontalCuts[i - 1]);
+
+            long maxW = Math.Max(verticalCuts[0], w - verticalCuts.Last());
+            for (int i = 1; i < verticalCuts.Length; i++)
+                maxW = Math.Max(maxW, verticalCuts[i] - verticalCuts[i - 1]);
+
+            return (int)(maxW * maxH % MOD);
+        }
+
         ///1466. Reorder Routes to Make All Paths Lead to the City Zero, #Graph, #DFS
         public int MinReorder(int n, int[][] connections)
         {
