@@ -339,6 +339,26 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///1936. Add Minimum Number of Rungs
+        //Return the minimum number of rungs that must be added to the ladder to climb to the last rung.
+        public int AddRungs(int[] rungs, int dist)
+        {
+            int prev = 0;
+            int res = 0;
+            foreach(var r in rungs)
+            {
+                if (r <= prev) continue;
+                if (r - prev > dist)
+                {
+                    int n = (int)Math.Ceiling((r - prev) * 1.0 / dist);
+                    res += n - 1;
+                }
+                prev = r;
+            }
+            return res;
+        }
+        ///
         /// 1941. Check if All Characters Have Equal Number of Occurrences
         ///A string s is good if all the characters that appear in s have the same number of occurrences
         public bool AreOccurrencesEqual(string s)
