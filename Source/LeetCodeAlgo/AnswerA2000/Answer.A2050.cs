@@ -109,6 +109,30 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2064. Minimized Maximum of Products Distributed to Any Store, #Binary Search
+        //n store, x is max count of each store, assign any count of only 1 product to a store;
+        //Return the minimum possible x.
+        public int MinimizedMaximum(int n, int[] quantities)
+        {
+            int left = 1;
+            int right = 100000;
+            while (left < right)
+            {
+                int mid = (left + right) / 2;
+                int count = 0;
+                foreach(var q in quantities)
+                {
+                    count += (int)Math.Ceiling(q * 1.0 / mid);
+                    if (count > n) break;
+                }
+                if (count > n)
+                    left = mid + 1;
+                else
+                    right = mid;
+            }
+            return left;
+        }
+
         /// 2068. Check Whether Two Strings are Almost Equivalent
         ///strings word1 and word2, each of length n, return true if word1 and word2 are almost equivalent or false
         ///differences between the frequencies of each letter from 'a' to 'z' between word1 and word2 is at most 3.
