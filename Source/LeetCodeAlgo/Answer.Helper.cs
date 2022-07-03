@@ -7,8 +7,6 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        public const long MOD = 10_0000_0007;
-
         private int getFibonacci(int n)
         {
             if (n <= 1)

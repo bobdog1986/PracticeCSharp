@@ -593,5 +593,18 @@ namespace LeetCodeAlgo
             return Math.Max(sum2+max1,sum1+max2);
         }
 
+        ///2325. Decode the Message
+        public string DecodeMessage(string key, string message)
+        {
+            var dict = new Dictionary<char, int>();
+            foreach(var c in key)
+            {
+                if (dict.Count == 26) break;
+                if (c == ' ') continue;
+                if (dict.ContainsKey(c)) continue;
+                dict.Add(c, dict.Count);
+            }
+            return new string(message.Select(x => x == ' ' ? ' ' : (char)(dict[x] + 'a')).ToArray());
+        }
     }
 }
