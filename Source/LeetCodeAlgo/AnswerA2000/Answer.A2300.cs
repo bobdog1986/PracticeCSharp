@@ -20,7 +20,6 @@ namespace LeetCodeAlgo
             {
                 arr[i] = (long)Math.Ceiling(success * 1.0 / potions[i]);
             }
-
             int n = spells.Length;
             int[] res = new int[n];
             for (int i = 0; i < n; i++)
@@ -35,13 +34,9 @@ namespace LeetCodeAlgo
                     {
                         int mid = (left + right + 1) / 2;
                         if (spells[i] >= arr[mid])
-                        {
                             left = mid;
-                        }
                         else
-                        {
                             right = mid - 1;
-                        }
                     }
                     res[i] = left + 1;
                 }
@@ -61,7 +56,6 @@ namespace LeetCodeAlgo
                 if (!dict.ContainsKey(map[0])) dict.Add(map[0], new HashSet<char>());
                 dict[map[0]].Add(map[1]);
             }
-
             int m = s.Length;
             int n = sub.Length;
             bool[][] dp = new bool[m][];
@@ -139,7 +133,6 @@ namespace LeetCodeAlgo
             Dictionary<int, int> dict = new Dictionary<int, int>();
             for (int i = 0; i < grid[0].Length; i++)
                 dict.Add(i, grid[0][i]);
-
             for (int i = 1; i < grid.Length; i++)
             {
                 var next = new Dictionary<int, int>();
@@ -161,7 +154,6 @@ namespace LeetCodeAlgo
         {
             int colLen = grid[0].Length;
             int[] arr = grid[0];
-
             for (int i = 1; i < grid.Length; i++)
             {
                 var next = new int[colLen];
@@ -187,11 +179,11 @@ namespace LeetCodeAlgo
         {
             int res = int.MaxValue;
             int[] arr = new int[k];
-            DistributeCookies(cookies, 0, arr, k, ref res);
+            DistributeCookies_BackTracking(cookies, 0, arr, k, ref res);
             return res;
         }
 
-        private void DistributeCookies(int[] cookies, int index, int[] arr, int k, ref int res)
+        private void DistributeCookies_BackTracking(int[] cookies, int index, int[] arr, int k, ref int res)
         {
             if (index == cookies.Length)
             {
@@ -204,7 +196,7 @@ namespace LeetCodeAlgo
                 {
                     if (arr[i] + cookies[index] >= res) continue;
                     arr[i] += cookies[index];
-                    DistributeCookies(cookies, index + 1, arr, k, ref res);
+                    DistributeCookies_BackTracking(cookies, index + 1, arr, k, ref res);
                     arr[i] -= cookies[index];
                 }
             }
@@ -216,7 +208,7 @@ namespace LeetCodeAlgo
         //If both of the new names are not found in the original ideas, then the name ideaA ideaBis a valid company name.
         //Otherwise, it is not a valid name.
         //Return the number of distinct valid names for the company.
-        public long DistinctNames_Dict(string[] ideas)
+        public long DistinctNames(string[] ideas)
         {
             long res = 0;
             Dictionary<char, HashSet<string>> dict = new Dictionary<char, HashSet<string>>();
@@ -225,7 +217,6 @@ namespace LeetCodeAlgo
                 if (!dict.ContainsKey(idea[0])) dict.Add(idea[0], new HashSet<string>());
                 dict[idea[0]].Add(idea);
             }
-
             Dictionary<char, Dictionary<char, long>> set = new Dictionary<char, Dictionary<char, long>>();
             foreach (var k1 in dict.Keys)
             {
@@ -241,7 +232,6 @@ namespace LeetCodeAlgo
                     }
                 }
             }
-
             foreach (var k1 in dict.Keys)
             {
                 foreach (var k2 in dict.Keys)
@@ -252,46 +242,6 @@ namespace LeetCodeAlgo
             }
             return res;
         }
-
-        public long DistinctNames(string[] ideas)
-        {
-            long res = 0;
-            HashSet<string>[] maps = new HashSet<string>[26];
-            for (int i = 0; i < maps.Length; i++)
-                maps[i] = new HashSet<string>();
-
-            foreach (var idea in ideas)
-                maps[idea[0] - 'a'].Add(idea);
-
-            long[][] set = new long[26][];
-            for (int i = 0; i < set.Length; i++)
-                set[i] = new long[26];
-
-            for (int i = 0; i < maps.Length; i++)
-            {
-                for (int j = 0; j < maps.Length; j++)
-                {
-                    if (i == j) continue;
-                    foreach (var s in maps[j])
-                    {
-                        var s2 = $"{(char)(i + 'a')}" + s.Substring(1);
-                        if (!maps[i].Contains(s2)) set[i][j]++;
-                    }
-                }
-            }
-
-            for (int i = 0; i < set.Length; i++)
-            {
-                for (int j = 0; j < set[0].Length; j++)
-                {
-                    if (i == j) continue;
-                    res += set[i][j] * set[j][i];
-                }
-            }
-
-            return res;
-        }
-
 
         ///2309. Greatest English Letter in Upper and Lower Case
         public string GreatestLetter(string s)
@@ -305,16 +255,8 @@ namespace LeetCodeAlgo
                 dict[char.ToUpper(c)][index] = 1;
             }
             var keys = dict.Keys.Where(x => dict[x].Sum() == 2).OrderBy(x=>-x).ToList();
-            if (keys.Count() == 0)
-            {
-                return String.Empty;
-            }
-            else
-            {
-                return keys[0].ToString();
-            }
+            return keys.Count() == 0 ? String.Empty : keys[0].ToString();
         }
-
 
         ///2310. Sum of Numbers With Units Digit K
         //The units digit of each integer is k.
@@ -351,16 +293,12 @@ namespace LeetCodeAlgo
             for(int i = s.Length - 1; i >= 0; i--)
             {
                 if (s[i] == '0')
-                {
                     zeros++;
-                }
                 else
                 {
                     long val = (long)1 << (zeros + ones);
                     if(curr+val> k)
-                    {
                         break;
-                    }
                     else if (curr + val == k)
                     {
                         ones++;
@@ -392,7 +330,6 @@ namespace LeetCodeAlgo
             {
                 priceMat[p[0],p[1]] = Math.Max(priceMat[p[0], p[1]], p[2]);
             }
-
             long[,] dp = new long[m + 1,n + 1];
             for (int i = 1; i <= m; i++)
             {
@@ -607,7 +544,6 @@ namespace LeetCodeAlgo
             return new string(message.Select(x => x == ' ' ? ' ' : (char)(dict[x] + 'a')).ToArray());
         }
 
-
         ///2326. Spiral Matrix IV
         public int[][] SpiralMatrix(int m, int n, ListNode head)
         {
@@ -617,7 +553,7 @@ namespace LeetCodeAlgo
                 res[i] = new int[n];
                 Array.Fill(res[i], -1);
             }
-            int direct = 0;
+            int direct = n==1?1: 0;
             int r = 0;
             int c = 0;
             int row1 = 0;
@@ -627,15 +563,7 @@ namespace LeetCodeAlgo
             while (head != null)
             {
                 res[r][c] = head.val;
-                if (n == 1)
-                {
-                    r++;
-                }
-                else if (m == 1)
-                {
-                    c++;
-                }
-                else if (direct == 0)
+                if (direct == 0)
                 {
                     c++;
                     if (c == col2)
@@ -688,13 +616,10 @@ namespace LeetCodeAlgo
             long mod = 10_0000_0007;
             long[] shares = new long[n + 1];
             long[] forgets = new long[n + 1];
-
             if (1+delay <= n)
                 shares[delay + 1] = 1;
-
             if (1+forget <= n)
                 forgets[forget + 1] = 1;
-
             long shareToday = 0;
             long peopleKnow = 1;
             for (int i = delay+1; i <= n; i++)
@@ -702,17 +627,29 @@ namespace LeetCodeAlgo
                 shareToday += shares[i] % mod;
                 shareToday -= forgets[i] % mod;
                 peopleKnow -= forgets[i] % mod;
-
                 if (i + delay <= n)
                     shares[i + delay] += shareToday % mod;
-
                 if (i + forget <= n)
                     forgets[i + forget] += shareToday % mod;
-
                 peopleKnow = (peopleKnow + shareToday) % mod;
             }
             return (int)(peopleKnow % mod);
         }
 
+        public int PeopleAwareOfSecret_Lee215(int n, int delay, int forget)
+        {
+            long[] dp = new long[n + 1];
+            long mod=10_0000_0007, share = 0, res = 0;
+            dp[1] = 1;
+            for (int i = 2; i <= n; ++i)
+            {
+                share = share + dp[Math.Max(i - delay, 0)] - dp[Math.Max(i - forget, 0)];
+                share %= mod;
+                dp[i] = share;
+            }
+            for (int i = n - forget + 1; i <= n; ++i)
+                res = (res + dp[i]) % mod;
+            return (int)res;
+        }
     }
 }

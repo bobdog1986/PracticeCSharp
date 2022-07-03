@@ -235,6 +235,20 @@ namespace LeetCodeAlgo
             return head;
         }
 
+        ///2075. Decode the Slanted Ciphertext
+        public string DecodeCiphertext(string encodedText, int rows)
+        {
+            int n = encodedText.Length;
+            int cols = n / rows;
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < cols; ++i)
+            {
+                for (int j = i; j < n; j += cols + 1)
+                    sb.Append(encodedText[j]);
+            }
+            return sb.ToString().TrimEnd();
+        }
+
         /// 2078. Two Furthest Houses With Different Colors
         ///There are n houses evenly lined up on the street, and each house is beautifully painted.
         ///You are given a 0-indexed integer array colors of length n, where colors[i] represents
