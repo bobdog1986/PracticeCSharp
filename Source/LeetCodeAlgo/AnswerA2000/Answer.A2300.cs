@@ -606,5 +606,74 @@ namespace LeetCodeAlgo
             }
             return new string(message.Select(x => x == ' ' ? ' ' : (char)(dict[x] + 'a')).ToArray());
         }
+
+
+        ///2326. Spiral Matrix IV
+        public int[][] SpiralMatrix(int m, int n, ListNode head)
+        {
+            var res=new int[m][];
+            for(int i = 0; i < m; i++)
+            {
+                res[i] = new int[n];
+                Array.Fill(res[i], -1);
+            }
+            int direct = 0;
+            int r = 0;
+            int c = 0;
+            int row1 = 0;
+            int row2 = m - 1;
+            int col1 = 0;
+            int col2 = n - 1;
+            while (head != null)
+            {
+                res[r][c] = head.val;
+                if (n == 1)
+                {
+                    r++;
+                }
+                else if (m == 1)
+                {
+                    c++;
+                }
+                else if (direct == 0)
+                {
+                    c++;
+                    if (c == col2)
+                    {
+                        row1++;
+                        direct = 1;
+                    }
+                }
+                else if (direct == 1)
+                {
+                    r++;
+                    if (r == row2)
+                    {
+                        direct = 2;
+                        col2--;
+                    }
+                }
+                else if(direct == 2)
+                {
+                    c--;
+                    if (c == col1)
+                    {
+                        row2--;
+                        direct = 3;
+                    }
+                }
+                else
+                {
+                    r--;
+                    if (r == row1)
+                    {
+                        col1++;
+                        direct = 0;
+                    }
+                }
+                head = head.next;
+            }
+            return res;
+        }
     }
 }
