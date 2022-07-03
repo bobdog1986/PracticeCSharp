@@ -85,7 +85,7 @@ namespace LeetCodeAlgo
         {
             Array.Sort(horizontalCuts);
             Array.Sort(verticalCuts);
-
+            long mod = 10_0000_0007;
             long maxH = Math.Max(horizontalCuts[0], h- horizontalCuts.Last());
             for(int i = 1; i < horizontalCuts.Length; i++)
                 maxH = Math.Max(maxH, horizontalCuts[i] - horizontalCuts[i - 1]);
@@ -94,7 +94,7 @@ namespace LeetCodeAlgo
             for (int i = 1; i < verticalCuts.Length; i++)
                 maxW = Math.Max(maxW, verticalCuts[i] - verticalCuts[i - 1]);
 
-            return (int)(maxW * maxH % MOD);
+            return (int)(maxW * maxH % mod);
         }
 
         ///1466. Reorder Routes to Make All Paths Lead to the City Zero, #Graph, #DFS

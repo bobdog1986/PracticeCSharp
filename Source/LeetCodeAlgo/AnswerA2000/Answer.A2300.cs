@@ -675,5 +675,44 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///2327. Number of People Aware of a Secret, #DP
+        //On day 1, one person discovers a secret.
+        //each person will share the secret with a new person every day,starting from delay days after discovering the secret.
+        //each person will forget the secret forget days after discovering it.
+        //A person cannot share the secret on the same day they forgot it, or on any day afterwards.
+        //Given an integer n, return the number of people who know the secret at the end of day n. modulo 109 + 7.
+        //2 <= n <= 1000,1 <= delay < forget <= n
+        public int PeopleAwareOfSecret(int n, int delay, int forget)
+        {
+            long mod = 10_0000_0007;
+            long[] shares = new long[n + 1];
+            long[] forgets = new long[n + 1];
+
+            if (1+delay <= n)
+                shares[delay + 1] = 1;
+
+            if (1+forget <= n)
+                forgets[forget + 1] = 1;
+
+            long shareToday = 0;
+            long peopleKnow = 1;
+            for (int i = delay+1; i <= n; i++)
+            {
+                shareToday += shares[i] % mod;
+                shareToday -= forgets[i] % mod;
+                peopleKnow -= forgets[i] % mod;
+
+                if (i + delay <= n)
+                    shares[i + delay] += shareToday % mod;
+
+                if (i + forget <= n)
+                    forgets[i + forget] += shareToday % mod;
+
+                peopleKnow = (peopleKnow + shareToday) % mod;
+            }
+            return (int)(peopleKnow % mod);
+        }
+
     }
 }
