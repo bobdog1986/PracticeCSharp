@@ -442,6 +442,9 @@ namespace LeetCodeAlgo
                     arr.Sum(i => Math.Abs(i - arr[m * n / 2 - 1]) / x));
         }
 
+        ///2034. Stock Price Fluctuation, see StockPrice
+
+
         /// 2037. Minimum Number of Moves to Seat Everyone
         /// Return the minimum number of moves required to move each student to a seat
         /// such that no two students are in the same seat.
