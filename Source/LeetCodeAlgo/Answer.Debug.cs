@@ -208,47 +208,6 @@ namespace LeetCodeAlgo
             return head;
         }
 
-        // Encodes a tree to a single string. eg. 1,2,3,,,4,5, Null will be ""
-        public string serializeTree(TreeNode root, int invalid = 1000001)
-        {
-            if (root == null)
-                return string.Empty;
-
-            List<int> ans = new List<int>();
-            List<TreeNode> nodes = new List<TreeNode>() { root };
-            while (nodes.Count > 0)
-            {
-                int count = 0;
-                List<TreeNode> nexts = new List<TreeNode>();
-                foreach (TreeNode node in nodes)
-                {
-                    if (node != null)
-                    {
-                        ans.Add(node.val);
-                        if (node.left != null)
-                            count++;
-                        if (node.right != null)
-                            count++;
-                        nexts.Add(node.left);
-                        nexts.Add(node.right);
-
-                    }
-                    else
-                    {
-                        ans.Add(invalid);
-                        //too many nodes in list, will out of memory
-                        //nexts.Add(null);
-                        //nexts.Add(null);
-                    }
-                }
-                nodes = nexts;
-                if (count == 0)
-                    break;
-            }
-
-            var str = string.Join(",", ans);
-            return str.Replace("1001", "");
-        }
         public static void printTree(TreeNode root)
         {
             if (root == null)

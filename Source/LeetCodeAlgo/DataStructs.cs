@@ -166,4 +166,11 @@ namespace LeetCodeAlgo
         public List<string> list = new List<string>();
     }
 
+
+    public class Employee
+    {
+        public int id;
+        public int importance;
+        public IList<int> subordinates;
+    }
 }

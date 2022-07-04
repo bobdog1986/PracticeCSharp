@@ -594,6 +594,56 @@ namespace LeetCodeAlgo
             return dict.Values.Sum() / total;
         }
 
+        ///690. Employee Importance, #BFS, #DFS
+        public int GetImportance(IList<Employee> employees, int id)
+        {
+            int total = 0;
+            Dictionary<int, Employee> map = new Dictionary<int, Employee>();
+            foreach (var employee in employees)
+            {
+                map.Add(employee.id, employee);
+            }
+
+            Queue<Employee> queue = new Queue<Employee>();
+            queue.Enqueue(map[id]);
+            while (queue.Count>0)
+            {
+                Employee current = queue.Dequeue();
+                total += current.importance;
+                if (current.subordinates != null)
+                {
+                    foreach (int subordinate in current.subordinates)
+                    {
+                        queue.Enqueue(map[subordinate]);
+                    }
+                }
+            }
+            return total;
+        }
+        public int GetImportance_DFS(IList<Employee> employees, int id)
+        {
+            Dictionary<int, Employee> map = new Dictionary<int, Employee>();
+            foreach (var employee in employees)
+            {
+                map.Add(employee.id, employee);
+            }
+            return GetImportance_DFS(map,id);
+        }
+
+        private int GetImportance_DFS(Dictionary<int, Employee> map, int rootId)
+        {
+            Employee root = map[rootId];
+            int total = root.importance;
+            if (root.subordinates != null)
+            {
+                foreach (var subordinate in root.subordinates)
+                {
+                    total += GetImportance_DFS(map, subordinate);
+                }
+            }
+            return total;
+        }
+
         /// 692. Top K Frequent Words, #PriorityQueue
         ///Given an array of strings words and an integer k, return the k most frequent strings.
         ///Return the answer sorted by the frequency from highest to lowest.

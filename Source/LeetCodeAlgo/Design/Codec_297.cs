@@ -9,103 +9,45 @@ namespace LeetCodeAlgo.Design
     ///297. Serialize and Deserialize Binary Tree
     public class Codec_297
     {
-        // Encodes a tree to a single string.
+
         public string serialize(TreeNode root)
         {
-            if (root == null)
-                return string.Empty;
-
-            const int invalid = 1001;
-            List<int> ans = new List<int>();
-            List<TreeNode> nodes = new List<TreeNode>() { root };
-            while (nodes.Count > 0)
-            {
-                int count = 0;
-                List<TreeNode> nexts = new List<TreeNode>();
-                foreach (TreeNode node in nodes)
-                {
-                    if (node != null)
-                    {
-                        ans.Add(node.val);
-                        if (node.left != null)
-                            count++;
-                        if (node.right != null)
-                            count++;
-                        nexts.Add(node.left);
-                        nexts.Add(node.right);
-
-                    }
-                    else
-                    {
-                        ans.Add(invalid);
-                        //too many nodes in list, will out of memory
-                        //nexts.Add(null);
-                        //nexts.Add(null);
-                    }
-                }
-                nodes = nexts;
-                if (count == 0)
-                    break;
-            }
-
-            var str = string.Join(",", ans);
-            return str.Replace("1001", "");
+            var sb = new StringBuilder();
+            return serializeInternal(sb, root).ToString();
         }
 
-        // Decodes your encoded data to tree.
+        // Generate preorder string
+        private StringBuilder serializeInternal(StringBuilder sb, TreeNode root)
+        {
+            if (root == null) return sb.Append("#").Append(",");
+            sb.Append(root.val).Append(",");
+            serializeInternal(sb, root.left);
+            serializeInternal(sb, root.right);
+            return sb;
+        }
+
         public TreeNode deserialize(string data)
         {
-            if (string.IsNullOrEmpty(data))
-                return null;
-
-            var arr = data.Split(',').Select(x => x == string.Empty ? 1001 : int.Parse(x)).ToList();
-            int i = 0;
-            var root = new TreeNode(arr[i]);
-            List<TreeNode> list = new List<TreeNode>() { root };
-            i++;
-            while (i < arr.Count)
+            if (data.Length > 0)
+                data = data.Substring(0, data.Length - 1);
+            var arr = data.Split(',');
+            var queue = new Queue<string>();
+            foreach(var i in arr)
             {
-                List<TreeNode> next = new List<TreeNode>();
-                foreach (var node in list)
-                {
-                    if (node == null)
-                    {
-                        i += 2;
-                        next.Add(null);
-                        next.Add(null);
-                    }
-                    else
-                    {
-                        if (arr[i] > 1000)
-                        {
-                            node.left = null;
-                            //too many nodes in list, will out of memory
-                            //next.Add(null);
-                            i++;
-                        }
-                        else
-                        {
-                            node.left = new TreeNode(arr[i]);
-                            next.Add(node.left);
-                            i++;
-                        }
-                        if (arr[i] > 1000)
-                        {
-                            node.right = null;
-                            //too many nodes in list, will out of memory
-                            //next.Add(null);
-                            i++;
-                        }
-                        else
-                        {
-                            node.right = new TreeNode(arr[i]);
-                            next.Add(node.right);
-                            i++;
-                        }
-                    }
-                }
-                list = next;
+                queue.Enqueue(i);
             }
+            return deserialInternal(queue);
+        }
+
+        // Use queue to simplify position move
+        private TreeNode deserialInternal(Queue<string> q)
+        {
+            if (q.Count == 0) return null;
+            var val = q.Dequeue();
+            if (val=="#"|| val == "-" || val=="null"||val =="") return null;
+            TreeNode root = new TreeNode(int.Parse(val));
+            root.left = deserialInternal(q);
+            root.right = deserialInternal(q);
             return root;
         }
     }
