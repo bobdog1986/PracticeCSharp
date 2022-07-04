@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
+using System.Text;
 
 namespace LeetCodeAlgo
 {
@@ -410,6 +412,96 @@ namespace LeetCodeAlgo
             }
 
             return dp[nums.Length - 1];
+        }
+
+
+        ///214. Shortest Palindrome, #KMP
+        //You can convert s to a palindrome by adding characters in front of it.
+        //Return the shortest palindrome you can find by performing this transformation.
+        public string ShortestPalindrome_My(string s)
+        {
+            StringBuilder sb = new StringBuilder();
+            for(int i = s.Length-1; i >=0 ; i--)
+            {
+                if (PalindromePairs_IsValid(s, 0, i)) break;
+                else sb.Append(s[i]);
+            }
+            return sb.ToString()+ s;
+        }
+
+        public string ShortestPalindrome(string s)
+        {
+            //#Knuth–Morris–Pratt algorithm, https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm
+            //https://leetcode.com/problems/shortest-palindrome/discuss/60113/Clean-KMP-solution-with-super-detailed-explanation
+            string temp = s + "#" + new string(s.Reverse().ToArray());
+            int[] table = getKMPTable(temp);
+            //get the maximum palin part in s starts from 0
+            return new string(s.Substring(table[table.Length - 1]).Reverse().ToArray()) + s;
+        }
+
+        private int[] getKMPTable(string s)
+        {
+            int[] table = new int[s.Length];
+            int index = 0;//pointer that points to matched char in prefix part
+            //skip index 0, we will not match a string with itself
+            for (int i = 1; i < s.Length;i++)
+            {
+                if (s[index] == s[i])
+                {
+                    //we can extend match in prefix and postfix
+                    table[i] = table[i-1]+1;
+                    index++;
+                }
+                else
+                {
+                    //match failed, we try to match a shorter substring
+                    //by assigning index to table[i-1], we will shorten the match string length, and jump to the
+                    //prefix part that we used to match postfix ended at i - 1
+                    index = table[i - 1];
+                    while (index > 0 && s[index] != s[i])
+                    {
+                        //we will try to shorten the match string length until we revert to the beginning of match (index 1)
+                        index = table[index - 1];
+                    }
+                    //when we are here may either found a match char or we reach the boundary and still no luck
+                    //so we need check char match
+                    if (s[index] == s[i])
+                    {
+                        //if match, then extend one char
+                        index++;
+                    }
+                    table[i] = index;
+                }
+            }
+            return table;
+        }
+
+        private int[] getKMPTable2(string s)
+        {
+            int[] table = new int[s.Length];
+
+            int index = 0;
+            for (int i = 1; i < s.Length;)
+            {
+                if (s[index] == s[i])
+                {
+                    table[i] = ++index;
+                    i++;
+                }
+                else
+                {
+                    if (index > 0)
+                    {
+                        index = table[index - 1];
+                    }
+                    else
+                    {
+                        index = 0;
+                        i++;
+                    }
+                }
+            }
+            return table;
         }
 
         ///215. Kth Largest Element in an Array
