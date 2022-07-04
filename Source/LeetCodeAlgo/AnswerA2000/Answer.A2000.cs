@@ -117,6 +117,30 @@ namespace LeetCodeAlgo
             return operations.Sum(x => x.Contains("++") ? 1 : -1);
         }
 
+        ///2012. Sum of Beauty in the Array, #Prefix Sum
+        public int SumOfBeauties(int[] nums)
+        {
+            int n = nums.Length;
+            int[] prefixMax = new int[n];
+            int[] suffixMin = new int[n];
+            int max = int.MinValue;
+            int min = int.MaxValue;
+            for (int i = 0; i < n; i++)
+            {
+                max = Math.Max(max, nums[i]);
+                min = Math.Min(min, nums[n-1-i]);
+                prefixMax[i] = max;
+                suffixMin[n-1-i] = min;
+            }
+            int res = 0;
+            for(int i = 1; i < n - 1; i++)
+            {
+                if (nums[i] > prefixMax[i - 1] && nums[i] < suffixMin[i + 1]) res += 2;
+                else if (nums[i] > nums[i - 1] && nums[i] < nums[i + 1]) res += 1;
+            }
+            return res;
+        }
+
         ///2016. Maximum Difference Between Increasing Elements
         // find the maximum of ( nums[j] - nums[i]), such that 0 <= i < j < n and nums[i] < nums[j].
         // Return the maximum difference.If no such i and j exists, return -1
