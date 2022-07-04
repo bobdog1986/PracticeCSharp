@@ -1302,7 +1302,7 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///135. Candy ,#DP, #DFS
+        ///135. Candy ,#DP
         ///There are n children standing in a line. Each child is assigned a rating value given in the integer array ratings.
         ///Each child must have at least one candy, Children with a higher rating get more candies than their neighbors.
         ///Return the minimum number of candies you need to have to distribute the candies to the children.
@@ -1310,35 +1310,33 @@ namespace LeetCodeAlgo
         {
             int n = ratings.Length;
             int[] dp = new int[n];
-            List<int> list = new List<int>();
-
+            Queue<int> queue = new Queue<int>();
             for (int i = 0; i < n; i++)
             {
                 if ((i == 0 || ratings[i] <= ratings[i - 1])
                     && (i == n - 1 || ratings[i] <= ratings[i + 1]))
                 {
-                    list.Add(i);
+                    queue.Enqueue(i);
                     dp[i] = 1;
                 }
             }
-
-            while (list.Count > 0)
+            while (queue.Count > 0)
             {
-                var next = new List<int>();
-                foreach (var i in list)
+                int size = queue.Count;
+                while (size-- > 0)
                 {
+                    var i = queue.Dequeue();
                     if (i > 0 && ratings[i - 1] > ratings[i])
                     {
                         dp[i - 1] = Math.Max(dp[i - 1], dp[i] + 1);
-                        next.Add(i - 1);
+                        queue.Enqueue(i - 1);
                     }
                     if (i < n - 1 && ratings[i + 1] > ratings[i])
                     {
                         dp[i + 1] = Math.Max(dp[i + 1], dp[i] + 1);
-                        next.Add(i + 1);
+                        queue.Enqueue(i + 1);
                     }
                 }
-                list = next;
             }
             return dp.Sum();
         }

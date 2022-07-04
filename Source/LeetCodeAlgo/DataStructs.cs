@@ -159,6 +159,7 @@ namespace LeetCodeAlgo
 
         public int sum = 0;
         public int val = 0;
+        public int index = -1;
         public Dictionary<int, TrieItem> set = new Dictionary<int, TrieItem>();
 
         public Dictionary<string, TrieItem> map = new Dictionary<string, TrieItem>();

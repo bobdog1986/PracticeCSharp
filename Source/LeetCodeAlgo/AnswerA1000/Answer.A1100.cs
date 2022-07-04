@@ -229,6 +229,34 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///1131. Maximum of Absolute Value Expression
+        //return the maximum value of: |arr1[i] - arr1[j]| + |arr2[i] - arr2[j]| + |i - j|
+        public int MaxAbsValExpr(int[] arr1, int[] arr2)
+        {
+            int n = arr1.Length;
+            int max1 = int.MinValue, max2 = int.MinValue, max3 = int.MinValue, max4 = int.MinValue;
+            int min1 = int.MaxValue, min2 = int.MaxValue, min3 = int.MaxValue, min4 = int.MaxValue;
+            for (int i = 0; i < n; i++)
+            {
+                // 1st scenario arr1[i] + arr2[i] + i
+                max1 = Math.Max(arr1[i] + arr2[i] + i, max1);
+                min1 = Math.Min(arr1[i] + arr2[i] + i, min1);
+                // 2nd scenario arr1[i] + arr2[i] - i
+                max2 = Math.Max(arr1[i] + arr2[i] - i, max2);
+                min2 = Math.Min(arr1[i] + arr2[i] - i, min2);
+                // 3rd scenario arr1[i] - arr2[i] - i
+                max3 = Math.Max(arr1[i] - arr2[i] - i, max3);
+                min3 = Math.Min(arr1[i] - arr2[i] - i, min3);
+                // 4th scenario arr1[i] - arr2[i] + i
+                max4 = Math.Max(arr1[i] - arr2[i] + i, max4);
+                min4 = Math.Min(arr1[i] - arr2[i] + i, min4);
+            }
+            int diff1 = max1 - min1;
+            int diff2 = max2 - min2;
+            int diff3 = max3 - min3;
+            int diff4 = max4 - min4;
+            return Math.Max(Math.Max(diff1, diff2), Math.Max(diff3, diff4));
+        }
         /// 1137. N-th Tribonacci Number
         ///T0 = 0, T1 = 1, T2 = 1, and Tn+3 = Tn + Tn+1 + Tn+2 for n >= 0.
         public int Tribonacci(int n)
