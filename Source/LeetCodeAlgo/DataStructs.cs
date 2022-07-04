@@ -159,11 +159,13 @@ namespace LeetCodeAlgo
 
         public int sum = 0;
         public int val = 0;
-        public int index = -1;
+        public int index = -1;//index of whole word matched, default is -1
         public Dictionary<int, TrieItem> set = new Dictionary<int, TrieItem>();
 
         public Dictionary<string, TrieItem> map = new Dictionary<string, TrieItem>();
         public List<string> list = new List<string>();
+
+        public List<int> nums = new List<int>();
     }
 
 

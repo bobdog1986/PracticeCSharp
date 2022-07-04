@@ -17,14 +17,17 @@ namespace LeetCodeAlgo
         {
             Answer.printListNode(result);
         }
+
         public static void log(long result)
         {
             Console.WriteLine($"Result = {result}");
         }
+
         public static void log(double result)
         {
             Console.WriteLine($"Result = {result}");
         }
+
         public static void log(int result)
         {
             Console.WriteLine($"Result = {result}");
@@ -34,6 +37,7 @@ namespace LeetCodeAlgo
         {
             Console.WriteLine($"Result = {result}");
         }
+
         public static void log(string result)
         {
             var res = string.IsNullOrEmpty(result) ? "String.Empty" : result;
@@ -42,78 +46,85 @@ namespace LeetCodeAlgo
 
         public static void log(IEnumerable<long> result)
         {
-            if(result.Count()==0) Console.WriteLine("!!!Result count = 0");
-            else  Console.WriteLine(string.Join(",", result));
+            Console.WriteLine($"!!!Result count = {result.Count()}");
+            if (result.Count() > 0)
+                Console.WriteLine(string.Join(",", result));
         }
 
         public static void log(IEnumerable<int> result)
         {
-            if (result.Count() == 0) Console.WriteLine("!!!Result count = 0");
-            else Console.WriteLine(string.Join(",", result));
+            Console.WriteLine($"!!!Result count = {result.Count()}");
+
+            if (result.Count() > 0)
+                Console.WriteLine(string.Join(",", result));
         }
 
         public static void log(IEnumerable<double> result)
         {
-            if (result.Count() == 0) Console.WriteLine("!!!Result count = 0");
-            else Console.WriteLine(string.Join(",", result));
+            Console.WriteLine($"!!!Result count = {result.Count()}");
+            if (result.Count() > 0)
+                Console.WriteLine(string.Join(",", result));
         }
 
         public static void log(IEnumerable<string> result)
         {
-            if (result.Count() == 0) Console.WriteLine("!!!Result count = 0");
-            else Console.WriteLine(string.Join(",", result));
+            Console.WriteLine($"!!!Result count = {result.Count()}");
+            if (result.Count() > 0)
+                Console.WriteLine(string.Join(",", result));
         }
+
         public static void log(int[][] result)
         {
+            Console.WriteLine($"!!!Result count = {result.Count()}");
             if (result.Count() > 0)
             {
                 Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
             }
-            else Console.WriteLine("!!!Result count = 0");
         }
 
         public static void log(IList<int[]> result)
         {
+            Console.WriteLine($"!!!Result count = {result.Count()}");
             if (result.Count() > 0)
             {
                 Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
             }
-            else Console.WriteLine("!!!Result count = 0");
         }
+
         public static void log(IList<IList<int>> result)
         {
+            Console.WriteLine($"!!!Result count = {result.Count()}");
             if (result.Count() > 0)
             {
                 Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
             }
-            else Console.WriteLine("!!!Result count = 0");
         }
 
         public static void log(IList<IList<string>> result)
         {
+            Console.WriteLine($"!!!Result count = {result.Count()}");
             if (result.Count() > 0)
             {
                 Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
             }
-            else Console.WriteLine("!!!Result count = 0");
         }
 
         public static void log(string[][] result)
         {
+            Console.WriteLine($"!!!Result count = {result.Count()}");
             if (result.Count() > 0)
             {
                 Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
             }
-            else Console.WriteLine("!!!Result count = 0");
         }
 
         public static void log(char[][] result)
         {
+            Console.WriteLine($"!!!Result count = {result.Count()}");
             if (result.Count() > 0)
             {
                 Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
             }
-            else Console.WriteLine("!!!Result count = 0");
         }
     }
 }
