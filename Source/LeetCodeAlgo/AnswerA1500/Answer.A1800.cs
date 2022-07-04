@@ -347,6 +347,25 @@ namespace LeetCodeAlgo
             return list[0];
         }
 
+        ///1824. Minimum Sideway Jumps, #DP
+        public int MinSideJumps(int[] obstacles)
+        {
+            int[] dp = new int[] { 1, 0, 1 };
+            foreach (var a in obstacles)
+            {
+                if (a > 0)
+                    dp[a-1] = 1000000;
+                for (int i = 0; i < 3; ++i)
+                {
+                    if (a-1 != i)
+                    {
+                        dp[i] = Math.Min(dp[i], Math.Min(dp[(i+1)% dp.Length], dp[(i+2)% dp.Length]) + 1);
+                    }
+                }
+            }
+            return dp.Min();
+        }
+
         ///1827. Minimum Operations to Make the Array Increasing
         public int MinOperations(int[] nums)
         {
