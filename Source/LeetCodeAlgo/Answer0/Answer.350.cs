@@ -14,9 +14,9 @@ namespace LeetCodeAlgo
         public int[] Intersect(int[] nums1, int[] nums2)
         {
             Dictionary<int, int> dict1 = new Dictionary<int, int>();
-            foreach(var n in nums1)
+            foreach (var n in nums1)
             {
-                if(dict1.ContainsKey(n))
+                if (dict1.ContainsKey(n))
                     dict1[n]++;
                 else
                     dict1.Add(n, 1);
@@ -29,20 +29,20 @@ namespace LeetCodeAlgo
                 else
                     dict2.Add(n, 1);
             }
-            var res=new List<int>();
-            foreach(var key in dict1.Keys)
+            var res = new List<int>();
+            foreach (var key in dict1.Keys)
             {
                 if (!dict2.ContainsKey(key))
                     continue;
                 int count = Math.Min(dict1[key], dict2[key]);
-                while (count-->0)
+                while (count-- > 0)
                     res.Add(key);
             }
             return res.ToArray();
         }
+
         public int[] Intersect_350_TwoPointers(int[] nums1, int[] nums2)
         {
-
             var ans = new List<int>();
             //O(n)= mlogm+nlogn+(m+n)
             Array.Sort(nums1);
@@ -83,19 +83,17 @@ namespace LeetCodeAlgo
 
             int[] dp = new int[envelopes.Length];
             int len = 0;
-            foreach(var envelope in envelopes)
+            foreach (var envelope in envelopes)
             {
                 int index = Array.BinarySearch(dp, 0, len, envelope[1]);
-                if(index< 0)
+                if (index < 0)
                     index = -(index + 1);
                 dp[index] = envelope[1];
-                if(index == len)
+                if (index == len)
                     len++;
             }
             return len;
         }
-
-
 
         ///357. Count Numbers with Unique Digits
         ///return the count of all numbers with unique digits, x, where 0 <= x < 10^n.
@@ -119,7 +117,6 @@ namespace LeetCodeAlgo
             }
             return res;
         }
-
 
         /// 365. Water and Jug Problem
         ///If targetCapacity liters of water are measurable, you must have targetCapacity
@@ -150,6 +147,7 @@ namespace LeetCodeAlgo
             }
             return a;
         }
+
         /// 367. Valid Perfect Square, #Binary Search
         /// Given a positive integer num, write a function which returns True if num is a perfect square else False.
         public bool IsPerfectSquare(int num)
@@ -176,15 +174,15 @@ namespace LeetCodeAlgo
             int bit = 1;
             bool carry = false;
             //check every bit 1 or 0
-            for(int i=0; i < 32; i++)
+            for (int i = 0; i < 32; i++)
             {
-                bool left = (a & bit) !=0;
+                bool left = (a & bit) != 0;
                 bool right = (b & bit) != 0;
                 int count = 0;
                 if (left) count++;
-                if(right) count++;
+                if (right) count++;
                 if (carry) count++;
-                carry = count >=2;
+                carry = count >= 2;
                 bool add = (count % 2) == 1;
                 if (add)
                 {
@@ -205,11 +203,11 @@ namespace LeetCodeAlgo
             int len2 = nums2.Length;
             //min heap, store indexes in nums1 and nums2, sort by nums1[i]+nums2[j]
             var priorityQueue = new PriorityQueue<int[], int>();
-            for (int i = 0; i <Math.Min(len1,k); i++)
+            for (int i = 0; i < Math.Min(len1, k); i++)
             {
                 //enqueue atmost Math.Min(len1,k) count of [i,0] combines, auto sorted by nums1[i] + nums2[0]
                 //{nums1[0],nums2[0]} always the first element
-                priorityQueue.Enqueue(new int[] {i ,0 }, nums1[i] + nums2[0]);
+                priorityQueue.Enqueue(new int[] { i, 0 }, nums1[i] + nums2[0]);
             }
             IList<IList<int>> ans = new List<IList<int>>();
             while (k-- > 0 && priorityQueue.Count > 0)
@@ -227,6 +225,7 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
         /// 374. Guess Number Higher or Lower, see GuessGame
 
         ///375. Guess Number Higher or Lower II
@@ -251,7 +250,7 @@ namespace LeetCodeAlgo
             int max1 = 1;
             int max2 = 1;
 
-            for(int i=1; i<nums.Length; i++)
+            for (int i = 1; i < nums.Length; i++)
             {
                 if ((posSign == 1 && nums[i] < pos)
                     || (posSign == -1 && nums[i] > pos))
@@ -269,7 +268,7 @@ namespace LeetCodeAlgo
                 }
                 neg = nums[i];
             }
-            return Math.Max(max1,max2);
+            return Math.Max(max1, max2);
         }
 
         ///377. Combination Sum IV -Permutation , #DP
@@ -277,9 +276,9 @@ namespace LeetCodeAlgo
         ///return the number of possible combinations that add up to target.
         public int CombinationSum4(int[] nums, int target)
         {
-            int[] dp=new int[target+1];
+            int[] dp = new int[target + 1];
             dp[0] = 1;
-            for(int sum = 0; sum <= target; sum++)
+            for (int sum = 0; sum <= target; sum++)
             {
                 foreach (var n in nums)
                 {
@@ -294,18 +293,18 @@ namespace LeetCodeAlgo
         ///return the kth smallest element in the matrix. O(n^2)
         public int KthSmallest(int[][] matrix, int k)
         {
-            PriorityQueue<int[],int> priorityQueue = new PriorityQueue<int[], int>();
-            for(int i = 0; i < matrix.Length; i++)
+            PriorityQueue<int[], int> priorityQueue = new PriorityQueue<int[], int>();
+            for (int i = 0; i < matrix.Length; i++)
             {
                 priorityQueue.Enqueue(new int[] { i, 0 }, matrix[i][0]);
             }
             int count = 0;
-            while(count++ < k)
+            while (count++ < k)
             {
                 var i = priorityQueue.Dequeue();
-                if (count == k ) return matrix[i[0]][i[1]];
-                if(i[1] != matrix[0].Length-1)
-                    priorityQueue.Enqueue(new int[] { i[0], i[1]+1 }, matrix[i[0]][i[1] + 1]);
+                if (count == k) return matrix[i[0]][i[1]];
+                if (i[1] != matrix[0].Length - 1)
+                    priorityQueue.Enqueue(new int[] { i[0], i[1] + 1 }, matrix[i[0]][i[1] + 1]);
             }
             return 0;
         }
@@ -320,7 +319,7 @@ namespace LeetCodeAlgo
             int[] arr = new int[26];
             foreach (var c in magazine)
                 arr[c - 'a']++;
-            foreach(var c in ransomNote)
+            foreach (var c in ransomNote)
                 if (arr[c - 'a']-- == 0) return false;
             return true;
         }
@@ -335,9 +334,9 @@ namespace LeetCodeAlgo
             for (int i = 0; i < s.Length; i++)
             {
                 if (dict.ContainsKey(s[i]))
-                    dict[s[i]]=-1;
+                    dict[s[i]] = -1;
                 else
-                    dict.Add(s[i],i);
+                    dict.Add(s[i], i);
             }
             foreach (var key in dict.Keys)
             {
@@ -358,7 +357,7 @@ namespace LeetCodeAlgo
                 arr[c - 'a']--;
             foreach (var c in t)
                 arr[c - 'a']++;
-            for(int i=0; i<arr.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
                 if (arr[i] != 0)
                     return (char)(i + 'a');
@@ -379,11 +378,11 @@ namespace LeetCodeAlgo
             int tLen = t.Length;
             if (sLen > tLen) return false;
             int j = 0;
-            for (int i = 0; i < tLen && j<sLen; i++)
+            for (int i = 0; i < tLen && j < sLen; i++)
             {
                 if (s[j] == t[i]) j++;
             }
-            return j==sLen;
+            return j == sLen;
         }
 
         ///394. Decode String
@@ -402,21 +401,21 @@ namespace LeetCodeAlgo
                 if (s[i] == '[')
                 {
                     count++;
-                    if(endOfDigit==-1)endOfDigit = i-1;
+                    if (endOfDigit == -1) endOfDigit = i - 1;
                 }
                 if (s[i] == ']')
                 {
                     count--;
                     if (count == 0)
                     {
-                        int k = int.Parse(s.Substring(startOfDigit, endOfDigit-startOfDigit+1));
+                        int k = int.Parse(s.Substring(startOfDigit, endOfDigit - startOfDigit + 1));
                         string curr = "";
                         string sub = DecodeString(s.Substring(endOfDigit + 2, i - (endOfDigit + 2)));
                         while (k-- > 0)
                         {
                             curr += sub;
                         }
-                        return s.Substring(0, startOfDigit)+ curr + DecodeString(s.Substring(i + 1));
+                        return s.Substring(0, startOfDigit) + curr + DecodeString(s.Substring(i + 1));
                     }
                 }
             }
@@ -427,7 +426,7 @@ namespace LeetCodeAlgo
         {
             var curr = "";
             Stack<int> countStack = new Stack<int>();
-            Stack<String> strStack = new Stack<string>();
+            Stack<string> strStack = new Stack<string>();
             int idx = 0;
             while (idx < s.Length)
             {
@@ -472,20 +471,20 @@ namespace LeetCodeAlgo
             if (s.Length < k) return 0;
 
             int res = 0;
-            Dictionary<char,int> dict=new Dictionary<char, int>();
-            foreach(var c in s)
+            Dictionary<char, int> dict = new Dictionary<char, int>();
+            foreach (var c in s)
             {
                 if (dict.ContainsKey(c)) dict[c]++;
-                else dict.Add(c,1);
+                else dict.Add(c, 1);
             }
 
-            bool match = dict.Keys.Where(x=>dict[x]<k).Count()==0;
+            bool match = dict.Keys.Where(x => dict[x] < k).Count() == 0;
             if (match)
                 return s.Length;
 
             int left = 0;
             int right = 0;
-            for(; right < s.Length; right++)
+            for (; right < s.Length; right++)
             {
                 if (dict[s[right]] < k)
                 {
@@ -500,6 +499,45 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///397. Integer Replacement, #Bit
+        //If n is even, replace n with n / 2. If n is odd, replace n with either n + 1 or n - 1.
+        //Return the minimum number of operations needed for n to become 1, 1 <= n <= 231 - 1
+        public int IntegerReplacement_Recursion(int n)
+        {
+            if (n == 1) return 0;
+            if (n == 2) return 1;
+            if (n == int.MaxValue) return 32;
+            if (n % 2 == 0)
+                return 1 + IntegerReplacement_Recursion(n / 2);
+            else
+                return 1 + Math.Min(IntegerReplacement_Recursion(n + 1), IntegerReplacement_Recursion(n - 1));
+        }
+
+        public int IntegerReplacement(int n)
+        {
+            //https://leetcode.com/problems/integer-replacement/discuss/87920/A-couple-of-Java-solutions-with-explanations
+            //If n=3 or n-1 has less 1's than n+1, decrement n.
+            int res = 0;
+            long a = n;
+            while (a != 1)
+            {
+                if ((a & 1) == 0)
+                {
+                    a >>= 1;
+                }
+                else if (a == 3 || ((a >> 1) & 1) == 0)
+                {
+                    --a;
+                }
+                else
+                {
+                    ++a;
+                }
+                ++res;
+            }
+            return res;
+        }
+
         ///398. Random Pick Index, see RandomPickIndex
 
         /// 399. Evaluate Division, #Graph, #DFS
@@ -509,18 +547,18 @@ namespace LeetCodeAlgo
         ///Return the answers to all queries.If a single answer cannot be determined, return -1.0.
         public double[] CalcEquation(IList<IList<string>> equations, double[] values, IList<IList<string>> queries)
         {
-            double[] res= new double[queries.Count];
-            Dictionary<string,Dictionary<string,double>> graph=new Dictionary<string, Dictionary<string, double>>();
-            for(int i=0; i< equations.Count; i++)
+            double[] res = new double[queries.Count];
+            Dictionary<string, Dictionary<string, double>> graph = new Dictionary<string, Dictionary<string, double>>();
+            for (int i = 0; i < equations.Count; i++)
             {
                 var curr = equations[i];
                 if (!graph.ContainsKey(curr[0])) graph.Add(curr[0], new Dictionary<string, double>());
-                if(!graph.ContainsKey(curr[1])) graph.Add(curr[1], new Dictionary<string,double>());
+                if (!graph.ContainsKey(curr[1])) graph.Add(curr[1], new Dictionary<string, double>());
                 graph[curr[0]].Add(curr[1], values[i]);
-                graph[curr[1]].Add(curr[0], 1/values[i]);
+                graph[curr[1]].Add(curr[0], 1 / values[i]);
             }
 
-            for(int i=0; i< queries.Count; i++)
+            for (int i = 0; i < queries.Count; i++)
             {
                 bool find = false;
                 double val = -1;
@@ -530,7 +568,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        private void CalcEquation_DFS(Dictionary<string, Dictionary<string, double>> graph, HashSet<string> visit, string key, string target, double seed, ref bool find,ref double val)
+        private void CalcEquation_DFS(Dictionary<string, Dictionary<string, double>> graph, HashSet<string> visit, string key, string target, double seed, ref bool find, ref double val)
         {
             if (find) return;
             if (visit.Contains(key)) return;
@@ -538,11 +576,11 @@ namespace LeetCodeAlgo
             if (!graph.ContainsKey(key)) return;
             if (graph[key].ContainsKey(target))
             {
-                find= true;
-                val = seed/graph[key][target];
+                find = true;
+                val = seed / graph[key][target];
                 return;
             }
-            foreach(var subKey in graph[key].Keys)
+            foreach (var subKey in graph[key].Keys)
             {
                 CalcEquation_DFS(graph, visit, subKey, target, seed / graph[key][subKey], ref find, ref val);
             }
