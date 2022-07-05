@@ -500,6 +500,8 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///398. Random Pick Index, see RandomPickIndex
+
         /// 399. Evaluate Division, #Graph, #DFS
         ///where equations[i] = [Ai, Bi] and values[i] represent the equation Ai / Bi = values[i].
         ///Each Ai or Bi is a string that represents a single variable.

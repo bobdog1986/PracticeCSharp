@@ -1770,10 +1770,56 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        /// 148. Sort List
+        /// 148. Sort List， #Merge Sort, #Two Pointers
         ///Given the head of a linked list, return the list after sorting it in ascending order.
         ///O(n logn) time and O(1) memory
         public ListNode SortList(ListNode head)
+        {
+            //MergeSort, divide and conquer
+            if (head == null || head.next == null)
+                return head;
+            // step 1. cut the list to two halves
+            ListNode prev = null, slow = head, fast = head;
+            while (fast != null && fast.next != null)
+            {
+                prev = slow;
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            prev.next = null;
+            // step 2. sort each half
+            ListNode l1 = SortList(head);
+            ListNode l2 = SortList(slow);
+
+            // step 3. merge l1 and l2
+            return SortList_Merge(l1, l2);
+        }
+
+        private ListNode SortList_Merge(ListNode l1, ListNode l2)
+        {
+            ListNode root = new ListNode(0), prev = root;
+            while (l1 != null && l2 != null)
+            {
+                if (l1.val < l2.val)
+                {
+                    prev.next = l1;
+                    l1 = l1.next;
+                }
+                else
+                {
+                    prev.next = l2;
+                    l2 = l2.next;
+                }
+                prev = prev.next;
+            }
+            if (l1 != null)
+                prev.next = l1;
+            if (l2 != null)
+                prev.next = l2;
+            return root.next;
+        }
+
+        public ListNode SortList_My(ListNode head)
         {
             if (head == null) return null;
             ListNode ans = null;
