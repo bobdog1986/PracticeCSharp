@@ -150,29 +150,11 @@ namespace LeetCodeAlgo
         }
     }
 
-    //Common Trie for almost all scenarios
-    public class TrieItem
-    {
-        public Dictionary<char, TrieItem> dict = new Dictionary<char, TrieItem>();
-        public string word = string.Empty;
-        public bool exist = false;
-
-        public int sum = 0;
-        public int val = 0;
-        public int index = -1;//index of whole word matched, default is -1
-        public Dictionary<int, TrieItem> set = new Dictionary<int, TrieItem>();
-
-        public Dictionary<string, TrieItem> map = new Dictionary<string, TrieItem>();
-        public List<string> list = new List<string>();
-
-        public List<int> nums = new List<int>();
-    }
-
-
     public class Employee
     {
         public int id;
         public int importance;
         public IList<int> subordinates;
     }
+
 }

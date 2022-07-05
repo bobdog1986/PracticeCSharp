@@ -326,6 +326,55 @@ namespace LeetCodeAlgo
 
         ///384. Shuffle an Array, see Solution_384_Shuffle
 
+        ///386. Lexicographical Numbers， #Trie
+        //Given an integer n, return all the numbers in the range [1, n] sorted in lexicographical order.
+        //You must write an algorithm that runs in O(n) time and uses O(1) extra space.
+        public IList<int> LexicalOrder(int n)
+        {
+            var res = new List<int>();
+            var root = new TrieItem();
+            for(int i = 1; i <= n; i++)
+            {
+                var curr = root;
+                var str = i.ToString();
+                foreach(var c in str)
+                {
+                    if (curr.arr10 == null)
+                        curr.arr10 = new TrieItem[10];
+                    if (curr.arr10[c - '0'] == null)
+                        curr.arr10[c - '0'] = new TrieItem();
+                    curr = curr.arr10[c - '0'];
+                }
+                curr.val = i;
+            }
+            LexicalOrder(root, res);
+            return res;
+        }
+
+        private void LexicalOrder(TrieItem root, List<int> res)
+        {
+            if (root == null) return;
+            if (root.val != -1) res.Add(root.val);
+            if (root.arr10 != null)
+            {
+                foreach(var i in root.arr10)
+                {
+                    if (i != null)
+                        LexicalOrder(i, res);
+                }
+            }
+        }
+
+        public IList<int> LexicalOrder_PQ(int n)
+        {
+            PriorityQueue<int, string> pq = new PriorityQueue<int, string>();
+            for (int i = 1; i <= n; i++)
+                pq.Enqueue(i, i.ToString());
+            var res = new List<int>();
+            while (pq.Count > 0)
+                res.Add(pq.Dequeue());
+            return res;
+        }
         ///387. First Unique Character in a String
         ///find the first non-repeating character in it and return its index. If it does not exist, return -1.
         public int FirstUniqChar(string s)

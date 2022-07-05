@@ -1422,7 +1422,7 @@ namespace LeetCodeAlgo
             return pseudoHead.next;
         }
 
-        /// 139. Word Break, #DP, #Backtracking
+        /// 139. Word Break, #DP, #Backtracking, #Trie
         ///return true if s can be segmented into a space-separated sequence of one or more dictionary words.
         ///Note that the same word in the dictionary may be reused multiple times in the segmentation.
         public bool WordBreak139_DP(string s, IList<string> wordDict)
@@ -1445,6 +1445,45 @@ namespace LeetCodeAlgo
                         }
                     }
                 }
+            }
+            return false;
+        }
+
+        public bool WordBreak139_Trie(string s, IList<string> wordDict)
+        {
+            var root = new TrieItem();
+            foreach(var word in wordDict)
+            {
+                var curr = root;
+                foreach(var c in word)
+                {
+                    if (!curr.dict.ContainsKey(c)) curr.dict.Add(c, new TrieItem());
+                    curr = curr.dict[c];
+                }
+                curr.exist = true;
+            }
+            var visit= new HashSet<int>();
+            return WordBreak139_Trie(s, 0, visit, root);
+        }
+
+        private bool WordBreak139_Trie(string s,int index,HashSet<int> visit, TrieItem root)
+        {
+            if (visit.Contains(index)) return false;
+            visit.Add(index);
+            var curr = root;
+            List<int> list = new List<int>();
+            int i = index;
+            for (; i < s.Length; i++)
+            {
+                if (!curr.dict.ContainsKey(s[i])) break;
+                curr = curr.dict[s[i]];
+                if (curr.exist)
+                    list.Add(i);
+            }
+            if (i == s.Length && curr.exist) return true;
+            for(int j=list.Count-1;j>=0;j--)
+            {
+                if (WordBreak139_Trie(s, list[j] + 1, visit, root)) return true;
             }
             return false;
         }
@@ -1474,7 +1513,7 @@ namespace LeetCodeAlgo
             }
         }
 
-        ///140. Word Break II, #Backtracking, #DP
+        ///140. Word Break II, #Backtracking, #DP, #Trie
         ///Given a string s and a dictionary of strings wordDict,
         ///add spaces in s to construct a sentence where each word is a valid dictionary word.
         ///Return all such possible sentences in any order.
@@ -1531,29 +1570,65 @@ namespace LeetCodeAlgo
             }
         }
 
-        public IList<string> WordBreak140_Backtracking(string s, IList<string> wordDict)
+        public IList<string> WordBreak140_Trie(string s, IList<string> wordDict)
         {
-            var ans = new Dictionary<string, int>();
-            var list = new List<string>();
-            WordBreak140_Backtracking(s, wordDict, list, ans);
-            return ans.Keys.ToList();
+            var res=new List<string>();
+            var root = new TrieItem();
+            foreach (var word in wordDict)
+            {
+                var curr = root;
+                foreach (var c in word)
+                {
+                    if (!curr.dict.ContainsKey(c)) curr.dict.Add(c, new TrieItem());
+                    curr = curr.dict[c];
+                }
+                curr.word = word;
+            }
+            WordBreak140_Trie(s, 0, "", root, res);
+            return res;
         }
 
-        public void WordBreak140_Backtracking(string s, IList<string> wordDict, IList<string> list, IDictionary<string, int> ans)
+        private void WordBreak140_Trie(string s, int index, string currStr,TrieItem root, IList<string> res)
+        {
+            if (index == s.Length)
+            {
+                res.Add(currStr.Trim());
+            }
+            else
+            {
+                var curr = root;
+                for(int i = index; i < s.Length; i++)
+                {
+                    if (!curr.dict.ContainsKey(s[i])) return;
+                    curr=curr.dict[s[i]];
+                    if (!string.IsNullOrEmpty(curr.word))
+                        WordBreak140_Trie(s, i + 1, currStr +" "+ curr.word, root, res);
+                }
+            }
+        }
+
+        public IList<string> WordBreak140_Backtracking(string s, IList<string> wordDict)
+        {
+            HashSet<string> set = new HashSet<string>();
+            WordBreak140_Backtracking(s, wordDict, new List<string>(), set);
+            return set.ToList();
+        }
+
+        private void WordBreak140_Backtracking(string s, IList<string> wordDict, IList<string> list, HashSet<string> set)
         {
             if (s.Length == 0)
             {
-                var str = string.Join(" ", list);
-                if (!ans.ContainsKey(str))
-                    ans.Add(str, 1);
-                return;
+                set.Add(string.Join(" ", list));
             }
-            foreach (var w in wordDict)
+            else
             {
-                if (s.StartsWith(w))
+                foreach (var w in wordDict)
                 {
-                    var next = new List<string>(list) { w };
-                    WordBreak140_Backtracking(s.Substring(w.Length), wordDict, next, ans);
+                    if (s.StartsWith(w))
+                    {
+                        var next = new List<string>(list) { w };
+                        WordBreak140_Backtracking(s.Substring(w.Length), wordDict, next, set);
+                    }
                 }
             }
         }

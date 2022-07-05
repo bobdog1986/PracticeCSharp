@@ -353,14 +353,14 @@ namespace LeetCodeAlgo
             return res.ToList();
         }
 
-        private void FindWords212_dfs(char[][] board, int i, int j, TrieItem p, int[][] dxy4, HashSet<string> res)
+        private void FindWords212_dfs(char[][] board, int i, int j, TrieItem curr, int[][] dxy4, HashSet<string> res)
         {
             char c = board[i][j];
             //already used or cannot match
-            if (c == '#' || !p.dict.ContainsKey(c)) return;
-            p = p.dict[c];
-            if (!string.IsNullOrEmpty(p.word))
-                res.Add(p.word);// found one
+            if (c == '#' || !curr.dict.ContainsKey(c)) return;
+            curr = curr.dict[c];
+            if (!string.IsNullOrEmpty(curr.word))
+                res.Add(curr.word);// found one
             board[i][j] = '#';//change to invalid char to avoid duplicate visit
             foreach(var d in dxy4)
             {
@@ -368,7 +368,7 @@ namespace LeetCodeAlgo
                 int col = j + d[1];
                 if(row>=0 && row<board.Length && col>=0 && col<board[0].Length)
                 {
-                    FindWords212_dfs(board, row, col, p, dxy4, res);
+                    FindWords212_dfs(board, row, col, curr, dxy4, res);
                 }
             }
             board[i][j] = c;//restore back

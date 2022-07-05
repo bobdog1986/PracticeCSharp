@@ -268,7 +268,7 @@ namespace LeetCodeAlgo
 
         }
 
-        // Decodes your encoded data to tree.
+        // Decodes your encoded data to tree. Leetcode origin data is level-traversal
         public TreeNode deserializeTree(string data, int invalid = int.MinValue)
         {
             if (string.IsNullOrEmpty(data))

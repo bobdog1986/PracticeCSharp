@@ -169,55 +169,5 @@ namespace LeetCodeAlgo
                                     new int[] { 1, 1 }, new int[] { -1,-1 }, new int[] { -1, 1 }, new int[] { 1, -1 }};
         }
 
-        public TrieItem initTrieRoot(IEnumerable<string> words)
-        {
-            var root = new TrieItem();
-            insertToTrie(root, words);
-            return root;
-        }
-
-        public void insertToTrie(TrieItem root, IEnumerable<string> words)
-        {
-            foreach(var word in words)
-            {
-                insertToTrie(root, word);
-            }
-        }
-
-        public void insertToTrie(TrieItem root, string word)
-        {
-            var curr = root;
-            foreach (var c in word)
-            {
-                if (!curr.dict.ContainsKey(c))
-                    curr.dict.Add(c, new TrieItem());
-                curr = curr.dict[c];
-            }
-            curr.word = word;
-            curr.exist = true;
-        }
-
-        public bool searchPrefixInTrie(TrieItem root, string word)
-        {
-            var curr = root;
-            foreach (var c in word)
-            {
-                if (!curr.dict.ContainsKey(c)) return false;
-                curr = curr.dict[c];
-            }
-            return true;
-        }
-
-        public bool searchWholeWordInTrie(TrieItem root, string word)
-        {
-            var curr = root;
-            foreach (var c in word)
-            {
-                if (!curr.dict.ContainsKey(c)) return false;
-                curr = curr.dict[c];
-            }
-            return curr.exist||word==curr.word;
-        }
-
     }
 }
