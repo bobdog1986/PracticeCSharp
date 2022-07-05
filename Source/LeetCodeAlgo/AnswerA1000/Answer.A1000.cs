@@ -231,6 +231,25 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///1015. Smallest Integer Divisible by K
+        //find the length of the smallest positive integer n such that n is divisible by k, and n only contains digit 1.
+        //Return the length of n.If there is no such n, return -1. eg, k=3, n=111, return length of (111)
+        //Note: n may not fit in a 64-bit signed integer. 1 <= k <= 10^5
+        public int SmallestRepunitDivByK(int k)
+        {
+            //only hold the reminder
+            //If N exist, N <= K, just do a brute force check.
+            //Also if K % 2 == 0, return -1, because 111....11 can't be even.
+            //Also if K % 5 == 0, return -1, because 111....11 can't end with 0 or 5.
+            if (k % 2 == 0 || k % 5 == 0) return -1;
+            int reminder = 0;
+            for (int N = 1; N <= k; ++N)
+            {
+                reminder = (reminder * 10 + 1) % k;
+                if (reminder == 0) return N;//N is length
+            }
+            return -1;
+        }
         ///1018. Binary Prefix Divisible By 5
         public IList<bool> PrefixesDivBy5(int[] nums)
         {

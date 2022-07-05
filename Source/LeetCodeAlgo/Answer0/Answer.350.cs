@@ -326,10 +326,62 @@ namespace LeetCodeAlgo
 
         ///384. Shuffle an Array, see Solution_384_Shuffle
 
-        ///386. Lexicographical Numbers， #Trie
+        ///386. Lexicographical Numbers， #Trie, #DFS
         //Given an integer n, return all the numbers in the range [1, n] sorted in lexicographical order.
         //You must write an algorithm that runs in O(n) time and uses O(1) extra space.
         public IList<int> LexicalOrder(int n)
+        {
+            var res = new List<int>(); ;
+            for (int i = 1; i < 10; ++i)
+            {
+                LexicalOrder_DFS(i, n, res);
+            }
+            return res;
+        }
+
+        private void LexicalOrder_DFS(int curr, int n, List<int> res)
+        {
+            if (curr > n) return;
+            else
+            {
+                res.Add(curr);
+                for (int i = 0; i < 10; ++i)
+                {
+                    if (10 * curr + i > n)
+                        return;
+                    LexicalOrder_DFS(10 * curr + i, n, res);
+                }
+            }
+        }
+
+        public IList<int> LexicalOrder_Iteration(int n)
+        {
+            var res = new List<int>(); ;
+            int curr = 1;
+            for (int i = 1; i <= n; i++)
+            {
+                res.Add(curr);
+                if (curr * 10 <= n)
+                {
+                    curr *= 10;
+                }
+                else if (curr % 10 != 9 && curr + 1 <= n)
+                {
+                    curr++;
+                }
+                else
+                {
+                    while ((curr / 10) % 10 == 9)
+                    {
+                        curr /= 10;
+                    }
+                    curr = curr / 10 + 1;
+                }
+            }
+            return res;
+        }
+
+        public IList<int> LexicalOrder_Trie(int n)
         {
             var res = new List<int>();
             var root = new TrieItem();
@@ -347,11 +399,11 @@ namespace LeetCodeAlgo
                 }
                 curr.val = i;
             }
-            LexicalOrder(root, res);
+            LexicalOrder_Trie(root, res);
             return res;
         }
 
-        private void LexicalOrder(TrieItem root, List<int> res)
+        private void LexicalOrder_Trie(TrieItem root, List<int> res)
         {
             if (root == null) return;
             if (root.val != -1) res.Add(root.val);
@@ -360,7 +412,7 @@ namespace LeetCodeAlgo
                 foreach(var i in root.arr10)
                 {
                     if (i != null)
-                        LexicalOrder(i, res);
+                        LexicalOrder_Trie(i, res);
                 }
             }
         }
