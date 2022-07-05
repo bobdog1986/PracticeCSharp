@@ -247,6 +247,13 @@ namespace LeetCodeAlgo
             return cardPoints.Sum() - min;
         }
 
+        ///1436. Destination City
+        public string DestCity(IList<IList<string>> paths)
+        {
+            var departures = paths.Select(x => x[0]).ToHashSet();
+            return paths.First(x => !departures.Contains(x[1]))[1];
+        }
+
         ///1437. Check If All 1's Are at Least Length K Places Away
         ///Given an binary array nums and an integer k, return true if all 1's are at least k places away from each other
         public bool KLengthApart(int[] nums, int k)

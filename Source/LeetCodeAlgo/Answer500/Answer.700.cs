@@ -262,6 +262,13 @@ namespace LeetCodeAlgo
             return curr.OrderBy(x => x).First();
         }
 
+        ///721. Accounts Merge, NOT PASS
+        public IList<IList<string>> AccountsMerge(IList<List<string>> accounts)
+        {
+            //https://leetcode.com/problems/accounts-merge/discuss/109157/JavaC%2B%2B-Union-Find
+            return null;
+        }
+
         ///724. Find Pivot Index
         // leftSum = rightSum , exclude current number
         public int PivotIndex(int[] nums)

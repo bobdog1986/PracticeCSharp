@@ -513,6 +513,17 @@ namespace LeetCodeAlgo
                 return 1 + Math.Min(IntegerReplacement_Recursion(n + 1), IntegerReplacement_Recursion(n - 1));
         }
 
+        public int IntegerReplacement_TailRecur(int res , int n)
+        {
+            if (n == 1) return res;
+            if (n == 2) return res+1;
+            if (n == int.MaxValue) return res+32;
+            if (n % 2 == 0)
+                return IntegerReplacement_TailRecur(res+1,n / 2);
+            else
+                return Math.Min(IntegerReplacement_TailRecur(res + 1, n + 1), IntegerReplacement_TailRecur(res + 1, n - 1));
+        }
+
         public int IntegerReplacement(int n)
         {
             //https://leetcode.com/problems/integer-replacement/discuss/87920/A-couple-of-Java-solutions-with-explanations
