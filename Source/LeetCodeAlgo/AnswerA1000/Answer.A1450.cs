@@ -289,6 +289,24 @@ namespace LeetCodeAlgo
             return list.Count >= k ? list[k - 1] : -1;
         }
 
+        ///1496. Path Crossing
+        public bool IsPathCrossing(string path)
+        {
+            int x=0, y = 0;
+            HashSet<int> set = new HashSet<int>();
+            set.Add(0);
+            foreach(var c in path)
+            {
+                if (c == 'N') y++;
+                else if (c == 'S') y--;
+                else if (c == 'E') x++;
+                else if (c == 'W') x--;
+                if (set.Contains(x * 10000 + y)) return true;
+                set.Add(x * 10000 + y);
+            }
+            return false;
+        }
+
         ///1498. Number of Subsequences That Satisfy the Given Sum Condition, #Two Pointers
         //Return the number of non-empty subsequences of nums such that minimum + maximum <= target. modulo 109 + 7
         public int NumSubseq(int[] nums, int target)

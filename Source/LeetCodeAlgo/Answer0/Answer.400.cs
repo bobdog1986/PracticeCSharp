@@ -677,9 +677,9 @@ namespace LeetCodeAlgo
                 for (int i = 30; i >= 0; i--)
                 {
                     int currBit = (num >> i) & 1;
-                    if (!curr.set.ContainsKey(currBit))
-                        curr.set.Add(currBit, new TrieItem());
-                    curr = curr.set[currBit];
+                    if (!curr.intDict.ContainsKey(currBit))
+                        curr.intDict.Add(currBit, new TrieItem());
+                    curr = curr.intDict[currBit];
                 }
             }
 
@@ -693,14 +693,14 @@ namespace LeetCodeAlgo
                     if (i != 30 &&  (long)currSum + (1 << (i + 1)) -1 <= max) break;
                     // if A[i] is 0, we need 1 and if A[i] is 1, we need 0. Thus, 1 - A[i]
                     int requiredBit = 1 - ((num >> i) & 1);
-                    if (curr.set.ContainsKey(requiredBit))
+                    if (curr.intDict.ContainsKey(requiredBit))
                     {
                         currSum |= (1 << i); // set ith bit of curr result
-                        curr = curr.set[requiredBit];
+                        curr = curr.intDict[requiredBit];
                     }
                     else
                     {
-                        curr = curr.set[1 - requiredBit];//must exist itself, every level trie set contain at least 1 element
+                        curr = curr.intDict[1 - requiredBit];//must exist itself, every level trie set contain at least 1 element
                     }
                 }
                 max = Math.Max(max, currSum); // get max number

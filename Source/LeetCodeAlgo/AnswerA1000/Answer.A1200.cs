@@ -300,8 +300,8 @@ namespace LeetCodeAlgo
                 foreach(var s in strs)
                 {
                     if (!string.IsNullOrEmpty(curr.word)) break;
-                    if (!curr.map.ContainsKey(s)) curr.map.Add(s, new TrieItem());
-                    curr = curr.map[s];
+                    if (!curr.stringDict.ContainsKey(s)) curr.stringDict.Add(s, new TrieItem());
+                    curr = curr.stringDict[s];
                 }
                 if (!string.IsNullOrEmpty(curr.word)) continue;
                 curr.word = word;
@@ -320,7 +320,7 @@ namespace LeetCodeAlgo
             }
             else
             {
-                foreach(var pair in root.map)
+                foreach(var pair in root.stringDict)
                     RemoveSubfolders_Search(pair.Value, res);
             }
         }

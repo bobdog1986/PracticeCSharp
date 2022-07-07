@@ -1857,7 +1857,7 @@ namespace LeetCodeAlgo
         ///97. Interleaving String, #DP
         ///Given strings s1, s2, and s3, find whether s3 is formed by an interleaving of s1 and s2.
         ///An interleaving of two strings s and t is a configuration where they are divided into non-empty substrings
-        public bool IsInterleave_DP(string s1, string s2, string s3)
+        public bool IsInterleave(string s1, string s2, string s3)
         {
             if ((s1 == null || s1.Length == 0) && (s2 == null || s2.Length == 0))
             {
@@ -1867,26 +1867,26 @@ namespace LeetCodeAlgo
             if (s2 == null || s2.Length == 0) { return s1 == (s3); }
             if (s1.Length + s2.Length != s3.Length) { return false; }
 
-            bool[,] dp = new bool[s1.Length + 1, s2.Length + 1];
+            bool[,] dp = new bool[s1.Length + 1, s2.Length + 1];// would be false by default.
             dp[0, 0] = true;
 
-            for (int i = 1; i < s1.Length; i++)
+            for (int i = 1; i <= s1.Length; i++)
             {
                 if (dp[i - 1, 0] && s1[i - 1] == s3[i - 1])
                 {
                     dp[i, 0] = true;
                 }
             }
-            for (int j = 1; j < s2.Length; j++)
+            for (int j = 1; j <= s2.Length; j++)
             {
                 if (dp[0, j - 1] && s2[j - 1] == s3[j - 1])
                 {
                     dp[0, j] = true;
                 }
             }
-            for (int i = 1; i < s1.Length; i++)
+            for (int i = 1; i <= s1.Length; i++)
             {
-                for (int j = 1; j < s2.Length; j++)
+                for (int j = 1; j <= s2.Length; j++)
                 {
                     if (dp[i - 1, j] && s1[i - 1] == s3[i + j - 1])
                     {
@@ -1898,7 +1898,7 @@ namespace LeetCodeAlgo
                     }
                 }
             }
-            return dp[s1.Length - 1, s2.Length - 1];
+            return dp[s1.Length, s2.Length];
         }
 
         /// 98. Validate Binary Search Tree, #BTree

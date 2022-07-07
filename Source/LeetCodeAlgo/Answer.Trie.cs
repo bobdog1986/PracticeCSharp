@@ -20,10 +20,11 @@ namespace LeetCodeAlgo
 
         public TrieItem[] arr10 = new TrieItem[10];
         public TrieItem[] arr26 = new TrieItem[26];
-        public Dictionary<string, TrieItem> map = new Dictionary<string, TrieItem>();
-        public Dictionary<int, TrieItem> set = new Dictionary<int, TrieItem>();
+        public Dictionary<string, TrieItem> stringDict = new Dictionary<string, TrieItem>();
+        public Dictionary<int, TrieItem> intDict = new Dictionary<int, TrieItem>();
         public List<string> list = new List<string>();
         public List<int> nums = new List<int>();
+        public HashSet<int> set = new HashSet<int>();
     }
 
     public partial class Answer

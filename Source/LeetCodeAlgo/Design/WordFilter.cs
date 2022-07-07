@@ -12,83 +12,68 @@ namespace LeetCodeAlgo.Design
     //If there is no such word in the dictionary, return -1.
     public class WordFilter
     {
-        private class Trie
-        {
-            public Trie()
-            {
-                this._set = new HashSet<int>();
-                this._dict = new Dictionary<char, Trie>();
-            }
-            public HashSet<int> _set;
-            public Dictionary<char, Trie> _dict;
-        }
-
-        private readonly Dictionary<string, int> _indexMap;
-        private readonly Dictionary<string, int> _cacheDict;
-        private readonly Trie _prefixRoot;
-        private readonly Trie _suffixRoot;
-        private readonly HashSet<string> _invalidPrefixSet;
-        private readonly HashSet<string> _invalidSuffixSet;
+        private readonly Dictionary<string, int> indexMap;
+        private readonly Dictionary<string, int> visit;
+        private readonly TrieItem prefixRoot;
+        private readonly TrieItem suffixRoot;
 
         public WordFilter(string[] words)
         {
-            this._indexMap = new Dictionary<string, int>();
+            this.indexMap = new Dictionary<string, int>();
             for(int i = 0; i < words.Length; i++)
             {
-                if (_indexMap.ContainsKey(words[i])) _indexMap[words[i]] = i;
-                else _indexMap.Add(words[i], i);
+                if (indexMap.ContainsKey(words[i])) indexMap[words[i]] = i;
+                else indexMap.Add(words[i], i);
             }
 
-            _prefixRoot = new Trie();
-            _suffixRoot = new Trie();
+            prefixRoot = new TrieItem();
+            suffixRoot = new TrieItem();
             buildTree();
 
-            _cacheDict = new Dictionary<string, int>();
-            _invalidPrefixSet = new HashSet<string>();
-            _invalidSuffixSet = new HashSet<string>();
+            visit = new Dictionary<string, int>();
         }
 
         private void buildTree()
         {
-            foreach(var k in _indexMap.Keys)
+            foreach(var k in indexMap.Keys)
             {
-                var curr = _prefixRoot;
+                var curr = prefixRoot;
                 for (int j = 0; j < k.Length; j++)
                 {
-                    if (!curr._dict.ContainsKey(k[j]))
-                        curr._dict.Add(k[j], new Trie());
-                    curr = curr._dict[k[j]];
-                    curr._set.Add(_indexMap[k]);
+                    if (!curr.dict.ContainsKey(k[j]))
+                        curr.dict.Add(k[j], new TrieItem());
+                    curr = curr.dict[k[j]];
+                    curr.set.Add(indexMap[k]);
                 }
             }
 
-            foreach (var k in _indexMap.Keys)
+            foreach (var k in indexMap.Keys)
             {
-                var curr = _suffixRoot;
+                var curr = suffixRoot;
                 for (int j = k.Length - 1; j >= 0; j--)
                 {
-                    if (!curr._dict.ContainsKey(k[j]))
-                        curr._dict.Add(k[j], new Trie());
-                    curr = curr._dict[k[j]];
-                    curr._set.Add(_indexMap[k]);
+                    if (!curr.dict.ContainsKey(k[j]))
+                        curr.dict.Add(k[j], new TrieItem());
+                    curr = curr.dict[k[j]];
+                    curr.set.Add(indexMap[k]);
                 }
             }
         }
 
         public int F(string prefix, string suffix)
         {
-            if (_invalidPrefixSet.Contains(prefix)) return -1;
-            if (_invalidSuffixSet.Contains(suffix)) return -1;
-            if (_cacheDict.ContainsKey($"{prefix}_{suffix}"))
+            if (visit.ContainsKey(prefix + "_")) return -1;
+            if (visit.ContainsKey("_"+ suffix)) return -1;
+            if (visit.ContainsKey($"{prefix}_{suffix}"))
             {
-                return _cacheDict[$"{prefix}_{suffix}"];
+                return visit[$"{prefix}_{suffix}"];
             }
 
-            var currPrefix = _prefixRoot;
+            var currPrefix = prefixRoot;
             for(int i = 0; i < prefix.Length; i++)
             {
-                if (currPrefix._dict.ContainsKey(prefix[i]))
-                    currPrefix = currPrefix._dict[prefix[i]];
+                if (currPrefix.dict.ContainsKey(prefix[i]))
+                    currPrefix = currPrefix.dict[prefix[i]];
                 else
                 {
                     currPrefix = null;
@@ -98,16 +83,16 @@ namespace LeetCodeAlgo.Design
 
             if (currPrefix == null)
             {
-                _invalidPrefixSet.Add(prefix);
+                visit.Add(prefix+"_",-1);
                 return -1;
             }
-            var prefixSet = currPrefix._set;
+            var prefixSet = currPrefix.set;
 
-            var currSuffix = _suffixRoot;
+            var currSuffix = suffixRoot;
             for (int i = suffix.Length-1; i >=0; i--)
             {
-                if (currSuffix._dict.ContainsKey(suffix[i]))
-                    currSuffix = currSuffix._dict[suffix[i]];
+                if (currSuffix.dict.ContainsKey(suffix[i]))
+                    currSuffix = currSuffix.dict[suffix[i]];
                 else
                 {
                     currSuffix = null;
@@ -117,22 +102,22 @@ namespace LeetCodeAlgo.Design
 
             if (currSuffix == null)
             {
-                _invalidSuffixSet.Add(suffix);
+                visit.Add("_"+ suffix, -1);
                 return -1;
             }
-            var suffixSet = currSuffix._set;
+            var suffixSet = currSuffix.set;
 
-            var set = prefixSet.Where(x => suffixSet.Contains(x)).ToList();
-            if (set.Count == 0)
+            var list = prefixSet.Where(x => suffixSet.Contains(x)).ToList();
+            if (list.Count == 0)
             {
-                _cacheDict.Add($"{prefix}_{suffix}", -1);
+                visit.Add($"{prefix}_{suffix}", -1);
                 return -1;
             }
             else
             {
-                set.Sort((x, y) => -x.CompareTo(y));//the largest index
-                _cacheDict.Add($"{prefix}_{suffix}", set[0]);
-                return set[0];
+                list.Sort((x, y) => -x.CompareTo(y));//the largest index
+                visit.Add($"{prefix}_{suffix}", list[0]);
+                return list[0];
             }
         }
     }
