@@ -140,6 +140,48 @@ namespace LeetCodeAlgo
 
         ///1472. Design Browser History, see BrowserHistory
 
+        ///1473. Paint House III, #DP
+        //1 <= m <= 100, 1 <= n <= 20, 0 <= houses[i] <= n, 1 <= cost[i][j] <= 104
+        public int MinCost(int[] houses, int[][] cost, int m, int n, int target)
+        {
+            int MAX_COST = 1000001;
+            int[][][] dp = init3DMatrix(m, n + 1, target + 1,MAX_COST);
+
+            for (int i = 1; i <= n; i++)
+            {
+                if (houses[0] == 0) dp[0][i][1] = cost[0][i - 1];
+                else if (houses[0] == i) dp[0][i][1] = 0;
+            }
+
+            for (int i = 1; i < m; i++)
+            {
+                for (int j = 1; j <= n; j++)
+                {
+                    // if I only have two houses, I can't make 4 neighbour hoods so no point in looking at them hence the min in the next expression
+                    for (int k = 1; k <= Math.Min(target, i + 1); k++)
+                    {
+
+                        if (houses[i] != 0 && houses[i] != j) continue;
+                        int currCost = (houses[i] == j) ? 0 : cost[i][j - 1];
+
+                        for (int l = 1; l <= n; l++)
+                        {
+                            int newNeighour = (j == l) ? k : k - 1;
+                            dp[i][j][k] = Math.Min(dp[i][j][k], currCost + dp[i - 1][l][newNeighour]);
+                        }
+                    }
+                }
+            }
+
+            int minCostRes = MAX_COST;
+            for (int l = 1; l <= n; l++)
+            {
+                minCostRes = Math.Min(minCostRes, dp[m - 1][l][target]);
+            }
+
+            return (minCostRes == MAX_COST) ? -1 : minCostRes;
+        }
+
         /// 1476. Subrectangle Queries, see SubrectangleQueries
 
         ///1480. Running Sum of 1d Array
