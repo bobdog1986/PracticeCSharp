@@ -493,5 +493,25 @@ namespace LeetCodeAlgo
             }
             return sum;
         }
+
+
+        ///1749. Maximum Absolute Sum of Any Subarray, #Kadane
+        public int MaxAbsoluteSum(int[] nums)
+        {
+            return Math.Max(Math.Abs(MaxSubArray(nums)), Math.Abs(MinSubArray(nums)));
+        }
+
+        public int MinSubArray(int[] nums)
+        {
+            int sum = 0;
+            int min = int.MaxValue; //if all positive num ,return nums.Min()
+            for (int i = 0; i < nums.Length; i++)
+            {
+                sum += nums[i];
+                min = Math.Min(min, sum);
+                if (sum >= 0) sum = 0;
+            }
+            return min;
+        }
     }
 }
