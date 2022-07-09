@@ -1228,58 +1228,34 @@ namespace LeetCodeAlgo
             return maxLen;
         }
 
-        ///33. Search in Rotated Sorted Array
+        ///33. Search in Rotated Sorted Array, #Binary Search
         /// original array [1,2,3,4,5] sorted in ascending order (with distinct values).
         /// then possibly rotated to eg. [3,4,5,1,2]
         /// return the index of target if it is in nums or -1
-        public int Search_33(int[] nums, int target)
-        {
-            int i = 0;
-            while (i <= nums.Length - 1)
-            {
-                if (nums[i] == target)
-                    return i;
-                if (nums[i] < nums[0])
-                {
-                    //rotated
-                    if (target > nums[0])
-                    {
-                        return -1;
-                    }
-
-                    if (target < nums[i])
-                    {
-                        return -1;
-                    }
-                }
-                i++;
-            }
-            return -1;
-        }
         public int Search_33_BinarySearch(int[] nums,int target)
         {
             int n = nums.Length;
-            int lo = 0, hi = n - 1;
+            int left = 0, right = n - 1;
             // find the index of the smallest value using binary search.
             // Loop will terminate since mid < hi, and lo or hi will shrink by at least 1.
             // Proof by contradiction that mid < hi: if mid==hi, then lo==hi and loop would have been terminated.
-            while (lo < hi)
+            while (left < right)
             {
-                int mid = (lo + hi) / 2;
-                if (nums[mid] > nums[hi]) lo = mid + 1;
-                else hi = mid;
+                int mid = (left + right) / 2;
+                if (nums[mid] > nums[right]) left = mid + 1;
+                else right = mid;
             }
             // lo==hi is the index of the smallest value and also the number of places rotated.
-            int rot = lo;
-            lo = 0; hi = n - 1;
+            int rot = left;
+            left = 0; right = n - 1;
             // The usual binary search and accounting for rotation.
-            while (lo <= hi)
+            while (left <= right)
             {
-                int mid = (lo + hi) / 2;
+                int mid = (left + right) / 2;
                 int realmid = (mid + rot) % n;
                 if (nums[realmid] == target) return realmid;
-                if (nums[realmid] < target) lo = mid + 1;
-                else hi = mid - 1;
+                if (nums[realmid] < target) left = mid + 1;
+                else right = mid - 1;
             }
             return -1;
         }

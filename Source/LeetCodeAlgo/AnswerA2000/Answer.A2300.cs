@@ -651,5 +651,20 @@ namespace LeetCodeAlgo
                 res = (res + dp[i]) % mod;
             return (int)res;
         }
+
+        ///2331. Evaluate Boolean Binary Tree
+        //Leaf nodes have either the value 0 or 1, where 0 represents False and 1 represents True.
+        //Non-leaf nodes have either the value 2 or 3, where 2 represents the boolean OR and 3 represents the boolean AND
+        public bool EvaluateTree(TreeNode root)
+        {
+            if (root.val == 0)
+                return false;
+            else if (root.val == 1)
+                return true;
+            else if (root.val == 2)
+                return EvaluateTree(root.left) || EvaluateTree(root.right);
+            else
+                return EvaluateTree(root.left) && EvaluateTree(root.right);
+        }
     }
 }
