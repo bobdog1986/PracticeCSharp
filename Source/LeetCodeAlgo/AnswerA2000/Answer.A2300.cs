@@ -666,5 +666,58 @@ namespace LeetCodeAlgo
             else
                 return EvaluateTree(root.left) && EvaluateTree(root.right);
         }
+
+        ///2333. Minimum Sum of Squared Difference, #Binary Search
+        //The sum of squared difference of arrays nums1 and nums2 is defined as the sum of (nums1[i] - nums2[i])2
+        //k1 and k2. You can modify any of the elements of nums1 by +1 or -1 at most k1 times. same for k2 on nums2;
+        //Return the minimum sum of squared difference after modifying atmost k1 times and k2 times.
+        public long MinSumSquareDiff(int[] nums1, int[] nums2, int k1, int k2)
+        {
+            int n = nums1.Length;
+            long[] arr = new long[n];// abs(nums1[i]-nums2[i])
+            for (int i = 0; i < n; i++)
+            {
+                arr[i] = Math.Abs(nums1[i] - nums2[i]);
+            }
+            Array.Sort(arr);//sort ascending
+            long left = 0;
+            long right = arr[n - 1];
+            //using binary search to find the left value that all arr[i]>left can be changed to left
+            while (left < right)
+            {
+                long mid = (left + right) / 2;
+                long k = 0;
+                for (int i = n - 1; i >= 0; i--)
+                {
+                    if (k > k1 + k2) break;
+                    if (arr[i] > mid)
+                    {
+                        k += arr[i] - mid;
+                    }
+                    else break;
+                }
+                if (k <= k1 + k2)
+                    right = mid;//this mid is available
+                else
+                    left = mid + 1;//not available, then +1
+            }
+            long curr = k1 + k2;
+            for (int i = n - 1; i >= 0 && curr > 0; i--)
+            {
+                if (arr[i] <= left) break;
+                var subtract = Math.Min(arr[i] - left, curr);
+                curr -= subtract;
+                arr[i] -= subtract;
+            }
+            //it may still left some k, then do subtract 1 on as many elements as possible
+            for (int i = n - 1; i >= 0 && curr > 0; i--)
+            {
+                if (arr[i] <= 0) break;
+                curr -= 1;
+                arr[i] -= 1;
+            }
+            return arr.Sum(x => x * x);
+        }
+
     }
 }
