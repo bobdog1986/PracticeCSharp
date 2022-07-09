@@ -405,5 +405,30 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///1696. Jump Game VI, #DP, #PriorityQueue
+        // In one move, you can jump at most k steps forward
+        //Your score is the sum of all nums[j] for each index j you visited in the array.
+        //Return the maximum score you can get.
+        public int MaxResult(int[] nums, int k)
+        {
+            int n = nums.Length;
+            // store index of `nums` elements, elements is in decreasing order, the front is the maximum element.
+            PriorityQueue<int[], int> pq = new PriorityQueue<int[], int>();
+            pq.Enqueue(new int[] { 0, nums[0] }, -nums[0]);
+            int max = nums[0];
+            for (int i = 1; i < n; ++i)
+            {
+                while (pq.Count>0 && pq.Peek()[0] < i - k)
+                {
+                    pq.Dequeue();//discard all invalid indexes
+                }
+
+                max = nums[i] + pq.Peek()[1];
+                pq.Enqueue(new int[] { i, max },-max);
+            }
+            return max;
+        }
+
     }
 }
