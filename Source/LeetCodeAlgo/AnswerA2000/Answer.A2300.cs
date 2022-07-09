@@ -667,6 +667,56 @@ namespace LeetCodeAlgo
                 return EvaluateTree(root.left) && EvaluateTree(root.right);
         }
 
+        ///2332. The Latest Time to Catch a Bus, #Greedy
+        //
+        public int LatestTimeCatchTheBus(int[] buses, int[] passengers, int capacity)
+        {
+            Array.Sort(buses);
+            var pq =new PriorityQueue<int, int>();
+            foreach(var p in passengers)
+                pq.Enqueue(p, p);
+
+            HashSet<int> set = new HashSet<int>();
+            for(int i = 0; i < buses.Length - 1; i++)
+            {
+                var curr = capacity;
+                while (curr > 0)
+                {
+                    if (pq.Peek() > buses[i]) break;
+                    else
+                    {
+                        curr--;
+                        set.Add(pq.Dequeue());
+                    }
+                }
+            }
+            int cap = capacity;
+            while (cap > 0)
+            {
+                if (pq.Count == 0 || pq.Peek() > buses.Last())
+                {
+                    var ans = buses.Last();
+                    while (set.Contains(ans))
+                    {
+                        ans--;
+                    }
+                    return ans;
+                }
+                else
+                {
+                    cap--;
+                    set.Add(pq.Dequeue());
+                }
+            }
+            var last = set.Last();
+            var res = last - 1;
+            while (set.Contains(res))
+            {
+                res--;
+            }
+            return res;
+        }
+
         ///2333. Minimum Sum of Squared Difference, #Binary Search
         //The sum of squared difference of arrays nums1 and nums2 is defined as the sum of (nums1[i] - nums2[i])2
         //k1 and k2. You can modify any of the elements of nums1 by +1 or -1 at most k1 times. same for k2 on nums2;
