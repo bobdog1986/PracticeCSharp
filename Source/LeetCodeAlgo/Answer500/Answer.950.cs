@@ -225,7 +225,7 @@ namespace LeetCodeAlgo
                 return 0;
             }
         }
-        /// 973. K Closest Points to Origin, #PriorityQueue, 
+        /// 973. K Closest Points to Origin, #PriorityQueue,
         ///return the k closest points to the origin (0, 0).
         public int[][] KClosest(int[][] points, int k)
         {
@@ -668,6 +668,63 @@ namespace LeetCodeAlgo
                     return i;
             }
             return -1;
+        }
+
+        ///999. Available Captures for Rook
+        public int NumRookCaptures(char[][] board)
+        {
+            int m = board.Length;
+            int n = board[0].Length;
+            int r = 0, c = 0;
+            for(int i=0;i< m; i++)
+            {
+                for(int j = 0; j < n; j++)
+                {
+                    if(board[i][j] == 'R')
+                    {
+                        r = i;
+                        c = j;
+                    }
+                }
+            }
+            int res = 0;
+            for(int i = r + 1; i < m; i++)
+            {
+                if (board[i][c] == 'B') break;
+                else if (board[i][c] == 'p')
+                {
+                    res++;
+                    break;
+                }
+            }
+            for (int i = r - 1; i >=0; i--)
+            {
+                if (board[i][c] == 'B') break;
+                else if (board[i][c] == 'p')
+                {
+                    res++;
+                    break;
+                }
+            }
+            for (int j = c + 1; j < n; j++)
+            {
+                if (board[r][j] == 'B') break;
+                else if (board[r][j] == 'p')
+                {
+                    res++;
+                    break;
+                }
+            }
+            for (int j = c - 1; j >=0; j--)
+            {
+                if (board[r][j] == 'B') break;
+                else if (board[r][j] == 'p')
+                {
+                    res++;
+                    break;
+                }
+            }
+            return res;
         }
     }
 }

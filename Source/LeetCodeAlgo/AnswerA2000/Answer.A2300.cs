@@ -814,7 +814,6 @@ namespace LeetCodeAlgo
 
         ///2336. Smallest Number in Infinite Set, see SmallestInfiniteSet
 
-
         ///2337. Move Pieces to Obtain a String, #Greedy, #Swap
         //You are given two strings start and target, both of length n.'L', 'R', and '_' where
         //The 'L' and 'R' represent pieces, where a 'L' can move to the left only if there is a blank space to its left,
@@ -824,11 +823,6 @@ namespace LeetCodeAlgo
         //Otherwise, return false. n == start.length == target.length
         public bool CanChange(string start, string target)
         {
-            if (start == target)
-                return true;
-            if (start.Count(x => x == 'R') != target.Count(x => x == 'R') ||
-                start.Count(x => x == 'L') != target.Count(x => x == 'L'))
-                return false;
             int n = start.Length;
             int lefts = 0;
             int rights = 0;
@@ -880,7 +874,7 @@ namespace LeetCodeAlgo
                     }
                 }
             }
-            return true;
+            return lefts==0 && rights==0;
         }
 
     }
