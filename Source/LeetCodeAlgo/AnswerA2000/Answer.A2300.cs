@@ -814,5 +814,74 @@ namespace LeetCodeAlgo
 
         ///2336. Smallest Number in Infinite Set, see SmallestInfiniteSet
 
+
+        ///2337. Move Pieces to Obtain a String, #Greedy, #Swap
+        //You are given two strings start and target, both of length n.'L', 'R', and '_' where
+        //The 'L' and 'R' represent pieces, where a 'L' can move to the left only if there is a blank space to its left,
+        //and a piece 'R' can move to the right only if there is a blank space directly to its right.
+        //The character '_' represents a blank space that can be occupied by any of the 'L' or 'R' pieces.
+        //Return true if it is possible to obtain the string target by moving the pieces of the string start.
+        //Otherwise, return false. n == start.length == target.length
+        public bool CanChange(string start, string target)
+        {
+            if (start == target)
+                return true;
+            if (start.Count(x => x == 'R') != target.Count(x => x == 'R') ||
+                start.Count(x => x == 'L') != target.Count(x => x == 'L'))
+                return false;
+            int n = start.Length;
+            int lefts = 0;
+            int rights = 0;
+            for(int i = 0; i < n; i++)
+            {
+                if (target[i] == 'L')
+                {
+                    if (start[i] == 'L')
+                    {
+                        if (rights != 0) return false;
+                    }
+                    else if (start[i] == 'R')
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        lefts++;
+                    }
+                }
+                else if (target[i] == 'R')
+                {
+                    if (start[i] == 'L')
+                    {
+                        return false;
+                    }
+                    else if (start[i] == 'R')
+                    {
+                        if (lefts != 0) return false;
+                    }
+                    else
+                    {
+                        if (rights >= 0) return false;
+                        rights++;
+                    }
+                }
+                else
+                {
+                    if (start[i] == 'L')
+                    {
+                        if (rights != 0) return false;
+                        if (lefts <= 0) return false;
+                        lefts--;
+                    }
+                    else if (start[i] == 'R')
+                    {
+                        if (lefts != 0) return false;
+                        rights--;
+                    }
+                }
+            }
+            return true;
+        }
+
     }
 }
