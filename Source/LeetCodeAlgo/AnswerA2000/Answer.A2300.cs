@@ -811,5 +811,8 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///2336. Smallest Number in Infinite Set, see SmallestInfiniteSet
+
     }
 }
