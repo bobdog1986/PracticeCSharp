@@ -769,5 +769,47 @@ namespace LeetCodeAlgo
             return arr.Sum(x => x * x);
         }
 
+
+        ///2335. Minimum Amount of Time to Fill Cups
+        //Every second, you can either fill up 2 cups with different types of water, or 1 cup of any type of water.
+        //Return the minimum number of seconds needed to fill up all the cups.
+        public int FillCups(int[] amount)
+        {
+            Array.Sort(amount);
+            if (amount[2] >= amount[0] + amount[1])
+                return amount[2];
+            return (amount.Sum() + 1) / 2;
+        }
+
+        public int FillCups_PQ(int[] amount)
+        {
+            int res = 0;
+            PriorityQueue<int,int> pq = new PriorityQueue<int, int>();
+            foreach (var a in amount)
+            {
+                if (a > 0)
+                    pq.Enqueue(a, -a);
+            }
+            while (pq.Count > 0)
+            {
+                if (pq.Count == 1)
+                {
+                    res += pq.Dequeue();
+                }
+                else
+                {
+                    var max = pq.Dequeue();
+                    var mid = pq.Dequeue();
+                    res++;
+                    max--;
+                    mid--;
+                    if(max>0)
+                        pq.Enqueue(max, -max);
+                    if (mid > 0)
+                        pq.Enqueue(mid, -mid);
+                }
+            }
+            return res;
+        }
     }
 }

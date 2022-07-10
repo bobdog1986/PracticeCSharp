@@ -20,12 +20,12 @@ namespace LeetCodeAlgo
 
             //string[][] matStrLine0 = answer.buildStringMatrix(strMatLines[0]);//build string[][] from file
             //char[][] matCharLine0 = answer.buildCharMatrix(strMatLines[0]);//build char[][] from file due to leetcode using ""
-            string[] arrStrLine0 = answer.buildStringArray(strArrLines[0]);
+            //string[] arrStrLine0 = answer.buildStringArray(strArrLines[0]);
             //char[] arrCharLine0 = answer.buildCharArray(strArrLines[0]);
 
             ///build ListNode, auto print
-            string listNodeStr1 = "[0,1,2]";//intArrLines[0]
-            ListNode listnode1 = answer.buildListNode(listNodeStr1);
+            //string listNodeStr1 = "[0,1,2]";//intArrLines[0]
+            //ListNode listnode1 = answer.buildListNode(listNodeStr1);
 
             ///build TreeNode, auto print
             //string bTreeStr1 = "[5,1,2,3,null,6,4]";//intArrLines[0];
@@ -51,7 +51,8 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.LexicalOrder(2);
+
+            var result = answer.CanChange("R_", "_R");
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
