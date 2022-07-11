@@ -18,6 +18,17 @@ namespace LeetCodeAlgo
                 if (arr[i] - arr[i - 1] != diff) return false;
             return true;
         }
+
+        ///1507. Reformat Date
+        public string ReformatDate(string date)
+        {
+            var list = new List<string> { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+            var arr = date.Split(' ');
+            int year =int.Parse( arr[2]);
+            int month = (list.IndexOf(arr[1])+1);
+            int day = int.Parse(arr[0].Substring(0, arr[0].Length - 2));
+            return new DateTime(year,month,day).ToString("yyyy-MM-dd");
+        }
         ///1508. Range Sum of Sorted Subarray Sums, #PriorityQueue
         //Create new int[] of all range of subarrays,then get sum of [left,right], 1-indexed
         public int RangeSum(int[] nums, int n, int left, int right)

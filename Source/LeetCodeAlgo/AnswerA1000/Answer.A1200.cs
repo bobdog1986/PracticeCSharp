@@ -56,66 +56,26 @@ namespace LeetCodeAlgo
         public string SmallestStringWithSwaps(string s, IList<IList<int>> pairs)
         {
             int n = s.Length;
-            int[] parents=new int[n];
-            //default root of each index is itself
+            var uf = new UnionFind(n);
+            foreach(var pair in pairs)
+            {
+                uf.Union(pair[0], pair[1]);
+            }
+            var dict = new Dictionary<int, PriorityQueue<char, char>> ();
             for(int i = 0; i < n; i++)
-                parents[i] = i;
-
-            //group index by the min index of connected-pairs
-            foreach (var pair in pairs)
-                SmallestStringWithSwaps_union(pair[0], pair[1], parents);
-
-            return SmallestStringWithSwaps(s, pairs, parents);
-        }
-
-        private string SmallestStringWithSwaps(string s, IList<IList<int>> pairs, int[] parents)
-        {
-            var map = new Dictionary<int, PriorityQueue<char,char>>();
-            for (int i = 0; i < s.Length; i++)
             {
-                int root = SmallestStringWithSwaps_find(i,parents);
-                //if no root index, create one using pq as value to auto sort s[i]
-                if (!map.ContainsKey(root))
-                    map.Add(root, new PriorityQueue<char, char>());
-
-                map[root].Enqueue(s[i], s[i]);
+                var p = uf.Find(i);
+                if (!dict.ContainsKey(p))
+                    dict.Add(p, new PriorityQueue<char, char>());
+                dict[p].Enqueue(s[i], s[i]);
             }
-
-            var sb = new StringBuilder();
-            for (int i = 0; i < s.Length; i++)
+            char[] res = new char[n];
+            for (int i = 0; i < n; i++)
             {
-                //find the root , then dequeue a char from pq
-                var root = SmallestStringWithSwaps_find(i, parents);
-                sb.Append(map[root].Dequeue());
+                var p = uf.Find(i);
+                res[i] = dict[p].Dequeue();
             }
-            return sb.ToString();
-        }
-
-        private void SmallestStringWithSwaps_union(int a, int b, int[] parents)
-        {
-            //find root index of a and b
-            int aParent = SmallestStringWithSwaps_find(a, parents);
-            int bParent = SmallestStringWithSwaps_find(b, parents);
-            //if a<b, set b's root = a
-            if (aParent < bParent)
-            {
-                parents[bParent] = aParent;
-            }
-            else
-            {
-                parents[aParent] = bParent;
-            }
-        }
-
-        private int SmallestStringWithSwaps_find(int index, int[] parents)
-        {
-            //if equal, this index is the root index
-            while (parents[index] != index)
-            {
-                parents[index] = parents[parents[index]];
-                index = parents[index];
-            }
-            return index;
+            return new string(res);
         }
 
         ///1208. Get Equal Substrings Within Budget, #Sliding Window

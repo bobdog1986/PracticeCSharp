@@ -705,49 +705,56 @@ namespace LeetCodeAlgo
             return Math.Max(left,right)+1;
         }
 
-        /// 547. Number of Provinces, #DFS
-        ///BFS/DFS, same to 200
+        /// 547. Number of Provinces, #DFS, #Union Find
+        public int FindCircleNum_UnionFind(int[][] isConnected)
+        {
+            int n = isConnected.Length;
+            var uf = new UnionFind(n);
+            for(int i=0; i<n; i++)
+            {
+                for(int j=0; j<n; j++)
+                {
+                    if (i == j) continue;
+                    if (isConnected[i][j] == 1)
+                    {
+                        uf.Union(i, j);
+                    }
+                }
+            }
+            return uf.GroupCount;
+        }
+
+
         public int FindCircleNum(int[][] isConnected)
         {
+            int res = 0;
             int[] arr = new int[isConnected.Length];
-            for (int i = 0; i < arr.Length; i++)
-            {
-                arr[i] = 1;
-            }
-            int ans = 0;
             for (int i = 0; i < isConnected.Length; i++)
             {
-                if (arr[i] == 0)
-                {
-                    continue;
-                }
-                else
-                {
-                    ans++;
-                    arr[i] = 0;
-                }
-
+                if (arr[i] != 0) continue;
+                res++;
+                arr[i] = 1;
                 for (int j = 0; j < isConnected[i].Length; j++)
                 {
                     if (i != j && isConnected[i][j] == 1)
                     {
-                        FindCircleNum_RemoveAllConnected(isConnected, arr, i, j);
+                        FindCircleNum_dfs(isConnected, arr, j);
                     }
                 }
             }
-            return ans;
+            return res;
         }
 
-        public void FindCircleNum_RemoveAllConnected(int[][] isConnected, int[] arr, int r, int c)
+        private void FindCircleNum_dfs(int[][] isConnected, int[] arr, int index)
         {
-            if (arr[c] == 0)
+            if (arr[index] != 0)
                 return;
-            arr[c] = 0;
-            for (int j = 0; j < isConnected[c].Length; j++)
+            arr[index] = 1;
+            for (int j = 0; j < isConnected[index].Length; j++)
             {
-                if (c != j && isConnected[c][j] == 1)
+                if (index != j && isConnected[index][j] == 1)
                 {
-                    FindCircleNum_RemoveAllConnected(isConnected, arr, c, j);
+                    FindCircleNum_dfs(isConnected, arr, j);
                 }
             }
         }
