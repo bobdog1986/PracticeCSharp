@@ -286,12 +286,12 @@ namespace LeetCodeAlgo
             return min == int.MaxValue ? 0 : min;
         }
 
-        ///210. Course Schedule II, #Graph
+        ///210. Course Schedule II, #Topological Sort
+        //prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
         ///Return the ordering of courses you should take to finish all courses.
-        ///If there are many valid answers, return any of them. If it is impossible to finish all courses, return an empty array.
+        ///If there are many answers, return any. If impossible to finish all courses, return an empty array.
         public int[] FindOrder(int numCourses, int[][] prerequisites)
         {
-            if (numCourses == 0) return null;
             // Convert graph presentation from edges to indegree of adjacent list.
             int[] indegree = new int[numCourses];
             int[] order = new int[numCourses];

@@ -65,13 +65,13 @@ namespace LeetCodeAlgo
             return res.ToArray();
         }
 
-        public string[][] buildStringMatrix(string str)
+        public IList<string>[] buildStringMatrix(string str)
         {
             str = str.Replace(" ", "");
             if (str[0] == '[') str = str.Substring(1);
             if (str[str.Length - 1] == ']') str = str.Substring(0, str.Length - 1);
             var arr = str.Split("],[").Select(x => x.Trim()).Where(x => !string.IsNullOrEmpty(x)).ToList();
-            var res = new List<string[]>();
+            var res = new List<IList<string>>();
             foreach (var a in arr)
             {
                 res.Add(buildStringArray(a));

@@ -262,11 +262,63 @@ namespace LeetCodeAlgo
             return curr.OrderBy(x => x).First();
         }
 
-        ///721. Accounts Merge, NOT PASS
-        public IList<IList<string>> AccountsMerge(IList<List<string>> accounts)
+        ///721. Accounts Merge, #Union Find
+        //each list is {name, mails}, if two list contains same mail ,they belong to same person
+        //diffierent people may own same name
+        public IList<IList<string>> AccountsMerge(IList<IList<string>> accounts)
         {
-            //https://leetcode.com/problems/accounts-merge/discuss/109157/JavaC%2B%2B-Union-Find
-            return null;
+            int n = accounts.Count();
+            var uf = new UnionFind(n);
+
+            var dict = new Dictionary<string, int>();
+
+            for(int i = 0; i < n; i++)
+            {
+                HashSet<int> set = new HashSet<int>();
+                set.Add(i);
+                for(int j = 1; j < accounts[i].Count(); j++)
+                {
+                    if (dict.ContainsKey(accounts[i][j]))
+                    {
+                        set.Add(dict[accounts[i][j]]);
+                    }
+                    else
+                    {
+                        dict.Add(accounts[i][j], i);
+                    }
+                }
+                foreach(var k1 in set)
+                {
+                    foreach(var k2 in set)
+                    {
+                        uf.Union(k1, k2);
+                    }
+                }
+            }
+
+            var map = new Dictionary<int, HashSet<string>>();
+            for(int i = 0; i < n; i++)
+            {
+                int k = uf.Find(i);
+                if (!map.ContainsKey(k))
+                {
+                    map.Add(k, new HashSet<string>());
+                    map[k].Add(accounts[i][0]);
+                }
+                for (int j = 1; j < accounts[i].Count(); j++)
+                    map[k].Add(accounts[i][j]);
+            }
+
+            var res=new List<IList<string>>();
+            foreach (var set in map.Values)
+            {
+                string name= set.ElementAt(0);
+                var mails = set.Skip(1).ToList();
+                mails.Sort((x, y) => string.CompareOrdinal(x, y));
+                mails.Insert(0, name);
+                res.Add(mails);
+            }
+            return res;
         }
 
         ///724. Find Pivot Index
