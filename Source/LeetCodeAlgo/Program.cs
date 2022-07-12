@@ -52,7 +52,7 @@ namespace LeetCodeAlgo
             sw.Start();
 
 
-            var result = answer.RegionsBySlashes(arrStrLine0);
+            var result = answer.GroupStrings(arrStrLine0);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

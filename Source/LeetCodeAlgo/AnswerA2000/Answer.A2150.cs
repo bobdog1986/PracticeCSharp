@@ -75,6 +75,49 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2157. Groups of Strings, #Union Find
+        public int[] GroupStrings(string[] words)
+        {
+            int n= words.Length;
+            var uf = new UnionFind(n);
+            for(int i = 0; i < n-1; i++)
+            {
+                for(int j = i + 1; j < n; j++)
+                {
+                    if (GroupStrings(words[i], words[j]))
+                    {
+                        uf.Union(uf.Find( i), uf.Find(j));
+                    }
+                }
+            }
+            int max = 0;
+            var dict=new Dictionary<int, int>();
+            for(int i = 0; i < n; i++)
+            {
+                var k = uf.Find(i);
+                if (!dict.ContainsKey(k)) dict.Add(k, 0);
+                max = Math.Max(max, ++dict[k]);
+            }
+
+            return new int[] { dict.Keys.Count, max };
+        }
+
+        private bool GroupStrings(string s1,string s2)
+        {
+            int m = s1.Length;
+            int n = s2.Length;
+            if (m - n > 1 || n - m > 1) return false;
+            if (m > n) return GroupStrings(s2, s1);
+            var set1 = s1.ToHashSet();
+            int miss = 0;
+            foreach (var c in s2)
+            {
+                set1.Remove(c);
+            }
+
+            return m == n ? set1.Count <= 1 : set1.Count == 0;
+        }
+
         ///2160. Minimum Sum of Four Digit Number After Splitting Digits
         ///You are given a positive integer num consisting of exactly four digits.
         ///Split num into two new integers new1 and new2 by using the digits found in num.

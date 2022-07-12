@@ -366,49 +366,33 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2316. Count Unreachable Pairs of Nodes in an Undirected Graph, #DFS
+        ///2316. Count Unreachable Pairs of Nodes in an Undirected Graph, #Union Find
         //undirected graph with n nodes from 0 to n - 1. edges where edges[i] = [ai, bi]
         //Return the number of pairs of different nodes that are unreachable from each other.
         public long CountPairs(int n, int[][] edges)
         {
             long res = 0;
-            var graph = new List<int>[n];
-            for (int i = 0; i < n; i++)
-                graph[i] = new List<int>();
-
-            foreach(var edge in edges)
+            var uf = new UnionFind(n);
+            foreach(var e in edges)
             {
-                graph[edge[0]].Add(edge[1]);
-                graph[edge[1]].Add(edge[0]);
+                uf.Union(e[0], e[1]);
             }
 
-            var visit = new HashSet<int>();
-            long left = 0;
-            for (int i = 0; i < n; i++)
+            var dict=new Dictionary<int, long>();
+            for(int i = 0; i < n; i++)
             {
-                if (visit.Contains(i)) continue;
-                var set = new HashSet<int>();
-                CountPairs_DFS(graph, i, set);
-                left = (n - visit.Count);
-                res += (long)set.Count*(left- set.Count);
-                foreach (var x in set)
-                    visit.Add(x);
+                var j = uf.Find(i);
+                if (!dict.ContainsKey(j)) dict.Add(j, 0);
+                dict[j]++;
             }
-            left = (n - visit.Count);
-            if (left > 1)
-                res += getFactorial((int)left, 2) / 2;
-            return res;
+
+            foreach(var k in dict.Keys)
+            {
+                res += dict[k] * (n - dict[k]);//select i in current group, and j not in
+            }
+            return res/2;//duplicate {i,j}, {j,i}
         }
 
-        private void CountPairs_DFS(List<int>[] graph,int i,HashSet<int> set)
-        {
-            foreach(var x in graph[i])
-            {
-                if (set.Contains(x)) continue;
-                set.Add(x);
-                CountPairs_DFS(graph, x, set);
-            }
-        }
 
         ///2317. Maximum XOR After Operations
         //update nums[i] to be equal to nums[i] AND (nums[i] XOR x).

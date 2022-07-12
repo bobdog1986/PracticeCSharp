@@ -131,6 +131,19 @@ namespace LeetCodeAlgo
 
         ///1261. Find Elements in a Contaminated Binary Tree. see FindElements
 
+        ///1266. Minimum Time Visiting All Points
+        public int MinTimeToVisitAllPoints(int[][] points)
+        {
+            int res = 0;
+            var prev = points[0];
+            foreach(var curr in points)
+            {
+                res += Math.Max(Math.Abs(curr[0] - prev[0]), Math.Abs(curr[1] - prev[1]));
+                prev = curr;
+            }
+            return res;
+        }
+
         ///1267. Count Servers that Communicate
         public int CountServers(int[][] grid)
         {
