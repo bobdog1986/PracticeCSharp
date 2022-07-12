@@ -952,33 +952,10 @@ namespace LeetCodeAlgo
             return 0;
         }
 
-        /// 128. Longest Consecutive Sequence
-        /// Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence. O(n) time.
+        /// 128. Longest Consecutive Sequence, #HashMap, #Union Find
+        /// unsorted array nums, return the length of the longest consecutive elements sequence. O(n) time.
         /// 0 <= nums.length <= 105, -10^9 <= nums[i] <= 10^9
         public int LongestConsecutive(int[] nums)
-        {
-            if (nums.Length <= 1) return nums.Length;
-            Array.Sort(nums);
-            int max = 1;
-            int count = 1;
-            int pre = nums[0];
-            for (int i = 1; i < nums.Length; i++)
-            {
-                if (nums[i] <= pre + 1)
-                {
-                    if (nums[i] != pre) count++;
-                }
-                else
-                {
-                    max = Math.Max(count, max);
-                    count = 1;
-                }
-                pre = nums[i];
-            }
-            return Math.Max(count, max);
-        }
-
-        public int LongestConsecutive_HashMap_O_n(int[] nums)
         {
             int res = 0;
             Dictionary<int, int> dict = new Dictionary<int, int>();
@@ -986,32 +963,43 @@ namespace LeetCodeAlgo
             {
                 if (!dict.ContainsKey(n))
                 {
-                    int left = (dict.ContainsKey(n - 1)) ? dict[n - 1] : 0;
-                    int right = (dict.ContainsKey(n + 1)) ? dict[n + 1] : 0;
+                    int left = dict.ContainsKey(n - 1) ? dict[n - 1] : 0;
+                    int right = dict.ContainsKey(n + 1) ? dict[n + 1] : 0;
                     int sum = left + right + 1;
                     dict.Add(n, sum);
-                    // keep track of the max length
                     res = Math.Max(res, sum);
-                    // extend the length to the boundary(s)
-                    // of the sequence
-                    // will do nothing if n has no neighbors
-                    if (dict.ContainsKey(n - left))
-                    {
+                    // extend the length to the boundary(s) of the sequence
+                    if (left > 0)
                         dict[n - left] = sum;
-                    }
-                    else
-                    {
-                        dict.Add(n - left, sum);
-                    }
-                    if (dict.ContainsKey(n + right))
-                    {
+                    if(right>0)
                         dict[n + right] = sum;
-                    }
-                    else
-                    {
-                        dict.Add(n + right, sum);
-                    }
                 }
+            }
+            return res;
+        }
+
+        public int LongestConsecutive_UnionFind(int[] nums)
+        {
+            int res = 0;
+            int n = nums.Length;
+            var uf = new UnionFind(n);
+            var dict = new Dictionary<int, int>();
+            for(int i = 0; i < n; i++)
+            {
+                if (dict.ContainsKey(nums[i])) continue;
+                dict.Add(nums[i], i);
+                if (dict.ContainsKey(nums[i] - 1))
+                    uf.Union(uf.Find( dict[nums[i] - 1]), i);
+                if (dict.ContainsKey(nums[i] + 1))
+                    uf.Union(uf.Find(dict[nums[i] + 1]), i);
+            }
+
+            var map = new Dictionary<int, int>();
+            for(int i = 0; i < n; i++)
+            {
+                var p = uf.Find(i);
+                if (!map.ContainsKey(p)) map.Add(p, 0);
+                res = Math.Max(res, ++map[p]);
             }
             return res;
         }
@@ -1039,71 +1027,49 @@ namespace LeetCodeAlgo
             }
         }
 
-        /// 130. Surrounded Regions
-        ///Given an m x n matrix board containing 'X' and 'O',
-        ///capture all regions that are 4-directionally surrounded by 'X'.
+        /// 130. Surrounded Regions, #Union Find
+        ///m x n matrix board containing 'X' and 'O', capture all regions that 4-directionally surrounded by 'X'.
         ///A region is captured by flipping all 'O's into 'X's in that surrounded region.
-        ///Tips: If 'O's connect to 4-direction edges , escape; or captured
+        ///Tips: If 'O's connect to 4-direction edges ,escape ; or captured
         public void Solve(char[][] board)
         {
-            int rowLen = board.Length;
-            int colLen = board[0].Length;
+            int m = board.Length;
+            int n = board[0].Length;
+            bool[][] visit = new bool[m][];
+            for (int i = 0; i < m; i++)
+                visit[i] = new bool[n];
 
-            if (rowLen <= 1 || colLen <= 1)
-                return;
-
-            bool[][] visit = new bool[rowLen][];
-            for (int i = 0; i < rowLen; i++)
+            int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, -1 } };
+            for (int i = 0; i < m; i++)
             {
-                visit[i] = new bool[colLen];
-            }
-
-            int[][] dxy = new int[4][] { new int[] { 0, 1 }, new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, -1 } };
-
-            for (int i = 0; i < rowLen; i++)
-            {
-                for (int j = 0; j < colLen; j++)
+                for (int j = 0; j < n; j++)
                 {
-                    if (visit[i][j])
-                        continue;
-
+                    if (visit[i][j]) continue;
                     visit[i][j] = true;
-
                     if (board[i][j] == 'O')
                     {
                         List<int[]> list = new List<int[]>();
-
-                        List<int[]> currList = new List<int[]>
-                        {
-                            new int[] { i, j }
-                        };
-
+                        Queue<int[]> queue = new Queue<int[]>();
+                        queue.Enqueue(new int[] { i, j });
                         bool capture = true;
-
-                        while (currList.Count > 0)
+                        while (queue.Count > 0)
                         {
-                            list.AddRange(currList);
-
-                            List<int[]> subList = new List<int[]>();
-
-                            foreach (var cell in list)
+                            int size = queue.Count;
+                            while (size-- > 0)
                             {
-                                foreach (var d in dxy)
+                                var top = queue.Dequeue();
+                                list.Add(top);
+                                foreach (var d in dxy4)
                                 {
-                                    int r = cell[0] + d[0];
-                                    int c = cell[1] + d[1];
-
-                                    if (r >= 0 && r <= rowLen - 1
-                                        && c >= 0 && c <= colLen - 1)
+                                    int r = top[0] + d[0];
+                                    int c = top[1] + d[1];
+                                    if (r >= 0 && r <= m - 1 && c >= 0 && c <= n - 1)
                                     {
                                         if (!visit[r][c])
                                         {
                                             visit[r][c] = true;
-
                                             if (board[r][c] == 'O')
-                                            {
-                                                subList.Add(new int[] { r, c });
-                                            }
+                                                queue.Enqueue(new int[] { r, c });
                                         }
                                     }
                                     else
@@ -1112,10 +1078,7 @@ namespace LeetCodeAlgo
                                     }
                                 }
                             }
-
-                            currList = subList;
                         }
-
                         if (capture)
                         {
                             foreach (var cell in list)
@@ -1126,6 +1089,40 @@ namespace LeetCodeAlgo
             }
         }
 
+        public void Solve_UnionFind(char[][] board)
+        {
+            int m = board.Length;
+            int n = board[0].Length;
+            var uf = new UnionFind(m * n + 1);
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (board[i][j] == 'O')
+                    {
+                        if (i == 0 || i == m - 1 || j == 0 || j == n - 1)
+                        {
+                            uf.Union(i * n + j, m * n);
+                        }
+                        else
+                        {
+                            if (board[i - 1][j] == 'O') uf.Union(i * n + j, (i - 1) * n + j);
+                            if (board[i + 1][j] == 'O') uf.Union(i * n + j, (i + 1) * n + j);
+                            if (board[i][j - 1] == 'O') uf.Union(i * n + j, i * n + j - 1);
+                            if (board[i][j + 1] == 'O') uf.Union(i * n + j, i * n + j + 1);
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (!uf.IsConnected(i * n + j, m * n))
+                        board[i][j] = 'X';
+                }
+            }
+        }
         ///131. Palindrome Partitioning, #Backtracking
         ///Given a string s, partition s such that every substring of the partition is a palindrome.
         ///Return all possible palindrome partitioning of s.

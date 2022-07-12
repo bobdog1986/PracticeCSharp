@@ -67,10 +67,13 @@ namespace LeetCodeAlgo
 
         public IList<string>[] buildStringMatrix(string str)
         {
-            str = str.Replace(" ", "");
+            //str = str.Replace(" ", "");
+            str = str.Trim();
             if (str[0] == '[') str = str.Substring(1);
             if (str[str.Length - 1] == ']') str = str.Substring(0, str.Length - 1);
-            var arr = str.Split("],[").Select(x => x.Trim()).Where(x => !string.IsNullOrEmpty(x)).ToList();
+            var arr = str.Split("],[")
+                //.Select(x => x.Trim())
+                .Where(x => !string.IsNullOrEmpty(x)).ToList();
             var res = new List<IList<string>>();
             foreach (var a in arr)
             {
@@ -81,13 +84,18 @@ namespace LeetCodeAlgo
 
         public string[] buildStringArray(string str)
         {
-            str = str.Replace(" ", "");
-            str = str.Replace("\"\"", "!@#$%");//keep string.Empty
+            //str = str.Replace(" ", "");
+            str = str.TrimStart();
+            str = str.TrimEnd();
+            var n = str.Length;
+            //str = str.Replace("\"\"", "!@#$%");//keep string.Empty
             str = str.Replace("\"", "");
+            var n2 = str.Length;
             if (str[0] == '[') str = str.Substring(1);
             if (str[str.Length - 1] == ']') str = str.Substring(0, str.Length - 1);
             var arr = str.Split(",").Where(x => !string.IsNullOrEmpty(x))
-                            .Select(x => x.Trim()).Select(x => x== "!@#$%" ?"":x).ToList();
+                            //.Select(x => x.Trim())
+                            .Select(x => x == "!@#$%" ? "" : x).ToList();
             return arr.ToArray();
         }
 

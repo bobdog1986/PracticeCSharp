@@ -13,14 +13,14 @@ namespace LeetCodeAlgo
             Console.WriteLine("Run\r\n****************************\r\n");
             Answer answer = new Answer();
             ///!!!*** read from string files
-            List<string> strMatLines = File.ReadLines("StringMatrix.txt").ToList();
+            //List<string> strMatLines = File.ReadLines("StringMatrix.txt").ToList();
             List<string> strArrLines = File.ReadLines("StringArr.txt").ToList();
             //List<string> intArrLines = File.ReadLines("IntArr.txt").ToList();
             //List<string> intMatLines = File.ReadLines("IntMatrix.txt").ToList();
 
-            var matStrLine0 = answer.buildStringMatrix(strMatLines[0]);//build string[][] from file
+            //var matStrLine0 = answer.buildStringMatrix(strMatLines[0]);//build string[][] from file
             //char[][] matCharLine0 = answer.buildCharMatrix(strMatLines[0]);//build char[][] from file due to leetcode using ""
-            //string[] arrStrLine0 = answer.buildStringArray(strArrLines[0]);
+            string[] arrStrLine0 = answer.buildStringArray(strArrLines[0]);
             //char[] arrCharLine0 = answer.buildCharArray(strArrLines[0]);
 
             ///build ListNode, auto print
@@ -52,7 +52,7 @@ namespace LeetCodeAlgo
             sw.Start();
 
 
-            var result = answer.AccountsMerge(matStrLine0);
+            var result = answer.RegionsBySlashes(arrStrLine0);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

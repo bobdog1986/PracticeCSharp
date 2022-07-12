@@ -64,6 +64,66 @@ namespace LeetCodeAlgo
             }
             return i >= s1.Length;
         }
+
+        ///959. Regions Cut By Slashes, #Union Find
+        //An n x n grid is composed of 1 x 1 squares where each 1 x 1 square consists of a '/', '\', or blank space ' '.
+        //These characters divide the square into contiguous regions.
+        //Given the grid grid represented as a string array, return the number of regions.
+        //Note that backslash characters are escaped, so a '\' is represented as '\\'.
+        public int RegionsBySlashes(string[] grid)
+        {
+            //     0
+            //  3     1
+            //     2
+            int n = grid.Length;
+            var uf = new UnionFind(n * n * 4);
+
+            for(int i = 0; i < n; i++)
+            {
+                for(int j = 0; j < n; j++)
+                {
+                    int up = RegionsBySlashes_getIndex(i, j, 0, n);
+                    int right = RegionsBySlashes_getIndex(i, j, 1, n);
+                    int bottom = RegionsBySlashes_getIndex(i, j, 2, n);
+                    int left = RegionsBySlashes_getIndex(i, j, 3, n);
+
+                    if (i > 0)
+                    {
+                        int prev = RegionsBySlashes_getIndex(i - 1, j, 2, n);
+                        uf.Union(prev, up);
+                    }
+                    if (j > 0)
+                    {
+                        int prev = RegionsBySlashes_getIndex(i, j-1, 1, n);
+                        uf.Union(prev, left);
+                    }
+
+                    if (grid[i][j]== '/')
+                    {
+                        uf.Union(up, left);
+                        uf.Union(right, bottom);
+                    }
+                    else if(grid[i][j] == ' ')
+                    {
+                        uf.Union(up, left);
+                        uf.Union(left, bottom);
+                        uf.Union(bottom, right);
+                    }
+                    else
+                    {
+                        uf.Union(up, right);
+                        uf.Union(left, bottom);
+                    }
+                }
+            }
+            return uf.GroupCount;
+        }
+
+        private int RegionsBySlashes_getIndex(int i, int j, int k,int n)
+        {
+            return (i * n + j)*4 + k;
+        }
+
         ///965. Univalued Binary Tree, #BTree
         public bool IsUnivalTree(TreeNode root)
         {
