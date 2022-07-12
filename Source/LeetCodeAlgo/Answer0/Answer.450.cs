@@ -425,6 +425,37 @@ namespace LeetCodeAlgo
             return false;
         }
 
+        ///473. Matchsticks to Square, #Backtracking
+        //matchsticks.Length <=15 , split to 4 equal subarray
+        public bool Makesquare(int[] matchsticks)
+        {
+            //skip invalid as soon as possible by sort descending
+            matchsticks = matchsticks.OrderBy(x => -x).ToArray();
+            int sum = matchsticks.Sum();
+            if (sum % 4 != 0) return false;
+            return Makesquare_dfs(matchsticks, new int[4], 0, sum / 4);
+        }
+
+        private bool Makesquare_dfs(int[] matchsticks, int[] arr , int index, int target)
+        {
+            if (index == matchsticks.Length)
+            {
+                return !arr.Any(x => x != target);
+            }
+            else
+            {
+                for(int i = 0; i < arr.Length; i++)
+                {
+                    if (arr[i] + matchsticks[index] > target) continue;
+                    arr[i] += matchsticks[index];
+                    if (Makesquare_dfs(matchsticks, arr, index + 1, target))
+                        return true;
+                    arr[i] -= matchsticks[index];
+                }
+                return false;
+            }
+        }
+
         ///474. Ones and Zeroes, #DP
         ///Return the size of largest subset of strs such that at most m 0's and n 1's in the subset.
         public int FindMaxForm(string[] strs, int m, int n)
