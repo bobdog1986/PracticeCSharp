@@ -75,47 +75,80 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2157. Groups of Strings, #Union Find
+        ///2157. Groups of Strings, #Union Find, #Bit
+        //Two strings connected if the set of letters of s2 can be obtained by: Add 1 /Delete /Replace 1 char
+        //Return array ans where:ans[0] is the maximum number of groups, ans[1] is the size of the largest group.
         public int[] GroupStrings(string[] words)
         {
             int n= words.Length;
             var uf = new UnionFind(n);
-            for(int i = 0; i < n-1; i++)
+
+            var dict = new Dictionary<int, Dictionary<int,int>>();//store {len, {bit, index}} pairs
+            for (int i = 0; i < n; i++)
             {
-                for(int j = i + 1; j < n; j++)
+                int len = words[i].Length;
+                int bit = 0;
+                foreach(var c in words[i])
+                    bit |= 1 << (c - 'a');
+                if (!dict.ContainsKey(len))
+                    dict.Add(len, new Dictionary<int, int>());
+                if (dict[len].ContainsKey(bit))
+                    uf.Union(dict[len][bit], i);//union duplicates
+                else dict[len].Add(bit,i);
+            }
+            //union all replace pairs of same length
+            foreach(var i in dict.Keys)
+            {
+                var keys = dict[i].Keys.ToList();
+                for(int k1 = 0; k1 < keys.Count-1; k1++)
                 {
-                    if (GroupStrings(words[i], words[j]))
+                    for (int k2 = k1+1; k2 < keys.Count; k2++)
                     {
-                        uf.Union(uf.Find( i), uf.Find(j));
+                        if (GroupStrings_Ones(keys[k1] ^ keys[k2]) == 2)
+                            uf.Union(dict[i][keys[k1]], dict[i][keys[k2]]);
                     }
                 }
             }
-            int max = 0;
-            var dict=new Dictionary<int, int>();
+            //union all delete pairs of 1 length diff
+            //this is very important to reduce O(n1*n2) to O(n1*26), n1,n2 is count of same length words of i,i-1
+            for (int i = 1; i <= 26; i++)
+            {
+                if (!dict.ContainsKey(i) || !dict.ContainsKey(i - 1)) continue;
+                foreach(var num in dict[i].Keys)
+                {
+                    for(int j = 0; j < 26; j++)
+                    {
+                        if((num & (1 << j)) != 0)// if current bit is 1
+                        {
+                            int delete = num & (~(1 << j));//try to find if delete exist
+                            if (dict[i - 1].ContainsKey(delete))
+                                uf.Union(dict[i][num], dict[i - 1][delete]);
+                        }
+                    }
+                }
+            }
+            int maxCount = 0;
+            HashSet<int> indexSet = new HashSet<int>();
+            int[] arr = new int[n];
             for(int i = 0; i < n; i++)
             {
-                var k = uf.Find(i);
-                if (!dict.ContainsKey(k)) dict.Add(k, 0);
-                max = Math.Max(max, ++dict[k]);
+                int k = uf.Find(i);
+                indexSet.Add(k);
+                maxCount = Math.Max(maxCount, ++arr[k]);
             }
-
-            return new int[] { dict.Keys.Count, max };
+            return new int[] { indexSet.Count, maxCount };
         }
 
-        private bool GroupStrings(string s1,string s2)
+        private int GroupStrings_Ones(int n)
         {
-            int m = s1.Length;
-            int n = s2.Length;
-            if (m - n > 1 || n - m > 1) return false;
-            if (m > n) return GroupStrings(s2, s1);
-            var set1 = s1.ToHashSet();
-            int miss = 0;
-            foreach (var c in s2)
+            int count = 0;
+            int seed = 1;
+            for(int i = 0; i < 26 && count <=2; i++)
             {
-                set1.Remove(c);
+                if ((n & (seed)) != 0) count++;
+                seed<<=1;
             }
-
-            return m == n ? set1.Count <= 1 : set1.Count == 0;
+            return count;
         }
 
         ///2160. Minimum Sum of Four Digit Number After Splitting Digits
