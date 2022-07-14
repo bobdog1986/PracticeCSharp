@@ -572,19 +572,23 @@ namespace LeetCodeAlgo
                     break;
                 }
             }
-
             var uf = new UnionFind(n + 1);
-
             foreach (var edge in edges)
             {
-                if (edge[1] == 0) continue;
+                if (edge[1] == 0) continue;//skip curr
                 if (!uf.Union(edge[0], edge[1]))//already connected
                 {
-                    return prev != null ? prev : edge;
+                    if (prev != null)
+                        return prev;//case 1 : still invalid, but prev is not null, return prev
+                    else
+                    {
+                        //case 2 :or prev == null means all nodes has only 1 parent
+                        //so there still a cycle, no one has two parents, just return the last edge, eg 1->2->3->1
+                        return edge;
+                    }
                 }
             }
-            //move curr is ok , so return B
-            return curr;
+            return curr;//skip curr is correct ,so return curr
         }
 
         ///688. Knight Probability in Chessboard, #Memoization
@@ -592,7 +596,6 @@ namespace LeetCodeAlgo
         {
             var dxy = new int[][] { new int[] {1,2 }, new int[] { 2, 1 }, new int[] { -1, 2 }, new int[] { -2, 1 },
                                     new int[] {1,-2 }, new int[] {2,-1 }, new int[] {-1,-2 }, new int[] {-2,-1 },};
-
             var total = Math.Pow(8, k);
             var dict = new Dictionary<int, double>();
             dict.Add(row * 100 + column, 1);

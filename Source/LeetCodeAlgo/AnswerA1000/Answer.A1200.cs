@@ -186,6 +186,19 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///1221. Split a String in Balanced Strings
+        public int BalancedStringSplit(string s)
+        {
+            int res = 0;
+            int l = 0;
+            foreach(var c in s)
+            {
+                l += c == 'L' ? 1 : -1;
+                if (l == 0) res++;
+            }
+            return res;
+        }
+
         ///1222. Queens That Can Attack the King
         public IList<IList<int>> QueensAttacktheKing(int[][] queens, int[] king)
         {
