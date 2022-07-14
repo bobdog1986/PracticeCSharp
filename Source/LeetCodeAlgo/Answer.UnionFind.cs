@@ -12,7 +12,6 @@ namespace LeetCodeAlgo
         public int[] parent;
         public int[] rank;
         public int GroupCount;
-
         public UnionFind(int n)
         {
             GroupCount = n;
@@ -38,11 +37,11 @@ namespace LeetCodeAlgo
             return Find(x) == Find(y);
         }
 
-        public void Union(int p, int q)
+        public bool Union(int p, int q)
         {
             int rootP = Find(p);
             int rootQ = Find(q);
-            if (rootP == rootQ) return;
+            if (rootP == rootQ) return false;
             if (rank[rootQ] > rank[rootP])
             {
                 parent[rootP] = rootQ;
@@ -56,6 +55,7 @@ namespace LeetCodeAlgo
                 }
             }
             GroupCount--;
+            return true;
         }
     }
 

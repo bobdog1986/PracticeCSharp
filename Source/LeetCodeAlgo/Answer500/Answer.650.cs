@@ -144,30 +144,31 @@ namespace LeetCodeAlgo
             for (int i = 0; i < m; i++)
                 res[i] = new int[n];
 
-            for(int i = 0; i < m; i++)
+            for (int i = 0; i < m; i++)
             {
-                for(int j=0; j < n; j++)
+                for (int j = 0; j < n; j++)
                 {
                     int sum = 0;
                     int count = 0;
-                    for(int k = -1; k <= 1; k++)
+                    for (int k = -1; k <= 1; k++)
                     {
-                        for(int l = -1; l <= 1; l++)
+                        for (int l = -1; l <= 1; l++)
                         {
                             int r = i + k;
                             int c = j + l;
-                            if(r>=0 && r<m && c>=0 && c < n)
+                            if (r >= 0 && r < m && c >= 0 && c < n)
                             {
                                 sum += img[r][c];
                                 count++;
                             }
                         }
                     }
-                    res[i][j] = sum/count;
+                    res[i][j] = sum / count;
                 }
             }
             return res;
         }
+
         /// 662. Maximum Width of Binary Tree
         ///The maximum width of a tree is the maximum width among all levels.
         ///The width of one level is defined as the length between the end-nodes(the leftmost and rightmost non-null nodes),
@@ -212,7 +213,7 @@ namespace LeetCodeAlgo
         public bool CheckPossibility(int[] nums)
         {
             int prev = int.MinValue;
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 if (nums[i] < prev)
                 {
@@ -223,7 +224,7 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        private bool CheckPossibility(int[] nums,int index ,int skip)
+        private bool CheckPossibility(int[] nums, int index, int skip)
         {
             int prev = int.MinValue;
             for (int i = Math.Max(0, index); i < nums.Length; i++)
@@ -367,7 +368,7 @@ namespace LeetCodeAlgo
             int max = 0;
             int prev = int.MinValue;
             int curr = 0;
-            foreach(var n in nums)
+            foreach (var n in nums)
             {
                 if (n > prev)
                 {
@@ -531,37 +532,59 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///684. Redundant Connection, #Graph,#BFS
+        ///684. Redundant Connection, #Union Find
+        //In this problem, a tree is an undirected graph that is connected and has no cycles.
+        //vertex is from 1 to n,  their are n edges, so must 1 edge redundant
         public int[] FindRedundantConnection(int[][] edges)
         {
             int n = edges.Length;
-            HashSet<int>[] graph = new HashSet<int>[n + 1];
-            for (int i = 0; i < graph.Length; i++)
-                graph[i] = new HashSet<int>();
+            var uf = new UnionFind(n + 1);
+            foreach (var e in edges)
+            {
+                if (uf.Find(e[0]) == uf.Find(e[1]))
+                    return e;
+                uf.Union(e[0], e[1]);
+            }
+            return new int[] { };
+        }
+
+        //685. Redundant Connection II, #Union Find
+        //a rooted tree is a directed graph
+        public int[] FindRedundantDirectedConnection(int[][] edges)
+        {
+            int n = edges.Length;
+            int[] prev = null;
+            int[] curr = null;
+            int[] parent = new int[n+1];
+            foreach (var edge in edges)
+            {
+                //check whether there is a node with two parents
+                if (parent[edge[1]] == 0)
+                {
+                    parent[edge[1]] = edge[0];
+                }
+                else
+                {
+                    //edge[1] has two parent: prev, curr
+                    prev = new int[] { parent[edge[1]], edge[1] };
+                    curr = new int[] { edge[0], edge[1] };
+                    edge[1] = 0;//make current invalid
+                    break;
+                }
+            }
+
+            var uf = new UnionFind(n + 1);
 
             foreach (var edge in edges)
             {
-                if (FindRedundantConnection_BFS(graph, new bool[n + 1], edge[0], edge[1])) return edge;
-                else
+                if (edge[1] == 0) continue;
+                if (!uf.Union(edge[0], edge[1]))//already connected
                 {
-                    graph[edge[0]].Add(edge[1]);
-                    graph[edge[1]].Add(edge[0]);
+                    return prev != null ? prev : edge;
                 }
             }
-            return null;
-        }
-
-        private bool FindRedundantConnection_BFS(HashSet<int>[] graph, bool[] visit, int curr, int target)
-        {
-            if (visit[curr]) return false;
-            if (graph[curr].Contains(target)) return true;
-            visit[curr] = true;
-            foreach (var i in graph[curr])
-            {
-                if (visit[i]) continue;
-                if (FindRedundantConnection_BFS(graph, visit, i, target)) return true;
-            }
-            return false;
+            //move curr is ok , so return B
+            return curr;
         }
 
         ///688. Knight Probability in Chessboard, #Memoization
@@ -606,7 +629,7 @@ namespace LeetCodeAlgo
 
             Queue<Employee> queue = new Queue<Employee>();
             queue.Enqueue(map[id]);
-            while (queue.Count>0)
+            while (queue.Count > 0)
             {
                 Employee current = queue.Dequeue();
                 total += current.importance;
@@ -620,6 +643,7 @@ namespace LeetCodeAlgo
             }
             return total;
         }
+
         public int GetImportance_DFS(IList<Employee> employees, int id)
         {
             Dictionary<int, Employee> map = new Dictionary<int, Employee>();
@@ -627,7 +651,7 @@ namespace LeetCodeAlgo
             {
                 map.Add(employee.id, employee);
             }
-            return GetImportance_DFS(map,id);
+            return GetImportance_DFS(map, id);
         }
 
         private int GetImportance_DFS(Dictionary<int, Employee> map, int rootId)
