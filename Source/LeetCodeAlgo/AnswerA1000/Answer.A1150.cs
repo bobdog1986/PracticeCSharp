@@ -244,6 +244,27 @@ namespace LeetCodeAlgo
             return head;
         }
 
+        ///1184. Distance Between Bus Stops
+        public int DistanceBetweenBusStops(int[] distance, int start, int destination)
+        {
+            int n = distance.Length;
+            int forward = 0;
+            int i = start%n;
+            while (i != destination)
+            {
+                forward+=distance[i];
+                i = (i + 1) % n;
+            }
+            int backward = 0;
+            int j = destination % n;
+            while (j != start)
+            {
+                backward += distance[j];
+                j = (j + 1) % n;
+            }
+            return Math.Min(forward, backward);
+        }
+
         ///1185. Day of the Week
         public string DayOfTheWeek(int day, int month, int year)
         {

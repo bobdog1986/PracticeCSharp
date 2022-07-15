@@ -522,20 +522,18 @@ namespace LeetCodeAlgo
             if (amount == 0)
                 return 0;
             int[] dp = new int[amount + 1];
-            for (int i = 0; i < dp.Length; i++)
-                dp[i] = 10001;
-            Array.Sort(coins);
+            Array.Fill(dp, 1000000);
+            coins = coins.OrderBy(x => -x).ToArray();//sort descending
             dp[amount] = 0;
             for (int i = amount; i >= 0; i--)
             {
-                for (int j = coins.Length - 1; j >= 0; j--)
+                foreach (var coin in coins)
                 {
-                    if (i - coins[j] < 0)
-                        continue;
-                    dp[i - coins[j]] = Math.Min(dp[i - coins[j]], dp[i] + 1);
+                    if (i - coin < 0) continue;
+                    dp[i - coin] = Math.Min(dp[i - coin], dp[i] + 1);
                 }
             }
-            return dp[0] == 10001 ? -1 : dp[0];
+            return dp[0] >= 1000000 ? -1 : dp[0];
         }
 
         ///324. Wiggle Sort II

@@ -464,37 +464,32 @@ namespace LeetCodeAlgo
             return c - '0';
         }
 
-        ///416. Partition Equal Subset Sum, #DP, #knapsack
-        //non-empty nums(nums[i]>=1), find can be partitioned into two subsets such that the sum of elements in both subsets is equal.
+        ///416. Partition Equal Subset Sum, #DP, #Knapsack
+        //non-empty nums(nums[i]>=1), find can be partitioned into two subsets with equal sum.
         public bool CanPartition(int[] nums)
         {
             int sum = nums.Sum();
-            if ((sum & 1) == 1) return false;
-
-            sum = sum /2;
-
+            if (sum % 2 != 0) return false;
+            int half = sum / 2;
             int n = nums.Length;
             bool[][] dp = new bool[n + 1][];
             for (int i = 0; i < dp.Length; i++)
-                dp[i] = new bool[sum + 1];
-
+                dp[i] = new bool[half + 1];
             dp[0][0] = true;
-
             for (int i = 1; i < dp.Length; i++)
                 dp[i][0] = true;
-
             for (int i = 1; i < dp.Length; i++)
             {
-                for (int j = 1; j < dp[0].Length; j++)
+                for (int j = 1; j <= half; j++)
                 {
                     dp[i][j] = dp[i - 1][j];
                     if (j >= nums[i - 1])
                     {
-                        dp[i][j] = dp[i][j] || dp[i - 1][j - nums[i - 1]];
+                        dp[i][j] |= dp[i - 1][j - nums[i - 1]];
                     }
                 }
             }
-            return dp[n][sum];
+            return dp[n][half];
         }
 
         /// 417. Pacific Atlantic Water Flow. #Graph, #BFS
