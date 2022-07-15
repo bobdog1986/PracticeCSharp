@@ -168,6 +168,53 @@ namespace LeetCodeAlgo
             else return false;
         }
 
+        ///815. Bus Routes, #BFS
+        //routes[0] = [1, 5, 7], 0th bus travels in the sequence 1 -> 5 -> 7 -> 1 -> 5 -> 7 -> ... forever.
+        //Return the least number of buses you must take to travel from source to target. Return -1 if not possible.
+        //1 <= routes.length <= 500. 1 <= routes[i].length <= 10^5
+        public int NumBusesToDestination(int[][] routes, int source, int target)
+        {
+            int n = 0;//store max of bus stopId
+            var dict = new Dictionary<int, HashSet<int>>();//store {stopId,busIdSet}
+            for(int i = 0; i < routes.Length; i++)
+            {
+                foreach(var j in routes[i])
+                {
+                    n = Math.Max(n, j);
+                    if (!dict.ContainsKey(j))
+                        dict.Add(j, new HashSet<int>());
+                    dict[j].Add(i);
+                }
+            }
+            if (!dict.ContainsKey(target) || !dict.ContainsKey(source))
+                return -1;
+            Queue<int> q = new Queue<int>();
+            q.Enqueue(source);
+            int level = 0;
+            HashSet<int> visit = new HashSet<int>();
+            visit.Add(source);
+            while (q.Count > 0)
+            {
+                int size = q.Count;
+                while (size-- > 0)
+                {
+                    var top = q.Dequeue();
+                    if (top == target) return level;
+                    foreach(var busId in dict[top])
+                    {
+                        foreach(var stopId in routes[busId])
+                        {
+                            if (visit.Contains(stopId)) continue;
+                            visit.Add(stopId);
+                            q.Enqueue(stopId);
+                        }
+                    }
+                }
+                level++;
+            }
+            return -1;
+        }
+
         ///819. Most Common Word
         public string MostCommonWord(string paragraph, string[] banned)
         {
