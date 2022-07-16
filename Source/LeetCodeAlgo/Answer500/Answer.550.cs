@@ -322,6 +322,39 @@ namespace LeetCodeAlgo
         {
             return Math.Min(candyType.Length / 2, candyType.ToHashSet().Count);
         }
+
+        ///576. Out of Boundary Paths, #DP
+        public int FindPaths(int m, int n, int maxMove, int startRow, int startColumn)
+        {
+            int res = 0;
+            int mod = 10_0000_0007;
+            int[][][] dp = new int[maxMove + 1][][];
+            for(int i = 0; i < dp.Length; i++)
+            {
+                dp[i] = new int[m][];
+                for (int j = 0; j < m; j++)
+                    dp[i][j] = new int[n];
+            }
+            dp[0][startRow][startColumn] = 1;
+            int[] dxy4 = new int[] { 1, 0, -1, 0, 1 };
+            for(int i = 0; i < maxMove; i++)
+                for (int r = 0; r < m; r++)
+                    for (int c = 0; c < n; c++)
+                    {
+                        if (dp[i][r][c] == 0) continue;
+                        for (int l = 0; l < 4; l++)
+                        {
+                            int row = r + dxy4[l];
+                            int col = c + dxy4[l + 1];
+                            if (row >= 0 && row < m && col >= 0 && col < n)
+                                dp[i + 1][row][col] = (dp[i + 1][row][col] + dp[i][r][c]) % mod;
+                            else
+                                res = (res + dp[i][r][c]) % mod;
+                        }
+                    }
+            return res % mod;
+        }
+
         /// 581. Shortest Unsorted Continuous Subarray
         ///find one continuous subarray that sort this subarray in ascending order,then the whole array sorted.
         ///Return the shortest such subarray and output its length.
