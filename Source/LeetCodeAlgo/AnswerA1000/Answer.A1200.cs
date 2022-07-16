@@ -315,11 +315,41 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///1247. Minimum Swaps to Make Strings Equal
-        //s1 and s2 of equal length consisting of letters "x" and "y" only.
-        //You can swap any two characters that belong to different strings, which means: swap s1[i] and s2[j].
-        //Return the minimum number of swaps required to make s1 and s2 equal, or return -1 if impossible.
-        public int MinimumSwap(string s1, string s2)
+        ///1234. Replace the Substring for Balanced String, #Sliding Window, #Two Pointers
+        //string s only contains 'Q', 'W', 'E', and 'R'
+        //A string is said to be balanced if each characters appears n / 4 times.
+        //Return the minimum length of the substring that can be replaced with any other string of the same length
+        //to make s balanced. If s is already balanced, return 0.
+        public int BalancedString(string s)
+        {
+            int[] arr = new int[128];
+            int n = s.Length;
+            int res = n;
+            int k = n / 4;
+            foreach (var c in s)
+                arr[c]++;
+            // left pointer and right pointer of the sliding window
+            int left = 0, right = 0;
+            while (right < n)
+            {
+                // add current char at "right" pointer into the sliding window, and move "right" pointer to the right
+                arr[s[right++]]--;
+                while (left < n && arr['Q'] <= k && arr['W'] <= k && arr['E'] <= k && arr['R'] <= k)
+                {
+                    res = Math.Min(res, right - left);//[left,right)
+                    // remove the char at "left" pointer from the sliding window and move "left" pointer to the right
+                    arr[s[left++]]++;
+                }
+            }
+            return res;
+        }
+
+
+            ///1247. Minimum Swaps to Make Strings Equal
+            //s1 and s2 of equal length consisting of letters "x" and "y" only.
+            //You can swap any two characters that belong to different strings, which means: swap s1[i] and s2[j].
+            //Return the minimum number of swaps required to make s1 and s2 equal, or return -1 if impossible.
+            public int MinimumSwap(string s1, string s2)
         {
             int res = 0;
             int n = s1.Length;

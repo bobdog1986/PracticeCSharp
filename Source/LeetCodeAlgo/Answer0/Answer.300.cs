@@ -431,34 +431,6 @@ namespace LeetCodeAlgo
             }
         }
 
-        public IList<int> CountSmaller_My(int[] nums)
-        {
-            int ship = 10000;
-            var arr = new int[2 * ship + 1];
-            int left = 2 * ship;
-            int right = 0;
-            foreach (var n in nums)
-            {
-                arr[n + ship]++;
-                left = Math.Min(left, n + ship);
-                right = Math.Max(right, n + ship);
-            }
-            var ans = new List<int>();
-            for (int i = 0; i < nums.Length; i++)
-            {
-                int count = 0;
-                int j = nums[i] + ship - 1;
-                while (j >= left)
-                {
-                    count += arr[j];
-                    j--;
-                }
-                ans.Add(count);
-                arr[nums[i] + ship]--;
-            }
-            return ans;
-        }
-
         ///316. Remove Duplicate Letters, #Greedy
         ///Given a string s, remove duplicate letters so that every letter appears once and only once.
         ///You must make sure your result is the smallest in lexicographical order among all possible results.
