@@ -247,14 +247,14 @@ namespace LeetCodeAlgo
         public string GreatestLetter(string s)
         {
             var dict = new Dictionary<char, int[]>();
-            foreach(var c in s)
+            foreach (var c in s)
             {
                 if (!dict.ContainsKey(char.ToUpper(c)))
-                    dict.Add(char.ToUpper(c),new int[] {0,0 });
+                    dict.Add(char.ToUpper(c), new int[] { 0, 0 });
                 int index = char.IsUpper(c) ? 0 : 1;
                 dict[char.ToUpper(c)][index] = 1;
             }
-            var keys = dict.Keys.Where(x => dict[x].Sum() == 2).OrderBy(x=>-x).ToList();
+            var keys = dict.Keys.Where(x => dict[x].Sum() == 2).OrderBy(x => -x).ToList();
             return keys.Count() == 0 ? String.Empty : keys[0].ToString();
         }
 
@@ -271,7 +271,7 @@ namespace LeetCodeAlgo
             if (num % 10 == k) return 1;
             //max of result is 10, because if exist valid result, we must fint it in [1,10]
             //start with 1 and look for the target i that make unit k
-            for (int i = 1; i <= num / k && i<=10; i++)
+            for (int i = 1; i <= num / k && i <= 10; i++)
             {
                 //if unit equal to k, we can pick any number in set to add the cap to num
                 if (num % 10 == ((i * k) % 10)) // Look for equal unit's digit
@@ -290,14 +290,14 @@ namespace LeetCodeAlgo
             int ones = 0;
             int zeros = 0;
             long curr = 0;
-            for(int i = s.Length - 1; i >= 0; i--)
+            for (int i = s.Length - 1; i >= 0; i--)
             {
                 if (s[i] == '0')
                     zeros++;
                 else
                 {
                     long val = (long)1 << (zeros + ones);
-                    if(curr+val> k)
+                    if (curr + val > k)
                         break;
                     else if (curr + val == k)
                     {
@@ -325,29 +325,29 @@ namespace LeetCodeAlgo
         //1 <= m, n <= 200
         public long SellingWood(int m, int n, int[][] prices)
         {
-            int[,] priceMat = new int[201,201];
+            int[,] priceMat = new int[201, 201];
             foreach (var p in prices)
             {
-                priceMat[p[0],p[1]] = Math.Max(priceMat[p[0], p[1]], p[2]);
+                priceMat[p[0], p[1]] = Math.Max(priceMat[p[0], p[1]], p[2]);
             }
-            long[,] dp = new long[m + 1,n + 1];
+            long[,] dp = new long[m + 1, n + 1];
             for (int i = 1; i <= m; i++)
             {
                 for (int j = 1; j <= n; j++)
                 {
-                    dp[i,j] = priceMat[i,j];
+                    dp[i, j] = priceMat[i, j];
                     //because cut across the entire height or width of the piece
                     for (int k = 1; k < i; k++)
                     {
-                        dp[i,j] = Math.Max(dp[i,j], dp[k,j] + dp[i - k,j]);
+                        dp[i, j] = Math.Max(dp[i, j], dp[k, j] + dp[i - k, j]);
                     }
                     for (int k = 1; k < j; k++)
                     {
-                        dp[i,j] = Math.Max(dp[i,j], dp[i,k] + dp[i,j - k]);
+                        dp[i, j] = Math.Max(dp[i, j], dp[i, k] + dp[i, j - k]);
                     }
                 }
             }
-            return dp[m,n];
+            return dp[m, n];
         }
 
         //2315. Count Asterisks
@@ -356,9 +356,9 @@ namespace LeetCodeAlgo
         {
             bool open = false;
             int res = 0;
-            foreach(var c in s)
+            foreach (var c in s)
             {
-                if(c== '|')
+                if (c == '|')
                     open = !open;
                 else if (c == '*' && !open)
                     res++;
@@ -373,26 +373,25 @@ namespace LeetCodeAlgo
         {
             long res = 0;
             var uf = new UnionFind(n);
-            foreach(var e in edges)
+            foreach (var e in edges)
             {
                 uf.Union(e[0], e[1]);
             }
 
-            var dict=new Dictionary<int, long>();
-            for(int i = 0; i < n; i++)
+            var dict = new Dictionary<int, long>();
+            for (int i = 0; i < n; i++)
             {
                 var j = uf.Find(i);
                 if (!dict.ContainsKey(j)) dict.Add(j, 0);
                 dict[j]++;
             }
 
-            foreach(var k in dict.Keys)
+            foreach (var k in dict.Keys)
             {
                 res += dict[k] * (n - dict[k]);//select i in current group, and j not in
             }
-            return res/2;//duplicate {i,j}, {j,i}
+            return res / 2;//duplicate {i,j}, {j,i}
         }
-
 
         ///2317. Maximum XOR After Operations
         //update nums[i] to be equal to nums[i] AND (nums[i] XOR x).
@@ -422,8 +421,8 @@ namespace LeetCodeAlgo
             dict.Add(5, new List<int>() { 1, 2, 3, 4, 6 });
             dict.Add(6, new List<int>() { 1, 5, });
             //must use 3D matrix array, init seed data
-            long[,,] dp = new long[n + 1,7,7];
-            for(int i=1;i<=6;i++)
+            long[,,] dp = new long[n + 1, 7, 7];
+            for (int i = 1; i <= 6; i++)
                 dp[1, i, i] = 1;// normally index1 cannot equal index2, this is a tricky
             //i is round
             for (int i = 2; i <= n; i++)
@@ -432,7 +431,7 @@ namespace LeetCodeAlgo
                 for (int j = 1; j <= 6; j++)
                 {
                     //k means that last row number, eg dp[i,j,k] came from dp[i-1,k,x], x cannot be j due to abs(i,j)>2 rule
-                    for (int k=1;k<=6; k++)
+                    for (int k = 1; k <= 6; k++)
                     {
                         if (!dict[j].Contains(k)) continue;
                         for (int l = 1; l <= 6; l++)
@@ -444,11 +443,11 @@ namespace LeetCodeAlgo
                     }
                 }
             }
-            for (int i=1;i<=6;i++)
+            for (int i = 1; i <= 6; i++)
             {
-                for(int j = 1; j <= 6; j++)
+                for (int j = 1; j <= 6; j++)
                 {
-                    res = (res + dp[n,i,j]) % mod;
+                    res = (res + dp[n, i, j]) % mod;
                 }
             }
             return (int)((res + mod) % mod);
@@ -459,13 +458,13 @@ namespace LeetCodeAlgo
         public bool CheckXMatrix(int[][] grid)
         {
             int n = grid.Length;
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
-                for(int j = 0; j < n; j++)
+                for (int j = 0; j < n; j++)
                 {
                     bool drag = i == j || n - 1 - i == j;
                     if ((drag && grid[i][j] == 0)
-                        ||(!drag && grid[i][j] != 0)) return false;
+                        || (!drag && grid[i][j] != 0)) return false;
                 }
             }
             return true;
@@ -484,11 +483,11 @@ namespace LeetCodeAlgo
             long mod = 10_0000_0007;
             long a = 1;
             long dp = 1;
-            for(int i = 1; i <= n; i++)
+            for (int i = 1; i <= n; i++)
             {
                 long b = a + dp;
                 a = dp;
-                dp = b% mod;
+                dp = b % mod;
             }
             return (int)(dp * dp % mod);
         }
@@ -511,14 +510,14 @@ namespace LeetCodeAlgo
             }
             int max1 = MaxSubArray(diff1);
             int max2 = MaxSubArray(diff2);
-            return Math.Max(sum2+max1,sum1+max2);
+            return Math.Max(sum2 + max1, sum1 + max2);
         }
 
         ///2325. Decode the Message
         public string DecodeMessage(string key, string message)
         {
             var dict = new Dictionary<char, int>();
-            foreach(var c in key)
+            foreach (var c in key)
             {
                 if (dict.Count == 26) break;
                 if (c == ' ') continue;
@@ -531,13 +530,13 @@ namespace LeetCodeAlgo
         ///2326. Spiral Matrix IV
         public int[][] SpiralMatrix(int m, int n, ListNode head)
         {
-            var res=new int[m][];
-            for(int i = 0; i < m; i++)
+            var res = new int[m][];
+            for (int i = 0; i < m; i++)
             {
                 res[i] = new int[n];
                 Array.Fill(res[i], -1);
             }
-            int direct = n==1?1: 0;
+            int direct = n == 1 ? 1 : 0;
             int r = 0;
             int c = 0;
             int row1 = 0;
@@ -565,7 +564,7 @@ namespace LeetCodeAlgo
                         col2--;
                     }
                 }
-                else if(direct == 2)
+                else if (direct == 2)
                 {
                     c--;
                     if (c == col1)
@@ -600,13 +599,13 @@ namespace LeetCodeAlgo
             long mod = 10_0000_0007;
             long[] shares = new long[n + 1];
             long[] forgets = new long[n + 1];
-            if (1+delay <= n)
+            if (1 + delay <= n)
                 shares[delay + 1] = 1;
-            if (1+forget <= n)
+            if (1 + forget <= n)
                 forgets[forget + 1] = 1;
             long shareToday = 0;
             long peopleKnow = 1;
-            for (int i = delay+1; i <= n; i++)
+            for (int i = delay + 1; i <= n; i++)
             {
                 shareToday += shares[i] % mod;
                 shareToday -= forgets[i] % mod;
@@ -623,7 +622,7 @@ namespace LeetCodeAlgo
         public int PeopleAwareOfSecret_Lee215(int n, int delay, int forget)
         {
             long[] dp = new long[n + 1];
-            long mod=10_0000_0007, share = 0, res = 0;
+            long mod = 10_0000_0007, share = 0, res = 0;
             dp[1] = 1;
             for (int i = 2; i <= n; ++i)
             {
@@ -656,12 +655,12 @@ namespace LeetCodeAlgo
         public int LatestTimeCatchTheBus(int[] buses, int[] passengers, int capacity)
         {
             Array.Sort(buses);
-            var pq =new PriorityQueue<int, int>();
-            foreach(var p in passengers)
+            var pq = new PriorityQueue<int, int>();
+            foreach (var p in passengers)
                 pq.Enqueue(p, p);
 
             HashSet<int> set = new HashSet<int>();
-            for(int i = 0; i < buses.Length - 1; i++)
+            for (int i = 0; i < buses.Length - 1; i++)
             {
                 var curr = capacity;
                 while (curr > 0)
@@ -753,7 +752,6 @@ namespace LeetCodeAlgo
             return arr.Sum(x => x * x);
         }
 
-
         ///2335. Minimum Amount of Time to Fill Cups
         //Every second, you can either fill up 2 cups with different types of water, or 1 cup of any type of water.
         //Return the minimum number of seconds needed to fill up all the cups.
@@ -768,7 +766,7 @@ namespace LeetCodeAlgo
         public int FillCups_PQ(int[] amount)
         {
             int res = 0;
-            PriorityQueue<int,int> pq = new PriorityQueue<int, int>();
+            PriorityQueue<int, int> pq = new PriorityQueue<int, int>();
             foreach (var a in amount)
             {
                 if (a > 0)
@@ -787,7 +785,7 @@ namespace LeetCodeAlgo
                     res++;
                     max--;
                     mid--;
-                    if(max>0)
+                    if (max > 0)
                         pq.Enqueue(max, -max);
                     if (mid > 0)
                         pq.Enqueue(mid, -mid);
@@ -810,7 +808,7 @@ namespace LeetCodeAlgo
             int n = start.Length;
             int lefts = 0;
             int rights = 0;
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
                 if (target[i] == 'L')
                 {
@@ -858,7 +856,22 @@ namespace LeetCodeAlgo
                     }
                 }
             }
-            return lefts==0 && rights==0;
+            return lefts == 0 && rights == 0;
+        }
+
+        ///2341. Maximum Number of Pairs in Array
+        public int[] NumberOfPairs(int[] nums)
+        {
+            var dict = new Dictionary<int, int>();
+            foreach (var n in nums)
+            {
+                if (!dict.ContainsKey(n)) dict.Add(n, 0);
+                dict[n]++;
+            }
+            var x = dict.Keys.Select(x => dict[x] / 2).Sum();
+            var y = dict.Keys.Select(x => dict[x] % 2).Sum();
+            return new int[] { x, y };
+        }
         }
 
     }
