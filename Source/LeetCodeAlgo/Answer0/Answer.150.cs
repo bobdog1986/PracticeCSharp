@@ -479,17 +479,17 @@ namespace LeetCodeAlgo
             return dp[nums.Length - 1];
         }
 
-        ///199. Binary Tree Right Side View
+        ///199. Binary Tree Right Side View, #BTree
         ///return the right side values of the nodes you can see ordered from top to bottom.
         public IList<int> RightSideView(TreeNode root)
         {
-            var ans = new List<int>();
+            var res = new List<int>();
             if (root == null)
-                return ans;
+                return res;
             List<TreeNode> nodes = new List<TreeNode>() { root };
             while (nodes.Count > 0)
             {
-                ans.Add(nodes.Last().val);
+                res.Add(nodes.Last().val);
                 List<TreeNode> nexts = new List<TreeNode>();
                 foreach (var node in nodes)
                 {
@@ -500,7 +500,7 @@ namespace LeetCodeAlgo
                 }
                 nodes = nexts;
             }
-            return ans;
+            return res;
         }
     }
 }

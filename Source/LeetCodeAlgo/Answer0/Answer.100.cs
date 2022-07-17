@@ -15,7 +15,7 @@ namespace LeetCodeAlgo
             return IsSameTree_Recursion(p.left, q.left) && IsSameTree_Recursion(p.right, q.right);
         }
 
-        public bool IsSameTree_Iteration(TreeNode p, TreeNode q)
+        public bool IsSameTree(TreeNode p, TreeNode q)
         {
             var q1 = new Queue<TreeNode>();
             var q2 = new Queue<TreeNode>();

@@ -226,6 +226,38 @@ namespace LeetCodeAlgo
             return Math.Max(nums[0] * nums[1] * nums[n - 1], nums[n - 3] * nums[n - 2] * nums[n - 1]);
         }
 
+
+        ///629. K Inverse Pairs Array, #DP
+        //an inverse pair is a pair of integers [i, j] where 0 <= i < j < nums.length and nums[i] > nums[j].
+        //Given two integers n and k, return the number of different arrays consist of numbers from 1 to n
+        //such that there are exactly k inverse pairs.return it modulo 10^9 + 7.
+        public int KInversePairs(int n, int k)
+        {
+            long mod = 10_0000_0007;
+            if (k > n * (n - 1) / 2 || k < 0)
+                return 0;
+            if (k == 0 || k == n * (n - 1) / 2)
+                return 1;
+
+            long[][] dp = new long[n + 1][];
+            for (int i = 0; i < dp.Length; i++)
+                dp[i] = new long[k + 1];
+
+            dp[2][0] = 1;
+            dp[2][1] = 1;
+            for (int i = 3; i <= n; i++)
+            {
+                dp[i][0] = 1;
+                for (int j = 1; j <= Math.Min(k, i * (i - 1) / 2); j++)
+                {
+                    dp[i][j] = dp[i][j - 1] + dp[i - 1][j];
+                    if (j >= i) dp[i][j] -= dp[i - 1][j - i];
+                    dp[i][j] = (dp[i][j] + mod) % mod;
+                }
+            }
+            return (int)dp[n][k];
+        }
+
         ///630. Course Schedule III, #PriorityQueue
         //courses[i] = [durationi, lastDayi] indicate that the ith course should be taken continuously
         //for durationi days and must be finished before or on lastDayi.
