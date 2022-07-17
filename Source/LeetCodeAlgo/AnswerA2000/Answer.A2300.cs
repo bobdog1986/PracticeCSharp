@@ -872,6 +872,41 @@ namespace LeetCodeAlgo
             var y = dict.Keys.Select(x => dict[x] % 2).Sum();
             return new int[] { x, y };
         }
+
+        ///2342. Max Sum of a Pair With Equal Sum of Digits
+        //You are given a 0-indexed array nums consisting of positive integers.
+        //choose two indices i and j, i != j, and the sum of digits of the number nums[i] is equal to that of nums[j].
+        //Return the maximum value of nums[i] + nums[j] that you can obtain over all possible indices i and j
+        public int MaximumSum_2342(int[] nums)
+        {
+            var dict = new Dictionary<int, PriorityQueue<int, int>>();
+            int res = -1;
+            foreach (var n in nums)
+            {
+                int digit = getDigitSum(n);
+                if (!dict.ContainsKey(digit))
+                    dict.Add(digit, new PriorityQueue<int, int>());
+                dict[digit].Enqueue(n, -n);
+            }
+            foreach (var k in dict.Keys)
+            {
+                if (dict[k].Count >= 2)
+                {
+                    res = Math.Max(res, dict[k].Dequeue() + dict[k].Dequeue());
+                }
+            }
+            return res;
+        }
+
+        private int getDigitSum(int n)
+        {
+            int res = 0;
+            while (n > 0)
+            {
+                res += n % 10;
+                n /= 10;
+            }
+            return res;
         }
 
     }
