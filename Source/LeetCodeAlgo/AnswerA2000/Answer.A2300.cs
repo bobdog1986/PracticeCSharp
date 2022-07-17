@@ -941,5 +941,43 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2344. Minimum Deletions to Make Array Divisible
+        //You can delete any number of elements from nums.
+        //Return the minimum number of deletions such that the smallest element in nums divides all the elements of numsDivide.
+        //If this is not possible, return -1.
+        //1 <= nums.length, numsDivide.length <= 10^5, 1 <= nums[i], numsDivide[i] <= 10^9
+        public int MinOperations(int[] nums, int[] numsDivide)
+        {
+            int res = 0;
+            numsDivide = numsDivide.ToHashSet().ToArray();
+            int gcd = numsDivide[0];
+            foreach (var n in numsDivide)
+            {
+                gcd = getGCD(gcd, n);
+            }
+            HashSet<int> visit = new HashSet<int>();
+            var pq = new PriorityQueue<int, int>();
+            foreach (var n in nums)
+            {
+                if (n <= gcd)
+                    pq.Enqueue(n, n);
+            }
+            while (pq.Count > 0)
+            {
+                var top = pq.Dequeue();
+                if (visit.Contains(top))
+                {
+                    res++;
+                    continue;
+                }
+                if (gcd % top == 0) return res;
+                else
+                {
+                    visit.Add(top);
+                    res++;
+                }
+            }
+            return -1;
+        }
     }
 }
