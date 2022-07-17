@@ -909,5 +909,37 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2343. Query Kth Smallest Trimmed Number
+        //each string is of equal length and consists of only digits.
+        //queries where queries[i] = [ki, trimi].
+        //-Trim each number in nums to its rightmost trimi digits.
+        //-Determine the index of the ki-th smallest trimmed number in nums.
+        //    If two trimmed numbers are equal, the number with the lower index is considered to be smaller.
+        //-Reset each number in nums to its original length.
+        //Return an array answer of the same length as queries, where answer[i] is the answer to the ith query.
+        public int[] SmallestTrimmedNumbers(string[] nums, int[][] queries)
+        {
+            int[] res = new int[queries.Length];
+            int[] arr = new int[nums.Length];
+            for (int i = 0; i < arr.Length; i++)
+                arr[i] = i;
+            int n = nums[0].Length;
+            for(int i = 0; i < queries.Length; i++)
+            {
+                int j = queries[i][1];
+                Array.Sort(arr, (x, y) =>
+                {
+                    for (int k = n - j; k < n; k++)
+                    {
+                        if (nums[x][k] < nums[y][k]) return -1;
+                        else if (nums[x][k] > nums[y][k]) return 1;
+                    }
+                    return x - y;
+                });
+                res[i] = arr[queries[i][0] - 1];
+            }
+            return res;
+        }
+
     }
 }
