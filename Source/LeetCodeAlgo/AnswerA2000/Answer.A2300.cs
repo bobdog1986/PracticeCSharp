@@ -651,55 +651,33 @@ namespace LeetCodeAlgo
         }
 
         ///2332. The Latest Time to Catch a Bus, #Greedy
-        //
         public int LatestTimeCatchTheBus(int[] buses, int[] passengers, int capacity)
         {
             Array.Sort(buses);
-            var pq = new PriorityQueue<int, int>();
-            foreach (var p in passengers)
-                pq.Enqueue(p, p);
-
+            Array.Sort(passengers);
             HashSet<int> set = new HashSet<int>();
-            for (int i = 0; i < buses.Length - 1; i++)
+            int res = 0;
+            int j = 0;
+            for (int i = 0; i < buses.Length; i++)
             {
-                var curr = capacity;
-                while (curr > 0)
+                int curr = 0;
+                while (j < passengers.Length && curr < capacity && passengers[j] <= buses[i])
                 {
-                    if (pq.Peek() > buses[i]) break;
-                    else
+                    if (!set.Contains(passengers[j] - 1))
                     {
-                        curr--;
-                        set.Add(pq.Dequeue());
+                        res = passengers[j] - 1;
                     }
+                    set.Add(passengers[j]);
+                    j++;
+                    curr++;
                 }
-            }
-            int cap = capacity;
-            while (cap > 0)
-            {
-                if (pq.Count == 0 || pq.Peek() > buses.Last())
+                if (curr < capacity && !set.Contains(buses[i]))
                 {
-                    var ans = buses.Last();
-                    while (set.Contains(ans))
-                    {
-                        ans--;
-                    }
-                    return ans;
+                    res = buses[i];
                 }
-                else
-                {
-                    cap--;
-                    set.Add(pq.Dequeue());
-                }
-            }
-            var last = set.Last();
-            var res = last - 1;
-            while (set.Contains(res))
-            {
-                res--;
             }
             return res;
         }
-
         ///2333. Minimum Sum of Squared Difference, #Binary Search
         //The sum of squared difference of arrays nums1 and nums2 is defined as the sum of (nums1[i] - nums2[i])2
         //k1 and k2. You can modify any of the elements of nums1 by +1 or -1 at most k1 times. same for k2 on nums2;
@@ -806,57 +784,28 @@ namespace LeetCodeAlgo
         public bool CanChange(string start, string target)
         {
             int n = start.Length;
-            int lefts = 0;
-            int rights = 0;
-            for (int i = 0; i < n; i++)
+            int i = 0, j = 0;
+            while (i < n || j < n)
             {
+                while (i < n && target[i] == '_') i++;
+                while (j < n && start[j] == '_') j++;
+                if (i == n || j == n)
+                {
+                    break;
+                }
+                if (target[i] != start[j]) return false;
                 if (target[i] == 'L')
                 {
-                    if (start[i] == 'L')
-                    {
-                        if (rights != 0) return false;
-                    }
-                    else if (start[i] == 'R')
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        lefts++;
-                    }
-                }
-                else if (target[i] == 'R')
-                {
-                    if (start[i] == 'L')
-                    {
-                        return false;
-                    }
-                    else if (start[i] == 'R')
-                    {
-                        if (lefts != 0) return false;
-                    }
-                    else
-                    {
-                        if (rights >= 0) return false;
-                        rights++;
-                    }
+                    if (j < i) return false;
                 }
                 else
                 {
-                    if (start[i] == 'L')
-                    {
-                        if (rights != 0) return false;
-                        if (lefts <= 0) return false;
-                        lefts--;
-                    }
-                    else if (start[i] == 'R')
-                    {
-                        if (lefts != 0) return false;
-                        rights--;
-                    }
+                    if (i < j) return false;
                 }
+                i++;
+                j++;
             }
-            return lefts == 0 && rights == 0;
+            return i == n && j == n;
         }
 
         ///2341. Maximum Number of Pairs in Array

@@ -14,9 +14,9 @@ namespace LeetCodeAlgo
         {
             //get primes <=100, https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
             int[] arr = new int[101];
-            for(int i = 2; i*i <= 100; i++)
+            for (int i = 2; i * i <= 100; i++)
             {
-                int j = i+i;
+                int j = i + i;
                 while (j <= 100)
                 {
                     arr[j] = 1;
@@ -26,11 +26,12 @@ namespace LeetCodeAlgo
             if (n > 2)
             {
                 var sqrt = (int)Math.Sqrt(n);
-                if(arr[sqrt]==0 && sqrt* sqrt==n)return true;
+                if (arr[sqrt] == 0 && sqrt * sqrt == n) return true;
                 else return false;
             }
             else return false;
         }
+
         ///1957. Delete Characters to Make Fancy String
         ///A fancy string is a string where no three consecutive characters are equal.
         public string MakeFancyString(string s)
@@ -39,9 +40,9 @@ namespace LeetCodeAlgo
             char c = s[0];
             int count = 1;
             list.Add(c);
-            for(int i=1; i<s.Length; i++)
+            for (int i = 1; i < s.Length; i++)
             {
-                if(s[i] == c)
+                if (s[i] == c)
                 {
                     count++;
                 }
@@ -55,13 +56,12 @@ namespace LeetCodeAlgo
             return new string(list.ToArray());
         }
 
-
         /// 1961. Check If String Is a Prefix of Array
         ///Given a string s and an array of strings words, determine whether s is a prefix string of words.
         ///A string s is a prefix string of words if s can be made by concatenating the first k strings in words
         public bool IsPrefixString(string s, string[] words)
         {
-            foreach(var w in words)
+            foreach (var w in words)
             {
                 if (s.StartsWith(w)) s = s.Substring(w.Length);
                 else return false;
@@ -90,6 +90,7 @@ namespace LeetCodeAlgo
             }
             return sum - total;
         }
+
         /// 1963. Minimum Number of Swaps to Make the String Balanced
         ///Return the minimum number of swaps to make s balanced.
         public int MinSwaps(string s)
@@ -108,11 +109,13 @@ namespace LeetCodeAlgo
             }
             return (stack_size + 1) / 2;//both ]][[, ][ need 1 swap
         }
+
         ///1967. Number of Strings That Appear as Substrings in Word
         public int NumOfStrings(string[] patterns, string word)
         {
             return patterns.Where(x => word.Contains(x)).Count();
         }
+
         ///1968. Array With Elements Not Equal to Average of Neighbors
         public int[] RearrangeArray_1968(int[] nums)
         {
@@ -122,7 +125,7 @@ namespace LeetCodeAlgo
             int i = 0;
             int left = 0;
             int right = n - 1;
-            while(i < n)
+            while (i < n)
             {
                 if (i % 2 == 0)
                 {
@@ -135,28 +138,29 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         ///1971. Find if Path Exists in Graph,#BFS
         public bool ValidPath(int n, int[][] edges, int source, int destination)
         {
             if (source == destination) return true;
-            List<int>[] graph=new List<int>[n];
+            List<int>[] graph = new List<int>[n];
             for (int i = 0; i < n; i++)
                 graph[i] = new List<int>();
-            foreach(var e in edges)
+            foreach (var e in edges)
             {
                 graph[e[0]].Add(e[1]);
                 graph[e[1]].Add(e[0]);
             }
 
             bool[] visit = new bool[n];
-            var list = new List<int>() { source};
+            var list = new List<int>() { source };
             visit[source] = true;
             while (list.Count > 0)
             {
-                var next=new List<int>();
-                foreach(var i in list)
+                var next = new List<int>();
+                foreach (var i in list)
                 {
-                    foreach(var j in graph[i])
+                    foreach (var j in graph[i])
                     {
                         if (j == destination) return true;
                         if (visit[j]) continue;
@@ -168,20 +172,22 @@ namespace LeetCodeAlgo
             }
             return false;
         }
+
         /// 1974. Minimum Time to Type Word Using Special Typewriter
         ///Given a string word, return the minimum number of seconds to type out the characters in word.
         public int MinTimeToType(string word)
         {
             int res = 0;
             char c = 'a';
-            for(int i=0; i<word.Length; i++)
+            for (int i = 0; i < word.Length; i++)
             {
-                res+= Math.Min(Math.Abs(word[i] -c), 26 - Math.Abs(word[i] - c));
+                res += Math.Min(Math.Abs(word[i] - c), 26 - Math.Abs(word[i] - c));
                 res++;
-                c=word[i];
+                c = word[i];
             }
             return res;
         }
+
         ///1975. Maximum Matrix Sum
         ///You can do any times:Choose any two adjacent elements of matrix and multiply each of them by -1.
         ///Return the maximum sum of the matrix's elements using the operation mentioned above.
@@ -191,8 +197,8 @@ namespace LeetCodeAlgo
             int min = int.MaxValue;
             int count = 0;
 
-            foreach(var m in matrix)
-                foreach(var n in m)
+            foreach (var m in matrix)
+                foreach (var n in m)
                 {
                     if (n >= 0)
                     {
@@ -207,8 +213,104 @@ namespace LeetCodeAlgo
                     }
                 }
 
-            return count%2==0?res:res-min;
+            return count % 2 == 0 ? res : res - min;
         }
+
+        ///1976. Number of Ways to Arrive at Destination, #Dijkstra
+        //n nodes from [0,n-1] with bi-directional roads between some intersections.
+        //roads[i] = [ui, vi, timei] between intersections ui and vi that takes timei minutes to travel.
+        //Return the number of ways you can arrive at n-1 from 0 in the shortest amount of time.
+        //Since the answer may be large, return it modulo 109 + 7.
+        public int CountPaths(int n, int[][] roads)
+        {
+            List<int[]>[] graph = new List<int[]>[n];
+            for (int i = 0; i < n; i++)
+                graph[i] = new List<int[]>();
+            foreach (var e in roads)
+            {
+                graph[e[0]].Add(new int[] { e[1], e[2] });
+                graph[e[1]].Add(new int[] { e[0], e[2] });
+            }
+            var dp=getDijkstra(graph);
+            return (int)dp[n - 1];
+        }
+
+        private long[] getDijkstra(List<int[]>[] graph)
+        {
+            int n = graph.Length;
+            long[] dp = new long[n];
+            long[] distance=new long[n];
+            Array.Fill(distance, long.MaxValue);
+            distance[0] = 0;
+            dp[0] = 1;
+            long mod = 1_000_000_007;
+            PriorityQueue<long[], long> pq = new PriorityQueue<long[], long>();
+            //store {index, cost} pairs sort by cost ascending
+            //always visit shortest path first, it will help to skips longer paths later
+            pq.Enqueue(new long[] { 0, 0 },0);
+            while (pq.Count>0)
+            {
+                long[] top = pq.Dequeue();
+                long u = top[0];
+                long cost = top[1];
+                if (cost > distance[u]) continue;//not shortest, skip it
+                foreach (var v in graph[u])
+                {
+                    if (distance[v[0]] > cost + v[1])
+                    {
+                        distance[v[0]] = cost + v[1];//shorter path found
+                        dp[v[0]] = dp[u];//reset to 0, then update
+                        //re-visit again due to shorter path found, will update all follow paths
+                        pq.Enqueue(new long[] { v[0], distance[v[0]] }, distance[v[0]]);
+                    }
+                    else if(distance[v[0]] == cost + v[1])
+                    {
+                        dp[v[0]] = (dp[v[0]] + dp[u])% mod;//Dijkstra is BFS, no need to Enqueue, just update
+                    }
+                }
+            }
+            return dp;
+        }
+
+        private long[] getDijkstra(List<int[]>[] graph,out long[] dist)
+        {
+            int n = graph.Length;
+            long[] dp = new long[n];
+            long[] distance = new long[n];
+            Array.Fill(distance, long.MaxValue);
+            distance[0] = 0;
+            dp[0] = 1;
+            long mod = 1_000_000_007;
+            PriorityQueue<long[], long> pq = new PriorityQueue<long[], long>();
+            //store {index, cost} pairs sort by cost ascending
+            //always try short paths first , it will help to skips long paths later
+            pq.Enqueue(new long[] { 0, 0 }, 0);
+            while (pq.Count > 0)
+            {
+                long[] top = pq.Dequeue();
+                long u = top[0];
+                long cost = top[1];
+                if (cost > distance[u])//not shortest
+                    continue;
+                foreach (var v in graph[u])
+                {
+                    if (distance[v[0]] > cost + v[1])
+                    {
+                        distance[v[0]] = cost + v[1];//shorter path found, update
+                        dp[v[0]] = dp[u];//update
+                        //re-visit again due to shorter path found, will update all follow paths
+                        pq.Enqueue(new long[] { v[0], distance[v[0]] }, distance[v[0]]);
+                    }
+                    else if (distance[v[0]] == cost + v[1])
+                    {
+                        dp[v[0]] = (dp[v[0]] + dp[u]) % mod;
+                    }
+                }
+            }
+            dist = distance;
+            return dp;
+        }
+
         /// 1979. Find Greatest Common Divisor of Array
         ///return the greatest common divisor of the smallest number and largest number in nums.
         ///2 <= nums.length <= 1000,1 <= nums[i] <= 1000
@@ -216,10 +318,10 @@ namespace LeetCodeAlgo
         {
             int max = 1;
             int min = 1000;
-            foreach(var n in nums)
+            foreach (var n in nums)
             {
-                max=Math.Max(max, n);
-                min=Math.Min(min, n);
+                max = Math.Max(max, n);
+                min = Math.Min(min, n);
             }
             return getGCD(max, min);
         }
@@ -230,11 +332,10 @@ namespace LeetCodeAlgo
         ///answers, you may return any of them.
         public string FindDifferentBinaryString(string[] nums)
         {
-            HashSet<string> set =new HashSet<string>();
+            HashSet<string> set = new HashSet<string>();
 
             FindDifferentBinaryString(nums[0].Length, "", set);
             HashSet<string> map = new HashSet<string>(nums);
-
 
             foreach (var n in set)
             {
@@ -243,6 +344,7 @@ namespace LeetCodeAlgo
 
             return "";
         }
+
         public void FindDifferentBinaryString(int count, string curr, HashSet<string> res)
         {
             if (count == 0) res.Add(curr);
@@ -262,7 +364,7 @@ namespace LeetCodeAlgo
             if (k == 1) return 0;
             Array.Sort(nums);
             int min = int.MaxValue;
-            for(int i=0; i<nums.Length-k+1; i++)
+            for (int i = 0; i < nums.Length - k + 1; i++)
             {
                 min = Math.Min(min, nums[i + k - 1] - nums[i]);
             }
@@ -277,7 +379,7 @@ namespace LeetCodeAlgo
             {
                 if (x.Length == y.Length)
                 {
-                    for(int i = 0; i < x.Length; i++)
+                    for (int i = 0; i < x.Length; i++)
                     {
                         if (x[i] > y[i]) return -1;
                         else if (x[i] < y[i]) return 1;
@@ -294,13 +396,14 @@ namespace LeetCodeAlgo
         {
             int sum = nums.Sum();
             int curr = 0;
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 if (curr == sum - curr - nums[i]) return i;
                 curr += nums[i];
             }
             return -1;
         }
+
         /// 1992. Find All Groups of Farmland, #BFS
         ///Return a 2D array containing the 4-length arrays for each group of farmland in land(1s rectangle area.).
         public int[][] FindFarmland(int[][] land)
@@ -308,10 +411,10 @@ namespace LeetCodeAlgo
             List<int[]> res = new List<int[]>();
             int rowLen = land.Length;
             int colLen = land[0].Length;
-            int[][] dxy = new int[2][] { new int[] { 1, 0 }, new int[] { 0, 1 }};
+            int[][] dxy = new int[2][] { new int[] { 1, 0 }, new int[] { 0, 1 } };
             for (int i = 0; i < rowLen; i++)
             {
-                for(int j=0; j<colLen; j++)
+                for (int j = 0; j < colLen; j++)
                 {
                     if (land[i][j] == 0) continue;
                     int maxRow = i;
@@ -322,9 +425,9 @@ namespace LeetCodeAlgo
                     while (list.Count > 0)
                     {
                         List<int[]> next = new List<int[]>();
-                        foreach(var p in list)
+                        foreach (var p in list)
                         {
-                            foreach(var d in dxy)
+                            foreach (var d in dxy)
                             {
                                 var r = p[0] + d[0];
                                 var c = p[1] + d[1];
@@ -355,13 +458,13 @@ namespace LeetCodeAlgo
         public int CountQuadruplets(int[] nums)
         {
             int res = 0;
-            for(int i = 0; i < nums.Length - 3; i++)
+            for (int i = 0; i < nums.Length - 3; i++)
             {
-                for(int j=i+1; j < nums.Length-2; j++)
+                for (int j = i + 1; j < nums.Length - 2; j++)
                 {
-                    for(int k = j + 1; k < nums.Length - 1; k++)
+                    for (int k = j + 1; k < nums.Length - 1; k++)
                     {
-                        for(int m = k + 1; m < nums.Length; m++)
+                        for (int m = k + 1; m < nums.Length; m++)
                         {
                             if (nums[i] + nums[j] + nums[k] == nums[m]) res++;
                         }
@@ -370,6 +473,5 @@ namespace LeetCodeAlgo
             }
             return res;
         }
-
     }
 }
