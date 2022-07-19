@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Collections;
 using System.Text;
 
 namespace LeetCodeAlgo
@@ -586,6 +586,67 @@ namespace LeetCodeAlgo
                 n /= 3;
             }
             return n == 1;
+        }
+
+        ///327. Count of Range Sum, #Merge Sort
+        //return the number of range [i,j] sums that lie in [lower, upper] inclusive.
+        public int CountRangeSum(int[] nums, int lower, int upper)
+        {
+            int n = nums.Length;
+            long[] prefixSum = new long[n + 1];
+            long[] temp = new long[n + 1];
+            prefixSum[0] = 0;
+            for (int i = 1; i <= n; i++)
+            {
+                prefixSum[i] = prefixSum[i - 1] + nums[i - 1];//sum[0..n] = sum of first x elements
+            }
+            int count = 0;
+            CountRangeSum_MergeSort(prefixSum, 0, n, temp, lower, upper, ref count);
+            return count;
+        }
+
+        private void CountRangeSum_MergeSort(long[] prefixSum, int start, int end, long[] temp, int lower, int upper, ref int count)
+        {
+            if (start >= end)
+            {
+                return;
+            }
+            int mid = start + (end - start) / 2;
+            CountRangeSum_MergeSort(prefixSum, start, mid, temp, lower, upper, ref count);
+            CountRangeSum_MergeSort(prefixSum, mid + 1, end, temp, lower, upper, ref count);
+            CountRangeSum_Merge(prefixSum, start, mid, end, temp, lower, upper, ref count);
+        }
+
+        private void CountRangeSum_Merge(long[] prefixSum, int start, int mid, int end, long[] temp, int lower, int upper, ref int count)
+        {
+            int right = mid + 1;
+            int index = start;
+            int low = mid + 1, high = mid + 1;
+            for (int left = start; left <= mid; left++)
+            {
+                while (low <= end && prefixSum[low] - prefixSum[left] < lower)
+                {
+                    low++;
+                }
+                while (high <= end && prefixSum[high] - prefixSum[left] <= upper)
+                {
+                    high++;
+                }
+                while (right <= end && prefixSum[right] < prefixSum[left])
+                {
+                    temp[index++] = prefixSum[right++];
+                }
+                temp[index++] = prefixSum[left];
+                count += high - low;
+            }
+            while (right <= end)
+            {
+                temp[index++] = prefixSum[right++];
+            }
+            for (int i = start; i <= end; i++)
+            {
+                prefixSum[i] = temp[i];
+            }
         }
 
         ///328. Odd Even Linked List
