@@ -782,55 +782,39 @@ namespace LeetCodeAlgo
         ///s consists of ints and operators ('+', '-', '*', '/') separated by some number of spaces.
         public int Calculate(string s)
         {
-            List<int> list = new List<int>();
+            Stack<int> stack = new Stack<int>();
             int num = 0;
             char sign = '+';
             for (int i = 0; i < s.Length; i++)
             {
                 if (char.IsDigit(s[i]))
                 {
-                    num = num * 10 + s[i] - '0';
+                    num = num * 10 + (s[i] - '0');
                 }
-                else if(s[i]!=' ')
+                if (i == s.Length - 1 || (!char.IsDigit(s[i]) && s[i] != ' '))
                 {
                     if (sign == '-')
                     {
-                        list.Add(-num);
+                        stack.Push(-num);
                     }
                     if (sign == '+')
                     {
-                        list.Add(num);
+                        stack.Push(num);
                     }
                     if (sign == '*')
                     {
-                        list[list.Count-1]*= num;
+                        stack.Push(stack.Pop() * num);
                     }
                     if (sign == '/')
                     {
-                        list[list.Count - 1] /= num;
+                        stack.Push(stack.Pop() / num);
                     }
-                    sign = s[i];
+                    if (!char.IsDigit(s[i]) && s[i]!=' ')
+                        sign = s[i];
                     num = 0;
                 }
             }
-
-            if (sign == '-')
-            {
-                list.Add(-num);
-            }
-            if (sign == '+')
-            {
-                list.Add(num);
-            }
-            if (sign == '*')
-            {
-                list[list.Count - 1] *= num;
-            }
-            if (sign == '/')
-            {
-                list[list.Count - 1] /= num;
-            }
-            return list.Count == 0 ? 0 : list.Sum();
+            return stack.Count == 0 ? 0 : stack.Sum();
         }
 
         ///228. Summary Ranges

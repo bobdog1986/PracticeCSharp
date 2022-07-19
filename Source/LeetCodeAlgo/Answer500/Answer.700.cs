@@ -460,6 +460,52 @@ namespace LeetCodeAlgo
             return image;
         }
 
+        ///735. Asteroid Collision
+        //(positive meaning right, negative meaning left). Each asteroid moves at the same speed.
+        //If two asteroids meet, the smaller one will explode.If both are the same size, both will explode.
+        //Find out the state of the asteroids after all collisions.
+        public int[] AsteroidCollision(int[] asteroids)
+        {
+            Stack<int> stack = new Stack<int>();
+            for(int i=0;i < asteroids.Length; i++)
+            {
+                if(asteroids[i] > 0)
+                {
+                    stack.Push(asteroids[i]);
+                }
+                else
+                {
+                    while(stack.Count>0 && stack.Peek() > 0)
+                    {
+                        var top = stack.Peek();
+                        if (top + asteroids[i] == 0)
+                        {
+                            stack.Pop();
+                            asteroids[i] = 0;
+                            break;
+                        }
+                        else if(top + asteroids[i] > 0)
+                        {
+                            asteroids[i] = 0;
+                            break;
+                        }
+                        else
+                        {
+                            stack.Pop();
+                        }
+                    }
+                    if (asteroids[i] < 0)
+                        stack.Push(asteroids[i]);
+                }
+            }
+
+            int[] res = new int[stack.Count];
+            for (int i = res.Length - 1; i >= 0; i--)
+                res[i] = stack.Pop();
+            return res;
+
+        }
+
         ///739. Daily Temperatures, #Monotonic Stack
         ///Given an array of integers temperatures represents the daily temperatures,
         ///return an array answer such that answer[i] is the number of days you have to wait after the ith day to get a warmer temperature.

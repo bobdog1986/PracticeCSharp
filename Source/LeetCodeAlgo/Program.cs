@@ -52,7 +52,7 @@ namespace LeetCodeAlgo
             sw.Start();
 
 
-            var result = answer.MinOperations(arr1, arr2);
+            var result = answer.Calculate(" 3/2 ");
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
