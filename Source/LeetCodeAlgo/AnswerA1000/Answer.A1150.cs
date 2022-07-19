@@ -59,6 +59,32 @@ namespace LeetCodeAlgo
             return (int)(dp[n][target] % mod);
         }
 
+        ///1160. Find Words That Can Be Formed by Characters
+        public int CountCharacters(string[] words, string chars)
+        {
+            int[] arr = new int[26];
+            foreach (var c in chars)
+                arr[c - 'a']++;
+            int res = 0;
+            foreach(var w in words)
+            {
+                if (w.Length > chars.Length) continue;
+                if (CountCharacters(w, arr))
+                    res += w.Length;
+            }
+            return res;
+        }
+
+        private bool CountCharacters(string word, int[] arr)
+        {
+            int[] sub = new int[26];
+            foreach (var c in word)
+                sub[c - 'a']++;
+            for (int i = 0; i < arr.Length; i++)
+                if (sub[i]> arr[i]) return false;
+            return true;
+        }
+
         /// 1161. Maximum Level Sum of a Binary Tree, #BTree
         ///the level of its root is 1, the level of its children is 2, and so on.
         ///Return the smallest level x such that the sum of all the values of nodes at level x is maximal.

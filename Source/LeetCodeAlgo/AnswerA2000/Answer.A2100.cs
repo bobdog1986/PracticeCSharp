@@ -264,26 +264,25 @@ namespace LeetCodeAlgo
             Dictionary<string, HashSet<string>> topoMap = new Dictionary<string, HashSet<string>>();
             for(int i = 0; i < n; i++)
             {
-                dict.Add(recipes[i], ingredients[i].ToHashSet());
-                for(int j = 0; j < ingredients[i].Count; j++)
+                dict.Add(recipes[i], ingredients[i].ToHashSet());//store {recipe, ingredients} pairs
+                for (int j = 0; j < ingredients[i].Count; j++)
                 {
                     if (!topoMap.ContainsKey(ingredients[i][j]))
                         topoMap.Add(ingredients[i][j], new HashSet<string>());
-                    topoMap[ingredients[i][j]].Add(recipes[i]);
+                    topoMap[ingredients[i][j]].Add(recipes[i]);//store {ingredient, recipes} pairs
                 }
             }
-            HashSet<string> set = supplies.ToHashSet();//valid supplies set, if a recipe is valid, then add it to this set
+            //valid supplies set, if a recipe is valid, then add it to this set
+            HashSet<string> set = supplies.ToHashSet();
             foreach (var recipe in recipes)
-            {
-                FindAllRecipes(recipe, dict, topoMap, set);
-            }
-            return dict.Keys.Where(x => dict[x].Count == 0).ToList();
+                FindAllRecipes_DFS(recipe, dict, topoMap, set, res);
+            return res;
         }
 
-        private void FindAllRecipes(string recipe
+        private void FindAllRecipes_DFS(string recipe
             , Dictionary<string, HashSet<string>> dict
             , Dictionary<string, HashSet<string>> topoMap
-            , HashSet<string> set)
+            , HashSet<string> set, List<string> res)
         {
             if (set.Contains(recipe)) return;
             foreach(var item in dict[recipe])
@@ -293,19 +292,17 @@ namespace LeetCodeAlgo
             }
             if(dict[recipe].Count == 0)//this recipe is valid
             {
+                res.Add(recipe);//add to result
                 set.Add(recipe);//add to valid supplies set
-                //if this recipe is other recipes's ingredient
-                if (topoMap.ContainsKey(recipe))
+                if (topoMap.ContainsKey(recipe))//if this recipe is other recipes's ingredient then update them
                 {
-                    //something like raise a event ,to re-visit all other recipes which use this recipe as ingredient  
-                    foreach(var item in topoMap[recipe])
+                    foreach (var item in topoMap[recipe])
                     {
                         if (set.Contains(item)) continue;
-                        FindAllRecipes(item, dict, topoMap, set);
+                        FindAllRecipes_DFS(item, dict, topoMap, set, res);
                     }
                 }
             }
-
         }
 
         public IList<string> FindAllRecipes_Kahn_BFS(string[] recipes, IList<IList<string>> ingredients, string[] supplies)
