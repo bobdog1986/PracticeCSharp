@@ -248,6 +248,111 @@ namespace LeetCodeAlgo
             return sentences.Max(x => x.Where(x => x == ' ').Count()) + 1;
         }
 
+        ///2115. Find All Possible Recipes from Given Supplies, #Topological Sort, #Kahn's Algo
+        //n different recipes and a 2D string array ingredients.
+        //The ith recipe has the name recipes[i], can create if you have all the ingredients from ingredients[i].
+        //Ingredients to a recipe may need to be created from other recipes,
+        //i.e., ingredients[i] may contain a string that is in recipes.
+        //a string array supplies containing all the ingredients that you initially have, as many as you need
+        //Return a list of all the recipes that you can create. You may return the answer in any order.
+        //Note that two recipes may contain each other in their ingredients.
+        public IList<string> FindAllRecipes(string[] recipes, IList<IList<string>> ingredients, string[] supplies)
+        {
+            List<string> res = new List<string>();
+            int n = recipes.Length;
+            Dictionary<string, HashSet<string>> dict = new Dictionary<string, HashSet<string>>();
+            Dictionary<string, HashSet<string>> topoMap = new Dictionary<string, HashSet<string>>();
+            for(int i = 0; i < n; i++)
+            {
+                dict.Add(recipes[i], ingredients[i].ToHashSet());
+                for(int j = 0; j < ingredients[i].Count; j++)
+                {
+                    if (!topoMap.ContainsKey(ingredients[i][j]))
+                        topoMap.Add(ingredients[i][j], new HashSet<string>());
+                    topoMap[ingredients[i][j]].Add(recipes[i]);
+                }
+            }
+            HashSet<string> set = supplies.ToHashSet();//valid supplies set, if a recipe is valid, then add it to this set
+            foreach (var recipe in recipes)
+            {
+                FindAllRecipes(recipe, dict, topoMap, set);
+            }
+            return dict.Keys.Where(x => dict[x].Count == 0).ToList();
+        }
+
+        private void FindAllRecipes(string recipe
+            , Dictionary<string, HashSet<string>> dict
+            , Dictionary<string, HashSet<string>> topoMap
+            , HashSet<string> set)
+        {
+            if (set.Contains(recipe)) return;
+            foreach(var item in dict[recipe])
+            {
+                if (set.Contains(item))
+                    dict[recipe].Remove(item);
+            }
+            if(dict[recipe].Count == 0)//this recipe is valid
+            {
+                set.Add(recipe);//add to valid supplies set
+                //if this recipe is other recipes's ingredient
+                if (topoMap.ContainsKey(recipe))
+                {
+                    //something like raise a event ,to re-visit all other recipes which use this recipe as ingredient  
+                    foreach(var item in topoMap[recipe])
+                    {
+                        if (set.Contains(item)) continue;
+                        FindAllRecipes(item, dict, topoMap, set);
+                    }
+                }
+            }
+
+        }
+
+        public IList<string> FindAllRecipes_Kahn_BFS(string[] recipes, IList<IList<string>> ingredients, string[] supplies)
+        {
+            int n = recipes.Length;
+            Dictionary<string, HashSet<int>> topoMap = new Dictionary<string, HashSet<int>>();
+            List<string> res = new List<string>();
+            int[] rtoic = new int[n]; // Recipes to ingredients count map
+            for (int i = 0; i < n; i++)
+            {
+                foreach (var ingre in ingredients[i])
+                {
+                    if (!topoMap.ContainsKey(ingre))
+                    {
+                        topoMap.Add(ingre, new HashSet<int>());
+                    }
+                    topoMap[ingre].Add(i);
+                }
+                rtoic[i] = ingredients[i].Count;
+            }
+
+            Queue<string> q = new Queue<string>();
+            foreach(var s in supplies)
+                q.Enqueue(s);// Add all the available basic ingredients first
+
+            while (q.Count>0)
+            {
+                string cur = q.Dequeue();
+                if (topoMap.ContainsKey(cur))
+                {
+                    // If there are recipes which are dependent on this ingredient
+                    foreach (int i in topoMap[cur])
+                    {
+                        // Go through all the recipes dependent on this ingredient
+                        rtoic[i]--; // Reduce the ingredient dependency count for the recipe
+                        if (rtoic[i] == 0)
+                        {
+                            // If the recipe has all the ingredients available now
+                            res.Add(recipes[i]); // We can create this recipe
+                            q.Enqueue(recipes[i]); // Also add the recipe as an available ingredient
+                        }
+                    }
+                }
+            }
+            return res;
+        }
+
         ///2116. Check if a Parentheses String Can Be Valid
         //If locked[i] is '1', you cannot change s[i]. if =='0' you can change s[i] to '(' or ')'
         //Return true if you can make s a valid parentheses string. Otherwise, return false.
