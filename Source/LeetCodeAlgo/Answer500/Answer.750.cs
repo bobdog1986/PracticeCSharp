@@ -326,6 +326,41 @@ namespace LeetCodeAlgo
             return !ghosts.Any(g => Math.Abs(g[0] - target[0]) + Math.Abs(g[1] - target[1]) <= Math.Abs(target[0]) + Math.Abs(target[1]));
         }
 
+        ///792. Number of Matching Subsequences, #Binary Search
+        //return the number of words[i] that is a subsequence of s.For example, "ace" is a subsequence of "abcde".
+        //A subsequence is generated from the original string with some(can be none) deleted without changing the order.
+        public int NumMatchingSubseq(string s, string[] words)
+        {
+            int n = s.Length;
+            List<int>[] posArr = new List<int>[26];
+            for (int i = 0; i < posArr.Length; i++)
+                posArr[i] = new List<int>();
+            for(int i = 0; i < n; i++)
+                posArr[s[i] - 'a'].Add(i);
+            return words.Count(w =>
+            {
+                int curr = 0;
+                for(int i = 0; i < w.Length; i++)
+                {
+                    if (curr >= n) return false;
+                    var list = posArr[w[i] - 'a'];
+                    if (list.Count == 0 || list.Last() < curr) return false;
+                    int left = 0;
+                    int right = list.Count - 1;
+                    while (left < right)
+                    {
+                        int mid = (left + right )/ 2;
+                        if (list[mid] >= curr)
+                            right = mid;
+                        else
+                            left = mid + 1;
+                    }
+                    curr = list[left] + 1;
+                }
+                return true;
+            });
+        }
+
         ///796. Rotate String
         ///Given two strings s and goal, return true if and only if s can become goal after some number of shifts on s.
         public bool RotateString(string s, string goal)
