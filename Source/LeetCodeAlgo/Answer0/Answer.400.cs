@@ -1129,7 +1129,6 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///
         /// 446. Arithmetic Slices II - Subsequence, #DP
         ///at least 3 nums with same distance, eg. [1,2,3,4], [1,1,1]
         ///1  <= nums.length <= 1000, -2^31 <= nums[i] <= 2^31 - 1
@@ -1139,6 +1138,41 @@ namespace LeetCodeAlgo
             int ans = 0;
 
             return ans;
+        }
+
+        ///447. Number of Boomerangs
+        //Return the number of points (i, j, k) that the distance between i and j equal to i and k
+        public int NumberOfBoomerangs(int[][] points)
+        {
+            int res = 0;
+            int n = points.Length;
+            Dictionary<int, int>[] mapArr=new Dictionary<int, int>[n];
+            for (int i = 0; i < n; i++)
+                mapArr[i] = new Dictionary<int, int>();
+            for(int i = 0; i < n - 1; i++)
+            {
+                for(int j = i + 1; j < n; j++)
+                {
+                    int[] p1 = points[i];
+                    int[] p2 = points[j];
+                    int dist =( p1[0] - p2[0]) * (p1[0] - p2[0]) + (p1[1] - p2[1]) * (p1[1] - p2[1]);
+                    var map1 = mapArr[i];
+                    var map2 = mapArr[j];
+                    if (!map1.ContainsKey(dist)) map1.Add(dist, 0);
+                    map1[dist]++;
+                    if (!map2.ContainsKey(dist)) map2.Add(dist, 0);
+                    map2[dist]++;
+                }
+            }
+            foreach(var map in mapArr)
+            {
+                foreach(var k in map.Keys)
+                {
+                    if (map[k] <= 1) continue;
+                    res += map[k] * (map[k] - 1);
+                }
+            }
+            return res;
         }
 
         ///448. Find All Numbers Disappeared in an Array
