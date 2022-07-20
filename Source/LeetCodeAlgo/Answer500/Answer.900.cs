@@ -190,6 +190,42 @@ namespace LeetCodeAlgo
             return (int)(res % 10_0000_0007);
         }
 
+        ///924. Minimize Malware Spread, #Union Find
+        //the ith node is directly connected to the jth node if graph[i][j] == 1.
+        //Return the node that, if removed, would minimize M(initial).
+        //If multiple nodes could be removed to minimize M(initial), return the smallest index.
+        public int MinMalwareSpread(int[][] graph, int[] initial)
+        {
+            int n = graph.Length;
+            var uf = new UnionFind(n);
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int j = i + 1; j < n; j++)
+                    if (graph[i][j] == 1) uf.Union(i, j);//union all connected {i,j}
+            }
+            var groupCount = new Dictionary<int, int>();//{groupIndex, count},count of nodes connected with same groupIdx
+            for (int i = 0; i < n; i++)
+            {
+                int j = uf.Find(i);
+                if (!groupCount.ContainsKey(j)) groupCount.Add(j, 0);
+                groupCount[j]++;
+            }
+            var malwareGroup = new Dictionary<int, int>();//{groupIndex, malwareCount},malwares shares same groupIndex
+            foreach (var i in initial)
+            {
+                var j = uf.Find(i);
+                if (!malwareGroup.ContainsKey(j)) malwareGroup.Add(j, 0);
+                malwareGroup[j]++;
+            }
+            var arr = initial.OrderBy(x =>
+            {
+                var j = uf.Find(x);
+                if (malwareGroup[j] >= 2) return 0;//>=2 malwares with same groupIndex will remove nothing
+                else return -groupCount[j];//sort by removed descending
+            }).ThenBy(x => x);
+            return arr.First();
+        }
+
         /// 925. Long Pressed Name
         ///Your friend is typing his name into a keyboard. Sometimes, when typing a character c,
         ///the key might get long pressed, and the character will be typed 1 or more times.
