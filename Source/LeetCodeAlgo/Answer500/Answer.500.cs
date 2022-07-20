@@ -103,7 +103,7 @@ namespace LeetCodeAlgo
             }
             return w;
         }
-        /// 503. Next Greater Element II ,#Monotonic
+        /// 503. Next Greater Element II ,#Monotonic Stack
         ///Given a circular integer array nums (i.e., the next element of nums[nums.length - 1] is nums[0]),
         ///return the next greater number for every element in nums.
         ///The next greater number of a number x is the first greater number to its traversing-order next in the array,
@@ -112,17 +112,13 @@ namespace LeetCodeAlgo
         {
             int len = nums.Length;
             int[] res = new int[len];
-            for (int i = 0; i < res.Length; i++)
-                res[i] = -1;
-
+            Array.Fill(res, -1);
             Stack<int> stack = new Stack<int>();
-
             for (int i = 0; i < len * 2; i++)
             {
                 while (stack.Count > 0 && nums[i % len] > nums[stack.Peek() % len])
                 {
-                    var j = stack.Pop();
-                    res[j % len] = nums[i % len];
+                    res[stack.Pop() % len] = nums[i % len];
                 }
                 if (i < len && res[i % len] == -1)
                     stack.Push(i);

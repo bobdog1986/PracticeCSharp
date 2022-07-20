@@ -374,9 +374,7 @@ namespace LeetCodeAlgo
             long res = 0;
             var uf = new UnionFind(n);
             foreach (var e in edges)
-            {
                 uf.Union(e[0], e[1]);
-            }
 
             var dict = new Dictionary<int, long>();
             for (int i = 0; i < n; i++)
@@ -385,12 +383,13 @@ namespace LeetCodeAlgo
                 if (!dict.ContainsKey(j)) dict.Add(j, 0);
                 dict[j]++;
             }
-
+            long total = n;
             foreach (var k in dict.Keys)
             {
-                res += dict[k] * (n - dict[k]);//select i in current group, and j not in
+                res += dict[k] * (total - dict[k]);//select i in current group, and j not in
+                total -= dict[k];
             }
-            return res / 2;//duplicate {i,j}, {j,i}
+            return res;
         }
 
         ///2317. Maximum XOR After Operations
@@ -728,6 +727,24 @@ namespace LeetCodeAlgo
                 arr[i] -= 1;
             }
             return arr.Sum(x => x * x);
+        }
+
+        ///2334. Subarray With Elements Greater Than Varying Threshold, #Monotonic Stack
+        //Find any subarray of nums of length k such that every element in the subarray is greater than threshold / k.
+        //Return the size of any such subarray.If there is no such subarray, return -1.
+        public int ValidSubarraySize(int[] nums, int threshold)
+        {
+            int n = nums.Length;
+            int[] leftArr = getLeftSmallerMonotonicArr(nums);
+            int[] rightArr = getRightSmallerMonotonicArr(nums);
+            for(int i = 0; i < n; i++)
+            {
+                int left = leftArr[i] + 1;
+                int right = rightArr[i] - 1;
+                int k = right - left + 1;
+                if (nums[i] > threshold / k) return k;
+            }
+            return -1;
         }
 
         ///2335. Minimum Amount of Time to Fill Cups

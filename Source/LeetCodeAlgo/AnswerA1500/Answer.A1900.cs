@@ -377,37 +377,26 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        ///1944. Number of Visible People in a Queue, #Monotonic
-        ///A person can see another person to their right in the queue if everybody in between is shorter than both of them.
-        ///More formally, the ith person can see the jth person if i<j and min(heights[i], heights[j]) > max(heights[i + 1], heights[i + 2], ..., heights[j - 1]).
-        ///Return an array answer of length n where answer[i] is the number of people the ith person can see to their right in the queue.
+        ///1944. Number of Visible People in a Queue, #Monotonic Stack
+        ///A person can see another person to their right if everybody in between is shorter than both of them.
+        ///the ith person can see the jth person if i<j and min(heights[i], heights[j]) > max(heights[i + 1,...,j - 1]).
+        ///Return an array answer where answer[i] is the number of person can see to i-th's right in the queue.
         public int[] CanSeePersonsCount(int[] heights)
         {
+            int n = heights.Length;
             int[] res = new int[heights.Length];
-            int[] arr= new int[heights.Length];//all possible persons which current can see, monotonic, desc, you can also using stack
-            int count = 0;//how many persons in arr
-            //from tail to head
-            for (int i=heights.Length-1; i>=0; i--)
+            Stack<int> stack = new Stack<int>();
+            //from right to left
+            for (int i=n-1; i>=0; i--)
             {
-                if(count == 0)
+                int count = 0;
+                while(stack.Count>0 && stack.Peek()< heights[i])
                 {
-                    res[i] = 0;
+                    count++;
+                    stack.Pop();
                 }
-                else
-                {
-                    int j = count - 1;//closest person to current
-                    while (j > 0)//person at index-0, is the last one, will block no one. so just skip it.
-                    {
-                        if (arr[j] >= heights[i]) break;//if this person is taller than current, he/she will block all others behind
-                        else j--;
-                    }
-                    res[i] = count - j;
-                }
-
-                //remove all persons who is lower than current
-                while (count > 0 && arr[count-1] <= heights[i])
-                    arr[count-- -1]=0;
-                arr[count++]=heights[i];
+                res[i] = stack.Count==0? count:count+1;
+                stack.Push(heights[i]);
             }
             return res;
         }

@@ -169,7 +169,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///456. 132 Pattern, #Monotonic
+        ///456. 132 Pattern, #Monotonic Stack
         ///nums[i] < nums[k] < nums[j]. Return true if there is a 132 pattern in nums, otherwise, return false.
         public bool Find132pattern(int[] nums)
         {
@@ -179,7 +179,6 @@ namespace LeetCodeAlgo
             {
                 if (nums[i] < thirdElement)
                     return true;
-
                 while (stack.Count > 0 && stack.Peek() < nums[i])
                     thirdElement = stack.Pop();
                 stack.Push(nums[i]);

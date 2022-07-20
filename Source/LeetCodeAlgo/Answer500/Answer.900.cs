@@ -194,7 +194,7 @@ namespace LeetCodeAlgo
         //the ith node is directly connected to the jth node if graph[i][j] == 1.
         //Return the node that, if removed, would minimize M(initial).
         //If multiple nodes could be removed to minimize M(initial), return the smallest index.
-        public int MinMalwareSpread(int[][] graph, int[] initial)
+        public int MinMalwareSpread_924(int[][] graph, int[] initial)
         {
             int n = graph.Length;
             var uf = new UnionFind(n);

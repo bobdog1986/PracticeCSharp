@@ -650,7 +650,7 @@ namespace LeetCodeAlgo
             }
         }
 
-        ///2281. Sum of Total Strength of Wizards, #Prefix Sum, #Monotonic
+        ///2281. Sum of Total Strength of Wizards, #Prefix Sum, #Monotonic Stack
         ///strength[i] denotes the strength of the ith wizard.For a contiguous group of wizards,two values:
         /// - The strength of the weakest wizard in the group.
         /// - The total of all the individual strengths of the wizards in the group.
@@ -858,7 +858,7 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        ///2289. Steps to Make Array Non-decreasing, #Monotonic, #DP
+        ///2289. Steps to Make Array Non-decreasing, #Monotonic Stack, #DP
         //In one step, remove all elements nums[i] where nums[i - 1] > nums[i] for all 0 < i<nums.length.
         //Return the number of steps performed until nums becomes a non-decreasing array.
         public int TotalSteps(int[] nums)
@@ -867,7 +867,7 @@ namespace LeetCodeAlgo
             int res = 0;
             int[] dp = new int[n];
             Stack<int> stack = new Stack<int>();
-            for (int i = n - 1; i >= 0; --i)
+            for (int i = n - 1; i >= 0; i--)
             {
                 while (stack.Count > 0 && nums[i] > nums[stack.Peek()])
                 {

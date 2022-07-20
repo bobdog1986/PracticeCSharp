@@ -119,16 +119,16 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2104. Sum of Subarray Ranges, #Monotonic
-        ///The range of a subarray of nums is the difference between the largest and smallest element in the subarray.
+        ///2104. Sum of Subarray Ranges, #Monotonic Stack
+        ///The range of a subarray of nums is the difference between the largest and smallest in the subarray.
         ///Return the sum of all subarray ranges of nums. A subarray is a contiguous non-empty sequence.
         public long SubArrayRanges(int[] nums)
         {
-            ///The idea is to divide sum(max - min) to sum(max) - sum(min), and focus one each number's counter when it is max and min.
+            //The idea is to divide sum(max - min) to sum(max) - sum(min),
+            //and focus one each number's counter when it is max and min.
             int n = nums.Length;
             int j, k;
             long res = 0;
-
             Stack<int> s = new Stack<int>();
             //why <=n? not <n
             for (int i = 0; i <= n; i++)

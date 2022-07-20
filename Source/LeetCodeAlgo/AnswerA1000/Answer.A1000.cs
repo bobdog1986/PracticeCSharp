@@ -276,7 +276,7 @@ namespace LeetCodeAlgo
                 curr = curr.next;
             }
             int[] res = new int[list.Count];
-            var stack = new Stack<int>();
+            Stack<int> stack = new Stack<int>();
             for(int i = 0; i < list.Count; i++)
             {
                 while (stack.Count > 0 && list[stack.Peek()] < list[i])

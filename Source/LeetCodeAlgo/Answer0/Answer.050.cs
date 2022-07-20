@@ -1275,84 +1275,23 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        ///84. Largest Rectangle in Histogram, #Monotonic
+        ///84. Largest Rectangle in Histogram, #Monotonic Stack
         ///heights representing the histogram's bar height where the width of each bar is 1,
         ///return the area of the largest rectangle in the histogram.
         /// 0<= height <=10000, heights.Length>=1
-        public int LargestRectangleArea_My(int[] heights)
-        {
-            int n = heights.Length;
-            int[] lessFromLeft = new int[n]; // idx of the first bar the left that is lower than current
-            int[] lessFromRight = new int[n]; // idx of the first bar the right that is lower than current
-
-            var stack = new Stack<int>();//stack only store strictly increase elements
-            for (int i = 0; i < n; i++)
-            {
-                while (stack.Count > 0 && heights[stack.Peek()] >= heights[i])
-                    stack.Pop();
-
-                lessFromLeft[i] = stack.Count > 0 ? stack.Peek() : -1;
-                stack.Push(i);
-            }
-
-            stack.Clear();
-            for (int i = n - 1; i >= 0; i--)
-            {
-                while (stack.Count > 0 && heights[stack.Peek()] >= heights[i])
-                    stack.Pop();
-
-                lessFromRight[i] = stack.Count > 0 ? stack.Peek() : n;
-                stack.Push(i);
-            }
-            int maxArea = 0;
-            for (int i = 0; i < n; i++)
-            {
-                //if lessFromLeft[i]==-1, start from 0; if lessFromRight[i]=n, end with n-1
-                // width is range [lessFromLeft[i]+1,lessFromRight[i]-1]
-                maxArea = Math.Max(maxArea, heights[i] * (lessFromRight[i] - 1 - (lessFromLeft[i] + 1) + 1));
-            }
-            return maxArea;
-        }
-
         public int LargestRectangleArea(int[] heights)
         {
             int n = heights.Length;
-            int[] lessFromLeft = new int[n]; // idx of the first bar the left that is lower than current
-            int[] lessFromRight = new int[n]; // idx of the first bar the right that is lower than current
-            lessFromRight[n - 1] = n;
-            lessFromLeft[0] = -1;
-
-            for (int i = 1; i < heights.Length; i++)
-            {
-                int prev = i - 1;
-                while (prev >= 0 && heights[prev] >= heights[i])
-                {
-                    //prev--;time out
-                    prev = lessFromLeft[prev];//this will save time
-                }
-                lessFromLeft[i] = prev;
-            }
-
-            for (int i = heights.Length - 2; i >= 0; i--)
-            {
-                int next = i + 1;
-
-                while (next < heights.Length && heights[next] >= heights[i])
-                {
-                    //next++;time out
-                    next = lessFromRight[next];//this will save time
-                }
-                lessFromRight[i] = next;
-            }
-
+            int[] lessFromLeft = getLeftSmallerMonotonicArr(heights);
+            int[] lessFromRight = getRightSmallerMonotonicArr(heights);
             int maxArea = 0;
-            for (int i = 0; i < heights.Length; i++)
+            for (int i = 0; i < n; i++)
             {
-                //if lessFromLeft[i]==-1, start from 0; if lessFromRight[i]=n, end with n-1
-                // width is range [lessFromLeft[i]+1,lessFromRight[i]-1]
-                maxArea = Math.Max(maxArea, heights[i] * (lessFromRight[i]-1 - (lessFromLeft[i]+1) + 1));
+                int left = lessFromLeft[i] + 1;
+                int right = lessFromRight[i] - 1;
+                int width = right - left + 1;
+                maxArea = Math.Max(maxArea, heights[i] * width);
             }
-
             return maxArea;
         }
 
@@ -1360,7 +1299,7 @@ namespace LeetCodeAlgo
         {
             int n = heights.Length;
             int max = 0;
-            var stack = new Stack<int>();
+            Stack<int> stack = new Stack<int>();
             for (int i = 0; i <= n; i++)
             {
                 int height = (i == n) ? 0 : heights[i];
