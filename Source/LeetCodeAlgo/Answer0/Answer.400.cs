@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Collections;
 
 namespace LeetCodeAlgo
 {
@@ -701,6 +703,52 @@ namespace LeetCodeAlgo
                 max = Math.Max(max, currSum); // get max number
             }
             return max;
+        }
+
+        ///423. Reconstruct Original Digits from English
+        //Given a string s = out-of-order English representation of digits 0-9, return the digits in ascending.
+        public string OriginalDigits(string s)
+        {
+            Dictionary<char, int> dict = new Dictionary<char, int>()
+            {
+                {'e',0 },{'g',0 },{'f',0 },{'i',0 },{'h',0 },
+                {'o',0 },{'n',0 },{'s',0 },{'r',0 },{'u',0 },
+                {'t',0 },{'w',0 },{'v',0 },{'x',0 },{'z',0 },
+            };
+            foreach (var c in s)
+                dict[c]++;
+            List<char> res = new List<char>();
+            //round1, eg only "six" contains 'x'
+            OriginalDigits_Remove('x', '6', "six", dict, res);
+            OriginalDigits_Remove('w', '2', "two", dict, res);
+            OriginalDigits_Remove('g', '8', "eight", dict, res);
+            OriginalDigits_Remove('u', '4', "four", dict, res);
+            OriginalDigits_Remove('z', '0', "zero", dict, res);
+            //round2, eg. both "six" and "seven" contains 's', but now only "seven" contains 's'
+            OriginalDigits_Remove('s', '7', "seven", dict, res);
+            OriginalDigits_Remove('t', '3', "three", dict, res);//'h','r'
+            OriginalDigits_Remove('f', '5', "five", dict, res);//skip 'v'
+            OriginalDigits_Remove('o', '1', "one", dict, res);
+            //round3
+            OriginalDigits_Remove('i', '9', "nine", dict, res);//n
+            return new string(res.OrderBy(x => x).ToArray());
+        }
+
+        private void OriginalDigits_Remove(char c, char d, string str, Dictionary<char, int> dict, List<char> res)
+        {
+            if (dict[c] > 0)
+            {
+                int count = dict[c];
+                var map = new Dictionary<char, int>();
+                foreach(var i in str)
+                {
+                    if (!map.ContainsKey(i)) map.Add(i, 0);
+                    map[i]++;
+                }
+                foreach(var k in map.Keys)
+                    dict[k] -= map[k] * count;
+                res.AddRange(Enumerable.Repeat(d, count));
+            }
         }
 
         ///424. Longest Repeating Character Replacement, #Sliding Window
