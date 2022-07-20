@@ -18,17 +18,13 @@ namespace LeetCodeAlgo
             parent = new int[n];
             rank = new int[n];
             for(int i = 0; i < n; i++)
-            {
                 parent[i] = i;
-            }
         }
 
         public int Find(int i)
         {
             while (parent[i] != i)
-            {
-                i=parent[i];
-            }
+                i = parent[i];
             return i;
         }
 
@@ -50,9 +46,7 @@ namespace LeetCodeAlgo
             {
                 parent[rootQ] = rootP;
                 if (rank[rootP] == rank[rootQ])
-                {
                     rank[rootP]++;
-                }
             }
             GroupCount--;
             return true;

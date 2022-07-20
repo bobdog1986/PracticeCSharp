@@ -539,5 +539,30 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+
+        ///947. Most Stones Removed with Same Row or Column, #Union Find
+        //A stone can be removed if either the same row or the same column as another stone that has not been removed.
+        //Given an array stones of length n where stones[i] = [xi, yi] represents the location of the ith stone,
+        //return the largest possible number of stones that can be removed.
+        public int RemoveStones(int[][] stones)
+        {
+            int n = stones.Length;
+            var uf = new UnionFind(n);
+            Dictionary<int, int> rowDict = new Dictionary<int, int>();//store {rowIndex, indexOfFirstStone}
+            Dictionary<int, int> colDict = new Dictionary<int, int>();//store {colIndex, indexOfFirstStone}
+            for (int i = 0; i < n; i++)
+            {
+                int[] curr = stones[i];
+                if (rowDict.ContainsKey(curr[0]))
+                    uf.Union(i, rowDict[curr[0]]);//union current stone with first stone contain same row
+                else
+                    rowDict.Add(curr[0], i);//or mark current stone as the first one has this rowIndex
+                if (colDict.ContainsKey(curr[1]))
+                    uf.Union(i, colDict[curr[1]]);//union current stone with first stone contain same col
+                else
+                    colDict.Add(curr[1], i);//or mark current stone as the first one has this colIndex
+            }
+            return n - uf.GroupCount;//every group will finally left 1 stone that cannot be removed!
+        }
     }
 }
