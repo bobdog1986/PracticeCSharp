@@ -126,21 +126,8 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///504. Base 7
-        ///Given an integer num, return a string of its base 7 representation.
-        public string ConvertToBase7(int num)
-        {
-            if (num == 0) return "0";
-            bool sign = num > 0;
-            num = Math.Abs(num);
-            string res = "";
-            while (num > 0)
-            {
-                res = num % 7 + res;
-                num /= 7;
-            }
-            return sign ? res : "-" + res;
-        }
+
+        ///504. Base 7, in Easy
 
         ///506. Relative Ranks
         ///You are given an integer array score of size n, where score[i] is the score of the ith athlete in a competition.
@@ -162,6 +149,7 @@ namespace LeetCodeAlgo
             }
             return score.Select(x => dict[x]).ToArray();
         }
+
         ///507. Perfect Number
         //a positive integer equal to the sum of its positive divisors,excluding the number itself.
         public bool CheckPerfectNumber(int num)
@@ -172,6 +160,7 @@ namespace LeetCodeAlgo
                 if (num % i == 0) sum += i + num / i;
             return sum == num;
         }
+
         /// 508. Most Frequent Subtree Sum, #BTree
         public int[] FindFrequentTreeSum(TreeNode root)
         {
@@ -220,6 +209,7 @@ namespace LeetCodeAlgo
         {
             return Fib_Memo(n,new Dictionary<int, int>());
         }
+
         private int Fib_Memo(int n, Dictionary<int,int> dict)
         {
             if (n == 0) return 0;
@@ -402,11 +392,8 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///521. Longest Uncommon Subsequence I
-        public int FindLUSlength(string a, string b)
-        {
-            return a == b ? -1 : Math.Max(a.Length, b.Length);
-        }
+        ///521. Longest Uncommon Subsequence I, in Easy
+
         /// 524. Longest Word in Dictionary through Deleting
         public string FindLongestWord(string s, IList<string> dictionary)
         {
@@ -437,6 +424,7 @@ namespace LeetCodeAlgo
             }
             return string.Empty;
         }
+
         /// 525. Contiguous Array
         ///Given a binary array nums, return the maximum length of a contiguous subarray with an equal number of 0 and 1.
         ///1 <= nums.length <= 105

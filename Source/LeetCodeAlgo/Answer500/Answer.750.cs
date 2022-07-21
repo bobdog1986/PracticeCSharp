@@ -326,6 +326,8 @@ namespace LeetCodeAlgo
             return !ghosts.Any(g => Math.Abs(g[0] - target[0]) + Math.Abs(g[1] - target[1]) <= Math.Abs(target[0]) + Math.Abs(target[1]));
         }
 
+        ///791. Custom Sort String, in Easy
+
         ///792. Number of Matching Subsequences, #Binary Search
         //return the number of words[i] that is a subsequence of s.For example, "ace" is a subsequence of "abcde".
         //A subsequence is generated from the original string with some(can be none) deleted without changing the order.

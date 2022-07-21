@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Design
+namespace LeetCodeAlgo.Easy.Design
 {
     ///1381. Design a Stack With Increment Operation
     ///void inc(int k, int val) Increments the bottom k elements of the stack by val.
@@ -15,12 +15,12 @@ namespace LeetCodeAlgo.Design
         public CustomStack(int maxSize)
         {
             last = -1;
-            arr=new int[maxSize];
+            arr = new int[maxSize];
         }
 
         public void Push(int x)
         {
-            if (last < arr.Length-1)
+            if (last < arr.Length - 1)
                 arr[++last] = x;
         }
 
@@ -32,7 +32,7 @@ namespace LeetCodeAlgo.Design
 
         public void Increment(int k, int val)
         {
-            for (int i = 0; i<=last && i+1<=k; i++)
+            for (int i = 0; i <= last && i + 1 <= k; i++)
                 arr[i] += val;
         }
     }

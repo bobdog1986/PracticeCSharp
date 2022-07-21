@@ -12,6 +12,18 @@ namespace LeetCodeAlgo.Design
 
     public class LRUCache
     {
+        private class DLinkedNode
+        {
+            public DLinkedNode prev;
+            public DLinkedNode next;
+            public int key, value;
+            public DLinkedNode(int _key, int _value)
+            {
+                this.key = _key;
+                this.value = _value;
+            }
+        }
+
         private DLinkedNode head;
         private DLinkedNode tail;
         private Dictionary<int, DLinkedNode> map = new Dictionary<int, DLinkedNode>();
@@ -77,15 +89,4 @@ namespace LeetCodeAlgo.Design
         }
     }
 
-    public class DLinkedNode
-    {
-        public DLinkedNode prev ;
-        public DLinkedNode next ;
-        public int key, value;
-        public DLinkedNode(int _key, int _value)
-        {
-            this.key = _key;
-            this.value = _value;
-        }
-    }
 }

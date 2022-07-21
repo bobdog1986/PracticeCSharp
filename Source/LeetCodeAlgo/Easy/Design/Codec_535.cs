@@ -4,23 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Design
+namespace LeetCodeAlgo.Easy.Design
 {
     ///535. Encode and Decode TinyURL
     public class Codec_535
     {
-        private readonly Dictionary<string,string> dict = new Dictionary<string,string>();
-        private readonly string str= @"http://tinyurl.com/";
-        public Codec_535()
-        {
-
-        }
-
+        private readonly Dictionary<string, string> dict = new Dictionary<string, string>();
+        private readonly string str = @"http://tinyurl.com/";
 
         // Encodes a URL to a shortened URL
         public string encode(string longUrl)
         {
-            var guidKey=Guid.NewGuid().ToString().Substring(0,6);
+            string guidKey = string.Empty;
+            while (string.IsNullOrEmpty(guidKey))
+            {
+                string currKey = Guid.NewGuid().ToString().Substring(0, 6);
+                if (!dict.ContainsKey(currKey))//in case of duplicate guid
+                    guidKey = currKey;
+            }
             dict.Add(guidKey, longUrl);
             return str + guidKey;
         }
@@ -28,7 +29,7 @@ namespace LeetCodeAlgo.Design
         // Decodes a shortened URL to its original URL.
         public string decode(string shortUrl)
         {
-            var key = shortUrl.Substring(shortUrl.Length-6);
+            var key = shortUrl.Substring(shortUrl.Length - 6);
             return dict[key];
         }
     }

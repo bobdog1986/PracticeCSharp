@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Design
+namespace LeetCodeAlgo.Easy.Design
 {
     ///2336. Smallest Number in Infinite Set
     public class SmallestInfiniteSet
@@ -14,7 +14,7 @@ namespace LeetCodeAlgo.Design
 
         public SmallestInfiniteSet()
         {
-            for(int i = 1; i <= 1000; i++)
+            for (int i = 1; i <= 1000; i++)
             {
                 pq.Enqueue(i, i);
                 set.Add(i);

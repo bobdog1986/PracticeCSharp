@@ -21,17 +21,6 @@ namespace LeetCodeAlgo
             return j == t.Length;
         }
 
-        private bool isSubSequence_binarySearch(string s, string t)
-        {
-            int n = s.Length;
-            List<int>[] posArr = new List<int>[26];
-            for (int i = 0; i < posArr.Length; i++)
-                posArr[i] = new List<int>();
-            for (int i = 0; i < n; i++)
-                posArr[s[i] - 'a'].Add(i);
-            return isSubSequence_binarySearch(posArr, s, t);
-        }
-
         private bool isSubSequence_binarySearch(List<int>[] posArr, string s, string t)
         {
             int n = s.Length;

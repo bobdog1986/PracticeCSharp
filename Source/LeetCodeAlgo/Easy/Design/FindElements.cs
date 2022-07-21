@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Design
+namespace LeetCodeAlgo.Easy.Design
 {
     ///1261. Find Elements in a Contaminated Binary Tree
     ///root.val == 0 ,treeNode.left.val == 2 * x + 1 , treeNode.right.val == 2 * x + 2
@@ -16,16 +16,16 @@ namespace LeetCodeAlgo.Design
         public FindElements(TreeNode root)
         {
             set = new HashSet<int>();
-            Build(root,0);
+            buildInternal(root, 0);
         }
 
-        private void Build(TreeNode root,int val)
+        private void buildInternal(TreeNode root, int val)
         {
             if (root == null) return;
             root.val = val;
             set.Add(root.val);
-            Build(root.left, val * 2 + 1);
-            Build(root.right, val * 2 + 2);
+            buildInternal(root.left, val * 2 + 1);
+            buildInternal(root.right, val * 2 + 2);
         }
         public bool Find(int target)
         {

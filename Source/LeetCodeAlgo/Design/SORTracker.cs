@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo.Design
 {
-    ///2102. Sequentially Ordinal Rank Tracker, #PriorityQueue, 
+    ///2102. Sequentially Ordinal Rank Tracker, #PriorityQueue
     ///A scenic location is represented by its name and attractiveness score,
     ///where name is a unique string among all locations and score is an integer.
     ///Locations can be ranked from the best to the worst. The higher the score, the better the location.

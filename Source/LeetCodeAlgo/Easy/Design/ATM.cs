@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Design
+namespace LeetCodeAlgo.Easy.Design
 {
     ///2241. Design an ATM Machine
 
@@ -16,12 +16,12 @@ namespace LeetCodeAlgo.Design
         public ATM()
         {
             arr = new long[5];
-            coin =new int[5] { 20,50,100,200,500};
+            coin = new int[5] { 20, 50, 100, 200, 500 };
         }
 
         public void Deposit(int[] banknotesCount)
         {
-            for(int i = 0; i < banknotesCount.Length; i++)
+            for (int i = 0; i < banknotesCount.Length; i++)
                 arr[i] += banknotesCount[i];
         }
 
@@ -29,7 +29,7 @@ namespace LeetCodeAlgo.Design
         {
             var res = new int[5];
 
-            for(int i = coin.Length-1; i >=0 ; i--)
+            for (int i = coin.Length - 1; i >= 0; i--)
             {
                 if (amount == 0) break;
                 long count = Math.Min(amount / coin[i], arr[i]);
@@ -39,7 +39,7 @@ namespace LeetCodeAlgo.Design
 
             if (amount == 0)
             {
-                for(int i=0;i<arr.Length;i++)
+                for (int i = 0; i < arr.Length; i++)
                     arr[i] -= res[i];
                 return res;
             }

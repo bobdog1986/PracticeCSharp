@@ -119,11 +119,8 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        /// 2255. Count Prefixes of a Given String
-        public int CountPrefixes(string[] words, string s)
-        {
-            return words.Where(x => s.StartsWith(x)).Count();
-        }
+        /// 2255. Count Prefixes of a Given String, in Easy
+
 
         ///2256. Minimum Average Difference
         ///The average difference of the index i is the absolute difference between the
@@ -437,20 +434,8 @@ namespace LeetCodeAlgo
             return dp[m][n-1][0];//or dp[n][m-1][0]
         }
 
-        ///2269 Find the K-Beauty of a Number
-        /// It has a length of k. It is a divisor of num.
-        public int DivisorSubstrings(int num, int k)
-        {
-            int res = 0;
-            var str = num.ToString();
-            for (int i = 0; i < str.Length - k + 1; i++)
-            {
-                var curr = int.Parse(str.Substring(i, k));
-                if (curr == 0) continue;
-                if (num % curr == 0) res++;
-            }
-            return res;
-        }
+        ///2269 Find the K-Beauty of a Number, in Easy
+
 
         ///2270. Number of Ways to Split Array, #Prefix Sum
         ///The sum of the first [0,i] elements is >= the sum of the last [i+1,n-1] elements.
@@ -518,24 +503,8 @@ namespace LeetCodeAlgo
         }
 
 
-        ///2273. Find Resultant Array After Removing Anagrams
-        public IList<string> RemoveAnagrams(string[] words)
-        {
-            var res = new List<string>();
-            res.Add(words[0]); ;
-            string prev = new string(words[0].ToArray().OrderBy(x => x).ToArray());
+        ///2273. Find Resultant Array After Removing Anagrams, in Easy
 
-            for (int i = 1; i < words.Length; i++)
-            {
-                string curr = new string(words[i].ToArray().OrderBy(x => x).ToArray());
-                if (curr != prev)
-                {
-                    prev = curr;
-                    res.Add(words[i]);
-                }
-            }
-            return res;
-        }
 
         ///2274. Maximum Consecutive Floors Without Special Floors
         ///Return the maximum number of consecutive floors without a special floor.
@@ -574,13 +543,7 @@ namespace LeetCodeAlgo
 
         ///2276. Count Integers in Intervals, see CountIntervals
 
-        ///2278. Percentage of Letter in String
-        ///Given a string s and a character letter, return the percentage of characters
-        ///in s that equal letter rounded down to the nearest whole percent.
-        public int PercentageLetter(string s, char letter)
-        {
-            return s.Count(x => x == letter) * 100 / s.Length;
-        }
+        ///2278. Percentage of Letter in String, in Easy
 
         ///2279. Maximum Bags With Full Capacity of Rocks
         public int MaximumBags(int[] capacity, int[] rocks, int additionalRocks)
@@ -710,24 +673,8 @@ namespace LeetCodeAlgo
             return (int)((res + mod) % mod);//must add mod, or return negative
         }
 
-        ///2283. Check if Number Has Equal Digit Count and Digit Value
-        ///You are given a 0-indexed string num of length n consisting of digits.
-        ///Return true if every index 0 <= i<n, the digit i occurs num[i] times in num,otherwise return false.
 
-        public bool DigitCount(string num)
-        {
-            int[] arr = new int[10];
-            foreach (var n in num)
-            {
-                arr[n - '0']++;
-            }
-            for (int i = 0; i < num.Length; i++)
-            {
-                if (arr[i] != (num[i] - '0'))
-                    return false;
-            }
-            return true;
-        }
+        ///2283. Check if Number Has Equal Digit Count and Digit Value, in Easy
 
         ///2284. Sender With Largest Word Count
         ///Return the sender with the largest word count or lexicographically largest name.
@@ -813,50 +760,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        /// 2288. Apply Discount to Prices
-        ///Return a string representing the modified sentence.
-        public string DiscountPrices(string sentence, int discount)
-        {
-            var arr = sentence.Split(' ').Select(x =>
-                {
-                    if (x.Length > 1 && x[0] == '$')
-                    {
-                        var str = x.Substring(1);
-                        if (IsDigitsOnly(str))
-                        {
-                            double a = -1;
-                            double.TryParse(str, out a);
-                            if (a >= 0)
-                            {
-                                return "$" + String.Format("{0:0.00}", Math.Round((a * (100 - discount) / 100), 2));
-                            }
-                            else
-                            {
-                                return x;
-                            }
-                        }
-                        else
-                        {
-                            return x;
-                        }
-                    }
-                    else
-                    {
-                        return x;
-                    }
-                }).ToArray();
-            return string.Join(' ', arr);
-        }
-
-        private bool IsDigitsOnly(string str)
-        {
-            foreach (char c in str)
-            {
-                if (c < '0' || c > '9')
-                    return false;
-            }
-            return true;
-        }
+        /// 2288. Apply Discount to Prices, in Easy
 
         ///2289. Steps to Make Array Non-decreasing, #Monotonic Stack, #DP
         //In one step, remove all elements nums[i] where nums[i - 1] > nums[i] for all 0 < i<nums.length.
@@ -923,27 +827,7 @@ namespace LeetCodeAlgo
             return dp[0][0];
         }
 
-        ///2293. Min Max Game
-        public int MinMaxGame(int[] nums)
-        {
-            while (nums.Length > 1)
-            {
-                var next = new int[nums.Length / 2];
-                for (int i = 0; i < next.Length; i++)
-                {
-                    if (i % 2 == 0)
-                    {
-                        next[i] = Math.Min(nums[2 * i], nums[2 * i + 1]);
-                    }
-                    else
-                    {
-                        next[i] = Math.Max(nums[2 * i], nums[2 * i + 1]);
-                    }
-                }
-                nums = next;
-            }
-            return nums[0];
-        }
+        ///2293. Min Max Game, in Easy
 
         ///2294. Partition Array Such That Maximum Difference Is K
         //Return the minimum number of subsequences needed such that the difference
@@ -1000,28 +884,6 @@ namespace LeetCodeAlgo
 
         ///2296. Design a Text Editor, see TextEditor
 
-        ///2299. Strong Password Checker II
-        //at least 8 characters, one lowercase, one uppercase, one digit, one special in "!@#$%^&*()-+".
-        //It does not contain 2 of the same character in adjacent positions
-        //Given a string password, return true if it is a strong password.Otherwise, return false.
-        public bool StrongPasswordCheckerII(string password)
-        {
-            int n = password.Length;
-            if (n < 8) return false;
-            var set = new HashSet<char>("!@#$%^&*()-+");
-            bool hasUpper = false;
-            bool hasLower = false;
-            bool hasDigit = false;
-            bool hasSpec = false;
-            for (int i = 0; i < n; i++)
-            {
-                if (char.IsUpper(password[i])) hasUpper = true;
-                if (char.IsLower(password[i])) hasLower = true;
-                if (char.IsDigit(password[i])) hasDigit = true;
-                if (set.Contains(password[i])) hasSpec = true;
-                if (i > 0 && password[i] == password[i - 1]) return false;
-            }
-            return hasUpper && hasLower && hasSpec && hasDigit;
-        }
+        ///2299. Strong Password Checker II, in Easy
     }
 }

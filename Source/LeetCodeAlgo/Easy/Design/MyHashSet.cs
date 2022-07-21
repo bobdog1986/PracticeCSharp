@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Design
+namespace LeetCodeAlgo.Easy.Design
 {
     /// 705. Design HashSet
     public class MyHashSet
@@ -13,7 +13,7 @@ namespace LeetCodeAlgo.Design
         private const int LEN = 1000001;
         public MyHashSet()
         {
-            arr=new bool[LEN];
+            arr = new bool[LEN];
         }
 
         public void Add(int key)

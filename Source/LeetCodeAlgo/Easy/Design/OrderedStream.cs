@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Design
+namespace LeetCodeAlgo.Easy.Design
 {
     ///1656. Design an Ordered Stream
     //Design a stream that returns the values in increasing order of their IDs
@@ -25,7 +25,7 @@ namespace LeetCodeAlgo.Design
         public IList<string> Insert(int idKey, string value)
         {
             var res = new List<string>();
-            if(!dict.ContainsKey(idKey))
+            if (!dict.ContainsKey(idKey))
                 dict.Add(idKey, value);
             while (index <= 1000)
             {

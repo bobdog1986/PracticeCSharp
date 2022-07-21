@@ -7,22 +7,6 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        private int getFibonacci(int n)
-        {
-            if (n <= 1)
-                return n;
-            int a = 0;
-            int dp = 1;
-            int temp = 0;
-            while (n-- > 1)
-            {
-                temp = dp;
-                dp += a;
-                a = temp;
-            }
-            return dp;
-        }
-
         //Greatest Common Divisor
         private long getGCD_Long(long x, long y)
         {

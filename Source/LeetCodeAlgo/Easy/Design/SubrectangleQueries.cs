@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Design
+namespace LeetCodeAlgo.Easy.Design
 {
     /// 1476. Subrectangle Queries
     /// Implement the class SubrectangleQueries which receives a rows x cols rectangle
@@ -19,8 +19,8 @@ namespace LeetCodeAlgo.Design
 
         public void UpdateSubrectangle(int row1, int col1, int row2, int col2, int newValue)
         {
-            for(int i = row1; i <= row2; i++)
-                for(int j = col1; j <= col2; j++)
+            for (int i = row1; i <= row2; i++)
+                for (int j = col1; j <= col2; j++)
                     _matrix[i][j] = newValue;
         }
 

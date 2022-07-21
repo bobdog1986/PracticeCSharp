@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Design
+namespace LeetCodeAlgo.Easy.Design
 {
     /// 398. Random Pick Index
 
@@ -16,10 +16,10 @@ namespace LeetCodeAlgo.Design
         {
             rand = new Random();
             dict = new Dictionary<int, List<int>>();
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 if (!dict.ContainsKey(nums[i]))
-                    dict.Add(nums[i],new List<int>());
+                    dict.Add(nums[i], new List<int>());
                 dict[nums[i]].Add(i);
             }
         }

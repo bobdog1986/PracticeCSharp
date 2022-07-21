@@ -6,36 +6,33 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo.Design
 {
-    ///295. Find Median from Data Stream, #PriorityQueue, 
+    ///295. Find Median from Data Stream, #PriorityQueue
     ///The median is the middle value in an ordered integer list.
     ///If the size of the list is even, there is no middle value and the median is the mean of the two middle values.
     public class MedianFinder
     {
-        //maxHeap alway hold small half elements
-        private PriorityQueue<int, int> minHeap = new PriorityQueue<int, int>();
-        //maxHeap alway hold big half elements
-        private PriorityQueue<int, int> maxHeap = new PriorityQueue<int, int>();
-        public MedianFinder()
-        {
-        }
+        //minHalf alway hold small half elements, is a maxHeap
+        private PriorityQueue<int, int> minHalf = new PriorityQueue<int, int>();
+        //maxHalf alway hold big half elements, is a minHeap
+        private PriorityQueue<int, int> maxHalf = new PriorityQueue<int, int>();
 
         public void AddNum(int num)
         {
-            maxHeap.Enqueue(num,num);
-            var head = maxHeap.Dequeue();
-            minHeap.Enqueue(head,-head);
-            if (maxHeap.Count < minHeap.Count)
+            maxHalf.Enqueue(num,num);
+            var head = maxHalf.Dequeue();
+            minHalf.Enqueue(head,-head);
+            if (maxHalf.Count < minHalf.Count)
             {
-                var next = minHeap.Dequeue();
-                maxHeap.Enqueue(next, next);
+                var next = minHalf.Dequeue();
+                maxHalf.Enqueue(next, next);
             }
         }
 
         public double FindMedian()
         {
-            return maxHeap.Count > minHeap.Count
-                   ? maxHeap.Peek()
-                   : (maxHeap.Peek()*0.5 + minHeap.Peek() * 0.5);
+            return maxHalf.Count > minHalf.Count
+                   ? maxHalf.Peek()
+                   : (maxHalf.Peek()*0.5 + minHalf.Peek() * 0.5);
         }
     }
 }

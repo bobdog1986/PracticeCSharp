@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Design
+namespace LeetCodeAlgo.Easy.Design
 {
     ///1865. Finding Pairs With a Certain Sum
 
@@ -18,7 +18,7 @@ namespace LeetCodeAlgo.Design
             arr2 = nums2;
             dict1 = new Dictionary<int, int>();
             dict2 = new Dictionary<int, int>();
-            foreach(var n1 in nums1)
+            foreach (var n1 in nums1)
             {
                 if (dict1.ContainsKey(n1)) dict1[n1]++;
                 else dict1.Add(n1, 1);
@@ -42,7 +42,7 @@ namespace LeetCodeAlgo.Design
         public int Count(int tot)
         {
             int res = 0;
-            foreach(var k in dict1.Keys)
+            foreach (var k in dict1.Keys)
             {
                 if (dict2.ContainsKey(tot - k))
                     res += dict1[k] * dict2[tot - k];

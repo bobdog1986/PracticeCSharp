@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Design
+namespace LeetCodeAlgo.Easy.Design
 {
     ///703. Kth Largest Element in a Stream, #PriorityQueue
     ///Design a class to find the kth largest element in a stream.
@@ -25,7 +25,7 @@ namespace LeetCodeAlgo.Design
         private void EnqueueInternal(int val)
         {
             minHeap.Enqueue(val, val);
-            if(minHeap.Count>rank)
+            if (minHeap.Count > rank)
                 minHeap.Dequeue();
         }
 

@@ -10,10 +10,9 @@ namespace LeetCodeAlgo.Design
 
     public class TimeMap
     {
-
-        public class TimeMapItem
+        private class TimeMapItem
         {
-            public TimeMapItem( int timeStamp, string value)
+            public TimeMapItem(int timeStamp, string value)
             {
                 this.TimeStamp = timeStamp;
                 this.Value = value;

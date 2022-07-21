@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Design
+namespace LeetCodeAlgo.Easy.Design
 {
     ///676. Implement Magic Dictionary
 
@@ -18,7 +18,7 @@ namespace LeetCodeAlgo.Design
 
         public void BuildDict(string[] dictionary)
         {
-            foreach(var word in dictionary)
+            foreach (var word in dictionary)
             {
                 if (!dict.ContainsKey(word.Length)) dict.Add(word.Length, new List<string>());
                 dict[word.Length].Add(word);
@@ -29,7 +29,7 @@ namespace LeetCodeAlgo.Design
         {
             if (dict.ContainsKey(searchWord.Length))
             {
-                foreach(var word in dict[searchWord.Length])
+                foreach (var word in dict[searchWord.Length])
                 {
                     int diff = 0;
                     for (int i = 0; i < searchWord.Length; i++)
@@ -37,7 +37,7 @@ namespace LeetCodeAlgo.Design
                         if (searchWord[i] != word[i]) diff++;
                         if (diff > 1) break;
                     }
-                    if(diff ==1)return true;
+                    if (diff == 1) return true;
                 }
                 return false;
             }
