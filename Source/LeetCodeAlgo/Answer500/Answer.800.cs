@@ -55,6 +55,60 @@ namespace LeetCodeAlgo
             }
             return set.Count;
         }
+
+        ///805. Split Array With Same Average, #DP
+        //split to two non-empty subset that the double average of each is same
+        //1 <= nums.length <= 30,0 <= nums[i] <= 10^4
+        public bool SplitArraySameAverage(int[] nums)
+        {
+            Array.Sort(nums);//sort ascending
+            return SplitArraySameAverage_Memo(nums, 0, 0, 0, 0, nums.Sum(), new Dictionary<int, HashSet<int>>());
+        }
+
+        private bool SplitArraySameAverage_Memo(int[] nums, int i, int count, int sum1, int sum2, int total, Dictionary<int, HashSet<int>> visit)
+        {
+            //sum1 is sum of part1, sum2 is sum of part2, and count is part1's elements count, i is current index
+            if (i == nums.Length)
+            {
+                if (count == 0 || count == nums.Length) return false;//part1 or part2 is empty
+                double a = 1.0 * sum1 / count;//average of part1
+                double b = 1.0 * sum2 / (nums.Length - count);//average of part2
+                return a == b;
+            }
+            else
+            {
+                // visit is a memoization , store {index*1000 +countOfPart1, visitedSum1 set }
+                int k = i * 1000 + count;
+                if (visit.ContainsKey(k) && visit[k].Contains(sum1))
+                    return false;//this will help us skip duplicate visit
+                if (!visit.ContainsKey(k))
+                    visit.Add(k, new HashSet<int>());
+                visit[k].Add(sum1);
+                if (count > 0)
+                {
+                    //count>0, so part1 is non-empty, we try to assign all left elements to part2
+                    double a = 1.0 * sum1 / count;
+                    double b = 1.0 * (total - sum1) / (nums.Length - count);
+                    if (a == b) return true;//it works ,so return true
+                    else if (a > b) return false;//nums sort in ascending, so this operation must increase b, but it still not enough, return false
+                }
+                if (count < i)
+                {
+                    //count<i, so part1 is non-empty, we try to assign all left elements to part1
+                    double a = 1.0 * (total - sum2) / (nums.Length - (i - count));
+                    double b = 1.0 * sum2 / (i - count);
+                    if (a == b) return true;//it works ,so return true
+                    else if (a < b) return false;//nums sort in ascending, so this operation must increase a, but it still not enough, return false
+                }
+                //dfs, try assign current element to part2
+                if (SplitArraySameAverage_Memo(nums, i + 1, count, sum1, sum2 + nums[i], total, visit))
+                    return true;
+                //dfs, try assign current element to part1
+                if (SplitArraySameAverage_Memo(nums, i + 1, count + 1, sum1 + nums[i], sum2, total, visit))
+                    return true;
+                return false;
+            }
+        }
         ///806. Number of Lines To Write String
         public int[] NumberOfLines(int[] widths, string s)
         {

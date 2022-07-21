@@ -9,7 +9,7 @@ namespace LeetCodeAlgo
     public partial class Answer
     {
         ///400. Nth Digit
-        ///Given an integer n, return the nth digit of the infinite integer sequence [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...].
+        ///return the nth digit of the infinite integer sequence [1, 2, 3, ... 10, 11, ...].
         ///1 <= n <= 231 - 1
         public int FindNthDigit(int n)
         {
@@ -29,18 +29,19 @@ namespace LeetCodeAlgo
         }
 
         ///401. Binary Watch
-        ///A binary watch has 4 LEDs on the top which represent the hours (0-11), and the 6 LEDs on the bottom represent the minutes (0-59).
-        ///Each LED represents a zero or one, with the least significant bit on the right.
+        //A binary watch has 4 LEDs on the top which represent the hours (0-11),
+        //and the 6 LEDs on the bottom represent the minutes (0-59).
+        //Each LED represents a zero or one, with the least significant bit on the right.
         public IList<string> ReadBinaryWatch_Bits(int turnedOn)
         {
             List<string> res = new List<string>();
             for(int hour = 0; hour < 12; hour++)
             {
-                int hourBits = ReadBinaryWatch_GetBitsCount(hour);
+                int hourBits = getOnesCount(hour);
                 if (hourBits > turnedOn) continue;
                 for (int minute = 0; minute < 60; minute++)
                 {
-                    int minuteBits = ReadBinaryWatch_GetBitsCount(minute);
+                    int minuteBits = getOnesCount(minute);
                     if(hourBits+ minuteBits == turnedOn)
                     {
                         res.Add($"{hour}:{minute.ToString("00")}");
@@ -50,7 +51,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        private int ReadBinaryWatch_GetBitsCount(int n)
+        private int getOnesCount(int n)
         {
             int res = 0;
             while (n > 0)
@@ -130,6 +131,7 @@ namespace LeetCodeAlgo
                 ReadBinaryWatch_GetMinute_BackTracking(count - 1, i + 1, curr + list[i], list, res);
             }
         }
+
         /// 402. Remove K Digits
         ///a non-negative integer num, and an integer k, return the smallest possible integer after removing k digits from num.
         ///1 <= k <= num.length <= 105
@@ -211,6 +213,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 406. Queue Reconstruction by Height, #Greedy
         ///You are given an array of people, people, which are the attributes of some people
         ///in a queue (not necessarily in order). Each people[i] = [hi, ki] represents
@@ -334,33 +337,7 @@ namespace LeetCodeAlgo
             return max;
         }
 
-        ///412. Fizz Buzz
-        ///Given an integer n, return a string array answer (1-indexed) where:
-        ///answer[i] == "FizzBuzz" if i is divisible by 3 and 5.
-        ///answer[i] == "Fizz" if i is divisible by 3.
-        ///answer[i] == "Buzz" if i is divisible by 5.
-        ///answer[i] == i(as a string) if none of the above conditions are true.
-        public IList<string> FizzBuzz(int n)
-        {
-            var ans = new string[n];
-            for (int i = 1; i <= n; i++)
-            {
-                ans[i - 1] = i.ToString();
-            }
-            for (int i = 3-1; i < n; i += 3)
-            {
-                ans[i] = "Fizz";
-            }
-            for (int i = 5-1; i < n; i += 5)
-            {
-                ans[i] = "Buzz";
-            }
-            for (int i = 15-1; i < n; i += 15)
-            {
-                ans[i] = "FizzBuzz";
-            }
-            return ans;
-        }
+        ///412. Fizz Buzz, in Easy
 
         /// 413. Arithmetic Slices, #DP
         ///at least 3 nums with same distance, eg. [1,2,3,4], [1,1,1]
@@ -385,24 +362,8 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///414. Third Maximum Number
-        ///Given an integer array nums, return the third distinct maximum number in this array.
-        ///If the third maximum does not exist, return the maximum number.
-        public int ThirdMax(int[] nums)
-        {
-            var pq = new PriorityQueue<int, long>();
-            var set = new HashSet<int>();
-            foreach (var x in nums)
-            {
-                if (!set.Contains(x))
-                    pq.Enqueue(x, 0l - x);
-                set.Add(x);
-            }
-            if (set.Count < 3) return pq.Dequeue();
-            pq.Dequeue();
-            pq.Dequeue();
-            return pq.Dequeue();
-        }
+        ///414. Third Maximum Number, in Easy
+
 
 
         /// 415. Add Strings
@@ -705,51 +666,8 @@ namespace LeetCodeAlgo
             return max;
         }
 
-        ///423. Reconstruct Original Digits from English
-        //Given a string s = out-of-order English representation of digits 0-9, return the digits in ascending.
-        public string OriginalDigits(string s)
-        {
-            Dictionary<char, int> dict = new Dictionary<char, int>()
-            {
-                {'e',0 },{'g',0 },{'f',0 },{'i',0 },{'h',0 },
-                {'o',0 },{'n',0 },{'s',0 },{'r',0 },{'u',0 },
-                {'t',0 },{'w',0 },{'v',0 },{'x',0 },{'z',0 },
-            };
-            foreach (var c in s)
-                dict[c]++;
-            List<char> res = new List<char>();
-            //round1, eg only "six" contains 'x'
-            OriginalDigits_Remove('x', '6', "six", dict, res);
-            OriginalDigits_Remove('w', '2', "two", dict, res);
-            OriginalDigits_Remove('g', '8', "eight", dict, res);
-            OriginalDigits_Remove('u', '4', "four", dict, res);
-            OriginalDigits_Remove('z', '0', "zero", dict, res);
-            //round2, eg. both "six" and "seven" contains 's', but now only "seven" contains 's'
-            OriginalDigits_Remove('s', '7', "seven", dict, res);
-            OriginalDigits_Remove('t', '3', "three", dict, res);//'h','r'
-            OriginalDigits_Remove('f', '5', "five", dict, res);//skip 'v'
-            OriginalDigits_Remove('o', '1', "one", dict, res);
-            //round3
-            OriginalDigits_Remove('i', '9', "nine", dict, res);//n
-            return new string(res.OrderBy(x => x).ToArray());
-        }
+        ///423. Reconstruct Original Digits from English, in Easy
 
-        private void OriginalDigits_Remove(char c, char d, string str, Dictionary<char, int> dict, List<char> res)
-        {
-            if (dict[c] > 0)
-            {
-                int count = dict[c];
-                var map = new Dictionary<char, int>();
-                foreach(var i in str)
-                {
-                    if (!map.ContainsKey(i)) map.Add(i, 0);
-                    map[i]++;
-                }
-                foreach(var k in map.Keys)
-                    dict[k] -= map[k] * count;
-                res.AddRange(Enumerable.Repeat(d, count));
-            }
-        }
 
         ///424. Longest Repeating Character Replacement, #Sliding Window
         ///You can choose any character of the string and change it to any other uppercase English character at most k times.
@@ -883,14 +801,9 @@ namespace LeetCodeAlgo
             return diff == 1;
         }
 
-        /// 434. Number of Segments in a String
-        ///return the number of segments , segment is a contiguous sequence of non-space characters.0 <= s.length <= 300
-        public int CountSegments(string s)
-        {
-            if(s.Length==0) return 0;
-            var arr = s.Split(' ');
-            return arr.Where(x => x.Length > 0).Count();
-        }
+        /// 434. Number of Segments in a String, in Easy
+
+
         /// 435. Non-overlapping Intervals
         /// there are some embeded intervals, use Math.Min()
         public int EraseOverlapIntervals(int[][] intervals)
@@ -1071,23 +984,8 @@ namespace LeetCodeAlgo
             }
             return (int)right;
         }
-        ///442. Find All Duplicates in an Array
-        ///Given an integer array nums of length n where all of nums in the range [1, n]
-        ///and each integer appears once or twice, return an array of all the integers that appears twice.
-        public IList<int> FindDuplicates(int[] nums)
-        {
-            var res=new List<int>();
-            Dictionary<int, int> dict = new Dictionary<int, int>();
-            foreach(var n in nums)
-            {
-                if(!dict.ContainsKey(n))dict.Add(n, 0);
-                dict[n]++;
-            }
-            foreach (var k in dict.Keys)
-                if (dict[k] == 2) res.Add(k);
+        ///442. Find All Duplicates in an Array, in Easy
 
-            return res;
-        }
         /// 443
         public int Compress(char[] chars)
         {
@@ -1177,51 +1075,8 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        /// 446. Arithmetic Slices II - Subsequence, #DP
-        ///at least 3 nums with same distance, eg. [1,2,3,4], [1,1,1]
-        ///1  <= nums.length <= 1000, -2^31 <= nums[i] <= 2^31 - 1
-        ///Subsequence may not continuous
-        public int NumberOfArithmeticSlices(int[] nums)
-        {
-            int ans = 0;
+        ///447. Number of Boomerangs, in Easy
 
-            return ans;
-        }
-
-        ///447. Number of Boomerangs
-        //Return the number of points (i, j, k) that the distance between i and j equal to i and k
-        public int NumberOfBoomerangs(int[][] points)
-        {
-            int res = 0;
-            int n = points.Length;
-            Dictionary<int, int>[] mapArr=new Dictionary<int, int>[n];
-            for (int i = 0; i < n; i++)
-                mapArr[i] = new Dictionary<int, int>();
-            for(int i = 0; i < n - 1; i++)
-            {
-                for(int j = i + 1; j < n; j++)
-                {
-                    int[] p1 = points[i];
-                    int[] p2 = points[j];
-                    int dist =( p1[0] - p2[0]) * (p1[0] - p2[0]) + (p1[1] - p2[1]) * (p1[1] - p2[1]);
-                    var map1 = mapArr[i];
-                    var map2 = mapArr[j];
-                    if (!map1.ContainsKey(dist)) map1.Add(dist, 0);
-                    map1[dist]++;
-                    if (!map2.ContainsKey(dist)) map2.Add(dist, 0);
-                    map2[dist]++;
-                }
-            }
-            foreach(var map in mapArr)
-            {
-                foreach(var k in map.Keys)
-                {
-                    if (map[k] <= 1) continue;
-                    res += map[k] * (map[k] - 1);
-                }
-            }
-            return res;
-        }
 
         ///448. Find All Numbers Disappeared in an Array
         ///Given an array nums of n integers where nums[i] is in the range [1, n],

@@ -33,12 +33,8 @@ namespace LeetCodeAlgo
             return stack.Count > 0 ? stack.Pop() :res;
         }
 
-        ///151. Reverse Words in a String
-        ///Given an input string s, reverse the order of the words.
-        public string ReverseWords(string s)
-        {
-            return string.Join(' ', s.Split(' ').Where(x=>x.Length>0).Reverse());
-        }
+        ///151. Reverse Words in a String, in Easy
+
 
         /// 152. Maximum Product Subarray, #DP
         ///Given an integer array nums, find a contiguous non-empty subarray within the array
@@ -259,7 +255,7 @@ namespace LeetCodeAlgo
             return ans.ToString();
         }
 
-        ///167. Two Sum II - Input Array Is Sorted, #Two Pointers, #Binary Search
+        ///167. Two Sum II - Input Array Is Sorted, #Two Pointers
         ///Given a 1-indexed array sorted in non-decreasing order, find two numbers add up to target number.
         //numbers[index1] and numbers[index2] where 1 <= index1<index2 <= numbers.length.
         ///Return the indices of the two numbers, index1 and index2, added by one as an integer array[index1, index2] of length 2.
@@ -278,55 +274,13 @@ namespace LeetCodeAlgo
             return new int[] { };
         }
 
-        /// 168. Excel Sheet Column Title
-        ///Given an integer columnNumber, return its corresponding column title as it appears in an Excel sheet.
-        public string ConvertToTitle(int columnNumber)
-        {
-            List<char> ans = new List<char>();
-            int n = columnNumber;
-            while (n > 0)
-            {
-                var c = (char)((n - 1) % 26 + 'A');
-                ans.Insert(0, (char)c);
-                n = (n - 1) / 26;
-            }
-            return new string(ans.ToArray());
-        }
+        /// 168. Excel Sheet Column Title, in Easy
 
-        /// 169. Majority Element
-        ///The majority element is the element that appears more than n/2 times.
-        public int MajorityElement(int[] nums)
-        {
-            Dictionary<int, int> dict = new Dictionary<int, int>();
-            int half = nums.Length / 2 + 1;
-            for (int i = 0; i < nums.Length; i++)
-            {
-                if (dict.ContainsKey(nums[i]))
-                {
-                    dict[nums[i]]++;
-                }
-                else
-                {
-                    dict.Add(nums[i], 1);
-                }
-                if (dict[nums[i]] >= half) return nums[i];
-            }
-            return -1;
-        }
+        /// 169. Majority Element, in Easy
 
-        ///171. Excel Sheet Column Number
-        ///return its corresponding column number.
-        public int TitleToNumber(string columnTitle)
-        {
-            int ans = 0;
-            int m = 1;
-            for (int i = columnTitle.Length - 1; i >= 0; i--)
-            {
-                ans += m * (columnTitle[i] - 'A' + 1);
-                m *= 26;
-            }
-            return ans;
-        }
+
+        ///171. Excel Sheet Column Number, in Easy
+
 
         /// 172. Factorial Trailing Zeroes
         ///Given an integer n, return the number of trailing zeroes in n!.
@@ -348,41 +302,33 @@ namespace LeetCodeAlgo
 
         /// 173. Binary Search Tree Iterator, see BSTIterator
 
-        /// 174 not done
-        public int CalculateMinimumHP(int[,] dungeon)
-        {
-            if (dungeon == null || dungeon.Length == 0) return 0;
-
-            int col = dungeon.GetLength(0);
-            int row = dungeon.GetLength(1);
-
-            int maxLost = 0;
-
-            List<int> path = new List<int>();
-
-            return maxLost > 0 ? 1 : (maxLost + 1);
-        }
-
         ///179. Largest Number
-        ///Given a list of non-negative integers nums, arrange them such that they form the largest number and return it.
-        ///Since the result may be very large, so you need to return a string instead of an integer.
+        //Given a list of non-negative integers nums, arrange them form the largest number and return it.
+        //Since the result may be very large, so you need to return a string instead of an integer.
         public string LargestNumber(int[] nums)
         {
-            string ans = string.Empty;
+            StringBuilder sb = new StringBuilder();
             Array.Sort(nums, (x, y) =>
             {
-                return -LargestNumber_Compare(x, y);
+                return - LargestNumber_Compare(x, y);
             });
 
-            foreach (var n in nums)
+            int i = 0;
+            for (; i < nums.Length; i++)
             {
-                if (ans == "0" && n == 0) continue;
-                ans += n.ToString();
+                if (nums[i] == 0) break;
+                sb.Append(nums[i]);
             }
-            return ans;
+            if (i != nums.Length)
+            {
+                if (sb.Length == 0) return "0";
+                while (i++ < nums.Length)
+                    sb.Append("0");
+            }
+            return sb.ToString();
         }
 
-        public int LargestNumber_Compare(int x, int y)
+        private int LargestNumber_Compare(int x, int y)
         {
             string a = $"{x}{y}";
             string b = $"{y}{x}";

@@ -32,8 +32,9 @@ namespace LeetCodeAlgo
                 if (node.right != null) BinaryTreePaths(node.right, path, ans);
             }
         }
+
         /// 258. Add Digits
-        ///Given an integer num, repeatedly add all its digits until the result has only one digit, and return it.
+        //Given an integer num, repeatedly add all its digits until the result has only one digit, and return it.
         public int AddDigits(int num)
         {
             if (num < 10) return num;
@@ -47,19 +48,8 @@ namespace LeetCodeAlgo
             return AddDigits(total);
         }
 
-        ///260. Single Number III
-        ///exactly two elements appear only once and all the other elements appear exactly twice.
-        ///Find the two elements that appear only once. You can return the answer in any order.
-        public int[] SingleNumber(int[] nums)
-        {
-            HashSet<int> set = new HashSet<int>();
-            foreach(var n in nums)
-            {
-                if(set.Contains(n))set.Remove(n);
-                else set.Add(n);
-            }
-            return set.ToArray();
-        }
+        ///260. Single Number III, in Easy
+
         /// 263. Ugly Number
         ///An ugly number is a positive integer whose prime factors are limited to 2, 3, and 5.
         ///Given an integer n, return true if n is an ugly number.
@@ -76,6 +66,7 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+
         /// 264. Ugly Number II - NOT mine
         /// An ugly number is a positive integer whose prime factors are limited to 2, 3, and 5.
         /// Given an integer n, return the nth ugly number.
@@ -101,21 +92,9 @@ namespace LeetCodeAlgo
             }
             return ugly[n - 1];
         }
-        ///268. Missing Number
-        ///Given an array nums containing n distinct numbers in the range [0, n],
-        ///return the only number in the range that is missing from the array.
-        public int MissingNumber(int[] nums)
-        {
-            bool[] arr=new bool[nums.Length + 1];
-            foreach(var num in nums)
-                arr[num] = true;
-            for (int i=0; i < arr.Length; i++)
-            {
-                if(!arr[i])
-                    return i;
-            }
-            return -1;
-        }
+
+        ///268. Missing Number, in Easy
+
         ///273. Integer to English Words
         //Convert a non-negative integer num to its English words representation. 0 <= num <= 231 - 1
         public string NumberToWords(int num)
@@ -222,27 +201,8 @@ namespace LeetCodeAlgo
             return n - right;
         }
 
-        /// 278. First Bad Version, #Binary Search
-        /// 1 <= bad <= n <= 2^31 - 1,all the versions after a bad version are also bad.
-        public int FirstBadVersion(int n)
-        {
-            int left = 1;
-            int right = n;
-            while(left< right)
-            {
-                int mid = left + (right - left) / 2;
-                if (IsBadVersion(mid))
-                    right = mid;
-                else
-                    left = mid + 1;
-            }
-            return left;
-        }
 
-        private bool IsBadVersion(int n)//API provides by leetcode
-        {
-            return (n >= 1702766719);
-        }
+        /// 278. First Bad Version,in Easy
 
         ///279. Perfect Squares, #DP
         ///Given an integer n, return the least number of perfect square numbers that sum to n.
@@ -311,19 +271,7 @@ namespace LeetCodeAlgo
 
         ///284. Peeking Iterator， see PeekingIterator
 
-        /// 287. Find the Duplicate Number
-        ///Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive.
-        ///There is only one repeated number in nums, return this repeated number.
-        public int FindDuplicate(int[] nums)
-        {
-            int[] arr=new int[nums.Length+1];
-            foreach(var n in nums)
-            {
-                if (arr[n] == 1) return n;
-                arr[n] = 1;
-            }
-            return 0;
-        }
+        /// 287. Find the Duplicate Number, in Easy
 
         /// 289. Game of Life
         /// For 1, count of 1 in hor,ver , dragonal is 2 or 3 =>1
@@ -413,13 +361,8 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        ///292. Nim Game
-        ///Given n, the number of stones in the heap, return true if you can win the game
-        ///assuming both you and your friend play optimally, otherwise return false.
-        public bool CanWinNim(int n)
-        {
-            return n%4!=0;
-        }
+
+        ///292. Nim Game, in Easy
 
         ///295. Find Median from Data Stream, See MedianFinder
 

@@ -809,24 +809,6 @@ namespace LeetCodeAlgo
         ///a-z, A-Z, 0-9
         public bool IsPalindrome(string s)
         {
-            List<char> list = new List<char>();
-            foreach (var c in s)
-            {
-                if (char.IsLetter(c))
-                    list.Add(char.ToLower(c));
-                if (char.IsDigit(c))
-                    list.Add(c);
-            }
-            for (int i = 0; i < list.Count / 2; i++)
-            {
-                if (list[i] != list[list.Count - 1 - i])
-                    return false;
-            }
-            return true;
-        }
-
-        public bool IsPalindrome_TwoPointers(string s)
-        {
             int left = 0;
             int right = s.Length - 1;
             while (left < right)
@@ -1338,35 +1320,11 @@ namespace LeetCodeAlgo
             return dp.Sum();
         }
 
-        /// 136. Single Number
-        /// Given a non - empty array of integers nums, every element appears twice except for one.Find that single one.
-        /// You must implement a solution with a linear runtime complexity and use only constant extra space.
-        public int SingleNumber_136(int[] nums)
-        {
-            return nums.Aggregate((x, y) => x ^ y);
-        }
 
-        ///137. Single Number II
-        ///Given an integer array nums where every element appears three times except for one, which appears exactly once.
-        ///Find the single element and return it.
-        public int SingleNumber_137(int[] nums)
-        {
-            Dictionary<int, int> dict = new Dictionary<int, int>();
-            foreach (var n in nums)
-            {
-                if (dict.ContainsKey(n))
-                {
-                    if (dict[n] == 2) dict.Remove(n);
-                    else dict[n]++;
-                }
-                else
-                {
-                    dict.Add(n, 1);
-                }
-            }
-            var ans = dict.FirstOrDefault(x => x.Value != 3).Key;
-            return ans;
-        }
+        /// 136. Single Number, in Easy
+
+        ///137. Single Number II, in Easy
+
 
         ///138. Copy List with Random Pointer, #Good!
         ///Random may pointer to itself

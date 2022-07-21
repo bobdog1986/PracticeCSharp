@@ -335,24 +335,8 @@ namespace LeetCodeAlgo
             return ans.ToArray();
         }
 
-        ///58. Length of Last Word
-        public int LengthOfLastWord(string s)
-        {
-            int ans = 0;
-            for (int i = s.Length - 1; i >= 0; i--)
-            {
-                if (s[i] == ' ')
-                {
-                    if (ans == 0) continue;
-                    else break;
-                }
-                else
-                {
-                    ans++;
-                }
-            }
-            return ans;
-        }
+        ///58. Length of Last Word, in Easy
+
 
         /// 59. Spiral Matrix II
         ///Given a positive integer n, generate an n x n matrix filled with elements from 1 to n2 in spiral order.
@@ -766,14 +750,6 @@ namespace LeetCodeAlgo
             return (int)left;
         }
 
-        public int MySqrt_Math(int x)
-        {
-            long r = x;
-            while (r * r > x)
-                r = (r + x / r) / 2;
-            return (int)r;
-        }
-
         ///70. Climbing Stairs, #DP
         ///Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
         ///1 <= n <= 45
@@ -939,6 +915,7 @@ namespace LeetCodeAlgo
             }
             return false;
         }
+
         ///75. Sort Colors
         ///We will use the integers 0, 1, and 2 to represent the color red, white, and blue, respectively.
         /// sort as 0->1->2

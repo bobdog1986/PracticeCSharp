@@ -7,7 +7,7 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        //Greatest Common Divisor
+        //Greatest Common Divisor, #GCD
         private long getGCD_Long(long x, long y)
         {
             return y == 0 ? x : getGCD_Long(y, x % y);
@@ -18,7 +18,7 @@ namespace LeetCodeAlgo
             return y == 0 ? x : getGCD(y, x % y);
         }
 
-        //Least Common Multiple
+        //Least Common Multiple, #LCM
         private long getLCM_Long(long x, long y)
         {
             return (x * y) / getGCD_Long(x, y);

@@ -135,25 +135,8 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        //203. Remove Linked List Elements
-        public ListNode RemoveElements(ListNode head, int val)
-        {
-            while (head != null && head.val==val)
-                head = head.next;
+        //203. Remove Linked List Elements, in Easy
 
-            if (head == null)
-                return null;
-
-            var curr = head;
-            while (curr.next != null)
-            {
-                if (curr.next.val == val)
-                    curr.next = curr.next.next;
-                else
-                    curr = curr.next;
-            }
-            return head;
-        }
 
         ///204. Count Primes
         ///Given an int n, return the number of prime numbers that are strictly less than n.
@@ -175,26 +158,8 @@ namespace LeetCodeAlgo
             return count;
         }
 
-        ///205. Isomorphic Strings
-        ///Given two strings s and t, determine if they are isomorphic.
-        ///Two strings s and t are isomorphic if the characters in s can be replaced to get t.
-        public bool IsIsomorphic(string s, string t)
-        {
-            Dictionary<char, char> dict = new Dictionary<char, char>();
-            for(int i = 0; i < s.Length; i++)
-            {
-                if (dict.ContainsKey(s[i]))
-                {
-                    if (dict[s[i]] != t[i]) return false;
-                }
-                else
-                {
-                    if (dict.ContainsValue(t[i])) return false;
-                    else dict.Add(s[i], t[i]);
-                }
-            }
-            return true;
-        }
+        ///205. Isomorphic Strings, in Easy
+
         /// 206. Reverse Linked List
         ///Given the head of a singly linked list, reverse the list, and return the reversed list.
         ///The number of nodes in the list is the range [0, 5000].
@@ -234,7 +199,7 @@ namespace LeetCodeAlgo
         ///Return true if you can finish all courses. Otherwise, return false.
         public bool CanFinish(int numCourses, int[][] prerequisites)
         {
-            var ans = true;
+            bool res = true;
             int len = numCourses;
             bool[,] visit=new bool[len, len];
             foreach(var p in prerequisites)
@@ -242,7 +207,6 @@ namespace LeetCodeAlgo
                 if (p[0] == p[1]) return false;
                 if (visit[p[1], p[0]]) return false;
                 visit[p[0], p[1]] = true;
-
                 for (int i = 0; i < len; i++)
                 {
                     if(visit[p[1], i])
@@ -253,13 +217,11 @@ namespace LeetCodeAlgo
                             if (visit[i, j]) visit[p[0], j] = true;
                         }
                     }
-
                     //update
                     if (visit[i, p[0]]) visit[i, p[1]] = true;
                 }
-
             }
-            return ans;
+            return res;
         }
         ///208. Implement Trie (Prefix Tree), see Trie
 
@@ -329,6 +291,7 @@ namespace LeetCodeAlgo
 
             return (index == numCourses) ? order : new int[0];
         }
+
         /// 211. Design Add and Search Words Data Structure, see WordDictionary
 
         ///212. Word Search II, #Trie, #Backtracking, #DFS
@@ -504,31 +467,8 @@ namespace LeetCodeAlgo
             return table;
         }
 
-        ///215. Kth Largest Element in an Array
-        ///return the kth largest element in the array.
-        ///-10^4 <= nums[i] <= 10^4
-        public int FindKthLargest(int[] nums, int k)
-        {
-            Array.Sort(nums);
-            return nums[nums.Length - k];
-        }
-        public int FindKthLargest_Heap(int[] nums, int k)
-        {
-            var pq = new PriorityQueue<int, int>();
-            foreach(var n in nums)
-            {
-                if (pq.Count < k) pq.Enqueue(n, n);
-                else
-                {
-                    if (n > pq.Peek())
-                    {
-                        pq.Enqueue(n, n);
-                        pq.Dequeue();
-                    }
-                }
-            }
-            return pq.Peek();
-        }
+        ///215. Kth Largest Element in an Array, in Easy
+
         ///216. Combination Sum III, #Backtracking
         ///Find all valid combinations of k numbers that sum up to n :
         ///Only numbers 1 through 9 are used.And Each number is used at most once.
@@ -674,81 +614,10 @@ namespace LeetCodeAlgo
             return len * len;
         }
 
-        ///222. Count Complete Tree Nodes, #BTree
-        ///Given the root of a complete binary tree, return the number of the nodes in the tree.
-        public int CountNodes(TreeNode root)
-        {
-            int res = 0;
-            CountNodes(root, ref res);
-            return res;
-        }
-        public void CountNodes(TreeNode root, ref int res)
-        {
-            if (root == null) return;
-            res ++;
-            CountNodes(root.left, ref res);
-            CountNodes(root.right, ref res);
-        }
+        ///222. Count Complete Tree Nodes, in Easy
 
-        ///223. Rectangle Area
-        public int ComputeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2)
-        {
-            if (ax1 > bx1)
-                return ComputeArea(bx1, by1, bx2, by2, ax1, ay1, ax2, ay2);
+        ///223. Rectangle Area, in Easy
 
-            int res= ComputeArea_Rect(ax1, ay1, ax2, ay2) + ComputeArea_Rect(bx1, by1, bx2, by2);
-            if (by1>=ay2 || by2<=ay1 || bx1 >= ax2)
-            {
-                //if no overlay
-            }
-            else
-            {
-                if (bx2 <= ax2)
-                {
-                    if (by1 <= ay1 && by2 >= ay2)
-                    {
-                        res -= ComputeArea_Rect(bx1, ay1, bx2, ay2);
-                    }
-                    else if (by1 <= ay1)
-                    {
-                        res -= ComputeArea_Rect(bx1, ay1, bx2, by2);
-                    }
-                    else if (by2 >= ay2)
-                    {
-                        res -= ComputeArea_Rect(bx1, by1, bx2, ay2);
-                    }
-                    else
-                    {
-                        res -= ComputeArea_Rect(bx1, by1, bx2, by2);
-                    }
-                }
-                else
-                {
-                    if (by1 <= ay1 && by2 >= ay2)
-                    {
-                        res -= ComputeArea_Rect(bx1, ay1, ax2, ay2);
-                    }
-                    else if (by1 <= ay1)
-                    {
-                        res -= ComputeArea_Rect(bx1, ay1, ax2, by2);
-                    }
-                    else if (by2 >= ay2)
-                    {
-                        res -= ComputeArea_Rect(bx1, by1, ax2, ay2);
-                    }
-                    else
-                    {
-                        res -= ComputeArea_Rect(bx1, by1, ax2, by2);
-                    }
-                }
-            }
-
-            return res;
-        }
-        private int ComputeArea_Rect(int ax1, int ay1, int ax2, int ay2)
-        {
-            return (ax2 - ax1) * (ay2 - ay1);
-        }
 
         /// 225. Implement Stack using Queues, see MyStack
 
@@ -899,27 +768,8 @@ namespace LeetCodeAlgo
             return values[k - 1];
         }
 
-        /// 231. Power of Two
-        ///Given an int n, return true if it is a power of two.
+        /// 231. Power of Two, in Easy
 
-        public bool IsPowerOfTwo(int n)
-        {
-            if (n <= 0)
-                return false;
-
-            while (n >= 1)
-            {
-                if (n == 1)
-                    return true;
-
-                if (n % 2 == 1)
-                    return false;
-
-                n = n / 2;
-            }
-
-            return false;
-        }
 
         //232. Implement Queue using Stacks
 
@@ -1166,9 +1016,9 @@ namespace LeetCodeAlgo
         }
 
         /// 242. Valid Anagram
-        /// Given two strings s and t, return true if t is an anagram of s, and false otherwise.
-        /// An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, same length
-        /// Input: s = "anagram", t = "nagaram" =>Output: true
+        // Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+        // An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, same length
+        // Input: s = "anagram", t = "nagaram" =>Output: true
         public bool IsAnagram(string s, string t)
         {
             if (s.Length != t.Length)

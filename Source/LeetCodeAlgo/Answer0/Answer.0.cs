@@ -1773,7 +1773,7 @@ namespace LeetCodeAlgo
             return pCount == p.Length;
         }
 
-        /// 45. Jump Game II, using greedy
+        /// 45. Jump Game II, #Greedy
         public int Jump(int[] nums)
         {
             int position = nums.Length - 1;
@@ -1920,9 +1920,9 @@ namespace LeetCodeAlgo
         }
 
         ///49. Group Anagrams, #HashMap
-        ///Given an array of strings strs, group the anagrams together.
-        ///An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase,
-        ///eg. ["ate","eat","tea"]
+        //Given an array of strings strs, group the anagrams together.
+        //An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase,
+        //eg. ["ate","eat","tea"]
         public IList<IList<string>> GroupAnagrams(string[] strs)
         {
             List<IList<string>> res = new List<IList<string>>();

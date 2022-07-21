@@ -341,6 +341,29 @@ namespace LeetCodeAlgo
                 posArr[s[i] - 'a'].Add(i);
             return words.Count(w => isSubSequence_binarySearch(posArr, s, w));
         }
+        private bool isSubSequence_binarySearch(List<int>[] posArr, string s, string t)
+        {
+            int n = s.Length;
+            int curr = 0;
+            for (int i = 0; i < t.Length; i++)
+            {
+                if (curr >= n) return false;
+                var list = posArr[t[i] - 'a'];
+                if (list.Count == 0 || list.Last() < curr) return false;
+                int left = 0;
+                int right = list.Count - 1;
+                while (left < right)
+                {
+                    int mid = (left + right) / 2;
+                    if (list[mid] >= curr)
+                        right = mid;
+                    else
+                        left = mid + 1;
+                }
+                curr = list[left] + 1;
+            }
+            return true;
+        }
 
         ///796. Rotate String
         ///Given two strings s and goal, return true if and only if s can become goal after some number of shifts on s.
