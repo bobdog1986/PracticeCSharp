@@ -448,6 +448,27 @@ namespace LeetCodeAlgo
             return classes.Sum(x => 1.0 * x[0] / x[1]) / n;
         }
 
+        ///1793. Maximum Score of a Good Subarray, #Monotonic Stack
+        //The score of a subarray(i, j) is defined as min(nums[i..j]) * (j - i + 1).
+        //A good subarray is a subarray where i <= k <= j.
+        //Return the maximum possible score of a good subarray.
+        public int MaximumScore(int[] nums, int k)
+        {
+            int res = 0;
+            int n = nums.Length;
+            int[] leftArr = getLeftSmallerMonotonicArr(nums);
+            int[] rightArr = getRightSmallerMonotonicArr(nums);
+            for (int i = 0; i < n; i++)
+            {
+                int left = leftArr[i] + 1;
+                int right = rightArr[i] - 1;
+                if (left <= k && right >= k)
+                {
+                    res = Math.Max(res, nums[i] * (right - left + 1));//current num[i] is min in [left,right]
+                }
+            }
+            return res;
+        }
         ///1796. Second Largest Digit in a String
         public int SecondHighest(string s)
         {

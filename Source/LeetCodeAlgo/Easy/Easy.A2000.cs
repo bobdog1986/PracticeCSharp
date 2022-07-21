@@ -8,13 +8,103 @@ namespace LeetCodeAlgo.Easy
 {
     public partial class Easy
     {
+        ///2200. Find All K-Distant Indices in an Array
+        //A k-distant index is index i,j such that |i - j| <= k and nums[j] == key.
+        //Return a list of all k-distant indices sorted in increasing order.
+        public IList<int> FindKDistantIndices(int[] nums, int key, int k)
+        {
+            var set = new HashSet<int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] == key)
+                {
+                    for (int j = Math.Max(0, i - k); j <= i + k && j < nums.Length; j++)
+                        set.Add(j);
+                }
+            }
+            return set.ToList();
+        }
+
+        /// 2215. Find the Difference of Two Arrays
+        //Given two 0-indexed integer arrays nums1 and nums2, return a list answer of size 2 where:
+        //answer[0] is a list of all distinct integers in nums1 which are not present in nums2.
+        //answer[1] is a list of all distinct integers in nums2 which are not present in nums1
+
+        public IList<IList<int>> FindDifference(int[] nums1, int[] nums2)
+        {
+            var res = new List<IList<int>>();
+            HashSet<int> set1 = new HashSet<int>(nums1);
+            HashSet<int> set2 = new HashSet<int>(nums2);
+            res.Add(set1.Where(x => !set2.Contains(x)).ToList());
+            res.Add(set2.Where(x => !set1.Contains(x)).ToList());
+            return res;
+        }
+
+        ///2220. Minimum Bit Flips to Convert Number
+        ///Given two integers start and goal, return the minimum number of bit flips to convert start to goal.
+        public int MinBitFlips(int start, int goal)
+        {
+            int x = start ^ goal;
+            int res = 0;
+            while (x > 0)
+            {
+                if ((x & 1) == 1) res++;
+                x >>= 1;
+            }
+            return res;
+        }
+
+        ///2221. Find Triangular Sum of an Array
+        ///Return the triangular sum of nums.
+        public int TriangularSum(int[] nums)
+        {
+            while (nums.Length > 1)
+            {
+                int[] next = new int[nums.Length - 1];
+                for (int i = 0; i < next.Length; i++)
+                    next[i] = (nums[i] + nums[i + 1]) % 10;
+                nums = next;
+            }
+            return nums[0];
+        }
+
+        ///2224. Minimum Number of Operations to Convert Time
+        //In one operation you can increase the time current by 1, 5, 15, or 60 minutes.
+        //Return the minimum number of operations to convert current to correct.
+        public int ConvertTime(string current, string correct)
+        {
+            DateTime start = DateTime.ParseExact(current, "HH:mm", null);
+            DateTime end = DateTime.ParseExact(correct, "HH:mm", null);
+            int diff = (int)((end - start).TotalMinutes);
+            int res = 0;
+            while (diff > 0)
+            {
+                res++;
+                if (diff >= 60) diff -= 60;
+                else if (diff >= 15) diff -= 15;
+                else if (diff >= 5) diff -= 5;
+                else if (diff >= 1) diff -= 1;
+            }
+            return res;
+        }
+
+        ///2235. Add Two Integers
+        //public int Sum(int num1, int num2)
+        //{
+        //    return num1 + num2;
+        //}
+
+        ///2236. Root Equals Sum of Children
+        //public bool CheckTree(TreeNode root)
+        //{
+        //    return root.val == root.left.val + root.right.val;
+        //}
+
         /// 2255. Count Prefixes of a Given String
         public int CountPrefixes(string[] words, string s)
         {
             return words.Where(x => s.StartsWith(x)).Count();
         }
-
-
 
         ///2269 Find the K-Beauty of a Number
         /// It has a length of k. It is a divisor of num.
