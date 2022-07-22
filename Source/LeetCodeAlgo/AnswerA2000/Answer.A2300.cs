@@ -579,10 +579,10 @@ namespace LeetCodeAlgo
             return (int)res;
         }
 
-        ///2328. Number of Increasing Paths in a Grid, #DP, #DFS
+        ///2328. Number of Increasing Paths in a Grid, #DP, #DFS, #Topological Sort
         //Return the number of strictly increasing paths in the grid start from any and end at any cell.
         //Since the answer may be very large, return it modulo 10^9 + 7.
-        public int CountPaths_DP(int[][] grid)
+        public int CountPaths_DP_Topo(int[][] grid)
         {
             long res = 0;
             long mod = 1_000_000_007;
@@ -594,7 +594,7 @@ namespace LeetCodeAlgo
                 dp[i] = new long[n];
                 Array.Fill(dp[i], 1);//base case of every node is 1 , aka this node is smaller than all neighbors
             }
-            //minHeap, traversal all nodes from smallest to biggest
+            //topological traversal all nodes from smallest to biggest
             PriorityQueue<int[], int> pq = new PriorityQueue<int[], int>();
             for (int i = 0; i < m; i++)
                 for (int j = 0; j < n; j++)

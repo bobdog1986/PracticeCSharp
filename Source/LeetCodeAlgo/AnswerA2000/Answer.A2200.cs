@@ -701,6 +701,48 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2246. Longest Path With Different Adjacent Characters,#Graph, #DP, #DFS
+        //tree(connected, undirected graph that has no cycles) rooted at node 0 with n nodes indexed [0, n - 1].
+        //array parent of size n, where parent[i] is the parent of node i. node 0 is the root, parent[0] == -1.
+        //You are also given a string s of length n, where s[i] is the character assigned to node i.
+        //Return the length of the longest path in the tree such that no adjacent nodes have the same character.
+        public int LongestPath(int[] parent, string s)
+        {
+            int res = 0;
+            int n = s.Length;
+            List<int>[] graph = new List<int>[n];
+            for (int i = 0; i < n; i++)
+                graph[i] = new List<int>();
+            for (int i = 1; i < n; i++)
+                graph[parent[i]].Add(i);//build the graph
+            int[] memo = new int[n];//store the max-path from i-th node down to its childs
+            LongestPath_DFS(graph, 0, '-', s, memo);//traversal from root-0
+            res = memo.Max();//max path that from a node  down to its childs
+            for (int i = 0; i < n; i++)
+            {
+                //because this graph is undirect, so path can also climb up
+                //so we need find out 1st and 2nd max-path of everynode's childs that with diffierent char
+                //then res=Math.Max(res, 1 + 1st + 2nd )， 1 is current node
+                var diffNodes = graph[i].Where(x => s[x] != s[i]).ToList();
+                foreach (var k1 in diffNodes)
+                    foreach (var k2 in diffNodes)
+                        if (k1 != k2)
+                            res = Math.Max(res, 1 + memo[k1] + memo[k2]);
+            }
+            return res;
+        }
+
+        private int LongestPath_DFS(List<int>[] graph, int i, char prev, string s, int[] memo)
+        {
+            if (memo[i] != 0) return memo[i];
+            int res = 1;
+            foreach (var j in graph[i])
+                res = Math.Max(res, 1 + LongestPath_DFS(graph, j, s[i], s, memo));
+            memo[i] = res;
+            if (s[i] == prev) return 0;
+            else return memo[i];
+        }
+
         /// 2248. Intersection of Multiple Arrays
         ///Given a 2D integer array nums where nums[i] is a non-empty array of distinct positive integers,
         ///return the list of integers that are present in each array of nums sorted in ascending order.
