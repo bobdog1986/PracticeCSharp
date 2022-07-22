@@ -111,7 +111,6 @@ namespace LeetCodeAlgo
 
         ///2303. Calculate Amount Paid in Taxes, in Easy
 
-
         ///2304. Minimum Path Cost in a Grid, #DP, #HashMap
         public int MinPathCost_Dict(int[][] grid, int[][] moveCost)
         {
@@ -240,7 +239,7 @@ namespace LeetCodeAlgo
                 dict[char.ToUpper(c)][index] = 1;
             }
             var keys = dict.Keys.Where(x => dict[x].Sum() == 2).OrderBy(x => -x).ToList();
-            return keys.Count() == 0 ? String.Empty : keys[0].ToString();
+            return keys.Count() == 0 ? string.Empty : keys[0].ToString();
         }
 
         ///2310. Sum of Numbers With Units Digit K
@@ -383,13 +382,15 @@ namespace LeetCodeAlgo
             long mod = 10_0000_0007;
             //init non-GCD dictionary either same dictionary
             //eg. for 1, all [1,6] meet the GCD<=1 rule , but 1 is same , so dict[1] = {2,3,4,5,6}
-            Dictionary<int, List<int>> dict = new Dictionary<int, List<int>>();
-            dict.Add(1, new List<int>() { 2, 3, 4, 5, 6 });
-            dict.Add(2, new List<int>() { 1, 3, 5, });
-            dict.Add(3, new List<int>() { 1, 2, 4, 5 });
-            dict.Add(4, new List<int>() { 1, 3, 5 });
-            dict.Add(5, new List<int>() { 1, 2, 3, 4, 6 });
-            dict.Add(6, new List<int>() { 1, 5, });
+            Dictionary<int, List<int>> dict = new Dictionary<int, List<int>>
+            {
+                { 1, new List<int>() { 2, 3, 4, 5, 6 } },
+                { 2, new List<int>() { 1, 3, 5, } },
+                { 3, new List<int>() { 1, 2, 4, 5 } },
+                { 4, new List<int>() { 1, 3, 5 } },
+                { 5, new List<int>() { 1, 2, 3, 4, 6 } },
+                { 6, new List<int>() { 1, 5, } }
+            };
             //must use 3D matrix array, init seed data
             long[,,] dp = new long[n + 1, 7, 7];
             for (int i = 1; i <= 6; i++)
@@ -578,6 +579,76 @@ namespace LeetCodeAlgo
             return (int)res;
         }
 
+        ///2328. Number of Increasing Paths in a Grid, #DP, #DFS
+        //Return the number of strictly increasing paths in the grid start from any and end at any cell.
+        //Since the answer may be very large, return it modulo 10^9 + 7.
+        public int CountPaths_DP(int[][] grid)
+        {
+            long res = 0;
+            long mod = 1_000_000_007;
+            int m = grid.Length;
+            int n = grid[0].Length;
+            long[][] dp = new long[m][];
+            for (int i = 0; i < m; i++)
+            {
+                dp[i] = new long[n];
+                Array.Fill(dp[i], 1);//base case of every node is 1 , aka this node is smaller than all neighbors
+            }
+            //minHeap, traversal all nodes from smallest to biggest
+            PriorityQueue<int[], int> pq = new PriorityQueue<int[], int>();
+            for (int i = 0; i < m; i++)
+                for (int j = 0; j < n; j++)
+                    pq.Enqueue(new int[] { i, j }, grid[i][j]);
+            int[][] dxy4 = new int[4][] { new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 } };
+            while (pq.Count > 0)
+            {
+                var curr = pq.Dequeue();
+                foreach (var d in dxy4)
+                {
+                    int r = curr[0] + d[0];
+                    int c = curr[1] + d[1];
+                    if (r >= 0 && r < m && c >= 0 && c < n && grid[r][c] > grid[curr[0]][curr[1]])
+                        dp[r][c] = (dp[r][c] + dp[curr[0]][curr[1]]) % mod;
+                }
+            }
+            foreach (var row in dp)
+                foreach (var cell in row)
+                    res = (res + cell) % mod;
+            return (int)res;
+        }
+
+        public int CountPaths(int[][] grid)
+        {
+            long res = 0;
+            long mod = 1_000_000_007;
+            int m = grid.Length;
+            int n = grid[0].Length;
+            long[][] memo = new long[m][];//memoization matrix to store value of visited node
+            for (int i = 0; i < m; i++)
+                memo[i] = new long[n];
+            int[][] dxy4 = new int[4][] { new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 } };
+            for (int i = 0; i < m; i++)
+                for (int j = 0; j < n; j++)
+                    res = (res + CountPaths_DFS(grid, i, j, dxy4, memo)) % mod;//search every node by dfs
+            return (int)res;
+        }
+
+        private long CountPaths_DFS(int[][] grid, int i, int j, int[][] dxy4, long[][] memo)
+        {
+            if (memo[i][j] != 0) return memo[i][j];//if already visited, return value
+            long res = 1;//base case, only contain this node
+            long mod = 1_000_000_007;
+            foreach (var d in dxy4)
+            {
+                int r = i + d[0];
+                int c = j + d[1];
+                if (r >= 0 && r < grid.Length && c >= 0 && c < grid[0].Length && grid[i][j] > grid[r][c])
+                    res = (res + CountPaths_DFS(grid, r, c, dxy4, memo)) % mod;// bigger than neighbor [r,c]
+            }
+            memo[i][j] = res;
+            return res;
+        }
+
         ///2331. Evaluate Boolean Binary Tree, in Easy
 
         ///2332. The Latest Time to Catch a Bus, #Greedy
@@ -608,6 +679,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         ///2333. Minimum Sum of Squared Difference, #Binary Search
         //The sum of squared difference of arrays nums1 and nums2 is defined as the sum of (nums1[i] - nums2[i])2
         //k1 and k2. You can modify any of the elements of nums1 by +1 or -1 at most k1 times. same for k2 on nums2;
@@ -668,7 +740,7 @@ namespace LeetCodeAlgo
             int n = nums.Length;
             int[] leftArr = getLeftSmallerMonotonicArr(nums);
             int[] rightArr = getRightSmallerMonotonicArr(nums);
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
                 int left = leftArr[i] + 1;
                 int right = rightArr[i] - 1;
@@ -809,7 +881,7 @@ namespace LeetCodeAlgo
             for (int i = 0; i < arr.Length; i++)
                 arr[i] = i;
             int n = nums[0].Length;
-            for(int i = 0; i < queries.Length; i++)
+            for (int i = 0; i < queries.Length; i++)
             {
                 int j = queries[i][1];
                 Array.Sort(arr, (x, y) =>
