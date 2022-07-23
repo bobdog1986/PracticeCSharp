@@ -36,7 +36,8 @@ namespace LeetCodeAlgo
             int[][] mat1 = answer.buildMatrix(matStrInt1);
             //string matStrInt2 = "[[1,3,1,15],[1,3,3,1]]";
             //int[][] mat2 = answer.buildMatrix(matStrInt2);
-            string arrStrInt1 = "[-1,0,0,1,1,2]";
+            string arrStrInt1 = "[1,3,3,2,1,4,1,1,2,4,1,2,2,1,1,1,1,2,2,3,4,3,3,2,1,4,4]";
+
             int[] arr1 = answer.buildArray(arrStrInt1);
             string arrStrInt2 = "[8,2,6,10]";
             int[] arr2 = answer.buildArray(arrStrInt2);
@@ -52,7 +53,7 @@ namespace LeetCodeAlgo
             sw.Start();
 
 
-            var result = answer.LongestPath(arr1, "abacbe");
+            var result = answer.ShortestSequence(arr1, 4);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

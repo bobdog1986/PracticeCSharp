@@ -942,5 +942,30 @@ namespace LeetCodeAlgo
         ///2348. Number of Zero-Filled Subarrays, in Easy
 
         ///2349. Design a Number Container System, see NumberContainers
+
+        ///2350. Shortest Impossible Sequence of Rolls, #Greedy, #Good
+        //You are given an integer array rolls of length n and an integer k.You roll a k sided dice numbered from 1 to k, n times, where the result of the ith roll is rolls[i].
+        //Return the length of the shortest sequence of rolls that cannot be taken from rolls.
+        //A sequence of rolls of length len is the result of rolling a k sided dice len times.
+        //Note that the sequence taken does not have to be consecutive as long as it is in order.
+        public int ShortestSequence1(int[] rolls, int k)
+        {
+            //using greed, set.Count = k means all numbers of current length are found
+            //so we add len+1
+            int n = rolls.Length;
+            if (k == 1) return n + 1;
+            int res = 1;
+            HashSet<int> set = new HashSet<int>();
+            foreach(var r in rolls)
+            {
+                set.Add(r);
+                if (set.Count == k)
+                {
+                    res++;
+                    set.Clear();
+                }
+            }
+            return res;
+        }
     }
 }
