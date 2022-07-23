@@ -326,5 +326,22 @@ namespace LeetCodeAlgo.Easy
             var y = dict.Keys.Select(x => dict[x] % 2).Sum();
             return new int[] { x, y };
         }
+
+        ///2347. Best Poker Hand
+        public string BestHand(int[] ranks, char[] suits)
+        {
+            int[] arr1 = new int[14];
+            foreach (var r in ranks)
+                arr1[r]++;
+
+            int[] arr2 = new int[4];
+            foreach (var s in suits)
+                arr2[s - 'a']++;
+
+            if (arr2.Max() == 5) return "Flush";
+            else if (arr1.Max() >= 3) return "Three of a Kind";
+            else if (arr1.Max() == 2) return "Pair";
+            else return "High Card";
+        }
     }
 }
