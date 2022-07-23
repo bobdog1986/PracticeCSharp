@@ -343,5 +343,19 @@ namespace LeetCodeAlgo.Easy
             else if (arr1.Max() == 2) return "Pair";
             else return "High Card";
         }
+
+        ///2348. Number of Zero-Filled Subarrays
+        public long ZeroFilledSubarray(int[] nums)
+        {
+            long res = 0;
+            int count = 0;
+            foreach (var n in nums)
+            {
+                if (n == 0) count++;
+                else count = 0;
+                res += count;
+            }
+            return res;
+        }
     }
 }

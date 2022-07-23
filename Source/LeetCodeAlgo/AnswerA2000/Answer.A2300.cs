@@ -936,5 +936,9 @@ namespace LeetCodeAlgo
             }
             return -1;
         }
+
+        ///2347. Best Poker Hand, in Easy
+
+        ///2348. Number of Zero-Filled Subarrays, in Easy
     }
 }
