@@ -24,7 +24,8 @@ namespace LeetCodeAlgo.Easy.Design
 
         public void Change(int index, int number)
         {
-            dict[index] = number;
+            if(!dict.ContainsKey(index))dict.Add(index, number);
+            else dict[index] = number;
             if (!map.ContainsKey(number))
                 map.Add(number, new PriorityQueue<int, int>());
             map[number].Enqueue(index, index);
