@@ -25,7 +25,7 @@ namespace LeetCodeAlgo
             foreach(var n in nums)
             {
                 set.Add(n);
-                var bits = getBitCount(n);
+                var bits = getBitsCount(n);
                 if (!dict.ContainsKey(bits))
                     dict.Add(bits, new HashSet<int>());
                 dict[bits].Add(n);
@@ -33,21 +33,10 @@ namespace LeetCodeAlgo
             long res = 0;
             foreach (var i in set)
             {
-                int need = k - getBitCount(i);
+                int need = k - getBitsCount(i);
                 foreach (int key in dict.Keys)
                     if (key >= need)
                         res += (long)dict[key].Count;
-            }
-            return res;
-        }
-
-        private int getBitCount(int n)
-        {
-            int res = 0;
-            while (n > 0)
-            {
-                if ((n & 1) == 1) res++;
-                n >>= 1;
             }
             return res;
         }

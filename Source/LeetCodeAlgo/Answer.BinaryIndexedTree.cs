@@ -35,34 +35,6 @@ namespace LeetCodeAlgo
         }
     }
 
-    public class FenwickTree
-    {
-        private readonly int[] arr;
-        public FenwickTree(int n)
-        {
-            arr = new int[n + 1];
-        }
-
-        public void update(int x)
-        {
-            while (x < arr.Length)
-            {
-                arr[x]++;
-                x += x & -x;
-            }
-        }
-
-        public int get(int x)
-        {
-            int res = 0;
-            while (x > 0)
-            {
-                res += arr[x];
-                x -= x & -x;
-            }
-            return res;
-        }
-    }
     public partial class Answer
     {
 

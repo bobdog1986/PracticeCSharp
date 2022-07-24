@@ -8,7 +8,20 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        /// 1. Two Sum, in Easy
+        /// 1. Two Sum
+        // return indices of the two numbers such that they add up to target.
+        public int[] TwoSum(int[] nums, int target)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (dict.ContainsKey(target - nums[i]))
+                    return new int[2] { dict[target - nums[i]], i };
+                if (!dict.ContainsKey(nums[i]))
+                    dict.Add(nums[i], i);
+            }
+            return new int[2];
+        }
 
         ///2. Add Two Numbers
         //Add the two numbers and return the sum as a linked list.
@@ -43,7 +56,7 @@ namespace LeetCodeAlgo
         /// s consists of English letters, digits, symbols and spaces.
         public int LengthOfLongestSubstring(string s)
         {
-            if (s.Length <=1) return s.Length;
+            if (s.Length <= 1) return s.Length;
             Dictionary<char, int> map = new Dictionary<char, int>();
             int max = 0;
             int left = 0;
@@ -69,7 +82,7 @@ namespace LeetCodeAlgo
             if (n1 == 0 && n2 == 0) return 0;
             int i = 0, j = 0;
             int[] nums = new int[n];
-            while (i+j < n)
+            while (i + j < n)
             {
                 if (i == n1)
                     nums[i + j] = nums2[j++];
@@ -83,15 +96,10 @@ namespace LeetCodeAlgo
                         nums[i + j] = nums2[j++];
                 }
             }
-
-            if (nums.Length % 2 == 0)
-            {
-                return (nums[nums.Length / 2 - 1] + nums[nums.Length / 2]) / 2.0;
-            }
+            if (n % 2 == 0)
+                return (nums[n / 2 - 1] + nums[n / 2]) / 2.0;
             else
-            {
-                return nums[nums.Length / 2];
-            }
+                return nums[n / 2];
         }
 
         ///5. Longest Palindromic Substring
@@ -298,14 +306,13 @@ namespace LeetCodeAlgo
                 digits.Add(n % 10);
                 n = n / 10;
             }
-            int ans = 0;
-            int k = 1;
-            for (int i = digits.Count - 1; i >= 0; i--)
+
+            for (int i = 0; i < digits.Count / 2; i++)
             {
-                ans += digits[i] * k;
-                k *= 10;
+                if (digits[i] != digits[digits.Count - 1 - i])
+                    return false;
             }
-            return ans == x;
+            return true;
         }
 
         ///10. Regular Expression Matching, #DP
@@ -509,25 +516,14 @@ namespace LeetCodeAlgo
         /// 1 <= strs.length <= 200, 0 <= strs[i].length <= 200
         public string LongestCommonPrefix(string[] strs)
         {
-            var res = new List<char>();
-            for (int i = 0; i < strs[0].Length; i++)
+            strs = strs.OrderBy(x => x.Length).ToArray();
+            int i = 0;
+            for (; i < strs[0].Length; i++)
             {
-                bool fail = false;
-                char c = strs[0][i];
-                for (int j = 1; j < strs.Length; j++)
-                {
-                    if (strs[j].Length <= i || strs[j][i] != c)
-                    {
-                        fail = true;
-                        break;
-                    }
-                }
-                if (fail)
+                if (strs.Any(x => x[i] != strs[0][i]))
                     break;
-                else
-                    res.Add(c);
             }
-            return new string(res.ToArray());
+            return strs[0].Substring(0, i);
         }
 
         ///15. 3Sum, #Two Pointer
@@ -772,7 +768,7 @@ namespace LeetCodeAlgo
         public List<string> GenerateParenthesis_Iteration(int n)
         {
             List<List<string>> res = new List<List<string>>();
-            res.Add(new List<string>() { ""});
+            res.Add(new List<string>() { "" });
             for (int i = 1; i <= n; ++i)
             {
                 List<string> list = new List<string>();
@@ -797,6 +793,7 @@ namespace LeetCodeAlgo
             GenerateParenthesis_Backtracking(ans, "", 0, 0, n);
             return ans;
         }
+
         ///string is immutable , best for this question
         private void GenerateParenthesis_Backtracking(IList<string> list, string str, int left, int right, int count)
         {
@@ -892,6 +889,7 @@ namespace LeetCodeAlgo
 
             return head;
         }
+
         public ListNode SwapPairs_Recursion(ListNode head)
         {
             if (head == null || head.next == null)
@@ -901,8 +899,8 @@ namespace LeetCodeAlgo
             next.next = head;
             return next;
         }
+
         ///25. Reverse Nodes in k-Group
-        ///
         public ListNode ReverseKGroup(ListNode head, int k)
         {
             if (k == 1)
@@ -1055,14 +1053,8 @@ namespace LeetCodeAlgo
             Dictionary<string, int> dict = new Dictionary<string, int>();
             foreach (string word in words)
             {
-                if (dict.ContainsKey(word))
-                {
-                    dict[word]++;
-                }
-                else
-                {
-                    dict.Add(word, 1);
-                }
+                if (dict.ContainsKey(word)) dict[word]++;
+                else dict.Add(word, 1);
             }
             for (int i = 0; i < s.Length + 1 - len; i++)
             {
@@ -1219,7 +1211,7 @@ namespace LeetCodeAlgo
         /// original array [1,2,3,4,5] sorted in ascending order (with distinct values).
         /// then possibly rotated to eg. [3,4,5,1,2]
         /// return the index of target if it is in nums or -1
-        public int Search_33_BinarySearch(int[] nums,int target)
+        public int Search_33_BinarySearch(int[] nums, int target)
         {
             int n = nums.Length;
             int left = 0, right = n - 1;
@@ -1246,6 +1238,7 @@ namespace LeetCodeAlgo
             }
             return -1;
         }
+
         /// 34. Find First and Last Position of Element in Sorted Array, #Binary Search
         ///[5,7,7,8,8,10], target = 8, return [3,4], if not found return [-1,-1]
         public int[] SearchRange(int[] nums, int target)
@@ -1345,10 +1338,10 @@ namespace LeetCodeAlgo
         {
             if (board == null || board.Length == 0)
                 return;
-            SolveSudoku_Solve(board);
+            SolveSudoku_BackTracking(board);
         }
 
-        private bool SolveSudoku_Solve(char[][] board)
+        private bool SolveSudoku_BackTracking(char[][] board)
         {
             for (int i = 0; i < board.Length; i++)
             {
@@ -1362,7 +1355,7 @@ namespace LeetCodeAlgo
                             {
                                 board[i][j] = c; //Put c for this cell
 
-                                if (SolveSudoku_Solve(board))
+                                if (SolveSudoku_BackTracking(board))
                                     return true; //If it's the solution return true
                                 else
                                     board[i][j] = '.'; //Otherwise go back
@@ -1614,16 +1607,17 @@ namespace LeetCodeAlgo
         /// 1 <= nums.length <= 5 * 10^5, -2^31 <= nums[i] <= 2^31 - 1
         public int FirstMissingPositive(int[] nums)
         {
-            int[] arr = new int[nums.Length + 1];
-            foreach (var n in nums)
+            int n = nums.Length;
+            int[] arr = new int[n + 1];
+            foreach (var i in nums)
             {
-                if (n > 0 && n <= nums.Length) arr[n]++;
+                if (i >= 1 && i <= n) arr[i]++;
             }
             for (int i = 1; i < arr.Length; i++)
             {
                 if (arr[i] == 0) return i;
             }
-            return nums.Length + 1;
+            return n + 1;
         }
 
         ///42. Trapping Rain Water, #Two Pointers
@@ -1814,7 +1808,7 @@ namespace LeetCodeAlgo
             {
                 if (set.Contains(nums[i])) continue;
                 set.Add(nums[i]);
-                Permute_Backtracking( set, nums,res);
+                Permute_Backtracking(set, nums, res);
                 set.Remove(nums[i]);
             }
         }

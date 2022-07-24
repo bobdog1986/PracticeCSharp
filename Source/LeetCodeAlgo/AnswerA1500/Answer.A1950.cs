@@ -473,5 +473,29 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///1997. First Day Where You Have Been in All the Rooms, #DP
+        //Initially on day 0, you visit room 0.
+        //-if you have been in room i an odd number of times (including the current visit),
+        //on the next day you will visit a room with a lower or equal room number
+        //specified by nextVisit[i] where 0 <= nextVisit[i] <= i;
+        //-if you have been in room i an even number of times (including the current visit),
+        //on the next day you will visit room (i + 1) mod n.
+        //Return the label of the first day where you have been in all the rooms. return it modulo 109 + 7.
+        public int FirstDayBeenInAllRooms(int[] nextVisit)
+        {
+            long mod = 1_000_000_007;
+            int n = nextVisit.Length;
+            long[] dp = new long[n];
+            for (int i = 1; i < n; i++)
+            {
+                dp[i] = (2 * dp[i - 1] - dp[nextVisit[i - 1]] + 2 + mod) % mod;
+            }
+            return (int)dp[n - 1];
+        }
+
+
+        ///1998. GCD Sort of an Array, #Union Find
+
     }
 }

@@ -21,7 +21,10 @@ namespace LeetCodeAlgo
                 x = 1 / x;
             }
             if (m == 1) return x;
-            return (m % 2 == 0) ? MyPow(x * x, (int)(m / 2)) : x * MyPow(x * x, (int)(m / 2));
+            if (m % 2 == 0)
+                return MyPow(x * x, (int)(m / 2));
+            else
+                return x * MyPow(x * x, (int)(m / 2));
         }
 
         ///51. N-Queens, #Backtracking
@@ -337,7 +340,6 @@ namespace LeetCodeAlgo
 
         ///58. Length of Last Word, in Easy
 
-
         /// 59. Spiral Matrix II
         ///Given a positive integer n, generate an n x n matrix filled with elements from 1 to n2 in spiral order.
         public int[][] GenerateMatrix(int n)
@@ -526,7 +528,7 @@ namespace LeetCodeAlgo
             var dp = init2DMatrix(m, n, 1);
             for (int i = 1; i < m; i++)
                 for (int j = 1; j < n; j++)
-                    dp[i] [j] = dp[i - 1][ j] + dp[i][ j - 1];
+                    dp[i][j] = dp[i - 1][ j] + dp[i][ j - 1];
             return dp[m - 1][ n - 1];
         }
 
@@ -682,13 +684,12 @@ namespace LeetCodeAlgo
         }
 
         ///68. Text Justification
-        ///Given an array of strings words and a width maxWidth, format the text such that each line has exactly maxWidth characters and is fully (left and right) justified.
+        //Given an array of strings words and a width maxWidth, format the text such that
+        //each line has exactly maxWidth characters and is fully (left and right) justified.
         public IList<string> FullJustify(string[] words, int maxWidth)
         {
             var res = new List<string>();
-
             var list = new List<string>();
-
             foreach (var word in words)
             {
                 int sum = list.Sum(x => x.Length);
@@ -732,9 +733,10 @@ namespace LeetCodeAlgo
         }
 
         /// 69. Sqrt(x), #Binary Search
-        ///Given a non-negative integer x, compute and return the square root of x.
-        ///Since the return type is an integer, the decimal digits are truncated, and only the integer part of the result is returned.
-        ///0 <= x <= 2^31 - 1
+        //Given a non-negative integer x, compute and return the square root of x.
+        //Since the return type is an integer, the decimal digits are truncated,
+        //and only the integer part of the result is returned.
+        //0 <= x <= 2^31 - 1
         public int MySqrt(int x)
         {
             if (x <= 1) return x;
@@ -802,7 +804,8 @@ namespace LeetCodeAlgo
                 }
             }
             string ans = string.Empty;
-            foreach (var dir in list) ans += "/" + dir;
+            foreach (var dir in list)
+                ans += "/" + dir;
             return ans == string.Empty ? "/" : ans;
         }
 
@@ -1069,82 +1072,77 @@ namespace LeetCodeAlgo
         ///Given an m x n grid of characters board and a string word, return true if word exists in the grid.
         public bool Exist(char[][] board, string word)
         {
-            return Exist_Backtracking(board, null, 0, 0, word, 0);
-        }
-
-        public bool Exist_Backtracking(char[][] board, bool[] visit, int r, int c, string word, int index)
-        {
-            if (index == word.Length)
-                return true;
-            var rowLen = board.Length;
-            var colLen = board[0].Length;
             int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
-
-            if (index == 0)
+            int m = board.Length;
+            int n = board[0].Length;
+            for (int i = 0; i < m; i++)
             {
-                for (int i = 0; i < rowLen; i++)
+                for (int j = 0; j < n; j++)
                 {
-                    for (var j = 0; j < colLen; j++)
-                    {
-                        if (board[i][j] == word[index])
-                        {
-                            var nextVisit = new bool[rowLen * colLen];
-                            nextVisit[i * colLen + j] = true;
-                            bool result = Exist_Backtracking(board, nextVisit, i, j, word, index + 1);
-                            if (result)
-                                return true;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                foreach (var t in dxy4)
-                {
-                    int row = r + t[0];
-                    int col = c + t[1];
-                    if (row >= 0 && row < rowLen && col >= 0 && col < colLen
-                        && !visit[row * colLen + col] && board[row][col] == word[index])
-                    {
-                        var nextVisit = new List<bool>(visit).ToArray();
-                        nextVisit[row * colLen + col] = true;
-                        bool result = Exist_Backtracking(board, nextVisit, row, col, word, index + 1);
-                        if (result)
-                            return true;
-                    }
+                    bool result = Exist_Backtracking(board, 0, i, j, dxy4, word);
+                    if (result)
+                        return true;
                 }
             }
             return false;
         }
 
-        /// 80. Remove Duplicates from Sorted Array II
+        private bool Exist_Backtracking(char[][] board, int index,int i, int j, int[][] dxy4 , string word)
+        {
+            if (board[i][j] != word[index]) return false;
+            if (index == word.Length-1) return true;
+            char temp = board[i][j];
+            board[i][j] = '-';//avoid duplicate visit
+            int m = board.Length;
+            int n = board[0].Length;
+            foreach (var d in dxy4)
+            {
+                int r = i + d[0];
+                int c = j + d[1];
+                if (r >= 0 && r < m && c >= 0 && c < n && board[r][c] != '-')
+                {
+                    bool result = Exist_Backtracking(board, index + 1, r, c, dxy4, word);
+                    if (result)
+                        return true;
+                }
+            }
+            board[i][j] = temp;
+            return false;
+        }
+
+        /// 80. Remove Duplicates from Sorted Array II, #Two Pointers
         /// nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once.
         /// -10^4 <= nums[i] <= 10^4
         public int RemoveDuplicates(int[] nums)
         {
-            int ship = 10000;
-            int repeat = 2;
-            int[] arr = new int[ship * 2 + 1];
-            foreach (var i in nums)
-                arr[i + ship]++;
-            int count = 0;
-            int skipCount = 0;
-            for (int i = 0; i < arr.Length; i++)
+            int n = nums.Length;
+            int i = 0;
+            int j = 0;
+            int prev = int.MinValue;
+            int times = 1;
+            while (i < n)
             {
-                if (count + skipCount == arr.Length)
-                    break;
-                if (arr[i] == 0)
-                    continue;
-                skipCount += arr[i] - repeat;
-                int j = arr[i] > repeat ? repeat : arr[i];
-                while (j > 0)
+                if (nums[i] == prev)
                 {
-                    nums[count] = i - ship;
-                    count++;
-                    j--;
+                    if (times == 2)
+                    {
+                        //skip
+                    }
+                    else
+                    {
+                        nums[j++] = nums[i];
+                        times++;
+                    }
                 }
+                else
+                {
+                    nums[j++] = nums[i];
+                    prev = nums[i];
+                    times = 1;
+                }
+                i++;
             }
-            return count;
+            return j;
         }
 
         ///81. Search in Rotated Sorted Array II
@@ -1396,7 +1394,6 @@ namespace LeetCodeAlgo
         {
             int[] temp = new int[m];
             Array.Copy(nums1, temp, m);
-
             int i = 0, j = 0;
             while (i < m || j < n)
             {
@@ -1423,7 +1420,7 @@ namespace LeetCodeAlgo
             int i = 2;
             for (; i < Math.Pow(2, n); i++)
             {
-                var code = GrayCode_Code(i);
+                var code = getBitsCount(i);
                 if (!dict.ContainsKey(code)) dict.Add(code, new List<int>());
                 dict[code].Add(i);
             }
@@ -1454,15 +1451,15 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        public int GrayCode_Code(int val)
+        private int getBitsCount(int val)
         {
-            int ans = 0;
+            int res = 0;
             while (val > 0)
             {
-                if ((val & 1) == 1) ans++;
+                if ((val & 1) == 1) res++;
                 val >>= 1;
             }
-            return ans;
+            return res;
         }
 
         /// 90. Subsets II
@@ -1472,20 +1469,14 @@ namespace LeetCodeAlgo
         public IList<IList<int>> SubsetsWithDup(int[] nums)
         {
             var ans = new List<IList<int>>();
-
             Array.Sort(nums);
-
             ans.Add(new List<int>());
-
             for (int n = 1; n <= nums.Length - 1; n++)
             {
                 var llist = new List<IList<int>>();
-
                 SubsetsWithDup_Add(nums, 0, n, llist, ans);
             }
-
             ans.Add(nums);
-
             return ans;
         }
 

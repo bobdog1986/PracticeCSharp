@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Design
+namespace LeetCodeAlgo.Easy.Design
 {
     ///1797. Design Authentication Manager
     public class AuthenticationManager
@@ -25,7 +25,7 @@ namespace LeetCodeAlgo.Design
 
         public void Renew(string tokenId, int currentTime)
         {
-            if (dict.ContainsKey(tokenId) && dict[tokenId]> currentTime)
+            if (dict.ContainsKey(tokenId) && dict[tokenId] > currentTime)
             {
                 dict[tokenId] = currentTime + _timeToLive;
             }

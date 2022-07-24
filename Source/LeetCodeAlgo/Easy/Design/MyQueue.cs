@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Design
+namespace LeetCodeAlgo.Easy.Design
 {
     ///232. Implement Queue using Stacks
     public class MyQueue
@@ -18,14 +18,14 @@ namespace LeetCodeAlgo.Design
 
         public void Push(int x)
         {
-            var a = (q1.Count != 0 || q2.Count == 0) ? q1 : q2;
+            var a = q1.Count != 0 || q2.Count == 0 ? q1 : q2;
             a.Push(x);
         }
 
         public int Pop()
         {
-            var a = (q1.Count != 0 || q2.Count == 0) ? q1 : q2;
-            var b = (q1.Count != 0 || q2.Count == 0) ? q2 : q1;
+            var a = q1.Count != 0 || q2.Count == 0 ? q1 : q2;
+            var b = q1.Count != 0 || q2.Count == 0 ? q2 : q1;
 
             while (a.Count > 1)
             {
@@ -44,8 +44,8 @@ namespace LeetCodeAlgo.Design
 
         public int Peek()
         {
-            var a = (q1.Count != 0 || q2.Count == 0) ? q1 : q2;
-            var b = (q1.Count != 0 || q2.Count == 0) ? q2 : q1;
+            var a = q1.Count != 0 || q2.Count == 0 ? q1 : q2;
+            var b = q1.Count != 0 || q2.Count == 0 ? q2 : q1;
 
             while (a.Count > 0)
             {
