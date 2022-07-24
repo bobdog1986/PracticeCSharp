@@ -75,7 +75,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2157. Groups of Strings, #Union Find, #Bit
+        ///2157. Groups of Strings, #Union Find, #Bit Manipulation
         //Two strings connected if the set of letters of s2 can be obtained by: Add 1 /Delete /Replace 1 char
         //Return array ans where:ans[0] is the maximum number of groups, ans[1] is the size of the largest group.
         public int[] GroupStrings(string[] words)

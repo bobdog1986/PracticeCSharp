@@ -526,7 +526,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///397. Integer Replacement, #Bit
+        ///397. Integer Replacement, #Bit Manipulation
         //If n is even, replace n with n / 2. If n is odd, replace n with either n + 1 or n - 1.
         //Return the minimum number of operations needed for n to become 1, 1 <= n <= 231 - 1
         public int IntegerReplacement_Recursion(int n)

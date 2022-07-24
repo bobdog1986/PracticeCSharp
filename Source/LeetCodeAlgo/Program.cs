@@ -14,13 +14,14 @@ namespace LeetCodeAlgo
             Answer answer = new Answer();
             ///!!!*** read from string files
             //List<string> strMatLines = File.ReadLines("StringMatrix.txt").ToList();
-            //List<string> strArrLines = File.ReadLines("StringArr.txt").ToList();
+            List<string> strArrLines = File.ReadLines("StringArr.txt").ToList();
             //List<string> intArrLines = File.ReadLines("IntArr.txt").ToList();
             //List<string> intMatLines = File.ReadLines("IntMatrix.txt").ToList();
 
             //var matStrLine0 = answer.buildStringMatrix(strMatLines[0]);//build string[][] from file
             //char[][] matCharLine0 = answer.buildCharMatrix(strMatLines[0]);//build char[][] from file due to leetcode using ""
-            //string[] arrStrLine0 = answer.buildStringArray(strArrLines[0]);
+            string[] arrStrLine0 = answer.buildStringArray(strArrLines[0]);
+            string[] arrStrLine1 = answer.buildStringArray(strArrLines[1]);
             //char[] arrCharLine0 = answer.buildCharArray(strArrLines[0]);
 
             ///build ListNode, auto print
@@ -36,7 +37,7 @@ namespace LeetCodeAlgo
             int[][] mat1 = answer.buildMatrix(matStrInt1);
             //string matStrInt2 = "[[1,3,1,15],[1,3,3,1]]";
             //int[][] mat2 = answer.buildMatrix(matStrInt2);
-            string arrStrInt1 = "[1,3,3,2,1,4,1,1,2,4,1,2,2,1,1,1,1,2,2,3,4,3,3,2,1,4,4]";
+            string arrStrInt1 = "[1,2,3,1,536870911]";
 
             int[] arr1 = answer.buildArray(arrStrInt1);
             string arrStrInt2 = "[8,2,6,10]";
@@ -52,8 +53,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-
-            var result = answer.ShortestSequence(arr1, 4);
+            var result = answer.CountExcellentPairs(arr1, 3);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

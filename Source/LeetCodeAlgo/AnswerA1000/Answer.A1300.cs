@@ -277,7 +277,7 @@ namespace LeetCodeAlgo
             SumEvenGrandparent(root.right, ref res);
         }
 
-        ///1318. Minimum Flips to Make a OR b Equal to c, #Bit
+        ///1318. Minimum Flips to Make a OR b Equal to c, #Bit Manipulation
         public int MinFlips(int a, int b, int c)
         {
             //make a|b=c;

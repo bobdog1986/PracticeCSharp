@@ -570,7 +570,7 @@ namespace LeetCodeAlgo
                 }
             }
         }
-        /// 421. Maximum XOR of Two Numbers in an Array, #Trie, #Greedy, #Bit
+        /// 421. Maximum XOR of Two Numbers in an Array, #Trie, #Greedy, #Bit Manipulation
         //return the maximum result of nums[i] XOR nums[j], where 0 <= i <= j < n.
         //1 <= nums.length <= 2 * 10^5, 0 <= nums[i] <= 2^31 - 1
         public int FindMaximumXOR_Greedy(int[] nums)
