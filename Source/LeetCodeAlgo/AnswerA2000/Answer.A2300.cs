@@ -948,12 +948,11 @@ namespace LeetCodeAlgo
         //Return the length of the shortest sequence of rolls that cannot be taken from rolls.
         //A sequence of rolls of length len is the result of rolling a k sided dice len times.
         //Note that the sequence taken does not have to be consecutive as long as it is in order.
-        public int ShortestSequence1(int[] rolls, int k)
+        public int ShortestSequence(int[] rolls, int k)
         {
-            //using greed, set.Count = k means all numbers of current length are found
-            //so we add len+1
             int n = rolls.Length;
             if (k == 1) return n + 1;
+            //set.Count == k means all numbers of current length are found, then res++ and clear set
             int res = 1;
             HashSet<int> set = new HashSet<int>();
             foreach(var r in rolls)
@@ -966,6 +965,18 @@ namespace LeetCodeAlgo
                 }
             }
             return res;
+        }
+
+        private Dictionary<T, int> getHashMap<T>(IEnumerable<T> arr)
+            where T : notnull
+        {
+            var dict=new Dictionary<T,int>();
+            foreach(var n in arr)
+            {
+                if (dict.ContainsKey(n)) dict[n]++;
+                else dict.Add(n, 1);
+            }
+            return dict;
         }
     }
 }

@@ -357,5 +357,18 @@ namespace LeetCodeAlgo.Easy
             }
             return res;
         }
+
+        ///2351. First Letter to Appear Twice
+
+        public char RepeatedCharacter(string s)
+        {
+            var set = new HashSet<char>();
+            foreach (var c in s)
+            {
+                if (set.Contains(c)) return c;
+                else set.Add(c);
+            }
+            return 'a';
+        }
     }
 }
