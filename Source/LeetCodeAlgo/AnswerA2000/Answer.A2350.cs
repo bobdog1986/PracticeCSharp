@@ -10,5 +10,6 @@ namespace LeetCodeAlgo
     {
         ///2351. First Letter to Appear Twice, in Easy
 
+        ///2352. Equal Row and Column Pairs, in Easy
     }
 }
