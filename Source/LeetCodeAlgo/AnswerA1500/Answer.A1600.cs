@@ -481,5 +481,26 @@ namespace LeetCodeAlgo
             res += orders % mod * left;//must % mod, or cause overflow
             return (int)(res % mod);
         }
+
+
+        ///1649. Create Sorted Array through Instructions, #BITree, #Fenwick
+        //The cost of each insertion is the minimum of the following:
+        //The number of elements currently in nums that are strictly less than instructions[i].
+        //The number of elements currently in nums that are strictly greater than instructions[i].
+        //1 <= instructions[i] <= 10^5
+        public int CreateSortedArray(int[] instructions)
+        {
+            var root = new BinaryIndexedTree(100000);
+            long res = 0;
+            long mod = 1_000_000_007;
+            for(int i = 0; i < instructions.Length; i++)
+            {
+                res += Math.Min(root.get(instructions[i] - 1), i - root.get(instructions[i]));
+                res %= mod;
+                root.update(instructions[i]);
+            }
+            return (int)((res + mod) % mod);
+        }
+
     }
 }

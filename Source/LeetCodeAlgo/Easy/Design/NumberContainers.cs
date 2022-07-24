@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo.Easy.Design
 {
-    ///2349. Design a Number Container System
+    ///2349. Design a Number Container System, #PriorityQueue
     //Insert or Replace a number at the given index in the system.
     //Return the smallest index for the given number in the system.
     //void change(int index, int number) Fills the container at index with the number.Or update if exist
