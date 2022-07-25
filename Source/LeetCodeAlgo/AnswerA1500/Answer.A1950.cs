@@ -496,6 +496,44 @@ namespace LeetCodeAlgo
 
 
         ///1998. GCD Sort of an Array, #Union Find
-
+        //Swap the positions of two elements nums[i] and nums[j] if gcd(nums[i], nums[j]) > 1
+        //Return true if can sort nums in non-decreasing order using the above swap method, or false otherwise.
+        //1 <= nums.length <= 3 * 104,2 <= nums[i] <= 105
+        public bool GcdSort(int[] nums)
+        {
+            //Tips: Two numbers are both times of same prime => They are unioned, we can swap them any times.
+            //So we check every prime in range[2, max].Union all numbers which are times of each prime.
+            //Notice that, we must only union those numbers existed in nums array.
+            //eg[2, 3, 6, 9] ,all elements are unioned, because (2, 6), (3, 6), (3, 9) can union, so (2, 3) are unioned too.
+            //eg[2, 3, 9] cannot union all, 2 cannot union with others unless there exist number like 6,12,18...
+            int n = nums.Length;
+            var set = nums.ToHashSet();
+            int max = nums.Max();
+            var uf = new UnionFind(max + 1);
+            bool[] arr = new bool[max + 1];
+            //using Sieve_of_Eratosthenes to check every prime between [2,max]
+            //https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
+            for (int i = 2; i <= max; i++)
+            {
+                if (arr[i] == true) continue;//if i is not a prime, skip
+                int k = -1;//first existed number in nums which is times of this i-prime
+                for (int j = 1; j * i <= max; j++)
+                {
+                    arr[i * j] = true;//check all times of this i-prime in range of [1, max/i]
+                    if (set.Contains(i * j))
+                    {
+                        if (k == -1) k = i * j;//this is the first number
+                        else uf.Union(k, i * j);//Union with the first k, eg.[21,3,7], this will union(3,21) and (7,21)
+                    }
+                }
+            }
+            var sortedArr = nums.OrderBy(x => x).ToArray();
+            for (int i = 0; i < n; i++)
+            {
+                if (uf.Find(nums[i]) != uf.Find(sortedArr[i]))
+                    return false;
+            }
+            return true;
+        }
     }
 }

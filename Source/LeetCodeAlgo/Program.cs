@@ -37,7 +37,7 @@ namespace LeetCodeAlgo
             int[][] mat1 = answer.buildMatrix(matStrInt1);
             //string matStrInt2 = "[[1,3,1,15],[1,3,3,1]]";
             //int[][] mat2 = answer.buildMatrix(matStrInt2);
-            string arrStrInt1 = "[1,2,3,1,536870911]";
+            string arrStrInt1 = "[22,2,10,20,18,2,10,20,16,9]";
 
             int[] arr1 = answer.buildArray(arrStrInt1);
             string arrStrInt2 = "[8,2,6,10]";
@@ -53,7 +53,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.CountExcellentPairs(arr1, 3);
+            var result = answer.GcdSort(arr1);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
