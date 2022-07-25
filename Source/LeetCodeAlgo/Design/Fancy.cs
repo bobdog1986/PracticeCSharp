@@ -7,7 +7,13 @@ using System.Threading.Tasks;
 namespace LeetCodeAlgo.Design
 {
     ///1622. Fancy Sequence, #Segment Tree
-
+    //Implement the Fancy class:
+    //Fancy() Initializes the object with an empty sequence.
+    //void append(val) Appends an integer val to the end of the sequence.
+    //void addAll(inc) Increments all existing values in the sequence by an integer inc.
+    //void multAll(m) Multiplies all existing values in the sequence by an integer m.
+    //int getIndex(idx) Gets the current value at index idx (0-indexed) of the sequence modulo 109 + 7.
+    //If the index is greater or equal than the length of the sequence, return -1.
     public class Fancy
     {
         private int mod = 1_000_000_007;
@@ -43,13 +49,13 @@ namespace LeetCodeAlgo.Design
             if (idx >= num.Count)
                 return -1;
 
-            //Given Fermat Little Theorem 
-            //   1 ≡ a^(m-1) (mod m) 
+            //Given Fermat Little Theorem
+            //   1 ≡ a^(m-1) (mod m)
             //=> a^-1 ≡ a^(m-2) (mod m)
             //Let a = mul[idx], m = mod97
-            //So mul.Last()/mul[idx] 
-            //=> mul.Last()*mul[idx]^-1 
-            //=> mul.Last()*mul[idx]^(mod-2) 
+            //So mul.Last()/mul[idx]
+            //=> mul.Last()*mul[idx]^-1
+            //=> mul.Last()*mul[idx]^(mod-2)
             //=> mul.Last() * PowMod(mul[idx], mod97 - 2, mod97)
             long m = mul.Last() * PowMod(mul[idx], mod - 2, mod) % mod;
             long inc = sum.Last() + mod - sum[idx] * m % mod;

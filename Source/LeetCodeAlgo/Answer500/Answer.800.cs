@@ -157,6 +157,56 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///809. Expressive Words
+        //groups of adjacent letters that are all the same
+        //choose a group of characters c, and add some c to the group so that size of group is three or more.
+        public int ExpressiveWords(string s, string[] words)
+        {
+            int res = 0;
+            var list = ExpressiveWords_Parse(s);
+            foreach(var word in words)
+            {
+                var curr = ExpressiveWords_Parse(word);
+                if (list.Count != curr.Count) continue;
+                bool match = true;
+                for(int i=0;i<list.Count&&match; i++)
+                {
+                    if (list[i][0] != curr[i][0])
+                        match = false;
+                    else
+                    {
+                        if(list[i][1] == curr[i][1]) continue;
+                        else if (list[i][1] < 3 || list[i][1] < curr[i][1])
+                            match = false;
+                    }
+                }
+                if (match)
+                    res++;
+            }
+            return res;
+
+        }
+        private List<int[]> ExpressiveWords_Parse(string s)
+        {
+            List<int[]> list = new List<int[]>();
+            char prev = s[0];
+            int count = 1;
+            for (int i = 1; i < s.Length; i++)
+            {
+                if (s[i] == prev) count++;
+                else
+                {
+                    list.Add(new int[] { prev, count });
+
+                    prev = s[i];
+                    count = 1;
+                }
+            }
+            list.Add(new int[] { prev, count });
+            return list;
+        }
+
         ///811. Subdomain Visit Count
         public IList<string> SubdomainVisits(string[] cpdomains)
         {

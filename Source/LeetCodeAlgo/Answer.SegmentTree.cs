@@ -22,8 +22,10 @@ namespace LeetCodeAlgo
 
     public class SegmentTree
     {
-        public SegmentNode root=null;
-        private readonly long mod = 1_000_000_007;
+        public SegmentNode root = null;
+
+        public SegmentTree() { }
+
         public SegmentTree(int[] nums)
         {
             Build(nums, 0, nums.Length - 1);
@@ -91,7 +93,6 @@ namespace LeetCodeAlgo
                 }
             }
         }
-
 
         public long SumRange(int left,int right)
         {
@@ -186,194 +187,7 @@ namespace LeetCodeAlgo
             }
         }
 
-        public void UpdateRange(int left, int right, int val)
-        {
-            updateRangeInternal(root, left, right, val);
-        }
-
-        private void updateRangeInternal(SegmentNode node, int left, int right, int val)
-        {
-            if (node == null) return;
-            if (left > node.end || right < node.start) return;
-            if (node.start == node.end)
-            {
-                node.sum = val;
-                node.min = val;
-                node.max = val;
-            }
-            else
-            {
-                int mid = node.start + (node.end - node.start) / 2;
-                if (right <= mid)
-                {
-                    updateRangeInternal(node.left, left, right, val);
-                }
-                else if (left > mid)
-                {
-                    updateRangeInternal(node.right, left, right, val);
-                }
-                else
-                {
-                    updateRangeInternal(node.left, left, mid, val);
-                    updateRangeInternal(node.right, mid + 1, right, val);
-                }
-                node.sum = node.left.sum + node.right.sum;
-                node.max = Math.Max(node.left.max, node.right.max);
-                node.min = Math.Min(node.left.min, node.right.min);
-            }
-        }
-
-        public void AddRange(int left,int right , int val)
-        {
-            addRangeInternal(root, left, right, val);
-        }
-
-        private void addRangeInternal(SegmentNode node, int left, int right, int val)
-        {
-            if (node == null) return;
-            if (left > node.end || right < node.start) return;
-            if (node.start == node.end)
-            {
-                node.sum = (node.sum + val) % mod;
-                node.min = (int)node.sum;
-                node.max = (int)node.sum;
-            }
-            else
-            {
-                int mid = node.start + (node.end - node.start) / 2;
-                if (right <= mid)
-                {
-                    addRangeInternal(node.left, left, right, val);
-                }
-                else if (left > mid)
-                {
-                    addRangeInternal(node.right, left, right, val);
-                }
-                else
-                {
-                    addRangeInternal(node.left, left, mid, val);
-                    addRangeInternal(node.right, mid + 1, right, val);
-                }
-                node.sum = (node.left.sum + node.right.sum)%mod;
-                node.max = Math.Max(node.left.max, node.right.max);
-                node.min = Math.Min(node.left.min, node.right.min);
-            }
-        }
-
-        public void MultipyRange(int left, int right, int val)
-        {
-            multipyRangeInternal(root, left, right, val);
-        }
-
-        private void multipyRangeInternal(SegmentNode node, int left, int right, int val)
-        {
-            if (node == null) return;
-            if (left > node.end || right < node.start) return;
-            if (node.start == node.end)
-            {
-                node.sum = (node.sum * val) % mod;
-                node.min = (int)node.sum;
-                node.max = (int)node.sum;
-            }
-            else
-            {
-                int mid = node.start + (node.end - node.start) / 2;
-                if (right <= mid)
-                {
-                    multipyRangeInternal(node.left, left, right, val);
-                }
-                else if (left > mid)
-                {
-                    multipyRangeInternal(node.right, left, right, val);
-                }
-                else
-                {
-                    multipyRangeInternal(node.left, left, mid, val);
-                    multipyRangeInternal(node.right, mid + 1, right, val);
-                }
-                node.sum = (node.left.sum + node.right.sum) % mod;
-                node.max = Math.Max(node.left.max, node.right.max);
-                node.min = Math.Min(node.left.min, node.right.min);
-            }
-        }
-
-        //
-
-        public int[] Gather(int left, int right, int val, int m)
-        {
-            return gatherInternal(root, left, right, val, m);
-        }
-
-        private int[] gatherInternal(SegmentNode node, int left, int right, int val, int m)
-        {
-            if (node == null) return new int[] { };
-            if (node.start > right || node.end < left) return new int[] { };
-            if (node.min + val > m) return new int[] { };
-            if (node.start == node.end)
-            {
-                int[] res = new int[] { node.start, (int)node.sum };
-                node.sum = node.sum + val;
-                node.min = (int)node.sum;
-                node.max = (int)node.sum;
-                return res;
-            }
-            else
-            {
-                int[] res = new int[] { };
-                if (node.left != null && node.left.min + val <= m)
-                {
-                    res = gatherInternal(node.left, left, right, val, m);
-                }
-                else if (node.right != null && node.right.min + val <= m)
-                {
-                    res = gatherInternal(node.right, left, right, val, m);
-                }
-                node.sum = node.left.sum + node.right.sum;
-                node.min = Math.Min(node.left.min, node.right.min);
-                node.max = Math.Max(node.left.max, node.right.max);
-                return res;
-            }
-        }
-
-
-        public void Scatter(int left, int right, int k, int m)
-        {
-            scatterInternal(root, left, right, k, m);
-        }
-
-        private void scatterInternal(SegmentNode node, int left, int right, int k, int m)
-        {
-            if (node == null) return;
-            if (node.start > right || node.end < left) return;
-            if (node.start == node.end)
-            {
-                int diff = Math.Min(k, m - (int)node.sum);
-                node.sum = node.sum + diff;
-                node.min = (int)node.sum;
-                node.max = (int)node.sum;
-            }
-            else
-            {
-                long leftSum = node.left.sum;
-                long leftDiff = (long)m * (node.left.end - node.left.start + 1) - leftSum;
-                if (leftDiff >= k)
-                {
-                    scatterInternal(node.left, left, right, k, m);
-                }
-                else
-                {
-                    if (leftDiff > 0)
-                        scatterInternal(node.left, left, right, (int)leftDiff, m);
-                    scatterInternal(node.right, left, right, k - (int)leftDiff, m);
-                }
-                node.sum = node.left.sum + node.right.sum;
-                node.min = Math.Min(node.left.min, node.right.min);
-                node.max = Math.Max(node.left.max, node.right.max);
-            }
-        }
-
     }
-
 
     //for merge intervals, 1_000_000_000 is too big for normal segment tree
     public class SegmentIntervalNode
