@@ -15,7 +15,7 @@ namespace LeetCodeAlgo.Design
         private readonly SegmentTree tree;
         public NumArray_307(int[] nums)
         {
-            tree= new SegmentTree(nums);
+            tree = new SegmentTree(nums);
         }
 
         public void Update(int index, int val)

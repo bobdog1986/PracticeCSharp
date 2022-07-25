@@ -148,6 +148,10 @@ namespace LeetCodeAlgo
             return sum * 1.0 / (arr.Length - 2 * skips);
         }
 
+        ///1622. Fancy Sequence, see Fancy
+
+
+
         ///1629. Slowest Key
         public char SlowestKey(int[] releaseTimes, string keysPressed)
         {

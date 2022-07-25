@@ -28,9 +28,8 @@ namespace LeetCodeAlgo.Design
         {
             rows = n;
             seats = m;
-            root = new SegmentTree();
             int[] arr = new int[n];
-            root.Build(arr);
+            root = new SegmentTree(arr);
         }
 
         public int[] Gather(int k, int maxRow)
