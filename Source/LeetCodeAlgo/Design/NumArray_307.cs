@@ -25,7 +25,7 @@ namespace LeetCodeAlgo.Design
 
         public int SumRange(int left, int right)
         {
-            return tree.SumRange(left, right);
+            return (int)tree.SumRange(left, right);
         }
     }
 }

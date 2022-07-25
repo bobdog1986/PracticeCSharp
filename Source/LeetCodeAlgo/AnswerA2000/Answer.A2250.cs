@@ -725,6 +725,9 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2286. Booking Concert Tickets in Groups, see BookMyShow
+
+
         ///2287. Rearrange Characters to Make Target String
         ///You can take some letters from s and rearrange them to form new strings.
         ///Return the maximum number of copies of target that can be formed by taking letters from s and rearranging them.
