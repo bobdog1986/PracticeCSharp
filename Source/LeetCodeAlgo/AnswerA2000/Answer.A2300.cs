@@ -649,7 +649,20 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2331. Evaluate Boolean Binary Tree, in Easy
+        ///2331. Evaluate Boolean Binary Tree
+        //Leaf nodes have either the value 0 or 1, where 0 represents False and 1 represents True.
+        //Non-leaf nodes have either the value 2 or 3, where 2 represents the boolean OR and 3 represents the boolean AND
+        public bool EvaluateTree(TreeNode root)
+        {
+            if (root.val == 0)
+                return false;
+            else if (root.val == 1)
+                return true;
+            else if (root.val == 2)
+                return EvaluateTree(root.left) || EvaluateTree(root.right);
+            else
+                return EvaluateTree(root.left) && EvaluateTree(root.right);
+        }
 
         ///2332. The Latest Time to Catch a Bus, #Greedy
         public int LatestTimeCatchTheBus(int[] buses, int[] passengers, int capacity)
@@ -680,7 +693,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2333. Minimum Sum of Squared Difference, #Binary Search
+        ///2333. Minimum Sum of Squared Difference, #Binary Search, #Bucket Sort
         //The sum of squared difference of arrays nums1 and nums2 is defined as the sum of (nums1[i] - nums2[i])2
         //k1 and k2. You can modify any of the elements of nums1 by +1 or -1 at most k1 times. same for k2 on nums2;
         //Return the minimum sum of squared difference after modifying atmost k1 times and k2 times.
@@ -730,6 +743,38 @@ namespace LeetCodeAlgo
                 arr[i] -= 1;
             }
             return arr.Sum(x => x * x);
+        }
+        public long MinSumSquareDiff_BucketSort(int[] nums1, int[] nums2, int k1, int k2)
+        {
+            int n = nums1.Length;
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            //long[] arr = new long[n];// abs(nums1[i]-nums2[i])
+            int max = 0;
+            for (int i = 0; i < n; i++)
+            {
+                int diff = Math.Abs(nums1[i] - nums2[i]);
+                max = Math.Max(max, diff);
+                if(!dict.ContainsKey(diff))dict.Add(diff, 0);
+                dict[diff]++;
+                //arr[i] = Math.Abs(nums1[i] - nums2[i]);
+            }
+            int k = k1 + k2;
+            for(int i = max; i >= 1 && k>0; i--)
+            {
+                if (!dict.ContainsKey(i) || dict[i] == 0) continue;
+                int min = Math.Min(k, dict[i]);
+                dict[i] -= min;
+                k -= min;
+                if (!dict.ContainsKey(i - 1)) dict.Add(i - 1, 0);
+                dict[i - 1] += min;
+            }
+
+            long res = 0;
+            foreach(var i in dict.Keys)
+            {
+                res += (long)dict[i] * i * i;
+            }
+            return res;
         }
 
         ///2334. Subarray With Elements Greater Than Varying Threshold, #Monotonic Stack

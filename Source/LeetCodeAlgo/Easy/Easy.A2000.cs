@@ -68,37 +68,7 @@ namespace LeetCodeAlgo.Easy
             return nums[0];
         }
 
-        ///2224. Minimum Number of Operations to Convert Time
-        //In one operation you can increase the time current by 1, 5, 15, or 60 minutes.
-        //Return the minimum number of operations to convert current to correct.
-        public int ConvertTime(string current, string correct)
-        {
-            DateTime start = DateTime.ParseExact(current, "HH:mm", null);
-            DateTime end = DateTime.ParseExact(correct, "HH:mm", null);
-            int diff = (int)((end - start).TotalMinutes);
-            int res = 0;
-            while (diff > 0)
-            {
-                res++;
-                if (diff >= 60) diff -= 60;
-                else if (diff >= 15) diff -= 15;
-                else if (diff >= 5) diff -= 5;
-                else if (diff >= 1) diff -= 1;
-            }
-            return res;
-        }
 
-        ///2235. Add Two Integers
-        //public int Sum(int num1, int num2)
-        //{
-        //    return num1 + num2;
-        //}
-
-        ///2236. Root Equals Sum of Children
-        //public bool CheckTree(TreeNode root)
-        //{
-        //    return root.val == root.left.val + root.right.val;
-        //}
 
         /// 2255. Count Prefixes of a Given String
         public int CountPrefixes(string[] words, string s)
@@ -298,20 +268,7 @@ namespace LeetCodeAlgo.Easy
             return new string(message.Select(x => x == ' ' ? ' ' : (char)(dict[x] + 'a')).ToArray());
         }
 
-        ///2331. Evaluate Boolean Binary Tree
-        //Leaf nodes have either the value 0 or 1, where 0 represents False and 1 represents True.
-        //Non-leaf nodes have either the value 2 or 3, where 2 represents the boolean OR and 3 represents the boolean AND
-        public bool EvaluateTree(TreeNode root)
-        {
-            if (root.val == 0)
-                return false;
-            else if (root.val == 1)
-                return true;
-            else if (root.val == 2)
-                return EvaluateTree(root.left) || EvaluateTree(root.right);
-            else
-                return EvaluateTree(root.left) && EvaluateTree(root.right);
-        }
+
 
         ///2341. Maximum Number of Pairs in Array
         public int[] NumberOfPairs(int[] nums)

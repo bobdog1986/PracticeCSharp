@@ -501,6 +501,7 @@ namespace LeetCodeAlgo
             return Math.Max(Math.Abs(MaxSubArray(nums)), Math.Abs(MinSubArray(nums)));
         }
 
+        //totally reversed of MaxSubArray
         public int MinSubArray(int[] nums)
         {
             int sum = 0;

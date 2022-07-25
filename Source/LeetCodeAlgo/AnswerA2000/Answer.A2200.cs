@@ -376,8 +376,76 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///2224. Minimum Number of Operations to Convert Time, in Easy
+        ///2223. Sum of Scores of Built Strings, #Z-Algorithm
+        //Si->Sn, i is length from tail to head, sum the length of prefix of [S1...Sn] of s
+        public long SumScores(string s)
+        {
+            long res = 0;
+            var arr = getZArray(s.ToArray());
+            foreach (var i in arr)
+                res += i;//z-algorithm only calculate prefix
+            res += s.Length;//we need add final whole s
+            return res;
+        }
 
+        private int[] getZArray(char[] input)
+        {
+            int n = input.Length;
+            int[] Z = new int[n];
+            int left = 0, right = 0;
+            for (int i = 1; i < n; i++)
+            {
+                if (i > right)
+                {
+                    left = right = i;
+                    while (right < n && input[right] == input[right - left])
+                    {
+                        right++;
+                    }
+                    Z[i] = right - left;
+                    right--;
+                }
+                else
+                {
+                    int k = i - left;
+                    if (Z[k] < right - i + 1)
+                    {
+                        Z[i] = Z[k];
+                    }
+                    else
+                    {
+                        left = i;
+                        while (right < n && input[right] == input[right - left])
+                        {
+                            right++;
+                        }
+                        Z[i] = right - left;
+                        right--;
+                    }
+                }
+            }
+            return Z;
+        }
+
+        ///2224. Minimum Number of Operations to Convert Time
+        //In one operation you can increase the time current by 1, 5, 15, or 60 minutes.
+        //Return the minimum number of operations to convert current to correct.
+        public int ConvertTime(string current, string correct)
+        {
+            DateTime start = DateTime.ParseExact(current, "HH:mm", null);
+            DateTime end = DateTime.ParseExact(correct, "HH:mm", null);
+            int diff = (int)((end - start).TotalMinutes);
+            int res = 0;
+            while (diff > 0)
+            {
+                res++;
+                if (diff >= 60) diff -= 60;
+                else if (diff >= 15) diff -= 15;
+                else if (diff >= 5) diff -= 5;
+                else if (diff >= 1) diff -= 1;
+            }
+            return res;
+        }
 
         ///2225. Find Players With Zero or One Losses
         ///You are given an integer array matches where matches[i] = [winneri, loseri] indicates that
@@ -521,9 +589,17 @@ namespace LeetCodeAlgo
             return (int)res;
         }
 
-        ///2235. Add Two Integers, in Easy
+        ///2235. Add Two Integers
+        //public int Sum(int num1, int num2)
+        //{
+        //    return num1 + num2;
+        //}
 
-        ///2236. Root Equals Sum of Children, in Easy
+        ///2236. Root Equals Sum of Children
+        //public bool CheckTree(TreeNode root)
+        //{
+        //    return root.val == root.left.val + root.right.val;
+        //}
 
         ///2239. Find Closest Number to Zero
         public int FindClosestNumber(int[] nums)
