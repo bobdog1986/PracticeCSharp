@@ -301,7 +301,71 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///1575. Count All Possible Routes, #Graph, #DP
+        //distinct positive integers array locations where locations[i] represents the position of city i.
+        //integers start, finish and fuel representing the starting city, ending city, and the initial amount of fuel.
+        //each step, you can move from city i to city j such that j != i and 0 <= j < locations.length.
+        //Moving from city i to city j reduces the amount of fuel you have by |locations[i] - locations[j]|
+        //Notice that fuel cannot become negative at any point in time,
+        //and that you are allowed to visit any city more than once (including start and finish).
+        //Return the count of all possible routes from start to finish. return it modulo 109 + 7.
+        public int CountRoutes(int[] locations, int start, int finish, int fuel)
+        {
+            int n = locations.Length;
+            long[][] memo = new long[n][];
+            for (int i = 0; i < n; i++)
+            {
+                memo[i] = new long[fuel + 1];
+                Array.Fill(memo[i], -1l);
+            }
+            return (int)CountRoutes_DFS(locations, start, finish, fuel, memo);
+        }
 
+        private long CountRoutes_DFS(int[] locations, int city, int finish, int fuel, long[][] memo)
+        {
+            long mod = 1_000_000_007;
+            if (fuel < 0) return 0;
+            if (memo[city][fuel] != -1) return memo[city][fuel];
+            long res = 0;
+            if (city == finish) res +=1;
+            for (int i = 0; i < locations.Length; i++)
+            {
+                if (i == city) continue;
+                int fuelLeft = fuel - Math.Abs(locations[i] - locations[city]);
+                if(fuelLeft >= 0)
+                    res = (res + CountRoutes_DFS(locations, i, finish, fuelLeft, memo)) % mod;
+            }
+            memo[city][fuel] = res;
+            return res;
+        }
+
+        public int CountRoutes_DP(int[] locations, int start, int finish, int fuel)
+        {
+            int n = locations.Length;
+            long[][] dp = new long[n][];
+            for (int i = 0; i < n; i++)
+            {
+                dp[i] = new long[fuel + 1];
+            }
+            Array.Fill(dp[finish], 1);
+            long mod = 1_000_000_007;
+            for (int j = 0; j <= fuel; j++)
+            {
+                for (int i = 0; i < n; i++)
+                {
+                    for (int k = 0; k < n; k++)
+                    {
+                        if (k == i) continue;
+                        int cost = Math.Abs(locations[i] - locations[k]);
+                        if (cost <= j)
+                        {
+                            dp[i][j] = (dp[i][j] + dp[k][j - cost]) % mod;
+                        }
+                    }
+                }
+            }
+            return (int)dp[start][fuel];
+        }
         /// 1576. Replace All ?'s to Avoid Consecutive Repeating Characters
         /// replace ? to not same as previous or next char
         public string ModifyString(string s)
