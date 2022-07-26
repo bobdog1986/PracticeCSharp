@@ -59,6 +59,8 @@ namespace LeetCodeAlgo
             return (int)(dp[n][target] % mod);
         }
 
+        ///1157. Online Majority Element In Subarray, see MajorityChecker
+
         ///1160. Find Words That Can Be Formed by Characters
         public int CountCharacters(string[] words, string chars)
         {
