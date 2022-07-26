@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo.Design
 {
-    ///1622. Fancy Sequence, #Segment Tree
+    ///1622. Fancy Sequence, #Segment Tree, #Good
     //Implement the Fancy class:
     //Fancy() Initializes the object with an empty sequence.
     //void append(val) Appends an integer val to the end of the sequence.
@@ -14,67 +14,245 @@ namespace LeetCodeAlgo.Design
     //void multAll(m) Multiplies all existing values in the sequence by an integer m.
     //int getIndex(idx) Gets the current value at index idx (0-indexed) of the sequence modulo 109 + 7.
     //If the index is greater or equal than the length of the sequence, return -1.
-    public class Fancy
+
+    public class FancySegmentTreeLazy
     {
-        private int mod = 1_000_000_007;
-        private List<int> num = new List<int>();
-        private List<long> mul = new List<long>();
-        private List<long> sum = new List<long>();
-        public Fancy()
+        private readonly long mod = 1_000_000_007;
+        public SegmentNode root = null;
+        public int index=-1;
+        private readonly int[] arr;
+        public FancySegmentTreeLazy(int[] nums)
         {
-            mul.Add(1);
-            sum.Add(0);
+            this.arr = nums;
+            root = new SegmentNode(0, arr.Length - 1);
         }
 
         public void Append(int val)
         {
-            num.Add(val);
-            mul.Add(mul.Last());
-            sum.Add(sum.Last());
+            arr[++index] = val;
         }
 
         public void AddAll(int inc)
         {
-            sum[sum.Count - 1] = (sum.Last() + inc) % mod;
+            if (index == -1 || inc == 0) return;
+            addAllInternal(root, index, inc);
         }
 
-        public void MultAll(int m)
+        private void addAllInternal(SegmentNode node, int index, int inc)
         {
-            mul[mul.Count - 1] = mul.Last() * m % mod;
-            sum[sum.Count - 1] = sum.Last() * m % mod;
+            if (index >= node.start && index <= node.end)
+            {
+                if (node.start == node.end)
+                {
+                    node.inc = (node.inc + inc) % mod;
+                }
+                else
+                {
+                    int mid = node.start + (node.end - node.start) / 2;
+                    if(node.left == null)
+                    {
+                        node.left = new SegmentNode(node.start, mid);
+                        node.right = new SegmentNode(mid + 1, node.end);
+                    }
+                    if (index <= mid)
+                    {
+                        addAllInternal(node.left, index, inc);
+                    }
+                    else
+                    {
+                        addAllInternal(node.right, index, inc);
+                    }
+                    node.m = node.left.m * node.right.m % mod;
+                    node.inc = (node.left.inc * node.right.m + node.right.inc) % mod;
+                }
+            }
+        }
+
+        public void MultiplyAll(int m)
+        {
+            if (index == -1 || m == 1) return;
+            multiplyInternal(root, index, m);
+        }
+
+        private void multiplyInternal(SegmentNode node, int index, int val)
+        {
+            if (index >= node.start && index <= node.end)
+            {
+                if (node.start == node.end)
+                {
+                    node.m = node.m * val % mod;
+                    node.inc = node.inc * val % mod;
+                }
+                else
+                {
+                    int mid = node.start + (node.end - node.start) / 2;
+                    if (node.left == null)
+                    {
+                        node.left = new SegmentNode(node.start, mid);
+                        node.right = new SegmentNode(mid + 1, node.end);
+                    }
+                    if (index <= mid)
+                    {
+                        multiplyInternal(node.left, index, val);
+                    }
+                    else
+                    {
+                        multiplyInternal(node.right, index, val);
+                    }
+                    node.m = node.left.m * node.right.m % mod;
+                    node.inc = (node.left.inc * node.right.m + node.right.inc) % mod;
+                }
+            }
         }
 
         public int GetIndex(int idx)
         {
-            if (idx >= num.Count)
+            if (idx > index) return -1;
+            return (int)getIndexInternal(root, idx,index, arr[idx]);
+        }
+
+        private long getIndexInternal(SegmentNode node, int left, int right, long val)
+        {
+            if(node.start == left && node.end == right)
+            {
+                return (node.m * val + node.inc) % mod;
+            }
+            else
+            {
+
+                int mid = node.start + (node.end - node.start) / 2;
+                if (node.left == null)
+                {
+                    node.left = new SegmentNode(node.start, mid);
+                    node.right = new SegmentNode(mid + 1, node.end);
+                }
+                if (mid >= right)
+                    return getIndexInternal(node.left, left, right, val);
+                else if (mid < left)
+                    return getIndexInternal(node.right, left, right,val);
+                else
+                {
+                    var leftVal = getIndexInternal(node.left, left, mid, val);
+                    return getIndexInternal(node.right, mid+1, right, leftVal);
+                }
+            }
+        }
+    }
+
+    //MUST using Lazy Build to avoid possible TLE
+    public class Fancy
+    {
+        private readonly FancySegmentTreeLazy root;
+        public Fancy()
+        {
+            int[] arr = new int[100000 + 1];
+            root = new FancySegmentTreeLazy(arr);
+        }
+
+        public void Append(int val)
+        {
+            root.Append(val);
+        }
+
+        public void AddAll(int inc)
+        {
+            root.AddAll(inc);
+        }
+
+        public void MultAll(int m)
+        {
+            root.MultiplyAll(m);
+        }
+
+        public int GetIndex(int idx)
+        {
+            return root.GetIndex(idx);
+        }
+    }
+
+    //https://leetcode.com/problems/fancy-sequence/discuss/1505153/Java-Fenwick-O(logn)
+    public class Fancy_BIT
+    {
+        private readonly long MOD = 1_000_000_007;
+        private Position[] list = new Position[100000+1+1];
+
+        private int count = 0;
+
+        public void Append(int val)
+        {
+            list[++count] = new Position(val);
+        }
+
+        public void AddAll(int inc)
+        {
+            if (count == 0 || inc == 0) return;
+            add(count-1, inc);
+        }
+
+        public void MultAll(int m)
+        {
+            if (count == 0 || m == 1) return;
+            mult(count-1, m);
+        }
+
+        public int GetIndex(int idx)
+        {
+            if (idx > count -2)
                 return -1;
 
-            //Given Fermat Little Theorem
-            //   1 ≡ a^(m-1) (mod m)
-            //=> a^-1 ≡ a^(m-2) (mod m)
-            //Let a = mul[idx], m = mod97
-            //So mul.Last()/mul[idx]
-            //=> mul.Last()*mul[idx]^-1
-            //=> mul.Last()*mul[idx]^(mod-2)
-            //=> mul.Last() * PowMod(mul[idx], mod97 - 2, mod97)
-            long m = mul.Last() * PowMod(mul[idx], mod - 2, mod) % mod;
-            long inc = sum.Last() + mod - sum[idx] * m % mod;
-            return (int)((num[idx] * m + inc) % mod);
+            return query(idx);
         }
 
-        private long PowMod(long x, long y, long mod)
+        private int query(int i)
         {
-            long res = 1;
-            while (y > 0)
+            i++;
+
+            long val = list[i].val;
+
+            while (i < count)
             {
-                if ((y & 1) == 1)
-                    res = res * x % mod;
-                x = x * x % mod;
-                y >>= 1;
+                Position p = list[i];
+                val = (val * p.mult) % MOD;
+                val = (val + p.add) % MOD;
+
+                i += i & -i;
             }
 
-            return res;
+            return (int)val;
         }
 
+        private void add(int i, long val)
+        {
+            while (i > 0)
+            {
+                Position p = list[i];
+                p.add = (int)((p.add + val) % MOD);
+
+                i -= i & -i;
+            }
+        }
+
+        private void mult(int i, long val)
+        {
+            while (i > 0)
+            {
+                Position p = list[i];
+                p.add = (int)((val * p.add) % MOD);
+                p.mult = (int)((val * p.mult) % MOD);
+                i -= i & -i;
+            }
+        }
+
+        public class Position
+        {
+            public int val;
+            public int mult = 1;
+            public int add = 0;
+
+            public Position(int val)
+            {
+                this.val = val;
+            }
+        }
     }
 }

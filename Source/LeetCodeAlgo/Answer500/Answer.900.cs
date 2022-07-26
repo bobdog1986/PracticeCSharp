@@ -382,6 +382,66 @@ namespace LeetCodeAlgo
             return min;
         }
 
+        ///935. Knight Dialer, #DP
+        //The chess knight mvoe on a 4x3 a phone pad, cannot visit [3,0],[3,2]. start at any digit
+        //Given an integer n, return module of how many distinct phone numbers of length n we can dial.
+        public int KnightDialer(int n)
+        {
+            int mod = 1_000_000_007;
+            int[][][] dp = new int[n][][];
+            for (int i = 0; i < n; i++)
+            {
+                dp[i] = new int[4][];
+                for (int j = 0; j < 4; j++)
+                    dp[i][j] = new int[3];
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    if (i == 3 && j != 1) continue;
+                    dp[0][i][j] = 1;
+                }
+            }
+
+            List<int[]> dxy8 = new List<int[]>()
+            {
+                new int[]{1,2 },new int[]{2,1 },new int[]{-1,-2 },new int[]{-2,-1 },
+                new int[]{1,-2 },new int[]{2,-1 },new int[]{-1,2 },new int[]{-2,1 },
+            };
+
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    for (int k = 0; k < 3; k++)
+                    {
+                        if (j == 3 && k != 1) continue;
+                        foreach (var d in dxy8)
+                        {
+                            int r = j + d[0];
+                            int c = k + d[1];
+                            if (r >= 0 && r < 4 && c >= 0 && c < 3 && !(r == 3 && c != 1))
+                            {
+                                dp[i + 1][r][c] = (dp[i + 1][r][c] + dp[i][j][k]) % mod;
+                            }
+                        }
+                    }
+                }
+            }
+
+            int res = 0;
+            foreach (var r in dp[n - 1])//last round
+            {
+                foreach (var cell in r)
+                {
+                    res = (res + cell) % mod;
+                }
+            }
+            return res;
+        }
+
         ///938. Range Sum of BST, #BTree
         public int RangeSumBST(TreeNode root, int low, int high)
         {

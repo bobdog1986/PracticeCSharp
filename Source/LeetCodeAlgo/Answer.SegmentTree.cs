@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
-    //common data structure of SegmentNode
     public class SegmentNode
     {
-        public int start,end;
-        public SegmentNode left,right;
-        public long sum;
-        public int max,min;
+        public readonly int start, end;
+        public SegmentNode left, right;
+        public long sum = 0;
+        public int max = int.MinValue, min = int.MaxValue;
+        public long m = 1, inc = 0;
         public SegmentNode(int start, int end)
         {
             this.start = start;
@@ -22,18 +22,21 @@ namespace LeetCodeAlgo
 
     public class SegmentTree
     {
-        public SegmentNode root = null;
+        protected readonly SegmentNode root;
 
-        public SegmentTree() { }
+        /// <summary>
+        /// Lazy Build
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        public SegmentTree(int start,int end)
+        {
+            this.root = new SegmentNode(start, end);
+        }
 
         public SegmentTree(int[] nums)
         {
-            Build(nums, 0, nums.Length - 1);
-        }
-
-        public void Build(int[] nums,int start,int end)
-        {
-            this.root = buildInternal(nums, start, end);
+            this.root = buildInternal(nums, 0, nums.Length-1);
         }
 
         private SegmentNode buildInternal(int[] nums, int start, int end)
@@ -79,6 +82,11 @@ namespace LeetCodeAlgo
                 else
                 {
                     int mid = node.start + ( node.end - node.start) / 2;
+                    if (node.left == null)//lazy build
+                    {
+                        node.left = new SegmentNode(node.start, mid);
+                        node.right = new SegmentNode(mid + 1, node.end);
+                    }
                     if (index <= mid)
                     {
                         updateInternal(node.left, index, val);
@@ -110,6 +118,11 @@ namespace LeetCodeAlgo
             else
             {
                 int mid = node.start + (node.end - node.start) / 2;
+                if (node.left == null)//lazy build
+                {
+                    node.left = new SegmentNode(node.start, mid);
+                    node.right = new SegmentNode(mid + 1, node.end);
+                }
                 if (mid < left)
                 {
                     return sumRangeInternal(node.right, left, right);
@@ -141,6 +154,11 @@ namespace LeetCodeAlgo
             else
             {
                 int mid = node.start + (node.end - node.start) / 2;
+                if (node.left == null)//lazy build
+                {
+                    node.left = new SegmentNode(node.start, mid);
+                    node.right = new SegmentNode(mid + 1, node.end);
+                }
                 if (mid < left)
                 {
                     return minRangeInternal(node.right, left, right);
@@ -172,6 +190,11 @@ namespace LeetCodeAlgo
             else
             {
                 int mid = node.start + (node.end - node.start) / 2;
+                if (node.left == null)//lazy build
+                {
+                    node.left = new SegmentNode(node.start, mid);
+                    node.right = new SegmentNode(mid + 1, node.end);
+                }
                 if (mid < left)
                 {
                     return maxRangeInternal(node.right, left, right);
@@ -189,40 +212,60 @@ namespace LeetCodeAlgo
 
     }
 
-    //for merge intervals, 1_000_000_000 is too big for normal segment tree
-    public class SegmentIntervalNode
+    /// <summary>
+    /// Impl of SegmentIntervalTree, for insert interval and count how many points visited
+    /// </summary>
+    public class SegmentIntervalTree
     {
-        private int start, end;
-        private SegmentIntervalNode left, right;
-
-        public int Count { get; private set; }
-
-        public SegmentIntervalNode(int start, int end)
+        protected readonly SegmentNode root;
+        //lazy build for merge intervals, 1_000_000_000 is too big for normal segment tree
+        public SegmentIntervalTree(int start, int end)
         {
-            this.start = start;
-            this.end = end;
+            this.root = new SegmentNode(start, end);
         }
 
-        public int Add(int left, int right)
+        public void Insert(int left, int right)
         {
-            if (left > right || left > end || right < start)
-                return Count;
-            if ((left == start && right == end) || Count == end - start + 1)
+            insertInternal(root, left, right);
+        }
+
+        private long insertInternal(SegmentNode node, int left, int right)
+        {
+            //all range of [start,end] already visited
+            if (node.sum == node.end - node.start + 1)
+                return node.sum;
+
+            //if it will cover the whole range of this node
+            //reduce memory cost,eg a 2^10 big node only cost 1, but 2^10 nodes with 1 will cost 2^10
+            if (node.start ==left && node.end == right)
             {
-                Count = end - start + 1;
-                return Count;
+                node.sum = right - left + 1;
+                return node.sum;
             }
 
-            int mid = start + (end - start) / 2;
-            if (this.left == null)
-                this.left = new SegmentIntervalNode(start, mid);
-            if (this.right == null)
-                this.right = new SegmentIntervalNode(mid + 1, end);
+            int mid = node.start + (node.end - node.start) / 2;
+            if(node.left == null)//lazy build
+            {
+                node.left = new SegmentNode(node.start, mid);
+                node.right = new SegmentNode(mid + 1, node.end);
+            }
+            if (right <= mid)
+                insertInternal(node.left, left, right);
+            else if(left>mid)
+                insertInternal(node.right, left, right);
+            else
+            {
+                insertInternal(node.left, left, mid);
+                insertInternal(node.right, mid+1, right);
+            }
+            node.sum = node.left.sum + node.right.sum;
+            return node.sum;
+        }
 
-            var leftCount = this.left.Add(left, Math.Min(mid, right));
-            var rightCount = this.right.Add(Math.Max(left, mid + 1), right);
-            Count = leftCount + rightCount;
-            return Count;
+        public int Count()
+        {
+            return (int)root.sum;
         }
     }
+
 }

@@ -13,21 +13,22 @@ namespace LeetCodeAlgo.Design
     ///Note that an interval [left, right] denotes all the integers x where left <= x <= right.
     public class CountIntervals
     {
-        private readonly SegmentIntervalNode root;
+        private readonly SegmentIntervalTree root;
 
         public CountIntervals()
         {
-            root = new SegmentIntervalNode(1, 1_000_000_000);
+            root = new SegmentIntervalTree(1, 1_000_000_000);
         }
 
         public void Add(int left, int right)
         {
-            root.Add(left, right);
+            root.Insert(left, right);
         }
 
         public int Count()
         {
-            return root.Count;
+            return root.Count();
         }
     }
+
 }
