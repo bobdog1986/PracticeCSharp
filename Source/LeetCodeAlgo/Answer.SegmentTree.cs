@@ -13,6 +13,7 @@ namespace LeetCodeAlgo
         public long sum = 0;
         public int max = int.MinValue, min = int.MaxValue;
         public long m = 1, inc = 0;
+        public List<char> listStr=new List<char>();
         public SegmentNode(int start, int end)
         {
             this.start = start;
@@ -22,7 +23,7 @@ namespace LeetCodeAlgo
 
     public class SegmentTree
     {
-        protected readonly SegmentNode root;
+        public readonly SegmentNode root;
 
         /// <summary>
         /// Lazy Build
@@ -217,7 +218,7 @@ namespace LeetCodeAlgo
     /// </summary>
     public class SegmentIntervalTree
     {
-        protected readonly SegmentNode root;
+        public readonly SegmentNode root;
         //lazy build for merge intervals, 1_000_000_000 is too big for normal segment tree
         public SegmentIntervalTree(int start, int end)
         {
@@ -265,6 +266,110 @@ namespace LeetCodeAlgo
         public int Count()
         {
             return (int)root.sum;
+        }
+    }
+
+    public class SegmentLongestSubstrTree
+    {
+        public readonly SegmentNode root;
+
+        /// <summary>
+        /// Lazy Build
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        public SegmentLongestSubstrTree(string s)
+        {
+            this.root = buildInternal(s, 0, s.Length - 1);
+        }
+
+        private SegmentNode buildInternal(string s, int start, int end)
+        {
+            if (start > end)
+                return null;
+
+            var node = new SegmentNode(start, end);
+            if (start == end)
+            {
+                node.listStr.Add(s[start]);
+                node.max = 1;
+            }
+            else
+            {
+                int mid = start + (end - start) / 2;
+                node.left = buildInternal(s, start, mid);
+                node.right = buildInternal(s, mid + 1, end);
+
+                node.listStr.AddRange(node.left.listStr);
+                node.listStr.AddRange(node.right.listStr);
+                int max = 1;
+                if(node.left.listStr.Last() == node.right.listStr.First())
+                {
+                    char c = node.left.listStr.Last();
+                    int n1 = node.left.listStr.Count;
+                    int n2 = node.right.listStr.Count;
+                    int i = n1 - 1;
+                    while (i >= 0 && node.left.listStr[i] == c)
+                        i--;
+                    int j = 0;
+                    while (j < n2 && node.right.listStr[j] == c)
+                        j++;
+                    max = n1-1 - (i + 1) + 1 + j - 1 - 0 + 1;
+                }
+                node.max = Math.Max(max,Math.Max( node.left.max, node.right.max));
+            }
+            return node;
+        }
+
+        public void Update(int index, char val)
+        {
+            updateInternal(root, index, val);
+        }
+
+        private void updateInternal(SegmentNode node, int index, char val)
+        {
+            if (node == null) return;
+            if (index >= node.start && index <= node.end)
+            {
+                if (node.start == node.end)
+                {
+                    node.listStr[0] = val;
+                    node.max = 1;
+                }
+                else
+                {
+                    int mid = node.start + (node.end - node.start) / 2;
+                    if (index <= mid)
+                    {
+                        updateInternal(node.left, index, val);
+                    }
+                    else
+                    {
+                        updateInternal(node.right, index, val);
+                    }
+                    node.listStr[index-node.start]=val;
+                    int max = 1;
+                    if (node.left.listStr.Last() == node.right.listStr.First())
+                    {
+                        char c = node.left.listStr.Last();
+                        int n1 = node.left.listStr.Count;
+                        int n2 = node.right.listStr.Count;
+                        int i = n1 - 1;
+                        while (i >= 0 && node.left.listStr[i] == c)
+                            i--;
+                        int j = 0;
+                        while (j < n2 && node.right.listStr[j] == c)
+                            j++;
+                        max = n1-1 - (i + 1) + 1 + j - 1 - 0 + 1;
+                    }
+                    node.max = Math.Max(max, Math.Max(node.left.max, node.right.max));
+                }
+            }
+        }
+
+        public int Max()
+        {
+            return this.root.max;
         }
     }
 

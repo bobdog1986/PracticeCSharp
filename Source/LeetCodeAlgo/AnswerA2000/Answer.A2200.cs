@@ -59,6 +59,70 @@ namespace LeetCodeAlgo
                 max = Math.Max(max, nums[k]);
             return max;
         }
+
+        ///2203. Minimum Weighted Subgraph With the Required Paths, #Graph, #Dijkstra
+        //weighted directed graph, n nodes, edges[i] = [fromi, toi, weighti]
+        //Return the minimum weight of a subgraph that it is possible to reach dest
+        //from both src1 and src2 via a set of edges of this subgraph. If not exist, return -1.
+        public long MinimumWeight(int n, int[][] edges, int src1, int src2, int dest)
+        {
+            List<int[]>[] graph = new List<int[]>[n];
+            List<int[]>[] graphRev = new List<int[]>[n];
+            for (int i = 0; i < n; i++)
+            {
+                graph[i] = new List<int[]>();
+                graphRev[i] = new List<int[]>();//reverse graph will be used to find path from dest to other nodes
+            }
+            foreach (var e in edges)
+            {
+                graph[e[0]].Add(new int[] { e[1], e[2] });
+                graphRev[e[1]].Add(new int[] { e[0], e[2] });
+            }
+
+            var srcArr1 = getDijkstraCostArray(graph, src1);
+            if (srcArr1[dest] == long.MaxValue) return -1;//no possible from src1 to dest
+
+            var srcArr2 = getDijkstraCostArray(graph, src2);
+            if (srcArr2[dest] == long.MaxValue) return -1;//no possible from src2 to dest
+            long res = long.MaxValue;
+            var destArr = getDijkstraCostArray(graphRev, dest);
+            for(int i = 0; i < n; i++)
+            {
+                if (destArr[i] == long.MaxValue || srcArr1[i] == long.MaxValue || srcArr2[i] == long.MaxValue) continue;
+                //try every valid node as common node, total path = src1->node + src2->node + dest->node(reversed)
+                res = Math.Min(res, destArr[i] + srcArr1[i] + srcArr2[i]);
+            }
+            return res;
+        }
+
+        private long[] getDijkstraCostArray(List<int[]>[] graph, int src = 0)
+        {
+            int n = graph.Length;
+            long[] distance = new long[n];
+            Array.Fill(distance, long.MaxValue);
+            distance[src] = 0;
+            PriorityQueue<long[], long> pq = new PriorityQueue<long[], long>();
+            //{index, cost} sort by cost-asc, visit shortest path first, it helps to skips longer paths later
+            pq.Enqueue(new long[] { src, 0 }, 0);
+            while (pq.Count > 0)
+            {
+                long[] top = pq.Dequeue();
+                long u = top[0];
+                long cost = top[1];
+                if (cost > distance[u]) continue;//not shortest, skip it
+                foreach (var v in graph[u])
+                {
+                    if (distance[v[0]] > cost + v[1])
+                    {
+                        distance[v[0]] = cost + v[1];//shorter path found, re-visit again
+                        pq.Enqueue(new long[] { v[0], distance[v[0]] }, distance[v[0]]);
+                    }
+                }
+            }
+            return distance;
+        }
+
+
         /// 2206. Divide Array Into Equal Pairs
         public bool DivideArray(int[] nums)
         {
@@ -226,6 +290,28 @@ namespace LeetCodeAlgo
                 }
             }
         }
+
+        ///2213. Longest Substring of One Repeating Character , #Segment Tree
+        public int[] LongestRepeating(string s, string queryCharacters, int[] queryIndices)
+        {
+            int n = queryCharacters.Length;
+            var root = new SegmentLongestSubstrTree(s);
+            char[] arr = s.ToArray();
+            int[] res = new int[n];
+            for(int i = 0; i < n; i++)
+            {
+                int j = queryIndices[i];
+                char c = queryCharacters[i];
+                if ( c != arr[j])
+                {
+                    root.Update(j, c);
+                    arr[j] = c;
+                }
+                res[i] = root.Max();
+            }
+            return res;
+        }
+
 
         /// 2215. Find the Difference of Two Arrays, in Easy
 
