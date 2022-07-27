@@ -233,50 +233,14 @@ namespace LeetCodeAlgo
             }
             return true;
         }
-        ///1631. Path With Minimum Effort, #Dijkstra
-        /// A route's effort is the maximum absolute difference in heights between two consecutive cells of the route.
-        ///Return the minimum effort required to travel from the top-left cell to the bottom-right cell.
+        ///1631. Path With Minimum Effort, #Dijkstra，#Graph
+        //A route's effort is the maximum absolute difference in heights between two consecutive cells of the route.
+        //Return the minimum effort required to travel from the top-left cell to the bottom-right cell.
         public int MinimumEffortPath(int[][] heights)
         {
-            int rowLen = heights.Length;
-            int colLen = heights[0].Length;
-
-            int[][] dxy = new int[4][] { new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 } };
-            int[][] efforts = new int[rowLen][];
-            for(int i = 0; i < rowLen; i++)
-            {
-                efforts[i] = new int[colLen];
-                for (int j = 0; j < colLen; j++)
-                    efforts[i][j] = int.MaxValue;
-            }
-
-            efforts[0][0] = 0;
-            PriorityQueue<int[], int> pq = new PriorityQueue<int[], int>();
-            pq.Enqueue(new int[3],0);
-            while (pq.Count>0)
-            {
-                int[] cur = pq.Dequeue();
-                int effort = cur[0], x = cur[1], y = cur[2];
-                if (x == rowLen - 1 && y == colLen - 1)
-                {
-                    return effort;
-                }
-                foreach(var d in dxy)
-                {
-                    int r = x + d[0], c = y + d[1];
-                    if (0 <= r && r < rowLen && 0 <= c && c < colLen)
-                    {
-                        int nextEffort = Math.Max(effort, Math.Abs(heights[r][c] - heights[x][y]));
-                        if (efforts[r][c] > nextEffort)
-                        {
-                            efforts[r][c] = nextEffort;
-                            pq.Enqueue(new int[] { nextEffort, r, c }, nextEffort);
-                        }
-                    }
-                }
-            }
-            return -1;
+            return getDijkstraMaxAbsEdge(heights);
         }
+
         /// 1636. Sort Array by Increasing Frequency
         ///sort the array in increasing order based on the frequency of the values.
         ///If multiple values have the same frequency, sort them in decreasing order.

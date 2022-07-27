@@ -496,6 +496,71 @@ namespace LeetCodeAlgo
         {
             return s.Length == 0 ? 0 : (new string(s.Reverse().ToArray()) == s ? 1 : 2);
         }
+
+        ///1334. Find the City With the Smallest Number of Neighbors at a Threshold Distance, #Graph, #Dijkstra
+        //edges[i] = [fromi, toi, weighti] a bidirectional weighted edge between cities fromi and toi
+        //Return the city with the smallest number of cities that are reachable with distance <= distanceThreshold
+        //If there are multiple such cities, return the city with the greatest number.
+        public int FindTheCity(int n, int[][] edges, int distanceThreshold)
+        {
+            List<int[]>[] graph = new List<int[]>[n];
+            for (int i = 0; i < n; i++)
+                graph[i] = new List<int[]>();
+            foreach(var e in edges)
+            {
+                graph[e[0]].Add(new int[] { e[1], e[2] });
+                graph[e[1]].Add(new int[] { e[0], e[2] });
+            }
+            int res = n - 1;
+            int minCount = n+1;//impossible count n+1
+            for(int i = n - 1; i >= 0; i--)//from n-1 to 0 due to greatest number
+            {
+                //if >=minCount invalid, return -1
+                int curr = FindTheCity(graph, distanceThreshold, minCount,i);
+                if (curr == -1) continue;
+                else
+                {
+                    res = i;
+                    minCount = curr;
+                }
+            }
+            return res;
+        }
+
+        private int FindTheCity(List<int[]>[] graph, int threshold,int maxCount, int src = 0)
+        {
+            int n = graph.Length;
+            long[] dp = new long[n];//store cost
+            Array.Fill(dp, long.MaxValue);
+            dp[src] = 0;
+            PriorityQueue<long[], long> pq = new PriorityQueue<long[], long>();
+            //{index, cost} sort by cost-asc, visit shortest path first, it helps to skips longer paths later
+            pq.Enqueue(new long[] { src, 0 }, 0);
+            HashSet<long> set = new HashSet<long>();
+            while (pq.Count > 0)
+            {
+                long[] top = pq.Dequeue();
+                long u = top[0];
+                long cost = top[1];
+                if (cost <= threshold)
+                {
+                    set.Add(u);
+                    if (set.Count >= maxCount) return -1;//>=maxCount, return -1;
+                }
+                if (cost > dp[u]) continue;//not shortest, skip it, donot use >= , this will skip first time call
+                foreach (var v in graph[u])
+                {
+                    long nextCost = cost + v[1];
+                    if (nextCost < dp[v[0]])
+                    {
+                        dp[v[0]] = nextCost;//shorter path found
+                        pq.Enqueue(new long[] { v[0], nextCost }, nextCost);// re-visit again
+                    }
+                }
+            }
+            return set.Count;
+        }
+
         /// 1337. The K Weakest Rows in a Matrix, #PriorityQueue,
         ///A row i is weaker than a row j if one of the following is true:
         ///The number of soldiers(1) in row i is less than the number of soldiers in row j.

@@ -216,9 +216,9 @@ namespace LeetCodeAlgo
             return count % 2 == 0 ? res : res - min;
         }
 
-        ///1976. Number of Ways to Arrive at Destination, #Dijkstra
+        ///1976. Number of Ways to Arrive at Destination, #Dijkstra, #Graph
         //n nodes from [0,n-1] with bi-directional roads between some intersections.
-        //roads[i] = [ui, vi, timei] between intersections ui and vi that takes timei minutes to travel.
+        //roads[i] = [ui, vi, timei] between intersections ui and vi that takes time[i] minutes to travel.
         //Return the number of ways you can arrive at n-1 from 0 in the shortest amount of time.
         //Since the answer may be large, return it modulo 109 + 7.
         public int CountPaths(int n, int[][] roads)
@@ -231,85 +231,11 @@ namespace LeetCodeAlgo
                 graph[e[0]].Add(new int[] { e[1], e[2] });
                 graph[e[1]].Add(new int[] { e[0], e[2] });
             }
-            var dp=getDijkstra(graph);
+            var dp=getDijkstraWaysArray(graph);
             return (int)dp[n - 1];
         }
 
-        private long[] getDijkstra(List<int[]>[] graph)
-        {
-            int n = graph.Length;
-            long[] dp = new long[n];
-            long[] distance=new long[n];
-            Array.Fill(distance, long.MaxValue);
-            distance[0] = 0;
-            dp[0] = 1;
-            long mod = 1_000_000_007;
-            PriorityQueue<long[], long> pq = new PriorityQueue<long[], long>();
-            //store {index, cost} pairs sort by cost ascending
-            //always visit shortest path first, it will help to skips longer paths later
-            pq.Enqueue(new long[] { 0, 0 },0);
-            while (pq.Count>0)
-            {
-                long[] top = pq.Dequeue();
-                long u = top[0];
-                long cost = top[1];
-                if (cost > distance[u]) continue;//not shortest, skip it
-                foreach (var v in graph[u])
-                {
-                    if (distance[v[0]] > cost + v[1])
-                    {
-                        distance[v[0]] = cost + v[1];//shorter path found
-                        dp[v[0]] = dp[u];//reset to 0, then update
-                        //re-visit again due to shorter path found, will update all follow paths
-                        pq.Enqueue(new long[] { v[0], distance[v[0]] }, distance[v[0]]);
-                    }
-                    else if(distance[v[0]] == cost + v[1])
-                    {
-                        dp[v[0]] = (dp[v[0]] + dp[u])% mod;//Dijkstra is BFS, no need to Enqueue, just update
-                    }
-                }
-            }
-            return dp;
-        }
 
-        private long[] getDijkstra(List<int[]>[] graph,out long[] dist)
-        {
-            int n = graph.Length;
-            long[] dp = new long[n];
-            long[] distance = new long[n];
-            Array.Fill(distance, long.MaxValue);
-            distance[0] = 0;
-            dp[0] = 1;
-            long mod = 1_000_000_007;
-            PriorityQueue<long[], long> pq = new PriorityQueue<long[], long>();
-            //store {index, cost} pairs sort by cost ascending
-            //always try short paths first , it will help to skips long paths later
-            pq.Enqueue(new long[] { 0, 0 }, 0);
-            while (pq.Count > 0)
-            {
-                long[] top = pq.Dequeue();
-                long u = top[0];
-                long cost = top[1];
-                if (cost > distance[u])//not shortest
-                    continue;
-                foreach (var v in graph[u])
-                {
-                    if (distance[v[0]] > cost + v[1])
-                    {
-                        distance[v[0]] = cost + v[1];//shorter path found, update
-                        dp[v[0]] = dp[u];//update
-                        //re-visit again due to shorter path found, will update all follow paths
-                        pq.Enqueue(new long[] { v[0], distance[v[0]] }, distance[v[0]]);
-                    }
-                    else if (distance[v[0]] == cost + v[1])
-                    {
-                        dp[v[0]] = (dp[v[0]] + dp[u]) % mod;
-                    }
-                }
-            }
-            dist = distance;
-            return dp;
-        }
 
         /// 1979. Find Greatest Common Divisor of Array
         ///return the greatest common divisor of the smallest number and largest number in nums.

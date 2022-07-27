@@ -95,34 +95,6 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        private long[] getDijkstraCostArray(List<int[]>[] graph, int src = 0)
-        {
-            int n = graph.Length;
-            long[] distance = new long[n];
-            Array.Fill(distance, long.MaxValue);
-            distance[src] = 0;
-            PriorityQueue<long[], long> pq = new PriorityQueue<long[], long>();
-            //{index, cost} sort by cost-asc, visit shortest path first, it helps to skips longer paths later
-            pq.Enqueue(new long[] { src, 0 }, 0);
-            while (pq.Count > 0)
-            {
-                long[] top = pq.Dequeue();
-                long u = top[0];
-                long cost = top[1];
-                if (cost > distance[u]) continue;//not shortest, skip it
-                foreach (var v in graph[u])
-                {
-                    if (distance[v[0]] > cost + v[1])
-                    {
-                        distance[v[0]] = cost + v[1];//shorter path found, re-visit again
-                        pq.Enqueue(new long[] { v[0], distance[v[0]] }, distance[v[0]]);
-                    }
-                }
-            }
-            return distance;
-        }
-
-
         /// 2206. Divide Array Into Equal Pairs
         public bool DivideArray(int[] nums)
         {
