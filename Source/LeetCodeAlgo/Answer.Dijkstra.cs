@@ -9,9 +9,9 @@ namespace LeetCodeAlgo
     public partial class Answer
     {
         /// <summary>
-        /// get shortest ways from src to all nodes
+        /// get shortest ways from src to all nodes, only positive weight graph
         /// </summary>
-        private long[] getDijkstraWaysArray(List<int[]>[] graph, int src=0)
+        private long[] getDijkstraWays(List<int[]>[] graph, int src = 0 )
         {
             int n = graph.Length;
             long[] ways = new long[n];
@@ -47,7 +47,7 @@ namespace LeetCodeAlgo
             return ways;
         }
 
-        private long[] getDijkstraWaysArray(List<int[]>[] graph, out long[] dist, int src=0)
+        private long[] getDijkstraWays(List<int[]>[] graph, out long[] dist, int src=0)
         {
             int n = graph.Length;
             long[] ways = new long[n];
@@ -84,7 +84,7 @@ namespace LeetCodeAlgo
             return ways;
         }
 
-        private long[] getDijkstraCostArray(List<int[]>[] graph, int src = 0)
+        private long[] getDijkstraCosts(List<int[]>[] graph, int src = 0)
         {
             int n = graph.Length;
             long[] dp = new long[n];//store cost
@@ -113,9 +113,49 @@ namespace LeetCodeAlgo
         }
 
         /// <summary>
+        /// get the max cell of all paths from src to all cells in grid
+        /// </summary>
+        private int[][] getDijkstraMaxCell(int[][] grid, int srcX = 0, int srcY = 0)
+        {
+            int m = grid.Length;
+            int n = grid[0].Length;
+            int[][] dxy = new int[4][] { new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 } };
+            int[][] dp = new int[m][];
+            for (int i = 0; i < m; i++)
+            {
+                dp[i] = new int[n];
+                Array.Fill(dp[i], int.MaxValue);
+            }
+            dp[srcX][srcY] = grid[srcX][srcY];
+            PriorityQueue<int[], int> pq = new PriorityQueue<int[], int>();
+            pq.Enqueue(new int[3] { srcX, srcY, grid[srcX][srcY] }, grid[srcX][srcY]);//{i,j, cost}, sort by cost asc
+            while (pq.Count > 0)
+            {
+                int[] top = pq.Dequeue();
+                int i = top[0], j = top[1], cost = top[2];
+                foreach (var d in dxy)
+                {
+                    int r = i + d[0], c = j + d[1];
+                    if (0 <= r && r < m && 0 <= c && c < n)
+                    {
+                        //this only find the MaxCost , not SumOfAll
+                        int nextCost = Math.Max(cost, grid[r][c]);
+                        if (nextCost < dp[r][c])//shorter path found
+                        {
+                            dp[r][c] = nextCost;
+                            pq.Enqueue(new int[] { r, c, nextCost }, nextCost);
+                        }
+                    }
+                }
+            }
+            return dp;
+        }
+
+
+        /// <summary>
         /// find the max abs edge from src to any cell, abs edge is abs(grid[i,j] - grid[r,c]) of all neighbors
         /// </summary>
-        private int[][] getDijkstraMaxAbsEdgeMatrix(int[][] grid, int srcX = 0, int srcY = 0)
+        private int[][] getDijkstraMaxAbsEdge(int[][] grid, int srcX = 0, int srcY = 0)
         {
             int m = grid.Length;
             int n = grid[0].Length;
@@ -150,53 +190,11 @@ namespace LeetCodeAlgo
             }
             return dp;
         }
-        /// <summary>
-        /// find the max abs edge from src to dest , abs edge is abs(grid[i,j] - grid[r,c]) of all neighbors
-        /// </summary>
-        private int getDijkstraMaxAbsEdge(int[][] grid, int srcX = 0, int srcY = 0, int destX=-1, int destY=-1)
-        {
-            int m = grid.Length;
-            int n = grid[0].Length;
-            if (destX == -1) destX = m - 1;
-            if (destY == -1) destY = n - 1;
-            int[][] dxy = new int[4][] { new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 } };
-            int[][] dp = new int[m][];
-            for (int i = 0; i < m; i++)
-            {
-                dp[i] = new int[n];
-                Array.Fill(dp[i], int.MaxValue);
-            }
-            dp[srcX][srcY] = 0;
-            PriorityQueue<int[], int> pq = new PriorityQueue<int[], int>();
-            pq.Enqueue(new int[3] { srcX, srcY, 0 }, 0);//{i,j, cost}, sort by cost asc
-            while (pq.Count > 0)
-            {
-                int[] top = pq.Dequeue();
-                int i = top[0],j = top[1], cost = top[2];
-                if (i == destX && j == destY)//first time found , then return
-                    return cost;
-                foreach (var d in dxy)
-                {
-                    int r = i + d[0], c = j + d[1];
-                    if (0 <= r && r < m && 0 <= c && c < n)
-                    {
-                        //this only find the MaxCost , not SumOfAll
-                        int nextCost = Math.Max(cost, Math.Abs(grid[r][c] - grid[i][j]));
-                        if (nextCost < dp[r][c] ) //shorter abs cost found
-                        {
-                            dp[r][c] = nextCost;
-                            pq.Enqueue(new int[] { r, c, nextCost }, nextCost);
-                        }
-                    }
-                }
-            }
-            return dp[destX][destY];//never go here
-        }
 
         /// <summary>
-        /// shorest SumOfAbs from src to any grid cell
+        /// Shorest SumOfAbs from src to any grid cell
         /// </summary>
-        private long[][] getDijkstraAbsCostMatrix(int[][] grid, int srcX = 0, int srcY = 0)
+        private long[][] getDijkstraAbsCosts(int[][] grid, int srcX = 0, int srcY = 0 )
         {
             int m = grid.Length;
             int n = grid[0].Length;
@@ -235,7 +233,7 @@ namespace LeetCodeAlgo
         /// <summary>
         /// Ways (shortest sum of abs) from src to all grid cells
         /// </summary>
-        private long[][] getDijkstraAbsWaysMatrix(int[][] grid, int srcX = 0, int srcY = 0)
+        private long[][] getDijkstraAbsWays(int[][] grid, int srcX = 0, int srcY = 0)
         {
             int m = grid.Length;
             int n = grid[0].Length;
@@ -280,7 +278,7 @@ namespace LeetCodeAlgo
             return ways;
         }
 
-        private long[][] getDijkstraAbsWaysMatrix(int[][] grid, out long[][] dist, int srcX = 0, int srcY = 0)
+        private long[][] getDijkstraAbsWays(int[][] grid, out long[][] dist, int srcX = 0, int srcY = 0)
         {
             int m = grid.Length;
             int n = grid[0].Length;
@@ -326,5 +324,67 @@ namespace LeetCodeAlgo
             return ways;
         }
 
+        /// <summary>
+        /// Floyd-Warshall algo O(N^3), find min path of any two vertexes in whole graph, support negative edge
+        /// </summary>
+        public int[][] getFloydCosts(int n, int[][] edges, bool undirected = true, int seed = 1_000_000_000)
+        {
+            int[][] dp = new int[n][];
+            for (int i = 0; i < n; i++)
+            {
+                dp[i] = new int[n];
+                Array.Fill(dp[i], seed);
+                dp[i][i] = 0;
+            }
+            foreach (var e in edges)
+            {
+                //support duplicate edges
+                dp[e[0]][e[1]] = Math.Min(dp[e[0]][e[1]], e[2]);
+                if (undirected)//undirected graph
+                {
+                    dp[e[1]][e[0]] = Math.Min(dp[e[1]][e[0]],e[2]);
+                }
+            }
+            for (int k = 0; k < n; k++)
+            {
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = 0; j < n; j++)
+                    {
+                        //find shortest path bewteen any two nodes
+                        dp[i][j] = Math.Min(dp[i][j], dp[i][k] + dp[k][j]);
+                    }
+                }
+            }
+            return dp;
+        }
+
+        /// <summary>
+        /// (Not-Fast!!)Bellman-Floyd algo O(V*E), find min path of any two vertexes in whole graph, support negative edge
+        /// </summary>
+        private int[][] getBellmanCosts(int n, int[][] edges, bool undirected = true, int maxSeed = 1_000_000_000)
+        {
+            int[][] dp = new int[n][];
+            for (int i = 0; i < n; i++)
+            {
+                dp[i] = new int[n];
+                Array.Fill(dp[i], maxSeed);
+                dp[i][i] = 0;
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int k = 1; k < n; k++)
+                {
+                    foreach (var e in edges)
+                    {
+                        int u = e[0], v = e[1], cost = e[2];
+                        dp[i][v] = Math.Min(dp[i][v], dp[i][u] + cost);
+                        if (undirected)
+                            dp[i][u] = Math.Min(dp[i][u], dp[i][v] + cost);
+                    }
+                }
+            }
+            return dp;
+        }
     }
 }

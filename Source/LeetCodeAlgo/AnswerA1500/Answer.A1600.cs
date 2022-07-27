@@ -238,7 +238,7 @@ namespace LeetCodeAlgo
         //Return the minimum effort required to travel from the top-left cell to the bottom-right cell.
         public int MinimumEffortPath(int[][] heights)
         {
-            return getDijkstraMaxAbsEdge(heights);
+            return getDijkstraMaxAbsEdge(heights).Last().Last();
         }
 
         /// 1636. Sort Array by Increasing Frequency

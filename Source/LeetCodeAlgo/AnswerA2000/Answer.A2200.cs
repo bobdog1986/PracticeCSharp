@@ -79,13 +79,13 @@ namespace LeetCodeAlgo
                 graphRev[e[1]].Add(new int[] { e[0], e[2] });
             }
 
-            var srcArr1 = getDijkstraCostArray(graph, src1);
+            var srcArr1 = getDijkstraCosts(graph, src1);
             if (srcArr1[dest] == long.MaxValue) return -1;//no possible from src1 to dest
 
-            var srcArr2 = getDijkstraCostArray(graph, src2);
+            var srcArr2 = getDijkstraCosts(graph, src2);
             if (srcArr2[dest] == long.MaxValue) return -1;//no possible from src2 to dest
             long res = long.MaxValue;
-            var destArr = getDijkstraCostArray(graphRev, dest);
+            var destArr = getDijkstraCosts(graphRev, dest);
             for(int i = 0; i < n; i++)
             {
                 if (destArr[i] == long.MaxValue || srcArr1[i] == long.MaxValue || srcArr2[i] == long.MaxValue) continue;

@@ -720,8 +720,63 @@ namespace LeetCodeAlgo
             CountMaxOrSubsets_BackTracking(nums, i + 1, currOr | nums[i], maxOr, ref res);
         }
 
-        ///2047. Number of Valid Words in a Sentence
+        ///2045. Second Minimum Time to Reach Destination, #TLE
+        public int SecondMinimum(int n, int[][] edges, int time, int change)
+        {
+            List<int>[] graph = new List<int>[n + 1];
+            for (int i = 0; i < n + 1; i++)
+                graph[i] = new List<int>();
+            foreach (var e in edges)
+            {
+                graph[e[0]].Add(e[1]);
+                graph[e[1]].Add(e[0]);
+            }
+            PriorityQueue<int, int> pq = new PriorityQueue<int, int>();
+            bool[] visit = new bool[n + 1];
+            visit[1] = true;
+            SecondMinimum_DFS(graph, 1, 0, time, change, visit, false, pq, int.MaxValue);
+            return pq.Peek();
+        }
 
+        private void SecondMinimum_DFS(List<int>[] graph, int index, int cost, int time, int change, bool[] visit, bool cycle, PriorityQueue<int, int> pq, int max)
+        {
+            if (index == graph.Length - 1)
+            {
+                pq.Enqueue(cost, -cost);//maxheap
+                if (pq.Count > 2) pq.Dequeue();
+                if (pq.Count == 2)
+                {
+                    max = Math.Min(max, pq.Peek());
+                }
+            }
+            foreach (var v in graph[index])
+            {
+                if (visit[v])
+                {
+                    if (cycle) continue;
+                    else
+                    {
+                        int nextCost = cost + time;
+                        int mod = cost % (2 * change);
+                        if (mod >= change)
+                            nextCost += 2 * change - mod;
+                        SecondMinimum_DFS(graph, v, nextCost, time, change, visit, true, pq, max);
+                    }
+                }
+                else
+                {
+                    visit[v] = true;
+                    int nextCost = cost + time;
+                    int mod = cost % (2 * change);
+                    if (mod >= change)
+                        nextCost += 2 * change - mod;
+                    SecondMinimum_DFS(graph, v, nextCost, time, change, visit, cycle, pq, max);
+                    visit[v] = false;
+                }
+            }
+        }
+
+        ///2047. Number of Valid Words in a Sentence
         public int CountValidWords(string sentence)
         {
             int res = 0;

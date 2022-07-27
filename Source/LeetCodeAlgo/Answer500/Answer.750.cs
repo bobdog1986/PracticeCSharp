@@ -186,6 +186,13 @@ namespace LeetCodeAlgo
 
             return i == j;
         }
+        ///778. Swim in Rising Water, #Dijkstra
+        //return the min of cost in all path from (0,0) to (n-1,n-1), cost is max cell of a path
+        public int SwimInWater(int[][] grid)
+        {
+            var dp = getDijkstraMaxCell(grid);
+            return dp.Last().Last();
+        }
 
         ///779. K-th Symbol in Grammar
         //row[1]=0, row[i] to row[i+1] =>  0 with 01, and 1 with 10. return k(1-idnex) in row[n]

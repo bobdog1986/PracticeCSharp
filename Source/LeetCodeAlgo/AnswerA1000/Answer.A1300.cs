@@ -497,26 +497,63 @@ namespace LeetCodeAlgo
             return s.Length == 0 ? 0 : (new string(s.Reverse().ToArray()) == s ? 1 : 2);
         }
 
-        ///1334. Find the City With the Smallest Number of Neighbors at a Threshold Distance, #Graph, #Dijkstra
+        // #Graph, #Dijkstra, #Floyd, #Bellman,
+        ///1334. Find the City With the Smallest Number of Neighbors at a Threshold Distance
         //edges[i] = [fromi, toi, weighti] a bidirectional weighted edge between cities fromi and toi
         //Return the city with the smallest number of cities that are reachable with distance <= distanceThreshold
         //If there are multiple such cities, return the city with the greatest number.
-        public int FindTheCity(int n, int[][] edges, int distanceThreshold)
+        //2 <= n <= 100, 1 <= edges.length <= n* (n - 1) / 2, duplicate edges
+        //1 <= weighti, distanceThreshold <= 10^4
+        public int FindTheCity_Bellman(int n, int[][] edges, int distanceThreshold)
+        {
+            var dp = getBellmanCosts(n, edges);
+            int res = -1;
+            int count = n + 1;
+            for (int i = 0; i < n; i++)
+            {
+                int curr = dp[i].Count(x => x <= distanceThreshold);
+                if (curr <= count)
+                {
+                    count = curr;
+                    res = i;
+                }
+            }
+            return res;
+        }
+
+        public int FindTheCity_Floyd(int n, int[][] edges, int distanceThreshold)
+        {
+            var dp = getFloydCosts(n, edges);
+            int res = -1;
+            int count = n + 1;
+            for(int i = 0; i < n; i++)
+            {
+                int curr = dp[i].Count(x => x <= distanceThreshold);
+                if (curr <= count)
+                {
+                    count = curr;
+                    res = i;
+                }
+            }
+            return res;
+        }
+
+        public int FindTheCity_Dijkstra(int n, int[][] edges, int distanceThreshold)
         {
             List<int[]>[] graph = new List<int[]>[n];
             for (int i = 0; i < n; i++)
                 graph[i] = new List<int[]>();
-            foreach(var e in edges)
+            foreach (var e in edges)
             {
                 graph[e[0]].Add(new int[] { e[1], e[2] });
                 graph[e[1]].Add(new int[] { e[0], e[2] });
             }
             int res = n - 1;
-            int minCount = n+1;//impossible count n+1
-            for(int i = n - 1; i >= 0; i--)//from n-1 to 0 due to greatest number
+            int minCount = n + 1;//impossible count n+1
+            for (int i = n - 1; i >= 0; i--)//from n-1 to 0 due to greatest number
             {
                 //if >=minCount invalid, return -1
-                int curr = FindTheCity(graph, distanceThreshold, minCount,i);
+                int curr = FindTheCity_Dijkstra(graph, distanceThreshold, minCount, i);
                 if (curr == -1) continue;
                 else
                 {
@@ -527,7 +564,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        private int FindTheCity(List<int[]>[] graph, int threshold,int maxCount, int src = 0)
+        private int FindTheCity_Dijkstra(List<int[]>[] graph, int threshold,int maxCount, int src = 0)
         {
             int n = graph.Length;
             long[] dp = new long[n];//store cost

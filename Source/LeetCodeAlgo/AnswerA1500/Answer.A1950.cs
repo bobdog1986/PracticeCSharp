@@ -231,11 +231,9 @@ namespace LeetCodeAlgo
                 graph[e[0]].Add(new int[] { e[1], e[2] });
                 graph[e[1]].Add(new int[] { e[0], e[2] });
             }
-            var dp=getDijkstraWaysArray(graph);
+            var dp= getDijkstraWays(graph);
             return (int)dp[n - 1];
         }
-
-
 
         /// 1979. Find Greatest Common Divisor of Array
         ///return the greatest common divisor of the smallest number and largest number in nums.
