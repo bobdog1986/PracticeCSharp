@@ -7,26 +7,23 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        //Greatest Common Divisor, #GCD
-        private long getGCD_Long(long x, long y)
-        {
-            return y == 0 ? x : getGCD_Long(y, x % y);
-        }
-
+        ///Greatest Common Divisor, #GCD
         private int getGCD(int x, int y)
         {
             return y == 0 ? x : getGCD(y, x % y);
         }
-
-        //Least Common Multiple, #LCM
-        private long getLCM_Long(long x, long y)
+        private long getGCDLong(long x, long y)
         {
-            return (x * y) / getGCD_Long(x, y);
+            return y == 0 ? x : getGCDLong(y, x % y);
         }
-
+        ///Least Common Multiple, #LCM
         private int getLCM(int x, int y)
         {
-            return (int)(((long)x * y) / getGCD(x, y));
+            return x / getGCD(x, y) * y;
+        }
+        private long getLCMLong(long x, long y)
+        {
+            return x / getGCDLong(x, y) * y;
         }
 
         private long getFactorial(long n)

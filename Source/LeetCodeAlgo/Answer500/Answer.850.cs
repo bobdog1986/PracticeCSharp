@@ -322,7 +322,7 @@ namespace LeetCodeAlgo
         public int NthMagicalNumber(int n, int a, int b)
         {
             int mod = 1_000_000_007;
-            int c = a * b / getGCD(a, b);
+            int c = getLCM(a,b);
 
             long low = 0;
             long high = (long)n * Math.Min(a, b);

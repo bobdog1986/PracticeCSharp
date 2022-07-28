@@ -240,14 +240,7 @@ namespace LeetCodeAlgo
         ///2 <= nums.length <= 1000,1 <= nums[i] <= 1000
         public int FindGCD(int[] nums)
         {
-            int max = 1;
-            int min = 1000;
-            foreach (var n in nums)
-            {
-                max = Math.Max(max, n);
-                min = Math.Min(min, n);
-            }
-            return getGCD(max, min);
+            return getGCD(nums.Max(), nums.Min());
         }
 
         ///1980. Find Unique Binary String

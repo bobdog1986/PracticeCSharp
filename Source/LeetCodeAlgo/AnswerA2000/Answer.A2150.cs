@@ -823,5 +823,27 @@ namespace LeetCodeAlgo
 
             return set.FirstOrDefault(x => x.Value).Key;
         }
+
+
+        ///2197. Replace Non-Coprime Numbers in Array, #Monotonic Stack
+        //If any two adjacent numbers in nums that are non-coprime( aka GCD is 1)
+        //combine this two numbers to their LCM
+        //return the final elements in nums
+        public IList<int> ReplaceNonCoprimes(int[] nums)
+        {
+            int n = nums.Length;
+            int[] arr = new int[n];//donot use stack , it may TLE
+            int j = -1;
+            for (int i = 0; i < n; i++)
+            {
+                int curr = nums[i];//we need a local var, it may be updated to the LCM later
+                while (j >= 0 && getGCD(arr[j], curr) > 1)//if current number is non-coprime with last one
+                {
+                    curr = getLCM(arr[j--], curr);//delete them and create their LCM
+                }
+                arr[++j] = curr;
+            }
+            return arr.Take(j + 1).ToList();//j+1 = final count of elements in nums
+        }
     }
 }

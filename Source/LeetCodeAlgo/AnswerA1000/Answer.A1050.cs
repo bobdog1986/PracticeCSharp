@@ -110,7 +110,7 @@ namespace LeetCodeAlgo
                 str2 = str1;
                 str1 = temp;
             }
-            int gcb = (int)getGCD_Long(str1.Length, str2.Length);
+            int gcb = getGCD(str1.Length, str2.Length);
             for (int i = gcb; i >= 1; i--)
             {
                 if (str1.Length % gcb == 0 && str2.Length % gcb == 0)
