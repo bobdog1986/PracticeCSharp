@@ -873,6 +873,33 @@ namespace LeetCodeAlgo
             return i == n && j == n;
         }
 
+        ///2338. Count the Number of Ideal Arrays, #DP, not pass
+        public int IdealArrays(int n, int maxValue)
+        {
+            int mod = 1_000_000_007;
+            int[][] dp = new int[n][];
+            for(int i = 0; i < n; i++)
+                dp[i]=new int[maxValue+1];
+            Array.Fill(dp[0], 1);
+            for(int i = 0; i < n-1; i++)
+            {
+                for(int j = 1; j <= maxValue; j++)
+                {
+                    if (dp[i][j] == 0) continue;
+                    int x=j;
+                    while(x <= maxValue)
+                    {
+                        dp[i + 1][x] = (dp[i + 1][x] + dp[i][j]) % mod;
+                        x+=j;
+                    }
+                }
+            }
+            int res = 0;
+            for (int i = 1; i <= maxValue; i++)
+                res = (res + dp[n - 1][i]) % mod;
+            return res;
+        }
+
         ///2341. Maximum Number of Pairs in Array, in Easy
 
         ///2342. Max Sum of a Pair With Equal Sum of Digits

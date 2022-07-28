@@ -80,6 +80,20 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///1518. Water Bottles
+        public int NumWaterBottles(int numBottles, int numExchange)
+        {
+            int res = numBottles;
+            while (numBottles >= numExchange)
+            {
+                int curr = numBottles / numExchange;
+                numBottles = numBottles % numExchange;
+                res += curr;
+                numBottles += curr;
+            }
+            return res;
+        }
+
         ///1523. Count Odd Numbers in an Interval Range
         ///Given two non-negative integers low and high. Return the count of odd numbers between low and high (inclusive).
         public int CountOdds(int low, int high)
