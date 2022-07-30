@@ -474,6 +474,76 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///2172. Maximum AND Sum of Array
+        public int MaximumANDSum(int[] nums, int numSlots)
+        {
+            int res = 0;
+            int[] arr = new int[numSlots + 1];
+            int[] dp = new int[numSlots + 1];
+            foreach (var n in nums)
+            {
+                int i = n % (numSlots + 1);
+                if (dp[i] == 2)
+                {
+                    arr[i]++;
+                }
+                else
+                {
+                    dp[i]++;
+                    res += i;
+                }
+            }
+            int max = 0;
+            MaximumANDSum_DFS(arr, 0, new int[numSlots + 1], ref max);
+            return res+max;
+        }
+
+        private void MaximumANDSum_DFS(int[] arr, int index, int[] dp, ref int max)
+        {
+            if (index == arr.Length)
+            {
+                int res = 0;
+                for (int i = 1; i < dp.Length; i++)
+                {
+                    res += dp[i] * i;
+                }
+                max = Math.Max(res, max);
+            }
+            else
+            {
+                if (arr[index] == 0)
+                    MaximumANDSum_DFS(arr, index + 1, dp, ref max);
+                else
+                {
+                    for(int i = 1; i < dp.Length; i++)
+                    {
+                        if (dp[i] == 2) continue;
+                        else if (arr[index]==1 || dp[i] == 1)
+                        {
+                            arr[index]--;
+                            dp[i]++;
+                            MaximumANDSum_DFS(arr, index + 1, dp, ref max);
+                            arr[index]++;
+                            dp[i]--;
+                        }
+                        else
+                        {
+                            arr[index]--;
+                            dp[i]++;
+                            MaximumANDSum_DFS(arr, index + 1, dp, ref max);
+                            arr[index]++;
+                            dp[i]--;
+
+                            arr[index]-=2;
+                            dp[i]+=1;
+                            MaximumANDSum_DFS(arr, index + 1, dp, ref max);
+                            arr[index]+=2;
+                            dp[i]-=1;
+                        }
+                    }
+                }
+            }
+        }
 
         /// 2176. Count Equal and Divisible Pairs in an Array
         ///return the number of pairs (i, j) where 0 <= i < j < n, such that nums[i] == nums[j] and (i * j) is divisible by k.
@@ -711,6 +781,8 @@ namespace LeetCodeAlgo
                 }
             }
             int n = goodTires.Count;
+            int minTire = goodTires.Min(x => x[0]);
+            int maxUsed = 0;
             int LEN = 20;//1*2^20 >=1_000_000 , we should never use a tire continuous 20 laps
             int[][] timeMat = new int[n][];//create a tire cost table for future query
             for (int i = 0; i < n; i++)
@@ -721,8 +793,9 @@ namespace LeetCodeAlgo
                 for (int j = 1; j < LEN; j++)
                 {
                     int curr = timeMat[i][j - 1] * goodTires[i][1];
-                    if (curr >= changeTime + goodTires[i][0])//we should better replace a new tire with same tireID
+                    if (curr >= changeTime + minTire)//we should better replace a new tire with same tireID
                         break;
+                    maxUsed = Math.Max(maxUsed, j);
                     timeMat[i][j] = curr;
                 }
             }
@@ -743,7 +816,7 @@ namespace LeetCodeAlgo
                 for (int j = 0; j < n; j++)
                 {
                     //why k<=i ? because in lap-i, every time will be used at most i times
-                    for (int k = 0; k <= i && k < LEN; k++)
+                    for (int k = 0; k <= i && k < LEN && k <= maxUsed; k++)
                     {
                         //many data in dp[][][] is int.MaxValue, means it no need to handle
                         if (dp[i][j][k] == int.MaxValue) continue;

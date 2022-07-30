@@ -8,6 +8,22 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
+        ///1550. Three Consecutive Odds
+        public bool ThreeConsecutiveOdds(int[] arr)
+        {
+            int count = 0;
+            foreach(var n in arr)
+            {
+                if (n % 2 == 1)
+                {
+                    count++;
+                    if (count == 3) return true;
+                }
+                else count = 0;
+            }
+            return false;
+        }
+
         ///1551. Minimum Operations to Make Array Equal
         public int MinOperations(int n)
         {
