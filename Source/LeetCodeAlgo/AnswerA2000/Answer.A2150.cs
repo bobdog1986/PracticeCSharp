@@ -477,7 +477,7 @@ namespace LeetCodeAlgo
 
         /// 2176. Count Equal and Divisible Pairs in an Array
         ///return the number of pairs (i, j) where 0 <= i < j < n, such that nums[i] == nums[j] and (i * j) is divisible by k.
-        public int CountPairs(int[] nums, int k)
+        public int CountPairs_2176(int[] nums, int k)
         {
             int res = 0;
             Dictionary<int, List<int>> dict = new Dictionary<int, List<int>>();
@@ -613,6 +613,47 @@ namespace LeetCodeAlgo
             return new string(list.ToArray());
         }
 
+        ///2183. Count Array Pairs Divisible by K, #GCD
+        //  return the number of pairs(i, j) such that:
+        //0 <= i<j <= n - 1 and nums[i] * nums[j] is divisible by k.
+        public long CountPairs(int[] nums, int k)
+        {
+            // nums[i] * nums[j] % k==0 => gcd(nums[i] ,k) * gcd(nums[j] ,k) %k==0
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach(var n in nums)
+            {
+                if (dict.ContainsKey(n)) dict[n]++;
+                else dict.Add(n, 1);
+            }
+
+            Dictionary<int, int> map = new Dictionary<int, int>();
+            foreach(var n in dict.Keys)
+            {
+                var g = getGCD(n, k);
+                if(map.ContainsKey(g)) map[g]+=dict[n];
+                else map.Add(g, dict[n]);
+            }
+            long res = 0;
+            int[] keys = map.Keys.ToArray();
+
+            for(int i = 0; i < keys.Length; i++)
+            {
+                if ((long)keys[i] * keys[i] % k == 0)
+                {
+                    res+= (long)map[keys[i]] * (map[keys[i]] - 1) / 2;
+                }
+
+                for (int j = i + 1; j < keys.Length; j++)
+                {
+                    if ((long)keys[i] * keys[j] % k == 0)
+                    {
+                        res += (long)map[keys[i]] * map[keys[j]];
+                    }
+                }
+            }
+            return res;
+        }
+
         /// 2185. Counting Words With a Given Prefix
         public int PrefixCount(string[] words, string pref)
         {
@@ -651,6 +692,42 @@ namespace LeetCodeAlgo
             return left;
         }
 
+        ///2188. Minimum Time to Finish the Race, #DP
+        //xth successive lap in fi * ri(x-1) seconds.
+        //1 <= tires.length <= 105, 1 <= fi, changeTime <= 105,2 <= ri <= 105, 1 <= numLaps <= 1000
+        public int MinimumFinishTime(int[][] tires, int changeTime, int numLaps)
+        {
+            int[][][] dp = new int[numLaps][][];
+            for(int i = 0; i < numLaps; i++)
+            {
+                dp[i] = new int[tires.Length][];
+                for(int j = 0; j < tires.Length; j++)
+                {
+                    if (i == 0)
+                        dp[i][j] = new int[2] { tires[j][0], tires[j][0] };
+                    else
+                        dp[i][j] = new int[2];
+                }
+            }
+
+            for(int i = 1; i < numLaps; i++)
+            {
+                int lastMinTime = dp[i - 1].Min(x => x[1]);
+                for(int j = 0; j < tires.Length; j++)
+                {
+                    dp[i][j][0] = tires[j][0];
+                    dp[i][j][1] = lastMinTime + changeTime + tires[j][0];
+                    int keepTime = dp[i - 1][j][0] * tires[j][1] + dp[i - 1][j][1];
+                    if (keepTime < dp[i][j][1])
+                    {
+                        dp[i][j][0] = dp[i - 1][j][0] * tires[j][1];
+                        dp[i][j][1] = keepTime;
+                    }
+                }
+            }
+
+            return dp.Last().Min(x => x[1]);
+        }
         /// 2190. Most Frequent Number Following Key In an Array
         ///0 <= i <= n - 2, nums[i] == key and, nums[i + 1] == target.
         ///Return the target with the maximum count.

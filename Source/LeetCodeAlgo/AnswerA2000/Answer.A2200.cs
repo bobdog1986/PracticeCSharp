@@ -133,7 +133,7 @@ namespace LeetCodeAlgo
             return res + Math.Max(cnt1, cnt2);
         }
 
-        /// 2208. Minimum Operations to Halve Array Sum, #PriorityQueue, 
+        /// 2208. Minimum Operations to Halve Array Sum, #PriorityQueue,
         ///In one operation, you can choose any number from nums and reduce it to exactly half the number.
         ///(Note that you may choose this reduced number in future operations.)
         ///Return the minimum number of operations to reduce the sum of nums by at least half.
@@ -621,7 +621,7 @@ namespace LeetCodeAlgo
             return arr[0].Insert(x, "(") + "+" + arr[1].Insert(y + 1, ")");
         }
 
-        ///2233. Maximum Product After K Increments, #PriorityQueue, 
+        ///2233. Maximum Product After K Increments, #PriorityQueue,
         ///You are given an array of non-negative integers nums and an integer k.
         ///In one operation, you may choose any element from nums and increment it by 1.
         ///Return the maximum product of nums after at most k operations.Since the answer may be very large, return it modulo 109 + 7
@@ -645,6 +645,74 @@ namespace LeetCodeAlgo
                 res %= 10_0000_0007;
             }
             return (int)res;
+        }
+
+        ///2234. Maximum Total Beauty of the Gardens
+        public long MaximumBeauty(int[] flowers, long newFlowers, int target, int full, int partial)
+        {
+            long res = 0;
+            long[] diff = new long[target];
+            long totalFlowers = 0;
+            int maxDiff = 0, minDiff = target-1;
+            long gardens = 0;
+            foreach(var f in flowers)
+            {
+                if (f >= target) res += full;
+                else
+                {
+                    gardens++;
+                    totalFlowers += f;
+                    diff[f]++;
+                    maxDiff = Math.Max(maxDiff, f);
+                    minDiff = Math.Min(minDiff, f);
+                }
+            }
+
+            //if(newFlowers + totalFlowers >= gardens * target)
+            //{
+            //    return res + gardens * full;
+            //}
+
+            long max = 0;
+            for(int i = 0; i <= gardens; i++)
+            {
+                long[] arr = new long[target];
+                Array.Copy(diff, arr,target);
+                var curr = MaximumBeauty_calc(arr, i, newFlowers, full, partial,maxDiff,minDiff);
+                if (curr == -1) break;
+                max = Math.Max(max, curr);
+            }
+            return res + max;
+
+        }
+
+        private long MaximumBeauty_calc(long[] diff,long x, long newFlowers, int full, int partial, int maxDiff, int minDiff)
+        {
+            long res = 0;
+            int high = maxDiff;
+            for(; high >= minDiff && x>0; high--)
+            {
+                if (diff[high] == 0) continue;
+                long maxFulls = newFlowers / (diff.Length - high);
+                if (maxFulls < x) return -1;
+                long count = Math.Min(diff[high], maxFulls);
+                newFlowers -= count * (diff.Length - high);
+                x -= count;
+                diff[high] -= count;
+                res += count * full;
+            }
+            int low = minDiff;
+            for (; low <diff.Length && newFlowers>0; low++)
+            {
+                if (diff[low] == 0) continue;
+                if (newFlowers < diff[low]) break;
+                newFlowers -= diff[low];
+                if(low<diff.Length-1)
+                    diff[low + 1] += diff[low];
+                diff[low] = 0;
+            }
+
+            return res + partial * low;
         }
 
         ///2235. Add Two Integers

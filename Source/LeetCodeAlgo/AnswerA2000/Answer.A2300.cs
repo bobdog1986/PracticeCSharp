@@ -874,7 +874,7 @@ namespace LeetCodeAlgo
         }
 
         ///2338. Count the Number of Ideal Arrays, #DP, not pass
-        public int IdealArrays(int n, int maxValue)
+        public int IdealArrays_TLE(int n, int maxValue)
         {
             int mod = 1_000_000_007;
             int[][] dp = new int[n][];
@@ -899,6 +899,74 @@ namespace LeetCodeAlgo
                 res = (res + dp[n - 1][i]) % mod;
             return res;
         }
+
+        public int IdealArrays(int n, int maxValue)
+        {
+            long mod = 1_000_000_007;
+            long res = 0;
+            //find all strictly increasing array that last element <= max
+            long[][] dp = new long[15][];
+            for(int i = 0; i < dp.Length; i++)
+            {
+                dp[i] = new long[maxValue+1];
+            }
+            Array.Fill(dp[1], 1);
+            dp[1][0] = 0;
+            int endIndex = maxValue;
+            for(int i = 1; i < dp.Length-1; i++)
+            {
+                int zeros = 0;
+                for(int j = 1; j <= maxValue; j++)
+                {
+                    if (dp[i][j] == 0)
+                    {
+                        zeros++;
+                        continue;
+                    }
+                    int k = 2;
+                    while(k*j <= maxValue)
+                    {
+                        dp[i + 1][k * j] = (dp[i + 1][k * j] + dp[i][j]) % mod;
+                        k++;
+                    }
+                }
+                if(zeros == maxValue)
+                {
+                    endIndex = i;
+                    break;
+                }
+            }
+            //create table that
+            //arr is x len, sort asc strictly, insert arr[i] to i+1 index to make arr n len
+            long[][] memo = new long[n+1][];
+            for (int i = 0; i <= n; i++)
+                memo[i] = new long[n + 1];
+            Array.Fill(memo[1], 1);
+            for(int i = 2; i <= n; i++)
+            {
+                for(int j = i+1; j <= n; j++)
+                {
+                    for(int k = 1; k < i; k++)
+                    {
+                        for(int x = 0; x + i < n; x++)
+                        {
+                            memo[i][j] = (memo[i][j] + memo[i-k][j-k-x]) % mod;
+                        }
+                    }
+                }
+            }
+
+            for (int i = 1; i < dp.Length && i< endIndex; i++)
+            {
+                for(int j=1;j<endIndex && j<= maxValue; j++)
+                {
+                    if (dp[i][j] == 0) continue;
+                    res = (res + dp[i][j] * memo[i][n]) % mod;
+                }
+            }
+            return (int)res;
+        }
+
 
         ///2341. Maximum Number of Pairs in Array, in Easy
 
