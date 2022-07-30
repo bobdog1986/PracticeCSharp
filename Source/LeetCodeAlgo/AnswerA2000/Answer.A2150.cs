@@ -80,29 +80,29 @@ namespace LeetCodeAlgo
         //Return array ans where:ans[0] is the maximum number of groups, ans[1] is the size of the largest group.
         public int[] GroupStrings(string[] words)
         {
-            int n= words.Length;
+            int n = words.Length;
             var uf = new UnionFind(n);
 
-            var dict = new Dictionary<int, Dictionary<int,int>>();//store {len, {bit, index}} pairs
+            var dict = new Dictionary<int, Dictionary<int, int>>();//store {len, {bit, index}} pairs
             for (int i = 0; i < n; i++)
             {
                 int len = words[i].Length;
                 int bit = 0;
-                foreach(var c in words[i])
+                foreach (var c in words[i])
                     bit |= 1 << (c - 'a');
                 if (!dict.ContainsKey(len))
                     dict.Add(len, new Dictionary<int, int>());
                 if (dict[len].ContainsKey(bit))
                     uf.Union(dict[len][bit], i);//union duplicates
-                else dict[len].Add(bit,i);
+                else dict[len].Add(bit, i);
             }
             //union all replace pairs of same length
-            foreach(var i in dict.Keys)
+            foreach (var i in dict.Keys)
             {
                 var keys = dict[i].Keys.ToList();
-                for(int k1 = 0; k1 < keys.Count-1; k1++)
+                for (int k1 = 0; k1 < keys.Count - 1; k1++)
                 {
-                    for (int k2 = k1+1; k2 < keys.Count; k2++)
+                    for (int k2 = k1 + 1; k2 < keys.Count; k2++)
                     {
                         if (GroupStrings_Ones(keys[k1] ^ keys[k2]) == 2)
                             uf.Union(dict[i][keys[k1]], dict[i][keys[k2]]);
@@ -114,11 +114,11 @@ namespace LeetCodeAlgo
             for (int i = 1; i <= 26; i++)
             {
                 if (!dict.ContainsKey(i) || !dict.ContainsKey(i - 1)) continue;
-                foreach(var num in dict[i].Keys)
+                foreach (var num in dict[i].Keys)
                 {
-                    for(int j = 0; j < 26; j++)
+                    for (int j = 0; j < 26; j++)
                     {
-                        if((num & (1 << j)) != 0)// if current bit is 1
+                        if ((num & (1 << j)) != 0)// if current bit is 1
                         {
                             int delete = num & (~(1 << j));//try to find if delete exist
                             if (dict[i - 1].ContainsKey(delete))
@@ -130,7 +130,7 @@ namespace LeetCodeAlgo
             int maxCount = 0;
             HashSet<int> indexSet = new HashSet<int>();
             int[] arr = new int[n];
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
                 int k = uf.Find(i);
                 indexSet.Add(k);
@@ -143,10 +143,10 @@ namespace LeetCodeAlgo
         {
             int count = 0;
             int seed = 1;
-            for(int i = 0; i < 26 && count <=2; i++)
+            for (int i = 0; i < 26 && count <= 2; i++)
             {
                 if ((n & (seed)) != 0) count++;
-                seed<<=1;
+                seed <<= 1;
             }
             return count;
         }
@@ -425,12 +425,12 @@ namespace LeetCodeAlgo
             var evenKeys = evenDict.Keys.OrderBy(x => -evenDict[x]).ToList();
             var oddKeys = oddDict.Keys.OrderBy(x => -oddDict[x]).ToList();
             int res = int.MaxValue;
-            if(evenKeys.Count==1 && oddKeys.Count == 1)
+            if (evenKeys.Count == 1 && oddKeys.Count == 1)
             {
                 if (evenKeys[0] == oddKeys[0]) res = oddDict[oddKeys[0]];
                 else res = 0;
             }
-            else if (evenKeys.Count == 1 || oddKeys.Count==1)
+            else if (evenKeys.Count == 1 || oddKeys.Count == 1)
             {
                 if (evenKeys.Count == 1)
                 {
@@ -452,7 +452,7 @@ namespace LeetCodeAlgo
                 }
                 else
                 {
-                    res=lenOfEven- evenDict[evenKeys[0]] + lenOfOdd - oddDict[oddKeys[0]];
+                    res = lenOfEven - evenDict[evenKeys[0]] + lenOfOdd - oddDict[oddKeys[0]];
                 }
             }
             return res;
@@ -620,27 +620,27 @@ namespace LeetCodeAlgo
         {
             // nums[i] * nums[j] % k==0 => gcd(nums[i] ,k) * gcd(nums[j] ,k) %k==0
             Dictionary<int, int> dict = new Dictionary<int, int>();
-            foreach(var n in nums)
+            foreach (var n in nums)
             {
                 if (dict.ContainsKey(n)) dict[n]++;
                 else dict.Add(n, 1);
             }
 
             Dictionary<int, int> map = new Dictionary<int, int>();
-            foreach(var n in dict.Keys)
+            foreach (var n in dict.Keys)
             {
                 var g = getGCD(n, k);
-                if(map.ContainsKey(g)) map[g]+=dict[n];
+                if (map.ContainsKey(g)) map[g] += dict[n];
                 else map.Add(g, dict[n]);
             }
             long res = 0;
             int[] keys = map.Keys.ToArray();
 
-            for(int i = 0; i < keys.Length; i++)
+            for (int i = 0; i < keys.Length; i++)
             {
                 if ((long)keys[i] * keys[i] % k == 0)
                 {
-                    res+= (long)map[keys[i]] * (map[keys[i]] - 1) / 2;
+                    res += (long)map[keys[i]] * (map[keys[i]] - 1) / 2;
                 }
 
                 for (int j = i + 1; j < keys.Length; j++)
@@ -697,37 +697,70 @@ namespace LeetCodeAlgo
         //1 <= tires.length <= 105, 1 <= fi, changeTime <= 105,2 <= ri <= 105, 1 <= numLaps <= 1000
         public int MinimumFinishTime(int[][] tires, int changeTime, int numLaps)
         {
-            int[][][] dp = new int[numLaps][][];
-            for(int i = 0; i < numLaps; i++)
+            tires = tires.OrderBy(x => x[0]).ThenBy(x => x[1]).ToArray();//sort by fi then by ri
+            List<int[]> goodTires = new List<int[]>();//only select good tires to avoid TLE
+            int[] prev = tires[0];
+            goodTires.Add(tires[0]);
+            for (int i = 1; i < tires.Length; i++)
             {
-                dp[i] = new int[tires.Length][];
-                for(int j = 0; j < tires.Length; j++)
+                if (tires[i][1] >= prev[1]) continue;
+                else
                 {
-                    if (i == 0)
-                        dp[i][j] = new int[2] { tires[j][0], tires[j][0] };
-                    else
-                        dp[i][j] = new int[2];
+                    goodTires.Add(tires[i]);
+                    prev = tires[i];
                 }
             }
-
-            for(int i = 1; i < numLaps; i++)
+            int n = goodTires.Count;
+            int LEN = 20;//1*2^20 >=1_000_000 , we should never use a tire continuous 20 laps
+            int[][] timeMat = new int[n][];//create a tire cost table for future query
+            for (int i = 0; i < n; i++)
             {
-                int lastMinTime = dp[i - 1].Min(x => x[1]);
-                for(int j = 0; j < tires.Length; j++)
+                timeMat[i] = new int[LEN];
+                Array.Fill(timeMat[i], int.MaxValue);
+                timeMat[i][0] = goodTires[i][0];
+                for (int j = 1; j < LEN; j++)
                 {
-                    dp[i][j][0] = tires[j][0];
-                    dp[i][j][1] = lastMinTime + changeTime + tires[j][0];
-                    int keepTime = dp[i - 1][j][0] * tires[j][1] + dp[i - 1][j][1];
-                    if (keepTime < dp[i][j][1])
+                    int curr = timeMat[i][j - 1] * goodTires[i][1];
+                    if (curr >= changeTime + goodTires[i][0])//we should better replace a new tire with same tireID
+                        break;
+                    timeMat[i][j] = curr;
+                }
+            }
+            int[][][] dp = new int[numLaps][][];
+            for (int i = 0; i < numLaps; i++)
+            {
+                dp[i] = new int[n][];
+                for (int j = 0; j < n; j++)
+                {
+                    dp[i][j] = new int[LEN];
+                    Array.Fill(dp[i][j], int.MaxValue);
+                    if (i == 0)
+                        dp[i][j][0] = goodTires[j][0];//seed data
+                }
+            }
+            for (int i = 0; i < numLaps - 1; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    //why k<=i ? because in lap-i, every time will be used at most i times
+                    for (int k = 0; k <= i && k < LEN; k++)
                     {
-                        dp[i][j][0] = dp[i - 1][j][0] * tires[j][1];
-                        dp[i][j][1] = keepTime;
+                        //many data in dp[][][] is int.MaxValue, means it no need to handle
+                        if (dp[i][j][k] == int.MaxValue) continue;
+                        for (int m = 0; m < n; m++)
+                        {
+                            //try change to a new tire with ID=m, so it's dp[i + 1][m][0]
+                            //current cost is dp[i][j][k] , we should add  changeTime + timeMat[m][0]
+                            dp[i + 1][m][0] = Math.Min(dp[i + 1][m][0], dp[i][j][k] + changeTime + timeMat[m][0]);
+                        }
+                        if (timeMat[j][k + 1] == int.MaxValue) continue;//no need to continue , we should better change a new tire
+                        dp[i + 1][j][k + 1] = Math.Min(dp[i + 1][j][k + 1], dp[i][j][k] + timeMat[j][k + 1]);
                     }
                 }
             }
-
-            return dp.Last().Min(x => x[1]);
+            return dp.Last().Min(x => x.Min());
         }
+
         /// 2190. Most Frequent Number Following Key In an Array
         ///0 <= i <= n - 2, nums[i] == key and, nums[i + 1] == target.
         ///Return the target with the maximum count.
@@ -900,7 +933,6 @@ namespace LeetCodeAlgo
 
             return set.FirstOrDefault(x => x.Value).Key;
         }
-
 
         ///2197. Replace Non-Coprime Numbers in Array, #Monotonic Stack
         //If any two adjacent numbers in nums that are non-coprime( aka GCD is 1)

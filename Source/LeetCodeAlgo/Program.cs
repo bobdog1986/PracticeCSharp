@@ -53,7 +53,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.CountPairs(new int[] {1,2,3,4,5},2);
+            var result = answer.MinimumFinishTime(matIntLine0,int.Parse(intMatLines[1]), int.Parse(intMatLines[2]));
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
