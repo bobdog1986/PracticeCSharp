@@ -40,5 +40,15 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+
+        //2357. Make Array Zero by Subtracting Equal Amounts
+        public int MinimumOperations_A(int[] nums)
+        {
+            var set = nums.ToHashSet();
+            set.Remove(0);
+            return set.Count;
+        }
+
     }
 }
