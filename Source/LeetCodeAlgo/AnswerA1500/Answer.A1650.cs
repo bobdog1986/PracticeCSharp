@@ -234,6 +234,26 @@ namespace LeetCodeAlgo
             return accounts.Select(x => x.Sum()).Max();
         }
 
+
+        ///1673. Find the Most Competitive Subsequence, #Monotonic Stack
+        //return the most competitive subsequence of nums of size k.
+        //For example, [1,3,4] is more competitive than [1,3,5]
+        public int[] MostCompetitive(int[] nums, int k)
+        {
+            int n = nums.Length;
+            int[] arr = new int[n];
+            int index = -1;
+            int i = 0;
+            for (; i < n; i++)
+            {
+                while (index >= 0 && index + 1 + (n - 1) - i >= k && arr[index] > nums[i])
+                {
+                    index--;
+                }
+                arr[++index] = nums[i];
+            }
+            return arr.Take(k).ToArray();
+        }
         ///1678. Goal Parser Interpretation
         ///Given the string command, return the Goal Parser's interpretation of command.
         public string Interpret(string command)
