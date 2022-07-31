@@ -50,5 +50,24 @@ namespace LeetCodeAlgo
             return set.Count;
         }
 
+        ///2358. Maximum Number of Groups Entering a Competition, #Binary Search
+        //group count start from 1 and auto-increase 1, sum of group must strictly increase
+        //Return the maximum number of groups that can be formed.
+        public int MaximumGroups(int[] grades)
+        {
+            int n = grades.Length;
+            int left = 1;
+            int right = n;
+            while (left < right)
+            {
+                int mid = (left + right +1)/ 2;
+                long count = (long)mid * (1 + mid) / 2;
+                if (count <= n)
+                    left = mid;
+                else
+                    right = mid - 1;
+            }
+            return left;
+        }
     }
 }
