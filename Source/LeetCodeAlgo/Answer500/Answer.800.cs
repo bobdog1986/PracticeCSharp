@@ -572,6 +572,53 @@ namespace LeetCodeAlgo
             }
             return new string(arr.Take(i).ToArray());
         }
+        ///846. Hand of Straights
+        //each group is of size groupSize, and consists of groupSize consecutive cards.
+        //hand[i] is the value written on the ith card and an integer groupSize,
+        //return true if she can rearrange the cards, or false otherwise.
+        public bool IsNStraightHand(int[] hand, int groupSize)
+        {
+            int n = hand.Length;
+            if (n % groupSize != 0) return false;
+            Array.Sort(hand);
+            int count = n / groupSize;
+            int[][] dp = new int[count][];
+            for (int i = 0; i < count; i++)
+                dp[i] = new int[2];
+
+            for(int i = 0; i < n; i++)
+            {
+                bool append = false;
+                for(int j = 0; j < count; j++)
+                {
+                    if (dp[j][0] == groupSize) continue;
+                    else
+                    {
+                        if (dp[j][0] == 0)
+                        {
+                            dp[j][0]++;
+                            dp[j][1] = hand[i];
+                            append = true;
+                            break;
+                        }
+                        else
+                        {
+                            if (hand[i] > dp[j][1] + 1) return false;
+                            else if(hand[i] == dp[j][1] + 1)
+                            {
+                                dp[j][0]++;
+                                dp[j][1] = hand[i];
+                                append = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (!append) return false;
+            }
+            return true;
+        }
+
 
         ///847. Shortest Path Visiting All Nodes, #Graph, #BFS
         ///You have an undirected, connected graph of n nodes labeled from 0 to n - 1.

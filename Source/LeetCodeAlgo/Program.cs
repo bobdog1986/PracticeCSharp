@@ -52,7 +52,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.MostCompetitive(arr1,3);
+            var result = answer.SmallestSubsequence("leet", 3,'e',1);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

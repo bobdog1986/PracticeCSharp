@@ -419,6 +419,40 @@ namespace LeetCodeAlgo
                 res[i]++;
             return res;
         }
+
+        ///2030. Smallest K-Length Subsequence With Occurrences of a Letter
+        public string SmallestSubsequence(string s, int k, char letter, int repetition)
+        {
+            int n = s.Length;
+            List<int> list = new List<int>();
+            int[] arr = new int[n];
+            int index = -1;
+            int i = 0;
+            for (; i < n; i++)
+            {
+                if(s[i] == letter)
+                {
+                    list.Add(i);
+                    continue;
+                }
+                while (index >= 0 && index + 1 + (n - 1) - i >= k && s[arr[index]] > s[i])
+                {
+                    index--;
+                }
+                arr[++index] = i;
+            }
+
+            char[] res = new char[k];
+            int x = 0, y = 0;
+            int m = 0;
+            while(m<k)
+            {
+                //if e is just enough, add as many normal as possible
+                //<letter first
+            }
+            return new string(res);
+        }
+
         /// 2032. Two Out of Three
         ///return a distinct array containing all the values that in at least two out of the three arrays.
         public IList<int> TwoOutOfThree(int[] nums1, int[] nums2, int[] nums3)
