@@ -70,7 +70,61 @@ namespace LeetCodeAlgo
             return left;
         }
 
-        ///2360. Longest Cycle in a Graph, #Graph, #Good
+        ///2359. Find Closest Node to Given Two Nodes, #Graph, #Cycle
+        //a directed graph of n nodes numbered from 0 to n - 1, where each node has at most one outgoing edge.
+        //edges of size n, indicating that there is a directed edge from node i to node edges[i].
+        //Return the index of the node that can be reached from both node1 and node2,
+        //that the maximum between the distance from node1, and from node2 to that node is minimized.
+        //return the node with the smallest index, and if no possible return -1
+        public int ClosestMeetingNode(int[] edges, int node1, int node2)
+        {
+            int res = -1;
+            Dictionary<int, int> dict1 = new Dictionary<int, int>();
+            int cost = 0;
+            int idx = node1;
+            while (idx != -1)
+            {
+                if (dict1.ContainsKey(idx))
+                    break;
+                dict1.Add(idx, cost);
+                cost++;
+                idx = edges[idx];
+            }
+
+            Dictionary<int, int> dict2 = new Dictionary<int, int>();
+            cost = 0;
+            idx = node2;
+            while (idx != -1)
+            {
+                if (dict2.ContainsKey(idx))
+                    break;
+                dict2.Add(idx, cost);
+                cost++;
+                idx = edges[idx];
+            }
+
+            int min = int.MaxValue;
+            foreach (var k1 in dict1.Keys)
+            {
+                if (dict2.ContainsKey(k1))
+                {
+                    int curr = Math.Max(dict1[k1], dict2[k1]);
+                    if (curr < min)
+                    {
+                        min = curr;
+                        res = k1;
+                    }
+                    else if (curr == min)
+                    {
+                        if (k1 < res)
+                            res = k1;
+                    }
+                }
+            }
+            return res;
+        }
+
+        ///2360. Longest Cycle in a Graph, #Graph, #Cycle, #Good
         // a directed graph of n nodes numbered from 0 to n - 1, where each node has at most one outgoing edge.
         //edges of size n, indicating that there is a directed edge from node i to node edges[i].
         //If there is no outgoing edge from node i, then edges[i] == -1
@@ -100,6 +154,5 @@ namespace LeetCodeAlgo
             }
             return res;
         }
-
     }
 }

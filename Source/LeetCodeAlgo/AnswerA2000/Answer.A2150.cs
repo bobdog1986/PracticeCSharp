@@ -477,73 +477,41 @@ namespace LeetCodeAlgo
         ///2172. Maximum AND Sum of Array
         public int MaximumANDSum(int[] nums, int numSlots)
         {
+            int n = nums.Length;
             int res = 0;
-            int[] arr = new int[numSlots + 1];
-            int[] dp = new int[numSlots + 1];
-            foreach (var n in nums)
+            int[][][] dp = new int[n][][];
+            for(int i = 0; i < n; i++)
             {
-                int i = n % (numSlots + 1);
-                if (dp[i] == 2)
-                {
-                    arr[i]++;
-                }
-                else
-                {
-                    dp[i]++;
-                    res += i;
-                }
+                dp[i] = new int[numSlots * 2 + 2][];
+                for (int j = 0; j < dp[i].Length; j++)
+                    dp[i][j] = new int[2];
             }
-            int max = 0;
-            MaximumANDSum_DFS(arr, 0, new int[numSlots + 1], ref max);
-            return res+max;
-        }
 
-        private void MaximumANDSum_DFS(int[] arr, int index, int[] dp, ref int max)
-        {
-            if (index == arr.Length)
+            for(int i = 2; i < numSlots * 2 + 2;i++)
             {
-                int res = 0;
-                for (int i = 1; i < dp.Length; i++)
-                {
-                    res += dp[i] * i;
-                }
-                max = Math.Max(res, max);
+                dp[0][i][1] = (i / 2 & nums[0]);
             }
-            else
+
+            for(int i = 1; i < n; i++)
             {
-                if (arr[index] == 0)
-                    MaximumANDSum_DFS(arr, index + 1, dp, ref max);
-                else
+                for(int j = 2; j < dp[i].Length; j++)
                 {
-                    for(int i = 1; i < dp.Length; i++)
+                    for (int k = 2; k < dp[i].Length; k++)
                     {
-                        if (dp[i] == 2) continue;
-                        else if (arr[index]==1 || dp[i] == 1)
+                        if (j == k)
                         {
-                            arr[index]--;
-                            dp[i]++;
-                            MaximumANDSum_DFS(arr, index + 1, dp, ref max);
-                            arr[index]++;
-                            dp[i]--;
+
                         }
                         else
                         {
-                            arr[index]--;
-                            dp[i]++;
-                            MaximumANDSum_DFS(arr, index + 1, dp, ref max);
-                            arr[index]++;
-                            dp[i]--;
 
-                            arr[index]-=2;
-                            dp[i]+=1;
-                            MaximumANDSum_DFS(arr, index + 1, dp, ref max);
-                            arr[index]+=2;
-                            dp[i]-=1;
                         }
                     }
                 }
             }
+            return dp[n - 1].Max(x => x.Max());
         }
+
 
         /// 2176. Count Equal and Divisible Pairs in an Array
         ///return the number of pairs (i, j) where 0 <= i < j < n, such that nums[i] == nums[j] and (i * j) is divisible by k.

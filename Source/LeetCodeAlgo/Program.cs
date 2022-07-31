@@ -37,7 +37,7 @@ namespace LeetCodeAlgo
             int[][] mat1 = answer.buildMatrix(matStrInt1);
             //string matStrInt2 = "[[1,3,1,15],[1,3,3,1]]";
             //int[][] mat2 = answer.buildMatrix(matStrInt2);
-            string arrStrInt1 = "[22,2,10,20,18,2,10,20,16,9]";
+            string arrStrInt1 = " [-1,7,15,15,-1,4,16,2,16,7,11,6,10,4,9,1,14,-1]";
 
             int[] arr1 = answer.buildArray(arrStrInt1);
             string arrStrInt2 = "[8,2,6,10]";
@@ -53,7 +53,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.MinimumFinishTime(matIntLine0,int.Parse(intMatLines[1]), int.Parse(intMatLines[2]));
+            var result = answer.ClosestMeetingNode(arr1,1,6);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
