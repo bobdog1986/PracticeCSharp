@@ -1257,8 +1257,8 @@ namespace LeetCodeAlgo
         public int LargestRectangleArea(int[] heights)
         {
             int n = heights.Length;
-            int[] lessFromLeft = getLeftSmallerMonotonicArr(heights);
-            int[] lessFromRight = getRightSmallerMonotonicArr(heights);
+            int[] lessFromLeft = initMonotonicLeftSmallerArr(heights);
+            int[] lessFromRight = initMonotonicRightSmallerArr(heights);
             int maxArea = 0;
             for (int i = 0; i < n; i++)
             {
@@ -1268,28 +1268,6 @@ namespace LeetCodeAlgo
                 maxArea = Math.Max(maxArea, heights[i] * width);
             }
             return maxArea;
-        }
-
-        public int LargestRectangleArea_HardToLearn(int[] heights)
-        {
-            int n = heights.Length;
-            int max = 0;
-            Stack<int> stack = new Stack<int>();
-            for (int i = 0; i <= n; i++)
-            {
-                int height = (i == n) ? 0 : heights[i];
-                // stack is only store ascending heights
-                //if current height[i] is small , calculate max of top, then discard top
-                while (stack.Count>0 && height < heights[stack.Peek()])
-                {
-                    int currHeight = heights[stack.Pop()];
-                    //width is [top+1, i-1]
-                    int width = (stack.Count==0) ? i : i - 1 - stack.Peek();
-                    max = Math.Max(max, currHeight * width);
-                }
-                stack.Push(i);
-            }
-            return max;
         }
 
         ///86. Partition List

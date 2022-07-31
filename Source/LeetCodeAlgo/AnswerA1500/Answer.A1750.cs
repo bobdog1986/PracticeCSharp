@@ -456,8 +456,8 @@ namespace LeetCodeAlgo
         {
             int res = 0;
             int n = nums.Length;
-            int[] leftArr = getLeftSmallerMonotonicArr(nums);
-            int[] rightArr = getRightSmallerMonotonicArr(nums);
+            int[] leftArr = initMonotonicLeftSmallerArr(nums);
+            int[] rightArr = initMonotonicRightSmallerArr(nums);
             for (int i = 0; i < n; i++)
             {
                 int left = leftArr[i] + 1;

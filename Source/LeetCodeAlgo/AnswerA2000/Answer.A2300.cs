@@ -783,8 +783,8 @@ namespace LeetCodeAlgo
         public int ValidSubarraySize(int[] nums, int threshold)
         {
             int n = nums.Length;
-            int[] leftArr = getLeftSmallerMonotonicArr(nums);
-            int[] rightArr = getRightSmallerMonotonicArr(nums);
+            int[] leftArr = initMonotonicLeftSmallerArr(nums);
+            int[] rightArr = initMonotonicRightSmallerArr(nums);
             for (int i = 0; i < n; i++)
             {
                 int left = leftArr[i] + 1;

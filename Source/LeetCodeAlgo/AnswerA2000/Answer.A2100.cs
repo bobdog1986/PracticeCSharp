@@ -125,12 +125,11 @@ namespace LeetCodeAlgo
         public long SubArrayRanges(int[] nums)
         {
             //The idea is to divide sum(max - min) to sum(max) - sum(min),
-            //and focus one each number's counter when it is max and min.
+            //and focus on each number's counter when it is max and min.
             int n = nums.Length;
             int j, k;
             long res = 0;
             Stack<int> s = new Stack<int>();
-            //why <=n? not <n
             for (int i = 0; i <= n; i++)
             {
                 while (s.Count > 0 && nums[s.Peek()] > (i == n ? int.MinValue : nums[i]))

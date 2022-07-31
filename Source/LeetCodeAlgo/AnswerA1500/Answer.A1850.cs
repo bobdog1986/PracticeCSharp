@@ -60,6 +60,34 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///1856. Maximum Subarray Min-Product, #Monotonic Stack
+        //The min-product is equal to the minimum value in the array multiplied by the array's sum.
+        //return the maximum min-product of any non-empty subarray of nums.
+        //Since the answer may be large, return it modulo 109 + 7.
+        //Note that the min-product should be maximized before performing the modulo operation.
+        //Testcases are generated such that the maximum min-product without modulo will fit in a 64-bit signed integer.
+        public int MaxSumMinProduct(int[] nums)
+        {
+            long res = 0;
+            long mod = 1_000_000_007;
+            long[] prefixSum = initPrefixSum(nums);
+            int[] leftArr = initMonotonicLeftSmallerArr(nums);
+            int[] rightArr = initMonotonicRightSmallerArr(nums);
+
+            for(int i = 0; i < nums.Length; i++)
+            {
+                int left = leftArr[i] + 1;
+                int right = rightArr[i] - 1;
+                long sum = prefixSum[right];
+                if (left != 0)
+                    sum -= prefixSum[left-1];
+
+                res =Math.Max(res, sum * nums[i]);
+            }
+            return (int)(res % mod);
+        }
+
         ///1859. Sorting the Sentence
         public string SortSentence(string s)
         {

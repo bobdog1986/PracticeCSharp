@@ -771,7 +771,6 @@ namespace LeetCodeAlgo
         public int TotalSteps(int[] nums)
         {
             int n = nums.Length;
-            int res = 0;
             int[] dp = new int[n];
             Stack<int> stack = new Stack<int>();
             for (int i = n - 1; i >= 0; i--)
@@ -780,11 +779,10 @@ namespace LeetCodeAlgo
                 {
                     dp[i]++;
                     dp[i] = Math.Max(dp[i], dp[stack.Pop()]);
-                    res = Math.Max(res, dp[i]);
                 }
                 stack.Push(i);
             }
-            return res;
+            return dp.Max();
         }
 
         ///2290. Minimum Obstacle Removal to Reach Corner, #DP, #BFS

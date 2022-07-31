@@ -14,14 +14,14 @@ namespace LeetCodeAlgo
             Answer answer = new Answer();
             ///!!!*** read from string files
             //List<string> strMatLines = File.ReadLines("StringMatrix.txt").ToList();
-            List<string> strArrLines = File.ReadLines("StringArr.txt").ToList();
-            //List<string> intArrLines = File.ReadLines("IntArr.txt").ToList();
+            //List<string> strArrLines = File.ReadLines("StringArr.txt").ToList();
+            List<string> intArrLines = File.ReadLines("IntArr.txt").ToList();
             List<string> intMatLines = File.ReadLines("IntMatrix.txt").ToList();
 
             //var matStrLine0 = answer.buildStringMatrix(strMatLines[0]);//build string[][] from file
             //char[][] matCharLine0 = answer.buildCharMatrix(strMatLines[0]);//build char[][] from file due to leetcode using ""
-            string[] arrStrLine0 = answer.buildStringArray(strArrLines[0]);
-            string[] arrStrLine1 = answer.buildStringArray(strArrLines[1]);
+            //string[] arrStrLine0 = answer.buildStringArray(strArrLines[0]);
+            //string[] arrStrLine1 = answer.buildStringArray(strArrLines[1]);
             //char[] arrCharLine0 = answer.buildCharArray(strArrLines[0]);
 
             ///build ListNode, auto print
@@ -33,27 +33,26 @@ namespace LeetCodeAlgo
             //TreeNode treeNode1 = answer.deserializeTree(bTreeStr1);
 
             ///build int[][] and int[] from string
-            string matStrInt1 = " [[2,1],[2,2]]";
-            int[][] mat1 = answer.buildMatrix(matStrInt1);
+            //string matStrInt1 = " [[2,1],[2,2]]";
+            //int[][] mat1 = answer.buildMatrix(matStrInt1);
             //string matStrInt2 = "[[1,3,1,15],[1,3,3,1]]";
             //int[][] mat2 = answer.buildMatrix(matStrInt2);
-            string arrStrInt1 = " [-1,7,15,15,-1,4,16,2,16,7,11,6,10,4,9,1,14,-1]";
-
+            string arrStrInt1 = "[1,2,3,2]";
             int[] arr1 = answer.buildArray(arrStrInt1);
             string arrStrInt2 = "[8,2,6,10]";
             int[] arr2 = answer.buildArray(arrStrInt2);
 
             ///build int[][] and int[] from file
-            int[][] matIntLine0 = answer.buildMatrix(intMatLines[0]);
+            //int[][] matIntLine0 = answer.buildMatrix(intMatLines[0]);
             //int[][] matIntLine1 = answer.buildMatrix(intMatLines[1]);
-            //int[] arrIntLine0 = answer.buildArray(intArrLines[0]);
+            int[] arrIntLine0 = answer.buildArray(intArrLines[0]);
             //int[] arrIntLine1 = answer.buildArray(intArrLines[1]);
 
             Console.WriteLine("**************start watch ms*******");
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.ClosestMeetingNode(arr1,1,6);
+            var result = answer.MaxSumMinProduct(arrIntLine0);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
