@@ -69,5 +69,37 @@ namespace LeetCodeAlgo
             }
             return left;
         }
+
+        ///2360. Longest Cycle in a Graph, #Graph, #Good
+        // a directed graph of n nodes numbered from 0 to n - 1, where each node has at most one outgoing edge.
+        //edges of size n, indicating that there is a directed edge from node i to node edges[i].
+        //If there is no outgoing edge from node i, then edges[i] == -1
+        //Return the length of the longest cycle in the graph. If no cycle exists, return -1.
+        public int LongestCycle(int[] edges)
+        {
+            int res = -1;
+            HashSet<int> visit = new HashSet<int>();// global visisted
+            for (int i = 0; i < edges.Length; i++)
+            {
+                if (visit.Contains(i)) continue;//if visited,skip
+                int distance = 0;
+                int idx = i;
+                Dictionary<int, int> dict = new Dictionary<int, int>();// local visited
+                while (idx != -1)//if idx==-1, not a cycle
+                {
+                    if (dict.ContainsKey(idx))
+                    {
+                        res = Math.Max(res, distance - dict[idx]);//cycle found
+                        break;
+                    }
+                    if (visit.Contains(idx)) break;//if visited, skip
+                    visit.Add(idx);
+                    dict.Add(idx, distance++);//store {idx,distacne}, from i to idx
+                    idx = edges[idx];
+                }
+            }
+            return res;
+        }
+
     }
 }
