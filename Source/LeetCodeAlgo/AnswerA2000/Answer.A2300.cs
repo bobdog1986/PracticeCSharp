@@ -873,100 +873,87 @@ namespace LeetCodeAlgo
             return i == n && j == n;
         }
 
-        ///2338. Count the Number of Ideal Arrays, #DP, not pass
-        public int IdealArrays_TLE(int n, int maxValue)
-        {
-            int mod = 1_000_000_007;
-            int[][] dp = new int[n][];
-            for(int i = 0; i < n; i++)
-                dp[i]=new int[maxValue+1];
-            Array.Fill(dp[0], 1);
-            for(int i = 0; i < n-1; i++)
-            {
-                for(int j = 1; j <= maxValue; j++)
-                {
-                    if (dp[i][j] == 0) continue;
-                    int x=j;
-                    while(x <= maxValue)
-                    {
-                        dp[i + 1][x] = (dp[i + 1][x] + dp[i][j]) % mod;
-                        x+=j;
-                    }
-                }
-            }
-            int res = 0;
-            for (int i = 1; i <= maxValue; i++)
-                res = (res + dp[n - 1][i]) % mod;
-            return res;
-        }
-
+        ///2338. Count the Number of Ideal Arrays, #DP
+        //You are given two integers n and maxValue, which are used to describe an ideal array.
+        //A 0-indexed integer array arr of length n is considered ideal if the following conditions hold:
+        //Every arr[i] is a value from 1 to maxValue, for 0 <= i<n.
+        //Every arr[i] is divisible by arr[i - 1], for 0 < i<n.
+        //Return the number of distinct ideal arrays of length n.return it modulo 109 + 7.
         public int IdealArrays(int n, int maxValue)
         {
             long mod = 1_000_000_007;
             long res = 0;
-            //find all strictly increasing array that last element <= max
-            long[][] dp = new long[15][];
-            for(int i = 0; i < dp.Length; i++)
-            {
-                dp[i] = new long[maxValue+1];
-            }
+            long[][] dp = new long[15][];//find all strictly increasing arrays that last element <= maxValue
+            for (int i = 0; i < dp.Length; i++)
+                dp[i] = new long[maxValue + 1];
             Array.Fill(dp[1], 1);
-            dp[1][0] = 0;
-            int endIndex = maxValue;
-            for(int i = 1; i < dp.Length-1; i++)
+            //dp[i][j] means an strictly increasing array with i length and lastElement = j, (aka max =j )
+            for (int i = 1; i < dp.Length - 1; i++)
             {
-                int zeros = 0;
-                for(int j = 1; j <= maxValue; j++)
+                for (int j = 1; j <= maxValue; j++)
                 {
-                    if (dp[i][j] == 0)
-                    {
-                        zeros++;
-                        continue;
-                    }
+                    if (dp[i][j] == 0) continue;
                     int k = 2;
-                    while(k*j <= maxValue)
+                    while (k * j <= maxValue)
                     {
                         dp[i + 1][k * j] = (dp[i + 1][k * j] + dp[i][j]) % mod;
                         k++;
                     }
                 }
-                if(zeros == maxValue)
-                {
-                    endIndex = i;
-                    break;
-                }
             }
-            //create table that
-            //arr is x len, sort asc strictly, insert arr[i] to i+1 index to make arr n len
-            long[][] memo = new long[n+1][];
-            for (int i = 0; i <= n; i++)
-                memo[i] = new long[n + 1];
-            Array.Fill(memo[1], 1);
-            for(int i = 2; i <= n; i++)
+            //testcase 38 (9557,9767) bottom-up query table will OUT OF MEMORY on leetcode but works well in local
+            //create query table, ways to insert n-m element to strictly asc arr(m-length), make it non-desc as n-length
+            //long[][] memo = new long[n+1][];
+            //for (int i = 0; i <= n; i++)
+            //    memo[i] = new long[n + 1];
+            //Array.Fill(memo[1], 1);
+            //for(int i = 2; i <= n; i++)
+            //{
+            //    memo[i][i] = 1;
+            //    for(int j = i + 1; j <= n; j++)
+            //    {
+            //        memo[i][j] = (memo[i][j - 1] + memo[i - 1][j - 1])% mod;
+            //    }
+            //}
+            //bottom-up query table will OUT OF MEMORY,so we using top-down memoization
+            var memo = new Dictionary<int, long>();//using m*10000+n as query key
+            for (int i = 1; i < dp.Length && i <= n; i++)
             {
-                for(int j = i+1; j <= n; j++)
-                {
-                    for(int k = 1; k < i; k++)
-                    {
-                        for(int x = 0; x + i < n; x++)
-                        {
-                            memo[i][j] = (memo[i][j] + memo[i-k][j-k-x]) % mod;
-                        }
-                    }
-                }
-            }
-
-            for (int i = 1; i < dp.Length && i< endIndex; i++)
-            {
-                for(int j=1;j<endIndex && j<= maxValue; j++)
+                for (int j = 1; j <= maxValue; j++)
                 {
                     if (dp[i][j] == 0) continue;
-                    res = (res + dp[i][j] * memo[i][n]) % mod;
+                    res = (res + dp[i][j] * IdealArrays_GetCount(i, n, memo)) % mod;
                 }
             }
             return (int)res;
         }
 
+        private long IdealArrays_GetCount(int i, int n, Dictionary<int, long> dict)
+        {
+            if (i == 1) return 1;//special case
+            if (i == n) return 1;//special case
+            if (i > n) return 0;//never happen
+            long mod = 1_000_000_007;
+            if (dict.ContainsKey(i * 10000 + n))
+            {
+                return dict[i * 10000 + n];
+            }
+            else
+            {
+                //eg. for a 6 x 6 query table, memo[i][j] = memo[i][j - 1] + memo[i - 1][j - 1]
+                //     |  1  |  2  |  3  |  4  |  5  |  6  |
+                //  1  |  1  |  1  |  1  |  1  |  1  |  1  |
+                //  2  |  x  |  1  |  2  |  3  |  4  |  5  |
+                //  3  |  x  |  x  |  1  |  3  |  6  |  10 |
+                //  4  |  x  |  x  |  x  |  1  |  4  |  10 |
+                //  5  |  x  |  x  |  x  |  x  |  1  |  5  |
+                //  6  |  x  |  x  |  x  |  x  |  x  |  1  |
+                long res = IdealArrays_GetCount(i, n - 1, dict) + IdealArrays_GetCount(i - 1, n - 1, dict);
+                res = res % mod;
+                dict.Add(i * 10000 + n, res);
+                return res;
+            }
+        }
 
         ///2341. Maximum Number of Pairs in Array, in Easy
 
