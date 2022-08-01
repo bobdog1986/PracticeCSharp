@@ -469,6 +469,82 @@ namespace LeetCodeAlgo
             return Math.Max(sum2 + max1, sum1 + max2);
         }
 
+        ///2322. Minimum Score After Removals on a Tree, #Graph, #DFS, #HashMap
+        //There is an undirected connected tree with n nodes labeled from 0 to n - 1 and n - 1 edges.
+        //Remove two distinct edges of the tree to form three connected components.
+        // - Get the XOR of all the values of the nodes for each of the three components respectively.
+        // - The difference between the largest XOR value and the smallest XOR value is the score of the pair.
+        //Return the minimum score of any possible pair of edge removals on the given tree.
+        public int MinimumScore(int[] nums, int[][] edges)
+        {
+            int res = int.MaxValue;
+            int n = nums.Length;
+            List<int>[] graph = new List<int>[n];
+            for (int i = 0; i < n; i++)
+                graph[i] = new List<int>();
+            foreach(var e in edges)
+            {
+                graph[e[0]].Add(e[1]);
+                graph[e[1]].Add(e[0]);
+            }
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            Dictionary<int, HashSet<int>> map = new Dictionary<int, HashSet<int>>();
+            MinimumScore_DFS(nums, 0, -1, graph, dict, map);
+            for(int i = 0; i <edges.Length-1; i++)
+            {
+                int[] edge1 = edges[i];
+                int p = map[edge1[0]].Contains(edge1[1]) ? edge1[1] : edge1[0];
+                for (int j = i + 1; j < edges.Length; j++)
+                {
+                    int[] edge2= edges[j];
+                    int q = map[edge2[0]].Contains(edge2[1]) ? edge2[1] : edge2[0];
+                    int a=0, b=0, c=0;
+                    //3 parts, start at 0, p and q,
+                    //because p,q always select childs, so 0 will never be p/q
+                    if (map[p].Contains(q))
+                    {
+                        a = dict[q];
+                        b = dict[p] ^ dict[q];
+                        c = dict[0] ^ dict[p];
+                    }
+                    else if (map[q].Contains(p))
+                    {
+                        a = dict[p];
+                        b = dict[q] ^ dict[p];
+                        c = dict[0] ^ dict[q];
+                    }
+                    else
+                    {
+                        a= dict[p];
+                        b = dict[q];
+                        c = dict[0] ^ dict[q] ^ dict[p];
+                    }
+                    int max = Math.Max(a, Math.Max(b, c));
+                    int min = Math.Min(a, Math.Min(b, c));
+                    res = Math.Min(res, max - min);
+                }
+            }
+            return res;
+        }
+
+        private int MinimumScore_DFS(int[] nums,int curr, int prev, List<int>[] graph, Dictionary<int, int> dict, Dictionary<int, HashSet<int>> map)
+        {
+            int res = nums[curr];
+            if (!map.ContainsKey(curr))
+                map.Add(curr, new HashSet<int>());
+            foreach (var i in graph[curr])
+            {
+                if (i == prev) continue;
+                int xor = MinimumScore_DFS(nums, i, curr, graph, dict, map);
+                res ^= xor;
+                foreach (var sub in map[i])
+                    map[curr].Add(sub);
+                map[curr].Add(i);
+            }
+            dict.Add(curr, res);
+            return res;
+        }
+
         ///2325. Decode the Message, in Easy
 
         ///2326. Spiral Matrix IV
