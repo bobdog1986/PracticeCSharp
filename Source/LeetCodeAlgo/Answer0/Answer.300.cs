@@ -368,6 +368,32 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///313. Super Ugly Number, #PriorityQueue
+        //A super ugly number is a positive integer whose prime factors are in the array primes.
+        //Given an integer n and an array of integers primes, return the nth super ugly number.
+        //The nth super ugly number is guaranteed to fit in a 32-bit signed integer.
+        public int NthSuperUglyNumber(int n, int[] primes)
+        {
+            Array.Sort(primes);
+            PriorityQueue<int, int> pq = new PriorityQueue<int, int>();
+            pq.Enqueue(1, 1);
+            HashSet<int> visit = new HashSet<int>();
+            visit.Add(1);//must avoid duplicates
+            while (n-- > 1)
+            {
+                int top = pq.Dequeue();
+                foreach(var p in primes)
+                {
+                    if (top >= int.MaxValue / p) break;
+                    int next = p * top;
+                    if (visit.Contains(next)) continue;
+                    visit.Add(next);
+                    pq.Enqueue(next, next);
+                }
+            }
+            return pq.Peek();
+        }
+
         /// 315. Count of Smaller Numbers After Self - #Merge Sort
         ///You are given an integer array nums and you have to return a new counts array.
         ///The counts array has the property where counts[i] is the number of smaller elements to the right of nums[i].

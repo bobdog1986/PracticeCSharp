@@ -8,6 +8,7 @@ namespace LeetCodeAlgo.Easy
 {
     public partial class Easy
     {
+        /*
         ///504. Base 7
         ///Given an integer num, return a string of its base 7 representation.
         public string ConvertToBase7(int num)
@@ -56,9 +57,6 @@ namespace LeetCodeAlgo.Easy
             return sb.ToString();
         }
 
-
-
-
         ///951. Flip Equivalent Binary Trees, #BTree
         public bool FlipEquiv(TreeNode root1, TreeNode root2)
         {
@@ -71,5 +69,6 @@ namespace LeetCodeAlgo.Easy
                     || (FlipEquiv(root1.left, root2.right) && FlipEquiv(root1.right, root2.left));
             }
         }
+        */
     }
 }

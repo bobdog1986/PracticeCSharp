@@ -8,9 +8,144 @@ namespace LeetCodeAlgo.Easy
 {
     public partial class Easy
     {
+        /*
+        /// 1. Two Sum
+        // return indices of the two numbers such that they add up to target.
+        public int[] TwoSum(int[] nums, int target)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (dict.ContainsKey(target - nums[i]))
+                    return new int[2] { dict[target - nums[i]], i };
+                if (!dict.ContainsKey(nums[i]))
+                    dict.Add(nums[i], i);
+            }
+            return new int[2];
+        }
 
+        ///2. Add Two Numbers
+        //Add the two numbers and return the sum as a linked list.
+        //Input: l1 = [2,4,3], l2 = [5,6,4], Output: [7,0,8] ,Explanation: 342 + 465 = 807.
+        public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
+        {
+            ListNode root = new ListNode();
+            var curr = root;
+            int carry = 0;
+            while (l1 != null || l2 != null)
+            {
+                int a = l1 == null ? 0 : l1.val;
+                int b = l2 == null ? 0 : l2.val;
+                int c = a + b + carry;
+                curr.val = c % 10;
+                carry = c / 10;
+                if (l1 != null) l1 = l1.next;
+                if (l2 != null) l2 = l2.next;
+                if (l1 != null || l2 != null)
+                {
+                    curr.next = new ListNode();
+                    curr = curr.next;
+                }
+            }
+            if (carry != 0)
+                curr.next = new ListNode(carry);
+            return root;
+        }
 
+        ///4. Median of Two Sorted Arrays, #Two Pointers
+        //Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
+        //The overall run time complexity should be O(log (m+n)).
+        public double FindMedianSortedArrays(int[] nums1, int[] nums2)
+        {
+            int n1 = nums1.Length, n2 = nums2.Length, n = n1 + n2;
+            if (n1 == 0 && n2 == 0) return 0;
+            int i = 0, j = 0;
+            int[] nums = new int[n];
+            while (i + j < n)
+            {
+                if (i == n1)
+                    nums[i + j] = nums2[j++];
+                else if (j == n2)
+                    nums[i + j] = nums1[i++];
+                else
+                {
+                    if (nums1[i] <= nums2[j])
+                        nums[i + j] = nums1[i++];
+                    else
+                        nums[i + j] = nums2[j++];
+                }
+            }
+            if (n % 2 == 0)
+                return (nums[n / 2 - 1] + nums[n / 2]) / 2.0;
+            else
+                return nums[n / 2];
+        }
 
+        ///6. Zigzag Conversion
+        ///Zigzag is Z line, row=3
+        ///A     A     A
+        ///A  A  A  A  A
+        ///A     A
+        public string Convert_6_ZigZag(string s, int numRows)
+        {
+            if (s.Length <= numRows || numRows == 1)
+                return s;
+            int zagLen = numRows + (numRows - 2);
+            int zagColCount = 1 + (numRows - 2);
+            int zagCount = s.Length / zagLen;
+            if (s.Length % zagLen != 0) zagCount++;
+
+            char[][] mat = new char[numRows][];
+            for (int i = 0; i < mat.Length; i++)
+            {
+                mat[i] = new char[zagCount * zagLen];
+            }
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                int zagIndex = i / zagLen;
+                int zagModulo = i % zagLen;
+
+                int c = zagIndex * zagColCount;
+                if (zagModulo == 0) { }
+                else if (zagModulo < numRows) { }
+                else { c += zagModulo - numRows + 1; }
+
+                int r = 0;
+                if (zagModulo == 0) { }
+                else if (zagModulo < numRows) { r = zagModulo; }
+                else { r = numRows - 1 - (zagModulo - numRows + 1); }
+
+                mat[r][c] = s[i];
+            }
+
+            List<char> list = new List<char>();
+            foreach (var r in mat)
+            {
+                foreach (var a in r)
+                {
+                    if ((byte)a != 0)
+                        list.Add(a);
+                }
+            }
+            return new string(list.ToArray());
+        }
+
+        ///14. Longest Common Prefix
+        /// Input: strs = ["flower","flow","flight"]
+        /// Output: "fl"
+        /// 1 <= strs.length <= 200, 0 <= strs[i].length <= 200
+        public string LongestCommonPrefix(string[] strs)
+        {
+            strs = strs.OrderBy(x => x.Length).ToArray();
+            int i = 0;
+            for (; i < strs[0].Length; i++)
+            {
+                if (strs.Any(x => x[i] != strs[0][i]))
+                    break;
+            }
+            return strs[0].Substring(0, i);
+        }
 
         ///58. Length of Last Word
         public int LengthOfLastWord(string s)
@@ -671,5 +806,6 @@ namespace LeetCodeAlgo.Easy
             }
             return max;
         }
+        */
     }
 }

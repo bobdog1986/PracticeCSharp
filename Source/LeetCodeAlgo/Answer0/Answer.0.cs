@@ -9,47 +9,8 @@ namespace LeetCodeAlgo
     public partial class Answer
     {
         /// 1. Two Sum
-        // return indices of the two numbers such that they add up to target.
-        public int[] TwoSum(int[] nums, int target)
-        {
-            Dictionary<int, int> dict = new Dictionary<int, int>();
-            for (int i = 0; i < nums.Length; i++)
-            {
-                if (dict.ContainsKey(target - nums[i]))
-                    return new int[2] { dict[target - nums[i]], i };
-                if (!dict.ContainsKey(nums[i]))
-                    dict.Add(nums[i], i);
-            }
-            return new int[2];
-        }
 
         ///2. Add Two Numbers
-        //Add the two numbers and return the sum as a linked list.
-        //Input: l1 = [2,4,3], l2 = [5,6,4], Output: [7,0,8] ,Explanation: 342 + 465 = 807.
-        public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
-        {
-            ListNode root = new ListNode();
-            var curr = root;
-            int carry = 0;
-            while (l1 != null || l2 != null)
-            {
-                int a = l1 == null ? 0 : l1.val;
-                int b = l2 == null ? 0 : l2.val;
-                int c = a + b + carry;
-                curr.val = c % 10;
-                carry = c / 10;
-                if (l1 != null) l1 = l1.next;
-                if (l2 != null) l2 = l2.next;
-                if (l1 != null || l2 != null)
-                {
-                    curr.next = new ListNode();
-                    curr = curr.next;
-                }
-            }
-            if (carry != 0)
-                curr.next = new ListNode(carry);
-            return root;
-        }
 
         /// 3. Longest Substring Without Repeating Characters, #Sliding Window
         /// Given a string s, find the length of the longest substring without repeating characters.
@@ -74,33 +35,6 @@ namespace LeetCodeAlgo
         }
 
         ///4. Median of Two Sorted Arrays, #Two Pointers
-        //Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
-        //The overall run time complexity should be O(log (m+n)).
-        public double FindMedianSortedArrays(int[] nums1, int[] nums2)
-        {
-            int n1 = nums1.Length, n2 = nums2.Length, n = n1 + n2;
-            if (n1 == 0 && n2 == 0) return 0;
-            int i = 0, j = 0;
-            int[] nums = new int[n];
-            while (i + j < n)
-            {
-                if (i == n1)
-                    nums[i + j] = nums2[j++];
-                else if (j == n2)
-                    nums[i + j] = nums1[i++];
-                else
-                {
-                    if (nums1[i] <= nums2[j])
-                        nums[i + j] = nums1[i++];
-                    else
-                        nums[i + j] = nums2[j++];
-                }
-            }
-            if (n % 2 == 0)
-                return (nums[n / 2 - 1] + nums[n / 2]) / 2.0;
-            else
-                return nums[n / 2];
-        }
 
         ///5. Longest Palindromic Substring
         //Given a string s, return the longest palindromic substring in s.
@@ -161,54 +95,6 @@ namespace LeetCodeAlgo
         }
 
         ///6. Zigzag Conversion
-        ///Zigzag is Z line, row=3
-        ///A     A     A
-        ///A  A  A  A  A
-        ///A     A
-        public string Convert_6_ZigZag(string s, int numRows)
-        {
-            if (s.Length <= numRows || numRows == 1)
-                return s;
-            int zagLen = numRows + (numRows - 2);
-            int zagColCount = 1 + (numRows - 2);
-            int zagCount = s.Length / zagLen;
-            if (s.Length % zagLen != 0) zagCount++;
-
-            char[][] mat = new char[numRows][];
-            for (int i = 0; i < mat.Length; i++)
-            {
-                mat[i] = new char[zagCount * zagLen];
-            }
-
-            for (int i = 0; i < s.Length; i++)
-            {
-                int zagIndex = i / zagLen;
-                int zagModulo = i % zagLen;
-
-                int c = zagIndex * zagColCount;
-                if (zagModulo == 0) { }
-                else if (zagModulo < numRows) { }
-                else { c += zagModulo - numRows + 1; }
-
-                int r = 0;
-                if (zagModulo == 0) { }
-                else if (zagModulo < numRows) { r = zagModulo; }
-                else { r = numRows - 1 - (zagModulo - numRows + 1); }
-
-                mat[r][c] = s[i];
-            }
-
-            List<char> list = new List<char>();
-            foreach (var r in mat)
-            {
-                foreach (var a in r)
-                {
-                    if ((byte)a != 0)
-                        list.Add(a);
-                }
-            }
-            return new string(list.ToArray());
-        }
 
         ///7. Reverse Integer
         ///Given a signed 32-bit integer x, return x with its digits reversed.
@@ -227,6 +113,8 @@ namespace LeetCodeAlgo
                 if (res > (int.MaxValue / 10))
                     return 0;
                 res *= 10;
+                if (int.MaxValue - x % 10 < res)
+                    return 0;
                 res += x % 10;
                 x = x / 10;
             }
@@ -239,55 +127,53 @@ namespace LeetCodeAlgo
         public int MyAtoi(string s)
         {
             s = s.Trim();
-            int? sign = null;
-            int ans = 0;
-            bool valid = false;
+            int sign = 0;
+            int res = 0;
+            bool anyDigit = false;
             bool isOverFlow = false;
             for (int i = 0; i < s.Length; i++)
             {
                 if (char.IsDigit(s[i]))
                 {
-                    if (isOverFlow)
-                        continue;
-
-                    if (!valid)
-                        valid = true;
+                    anyDigit = true;
+                    if (isOverFlow) continue;
                     int d = (s[i] - '0');
-
                     if (sign == -1)
                     {
-                        if (ans > int.MaxValue / 10 || int.MinValue + ans * 10 > -d)
+                        if (res > int.MaxValue / 10 || int.MinValue + res * 10 > -d)
                             isOverFlow = true;
                     }
                     else
                     {
-                        if (ans > int.MaxValue / 10 || int.MaxValue - ans * 10 < d)
+                        if (res > int.MaxValue / 10 || int.MaxValue - res * 10 < d)
                             isOverFlow = true;
                     }
-                    ans = ans * 10 + d;
+                    if (!isOverFlow)
+                        res = res * 10 + d;
+                    else
+                        break;
                 }
                 else
                 {
-                    if (valid)
-                        break;
-                    if (s[i] == '+' && sign == null)
+                    if (anyDigit) break;
+                    if (sign == 0)
                     {
-                        sign = 1;
-                    }
-                    else if (s[i] == '-' && sign == null)
-                    {
-                        sign = -1;
+                        if (s[i] == '+')
+                            sign = 1;
+                        else if (s[i] == '-')
+                            sign = -1;
+                        else
+                            return 0;
                     }
                     else
-                    {
                         return 0;
-                    }
                 }
             }
-
-            return !valid ? 0
-                        : sign == -1 ? (isOverFlow ? int.MinValue : -ans)
-                                    : (isOverFlow ? int.MaxValue : ans);
+            if (!anyDigit) return 0;
+            else if (isOverFlow)
+                return sign == -1 ? int.MinValue : int.MaxValue;
+            else
+                return sign == -1 ? -res : res;
         }
 
         ///9. Palindrome Number
@@ -306,7 +192,6 @@ namespace LeetCodeAlgo
                 digits.Add(n % 10);
                 n = n / 10;
             }
-
             for (int i = 0; i < digits.Count / 2; i++)
             {
                 if (digits[i] != digits[digits.Count - 1 - i])
@@ -391,54 +276,25 @@ namespace LeetCodeAlgo
             int right = height.Length - 1;
             while (left < right)
             {
-                if (height[left] == 0)
-                {
+                while (height[left] == 0 && left<right)
                     left++;
-                    continue;
-                }
-                if (height[right] == 0)
-                {
+                while (height[right] == 0 && left<right)
                     right--;
-                    continue;
-                }
-                if (height[left] <= height[right])
+                if (left < right)
                 {
-                    max = Math.Max(max, (right - left) * height[left]);
-                    left++;
-                }
-                else
-                {
-                    max = Math.Max(max, (right - left) * height[right]);
-                    right--;
-                }
-            }
-            return max;
-        }
-
-        public int MaxArea_HeadToEnd(int[] height)
-        {
-            int max = 0;
-            int maxEnd = 0;
-            int maxHeight = 0;
-            for (int i = 0; i < height.Length - 1; i++)
-            {
-                if (height[i] == 0)
-                    continue;
-                if (height[i] * (height.Length - 1 - i + 1) <= max)
-                    continue;
-                for (int j = i + 1; j < height.Length; j++)
-                {
-                    if (height[j] == 0)
-                        continue;
-                    if (j <= maxEnd && height[j] <= maxHeight)
-                        continue;
-                    var h = Math.Min(height[i], height[j]);
-                    var a = (j - i) * h;
-                    if (a > max)
+                    max = Math.Max(max, (right - left) * Math.Min(height[left], height[right]));
+                    if (height[left] < height[right])
                     {
-                        max = a;
-                        maxEnd = j;
-                        maxHeight = h;
+                        left++;
+                    }
+                    else if(height[left] > height[right])
+                    {
+                        right--;
+                    }
+                    else// if equal
+                    {
+                        left++;
+                        right--;
                     }
                 }
             }
@@ -511,51 +367,88 @@ namespace LeetCodeAlgo
         }
 
         ///14. Longest Common Prefix
-        /// Input: strs = ["flower","flow","flight"]
-        /// Output: "fl"
-        /// 1 <= strs.length <= 200, 0 <= strs[i].length <= 200
-        public string LongestCommonPrefix(string[] strs)
-        {
-            strs = strs.OrderBy(x => x.Length).ToArray();
-            int i = 0;
-            for (; i < strs[0].Length; i++)
-            {
-                if (strs.Any(x => x[i] != strs[0][i]))
-                    break;
-            }
-            return strs[0].Substring(0, i);
-        }
 
-        ///15. 3Sum, #Two Pointer
-        ///nums[i] + nums[j] + nums[k] == 0. no duplicate values
+        ///15. 3Sum, #Two Pointer, #BinarySearch
+        ///nums[i] + nums[j] + nums[k] == 0. no same triplets
         ///0 <= nums.length <= 3000, -10^5 <= nums[i] <= 10^5
         public IList<IList<int>> ThreeSum(int[] nums)
         {
+            //using binary search
             Array.Sort(nums);
-            var ans = new List<IList<int>>();
-            for (int i = 0; i < nums.Length - 2; i++)
+            int n = nums.Length;
+            List<IList<int>> res = new List<IList<int>>();
+
+            int prev = int.MinValue;
+            for(int i = 0; i < n-2; i++)
             {
-                if (i == 0 || (i > 0 && nums[i] != nums[i - 1]))
+                if (nums[i] + nums[i + 1] + nums[i + 2] > 0) break;//min is overflow
+                if (nums[i] == prev) continue;//skip duplicate
+                if (nums[i] + nums[n-1] + nums[n-2] < 0) continue;//max is underflow
+                for (int j = i + 1; j < n - 1; j++)
                 {
-                    int left = i + 1;
-                    int right = nums.Length - 1;
-                    int sum = 0 - nums[i];
+                    if (j > i + 1 && nums[j] == nums[j - 1]) continue;//skip duplicate
+                    if (nums[i] + nums[j] + nums[j + 1] > 0) break;//min is overflow
+                    if (nums[i] + nums[j] + nums[n-1] < 0) continue;//max is underflow
+                    int left = j + 1;
+                    int right = n - 1;
                     while (left < right)
                     {
-                        if (nums[left] + nums[right] == sum)
+                        int mid = (left + right) / 2;
+                        if (nums[i] + nums[j] + nums[mid] == 0)
                         {
-                            ans.Add(new List<int> { nums[i], nums[left], nums[right] });
-                            while (left < right && nums[left] == nums[left + 1]) left++;
-                            while (left < right && nums[right] == nums[right - 1]) right--;
+                            left = mid;
+                            break;
+                        }
+                        else if (nums[i] + nums[j] + nums[mid] > 0)
+                            right = mid - 1;
+                        else
+                            left = mid + 1;
+                    }
+                    if (nums[i] + nums[j] + nums[left] == 0)
+                        res.Add(new List<int>() { nums[i] , nums[j] , nums[left] });
+                }
+                prev = nums[i];
+            }
+            return res;
+        }
+
+        public IList<IList<int>> ThreeSum_TwoPointers(int[] nums)
+        {
+            Array.Sort(nums);
+            int n = nums.Length;
+            List<IList<int>> res = new List<IList<int>>();
+
+            int prev = int.MinValue;
+            for (int i = 0; i < n - 2; i++)
+            {
+                if (nums[i] == prev) continue;
+                int left = i + 1;
+                int right = n - 1;
+                while (left < right)
+                {
+                    while (left > i + 1 && left < right && nums[left] == nums[left - 1])
+                        left++;
+                    while (right < n - 1 && left < right && nums[right] == nums[right + 1])
+                        right--;
+
+                    if (left < right)
+                    {
+                        int sum = nums[i] + nums[left] + nums[right];
+                        if (sum == 0)
+                        {
+                            res.Add(new List<int> { nums[i], nums[left], nums[right] });
                             left++;
                             right--;
                         }
-                        else if (nums[left] + nums[right] < sum) left++;
-                        else right--;
+                        else if (sum > 0)
+                            right--;
+                        else
+                            left++;
                     }
                 }
+                prev = nums[i];
             }
-            return ans;
+            return res;
         }
 
         ///16. 3Sum Closest
@@ -565,7 +458,6 @@ namespace LeetCodeAlgo
         {
             int closestSum = nums[0] + nums[1] + nums[2];
             Array.Sort(nums);
-
             // Go through nums
             for (int i = 0; i < nums.Length - 2; i++)
             {
@@ -621,50 +513,49 @@ namespace LeetCodeAlgo
             return q.ToList();
         }
 
-        /// 18. 4Sum
+        /// 18. 4Sum, #Two Pointers
         ///Given an array nums of n integers, return an array of all the unique
         ///quadruplets [nums[a], nums[b], nums[c], nums[d]] sum to target
         ///Input: nums = [2,2,2,2,2], target = 8
         ///Output: [[2,2,2,2]]
         public IList<IList<int>> FourSum(int[] nums, int target)
         {
-            List<IList<int>> result = new List<IList<int>>();
-            int len = nums.Length;
+            List<IList<int>> res = new List<IList<int>>();
+            int n = nums.Length;
             Array.Sort(nums);
-            for (int i = 0; i < len - 3; i++)
+            for (int i = 0; i < n - 3; i++)
             {
-                if (i > 0 && nums[i] == nums[i - 1])
-                    continue;
-
-                for (int j = i + 1; j < len - 2; j++)
+                if (i > 0 && nums[i] == nums[i - 1]) continue;//skip all duplicates
+                for (int j = i + 1; j < n - 2; j++)
                 {
-                    if (j > i + 1 && nums[j] == nums[j - 1])
-                        continue;
-
-                    var sum = nums[i] + nums[j];
+                    if (j > i + 1 && nums[j] == nums[j - 1]) continue;//skip all duplicates
                     int left = j + 1;
-                    int right = len - 1;
+                    int right = n - 1;
                     while (left < right)
                     {
-                        var t = nums[left] + nums[right] + sum;
-                        if (t == target)
+                        while (left < right && left > j + 1 && nums[left] == nums[left - 1])
+                            left++;
+                        while (left < right && right <n-1 && nums[right] == nums[right + 1])
+                            right--;
+                        if (left < right)
                         {
-                            result.Add(new List<int> { nums[i], nums[j], nums[left], nums[right] });
-                            while (left < right && nums[left] == nums[left + 1])
+                            //convert to long, avoid overflow of int sum
+                            long sum = (long)nums[left] + nums[right] + nums[i] + nums[j];
+                            if (sum == target)
+                            {
+                                res.Add(new List<int> { nums[i], nums[j], nums[left], nums[right] });
                                 left++;
-                            while (left < right && nums[right] == nums[right - 1])
                                 right--;
-                            left++;
-                            right--;
+                            }
+                            else if (sum < target)
+                                left++;
+                            else
+                                right--;
                         }
-                        else if (t < target)
-                            left++;
-                        else
-                            right--;
                     }
                 }
             }
-            return result;
+            return res;
         }
 
         ///19. Remove Nth Node From End of List
@@ -695,7 +586,7 @@ namespace LeetCodeAlgo
         }
 
         ///20. Valid Parentheses
-        ///Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+        ///s containing just '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
         public bool IsValid(string s)
         {
             Stack<char> stack = new Stack<char>();
@@ -765,28 +656,6 @@ namespace LeetCodeAlgo
         ///22. Generate Parentheses, #Backtracking
         ///Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
         ///1 <= n <= 8, if n=3, return ["((()))","(()())","(())()","()(())","()()()"]
-        public List<string> GenerateParenthesis_Iteration(int n)
-        {
-            List<List<string>> res = new List<List<string>>();
-            res.Add(new List<string>() { "" });
-            for (int i = 1; i <= n; ++i)
-            {
-                List<string> list = new List<string>();
-                for (int j = 0; j < i; ++j)
-                {
-                    foreach (var first in res[j])
-                    {
-                        foreach (var second in res[i - 1 - j])
-                        {
-                            list.Add("(" + first + ")" + second);
-                        }
-                    }
-                }
-                res.Add(list);
-            }
-            return res.Last();
-        }
-
         public List<string> GenerateParenthesis(int n)
         {
             List<string> ans = new List<string>();
@@ -829,7 +698,7 @@ namespace LeetCodeAlgo
             return nodes.Aggregate((x, y) => MergeKLists_Merge2(x, y));
         }
 
-        public ListNode MergeKLists_Merge2(ListNode node1, ListNode node2)
+        private ListNode MergeKLists_Merge2(ListNode node1, ListNode node2)
         {
             while (node2 != null)
             {
@@ -984,25 +853,20 @@ namespace LeetCodeAlgo
             return begin;
         }
 
-        ///28. Implement strStr()
+        ///28. Implement strStr(), #KMP
         ///Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
         ///0 <= haystack.length, needle.length <= 5 * 10^4
         public int StrStr(string haystack, string needle)
         {
             for (int i = 0; i < haystack.Length - needle.Length + 1; i++)
             {
-                int j = 0;
-                while (j < needle.Length)
-                {
-                    if (needle[j] != haystack[i + j])
-                        break;
-                    j++;
-                }
-                if (j == needle.Length)
+                if (haystack.Substring(i, needle.Length) == needle)
                     return i;
             }
             return -1;
         }
+
+
 
         ///29. Divide Two Integers
         ///-2^31 <= dividend, divisor <= 2^31 - 1, divisor!=0

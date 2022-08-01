@@ -8,6 +8,7 @@ namespace LeetCodeAlgo.Easy
 {
     public partial class Easy
     {
+        /*
         ///1502. Can Make Arithmetic Progression From Sequence
         ///A sequence of numbers is an arithmetic progression if the difference between any two consecutive elements is same.
         public bool CanMakeArithmeticProgression(int[] arr)
@@ -44,5 +45,6 @@ namespace LeetCodeAlgo.Easy
                 arr[i]++;
             return arr.Sum(i => i * (i - 1) / 2);
         }
+        */
     }
 }

@@ -8,6 +8,7 @@ namespace LeetCodeAlgo.Easy
 {
     public partial class Easy
     {
+        /*
         ///1005. Maximize Sum Of Array After K Negations, #PriorityQueue
         public int LargestSumAfterKNegations(int[] nums, int k)
         {
@@ -24,5 +25,6 @@ namespace LeetCodeAlgo.Easy
                 sum += pq.Dequeue();
             return sum;
         }
+        */
     }
 }

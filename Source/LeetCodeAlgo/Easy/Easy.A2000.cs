@@ -8,6 +8,7 @@ namespace LeetCodeAlgo.Easy
 {
     public partial class Easy
     {
+        /*
         ///2200. Find All K-Distant Indices in an Array
         //A k-distant index is index i,j such that |i - j| <= k and nums[j] == key.
         //Return a list of all k-distant indices sorted in increasing order.
@@ -67,8 +68,6 @@ namespace LeetCodeAlgo.Easy
             }
             return nums[0];
         }
-
-
 
         /// 2255. Count Prefixes of a Given String
         public int CountPrefixes(string[] words, string s)
@@ -268,8 +267,6 @@ namespace LeetCodeAlgo.Easy
             return new string(message.Select(x => x == ' ' ? ' ' : (char)(dict[x] + 'a')).ToArray());
         }
 
-
-
         ///2341. Maximum Number of Pairs in Array
         public int[] NumberOfPairs(int[] nums)
         {
@@ -359,5 +356,6 @@ namespace LeetCodeAlgo.Easy
 
             return res;
         }
+        */
     }
 }
