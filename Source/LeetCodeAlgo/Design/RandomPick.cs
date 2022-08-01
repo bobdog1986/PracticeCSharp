@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Design
+namespace LeetCodeAlgo.Design.RandomPick
 {
     ///528. Random Pick with Weight, #Binary Search
     //w[i] describes the weight of the ith index.
@@ -12,12 +12,12 @@ namespace LeetCodeAlgo.Design
     //The probability of picking an index i is w[i] / sum(w).
     //For example, if w = [1, 3], the probability of picking index 0 is 1 / (1 + 3) = 0.25 (i.e., 25%),
     //and the probability of picking index 1 is 3 / (1 + 3) = 0.75 (i.e., 75%).
-    public class Solution_RandomPick
+    public class Solution
     {
         private readonly int[] weights;
-        private int sum = 0;
+        private readonly int sum = 0;
 
-        public Solution_RandomPick(int[] w)
+        public Solution(int[] w)
         {
             weights = new int[w.Length];
             for (int i = 0; i < w.Length; i++)
@@ -29,7 +29,7 @@ namespace LeetCodeAlgo.Design
 
         public int PickIndex()
         {
-            var random=new Random();
+            var random = new Random();
             var target = random.Next(sum);
             int left = 0;
             int right = weights.Length - 1;
@@ -50,7 +50,6 @@ namespace LeetCodeAlgo.Design
                 }
             }
             return left;
-
         }
     }
 }
