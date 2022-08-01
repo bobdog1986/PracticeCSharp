@@ -236,6 +236,46 @@ namespace LeetCodeAlgo
             return true;
         }
 
+        ///668. Kth Smallest Number in Multiplication Table, #Binary Search
+        //The multiplication table of size m x n is an integer matrix mat where mat[i][j] == i * j (1-indexed).
+        //m, n, and k, return the kth smallest element in the m x n multiplication table.
+        public int FindKthNumber(int m, int n, int k)
+        {
+            int left = 1;
+            int right = m * n;
+            while (left < right)
+            {
+                int count = 0;
+                int mid = (left + right) / 2;
+                for (int i = 1; i <= n; i++)
+                {
+                    if (i > mid)
+                        break;
+                    else if (i * m <= mid)
+                        count += m;
+                    else
+                    {
+                        int low = 1;
+                        int high = m;
+                        while (low < high)
+                        {
+                            int center = (low + high + 1) / 2;
+                            if (center * i > mid)
+                                high = center - 1;
+                            else
+                                low = center;
+                        }
+                        count += low;
+                    }
+                }
+                if (count >= k)
+                    right = mid;
+                else
+                    left = mid + 1;
+            }
+            return left;
+        }
+
         ///669. Trim a Binary Search Tree, #BTree, #BST
         ///Given the root of a binary search tree, trim the tree so that all elements in [low, high].
         public TreeNode TrimBST(TreeNode root, int low, int high)
