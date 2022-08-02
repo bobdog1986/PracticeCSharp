@@ -552,6 +552,30 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///115. Distinct Subsequences, #DP, #Good
+        //Given two strings s and t, return the number of distinct subsequences of s which equals t.
+        public int NumDistinct(string s, string t)
+        {
+            int m = t.Length;
+            int n = s.Length;
+            if (m > n) return 0;
+            int[][] dp = new int[m + 1][];
+            for (int i = 0; i < dp.Length; i++)
+                dp[i] = new int[n + 1];
+            Array.Fill(dp[0], 1);
+            for(int i = 0; i < m; i++)
+            {
+                for(int j = 0; j < n; j++)
+                {
+                    if (t[i] == s[j])
+                        dp[i + 1][j + 1] = dp[i][j] + dp[i + 1][j];
+                    else
+                        dp[i + 1][j + 1] = dp[i + 1][j];
+                }
+            }
+            return dp.Last().Last();
+        }
+
         /// 116. Populating Next Right Pointers in Each Node
         // You are given a perfect binary tree where all leaves are on the same level
         // Populate each next pointer to point to its next right node.

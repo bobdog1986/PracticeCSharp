@@ -51,7 +51,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.FindMinDifference(arrStrLine0.ToList());
+            var result = answer.NumDistinct("rabbbit","rabbit");
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
