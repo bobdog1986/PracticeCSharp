@@ -1270,84 +1270,50 @@ namespace LeetCodeAlgo
             return maxArea;
         }
 
-        //85. Maximal Rectangle
+        //85. Maximal Rectangle, #Monotonic Stack
         //matrix filled with 0's and 1's, find the largest rectangle containing only 1's and return its area.
         public int MaximalRectangle(char[][] matrix)
         {
             int res = 0;
-            int m=matrix.Length,n=matrix[0].Length;
-            int[][] leftZeros = new int[m][];
-            int[][] rightZeros = new int[m][];
+            int m = matrix.Length, n = matrix[0].Length;
+            int[][] leftZeros = new int[m][];//first '0' index on left side
             for (int i = 0; i < m; i++)
                 leftZeros[i] = new int[n];
             for (int i = 0; i < m; i++)
-                rightZeros[i] = new int[n];
-            for (int i = 0; i < m; i++)
             {
                 Stack<int> stack = new Stack<int>();
-                for(int j=0;j<n; j++)
-                {
-                    if(matrix[i][j] == '0')
-                    {
-                        leftZeros[i][j] = j;
-                        stack.Push(j);
-                    }
-                    else
-                    {
-                        while (stack.Count > 0 && matrix[i][stack.Peek()]=='1')
-                            stack.Pop();
-                        leftZeros[i][j] = stack.Count == 0 ? -1 : stack.Peek();
-                        stack.Push(j);
-                    }
-                }
-            }
-            for (int i = 0; i < m; i++)
-            {
-                Stack<int> stack = new Stack<int>();
-                for (int j = n-1; j >=0 ; j--)
+                for (int j = 0; j < n; j++)
                 {
                     if (matrix[i][j] == '0')
                     {
-                        rightZeros[i][j] = j;
-                        stack.Push(j);
+                        leftZeros[i][j] = j;
                     }
                     else
                     {
                         while (stack.Count > 0 && matrix[i][stack.Peek()] == '1')
                             stack.Pop();
-                        rightZeros[i][j] = stack.Count == 0 ? n : stack.Peek();
-                        stack.Push(j);
+                        leftZeros[i][j] = stack.Count == 0 ? -1 : stack.Peek();
                     }
+                    stack.Push(j);
                 }
             }
-            Console.WriteLine("LeftArr");
-            foreach(var r in leftZeros)
-                Console.WriteLine(string.Join(',',r));
-
-            Console.WriteLine("rightZeros");
-            foreach (var r in rightZeros)
-                Console.WriteLine(string.Join(',', r));
-
             for (int i = 0; i < m; i++)
             {
-                for(int j = 0; j < n; j++)
+                for (int j = 0; j < n; j++)
                 {
                     if (matrix[i][j] == '0') continue;
-                    int high = i+1;
-                    while (high < m && leftZeros[high][j] <= leftZeros[i][j] && rightZeros[high][j] >= rightZeros[i][j])
+                    int high = i + 1, low = i - 1;
+                    while (high < m && leftZeros[high][j] <= leftZeros[i][j])
                         high++;
-                    int low = i-1;
-                    while (low >=0 && leftZeros[low][j] <= leftZeros[i][j] && rightZeros[low][j] >= rightZeros[i][j])
+                    while (low >= 0 && leftZeros[low][j] <= leftZeros[i][j])
                         low--;
-                    int w = rightZeros[i][j] - 1 - (leftZeros[i][j] + 1) + 1;
-                    int h = high-(low+1);
-                    res = Math.Max(res, h * w);
+                    //width = (j - leftZeros[i][j]) , height = (high - low - 1);
+                    int area = (j - leftZeros[i][j]) * (high - low - 1);
+                    res = Math.Max(res, area);
                 }
             }
-
             return res;
         }
-
 
         ///86. Partition List
         ///all nodes less than x come before nodes greater than or equal to x.
