@@ -182,8 +182,60 @@ namespace LeetCodeAlgo
             return left;
         }
 
+        ///164. Maximum Gap, #Bucket Sort
+        //return the maximum gap between two successive elements in sorted form.
+        public int MaximumGap(int[] nums)
+        {
+            HashSet<int> set = new HashSet<int>();
+            int min = int.MaxValue;
+            int max = int.MinValue;
+            foreach (var i in nums)
+            {
+                set.Add(i);
+                min = Math.Min(min, i);
+                max = Math.Max(max, i);
+            }
+            int n = set.Count();
+            if (max - min + 1 <= n)
+                return max == min ? 0 : 1;
+            //bucket width, n bucket must cover [min, max] range
+            int width = (max - min) / (n - 1);
+            if ((max - min) % (n - 1) != 0)
+                width++;
+            int[] ceils = new int[n];
+            int[] floors = new int[n];
+            Array.Fill(ceils, -1);
+            Array.Fill(floors, -1);
+            foreach (var i in set)
+            {
+                int id = (i - min) / width;
+                int mod = (i - min) % width;
+                if (ceils[id] == -1)
+                {
+                    ceils[id] = mod;
+                    floors[id] = mod;
+                }
+                else
+                {
+                    ceils[id] = Math.Max(ceils[id], mod);
+                    floors[id] = Math.Min(floors[id], mod);
+                }
+            }
+            int res = 0;
+            int prevId = 0;
+            for (int i = 0; i < n; i++)
+            {
+                if (ceils[i] != -1)
+                {
+                    res = Math.Max(res, (i - prevId) * width + floors[i] - ceils[prevId]);
+                    prevId = i;
+                }
+            }
+            return res;
+        }
+
         ///165. Compare Version Numbers
-        ///If version1<version2, return -1. If version1 > version2, return 1. Otherwise, return 0.
+                 ///If version1<version2, return -1. If version1 > version2, return 1. Otherwise, return 0.
         public int CompareVersion(string version1, string version2)
         {
             var list1 = version1.Split('.').Select(x => int.Parse(x)).ToList();
