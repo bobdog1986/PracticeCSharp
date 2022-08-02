@@ -767,6 +767,45 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///330. Patching Array, TLE, NOT PASS
+        //Given a sorted integer array nums and an integer n,
+        //add/patch elements to the array that any number in [1, n] can be formed by sum of some elements in array.
+        //Return the minimum number of patches required.
+        //1 <= n <= 231 - 1
+        public int MinPatches(int[] nums, int n)
+        {
+            long res = 0;
+            HashSet<long> set = new HashSet<long>();
+            set.Add(0);
+            foreach(var i in nums)
+            {
+                int count = set.Count;
+                for(int j = 0; j < count; j++)
+                {
+                    long next = i + set.ElementAt(j);
+                    if (next <= n)
+                        set.Add(next);
+                }
+            }
+
+            for(int i = 1; i <= n; i++)
+            {
+                if (!set.Contains(i))
+                {
+                    res++;
+                    int count = set.Count;
+                    for (int j = 0; j < count; j++)
+                    {
+                        long next = i + set.ElementAt(j);
+                        if (next <= n)
+                            set.Add(next);
+                    }
+                }
+            }
+
+            return (int)res;
+        }
+
         /// 334. Increasing Triplet Subsequence, #Greedy
         ///using greedy to find i<j<k, nums[i]<nums[j]<nums[k]
         public bool IncreasingTriplet(int[] nums)

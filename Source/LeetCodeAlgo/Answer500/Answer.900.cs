@@ -55,6 +55,24 @@ namespace LeetCodeAlgo
             Array.Sort(nums);
             return nums;
         }
+
+        ///914. X of a Kind in a Deck of Cards
+        public bool HasGroupsSizeX(int[] deck)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach(var d in deck)
+            {
+                if (!dict.ContainsKey(d)) dict.Add(d, 0);
+                dict[d]++;
+            }
+            for(int x = 2; x <= deck.Length; x++)
+            {
+                if (deck.Length % x == 0 && !dict.Keys.Any(k => dict[k] % x != 0))
+                    return true;
+            }
+            return false;
+        }
+
         ///916. Word Subsets
         //A string b is a subset of string a if every letter in b occurs in a including multiplicity.
         //A string a from words1 is universal if for every string b in words2, b is a subset of a.

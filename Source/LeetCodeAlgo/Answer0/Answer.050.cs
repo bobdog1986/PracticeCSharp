@@ -1276,40 +1276,54 @@ namespace LeetCodeAlgo
         {
             int res = 0;
             int m = matrix.Length, n = matrix[0].Length;
-            int[][] leftZeros = new int[m][];//first '0' index on left side
+            int[][] upOnes = new int[m][];
             for (int i = 0; i < m; i++)
-                leftZeros[i] = new int[n];
-            for (int i = 0; i < m; i++)
+                upOnes[i] = new int[n];
+
+            for(int j = 0; j < n; j++)
             {
                 Stack<int> stack = new Stack<int>();
-                for (int j = 0; j < n; j++)
+                for(int i = 0; i < m; i++)
                 {
-                    if (matrix[i][j] == '0')
+                    if(matrix[i][j] == '0')
                     {
-                        leftZeros[i][j] = j;
+                        upOnes[i][j] = 0;
                     }
                     else
                     {
-                        while (stack.Count > 0 && matrix[i][stack.Peek()] == '1')
+                        while (stack.Count > 0 && matrix[stack.Peek()][j] == '1')
                             stack.Pop();
-                        leftZeros[i][j] = stack.Count == 0 ? -1 : stack.Peek();
+                        upOnes[i][j] = stack.Count == 0 ? i + 1:i-stack.Peek() ;
                     }
-                    stack.Push(j);
+                    stack.Push(i);
                 }
             }
-            for (int i = 0; i < m; i++)
+
+            for(int i = 0; i < m; i++)
             {
-                for (int j = 0; j < n; j++)
+                int[] leftArr = new int[n];
+                Stack<int> stack = new Stack<int>();
+                for(int j=0;j< n; j++)
                 {
-                    if (matrix[i][j] == '0') continue;
-                    int high = i + 1, low = i - 1;
-                    while (high < m && leftZeros[high][j] <= leftZeros[i][j])
-                        high++;
-                    while (low >= 0 && leftZeros[low][j] <= leftZeros[i][j])
-                        low--;
-                    //width = (j - leftZeros[i][j]) , height = (high - low - 1);
-                    int area = (j - leftZeros[i][j]) * (high - low - 1);
-                    res = Math.Max(res, area);
+                    while (stack.Count > 0 && upOnes[i][j] <= upOnes[i][stack.Peek()])
+                        stack.Pop();
+                    leftArr[j] = stack.Count == 0 ?-1:stack.Peek();
+                    stack.Push(j);
+                }
+
+                int[] rightArr = new int[n];
+                stack = new Stack<int>();
+                for (int j = n-1; j >=0; j--)
+                {
+                    while (stack.Count > 0 && upOnes[i][j] <= upOnes[i][stack.Peek()])
+                        stack.Pop();
+                    rightArr[j] = stack.Count == 0 ? n : stack.Peek();
+                    stack.Push(j);
+                }
+
+                for(int j = 0; j < n; j++)
+                {
+                    res=Math.Max(res, (rightArr[j] - leftArr[j]- 1) * upOnes[i][j]);
                 }
             }
             return res;
