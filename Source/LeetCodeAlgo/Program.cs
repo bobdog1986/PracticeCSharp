@@ -13,14 +13,14 @@ namespace LeetCodeAlgo
             Console.WriteLine("Run\r\n****************************\r\n");
             Answer answer = new Answer();
             ///!!!*** read from string files
-            //List<string> strMatLines = File.ReadLines("StringMatrix.txt").ToList();
-            //List<string> strArrLines = File.ReadLines("StringArr.txt").ToList();
+            List<string> strMatLines = File.ReadLines("StringMatrix.txt").ToList();
+            List<string> strArrLines = File.ReadLines("StringArr.txt").ToList();
             List<string> intArrLines = File.ReadLines("IntArr.txt").ToList();
             List<string> intMatLines = File.ReadLines("IntMatrix.txt").ToList();
 
             //var matStrLine0 = answer.buildStringMatrix(strMatLines[0]);//build string[][] from file
-            //char[][] matCharLine0 = answer.buildCharMatrix(strMatLines[0]);//build char[][] from file due to leetcode using ""
-            //string[] arrStrLine0 = answer.buildStringArray(strArrLines[0]);
+            char[][] matCharLine0 = answer.buildCharMatrix(strMatLines[0]);//build char[][] from file due to leetcode using ""
+            string[] arrStrLine0 = answer.buildStringArray(strArrLines[0]);
             //string[] arrStrLine1 = answer.buildStringArray(strArrLines[1]);
             //char[] arrCharLine0 = answer.buildCharArray(strArrLines[0]);
 
@@ -45,14 +45,13 @@ namespace LeetCodeAlgo
             ///build int[][] and int[] from file
             //int[][] matIntLine0 = answer.buildMatrix(intMatLines[0]);
             //int[][] matIntLine1 = answer.buildMatrix(intMatLines[1]);
-            int[] arrIntLine0 = answer.buildArray(intArrLines[0]);
             //int[] arrIntLine1 = answer.buildArray(intArrLines[1]);
 
             Console.WriteLine("**************start watch ms*******");
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.MinimumScore(arr1, mat1);
+            var result = answer.FindMinDifference(arrStrLine0.ToList());
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

@@ -581,6 +581,28 @@ namespace LeetCodeAlgo
             root.val = root.val + right;
             return left;
         }
+
+        ///539. Minimum Time Difference
+        //"HH:MM" format, return the minimum minutes difference between any two time-points in the list.
+        public int FindMinDifference(IList<string> timePoints)
+        {
+            var arr = timePoints.Select(
+                x =>
+                {
+                    var dt = DateTime.ParseExact(x, "HH:mm", null);
+                    return dt.Hour * 60 + dt.Minute;
+                }).OrderBy(x => x).ToArray();
+            int res = 24*60 + arr[0] - arr.Last();
+            int prev = -1;
+            foreach(var i in arr)
+            {
+                if (prev != -1)
+                    res = Math.Min(res, i - prev);
+                prev = i;
+            }
+            return res;
+        }
+
         ///540. Single Element in a Sorted Array, #Binary Search
         //only 1 num once, others twice, find it
         public int SingleNonDuplicate(int[] nums)
