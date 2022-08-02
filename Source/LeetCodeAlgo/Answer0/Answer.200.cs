@@ -614,10 +614,63 @@ namespace LeetCodeAlgo
             return len * len;
         }
 
-        ///222. Count Complete Tree Nodes, in Easy
+        ///222. Count Complete Tree Nodes
 
-        ///223. Rectangle Area, in Easy
+        ///223. Rectangle Area
 
+        ///224. Basic Calculator
+        //implement a basic calculator such as eval() to evaluate it, and return the result of the evaluation.
+        //s consists of digits, '+', '-', '(', ')', and ' '.
+        public int Calculate(string s)
+        {
+            int res = 0;
+            int val = 0;
+            Stack<int> stack = new Stack<int>();
+            int sign = 1;
+            foreach (var c in s)
+            {
+                if (c == ' ') continue;
+                if (char.IsDigit(c))
+                    val = val * 10 + c - '0';
+                else
+                {
+                    if (c == '(')
+                    {
+                        if (sign == 1) stack.Push(int.MaxValue);
+                        else stack.Push(int.MinValue);
+                        sign = 1;
+                        val = 0;
+                    }
+                    else
+                    {
+                        int curr = val * sign;
+                        while (stack.Count > 0 && stack.Peek() != int.MaxValue && stack.Peek() != int.MinValue)
+                            curr += stack.Pop();//merge all values in a same level
+                        if (c == ')')
+                        {
+                            int top = stack.Pop();
+                            if (top == int.MaxValue) stack.Push(curr);
+                            else if (top == int.MinValue) stack.Push(-curr);
+                        }
+                        else if (c == '+')
+                        {
+                            stack.Push(curr);
+                            sign = 1;
+                        }
+                        else if (c == '-')
+                        {
+                            stack.Push(curr);
+                            sign = -1;
+                        }
+                        val = 0;
+                    }
+                }
+            }
+            res = sign * val;
+            while (stack.Count > 0)
+                res += stack.Pop();
+            return res;
+        }
 
         /// 225. Implement Stack using Queues, see MyStack
 
@@ -649,7 +702,7 @@ namespace LeetCodeAlgo
         ///227. Basic Calculator II
         ///1 <= s.length <= 3 * 10^5,non-negative ints in the range [0, 2^31 - 1].
         ///s consists of ints and operators ('+', '-', '*', '/') separated by some number of spaces.
-        public int Calculate(string s)
+        public int Calculate2(string s)
         {
             Stack<int> stack = new Stack<int>();
             int num = 0;
