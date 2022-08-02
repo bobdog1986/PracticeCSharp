@@ -767,43 +767,32 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///330. Patching Array, TLE, NOT PASS
+        ///330. Patching Array, #Math, #Good
         //Given a sorted integer array nums and an integer n,
         //add/patch elements to the array that any number in [1, n] can be formed by sum of some elements in array.
         //Return the minimum number of patches required.
         //1 <= n <= 231 - 1
         public int MinPatches(int[] nums, int n)
         {
-            long res = 0;
-            HashSet<long> set = new HashSet<long>();
-            set.Add(0);
-            foreach(var i in nums)
+            //must be long to avoid int overflow
+            long miss = 1, added = 0, i = 0;
+            while (miss <= n)
             {
-                int count = set.Count;
-                for(int j = 0; j < count; j++)
+                if (i < nums.Length && nums[i] <= miss)
                 {
-                    long next = i + set.ElementAt(j);
-                    if (next <= n)
-                        set.Add(next);
+                    //range [0,miss-1] sum nums[i], next is miss+nums[i]
+                    //no need to add
+                    miss += nums[i++];
+                }
+                else
+                {
+                    //if no miss, after patch miss, range [0,miss-1] sum miss, [miss,2*miss-1] will all covered
+                    //then we try the next : 2*miss
+                    miss += miss;
+                    added++;
                 }
             }
-
-            for(int i = 1; i <= n; i++)
-            {
-                if (!set.Contains(i))
-                {
-                    res++;
-                    int count = set.Count;
-                    for (int j = 0; j < count; j++)
-                    {
-                        long next = i + set.ElementAt(j);
-                        if (next <= n)
-                            set.Add(next);
-                    }
-                }
-            }
-
-            return (int)res;
+            return (int)added;
         }
 
         /// 334. Increasing Triplet Subsequence, #Greedy
