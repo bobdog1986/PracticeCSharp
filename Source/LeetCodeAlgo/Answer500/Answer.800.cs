@@ -414,6 +414,85 @@ namespace LeetCodeAlgo
             });
             return string.Join(" ", words);
         }
+
+        ///825. Friends Of Appropriate Ages, #Binary Search, #HashMap
+        //only request to friend that : age[y] <= 0.5 * age[x] + 7 && age[y] > age[x]
+        public int NumFriendRequests(int[] ages)
+        {
+            Array.Sort(ages);
+            int res = 0;
+            int n = ages.Length;
+            for(int i = 0; i < n; i++)
+            {
+                int count = 0;
+                double young = 0.5 * ages[i] + 7;
+
+                if (i > 0 && ages[i-1]>young)
+                {
+                    int left = 0;
+                    int right = i - 1;
+                    while (left < right)
+                    {
+                        int mid = (left + right) / 2;
+                        if (ages[mid] > young)
+                        {
+                            right = mid;
+                        }
+                        else
+                        {
+                            left = mid + 1;
+                        }
+                    }
+                    count += i - 1 - left + 1;
+                }
+
+                if (i < n - 1 && ages[i + 1] <= ages[i] && ages[i + 1]>young)
+                {
+                    int left = i + 1;
+                    int right = n - 1;
+                    while (left < right)
+                    {
+                        int mid = (left + right+1) / 2;
+                        if (ages[mid] > ages[i])
+                        {
+                            right = mid-1;
+                        }
+                        else
+                        {
+                            left = mid;
+                        }
+                    }
+                    count += left-(i+1)+1;
+                }
+                res += count;
+            }
+            return res;
+        }
+
+        public int NumFriendRequests_HashMap(int[] ages)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach(var i in ages)
+            {
+                if (dict.ContainsKey(i)) dict[i]++;
+                else dict.Add(i, 1);
+            }
+
+            int res = 0;
+            foreach(var i in dict.Keys)
+            {
+                foreach(var j in dict.Keys)
+                {
+                    if(j>0.5*i+7 && j <= i)
+                    {
+                        if (i == j) res += dict[i] * (dict[j] - 1);
+                        else res += dict[i] * dict[j];
+                    }
+                }
+            }
+            return res;
+        }
+
         ///826. Most Profit Assigning Work, #Binary Search
         //worker[i]>=difficulty[j], then can take profit[j]
         public int MaxProfitAssignment(int[] difficulty, int[] profit, int[] worker)

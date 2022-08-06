@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Design
+namespace LeetCodeAlgo.Design.NumArray_307
 {
     ///307. Range Sum Query - Mutable, #Segment Tree
     ///Given an integer array nums, handle multiple queries of the following types:
     ///Update the value of an element in nums.
     ///Calculate the sum of the elements of nums between indices left and right inclusive where left <= right.
-    public class NumArray_307
+    public class NumArray
     {
         private readonly SegmentTree tree;
-        public NumArray_307(int[] nums)
+        public NumArray(int[] nums)
         {
             tree = new SegmentTree(nums);
         }
@@ -28,4 +28,6 @@ namespace LeetCodeAlgo.Design
             return (int)tree.SumRange(left, right);
         }
     }
+
+
 }

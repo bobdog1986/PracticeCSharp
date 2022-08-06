@@ -238,7 +238,7 @@ namespace LeetCodeAlgo
 
             //if it will cover the whole range of this node
             //reduce memory cost,eg a 2^10 big node only cost 1, but 2^10 nodes with 1 will cost 2^10
-            if (node.start ==left && node.end == right)
+            if (node.start == left && node.end == right)
             {
                 node.sum = right - left + 1;
                 return node.sum;
@@ -263,9 +263,40 @@ namespace LeetCodeAlgo
             return node.sum;
         }
 
-        public int Count()
+        public int Count(int left=int.MinValue,int right=int.MaxValue)
         {
-            return (int)root.sum;
+            if (left == int.MinValue)
+                return (int)countInternal(root, root.start, root.end);
+            else
+                return (int)countInternal(root, left, right);
+        }
+
+        private long countInternal(SegmentNode node, int left, int right)
+        {
+            if (node == null) return 0;
+            //all range of [start,end] already visited
+            if (node.sum == node.end - node.start + 1)
+                return right -left+1;
+            if (node.start == left && node.end == right)
+            {
+                return node.sum;
+            }
+            else
+            {
+                int mid = node.start + (node.end - node.start) / 2;
+                if (mid + 1 <= left)
+                {
+                    return countInternal(node.right, left, right);
+                }
+                else if (mid >= right)
+                {
+                    return countInternal(node.left, left, right);
+                }
+                else
+                {
+                    return countInternal(node.left, left, mid)+ countInternal(node.right, mid+1, right);
+                }
+            }
         }
     }
 
