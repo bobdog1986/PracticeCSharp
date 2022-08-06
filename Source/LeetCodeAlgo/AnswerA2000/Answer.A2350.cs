@@ -156,6 +156,25 @@ namespace LeetCodeAlgo
         }
 
         ///2363. Merge Similar Items
+        public IList<IList<int>> MergeSimilarItems(int[][] items1, int[][] items2)
+        {
+            var res = new List<IList<int>>();
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach (var i in items1)
+            {
+                if (dict.ContainsKey(i[0])) dict[i[0]] += i[1];
+                else dict.Add(i[0], i[1]);
+            }
+            foreach (var i in items2)
+            {
+                if (dict.ContainsKey(i[0])) dict[i[0]] += i[1];
+                else dict.Add(i[0], i[1]);
+            }
+            var keys = dict.Keys.OrderBy(x => x).ToArray();
+            foreach (var k in keys)
+                res.Add(new List<int>() { k, dict[k] });
+            return res;
+        }
 
         ///2364. Count Number of Bad Pairs, #HashMap, #Good
         //A pair of indices (i, j) is a bad pair if i < j and j - i != nums[j] - nums[i].
@@ -210,7 +229,7 @@ namespace LeetCodeAlgo
             return days;
         }
 
-        ///2366. Minimum Replacements to Sort the Array, #Greedy
+        ///2366. Minimum Replacements to Sort the Array, #Greedy, #Good
         // In one operation you can replace any element of the array with any two elements that sum to it.
         public long MinimumReplacement(int[] nums)
         {
@@ -219,24 +238,12 @@ namespace LeetCodeAlgo
             int max = nums.Last();
             for(int i = n - 1; i >= 0; i--)
             {
-                if(nums[i] <= max)
-                {
-                    max = nums[i];
-                }
-                else
-                {
-                    int mod = nums[i] % max;
-                    if(mod == 0)
-                    {
-                        res += nums[i] / max - 1;
-                    }
-                    else
-                    {
-                        res += nums[i] / max ;
-                        //# python (num // k) is the maximal number you can create from splitting (k - 1) times
-                        max = nums[i] / (nums[i] / max + 1);//why this works???
-                    }
-                }
+                //x is count to split, still work for nums[i]<=max
+                int x = (nums[i] + max - 1) / max;
+                res += x - 1;
+                //every bucket must contain at least nums[i]/k,some of them may contains nums[i]/k+1.
+                //like fullfil buckets nums[i]/k or nums[i]/k+1 loops, not fullfil the first one ,then next...
+                max = nums[i] / x;
             }
             return res;
         }

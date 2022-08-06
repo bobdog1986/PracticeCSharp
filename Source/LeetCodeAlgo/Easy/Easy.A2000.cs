@@ -359,28 +359,7 @@ namespace LeetCodeAlgo.Easy
 
 
         ///2363. Merge Similar Items
-        public IList<IList<int>> MergeSimilarItems(int[][] items1, int[][] items2)
-        {
-            var res = new List<IList<int>>();
 
-            Dictionary<int, int> dict = new Dictionary<int, int>();
-            foreach(var i in items1)
-            {
-                if (dict.ContainsKey(i[0])) dict[i[0]] += i[1];
-                else dict.Add(i[0], i[1]);
-            }
-            foreach (var i in items2)
-            {
-                if (dict.ContainsKey(i[0])) dict[i[0]] += i[1];
-                else dict.Add(i[0], i[1]);
-            }
-            var keys = dict.Keys.OrderBy(x => x).ToArray();
-            foreach(var k in keys)
-            {
-                res.Add(new List<int>() { k, dict[k] });
-            }
-            return res;
-        }
         */
     }
 }

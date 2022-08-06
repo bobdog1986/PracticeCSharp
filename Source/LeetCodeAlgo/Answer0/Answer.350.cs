@@ -279,6 +279,9 @@ namespace LeetCodeAlgo
 
         /// 380. Insert Delete GetRandom O(1), see RandomizedSet
 
+        ///382. Linked List Random Node
+
+
         ///383. Ransom Note, in Easy
 
 
@@ -289,7 +292,7 @@ namespace LeetCodeAlgo
         //You must write an algorithm that runs in O(n) time and uses O(1) extra space.
         public IList<int> LexicalOrder(int n)
         {
-            var res = new List<int>(); ;
+            var res = new List<int>();
             for (int i = 1; i < 10; ++i)
             {
                 LexicalOrder_DFS(i, n, res);
