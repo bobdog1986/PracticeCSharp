@@ -177,6 +177,19 @@ namespace LeetCodeAlgo
             return false;
         }
 
+        ///458. Poor Pigs
+        public int PoorPigs(int buckets, int minutesToDie, int minutesToTest)
+        {
+            //if 1 bucket, return 0
+            //int pigs = 0;
+            //while (Math.Pow(minutesToTest / minutesToDie + 1, pigs) < buckets)
+            //{
+            //    pigs += 1;
+            //}
+            //return pigs;
+            return (int)Math.Ceiling(Math.Log( buckets, minutesToTest / minutesToDie + 1));
+        }
+
         ///459. Repeated Substring Pattern
         ///check if s can be constructed by taking a substring of it and appending multiple copies of the substring together.
         public bool RepeatedSubstringPattern(string s)
