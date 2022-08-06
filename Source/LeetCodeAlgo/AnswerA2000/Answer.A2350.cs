@@ -209,5 +209,36 @@ namespace LeetCodeAlgo
             }
             return days;
         }
+
+        ///2366. Minimum Replacements to Sort the Array, #Greedy
+        // In one operation you can replace any element of the array with any two elements that sum to it.
+        public long MinimumReplacement(int[] nums)
+        {
+            long res = 0;
+            int n = nums.Length;
+            int max = nums.Last();
+            for(int i = n - 1; i >= 0; i--)
+            {
+                if(nums[i] <= max)
+                {
+                    max = nums[i];
+                }
+                else
+                {
+                    int mod = nums[i] % max;
+                    if(mod == 0)
+                    {
+                        res += nums[i] / max - 1;
+                    }
+                    else
+                    {
+                        res += nums[i] / max ;
+                        //# python (num // k) is the maximal number you can create from splitting (k - 1) times
+                        max = nums[i] / (nums[i] / max + 1);//why this works???
+                    }
+                }
+            }
+            return res;
+        }
     }
 }
