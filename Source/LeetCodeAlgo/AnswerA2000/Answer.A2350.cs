@@ -156,5 +156,27 @@ namespace LeetCodeAlgo
         }
 
         ///2363. Merge Similar Items
+
+        ///2364. Count Number of Bad Pairs, #HashMap, #Good
+        //A pair of indices (i, j) is a bad pair if i < j and j - i != nums[j] - nums[i].
+        //Return the total number of bad pairs in nums.
+        public long CountBadPairs(int[] nums)
+        {
+            int n = nums.Length;
+            long res = (long)n*(n-1)/2;
+            Dictionary<int,int> dict = new Dictionary<int, int>();
+            for(int i = 0; i < n; i++)
+            {
+                int val = i - nums[i];
+                if (dict.ContainsKey(val)) dict[val]++;
+                else dict.Add(val, 1);
+            }
+            foreach(var k in dict.Keys)
+            {
+                res -= (long)dict[k] * (dict[k] - 1) / 2;
+            }
+            return res;
+        }
+
     }
 }
