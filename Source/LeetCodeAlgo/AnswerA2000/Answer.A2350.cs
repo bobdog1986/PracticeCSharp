@@ -178,5 +178,36 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2365. Task Scheduler II, #HashMap
+        //space represents the minimum number of days that must pass after the completion of a task
+        //before another task of the same type can be performed.
+        public long TaskSchedulerII(int[] tasks, int space)
+        {
+            Dictionary<int, long> dict = new Dictionary<int, long>();//store {taskId,lastDayOfTask}
+            long days = 0;
+            for(int i = 0; i < tasks.Length;i++)
+            {
+                if (dict.ContainsKey(tasks[i]))
+                {
+                    if(days - dict[tasks[i]] > space)//no need to wait
+                    {
+                        dict[tasks[i]]=days;
+                        days++;
+                    }
+                    else
+                    {
+                        days = dict[tasks[i]] + space+1;//must wait until dsy = dict[tasks[i]] + space+1
+                        dict[tasks[i]] = days;
+                        days++;
+                    }
+                }
+                else
+                {
+                    dict.Add(tasks[i], days);
+                    days++;
+                }
+            }
+            return days;
+        }
     }
 }
