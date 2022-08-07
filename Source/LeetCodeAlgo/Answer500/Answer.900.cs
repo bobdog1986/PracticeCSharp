@@ -8,6 +8,29 @@ namespace LeetCodeAlgo
     {
         ///901. Online Stock Span, see StockSpanner
 
+        ///904. Fruit Into Baskets, #Sliding Window
+        //from left to right, at most two different fruits, each tree pick 1, return max count
+        public int TotalFruit(int[] fruits)
+        {
+            int res = 0;
+            int left = 0;
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            for(int i = 0; i < fruits.Length; i++)
+            {
+                if (dict.ContainsKey(fruits[i])) dict[fruits[i]]++;
+                else dict.Add(fruits[i], 1);
+                while(dict.Keys.Count>2 && left <= i)
+                {
+                    dict[fruits[left]]--;
+                    if(dict[fruits[left]]==0)
+                        dict.Remove(fruits[left]);
+                    left++;
+                }
+                res = Math.Max(res, i - left + 1);
+            }
+            return res;
+        }
+
         ///905. Sort Array By Parity
         ///move all the evens at the beginning then followed by all the odds.
         public int[] SortArrayByParity(int[] nums)
