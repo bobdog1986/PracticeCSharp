@@ -317,5 +317,29 @@ namespace LeetCodeAlgo
             return dp.Last();
         }
 
+        ///2370. Longest Ideal Subsequence, #DP
+        //abs diff of every two adjacent letters of subsequence t is <=k, not cycle
+        //Return the length of the longest ideal string.
+        public int LongestIdealString(string s, int k)
+        {
+            int res = 0;
+            int n = s.Length;
+            int[][] dp = new int[n + 1][];
+            for (int i = 0; i < dp.Length; i++)
+                dp[i] = new int[26];
+
+            for (int i = 1; i <= n; i++)
+            {
+                for (int j = 0; j < 26; j++)
+                    dp[i][j] = dp[i - 1][j];
+
+                int m = s[i-1]-'a';
+                for (int j = Math.Max(0, m - k); j < 26 && j <= m + k; j++)
+                    dp[i][m] = Math.Max(dp[i][m], 1 + dp[i - 1][j]);
+                res = Math.Max(res, dp[i][m]);
+            }
+            return res;
+        }
+
     }
 }
