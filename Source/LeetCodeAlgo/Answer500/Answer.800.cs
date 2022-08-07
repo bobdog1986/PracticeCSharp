@@ -323,6 +323,31 @@ namespace LeetCodeAlgo
             return -1;
         }
 
+        ///817. Linked List Components
+        public int NumComponents(ListNode head, int[] nums)
+        {
+            var set = nums.ToHashSet();
+            int count = 0;
+            int res = 0;
+            ListNode node = head;
+            while (node != null)
+            {
+                if (set.Contains(node.val))
+                {
+                    count ++;
+                }
+                else
+                {
+                    if (count > 0) res++;
+                    count = 0;
+                }
+                node = node.next;
+            }
+            if (count > 0) res++;
+            count = 0;
+            return res;
+        }
+
         ///819. Most Common Word
         public string MostCommonWord(string paragraph, string[] banned)
         {
