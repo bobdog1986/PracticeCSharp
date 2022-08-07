@@ -338,7 +338,13 @@ namespace LeetCodeAlgo
             return ans.ToArray();
         }
 
-        ///58. Length of Last Word, in Easy
+        ///58. Length of Last Word
+        public int LengthOfLastWord(string s)
+        {
+            var arr = s.Split(' ').Where(x => x.Length > 0).ToArray();
+            if (arr.Length == 0) return 0;
+            else return arr.Last().Length;
+        }
 
         /// 59. Spiral Matrix II
         ///Given a positive integer n, generate an n x n matrix filled with elements from 1 to n2 in spiral order.

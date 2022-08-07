@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Easy.Design
+namespace LeetCodeAlgo.Design
 {
     ///208. Implement Trie (Prefix Tree), #Trie
     //A trie (pronounced as "try") or prefix tree is a tree data structure

@@ -8,9 +8,50 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        ///2351. First Letter to Appear Twice, in Easy
+        ///2351. First Letter to Appear Twice
 
-        ///2352. Equal Row and Column Pairs, in Easy
+        public char RepeatedCharacter(string s)
+        {
+            var set = new HashSet<char>();
+            foreach (var c in s)
+            {
+                if (set.Contains(c)) return c;
+                else set.Add(c);
+            }
+            return 'a';
+        }
+
+        ///2352. Equal Row and Column Pairs
+        public int EqualPairs(int[][] grid)
+        {
+            var dict1 = new Dictionary<string, int>();
+            var dict2 = new Dictionary<string, int>();
+            for (int i = 0; i < grid.Length; i++)
+            {
+                var row = string.Join(',', grid[i]);
+                if (dict1.ContainsKey(row)) dict1[row]++;
+                else dict1.Add(row, 1);
+            }
+
+            for (int i = 0; i < grid[0].Length; i++)
+            {
+                int[] col = new int[grid[0].Length];
+                for (int j = 0; j < grid.Length; j++)
+                    col[j] = grid[j][i];
+                var str = string.Join(',', col);
+                if (dict2.ContainsKey(str)) dict2[str]++;
+                else dict2.Add(str, 1);
+            }
+
+            int res = 0;
+            foreach (var k1 in dict1.Keys)
+            {
+                if (dict2.ContainsKey(k1))
+                    res += dict1[k1] * dict2[k1];
+            }
+
+            return res;
+        }
 
         ///2353. Design a Food Rating System, see FoodRatings
 

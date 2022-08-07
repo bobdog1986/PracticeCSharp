@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Easy.Design
+namespace LeetCodeAlgo.Design
 {
     ///1603. Design Parking System
     ///carType: big, medium, or small, which are represented by 1, 2, and 3 respectively.

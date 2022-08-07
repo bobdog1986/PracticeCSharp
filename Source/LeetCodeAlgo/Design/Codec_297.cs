@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Design
+namespace LeetCodeAlgo.Design.Codec_297
 {
     ///297. Serialize and Deserialize Binary Tree
-    public class Codec_297
+    public class Codec
     {
 
         public string serialize(TreeNode root)

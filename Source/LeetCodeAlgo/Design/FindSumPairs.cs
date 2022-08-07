@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Easy.Design
+namespace LeetCodeAlgo.Design
 {
     ///1865. Finding Pairs With a Certain Sum
-
     public class FindSumPairs
     {
         private readonly Dictionary<int, int> dict1;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Easy.Design
+namespace LeetCodeAlgo.Design
 {
     ///677. Map Sum Pairs, #Trie
     //Maps a string key to a given value.

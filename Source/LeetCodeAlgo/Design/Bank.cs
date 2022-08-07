@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Easy.Design
+namespace LeetCodeAlgo.Design
 {
     ///2043. Simple Bank System
     public class Bank

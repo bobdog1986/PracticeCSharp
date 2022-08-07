@@ -502,8 +502,14 @@ namespace LeetCodeAlgo
             return max;
         }
 
-        /// 319. Bulb Switcher, in Easy
-
+        /// 319. Bulb Switcher
+        public int BulbSwitch(int n)
+        {
+            int res = 0;
+            for (int i = 1; i * i <= n; i++)
+                res++;
+            return res;
+        }
 
         /// 322. Coin Change, #DP
         ///array coins representing coins of different denominations and an integer amount representing a total amount of money.
@@ -595,8 +601,19 @@ namespace LeetCodeAlgo
         }
 
 
-        /// 326. Power of Three, in Easy
-
+        /// 326. Power of Three
+        //Given an integer n, return true if it is a power of three. Otherwise, return false.
+        //An integer n is a power of three, if there exists an integer x such that n == 3x.
+        public bool IsPowerOfThree(int n)
+        {
+            while (n >= 3)
+            {
+                if (n % 3 != 0)
+                    return false;
+                n /= 3;
+            }
+            return n == 1;
+        }
         ///327. Count of Range Sum, #Merge Sort
         //return the number of range [i,j] sums that lie in [lower, upper] inclusive.
         public int CountRangeSum(int[] nums, int lower, int upper)
@@ -1020,7 +1037,17 @@ namespace LeetCodeAlgo
             return ans * n;
         }
 
-        /// 344. Reverse String, in Easy
+        /// 344. Reverse String
+        // You must do this by modifying the input array in-place with O(1) extra memory.
+        public void ReverseString(char[] s)
+        {
+            for (int i = 0; i < s.Length / 2; i++)
+            {
+                char temp = s[i];
+                s[i] = s[s.Length - 1 - i];
+                s[s.Length - 1 - i] = temp;
+            }
+        }
 
 
         ///345. Reverse Vowels of a String
@@ -1095,7 +1122,13 @@ namespace LeetCodeAlgo
             return dict.OrderBy(x => -x.Value).Take(k).Select(x => x.Key).ToArray();
         }
 
-        ///349. Intersection of Two Arrays, in Easy
-
+        ///349. Intersection of Two Arrays
+        //return an array of their intersection. Each element in the result must be unique
+        public int[] Intersection(int[] nums1, int[] nums2)
+        {
+            HashSet<int> set1 = new HashSet<int>(nums1);
+            HashSet<int> set2 = new HashSet<int>(nums2);
+            return set2.Where(x => set1.Contains(x)).ToArray();
+        }
     }
 }

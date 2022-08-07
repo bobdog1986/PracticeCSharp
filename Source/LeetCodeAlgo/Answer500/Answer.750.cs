@@ -333,8 +333,30 @@ namespace LeetCodeAlgo
             return !ghosts.Any(g => Math.Abs(g[0] - target[0]) + Math.Abs(g[1] - target[1]) <= Math.Abs(target[0]) + Math.Abs(target[1]));
         }
 
-        ///791. Custom Sort String, in Easy
 
+        ///791. Custom Sort String
+        //Permute the characters of s so that they match the order that order was sorted.
+        //order = "cba", s = "abcd" => Output: "cbad"
+        public string CustomSortString(string order, string s)
+        {
+            StringBuilder sb = new StringBuilder();
+            int n = order.Length;
+            Dictionary<char, int> dict = new Dictionary<char, int>();
+            for (int i = 0; i < n; i++)
+                dict.Add(order[i], i);
+            int[] arr = new int[n];
+            foreach (var c in s)
+            {
+                if (dict.ContainsKey(c)) arr[dict[c]]++;
+                else sb.Append(c);
+            }
+            for (int i = 0; i < n; i++)
+            {
+                while (arr[i]-- > 0)
+                    sb.Append(order[i]);
+            }
+            return sb.ToString();
+        }
         ///792. Number of Matching Subsequences, #Binary Search
         //return the number of words[i] that is a subsequence of s.For example, "ace" is a subsequence of "abcde".
         //A subsequence is generated from the original string with some(can be none) deleted without changing the order.

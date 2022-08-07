@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Easy.Design
+namespace LeetCodeAlgo.Design
 {
     ///2349. Design a Number Container System, #PriorityQueue
     //Insert or Replace a number at the given index in the system.
@@ -24,7 +24,7 @@ namespace LeetCodeAlgo.Easy.Design
 
         public void Change(int index, int number)
         {
-            if(!dict.ContainsKey(index))dict.Add(index, number);
+            if (!dict.ContainsKey(index)) dict.Add(index, number);
             else dict[index] = number;
             if (!map.ContainsKey(number))
                 map.Add(number, new PriorityQueue<int, int>());

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Easy.Design
+namespace LeetCodeAlgo.Design
 {
     ///1845. Seat Reservation Manager, #PriorityQueue
     ///Design a system that manages the reservation state of n seats that are numbered from 1 to n.

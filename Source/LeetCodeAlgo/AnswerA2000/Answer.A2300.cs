@@ -109,8 +109,24 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2303. Calculate Amount Paid in Taxes, in Easy
 
+        ///2303. Calculate Amount Paid in Taxes
+        //brackets[i] = [upperi, percenti] means that the ith tax bracket has an upper bound of upperi and
+        //is taxed at a rate of percenti.
+        //The brackets are sorted by upper bound (i.e. upperi-1 < upperi for 0 < i < brackets.length).
+        public double CalculateTax(int[][] brackets, int income)
+        {
+            double res = 0;
+            int prev = 0;
+            foreach (var bracket in brackets)
+            {
+                int curr = Math.Min(bracket[0], income) - prev;
+                res += curr * 1.0 * bracket[1] / 100;
+                prev = bracket[0];
+                if (bracket[0] >= income) break;
+            }
+            return res;
+        }
         ///2304. Minimum Path Cost in a Grid, #DP, #HashMap
         public int MinPathCost_Dict(int[][] grid, int[][] moveCost)
         {
@@ -334,8 +350,21 @@ namespace LeetCodeAlgo
             return dp[m, n];
         }
 
-        ///2315. Count Asterisks, in Easy
-
+        ///2315. Count Asterisks
+        //Return the number of '*' in s, excluding the '*' between each pair of '|'.
+        public int CountAsterisks(string s)
+        {
+            bool open = false;
+            int res = 0;
+            foreach (var c in s)
+            {
+                if (c == '|')
+                    open = !open;
+                else if (c == '*' && !open)
+                    res++;
+            }
+            return res;
+        }
         ///2316. Count Unreachable Pairs of Nodes in an Undirected Graph, #Union Find
         //undirected graph with n nodes from 0 to n - 1. edges where edges[i] = [ai, bi]
         //Return the number of pairs of different nodes that are unreachable from each other.
@@ -424,7 +453,23 @@ namespace LeetCodeAlgo
             return (int)((res + mod) % mod);
         }
 
-        ///2319. Check if Matrix Is X-Matrix, in Easy
+
+        ///2319. Check if Matrix Is X-Matrix
+        //All the elements in the diagonals of the matrix are non-zero. All other elements are 0.
+        public bool CheckXMatrix(int[][] grid)
+        {
+            int n = grid.Length;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    bool drag = i == j || n - 1 - i == j;
+                    if ((drag && grid[i][j] == 0)
+                        || (!drag && grid[i][j] != 0)) return false;
+                }
+            }
+            return true;
+        }
 
         ///2320. Count Number of Ways to Place Houses, #DP
         //There is a street with n * 2 plots, where there are n plots on each side of the street.
@@ -545,7 +590,19 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2325. Decode the Message, in Easy
+        ///2325. Decode the Message
+        public string DecodeMessage(string key, string message)
+        {
+            var dict = new Dictionary<char, int>();
+            foreach (var c in key)
+            {
+                if (dict.Count == 26) break;
+                if (c == ' ') continue;
+                if (dict.ContainsKey(c)) continue;
+                dict.Add(c, dict.Count);
+            }
+            return new string(message.Select(x => x == ' ' ? ' ' : (char)(dict[x] + 'a')).ToArray());
+        }
 
         ///2326. Spiral Matrix IV
         public int[][] SpiralMatrix(int m, int n, ListNode head)
@@ -1031,8 +1088,20 @@ namespace LeetCodeAlgo
             }
         }
 
-        ///2341. Maximum Number of Pairs in Array, in Easy
 
+        ///2341. Maximum Number of Pairs in Array
+        public int[] NumberOfPairs(int[] nums)
+        {
+            var dict = new Dictionary<int, int>();
+            foreach (var n in nums)
+            {
+                if (!dict.ContainsKey(n)) dict.Add(n, 0);
+                dict[n]++;
+            }
+            var x = dict.Keys.Select(x => dict[x] / 2).Sum();
+            var y = dict.Keys.Select(x => dict[x] % 2).Sum();
+            return new int[] { x, y };
+        }
         ///2342. Max Sum of a Pair With Equal Sum of Digits
         //You are given a 0-indexed array nums consisting of positive integers.
         //choose two indices i and j, i != j, and the sum of digits of the number nums[i] is equal to that of nums[j].
@@ -1140,9 +1209,36 @@ namespace LeetCodeAlgo
             return -1;
         }
 
-        ///2347. Best Poker Hand, in Easy
+        ///2347. Best Poker Hand
+        public string BestHand(int[] ranks, char[] suits)
+        {
+            int[] arr1 = new int[14];
+            foreach (var r in ranks)
+                arr1[r]++;
 
-        ///2348. Number of Zero-Filled Subarrays, in Easy
+            int[] arr2 = new int[4];
+            foreach (var s in suits)
+                arr2[s - 'a']++;
+
+            if (arr2.Max() == 5) return "Flush";
+            else if (arr1.Max() >= 3) return "Three of a Kind";
+            else if (arr1.Max() == 2) return "Pair";
+            else return "High Card";
+        }
+
+        ///2348. Number of Zero-Filled Subarrays
+        public long ZeroFilledSubarray(int[] nums)
+        {
+            long res = 0;
+            int count = 0;
+            foreach (var n in nums)
+            {
+                if (n == 0) count++;
+                else count = 0;
+                res += count;
+            }
+            return res;
+        }
 
         ///2349. Design a Number Container System, see NumberContainers
 
@@ -1168,18 +1264,6 @@ namespace LeetCodeAlgo
                 }
             }
             return res;
-        }
-
-        private Dictionary<T, int> getHashMap<T>(IEnumerable<T> arr)
-            where T : notnull
-        {
-            var dict=new Dictionary<T,int>();
-            foreach(var n in arr)
-            {
-                if (dict.ContainsKey(n)) dict[n]++;
-                else dict.Add(n, 1);
-            }
-            return dict;
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Easy.Design.NumArray_303
+namespace LeetCodeAlgo.Design
 {
     ///303. Range Sum Query - Immutable
     ///Given an integer array nums, handle multiple queries of the following type:

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Easy.Design
+namespace LeetCodeAlgo.Design
 {
     ///703. Kth Largest Element in a Stream, #PriorityQueue
     ///Design a class to find the kth largest element in a stream.

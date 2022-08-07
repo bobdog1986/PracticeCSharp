@@ -33,7 +33,7 @@ namespace LeetCodeAlgo
             //TreeNode treeNode1 = answer.deserializeTree(bTreeStr1);
 
             ///build int[][] and int[] from string
-            string matStrInt1 = " [[0,1],[1,2],[1,3],[3,4]]";
+            string matStrInt1 = "  [[4,3,8,4],[9,5,1,9],[2,7,6,2]]";
             int[][] mat1 = answer.buildMatrix(matStrInt1);
             //string matStrInt2 = "[[1,3,1,15],[1,3,3,1]]";
             //int[][] mat2 = answer.buildMatrix(matStrInt2);
@@ -51,7 +51,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.LongestIdealString("abcd", 1);
+            var result = answer.NumMagicSquaresInside(mat1);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

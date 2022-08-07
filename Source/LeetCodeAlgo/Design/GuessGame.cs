@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Easy.Design
+namespace LeetCodeAlgo.Design
 {
     ///374. Guess Number Higher or Lower, #Binary Search
     //1 <= n <= 231 - 1, 1 <= pick <= n, -1 if guess higher, 1 if guess lower

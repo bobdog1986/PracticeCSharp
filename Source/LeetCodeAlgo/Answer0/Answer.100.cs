@@ -1343,11 +1343,26 @@ namespace LeetCodeAlgo
             }
             return dp.Sum();
         }
+        /// 136. Single Number
+        // non-empty array nums, every element appears twice except for one.Find that single one.
+        public int SingleNumber_136(int[] nums)
+        {
+            return nums.Aggregate((x, y) => x ^ y);
+        }
 
-
-        /// 136. Single Number, in Easy
-
-        ///137. Single Number II, in Easy
+        ///137. Single Number II
+        //array nums where every element appears three times except for one, which appears exactly once.
+        //Find the single element and return it.
+        public int SingleNumber_137(int[] nums)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach (var n in nums)
+            {
+                if (!dict.ContainsKey(n)) dict.Add(n, 0);
+                dict[n]++;
+            }
+            return dict.Keys.First(x => dict[x] != 3);
+        }
 
 
         ///138. Copy List with Random Pointer, #Good!

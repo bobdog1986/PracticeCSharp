@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Easy.Design
+namespace LeetCodeAlgo.Design.Codec_535
 {
     ///535. Encode and Decode TinyURL
-    public class Codec_535
+    public class Codec
     {
         private readonly Dictionary<string, string> dict = new Dictionary<string, string>();
         private readonly string str = @"http://tinyurl.com/";

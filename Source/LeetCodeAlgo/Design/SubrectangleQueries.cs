@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Easy.Design
+namespace LeetCodeAlgo.Design
 {
     /// 1476. Subrectangle Queries
     /// Implement the class SubrectangleQueries which receives a rows x cols rectangle

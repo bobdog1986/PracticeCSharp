@@ -127,8 +127,21 @@ namespace LeetCodeAlgo
         }
 
 
-        ///504. Base 7, in Easy
-
+        ///504. Base 7
+        ///Given an integer num, return a string of its base 7 representation.
+        public string ConvertToBase7(int num)
+        {
+            if (num == 0) return "0";
+            bool sign = num > 0;
+            num = Math.Abs(num);
+            string res = "";
+            while (num > 0)
+            {
+                res = num % 7 + res;
+                num /= 7;
+            }
+            return sign ? res : "-" + res;
+        }
         ///506. Relative Ranks
         ///You are given an integer array score of size n, where score[i] is the score of the ith athlete in a competition.
         ///All the scores are guaranteed to be unique.
@@ -392,8 +405,12 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///521. Longest Uncommon Subsequence I, in Easy
 
+        ///521. Longest Uncommon Subsequence I
+        public int FindLUSlength(string a, string b)
+        {
+            return a == b ? -1 : Math.Max(a.Length, b.Length);
+        }
         /// 524. Longest Word in Dictionary through Deleting
         public string FindLongestWord(string s, IList<string> dictionary)
         {

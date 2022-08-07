@@ -51,7 +51,26 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///451. Sort Characters By Frequency, in Easy
+        ///451. Sort Characters By Frequency
+        //Given a string s, sort it in decreasing order based on the frequency of the characters.
+        //If there are multiple answers, return any of them.
+        public string FrequencySort(string s)
+        {
+            Dictionary<char, int> dict = new Dictionary<char, int>();
+            foreach (var c in s)
+            {
+                if (!dict.ContainsKey(c)) dict.Add(c, 0);
+                dict[c]++;
+            }
+            StringBuilder sb = new StringBuilder();
+            var keys = dict.Keys.OrderBy(x => -dict[x]).ToArray();
+            foreach (var k in keys)
+            {
+                sb.Append(new string(Enumerable.Repeat(k, dict[k]).ToArray()));
+            }
+            return sb.ToString();
+        }
+
 
         /// 452. Minimum Number of Arrows to Burst Balloons, #DP
         ///points.Length = Balloons number, Balloons horizontal -231 <= xstart < xend <= 231 - 1
@@ -77,8 +96,16 @@ namespace LeetCodeAlgo
             return shot;
         }
 
-        ///453. Minimum Moves to Equal Array Elements, in Easy
-
+        ///453. Minimum Moves to Equal Array Elements
+        //return the minimum number of moves required to make all array elements equal.
+        //In one move, you can increment n - 1 elements of the array by 1.
+        public int MinMoves(int[] nums)
+        {
+            // sum + m * (n - 1) = x * n
+            // x = min + m;
+            //sum+m*n-m = m*n+min*n=> m = sum- min*n;
+            return nums.Sum() - nums.Min() * nums.Length;
+        }
         /// 454. 4Sum II -- O(n^4) --> O(n^2), using Dictionary
         ///Given four integer arrays nums1, nums2, nums3, and nums4 all of length n,
         ///return the number of tuples (i, j, k, l) such that:nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
@@ -115,8 +142,23 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-        ///455. Assign Cookies, in Easy
-
+        ///455. Assign Cookies
+        ///Each child i g[i] is the minimum size of a cookie that the child will be content with
+        ///and each cookie j has a size s[j]. If s[j] >= g[i], we can assign the cookie j to the child i,
+        ///Your goal is to maximize the number of your content children and output the maximum number.
+        public int FindContentChildren(int[] g, int[] s)
+        {
+            Array.Sort(g);
+            Array.Sort(s);
+            int i = 0;
+            int j = 0;
+            while (i < g.Length && j < s.Length)
+            {
+                if (g[i] <= s[j++])
+                    i++;
+            }
+            return i;
+        }
 
         ///456. 132 Pattern, #Monotonic Stack
         ///nums[i] < nums[k] < nums[j]. Return true if there is a 132 pattern in nums, otherwise, return false.
@@ -210,8 +252,20 @@ namespace LeetCodeAlgo
             return false;
         }
 
-        /// 461. Hamming Distance, in Easy
-
+        /// 461. Hamming Distance
+        ///return the Hamming distance between two integers, count of bits are different.
+        public int HammingDistance(int x, int y)
+        {
+            int count = 0;
+            while (x != 0 && y != 0)
+            {
+                if ((x & 1) != (y & 1))
+                    count++;
+                x >>= 1;
+                y >>= 1;
+            }
+            return count;
+        }
 
         ///462. Minimum Moves to Equal Array Elements II
         //move to median
@@ -424,8 +478,22 @@ namespace LeetCodeAlgo
         }
 
 
-        /// 476. Number Complement, in Easy
 
+        /// 476. Number Complement
+        //The complement of an integer is flip all the 0's to 1's and all the 1's to 0's
+        //Eg, The integer 5 is "101" in binary and its complement is "010" which is the integer 2.
+        public int FindComplement(int num)
+        {
+            int res = 0;
+            int bit = 1;
+            while (num > 0)
+            {
+                if ((num & 1) == 0) res += bit;
+                bit <<= 1;
+                num >>= 1;
+            }
+            return res;
+        }
         ///477. Total Hamming Distance
         //The Hamming distance between two integers is the number of positions at which the corresponding bits are different.
         //return the sum of Hamming distances between all the pairs of the integers in nums.
@@ -464,8 +532,20 @@ namespace LeetCodeAlgo
             return new string(list.ToArray());
         }
 
-        /// 485. Max Consecutive Ones, in Easy
-
+        /// 485. Max Consecutive Ones
+        //Given a binary array nums, return the maximum number of consecutive 1's in the array.
+        public int FindMaxConsecutiveOnes(int[] nums)
+        {
+            int max = 0;
+            int count = 0;
+            foreach (var n in nums)
+            {
+                if (n == 1) count++;
+                else count = 0;
+                max = Math.Max(max, count);
+            }
+            return max;
+        }
 
         /// 492
         public int[] ConstructRectangle(int area)

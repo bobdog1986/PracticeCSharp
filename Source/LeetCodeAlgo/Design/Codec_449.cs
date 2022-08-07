@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Design
+namespace LeetCodeAlgo.Design.Codec_449
 {
     ///449. Serialize and Deserialize BST
-    public class Codec_449
+    public class Codec
     {
         private const string SEP = ",";
         private const string EMPTY = "-";

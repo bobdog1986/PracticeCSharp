@@ -63,18 +63,6 @@ namespace LeetCodeAlgo
             return visit;
         }
 
-        private bool[][][] initVisitMatrix(int m, int n, int k)
-        {
-            var visit = new bool[m][][];
-            for (int i = 0; i < m; i++)
-            {
-                visit[i] = new bool[n][];
-                for (int j = 0; j < n; j++)
-                    visit[i][j] = new bool[k];
-            }
-            return visit;
-        }
-
         private List<int>[] initListGraph(int n)
         {
             List<int>[] graph = new List<int>[n];
@@ -123,32 +111,124 @@ namespace LeetCodeAlgo
             return dp;
         }
 
-        private long[][][] init3DLongMatrix(int m, int n, int k, long seed = 0)
-        {
-            var dp = new long[m][][];
-            for (int i = 0; i < m; i++)
-            {
-                dp[i] = new long[n][];
-                for (long j = 0; j < n; j++)
-                {
-                    dp[i][j] = new long[k];
-                    if (seed != 0)
-                        Array.Fill(dp[i][j], seed);
-                }
-            }
-            return dp;
-        }
-
-        private int[][] initDxy4()
-        {
-            return new int[4][] { new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 } };
-        }
-
-        private int[][] initDxy8()
-        {
-            return new int[8][] { new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 },
-                                    new int[] { 1, 1 }, new int[] { -1,-1 }, new int[] { -1, 1 }, new int[] { 1, -1 }};
-        }
 
     }
+
+    /// <summary>
+    /// using binary search to auto sort a List<T>, default compare
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class AutoSortList<T>
+    {
+        private readonly List<T> _list;
+        private readonly IComparer<T>? _comparer;
+
+        public AutoSortList() : this(null) { }
+
+        public AutoSortList(IComparer<T>? comparer)
+        {
+            _comparer = InitializeComparer(comparer);
+            _list = new List<T>();
+        }
+
+        public AutoSortList(IEnumerable<T> elements, IComparer<T>? comparer)
+        {
+            _comparer = InitializeComparer(comparer);
+            _list = elements.OrderBy(x => x, _comparer).ToList();
+        }
+
+        private static IComparer<T>? InitializeComparer(IComparer<T>? comparer)
+        {
+            if (comparer == null) return Comparer<T>.Default;
+            else return comparer;
+        }
+
+        public int Count => _list.Count;
+
+        public List<T> List => _list;
+
+        public int Insert(T val)
+        {
+            if (_list.Count == 0)
+            {
+                _list.Add(val);
+                return 0;
+            }
+            else
+            {
+                if (_comparer.Compare(val, _list[0]) <= 0)
+                {
+                    _list.Insert(0, val);
+                    return 0;
+                }
+                else if (_comparer.Compare(_list.Last(), val) < 0)
+                {
+                    _list.Add(val);
+                    return _list.Count - 1;
+                }
+                else
+                {
+                    int left = 0;
+                    int right = _list.Count - 1;
+                    while (left < right)
+                    {
+                        int mid = (left + right) / 2;
+                        if (_comparer.Compare(_list[mid], val) < 0)
+                        {
+                            left = mid + 1;
+                        }
+                        else
+                        {
+                            right = mid;
+                        }
+                    }
+                    _list.Insert(left, val);
+                    return left;
+                }
+            }
+        }
+
+        public int IndexIfInsert(T val)
+        {
+            if (_list.Count == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                if (_comparer.Compare(val, _list[0]) <= 0)
+                {
+                    return 0;
+                }
+                else if (_comparer.Compare(_list.Last(), val) < 0)
+                {
+                    return _list.Count;
+                }
+                else
+                {
+                    int left = 0;
+                    int right = _list.Count - 1;
+                    while (left < right)
+                    {
+                        int mid = (left + right) / 2;
+                        if (_comparer.Compare(_list[mid], val) < 0)
+                        {
+                            left = mid + 1;
+                        }
+                        else
+                        {
+                            right = mid;
+                        }
+                    }
+                    return left;
+                }
+            }
+        }
+
+        public T this[int index]
+        {
+            get => _list[index];
+        }
+    }
+
 }

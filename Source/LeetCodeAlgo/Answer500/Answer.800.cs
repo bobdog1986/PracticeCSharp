@@ -628,6 +628,52 @@ namespace LeetCodeAlgo
             return rec2[0] < rec1[2] && rec2[1] < rec1[3] && rec2[3] > rec1[1];
         }
 
+        ///840. Magic Squares In Grid
+        // 3 x 3 sub-grid that contain 1-9 and each row, col , dragonal sum is same(aka 15)
+        public int NumMagicSquaresInside(int[][] grid)
+        {
+            int res = 0;
+            int m = grid.Length;
+            int n = grid[0].Length;
+            for(int i = 0; i < m - 2; i++)
+            {
+                for(int j=0; j < n-2; j++)
+                {
+                    bool find = true;
+                    for(int k=0; k<3; k++)
+                    {
+                        if (grid[i+k][j] + grid[i + k][j + 1] + grid[i + k][j + 2] != 15
+                            || grid[i][j+k] + grid[i + 1][j + k] + grid[i + 2][j + k] != 15)
+                        {
+                            find = false;
+                            break;
+                        }
+                    }
+                    if (!find) continue;
+                    if (grid[i][j] + grid[i + 1][j + 1] + grid[i + 2][j + 2] != 15
+                        || grid[i + 2][j] + grid[i + 1][j + 1] + grid[i][j + 2] != 15)
+                    {
+                        find = false;
+                    }
+                    if (!find) continue;
+                    bool[] arr = new bool[10];
+                    for(int k = 0; k < 3 && find; k++)
+                    {
+                        for(int l = 0; l < 3&& find; l++)
+                        {
+                            if (grid[i + k][j+l]>=1 && grid[i + k][j + l] <= 9 && !arr[grid[i + k][j + l]])
+                                arr[grid[i + k][j + l]] = true;
+                            else
+                                find = false;
+                        }
+                    }
+                    if (find)
+                        res++;
+                }
+            }
+            return res;
+        }
+
         /// 841. Keys and Rooms, #BFS
         //all the rooms are locked except room[0], rooms[i] is the set of keys that you can obtain if visited room i,
         //return true if you can visit all the rooms, or false otherwise.

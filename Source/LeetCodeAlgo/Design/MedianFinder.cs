@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,4 +36,30 @@ namespace LeetCodeAlgo.Design
                    : (maxHalf.Peek()*0.5 + minHalf.Peek() * 0.5);
         }
     }
+
+    public class MedianFinder_SortedList
+    {
+
+        private readonly AutoSortList<int> list = new AutoSortList<int>();
+
+        public void AddNum(int num)
+        {
+            list.Insert(num);
+        }
+
+        public double FindMedian()
+        {
+            if (list.Count % 2 == 0)
+            {
+                return 0.5 * (list[list.Count / 2 - 1] + list[list.Count / 2]);
+            }
+            else
+            {
+                return list[list.Count / 2];
+            }
+        }
+    }
+
+
+
 }

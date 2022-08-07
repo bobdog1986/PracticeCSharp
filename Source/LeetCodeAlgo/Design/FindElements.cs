@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.Easy.Design
+namespace LeetCodeAlgo.Design
 {
     ///1261. Find Elements in a Contaminated Binary Tree
     ///root.val == 0 ,treeNode.left.val == 2 * x + 1 , treeNode.right.val == 2 * x + 2
     public class FindElements
     {
-
         private readonly HashSet<int> set;
 
         public FindElements(TreeNode root)

@@ -135,8 +135,24 @@ namespace LeetCodeAlgo
             return result;
         }
 
-        //203. Remove Linked List Elements, in Easy
-
+        //203. Remove Linked List Elements
+        public ListNode RemoveElements(ListNode head, int val)
+        {
+            if (head == null) return null;
+            if (head.val == val) return RemoveElements(head.next, val);
+            var prev = head;
+            var curr = head.next;
+            while (curr != null)
+            {
+                if (curr.val == val)
+                {
+                    prev.next = curr.next;
+                }
+                else prev = curr;
+                curr = curr.next;
+            }
+            return head;
+        }
 
         ///204. Count Primes
         ///Given an int n, return the number of prime numbers that are strictly less than n.
@@ -158,8 +174,26 @@ namespace LeetCodeAlgo
             return count;
         }
 
-        ///205. Isomorphic Strings, in Easy
-
+        ///205. Isomorphic Strings
+        //Given two strings s and t, determine if they are isomorphic.
+        //Two strings s and t are isomorphic if the characters in s can be replaced to get t.
+        public bool IsIsomorphic(string s, string t)
+        {
+            Dictionary<char, char> dict = new Dictionary<char, char>();
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (dict.ContainsKey(s[i]))
+                {
+                    if (dict[s[i]] != t[i]) return false;
+                }
+                else
+                {
+                    if (dict.ContainsValue(t[i])) return false;
+                    else dict.Add(s[i], t[i]);
+                }
+            }
+            return true;
+        }
         /// 206. Reverse Linked List
         ///Given the head of a singly linked list, reverse the list, and return the reversed list.
         ///The number of nodes in the list is the range [0, 5000].
@@ -467,7 +501,25 @@ namespace LeetCodeAlgo
             return table;
         }
 
-        ///215. Kth Largest Element in an Array, in Easy
+        ///215. Kth Largest Element in an Array, #PriorityQueue
+        //return the kth largest element in the array. -10^4 <= nums[i] <= 10^4
+        public int FindKthLargest(int[] nums, int k)
+        {
+            var pq = new PriorityQueue<int, int>();
+            foreach (var n in nums)
+            {
+                if (pq.Count < k) pq.Enqueue(n, n);
+                else
+                {
+                    if (n > pq.Peek())
+                    {
+                        pq.Enqueue(n, n);
+                        pq.Dequeue();
+                    }
+                }
+            }
+            return pq.Peek();
+        }
 
         ///216. Combination Sum III, #Backtracking
         ///Find all valid combinations of k numbers that sum up to n :
@@ -614,9 +666,88 @@ namespace LeetCodeAlgo
             return len * len;
         }
 
-        ///222. Count Complete Tree Nodes
+        ///222. Count Complete Tree Nodes, #BTree
+        ///Given the root of a complete binary tree, return the number of the nodes in the tree.
+        public int CountNodes_recur(TreeNode root)
+        {
+            if (root == null) return 0;
+            return 1 + CountNodes_recur(root.left) + CountNodes_recur(root.right);
+        }
+
+        public int CountNodes(TreeNode root)
+        {
+            if (root == null) return 0;
+            int res = 0;
+            Queue<TreeNode> q = new Queue<TreeNode>();
+            q.Enqueue(root);
+            while (q.Count > 0)
+            {
+                var top = q.Dequeue();
+                res++;
+                if (top.left != null) q.Enqueue(top.left);
+                if (top.right != null) q.Enqueue(top.right);
+            }
+            return res;
+        }
 
         ///223. Rectangle Area
+        public int ComputeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2)
+        {
+            if (ax1 > bx1)
+                return ComputeArea(bx1, by1, bx2, by2, ax1, ay1, ax2, ay2);
+            int res = ComputeArea_Rect(ax1, ay1, ax2, ay2) + ComputeArea_Rect(bx1, by1, bx2, by2);
+            if (by1 >= ay2 || by2 <= ay1 || bx1 >= ax2)
+            {
+                //if no overlay
+            }
+            else
+            {
+                if (bx2 <= ax2)
+                {
+                    if (by1 <= ay1 && by2 >= ay2)
+                    {
+                        res -= ComputeArea_Rect(bx1, ay1, bx2, ay2);
+                    }
+                    else if (by1 <= ay1)
+                    {
+                        res -= ComputeArea_Rect(bx1, ay1, bx2, by2);
+                    }
+                    else if (by2 >= ay2)
+                    {
+                        res -= ComputeArea_Rect(bx1, by1, bx2, ay2);
+                    }
+                    else
+                    {
+                        res -= ComputeArea_Rect(bx1, by1, bx2, by2);
+                    }
+                }
+                else
+                {
+                    if (by1 <= ay1 && by2 >= ay2)
+                    {
+                        res -= ComputeArea_Rect(bx1, ay1, ax2, ay2);
+                    }
+                    else if (by1 <= ay1)
+                    {
+                        res -= ComputeArea_Rect(bx1, ay1, ax2, by2);
+                    }
+                    else if (by2 >= ay2)
+                    {
+                        res -= ComputeArea_Rect(bx1, by1, ax2, ay2);
+                    }
+                    else
+                    {
+                        res -= ComputeArea_Rect(bx1, by1, ax2, by2);
+                    }
+                }
+            }
+            return res;
+        }
+
+        private int ComputeArea_Rect(int ax1, int ay1, int ax2, int ay2)
+        {
+            return (ax2 - ax1) * (ay2 - ay1);
+        }
 
         ///224. Basic Calculator
         //implement a basic calculator such as eval() to evaluate it, and return the result of the evaluation.
@@ -821,8 +952,22 @@ namespace LeetCodeAlgo
             return values[k - 1];
         }
 
-        /// 231. Power of Two, in Easy
-
+        /// 231. Power of Two
+        //Given an int n, return true if it is a power of two.
+        public bool IsPowerOfTwo(int n)
+        {
+            if (n <= 0)
+                return false;
+            while (n >= 1)
+            {
+                if (n == 1)
+                    return true;
+                if (n % 2 == 1)
+                    return false;
+                n = n / 2;
+            }
+            return false;
+        }
 
         //232. Implement Queue using Stacks
 

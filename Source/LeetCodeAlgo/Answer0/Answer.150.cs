@@ -33,8 +33,13 @@ namespace LeetCodeAlgo
             return stack.Count > 0 ? stack.Pop() :res;
         }
 
-        ///151. Reverse Words in a String, in Easy
 
+        ///151. Reverse Words in a String
+        //Given an input string s, reverse the order of the words.
+        public string ReverseWords(string s)
+        {
+            return string.Join(' ', s.Split(' ').Where(x => x.Length > 0).Reverse());
+        }
 
         /// 152. Maximum Product Subarray, #DP
         ///Given an integer array nums, find a contiguous non-empty subarray within the array
@@ -326,13 +331,51 @@ namespace LeetCodeAlgo
             return new int[] { };
         }
 
-        /// 168. Excel Sheet Column Title, in Easy
+        /// 168. Excel Sheet Column Title
+        //Given an integer columnNumber, return its corresponding column title as it appears in an Excel sheet.
+        public string ConvertToTitle(int columnNumber)
+        {
+            List<char> res = new List<char>();
+            int n = columnNumber;
+            while (n > 0)
+            {
+                var c = (char)((n - 1) % 26 + 'A');
+                res.Insert(0, c);
+                n = (n - 1) / 26;
+            }
+            return new string(res.ToArray());
+        }
 
-        /// 169. Majority Element, in Easy
+        /// 169. Majority Element
+        //The majority element is the element that appears more than n/2 times.
+        public int MajorityElement(int[] nums)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            int half = nums.Length / 2 + 1;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (!dict.ContainsKey(nums[i]))
+                    dict.Add(nums[i], 0);
+                if (++dict[nums[i]] >= half) return nums[i];
+            }
+            return -1;
+        }
 
 
-        ///171. Excel Sheet Column Number, in Easy
 
+        ///171. Excel Sheet Column Number
+        //return its corresponding column number.
+        public int TitleToNumber(string columnTitle)
+        {
+            int res = 0;
+            int seed = 1;
+            for (int i = columnTitle.Length - 1; i >= 0; i--)
+            {
+                res += seed * (columnTitle[i] - 'A' + 1);
+                seed *= 26;
+            }
+            return res;
+        }
 
         /// 172. Factorial Trailing Zeroes
         ///Given an integer n, return the number of trailing zeroes in n!.
