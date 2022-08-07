@@ -185,6 +185,46 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///1220. Count Vowels Permutation, #DP
+        //Given an integer n, your task is to count how many strings of length n can be formed under the following rules:
+        //Each character is a lower case vowel('a', 'e', 'i', 'o', 'u')
+        //Each vowel 'a' may only be followed by an 'e'.
+        //Each vowel 'e' may only be followed by an 'a' or an 'i'.
+        //Each vowel 'i' may not be followed by another 'i'.
+        //Each vowel 'o' may only be followed by an 'i' or a 'u'.
+        //Each vowel 'u' may only be followed by an 'a'.
+        //Since the answer may be too large, return it modulo 10^9 + 7.
+        public int CountVowelPermutation(int n)
+        {
+            int mod = 1_000_000_007;
+            int[][] dp = new int[n][];
+            for (int i = 0; i < dp.Length; i++)
+                dp[i] = new int[5];
+            Array.Fill(dp[0], 1);
+            for(int i = 0; i < n - 1; i++)
+            {
+                dp[i + 1][0] = (dp[i + 1][0] + dp[i][1]) % mod;//'a' followed by an 'e'.
+
+                dp[i + 1][1] = (dp[i + 1][1] + dp[i][0]) % mod;// 'e' may only be followed by an 'a' or an 'i'.
+                dp[i + 1][1] = (dp[i + 1][1] + dp[i][2]) % mod;// 'e' may only be followed by an 'a' or an 'i'.
+
+                for(int j = 0; j < 5; j++)
+                {
+                    if (j == 2) continue;
+                    dp[i + 1][2] = (dp[i + 1][2] + dp[i][j]) % mod;// 'i' may not be followed by another 'i'.
+                }
+
+                dp[i + 1][3] = (dp[i + 1][3] + dp[i][2]) % mod;//'o' may only be followed by an 'i' or a 'u'.
+                dp[i + 1][3] = (dp[i + 1][3] + dp[i][4]) % mod;//'o' may only be followed by an 'i' or a 'u'.
+
+                dp[i + 1][4] = (dp[i + 1][4] + dp[i][0]) % mod;//'u' may only be followed by an 'a'.
+            }
+            int res = 0;
+            for(int i = 0; i < dp[n-1].Length; i++)
+                res = (res + dp[n - 1][i]) % mod;
+            return res;
+        }
+
         ///1221. Split a String in Balanced Strings
         public int BalancedStringSplit(string s)
         {
