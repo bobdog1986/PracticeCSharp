@@ -16,7 +16,7 @@ namespace LeetCodeAlgo
             //List<string> strMatLines = File.ReadLines("StringMatrix.txt").ToList();
             //List<string> strArrLines = File.ReadLines("StringArr.txt").ToList();
             List<string> intArrLines = File.ReadLines("IntArr.txt").ToList();
-            //List<string> intMatLines = File.ReadLines("IntMatrix.txt").ToList();
+            List<string> intMatLines = File.ReadLines("IntMatrix.txt").ToList();
 
             //var matStrLine0 = answer.buildStringMatrix(strMatLines[0]);//build string[][] from file
             //char[][] matCharLine0 = answer.buildCharMatrix(strMatLines[0]);//build char[][] from file due to leetcode using ""
@@ -43,7 +43,7 @@ namespace LeetCodeAlgo
             int[] arr2 = answer.buildArray(arrStrInt2);
 
             ///build int[][] and int[] from file
-            //int[][] matIntLine0 = answer.buildMatrix(intMatLines[0]);
+            int[][] matIntLine0 = answer.buildMatrix(intMatLines[0]);
             //int[][] matIntLine1 = answer.buildMatrix(intMatLines[1]);
             int[] arrIntLine1 = answer.buildArray(intArrLines[0]);
 
@@ -51,7 +51,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.NumMagicSquaresInside(mat1);
+            var result = answer.MaximumWhiteTiles(matIntLine0,15572);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

@@ -472,12 +472,37 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2271. Maximum White Tiles Covered by a Carpet, #Sliding Window, #not pass
+        ///2271. Maximum White Tiles Covered by a Carpet, #Sliding Window, #SegmentTree
         public int MaximumWhiteTiles(int[][] tiles, int carpetLen)
         {
+            int res = 0;
+            int left = int.MaxValue;
+            int right = int.MinValue;
+            foreach(var i in tiles)
+            {
+                left = Math.Min(left, i[0]);
+                right = Math.Max(right, i[1]);
+            }
+            var tree = new SegmentIntervalTree(left, right);
+            //int n = tiles.Length;
+            //var tree = new SegmentIntervalTree(1, 1_000_000_000);
+            foreach (var i in tiles)
+            {
+                tree.Insert(i[0], i[1]);
+            }
+            foreach(var i in tiles)
+            {
+                res = Math.Max(res, tree.Count(i[0], i[0] + carpetLen - 1));
+                //res = Math.Max(res, tree.Count(i[1]- carpetLen +1, i[1] ));
+            }
+            return res;
+        }
+
+        public int MaximumWhiteTiles1(int[][] tiles, int carpetLen)
+        {
+            //not pass!!!
             tiles = tiles.OrderBy(x => x[0]).ToArray();
             int n = tiles.Length;
-
             int res = 0;
             int left = 0;
             int sum = 0;
@@ -487,58 +512,20 @@ namespace LeetCodeAlgo
                 {
                     if(tiles[left][0] + carpetLen-1 >= tiles[i][0])
                         res = Math.Max(res, sum + tiles[left][0] + carpetLen-1 - tiles[i][0]+1);
-                    while(left<i && tiles[left][0] + carpetLen-1 < tiles[i][1])
+                    while(left<=i && tiles[left][0] + carpetLen-1 < tiles[i][1])
                     {
                         sum -= tiles[left][1] - tiles[left][0] + 1;
                         left++;
                     }
-                    if (tiles[left][0] + carpetLen-1 >= tiles[i][1])
+                    if (left <= i)
                     {
                         sum += tiles[i][1] - tiles[i][0] + 1;
                         res = Math.Max(res, sum);
-                    }
-                    else
-                    {
-                        //left==i
-                        res = Math.Max(res, carpetLen);
-                        left++;
                     }
                 }
                 else
                 {
                     sum += tiles[i][1] - tiles[i][0] +1;
-                    res = Math.Max(res, sum);
-                }
-            }
-
-            int right = n - 1;
-            sum = 0;
-            for (int i = n-1; i >=0; i--)
-            {
-                if (tiles[right][1] - carpetLen + 1 > tiles[i][0])
-                {
-                    if (tiles[right][1] - carpetLen + 1 <= tiles[i][1])
-                        res = Math.Max(res, sum + tiles[i][1] -(tiles[right][1] - carpetLen + 1 ) + 1);
-                    while (right > i && tiles[right][1] - carpetLen + 1 > tiles[i][0])
-                    {
-                        sum -= tiles[right][1] - tiles[right][0] + 1;
-                        right--;
-                    }
-                    if (tiles[right][1] - carpetLen + 1 <= tiles[i][0])
-                    {
-                        sum += tiles[i][1] - tiles[i][0] + 1;
-                        res = Math.Max(res, sum);
-                    }
-                    else
-                    {
-                        //right==i
-                        res = Math.Max(res, carpetLen);
-                        right--;
-                    }
-                }
-                else
-                {
-                    sum += tiles[i][1] - tiles[i][0] + 1;
                     res = Math.Max(res, sum);
                 }
             }

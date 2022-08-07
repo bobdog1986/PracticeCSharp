@@ -227,7 +227,7 @@ namespace LeetCodeAlgo
 
         public void Insert(int left, int right)
         {
-            insertInternal(root, left, right);
+            insertInternal(root, Math.Max(root.start, left),Math.Min(root.end, right));
         }
 
         private long insertInternal(SegmentNode node, int left, int right)
@@ -268,7 +268,7 @@ namespace LeetCodeAlgo
             if (left == int.MinValue)
                 return (int)countInternal(root, root.start, root.end);
             else
-                return (int)countInternal(root, left, right);
+                return (int)countInternal(root, Math.Max(root.start, left), Math.Min(root.end, right));
         }
 
         private long countInternal(SegmentNode node, int left, int right)
