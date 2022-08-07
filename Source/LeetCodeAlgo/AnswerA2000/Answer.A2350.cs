@@ -268,5 +268,35 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///2368. Reachable Nodes With Restrictions
+        public int ReachableNodes(int n, int[][] edges, int[] restricted)
+        {
+            HashSet<int> res =new  HashSet<int>();
+            List<int>[] graph = new List<int>[n];
+            for(int i = 0; i < n; i++)
+            {
+                graph[i] = new List<int>();
+            }
+            foreach(var e in edges)
+            {
+                graph[e[0]].Add(e[1]);
+                graph[e[1]].Add(e[0]);
+            }
+            HashSet<int> set = new HashSet<int>(restricted);
+            ReachableNodes(0, -1, graph, set, res);
+            return res.Count;
+        }
+
+        private void ReachableNodes(int i, int prev, List<int>[] graph, HashSet<int> set, HashSet<int> res)
+        {
+            res.Add(i);
+            foreach(var j in graph[i])
+            {
+                if (j == prev) continue;
+                if (set.Contains(j)) continue;
+                ReachableNodes(j, i, graph, set, res);
+            }
+        }
     }
 }
