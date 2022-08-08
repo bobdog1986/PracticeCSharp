@@ -17,8 +17,22 @@ namespace LeetCodeAlgo.Design
 
     public class FancySegmentTreeLazy
     {
+        protected class SegmentNode
+        {
+            public readonly int start, end;
+            public SegmentNode left, right;
+            public long sum = 0;
+            public int max = int.MinValue, min = int.MaxValue;
+            public long m = 1, inc = 0;
+            public SegmentNode(int start, int end)
+            {
+                this.start = start;
+                this.end = end;
+            }
+        }
+
         private readonly long mod = 1_000_000_007;
-        public SegmentNode root = null;
+        protected SegmentNode root = null;
         public int index=-1;
         private readonly int[] arr;
         public FancySegmentTreeLazy(int[] nums)

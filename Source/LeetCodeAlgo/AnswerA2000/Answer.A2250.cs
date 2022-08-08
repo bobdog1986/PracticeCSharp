@@ -473,7 +473,46 @@ namespace LeetCodeAlgo
         }
 
         ///2271. Maximum White Tiles Covered by a Carpet, #Sliding Window, #SegmentTree
+        //tiles no overlap,return max sum in range [tiles[i][0],tiles[i][0]+carpetLen)
         public int MaximumWhiteTiles(int[][] tiles, int carpetLen)
+        {
+            tiles = tiles.OrderBy(x => x[0]).ToArray();//sort then move from left to right
+            int n = tiles.Length;
+            int res = 0;
+            int left = 0;//the left most tile
+            int sum = 0;
+            for (int i = 0; i < n; i++)
+            {
+                if (tiles[left][0] + carpetLen - 1 < tiles[i][1])//if we cannot cover whole i-th tile
+                {
+                    if (tiles[left][0] + carpetLen - 1 >= tiles[i][0])
+                        res = Math.Max(res, sum + tiles[left][0] + carpetLen - 1 - tiles[i][0] + 1);//update res
+                    //move left step by step until we can cover whole i-th tile or failed (left=i+1)
+                    while (left <= i && tiles[left][0] + carpetLen - 1 < tiles[i][1])
+                    {
+                        sum -= tiles[left][1] - tiles[left][0] + 1;
+                        left++;
+                        //here we must update res again, or fail with testcase 44
+                        if (left <= i && tiles[left][0] + carpetLen - 1 >= tiles[i][0]
+                                    && tiles[left][0] + carpetLen - 1 < tiles[i][1])
+                            res = Math.Max(res, sum + tiles[left][0] + carpetLen - 1 - tiles[i][0] + 1);
+                    }
+                    if (left <= i)//if finally we can cover whole current i-th tile
+                    {
+                        sum += tiles[i][1] - tiles[i][0] + 1;
+                        res = Math.Max(res, sum);
+                    }
+                }
+                else
+                {
+                    sum += tiles[i][1] - tiles[i][0] + 1;//we can cover current i-th tile without move left
+                    res = Math.Max(res, sum);
+                }
+            }
+            return res;
+        }
+
+        public int MaximumWhiteTiles_SegmentIntervalTree(int[][] tiles, int carpetLen)
         {
             int res = 0;
             int left = int.MaxValue;
@@ -494,40 +533,6 @@ namespace LeetCodeAlgo
             {
                 res = Math.Max(res, tree.Count(i[0], i[0] + carpetLen - 1));
                 //res = Math.Max(res, tree.Count(i[1]- carpetLen +1, i[1] ));
-            }
-            return res;
-        }
-
-        public int MaximumWhiteTiles1(int[][] tiles, int carpetLen)
-        {
-            //not pass!!!
-            tiles = tiles.OrderBy(x => x[0]).ToArray();
-            int n = tiles.Length;
-            int res = 0;
-            int left = 0;
-            int sum = 0;
-            for(int i = 0; i < n; i++)
-            {
-                if (tiles[left][0] + carpetLen-1 < tiles[i][1])
-                {
-                    if(tiles[left][0] + carpetLen-1 >= tiles[i][0])
-                        res = Math.Max(res, sum + tiles[left][0] + carpetLen-1 - tiles[i][0]+1);
-                    while(left<=i && tiles[left][0] + carpetLen-1 < tiles[i][1])
-                    {
-                        sum -= tiles[left][1] - tiles[left][0] + 1;
-                        left++;
-                    }
-                    if (left <= i)
-                    {
-                        sum += tiles[i][1] - tiles[i][0] + 1;
-                        res = Math.Max(res, sum);
-                    }
-                }
-                else
-                {
-                    sum += tiles[i][1] - tiles[i][0] +1;
-                    res = Math.Max(res, sum);
-                }
             }
             return res;
         }

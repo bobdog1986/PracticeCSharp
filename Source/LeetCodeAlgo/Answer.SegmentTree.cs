@@ -6,24 +6,26 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
-    public class SegmentNode
-    {
-        public readonly int start, end;
-        public SegmentNode left, right;
-        public long sum = 0;
-        public int max = int.MinValue, min = int.MaxValue;
-        public long m = 1, inc = 0;
-        public List<char> listStr=new List<char>();
-        public SegmentNode(int start, int end)
-        {
-            this.start = start;
-            this.end = end;
-        }
-    }
-
+    /// <summary>
+    /// standard segment tree for update and range query of sum/min/max
+    /// </summary>
     public class SegmentTree
     {
-        public readonly SegmentNode root;
+        protected class SegmentNode
+        {
+            public readonly int start, end;
+            public SegmentNode left, right;
+            public long sum = 0;
+            public int max = int.MinValue, min = int.MaxValue;
+            public long m = 1, inc = 0;
+            public SegmentNode(int start, int end)
+            {
+                this.start = start;
+                this.end = end;
+            }
+        }
+
+        protected readonly SegmentNode root;
 
         /// <summary>
         /// Lazy Build
@@ -40,7 +42,7 @@ namespace LeetCodeAlgo
             this.root = buildInternal(nums, 0, nums.Length-1);
         }
 
-        private SegmentNode buildInternal(int[] nums, int start, int end)
+        protected SegmentNode buildInternal(int[] nums, int start, int end)
         {
             if (start > end)
                 return null;
@@ -69,7 +71,7 @@ namespace LeetCodeAlgo
             updateInternal(root, index, val);
         }
 
-        private void updateInternal(SegmentNode node, int index ,int val)
+        protected void updateInternal(SegmentNode node, int index ,int val)
         {
             if (node == null) return;
             if(index>=node.start && index <= node.end)
@@ -105,10 +107,10 @@ namespace LeetCodeAlgo
 
         public long SumRange(int left,int right)
         {
-            return sumRangeInternal(root, left, right);
+            return sumRangeInternal(root, Math.Max(root.start, left), Math.Min(root.end, right));
         }
 
-        private long sumRangeInternal(SegmentNode node, int left,int right)
+        protected long sumRangeInternal(SegmentNode node, int left,int right)
         {
             if (node == null) return 0;
             if (node.start > right || node.end < left) return 0;
@@ -141,10 +143,10 @@ namespace LeetCodeAlgo
 
         public int MinRange(int left, int right)
         {
-            return minRangeInternal(root, left, right);
+            return minRangeInternal(root, Math.Max(root.start, left), Math.Min(root.end, right));
         }
 
-        private int minRangeInternal(SegmentNode node, int left, int right)
+        protected int minRangeInternal(SegmentNode node, int left, int right)
         {
             if (node == null) return int.MaxValue;
             if (node.start > right || node.end < left) return int.MaxValue;
@@ -177,7 +179,7 @@ namespace LeetCodeAlgo
 
         public int MaxRange(int left, int right)
         {
-            return maxRangeInternal(root, left, right);
+            return maxRangeInternal(root, Math.Max(root.start, left), Math.Min(root.end, right));
         }
 
         private int maxRangeInternal(SegmentNode node, int left, int right)
@@ -214,11 +216,24 @@ namespace LeetCodeAlgo
     }
 
     /// <summary>
-    /// Impl of SegmentIntervalTree, for insert interval and count how many points visited
+    /// Impl of SegmentIntervalTree(Lazy-Build), for insert interval and count covered range
     /// </summary>
     public class SegmentIntervalTree
     {
-        public readonly SegmentNode root;
+        protected class SegmentNode
+        {
+            public readonly int start, end;
+            public SegmentNode left, right;
+            public long sum = 0;
+            public int max = int.MinValue, min = int.MaxValue;
+            public SegmentNode(int start, int end)
+            {
+                this.start = start;
+                this.end = end;
+            }
+        }
+
+        protected readonly SegmentNode root;
         //lazy build for merge intervals, 1_000_000_000 is too big for normal segment tree
         public SegmentIntervalTree(int start, int end)
         {
@@ -230,7 +245,7 @@ namespace LeetCodeAlgo
             insertInternal(root, Math.Max(root.start, left),Math.Min(root.end, right));
         }
 
-        private long insertInternal(SegmentNode node, int left, int right)
+        protected long insertInternal(SegmentNode node, int left, int right)
         {
             //all range of [start,end] already visited
             if (node.sum == node.end - node.start + 1)
@@ -271,7 +286,7 @@ namespace LeetCodeAlgo
                 return (int)countInternal(root, Math.Max(root.start, left), Math.Min(root.end, right));
         }
 
-        private long countInternal(SegmentNode node, int left, int right)
+        protected long countInternal(SegmentNode node, int left, int right)
         {
             if (node == null) return 0;
             //all range of [start,end] already visited
@@ -302,7 +317,21 @@ namespace LeetCodeAlgo
 
     public class SegmentLongestSubstrTree
     {
-        public readonly SegmentNode root;
+        protected class SegmentNode
+        {
+            public readonly int start, end;
+            public SegmentNode left, right;
+            public long sum = 0;
+            public int max = int.MinValue, min = int.MaxValue;
+            public List<char> listStr = new List<char>();
+            public SegmentNode(int start, int end)
+            {
+                this.start = start;
+                this.end = end;
+            }
+        }
+
+        protected readonly SegmentNode root;
 
         /// <summary>
         /// Lazy Build
@@ -314,7 +343,7 @@ namespace LeetCodeAlgo
             this.root = buildInternal(s, 0, s.Length - 1);
         }
 
-        private SegmentNode buildInternal(string s, int start, int end)
+        protected SegmentNode buildInternal(string s, int start, int end)
         {
             if (start > end)
                 return null;
@@ -357,7 +386,7 @@ namespace LeetCodeAlgo
             updateInternal(root, index, val);
         }
 
-        private void updateInternal(SegmentNode node, int index, char val)
+        protected void updateInternal(SegmentNode node, int index, char val)
         {
             if (node == null) return;
             if (index >= node.start && index <= node.end)
