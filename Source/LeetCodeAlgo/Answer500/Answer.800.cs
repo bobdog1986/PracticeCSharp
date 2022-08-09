@@ -422,6 +422,31 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///823. Binary Trees With Factors, #DP
+        //Given an array of unique integers, arr, where each integer arr[i] is strictly greater than 1.
+        //We make a binary tree using these integers, and each number may be used for any number of times.
+        //Each non-leaf node's value should be equal to the product of the values of its children.
+        //Return the number of binary trees we can make.modulo 10^9 + 7.
+        public int NumFactoredBinaryTrees(int[] arr)
+        {
+            long res = 0;
+            long mod = 1_000_000_007;
+            Dictionary<int, long> dict = new Dictionary<int, long>();
+            Array.Sort(arr);
+            foreach(var i in arr)
+            {
+                dict.Add(i, 1);
+                foreach (var k in dict.Keys)
+                {
+                    if (i % k == 0 && dict.ContainsKey(i / k))
+                        dict[i] = (dict[i] + dict[k] * dict[i / k]) % mod;
+                }
+            }
+            foreach(var k in dict.Keys)
+                res =( res + dict[k])% mod;
+            return (int)res;
+        }
+
         ///824. Goat Latin
         public string ToGoatLatin(string sentence)
         {
