@@ -365,6 +365,46 @@ namespace LeetCodeAlgo
             }
             return n == 0;
         }
+        ///1781. Sum of Beauty of All Substrings, #Prefix Sum
+        //The beauty of a string is the difference in frequencies between the most and least frequent characters.
+        //Given a string s, return the sum of beauty of all of its substrings.
+        public int BeautySum(string s)
+        {
+            int res = 0;
+            int n = s.Length;
+            int[][] prefixMat = new int[26][];
+            for(int i=0;i<26;i++)
+                prefixMat[i] = new int[n];
+            int[] sumArr = new int[26];
+            for(int i = 0; i < n; i++)
+            {
+                sumArr[s[i] - 'a']++;
+                for(int j=0;j<26;j++)
+                    prefixMat[j][i] = sumArr[j];
+            }
+
+            for(int i = 0; i < n; i++)
+            {
+                for (int j = i + 1; j < n; j++)
+                {
+                    string str = s.Substring(i, j - i + 1);
+                    int max = 0;
+                    int min = int.MaxValue;
+                    for(int k = 0; k < 26; k++)
+                    {
+                        int curr = prefixMat[k][j];
+                        if (i > 0)
+                            curr -= prefixMat[k][i - 1];
+                        if (curr == 0) continue;
+                        max = Math.Max(max, curr);
+                        min = Math.Min(min, curr);
+                    }
+                    res += max - min;
+                }
+            }
+            return res;
+        }
+
         /// 1784. Check if Binary String Has at Most One Segment of Ones
         public bool CheckOnesSegment(string s)
         {
