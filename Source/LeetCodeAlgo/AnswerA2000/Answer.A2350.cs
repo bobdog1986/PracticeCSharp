@@ -408,5 +408,21 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2374. Node With Highest Edge Score
+        public int EdgeScore(int[] edges)
+        {
+            int n = edges.Length;
+            Dictionary<int, long> dict = new Dictionary<int, long>();
+            for(int i = 0; i < n; i++)
+            {
+                if(!dict.ContainsKey(edges[i]))
+                    dict.Add(edges[i], 0);
+                dict[edges[i]] += i;
+            }
+            var max = dict.Values.Max();
+            var keys = dict.Keys.Where(x => dict[x] == max).OrderBy(x => x).ToList();
+            return keys.First();
+        }
+
     }
 }
