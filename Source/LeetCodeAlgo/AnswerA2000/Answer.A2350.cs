@@ -382,5 +382,31 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2373. Largest Local Values in a Matrix
+        //find the largest value in every contiguous 3 x 3 matrix in grid.
+        public int[][] LargestLocal(int[][] grid)
+        {
+            int n = grid.Length;
+            int[][] res = new int[n - 2][];
+            for (int i = 0; i < res.Length; i++)
+                res[i] = new int[n - 2];
+            for(int i = 0; i < res.Length; i++)
+            {
+                for(int j = 0; j < res.Length; j++)
+                {
+                    int max = 0;
+                    for(int k = i; k <= i + 2; k++)
+                    {
+                        for(int m = j; m <= j + 2; m++)
+                        {
+                            max = Math.Max(max, grid[k][m]);
+                        }
+                    }
+                    res[i][j] = max;
+                }
+            }
+            return res;
+        }
+
     }
 }
