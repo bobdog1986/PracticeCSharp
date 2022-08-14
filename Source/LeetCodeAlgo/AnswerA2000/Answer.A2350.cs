@@ -424,5 +424,55 @@ namespace LeetCodeAlgo
             return keys.First();
         }
 
+        ///2375. Construct Smallest Number From DI String, #Backtracking
+        // string pattern of length n  , characters 'I' meaning increasing and 'D' meaning decreasing.
+        //Return the lexicographically smallest possible string num that meets the conditions.
+        public string SmallestNumber(string pattern)
+        {
+            string res = "";
+            bool[] visit = new bool[10];
+            for(int i = 1; i <= 9; i++)
+            {
+                visit[i] = true;
+                SmallestNumber_DFS(pattern, 0, $"{(char)(i + '0')}", visit, ref res);
+                visit[i] = false;
+            }
+            return res;
+        }
+
+        private void SmallestNumber_DFS(string pattern, int i , string curr, bool[] visit, ref string res)
+        {
+            if (!string.IsNullOrEmpty(res))
+                return;
+            if (i == pattern.Length)
+            {
+                res = curr;
+                return;
+            }
+            int prev = curr.Last() -'0';
+            if (pattern[i] == 'I')
+            {
+                for(int j = prev + 1; j <= 9; j++)
+                {
+                    if (visit[j]) continue;
+                    string next = $"{curr}{(char)(j+'0')}";
+                    visit[j]=true;
+                    SmallestNumber_DFS(pattern, i + 1, next, visit,ref res);
+                    visit[j] = false;
+                }
+            }
+            else
+            {
+                for (int j = 1; j <=prev-1; j++)
+                {
+                    if (visit[j]) continue;
+                    string next = $"{curr}{(char)(j + '0')}";
+                    visit[j] = true;
+                    SmallestNumber_DFS(pattern, i + 1, next,visit, ref res);
+                    visit[j] = false;
+                }
+            }
+        }
+
     }
 }
