@@ -449,29 +449,28 @@ namespace LeetCodeAlgo
                 res = curr;
                 return;
             }
-            int prev = curr.Last() -'0';
-            if (pattern[i] == 'I')
+            int prev = curr.Last() - '0';
+            int start = pattern[i] == 'I' ? prev + 1:1 ;
+            int end = pattern[i] == 'I' ? 9 : prev - 1;
+            for (int j =start; j <= end; j++)
             {
-                for(int j = prev + 1; j <= 9; j++)
-                {
-                    if (visit[j]) continue;
-                    string next = $"{curr}{(char)(j+'0')}";
-                    visit[j]=true;
-                    SmallestNumber_DFS(pattern, i + 1, next, visit,ref res);
-                    visit[j] = false;
-                }
+                if (visit[j]) continue;
+                string next = $"{curr}{(char)(j + '0')}";
+                visit[j] = true;
+                SmallestNumber_DFS(pattern, i + 1, next, visit, ref res);
+                visit[j] = false;
             }
-            else
-            {
-                for (int j = 1; j <=prev-1; j++)
-                {
-                    if (visit[j]) continue;
-                    string next = $"{curr}{(char)(j + '0')}";
-                    visit[j] = true;
-                    SmallestNumber_DFS(pattern, i + 1, next,visit, ref res);
-                    visit[j] = false;
-                }
-            }
+        }
+
+        ///2376. Count Special Integers
+        //We call a positive integer special if all of its digits are distinct.
+        //Given a positive integer n, return the number of special integers that belong to the interval[1, n].
+        //1 <= n <= 2 * 10^9
+
+        public int CountSpecialNumbers(int n)
+        {
+            int res = 0;
+            return res;
         }
 
     }

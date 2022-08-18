@@ -628,6 +628,28 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///1338. Reduce Array Size to The Half
+        public int MinSetSize(int[] arr)
+        {
+            int res = 0;
+            int count = 0;
+            int n = arr.Length;
+            var dict = new Dictionary<int, int>();
+            foreach(var i in arr)
+            {
+                if (dict.ContainsKey(i)) dict[i]++;
+                else dict.Add(i, 1);
+            }
+            var keys = dict.Keys.OrderBy(x => -dict[x]).ToList();
+            for(int i = 0; i < keys.Count; i++)
+            {
+                if (count >= (n + 1) / 2) break;
+                count += dict[keys[i]];
+                res++;
+            }
+            return res;
+        }
+
         ///1342. Number of Steps to Reduce a Number to Zero
         ///In one step, if even divide it by 2, otherwise subtract 1 from it.
         public int NumberOfSteps(int num)
