@@ -134,6 +134,54 @@ namespace LeetCodeAlgo
             return res.OrderBy(o => o).Select(o => arr[o]).ToList();
         }
 
+        ///659. Split Array into Consecutive Subsequences, #Greedy, #Good
+        //array nums that is sorted in non-decreasing order.
+        //split nums into one or more subsequences such that :
+        //  - Each subsequence is a consecutive increasing sequence
+        //  - All subsequences have a length of 3 or more.
+        //Return true if you can split nums according to the above conditions, or false otherwise.
+        public bool IsPossible_659(int[] nums)
+        {
+            Dictionary<int, int> startDict = new Dictionary<int, int>();
+            Dictionary<int, int> endDict = new Dictionary<int, int>();
+
+            foreach (var n in nums)
+            {
+                if (startDict.ContainsKey(n)) startDict[n]++;
+                else startDict.Add(n, 1);
+            }
+
+            foreach (int a in nums)
+            {
+                if (startDict[a] <= 0) continue;
+                startDict[a]--;
+
+                // place a in an existing subsequence if possible
+                if (endDict.ContainsKey(a - 1) && endDict[a - 1] > 0)
+                {
+                    endDict[a - 1]--;
+                    if (endDict.ContainsKey(a)) endDict[a]++;
+                    else endDict.Add(a, 1);
+                    continue;
+                }
+
+                // place a in a new subsequence
+                if (startDict.ContainsKey(a + 1) && startDict[a + 1] > 0 &&
+                    startDict.ContainsKey(a + 2) && startDict[a + 2] > 0)
+                {
+                    startDict[a + 1]--;
+                    startDict[a + 2]--;
+                    if (endDict.ContainsKey(a+2)) endDict[a+2]++;
+                    else endDict.Add(a+2, 1);
+                    continue;
+                }
+
+                // don't know where to place a? ---> false
+                return false;
+            }
+            return true;
+        }
+
         ///661. Image Smoother
         public int[][] ImageSmoother(int[][] img)
         {
