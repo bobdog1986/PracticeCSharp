@@ -473,7 +473,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2379. Minimum Recolors to Get K Consecutive Black Blocks , #Slinding Window
+        ///2379. Minimum Recolors to Get K Consecutive Black Blocks , #Sliding Window
         public int MinimumRecolors(string blocks, int k)
         {
             int max = 0;
@@ -494,5 +494,36 @@ namespace LeetCodeAlgo
             }
             return k - max;
         }
+
+        ///2380. Time Needed to Rearrange a Binary String
+        //In one second, all "01" should be replaced with "10". This process repeats until no occurrences of "01" exist.
+        //Return the number of seconds needed to complete this process.
+        public int SecondsToRemoveOccurrences(string s)
+        {
+            int res = 0;
+            int n = s.Length;
+            var list = s.ToCharArray();
+            while (true)
+            {
+                bool find = false;
+                for (int i = 0; i < n - 1; i++)
+                {
+                    if (list[i] == '0' && list[i + 1] == '1')
+                    {
+                        list[i] = '1';
+                        list[i + 1] = '0';
+                        find = true;
+                        i++;
+                    }
+                }
+                if (!find)
+                {
+                    return res;
+                }
+                else res++;
+            }
+            return res;
+        }
+
     }
 }
