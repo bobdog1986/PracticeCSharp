@@ -473,5 +473,26 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2379. Minimum Recolors to Get K Consecutive Black Blocks , #Slinding Window
+        public int MinimumRecolors(string blocks, int k)
+        {
+            int max = 0;
+            int left = 0;
+            int curr = 0;
+            for (int i = 0; i < blocks.Length; i++)
+            {
+                if (blocks[i] == 'B')
+                {
+                    curr++;
+                }
+                max = Math.Max(max, curr);
+                if (i - left + 1 == k)
+                {
+                    if (blocks[left] == 'B') curr--;
+                    left++;
+                }
+            }
+            return k - max;
+        }
     }
 }
