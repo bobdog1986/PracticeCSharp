@@ -239,6 +239,26 @@ namespace LeetCodeAlgo
                 return res;
             }
         }
+        ///869. Reordered Power of 2
+        //You are given an integer n.We reorder the digits in any order (including the original order)
+        //such that the leading digit is not zero.
+        //Return true if and only if we can do this so that the resulting number is a power of two.
+        public bool ReorderedPowerOf2(int n)
+        {
+            HashSet<string> set = new HashSet<string>();
+            int a = 1;
+            while (a <= 1_000_000_000)
+            {
+                var s = a.ToString().ToArray().OrderBy(x => x).ToArray();
+                set.Add(new string(s));
+                a <<= 1;
+            }
+
+            var curr = n.ToString().ToArray().OrderBy(x => x).ToArray();
+            if (set.Contains(new string(curr))) return true;
+            else return false;
+        }
+
         /// 872. Leaf-Similar Trees, #BTree
         public bool LeafSimilar(TreeNode root1, TreeNode root2)
         {
