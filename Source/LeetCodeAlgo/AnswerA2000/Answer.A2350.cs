@@ -570,5 +570,26 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///2390. Removing Stars From a String
+        public string RemoveStars(string s)
+        {
+            int n = s.Length;
+            char[] arr = new char[n];
+            int index = -1;
+            for(int i = 0; i < n; i++)
+            {
+                if (s[i] != '*')
+                {
+                    arr[++index] = s[i];
+                }
+                else
+                {
+                    index--;
+                }
+            }
+            return new string(arr.Take(index + 1).ToArray());
+        }
+
     }
 }
