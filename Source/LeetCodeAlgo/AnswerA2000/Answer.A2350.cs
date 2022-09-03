@@ -591,5 +591,36 @@ namespace LeetCodeAlgo
             return new string(arr.Take(index + 1).ToArray());
         }
 
+        ///2391. Minimum Amount of Time to Collect Garbage
+        public int GarbageCollection(string[] garbage, int[] travel)
+        {
+            int res = 0;
+            res += GarbageCollection(garbage, 'P', travel);
+            res += GarbageCollection(garbage, 'G', travel);
+            res += GarbageCollection(garbage, 'M', travel);
+            return res;
+        }
+
+        private int GarbageCollection(string[] garbage, char c, int[] travel)
+        {
+            int n = garbage.Length;
+            int res = 0;
+            int right = n - 1;
+            for(; right >= 0; right--)
+            {
+                if (garbage[right].Contains(c))
+                    break;
+            }
+            if (right < 0)
+                return 0;
+            for(int i = 0; i <= right; i++)
+            {
+                res += garbage[i].Count(x=>x==c);
+                if(i!= right)
+                    res += travel[i];
+            }
+            return res;
+        }
+
     }
 }
