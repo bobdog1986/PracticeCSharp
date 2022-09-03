@@ -248,6 +248,33 @@ namespace LeetCodeAlgo
             }
             return ans.ToArray();
         }
+
+        ///967. Numbers With Same Consecutive Differences
+        //Return all non-negative integers of length n that the absolute difference between every two consecutive digits is k.
+        public int[] NumsSameConsecDiff(int n, int k)
+        {
+            List<int> res = new List<int>();
+            for(int i = 1; i <= 9; i++)
+                NumsSameConsecDiff(n - 1, k, i, i, res);
+            return res.ToArray();
+        }
+
+        private void NumsSameConsecDiff(int n, int k, int prev, int curr, List<int> res)
+        {
+            if(n == 0)
+                res.Add(curr);
+            else
+            {
+                int up = prev + k;
+                if (up <= 9)
+                    NumsSameConsecDiff(n - 1, k, up, curr * 10 + up, res);
+
+                int down = prev - k;
+                if (up!=down && down >= 0)//skip k==0
+                    NumsSameConsecDiff(n - 1, k, down, curr * 10 + down, res);
+            }
+        }
+
         ///968. Binary Tree Cameras, #Greedy, #DFS
         ///You are given the root of a binary tree. We install cameras on the tree nodes
         ///where each camera at a node can monitor its parent, itself, and its immediate children.
