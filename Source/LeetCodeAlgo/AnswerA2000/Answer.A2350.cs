@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,7 +66,7 @@ namespace LeetCodeAlgo
             //The important point to realize the sum of OR and AND is just the sum of bits of two numbers.
             var dict = new Dictionary<int, HashSet<int>>();
             var set = new HashSet<int>();
-            foreach(var n in nums)
+            foreach (var n in nums)
             {
                 set.Add(n);
                 var bits = getBitsCount(n);
@@ -81,7 +84,6 @@ namespace LeetCodeAlgo
             }
             return res;
         }
-
 
         //2357. Make Array Zero by Subtracting Equal Amounts
         public int MinimumOperations_A(int[] nums)
@@ -101,7 +103,7 @@ namespace LeetCodeAlgo
             int right = n;
             while (left < right)
             {
-                int mid = (left + right +1)/ 2;
+                int mid = (left + right + 1) / 2;
                 long count = (long)mid * (1 + mid) / 2;
                 if (count <= n)
                     left = mid;
@@ -223,15 +225,15 @@ namespace LeetCodeAlgo
         public long CountBadPairs(int[] nums)
         {
             int n = nums.Length;
-            long res = (long)n*(n-1)/2;
-            Dictionary<int,int> dict = new Dictionary<int, int>();
-            for(int i = 0; i < n; i++)
+            long res = (long)n * (n - 1) / 2;
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            for (int i = 0; i < n; i++)
             {
                 int val = i - nums[i];
                 if (dict.ContainsKey(val)) dict[val]++;
                 else dict.Add(val, 1);
             }
-            foreach(var k in dict.Keys)
+            foreach (var k in dict.Keys)
             {
                 res -= (long)dict[k] * (dict[k] - 1) / 2;
             }
@@ -245,18 +247,18 @@ namespace LeetCodeAlgo
         {
             Dictionary<int, long> dict = new Dictionary<int, long>();//store {taskId,lastDayOfTask}
             long days = 0;
-            for(int i = 0; i < tasks.Length;i++)
+            for (int i = 0; i < tasks.Length; i++)
             {
                 if (dict.ContainsKey(tasks[i]))
                 {
-                    if(days - dict[tasks[i]] > space)//no need to wait
+                    if (days - dict[tasks[i]] > space)//no need to wait
                     {
-                        dict[tasks[i]]=days;
+                        dict[tasks[i]] = days;
                         days++;
                     }
                     else
                     {
-                        days = dict[tasks[i]] + space+1;//must wait until dsy = dict[tasks[i]] + space+1
+                        days = dict[tasks[i]] + space + 1;//must wait until dsy = dict[tasks[i]] + space+1
                         dict[tasks[i]] = days;
                         days++;
                     }
@@ -277,7 +279,7 @@ namespace LeetCodeAlgo
             long res = 0;
             int n = nums.Length;
             int max = nums.Last();
-            for(int i = n - 1; i >= 0; i--)
+            for (int i = n - 1; i >= 0; i--)
             {
                 //x is count to split, still work for nums[i]<=max
                 int x = (nums[i] + max - 1) / max;
@@ -294,15 +296,15 @@ namespace LeetCodeAlgo
         {
             int n = nums.Length;
             int res = 0;
-            for(int i = 0; i < n - 2; i++)
+            for (int i = 0; i < n - 2; i++)
             {
-                for(int j = i + 1; j < n - 1; j++)
+                for (int j = i + 1; j < n - 1; j++)
                 {
-                    if (nums[j] -nums[i] !=diff) continue;
-                    for(int k = j + 1; k < n; k++)
+                    if (nums[j] - nums[i] != diff) continue;
+                    for (int k = j + 1; k < n; k++)
                     {
-                        if (nums[k] -nums[j]!=diff) continue;
-                        if (nums[k] - nums[j] ==diff && nums[j] - nums[i]==diff)
+                        if (nums[k] - nums[j] != diff) continue;
+                        if (nums[k] - nums[j] == diff && nums[j] - nums[i] == diff)
                             res++;
                     }
                 }
@@ -313,13 +315,13 @@ namespace LeetCodeAlgo
         ///2368. Reachable Nodes With Restrictions
         public int ReachableNodes(int n, int[][] edges, int[] restricted)
         {
-            HashSet<int> res =new  HashSet<int>();
+            HashSet<int> res = new HashSet<int>();
             List<int>[] graph = new List<int>[n];
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
                 graph[i] = new List<int>();
             }
-            foreach(var e in edges)
+            foreach (var e in edges)
             {
                 graph[e[0]].Add(e[1]);
                 graph[e[1]].Add(e[0]);
@@ -332,7 +334,7 @@ namespace LeetCodeAlgo
         private void ReachableNodes(int i, int prev, List<int>[] graph, HashSet<int> set, HashSet<int> res)
         {
             res.Add(i);
-            foreach(var j in graph[i])
+            foreach (var j in graph[i])
             {
                 if (j == prev) continue;
                 if (set.Contains(j)) continue;
@@ -344,15 +346,15 @@ namespace LeetCodeAlgo
         public bool ValidPartition(int[] nums)
         {
             int n = nums.Length;
-            bool[] dp = new bool[n+1];
+            bool[] dp = new bool[n + 1];
             dp[0] = true;
-            for(int i = 2; i <= n; i++)
+            for (int i = 2; i <= n; i++)
             {
-                if(nums[i - 1] == nums[i - 2])
+                if (nums[i - 1] == nums[i - 2])
                     dp[i] |= dp[i - 2];
-                if (i>=3 && nums[i - 1] == nums[i - 2] && nums[i - 1] == nums[i - 3])
+                if (i >= 3 && nums[i - 1] == nums[i - 2] && nums[i - 1] == nums[i - 3])
                     dp[i] |= dp[i - 3];
-                if (i >= 3 && nums[i - 1] == nums[i - 2] +1 && nums[i - 1] == nums[i - 3]+2)
+                if (i >= 3 && nums[i - 1] == nums[i - 2] + 1 && nums[i - 1] == nums[i - 3] + 2)
                     dp[i] |= dp[i - 3];
             }
             return dp.Last();
@@ -374,7 +376,7 @@ namespace LeetCodeAlgo
                 for (int j = 0; j < 26; j++)
                     dp[i][j] = dp[i - 1][j];
 
-                int m = s[i-1]-'a';
+                int m = s[i - 1] - 'a';
                 for (int j = Math.Max(0, m - k); j < 26 && j <= m + k; j++)
                     dp[i][m] = Math.Max(dp[i][m], 1 + dp[i - 1][j]);
                 res = Math.Max(res, dp[i][m]);
@@ -390,14 +392,14 @@ namespace LeetCodeAlgo
             int[][] res = new int[n - 2][];
             for (int i = 0; i < res.Length; i++)
                 res[i] = new int[n - 2];
-            for(int i = 0; i < res.Length; i++)
+            for (int i = 0; i < res.Length; i++)
             {
-                for(int j = 0; j < res.Length; j++)
+                for (int j = 0; j < res.Length; j++)
                 {
                     int max = 0;
-                    for(int k = i; k <= i + 2; k++)
+                    for (int k = i; k <= i + 2; k++)
                     {
-                        for(int m = j; m <= j + 2; m++)
+                        for (int m = j; m <= j + 2; m++)
                         {
                             max = Math.Max(max, grid[k][m]);
                         }
@@ -413,9 +415,9 @@ namespace LeetCodeAlgo
         {
             int n = edges.Length;
             Dictionary<int, long> dict = new Dictionary<int, long>();
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
-                if(!dict.ContainsKey(edges[i]))
+                if (!dict.ContainsKey(edges[i]))
                     dict.Add(edges[i], 0);
                 dict[edges[i]] += i;
             }
@@ -431,7 +433,7 @@ namespace LeetCodeAlgo
         {
             string res = "";
             bool[] visit = new bool[10];
-            for(int i = 1; i <= 9; i++)
+            for (int i = 1; i <= 9; i++)
             {
                 visit[i] = true;
                 SmallestNumber_DFS(pattern, 0, $"{(char)(i + '0')}", visit, ref res);
@@ -440,7 +442,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        private void SmallestNumber_DFS(string pattern, int i , string curr, bool[] visit, ref string res)
+        private void SmallestNumber_DFS(string pattern, int i, string curr, bool[] visit, ref string res)
         {
             if (!string.IsNullOrEmpty(res))
                 return;
@@ -450,9 +452,9 @@ namespace LeetCodeAlgo
                 return;
             }
             int prev = curr.Last() - '0';
-            int start = pattern[i] == 'I' ? prev + 1:1 ;
+            int start = pattern[i] == 'I' ? prev + 1 : 1;
             int end = pattern[i] == 'I' ? 9 : prev - 1;
-            for (int j =start; j <= end; j++)
+            for (int j = start; j <= end; j++)
             {
                 if (visit[j]) continue;
                 string next = $"{curr}{(char)(j + '0')}";
@@ -525,5 +527,48 @@ namespace LeetCodeAlgo
             return res;
         }
 
+
+        ///2389. Longest Subsequence With Limited Sum
+        public int[] AnswerQueries(int[] nums, int[] queries)
+        {
+            int n = nums.Length;
+            int m = queries.Length;
+            Array.Sort(nums);
+            int[] preSum = new int[n];
+            int sum = 0;
+            for(int i = 0; i < n; i++)
+            {
+                sum += nums[i];
+                preSum[i] = sum;
+            }
+
+            int[] res = new int[m];
+            for(int i = 0; i < m; i++)
+            {
+                if (queries[i] < preSum[0])
+                    res[i] = 0;
+                else if (queries[i] >= preSum.Last())
+                    res[i] = n;
+                else
+                {
+                    int left = 0;
+                    int right = n - 1;
+                    while (left < right)
+                    {
+                        int mid =( left + right+1 )/ 2;
+                        if (preSum[mid] <= queries[i])
+                        {
+                            left = mid;
+                        }
+                        else
+                        {
+                            right = mid - 1;
+                        }
+                    }
+                    res[i] = left + 1;
+                }
+            }
+            return res;
+        }
     }
 }
