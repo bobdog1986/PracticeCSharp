@@ -622,5 +622,24 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2399. Check Distances Between Same Letters
+        public bool CheckDistances(string s, int[] distance)
+        {
+            var dict = new Dictionary<char, List<int>>();
+            for(int i = 0; i < s.Length; i++)
+            {
+                if (!dict.ContainsKey(s[i]))
+                    dict.Add(s[i], new List<int>());
+                dict[s[i]].Add(i);
+            }
+            foreach (var k in dict.Keys)
+            {
+                if (distance[k-'a'] != dict[k][1] - dict[k][0]-1)
+                    return false;
+            }
+            return true;
+        }
+
+
     }
 }
