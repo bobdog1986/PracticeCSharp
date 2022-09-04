@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace LeetCodeAlgo
 {
@@ -496,6 +497,42 @@ namespace LeetCodeAlgo
             return list.ToArray();
 
         }
+
+
+        ///987. Vertical Order Traversal of a Binary Tree
+        public IList<IList<int>> VerticalTraversal(TreeNode root)
+        {
+            var res = new List<IList<int>>();
+            var dict = new Dictionary<int, Dictionary<int, List<int>>>();
+            VerticalTraversal(root, 0, 0, dict);
+            var cols = dict.Keys.OrderBy(x => x).ToArray();
+            foreach(var c in cols)
+            {
+                var list = new List<int>();
+                var rows = dict[c].Keys.OrderBy(x => x).ToArray();
+                foreach(var r in rows)
+                    list.AddRange(dict[c][r].OrderBy(x => x));
+                res.Add(list);
+            }
+            return res;
+        }
+
+        private void VerticalTraversal(TreeNode node,int row , int col , Dictionary<int, Dictionary<int, List<int>>> dict)
+        {
+            if (node == null)
+                return;
+            if (!dict.ContainsKey(col))
+                dict.Add(col, new Dictionary<int, List<int>>());
+            if (!dict[col].ContainsKey(row))
+                dict[col].Add(row, new List<int>());
+            dict[col][row].Add(node.val);
+            if (node.left != null)
+                VerticalTraversal(node.left, row + 1, col - 1, dict);
+            if (node.right != null)
+                VerticalTraversal(node.right, row + 1, col + 1, dict);
+        }
+
+
         ///988. Smallest String Starting From Leaf, #BTree
         ///each node has a value in the range [0, 25] representing the letters 'a' to 'z'.
         ///Return the lexicographically smallest string that starts at a leaf of this tree and ends at the root.
