@@ -527,6 +527,32 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2381. Shifting Letters II
+        // array shifts where shifts[i] = [starti, endi, directioni]
+        //shift the characters in s from the index starti to the index endi (inclusive) forward if directioni = 1,
+        //or shift the characters backward if directioni = 0.
+        public string ShiftingLetters(string s, int[][] shifts)
+        {
+            int n = s.Length;
+            char[] res = new char[n];
+            int[] arr = new int[n + 1];
+            foreach(var shift in shifts)
+            {
+                arr[shift[0]] += shift[2] == 1 ? 1 : -1;
+                arr[shift[1]+1] += shift[2] == 0 ? 1 : -1;
+            }
+            int move = 0;//total shifts
+            for(int i = 0; i < n; i++)
+            {
+                move += arr[i];
+                int curr = s[i] + move % 26;
+                if (curr > 'z') curr -= 26;
+                else if (curr < 'a') curr += 26;
+                res[i] = (char)curr;
+            }
+            return new string(res);
+        }
+
 
         ///2389. Longest Subsequence With Limited Sum
         public int[] AnswerQueries(int[] nums, int[] queries)
