@@ -123,5 +123,40 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        /// 2404. Most Frequent Even Element
+        public int MostFrequentEven(int[] nums)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach(var n in nums)
+            {
+                if (n % 2 == 0)
+                {
+                    if (dict.ContainsKey(n)) dict[n]++;
+                    else dict.Add(n, 1);
+                }
+            }
+
+            if (dict.Keys.Count == 0) return -1;
+            int res = -1;
+            int max = 0;
+            foreach(var k in dict.Keys)
+            {
+                if (dict[k] > max)
+                {
+                    max = dict[k];
+                    res = k;
+                }
+                else if (dict[k] == max)
+                {
+                    if (k < res)
+                    {
+                        res = k;
+                    }
+                }
+            }
+            return res;
+        }
+
     }
 }
