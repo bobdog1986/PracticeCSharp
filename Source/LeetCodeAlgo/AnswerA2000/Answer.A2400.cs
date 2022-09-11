@@ -176,5 +176,19 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2406. Divide Intervals Into Minimum Number of Groups, #PriorityQueue
+        public int MinGroups(int[][] intervals)
+        {
+            intervals = intervals.OrderBy(x => x[0]).ThenBy(x => x[1]).ToArray();
+            var pq = new PriorityQueue<int, int>();
+            foreach(var i in intervals)
+            {
+                if (pq.Count >0 && pq.Peek() < i[0])
+                    pq.Dequeue();
+                pq.Enqueue(i[1], i[1]);
+            }
+            return pq.Count;
+        }
+
     }
 }
