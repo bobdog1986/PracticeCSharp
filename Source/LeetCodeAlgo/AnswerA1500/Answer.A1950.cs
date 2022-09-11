@@ -391,6 +391,21 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///1996. The Number of Weak Characters in the Game
+        public int NumberOfWeakCharacters(int[][] properties)
+        {
+            int res = 0;
+            properties = properties.OrderBy(p => -p[0]).ThenBy(p => p[1]).ToArray();
+            int max = int.MinValue;
+            foreach (var p in properties)
+            {
+                if (p[1] < max)
+                    res++;
+                max = Math.Max(max, p[1]);
+            }
+            return res;
+        }
+
         ///1997. First Day Where You Have Been in All the Rooms, #DP
         //Initially on day 0, you visit room 0.
         //-if you have been in room i an odd number of times (including the current visit),
