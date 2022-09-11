@@ -124,7 +124,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        /// 2404. Most Frequent Even Element
+        ///2404. Most Frequent Even Element
         public int MostFrequentEven(int[] nums)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
@@ -154,6 +154,24 @@ namespace LeetCodeAlgo
                         res = k;
                     }
                 }
+            }
+            return res;
+        }
+
+        ///2405. Optimal Partition of String
+        public int PartitionString(string s)
+        {
+            int res = 0;
+            HashSet<char> set = new HashSet<char>();
+            res++;
+            foreach(var c in s)
+            {
+                if (set.Contains(c))
+                {
+                    res++;
+                    set = new HashSet<char>();
+                }
+                set.Add(c);
             }
             return res;
         }
