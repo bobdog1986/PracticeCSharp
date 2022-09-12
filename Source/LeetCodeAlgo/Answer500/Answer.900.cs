@@ -704,5 +704,33 @@ namespace LeetCodeAlgo
             }
             return n - uf.GroupCount;//every group will finally left 1 stone that cannot be removed!
         }
+
+        ///948. Bag of Tokens, #Two Pointer, #Greedy
+        //power - tokens[i], score+1; else power + tokens[i], , score-1;
+        //return max score, use any number tokens each atmost 1 time
+        public int BagOfTokensScore(int[] tokens, int power)
+        {
+            int res = 0;
+            Array.Sort(tokens);
+            int left = 0;
+            int right = tokens.Length - 1;
+            while (left <= right)
+            {
+                if (power >= tokens[left])
+                {
+                    power -= tokens[left++];
+                    res++;
+                }
+                else
+                {
+                    if (left == right) break;
+                    if (res == 0) break;
+                    power += tokens[right--];
+                    res--;
+                }
+            }
+            return res;
+        }
+
     }
 }
