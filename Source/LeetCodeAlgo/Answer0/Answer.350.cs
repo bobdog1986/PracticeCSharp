@@ -468,6 +468,48 @@ namespace LeetCodeAlgo
             return j == sLen;
         }
 
+        ///393. UTF-8 Validation
+        public bool ValidUtf8(int[] data)
+        {
+            int n = data.Length;
+            for (int i = 0; i < n; i++)
+            {
+                var ones = ValidUtf8_HighestOnes(data[i]);
+                if (ones == 0) continue;
+                else if (ones == 1) return false;
+                else if (ones == 2)
+                {
+                    if (i < n - 1 && (data[i + 1] & (1 << 7)) != 0) i += 1;
+                    else return false;
+                }
+                else if (ones == 3)
+                {
+                    if (i < n - 2 && (data[i + 1] & (1 << 7)) != 0 && (data[i + 2] & (1 << 7)) != 0) i += 2;
+                    else return false;
+                }
+                else if (ones == 4)
+                {
+                    if (i < n - 3
+                        && (data[i + 1] & (1 << 7)) != 0
+                        && (data[i + 2] & (1 << 7)) != 0
+                        && (data[i + 3] & (1 << 7)) != 0) i += 3;
+                    else return false;
+                }
+                else return false;
+            }
+            return true;
+        }
+        private int ValidUtf8_HighestOnes(int val)
+        {
+            int seed = 1 << 7;
+            int res = 0;
+            while((val & seed) != 0)
+            {
+                res++;
+                seed >>= 1;
+            }
+            return res;
+        }
         ///394. Decode String
         ///The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times.
         ///Input: s = "3[a]2[bc]"       =>      Output: "aaabcbc";
