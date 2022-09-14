@@ -40,6 +40,31 @@ namespace LeetCodeAlgo
             return max;
         }
 
+        ///1457. Pseudo-Palindromic Paths in a Binary Tree
+        public int PseudoPalindromicPaths(TreeNode root)
+        {
+            int res = 0;
+            int[] arr = new int[9];
+            PseudoPalindromicPaths(root, arr, ref res);
+            return res;
+        }
+
+        private void PseudoPalindromicPaths(TreeNode node, int[] arr, ref int res)
+        {
+            if (node == null) return;
+            arr[node.val - 1]++;
+            if (node.left == null && node.right == null)
+            {
+                if (arr.Count(x => x % 2 != 0) <= 1)
+                    res++;
+            }
+            if (node.left != null)
+                PseudoPalindromicPaths(node.left, arr, ref res);
+            if (node.right != null)
+                PseudoPalindromicPaths(node.right, arr, ref res);
+            arr[node.val - 1]--;
+        }
+
         /// 1461. Check If a String Contains All Binary Codes of Size K
         ///return true if every binary code of length k is a substring of s. Otherwise, return false.
         public bool HasAllCodes(string s, int k)
