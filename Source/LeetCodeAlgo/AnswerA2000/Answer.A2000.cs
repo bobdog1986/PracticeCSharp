@@ -111,6 +111,42 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///2007. Find Original Array From Doubled Array
+        public int[] FindOriginalArray(int[] changed)
+        {
+            int n = changed.Length;
+            var res = new List<int>();
+            if ((n&1) ==1) return Array.Empty<int>();
+            var dict = new Dictionary<int, int>();
+            foreach (var i in changed)
+            {
+                if (dict.ContainsKey(i)) dict[i]++;
+                else dict.Add(i, 1);
+            }
+
+            var keys = dict.Keys.OrderBy(x => x).ToArray();
+            for (int i = 0; i<keys.Length; i++)
+            {
+                if (keys[i] == 0 || dict[keys[i]]==0) continue;
+                if (dict.ContainsKey(2*keys[i]))
+                {
+                    if (dict[2*keys[i]]<dict[keys[i]]) return Array.Empty<int>();
+                    else
+                    {
+                        res.AddRange(Enumerable.Repeat(keys[i], dict[keys[i]]));
+                        dict[2*keys[i]]-=dict[keys[i]];
+                        //dict[keys[i]]=0;
+                    }
+                }
+                else return Array.Empty<int>();
+            }
+            if (res.Count <n/2)
+            {
+                res.AddRange(Enumerable.Repeat(0, n/2 - res.Count));
+            }
+            return res.ToArray();
+        }
+
         ///2011. Final Value of Variable After Performing Operations
         public int FinalValueAfterOperations(string[] operations)
         {
