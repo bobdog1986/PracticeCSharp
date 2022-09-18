@@ -202,5 +202,22 @@ namespace LeetCodeAlgo
         //    }
         //    return -1;
         //}
+
+        ///2414. Length of the Longest Alphabetical Continuous Substring
+        public int LongestContinuousSubstring(string s)
+        {
+            int res = 1;
+            char prev = s[0];
+            int curr = 1;
+            for(int i = 1; i<s.Length; i++)
+            {
+                if (s[i] - prev ==1) curr++;
+                else curr =1;
+                prev = s[i];
+                res = Math.Max(res, curr);
+            }
+            return res;
+        }
+
     }
 }
