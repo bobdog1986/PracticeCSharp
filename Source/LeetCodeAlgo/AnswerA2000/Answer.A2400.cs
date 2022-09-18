@@ -190,5 +190,17 @@ namespace LeetCodeAlgo
             return pq.Count;
         }
 
+
+        ///2413. Smallest Even Multiple
+        //public int SmallestEvenMultiple(int n)
+        //{
+        //    int i = 1;
+        //    while (true)
+        //    {
+        //        if (i*2 % n == 0) return i*2;
+        //        i++;
+        //    }
+        //    return -1;
+        //}
     }
 }
