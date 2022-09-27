@@ -585,6 +585,78 @@ namespace LeetCodeAlgo
             return list;
         }
 
+        ///990. Satisfiability of Equality Equations
+
+        public bool EquationsPossible(string[] equations)
+        {
+            Dictionary<char, HashSet<char>> equalMap = new Dictionary<char, HashSet<char>>();
+            Dictionary<char, HashSet<char>> diffMap = new Dictionary<char, HashSet<char>>();
+            for (int i = 0; i < 26; i++)
+            {
+                equalMap.Add((char)(i + 'a'), new HashSet<char>());
+                diffMap.Add((char)(i + 'a'), new HashSet<char>());
+            }
+
+            foreach (var e in equations)
+            {
+                var a = e[0];
+                var b = e[3];
+                if (a == b)
+                {
+                    if (e[1] == '!') return false;
+                    else continue;
+                }
+                else
+                {
+                    if (e[1] == '!')
+                    {
+                        if (EquationsPossible_Equal(a, b, equalMap, new HashSet<char>()))
+                            return false;
+
+                        diffMap[a].Add(b);
+                        diffMap[b].Add(a);
+                    }
+                    else
+                    {
+                        if (EquationsPossible_HasEqual(a, b, equalMap, diffMap, new HashSet<char>())
+                            || EquationsPossible_HasEqual(b, a, equalMap, diffMap, new HashSet<char>()))
+                            return false;
+
+                        equalMap[a].Add(b);
+                        equalMap[b].Add(a);
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private bool EquationsPossible_Equal(char a, char b, Dictionary<char, HashSet<char>> equalMap, HashSet<char> visit)
+        {
+            if (equalMap[a].Contains(b)) return true;
+            if (visit.Contains(a)) return false;
+            visit.Add(a);
+            foreach (var c in equalMap[a])
+            {
+                if (visit.Contains(c)) continue;
+                if (EquationsPossible_Equal(c, b, equalMap, visit)) return true;
+            }
+            return false;
+        }
+
+        private bool EquationsPossible_HasEqual(char a, char b, Dictionary<char, HashSet<char>> equalMap, Dictionary<char, HashSet<char>> diffMap, HashSet<char> visit)
+        {
+            if (diffMap[a].Contains(b)) return true;
+            if (visit.Contains(a)) return false;
+            visit.Add(a);
+            foreach (var c in equalMap[a])
+            {
+                if (visit.Contains(c)) continue;
+                if (EquationsPossible_HasEqual(c, b, equalMap, diffMap, visit)) return true;
+            }
+            return false;
+        }
+
         ///991. Broken Calculator
         ///multiply the number on display by 2, or subtract 1 from the number on display.
         /// return the minimum number of operations needed to display target on the calculator.
