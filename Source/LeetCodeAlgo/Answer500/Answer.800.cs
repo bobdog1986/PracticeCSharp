@@ -678,6 +678,55 @@ namespace LeetCodeAlgo
             return rec2[0] < rec1[2] && rec2[1] < rec1[3] && rec2[3] > rec1[1];
         }
 
+        ///838. Push Dominoes
+        public string PushDominoes(string dominoes)
+        {
+            int n = dominoes.Length;
+            char[] arr = new char[n];
+            Stack<int> s = new Stack<int>();
+            int right = -1;
+            for (int i = 0; i < n; i++)
+            {
+                if (dominoes[i] == 'L')
+                {
+                    while (s.Count > 0)
+                    {
+                        int dot = s.Pop();
+                        if (right == -1)
+                            arr[dot] = 'L';
+                        else
+                        {
+                            if (dot - right < i - dot)
+                                arr[dot] = 'R';
+                            else if (dot - right > i - dot)
+                                arr[dot] = 'L';
+                            else
+                                arr[dot] = '.';
+                        }
+                    }
+                    right = -1;
+                    arr[i] = 'L';
+                }
+                else if (dominoes[i] == '.')
+                {
+                    s.Push(i);
+                }
+                else if (dominoes[i] == 'R')
+                {
+                    while (s.Count > 0)
+                        arr[s.Pop()] = right ==-1 ? '.' : 'R';
+                    right = i;
+                    arr[i] = 'R';
+                }
+            }
+
+            while (s.Count > 0)
+            {
+                arr[s.Pop()] = right == -1 ? '.' : 'R';
+            }
+            return new string(arr);
+        }
+
         ///840. Magic Squares In Grid
         // 3 x 3 sub-grid that contain 1-9 and each row, col , dragonal sum is same(aka 15)
         public int NumMagicSquaresInside(int[][] grid)
