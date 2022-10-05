@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LeetCodeAlgo.Design;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -216,6 +217,52 @@ namespace LeetCodeAlgo
         }
 
         ///622. Design Circular Queue, see MyCircularQueue
+
+        ///623. Add One Row to Tree
+        public TreeNode AddOneRow(TreeNode root, int val, int depth)
+        {
+            if(depth == 1)
+            {
+                var res = new TreeNode(val);
+                res.left = root;
+                return res;
+            }
+            AddOneRow_Recur(root, val, depth-1);
+            return root;
+        }
+
+        private void AddOneRow_Recur(TreeNode node,int val, int depth)
+        {
+            if (node == null) return;
+            if(depth == 1)
+            {
+                if(node.left != null)
+                {
+                    var temp = node.left;
+                    node.left =new TreeNode(val);
+                    node.left.left = temp;
+                }
+                else
+                    node.left = new TreeNode(val);
+
+                if (node.right != null)
+                {
+                    var temp = node.right;
+                    node.right =new TreeNode(val);
+                    node.right.right = temp;
+                }
+                else
+                    node.right = new TreeNode(val);
+
+            }
+            else
+            {
+                if(node.left != null)
+                    AddOneRow_Recur(node.left, val, depth-1);
+                if(node.right !=null)
+                    AddOneRow_Recur(node.right, val, depth-1);
+            }
+        }
 
         ///628. Maximum Product of Three Numbers
         //find three numbers whose product is maximum and return the maximum product.
