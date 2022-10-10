@@ -219,5 +219,19 @@ namespace LeetCodeAlgo
             return res;
         }
 
+
+        ///2433. Find The Original Array of Prefix Xor
+        //pref[i] = arr[0] ^ arr[1] ^ ... ^ arr[i].
+        public int[] FindArray(int[] pref)
+        {
+            int n = pref.Length;
+            int[] res = new int[n];
+            for(int i = n-1; i>=0; i--)
+            {
+                if (i==0) res[i]=pref[i]^0;
+                else res[i]=pref[i]^pref[i-1];
+            }
+            return res;
+        }
     }
 }
