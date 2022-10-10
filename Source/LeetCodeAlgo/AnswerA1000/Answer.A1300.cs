@@ -444,6 +444,32 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///1328. Break a Palindrome
+        //replace one character so that the resulting string is the lexicographically smallest non-palindrome.
+        public string BreakPalindrome(string palindrome)
+        {
+            int n = palindrome.Length;
+            if (n==1) return "";
+            char[] arr = palindrome.ToCharArray();
+            int mid = n%2==1 ? (n-1)/2 : -1;
+            for(int i = 0; i<n; i++)
+            {
+                if (i==mid) continue;
+                if (i==n-1)
+                {
+                    arr[i] = arr[i]=='a' ? 'b' : 'a';
+                    return new string(arr);
+                }
+                else
+                {
+                    if (arr[i]=='a') continue;
+                    arr[i]='a';
+                    return new string(arr);
+                }
+            }
+            return "";
+        }
+
         ///1329. Sort the Matrix Diagonally
         public int[][] DiagonalSort(int[][] mat)
         {
