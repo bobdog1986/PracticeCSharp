@@ -128,7 +128,7 @@ namespace LeetCodeAlgo
         public int MostFrequentEven(int[] nums)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
-            foreach(var n in nums)
+            foreach (var n in nums)
             {
                 if (n % 2 == 0)
                 {
@@ -140,7 +140,7 @@ namespace LeetCodeAlgo
             if (dict.Keys.Count == 0) return -1;
             int res = -1;
             int max = 0;
-            foreach(var k in dict.Keys)
+            foreach (var k in dict.Keys)
             {
                 if (dict[k] > max)
                 {
@@ -164,7 +164,7 @@ namespace LeetCodeAlgo
             int res = 0;
             HashSet<char> set = new HashSet<char>();
             res++;
-            foreach(var c in s)
+            foreach (var c in s)
             {
                 if (set.Contains(c))
                 {
@@ -181,7 +181,7 @@ namespace LeetCodeAlgo
         {
             intervals = intervals.OrderBy(x => x[0]).ThenBy(x => x[1]).ToArray();
             var pq = new PriorityQueue<int, int>();
-            foreach(var i in intervals)
+            foreach (var i in intervals)
             {
                 if (pq.Count >0 && pq.Peek() < i[0])
                     pq.Dequeue();
@@ -189,7 +189,6 @@ namespace LeetCodeAlgo
             }
             return pq.Count;
         }
-
 
         ///2413. Smallest Even Multiple
         //public int SmallestEvenMultiple(int n)
@@ -209,7 +208,7 @@ namespace LeetCodeAlgo
             int res = 1;
             char prev = s[0];
             int curr = 1;
-            for(int i = 1; i<s.Length; i++)
+            for (int i = 1; i<s.Length; i++)
             {
                 if (s[i] - prev ==1) curr++;
                 else curr =1;
@@ -219,6 +218,26 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2428. Maximum Sum of an Hourglass
+        public int MaxSum(int[][] grid)
+        {
+            int m = grid.Length;
+            int n = grid[0].Length;
+            int res = 0;
+            for (int i = 1; i<m-1; i++)
+            {
+                for (int j = 1; j<n-1; j++)
+                {
+                    int sum = grid[i][j];
+                    for (int k = -1; k<=1; k++)
+                        sum+=grid[i-1][j+k];
+                    for (int k = -1; k<=1; k++)
+                        sum+=grid[i+1][j+k];
+                    res= Math.Max(res, sum);
+                }
+            }
+            return res;
+        }
 
         ///2433. Find The Original Array of Prefix Xor
         //pref[i] = arr[0] ^ arr[1] ^ ... ^ arr[i].
@@ -226,7 +245,7 @@ namespace LeetCodeAlgo
         {
             int n = pref.Length;
             int[] res = new int[n];
-            for(int i = n-1; i>=0; i--)
+            for (int i = n-1; i>=0; i--)
             {
                 if (i==0) res[i]=pref[i]^0;
                 else res[i]=pref[i]^pref[i-1];
