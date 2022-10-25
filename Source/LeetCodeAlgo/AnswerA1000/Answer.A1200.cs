@@ -383,12 +383,63 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///1239. Maximum Length of a Concatenated String with Unique Characters
+        public int MaxLength(IList<string> arr)
+        {
+            int res = 0;
+            HashSet<char> set = new HashSet<char>();
+            List<string> list = arr.Where(x => StringWithUniqueChars(x)).ToList();
+            MaxLength(list, 0, set, ref res);
+            return res;
+        }
 
-            ///1247. Minimum Swaps to Make Strings Equal
-            //s1 and s2 of equal length consisting of letters "x" and "y" only.
-            //You can swap any two characters that belong to different strings, which means: swap s1[i] and s2[j].
-            //Return the minimum number of swaps required to make s1 and s2 equal, or return -1 if impossible.
-            public int MinimumSwap(string s1, string s2)
+        private bool StringWithUniqueChars(string s)
+        {
+            if (s.Length <=1) return true;
+            if (s.Length>26) return false;
+
+            bool[] visit = new bool[26];
+            bool invalid = false;
+            foreach (var c in s)
+            {
+                if (visit[c - 'a'])
+                {
+                    invalid = true;
+                    break;
+                }
+                else visit[c - 'a'] = true;
+            }
+            return !invalid;
+        }
+
+        private void MaxLength(List<string> list, int index, HashSet<char> set, ref int res)
+        {
+            if (list.Count == index)
+            {
+                res = Math.Max(res, set.Count);
+            }
+            else
+            {
+                string curr = list[index];
+                if (curr.Count(x => set.Contains(x))==0)
+                {
+                    foreach (var c in curr)
+                        set.Add(c);
+
+                    MaxLength(list, index + 1, set, ref res);
+
+                    foreach (var c in curr)
+                        set.Remove(c);
+                }
+                MaxLength(list, index + 1, set, ref res);
+            }
+        }
+
+        ///1247. Minimum Swaps to Make Strings Equal
+        //s1 and s2 of equal length consisting of letters "x" and "y" only.
+        //You can swap any two characters that belong to different strings, which means: swap s1[i] and s2[j].
+        //Return the minimum number of swaps required to make s1 and s2 equal, or return -1 if impossible.
+        public int MinimumSwap(string s1, string s2)
         {
             int res = 0;
             int n = s1.Length;
