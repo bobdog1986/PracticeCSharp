@@ -411,6 +411,31 @@ namespace LeetCodeAlgo
         {
             return a == b ? -1 : Math.Max(a.Length, b.Length);
         }
+
+        ///523. Continuous Subarray Sum
+        //Given an integer array nums and an integer k, return true if nums has
+        //a continuous subarray of size at least two whose elements sum up to a multiple of k, or false otherwise.
+        public bool CheckSubarraySum(int[] nums, int k)
+        {
+            int n = nums.Length;
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            dict.Add(0, -1);
+            int sum = 0;
+            for (int i = 0; i < n; i++)
+            {
+                sum = (sum + nums[i])%k;
+                if (dict.ContainsKey(sum))
+                {
+                    if (i - dict[sum] > 1) return true;
+                }
+                else
+                {
+                    dict.Add(sum, i);
+                }
+            }
+            return false;
+        }
+
         /// 524. Longest Word in Dictionary through Deleting
         public string FindLongestWord(string s, IList<string> dictionary)
         {
