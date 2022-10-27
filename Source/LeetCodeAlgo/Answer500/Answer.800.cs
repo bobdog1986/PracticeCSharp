@@ -667,6 +667,36 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///835. Image Overlap
+        public int LargestOverlap(int[][] img1, int[][] img2)
+        {
+            int n = img1.Length;
+            int res = 0;
+            for(int a = -n+1; a<n; a++)
+            {
+                for(int b = -n+1;b<n; b++)
+                {
+                    int curr = 0;
+                    for(int i = 0; i<n; i++)
+                    {
+                        for(int j = 0; j<n; j++)
+                        {
+                            if (img2[i][j]==0) continue;
+                            int x = a+i;
+                            int y = b+j;
+                            if(x>=0 &&x<n && y>=0&&y<n)
+                            {
+                                if (img1[x][y]==1)
+                                    curr++;
+                            }
+                        }
+                    }
+                    res=Math.Max(res, curr);
+                }
+            }
+            return res;
+        }
+
         ///836. Rectangle Overlap
         //[x1, y1, x2, y2],  (x1, y1) bottom-left corner and (x2, y2) top-right corner.
         public bool IsRectangleOverlap(int[] rec1, int[] rec2)
