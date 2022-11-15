@@ -365,6 +365,76 @@ namespace LeetCodeAlgo
             }
             return dp.Sum();
         }
+
+        ///468. Validate IP Address
+        public string ValidIPAddress(string queryIP)
+        {
+            if (IsIPv4Address(queryIP))
+                return "IPv4";
+            if (IsIPv6Address(queryIP))
+                return "IPv6";
+            return "Neither";
+        }
+
+        public bool IsIPv4Address(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return false;
+
+            //must be digit char or dot(.)
+            if (str.Any(x => x != '.' && !char.IsDigit(x)))
+                return false;
+
+            var arr = str.Split('.');
+            //must 4 divs
+            if (arr.Length != 4)
+                return false;
+
+            //every div must 1-3 digits, nor leading zero '0'
+            if (arr.Any(x => x.Length == 0 || x.Length > 3 || (x.Length > 1 && x[0] == '0')))
+                return false;
+
+            //must in range [0,255]
+            if (
+                arr.Any(x =>
+                {
+                    var i = int.Parse(x);
+                    return i < 0 || i > 255;
+                })
+            )
+                return false;
+
+            return true;
+        }
+
+        public bool IsIPv6Address(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return false;
+
+            var allHexSet = new HashSet<char>()
+            {
+                '0', '1','2','3','4','5','6','7','8','9',
+                'A','B','C','D','E','F',
+                'a','b','c','d','e','f',
+            };
+
+            //must be hex char or :
+            if (str.Any(x => x != ':' && !allHexSet.Contains(x)))
+                return false;
+
+            var arr = str.Split(':');
+            //must 8 divs
+            if (arr.Length != 8)
+                return false;
+
+            //every div must 1-4 chars
+            if (arr.Any(x => x.Length == 0 || x.Length > 4))
+                return false;
+
+            return true;
+        }
+
         ///472. Concatenated Words, #DP, #BFS
         ///Given an array of strings words (without duplicates), return all the concatenated words in the given list of words.
         ///A concatenated word is defined as a string that is comprised entirely of at least two shorter words in the given array.
