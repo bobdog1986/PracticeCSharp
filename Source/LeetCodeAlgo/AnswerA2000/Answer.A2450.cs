@@ -63,5 +63,25 @@ namespace LeetCodeAlgo
             }
         }
 
+
+        ///2486. Append Characters to String to Make Subsequence
+        //Return the minimum chars that need to be appended to the end of s so that t becomes a subsequence of s.
+        public int AppendCharacters(string s, string t)
+        {
+            int i = 0, j = 0;
+            for(;i<s.Length && j<t.Length;)
+            {
+                if (s[i]==t[j])
+                {
+                    i++;
+                    j++;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            return t.Length-j;
+        }
     }
 }
