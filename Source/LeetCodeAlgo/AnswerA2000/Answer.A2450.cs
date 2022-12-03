@@ -17,6 +17,41 @@ namespace LeetCodeAlgo
         //    return n;
         //}
 
+        ///2482. Difference Between Ones and Zeros in Row and Column
+        //public int[][] OnesMinusZeros(int[][] grid)
+        //{
+        //    int m = grid.Length;
+        //    int n= grid[0].Length;
+
+        //    int[] onesRow = grid.Select(x => x.Count(o => o==1)).ToArray();
+        //    int[] zerosRow = grid.Select(x => x.Count(o => o==0)).ToArray();
+
+        //    int[] onesCol = new int[n];
+        //    int[] zerosCol = new int[n];
+
+        //    for(int j = 0; j<n; j++)
+        //    {
+        //        int ones = 0;
+        //        int zeros = 0;
+        //        for (int i = 0; i<m; i++)
+        //        {
+        //            if (grid[i][j]==0) zeros++;
+        //            if (grid[i][j]==1) ones++;
+        //        }
+        //        onesCol[j]=ones;
+        //        zerosCol[j]=zeros;
+        //    }
+        //    int[][] res = new int[m][];
+        //    for (int i = 0; i<m; i++)
+        //    {
+        //        res[i]=new int[n];
+        //        for(int j=0;j<n;j++)
+        //            res[i][j]= onesRow[i]+onesCol[j]- zerosRow[i]-zerosCol[j];
+        //    }
+        //    return res;
+        //}
+
+
         ///2485. Find the Pivot Integer
         //return x that sum of [1,x] == [x,n], if not exist, return -1
         //public int PivotInteger(int n)
