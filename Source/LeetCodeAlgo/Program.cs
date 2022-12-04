@@ -37,7 +37,7 @@ namespace LeetCodeAlgo
             int[][] mat1 = answer.buildMatrix(matStrInt1);
             //string matStrInt2 = "[[1,3,1,15],[1,3,3,1]]";
             //int[][] mat2 = answer.buildMatrix(matStrInt2);
-            string arrStrInt1 = " [4,5,6,7,8,9]";
+            string arrStrInt1 = "[1,5,4,2,9,9,9]";
             int[] arr1 = answer.buildArray(arrStrInt1);
             string arrStrInt2 = "[8,2,6,10]";
             int[] arr2 = answer.buildArray(arrStrInt2);
@@ -51,7 +51,7 @@ namespace LeetCodeAlgo
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var result = answer.CountSpecialNumbers(20);
+            var result = answer.MaximumSubarraySum(arr1,3);
 
             sw.Stop();
             Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");

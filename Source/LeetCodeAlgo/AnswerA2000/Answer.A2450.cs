@@ -17,6 +17,42 @@ namespace LeetCodeAlgo
         //    else return arr.Sum()/arr.Length;
         //}
 
+
+        ///2461. Maximum Sum of Distinct Subarrays With Length K, #Sliding Window
+        public long MaximumSubarraySum(int[] nums, int k)
+        {
+            long res = 0;
+            int n=nums.Length;
+            var dict=new Dictionary<int, int>();
+            long sum = 0;
+            for(int i=0;i<n;i++)
+            {
+                if (dict.ContainsKey(nums[i]))
+                {
+                    int start = i-dict.Count;
+                    int end = dict[nums[i]];
+                    while (start<= end)
+                    {
+                        dict.Remove(nums[start]);
+                        sum-=nums[start];
+                        start++;
+                    }
+                }
+                dict.Add(nums[i], i);
+                sum+=nums[i];
+                if (dict.Count==k+1)
+                {
+                    dict.Remove(nums[i-k]);
+                    sum-=nums[i-k];
+                }
+
+                if (dict.Count==k)
+                    res=Math.Max(res, sum);
+            }
+
+            return res;
+        }
+
         ///2465. Number of Distinct Averages
         //public int DistinctAverages(int[] nums)
         //{
