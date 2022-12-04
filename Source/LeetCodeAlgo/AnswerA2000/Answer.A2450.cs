@@ -151,22 +151,54 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///2490. Circular Sentence
+        //public bool IsCircularSentence(string sentence)
+        //{
+        //    var arr = sentence.Split(' ').ToArray();
+        //    for (int i = 0; i<arr.Length; i++)
+        //    {
+        //        int j = (i==arr.Length-1) ? 0 : i+1;
+        //        if (arr[i].Last()!=arr[j].First())
+        //            return false;
+        //    }
+        //    return true;
+        //}
 
         ///2491. Divide Players Into Teams of Equal Skill
-        public long DividePlayers(int[] skill)
+        //public long DividePlayers(int[] skill)
+        //{
+        //    Array.Sort(skill);
+        //    int n = skill.Length;
+        //    long res = 0;
+        //    int sum = skill[0] + skill[n-1];
+        //    for (int i = 0; i<n/2; i++)
+        //    {
+        //        if (skill[i] + skill[n-1-i] != sum)
+        //            return -1;
+        //        res+= skill[i] * skill[n-1-i];
+        //    }
+        //    return res;
+        //}
+
+
+        ///2492. Minimum Score of a Path Between Two Cities
+        ///#TODO
+        public int MinScore(int n, int[][] roads)
         {
-            Array.Sort(skill);
-            int n = skill.Length;
-            long res = 0;
-            int sum = skill[0] + skill[n-1];
-            for (int i = 0; i<n/2; i++)
+            List<int[]>[] graph = new List<int[]>[n+1];
+            for (int i = 0; i<graph.Length; i++)
+                graph[i]=new List<int[]>();
+
+            foreach (var r in roads)
             {
-                if (skill[i] + skill[n-1-i] != sum)
-                    return -1;
-                res+= skill[i] * skill[n-1-i];
+                graph[r[0]].Add(new int[] { r[1], r[2] });
+                graph[r[1]].Add(new int[] { r[0], r[2] });
             }
+
+            int res = int.MaxValue;
+            var pq = new PriorityQueue<int[], int>();
+
             return res;
         }
-
     }
 }
