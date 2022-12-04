@@ -252,5 +252,19 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///2442. Count Number of Distinct Integers After Reverse Operations
+        //public int CountDistinctIntegers(int[] nums)
+        //{
+        //    HashSet<int> set = nums.ToHashSet();
+        //    HashSet<int> res = new HashSet<int>(set);
+        //    foreach(var i in set)
+        //    {
+        //        res.Add(int.Parse(new string(i.ToString().Reverse().ToArray())));
+        //    }
+        //    return res.Count;
+        //}
+
+
     }
 }
