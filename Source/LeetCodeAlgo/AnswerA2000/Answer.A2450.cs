@@ -17,6 +17,31 @@ namespace LeetCodeAlgo
         //    else return arr.Sum()/arr.Length;
         //}
 
+        ///2460. Apply Operations to an Array
+        //public int[] ApplyOperations(int[] nums)
+        //{
+        //    int n=nums.Length;
+        //    int[] res= new int[n];
+        //    int index = 0;
+        //    for(int i=0;i< n-1;i++)
+        //    {
+        //        if (nums[i]==nums[i+1] && nums[i]!=0)
+        //        {
+        //            res[index++]=nums[i]*2;
+        //            nums[i+1]=0;
+        //        }
+        //        else
+        //        {
+        //            if (nums[i]!=0)
+        //                res[index++]=nums[i];
+        //        }
+        //    }
+
+        //    if (nums[n-1]!=0)
+        //        res[index++] = nums[n-1];
+
+        //    return res;
+        //}
 
         ///2461. Maximum Sum of Distinct Subarrays With Length K, #Sliding Window
         public long MaximumSubarraySum(int[] nums, int k)
