@@ -9,6 +9,48 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
+
+        ///2471. Minimum Number of Operations to Sort a Binary Tree by Level
+        //public int MinimumOperations(TreeNode root)
+        //{
+        //    int res = 0;
+        //    List<List<int>> matrix = new List<List<int>>();
+        //    Queue<TreeNode> queue = new Queue<TreeNode>();
+        //    queue.Enqueue(root);
+        //    while(queue.Count > 0)
+        //    {
+        //        int size = queue.Count;
+        //        var list =new List<int>();
+        //        while(size-- >0)
+        //        {
+        //            var curr= queue.Dequeue();
+        //            list.Add(curr.val);
+        //            if(curr.left!=null)queue.Enqueue(curr.left);
+        //            if(curr.right!=null)queue.Enqueue(curr.right);
+        //        }
+        //        matrix.Add(list);
+        //    }
+
+        //    foreach(var line in matrix)
+        //    {
+        //        var arr = line.OrderBy(x => x).ToList();
+        //        int diff = 0;
+        //        for(int i=0;i<arr.Count;i++)
+        //        {
+        //            if (arr[i]!=line[i])
+        //            {
+        //                diff++;
+        //                int index= line.IndexOf(arr[i]);
+        //                line[index] = line[i];
+        //                line[i]=arr[i];
+        //            }
+        //        }
+        //        res+= diff;
+        //    }
+        //    return res;
+        //}
+
+
         ///2481. Minimum Cuts to Divide a Circle
         //public int NumberOfCuts(int n)
         //{
@@ -182,7 +224,7 @@ namespace LeetCodeAlgo
 
 
         ///2492. Minimum Score of a Path Between Two Cities
-        ///#TODO
+        ///#TODO, timeout
         public int MinScore(int n, int[][] roads)
         {
             List<int[]>[] graph = new List<int[]>[n+1];
@@ -197,6 +239,32 @@ namespace LeetCodeAlgo
 
             int res = int.MaxValue;
             var pq = new PriorityQueue<int[], int>();
+            var from = new int[n+2];
+            from[0]=1;
+            from[n+1]=int.MaxValue;
+            pq.Enqueue(from, from[n+1]);
+            while (pq.Count>0)
+            {
+                var top = pq.Dequeue();
+
+                if (top[0]==n)
+                {
+                    res=Math.Min(res, top[n+1]);
+                }
+                else
+                {
+                    foreach (var i in graph[top[0]])
+                    {
+                        if (top[i[0]]!=0) continue;
+                        var next = new int[n+2];
+                        Array.Copy(top, next, top.Length);
+                        next[0] = i[0];
+                        next[n+1] = Math.Min(i[1], next[n+1]);
+                        next[i[0]]=1;//visit
+                        pq.Enqueue(next, next[n+1]);
+                    }
+                }
+            }
 
             return res;
         }
