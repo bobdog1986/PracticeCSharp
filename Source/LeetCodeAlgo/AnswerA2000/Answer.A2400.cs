@@ -265,6 +265,20 @@ namespace LeetCodeAlgo
         //    return res.Count;
         //}
 
-
+        ///2446. Determine if Two Events Have Conflict
+        //HH:MM, if overlap
+        //public bool HaveConflict(string[] event1, string[] event2)
+        //{
+        //    var arr1 = event1.Select(x => int.Parse(x.Split(':')[0])*60+int.Parse(x.Split(':')[1])).ToArray();
+        //    var arr2 = event2.Select(x => int.Parse(x.Split(':')[0])*60+int.Parse(x.Split(':')[1])).ToArray();
+        //    if (arr1[0]<=arr2[0])
+        //    {
+        //        return arr2[0]<= arr1[1];
+        //    }
+        //    else
+        //    {
+        //        return arr1[0]<= arr2[1];
+        //    }
+        //}
     }
 }
