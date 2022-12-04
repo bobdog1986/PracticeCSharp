@@ -35,6 +35,14 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2469. Convert the Temperature
+        //Kelvin = Celsius + 273.15
+        //Fahrenheit = Celsius* 1.80 + 32.00
+        //public double[] ConvertTemperature(double celsius)
+        //{
+        //    return new double[] { celsius+273.15, celsius*1.8+32 };
+        //}
+
         ///2471. Minimum Number of Operations to Sort a Binary Tree by Level
         //public int MinimumOperations(TreeNode root)
         //{
