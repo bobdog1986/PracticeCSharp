@@ -36,6 +36,39 @@ namespace LeetCodeAlgo
         //    return null;
         //}
 
+        ///2452. Words Within Two Edits of Dictionary
+
+        //public IList<string> TwoEditWords(string[] queries, string[] dictionary)
+        //{
+        //    var res= new List<string>();
+        //    var set = new HashSet<string>();
+        //    var arr = dictionary.ToHashSet();
+        //    foreach(var q in queries)
+        //    {
+        //        if(set.Contains(q))
+        //        {
+        //            res.Add(q);
+        //        }
+        //        else
+        //        {
+        //            if (arr.Any(x =>
+        //                    {
+        //                        if (x==q) return true;
+        //                        int diff = 0;
+        //                        for(int i = 0; i<q.Length; i++)
+        //                        {
+        //                            if (q[i]!=x[i]) diff++;
+        //                        }
+        //                        return diff<=2;
+        //                    }))
+        //            {
+        //                res.Add(q);
+        //                set.Add(q);
+        //            }
+        //        }
+        //    }
+        //    return res;
+        //}
 
         ///2455. Average Value of Even Numbers That Are Divisible by Three
         //public int AverageValue(int[] nums)

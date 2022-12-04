@@ -253,6 +253,18 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2439. Minimize Maximum of Array
+
+        public int MinimizeArrayValue(int[] nums)
+        {
+            int n = nums.Length;
+            int res = 0 ;
+
+
+
+            return res;
+        }
+
         ///2442. Count Number of Distinct Integers After Reverse Operations
         //public int CountDistinctIntegers(int[] nums)
         //{
