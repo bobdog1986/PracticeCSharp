@@ -218,6 +218,42 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2423. Remove Letter To Equalize Frequency
+        //public bool EqualFrequency(string word)
+        //{
+        //    Dictionary<char,int> dict= new Dictionary<char,int>();
+        //    foreach(var c in word)
+        //    {
+        //        if (dict.ContainsKey(c)) dict[c]++;
+        //        else dict.Add(c,1);
+        //    }
+        //    Dictionary<int, int> map = new Dictionary<int, int>();
+        //    foreach(var k in dict.Keys)
+        //    {
+        //        if (map.ContainsKey(dict[k])) map[dict[k]]++;
+        //        else map.Add(dict[k], 1);
+        //    }
+
+        //    if (map.Count>2) return false;
+        //    else if (map.Count==1)
+        //    {
+        //        //pass testcase zz
+        //        if (map.ContainsKey(1) || map.Values.Max()==1) return true;
+        //        else return false;
+        //    }
+        //    else
+        //    {
+        //        if (map.ContainsKey(1) && map[1]==1) return true;
+        //        else
+        //        {
+        //            int k1 = map.Keys.Max();
+        //            int k2 = map.Keys.Min();
+        //            if (map[k1]==1 && k1-k2==1) return true;
+        //            else return false;
+        //        }
+        //    }
+        //}
+
         ///2425. Bitwise XOR of All Pairings
         //public int XorAllNums(int[] nums1, int[] nums2)
         //{
