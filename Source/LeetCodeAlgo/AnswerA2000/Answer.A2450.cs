@@ -9,6 +9,13 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
+        ///2455. Average Value of Even Numbers That Are Divisible by Three
+        //public int AverageValue(int[] nums)
+        //{
+        //    var arr = nums.Where(x => x%6==0).ToArray();
+        //    if (arr.Length==0) return 0;
+        //    else return arr.Sum()/arr.Length;
+        //}
 
         ///2466. Count Ways To Build Good Strings, #DP
         public int CountGoodStrings(int low, int high, int zero, int one)
@@ -68,7 +75,6 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
-
         ///2481. Minimum Cuts to Divide a Circle
         //public int NumberOfCuts(int n)
         //{
@@ -110,7 +116,6 @@ namespace LeetCodeAlgo
         //    }
         //    return res;
         //}
-
 
         ///2485. Find the Pivot Integer
         //return x that sum of [1,x] == [x,n], if not exist, return -1
@@ -240,7 +245,6 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
-
         ///2492. Minimum Score of a Path Between Two Cities
         ///#TODO, timeout
         public int MinScore(int n, int[][] roads)
@@ -256,33 +260,6 @@ namespace LeetCodeAlgo
             }
 
             int res = int.MaxValue;
-            var pq = new PriorityQueue<int[], int>();
-            var from = new int[n+2];
-            from[0]=1;
-            from[n+1]=int.MaxValue;
-            pq.Enqueue(from, from[n+1]);
-            while (pq.Count>0)
-            {
-                var top = pq.Dequeue();
-
-                if (top[0]==n)
-                {
-                    res=Math.Min(res, top[n+1]);
-                }
-                else
-                {
-                    foreach (var i in graph[top[0]])
-                    {
-                        if (top[i[0]]!=0) continue;
-                        var next = new int[n+2];
-                        Array.Copy(top, next, top.Length);
-                        next[0] = i[0];
-                        next[n+1] = Math.Min(i[1], next[n+1]);
-                        next[i[0]]=1;//visit
-                        pq.Enqueue(next, next[n+1]);
-                    }
-                }
-            }
 
             return res;
         }
