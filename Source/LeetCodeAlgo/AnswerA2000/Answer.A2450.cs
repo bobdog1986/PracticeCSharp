@@ -9,6 +9,34 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
+        ///2451. Odd String Difference
+        //public string OddString(string[] words)
+        //{
+        //    Dictionary<string,List<string>> dict = new Dictionary<string, List<string>>();
+
+        //    foreach(var w in words)
+        //    {
+        //        StringBuilder sb = new StringBuilder();
+        //        for(int i = 0; i<w.Length-1; i++)
+        //        {
+        //            sb.Append($"{w[i+1]-w[i]},");
+        //        }
+        //        var key = sb.ToString();
+        //        if (dict.ContainsKey(key))
+        //            dict[key].Add(w);
+        //        else
+        //            dict.Add(key, new List<string>() { w });
+        //    }
+
+        //    foreach(var k in dict.Values)
+        //    {
+        //        if(k.Count==1)return k[0];
+        //    }
+
+        //    return null;
+        //}
+
+
         ///2455. Average Value of Even Numbers That Are Divisible by Three
         //public int AverageValue(int[] nums)
         //{
