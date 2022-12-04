@@ -17,6 +17,19 @@ namespace LeetCodeAlgo
         //    else return arr.Sum()/arr.Length;
         //}
 
+        ///2465. Number of Distinct Averages
+        //public int DistinctAverages(int[] nums)
+        //{
+        //    Array.Sort(nums);
+        //    int n=nums.Length;
+        //    HashSet<int> set= new HashSet<int>();
+        //    for(int i=0;i<n/2;i++)
+        //    {
+        //        set.Add(nums[i]+nums[n-1-i]);
+        //    }
+        //    return set.Count;
+        //}
+
         ///2466. Count Ways To Build Good Strings, #DP
         public int CountGoodStrings(int low, int high, int zero, int one)
         {
