@@ -218,6 +218,26 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2425. Bitwise XOR of All Pairings
+        //public int XorAllNums(int[] nums1, int[] nums2)
+        //{
+        //    int res = 0;
+        //    int n1 = nums1.Length;
+        //    int n2 = nums2.Length;
+
+        //    if (n1%2!=0)
+        //    {
+        //        foreach (var i in nums2)
+        //            res^=i;
+        //    }
+        //    if (n2%2!=0)
+        //    {
+        //        foreach (var i in nums1)
+        //            res^=i;
+        //    }
+        //    return res;
+        //}
+
         ///2428. Maximum Sum of an Hourglass
         public int MaxSum(int[][] grid)
         {
