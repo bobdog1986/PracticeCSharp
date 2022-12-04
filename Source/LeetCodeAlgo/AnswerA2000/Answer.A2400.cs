@@ -253,6 +253,61 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2437. Number of Valid Clock Times
+        //public int CountTime(string time)
+        //{
+        //    var arr = time.ToArray();
+        //    if (time[0]=='?')
+        //    {
+        //        int res = 0;
+        //        for(int i = 0; i<=2; i++)
+        //        {
+        //            arr[0]=(char)('0'+i);
+        //            res+=CountTime(new string(arr));
+        //        }
+        //        return res;
+        //    }
+        //    else if (time[1]=='?')
+        //    {
+        //        int res = 0;
+        //        for (int i = 0; i<=9; i++)
+        //        {
+        //            arr[1]=(char)('0'+i);
+        //            res+=CountTime(new string(arr));
+        //        }
+        //        return res;
+        //    }
+        //    else if (time[3]=='?')
+        //    {
+        //        int res = 0;
+        //        for (int i = 0; i<=5; i++)
+        //        {
+        //            arr[3]=(char)('0'+i);
+        //            res+=CountTime(new string(arr));
+        //        }
+        //        return res;
+        //    }
+        //    else if (time[4]=='?')
+        //    {
+        //        int res = 0;
+        //        for (int i = 0; i<=9; i++)
+        //        {
+        //            arr[4]=(char)('0'+i);
+        //            res+=CountTime(new string(arr));
+        //        }
+        //        return res;
+        //    }
+        //    else
+        //    {
+        //        int hour = int.Parse(time.Split(':')[0]);
+        //        int minute = int.Parse(time.Split(':')[1]);
+        //        if (hour >=0 && hour<24 && minute >=0 && minute<60)
+        //            return 1;
+        //        else
+        //            return 0;
+        //    }
+        //}
+
         ///2439. Minimize Maximum of Array
 
         public int MinimizeArrayValue(int[] nums)
