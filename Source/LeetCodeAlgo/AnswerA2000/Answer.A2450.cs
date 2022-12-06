@@ -280,6 +280,42 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
+        ///2483. Minimum Penalty for a Shop
+        //public int BestClosingTime(string customers)
+        //{
+        //    int min = int.MaxValue;
+        //    int res = -1;
+        //    int n = customers.Length;
+        //    int[] noArr = new int[n+1];
+        //    int[] yesArr = new int[n+1];
+
+        //    int noCount = 0;
+        //    for(int i=0; i <= n; i++)
+        //    {
+        //        noArr[i] = noCount;
+        //        if (i<n && customers[i]=='N')
+        //            noCount++;
+        //    }
+
+        //    int yesCount = 0;
+        //    for (int i = n; i >=0; i--)
+        //    {
+        //        if (i<n && customers[i]=='Y')
+        //            yesCount++;
+        //        yesArr[i] = yesCount;
+        //    }
+
+        //    for(int i=0;i<=n; i++)
+        //    {
+        //        if (yesArr[i]+noArr[i]<min)
+        //        {
+        //            min=yesArr[i]+noArr[i];
+        //            res=i;
+        //        }
+        //    }
+        //    return res;
+        //}
+
         ///2485. Find the Pivot Integer
         //return x that sum of [1,x] == [x,n], if not exist, return -1
         //public int PivotInteger(int n)
