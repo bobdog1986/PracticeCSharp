@@ -78,6 +78,51 @@ namespace LeetCodeAlgo
         //    else return arr.Sum()/arr.Length;
         //}
 
+        ///2456. Most Popular Video Creator
+        //public IList<IList<string>> MostPopularCreator(string[] creators, string[] ids, int[] views)
+        //{
+        //    var res = new List<IList<string>>();
+        //    int max = -1;
+
+        //    var dict = new Dictionary<string, Dictionary<string, int>>();
+        //    var map = new Dictionary<string, int>();
+
+        //    var set = new HashSet<string>();
+
+        //    for (int i=0;i<creators.Length;i++)
+        //    {
+        //        //if (views[i]==0) continue;
+
+        //        if (!dict.ContainsKey(creators[i]))
+        //            dict.Add(creators[i], new Dictionary<string, int>());
+        //        if (!dict[creators[i]].ContainsKey(ids[i]))
+        //            dict[creators[i]].Add(ids[i], 0);
+        //        dict[creators[i]][ids[i]]+=views[i];
+
+        //        if (!map.ContainsKey(creators[i]))
+        //            map.Add(creators[i], 0);
+        //        map[creators[i]]+=views[i];
+
+        //        if (map[creators[i]]>max)
+        //        {
+        //            set=new HashSet<string>() { creators[i] };
+        //            max=map[creators[i]];
+        //        }
+        //        else if(map[creators[i]] == max)
+        //        {
+        //            set.Add(creators[i]);
+        //        }
+        //    }
+
+        //    foreach(var i in set)
+        //    {
+        //        var a = dict[i].Keys.OrderBy(x => -dict[i][x]).ThenBy(x=>x).First();
+        //        res.Add(new List<string>() { i, a });
+        //    }
+
+        //    return res;
+        //}
+
         ///2460. Apply Operations to an Array
         //public int[] ApplyOperations(int[] nums)
         //{

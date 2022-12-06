@@ -8,7 +8,7 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        //2400. Number of Ways to Reach a Position After Exactly k Steps
+        ///2400. Number of Ways to Reach a Position After Exactly k Steps, #DP
         public int NumberOfWays(int startPos, int endPos, int k)
         {
             long mod = 1_000_000_007;
