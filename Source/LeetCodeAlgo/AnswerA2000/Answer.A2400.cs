@@ -218,6 +218,15 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2418. Sort the People
+        //public string[] SortPeople(string[] names, int[] heights)
+        //{
+        //    var dict = new Dictionary<int, string>();
+        //    for (int i = 0; i<names.Length; i++)
+        //        dict.Add(heights[i], names[i]);
+        //    return dict.Keys.OrderBy(x => -x).Select(x => dict[x]).ToArray();
+        //}
+
         ///2423. Remove Letter To Equalize Frequency
         //public bool EqualFrequency(string word)
         //{
