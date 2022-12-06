@@ -283,6 +283,19 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
+        ///2427. Number of Common Factors
+        public int CommonFactors(int a, int b)
+        {
+            int res = 0;
+            int gcd = getGCD(a, b);
+            for(int i = 1; i<=gcd; i++)
+            {
+                if (gcd%i==0)
+                    res++;
+            }
+            return res;
+        }
+
         ///2428. Maximum Sum of an Hourglass
         public int MaxSum(int[][] grid)
         {
