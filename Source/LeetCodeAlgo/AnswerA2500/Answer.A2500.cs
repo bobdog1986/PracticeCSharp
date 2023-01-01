@@ -10,6 +10,40 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
+
+        ///2512. Reward Top K Students
+        public IList<int> TopStudents(string[] positive_feedback, string[] negative_feedback, string[] report, int[] student_id, int k)
+        {
+            List<int> res = new List<int>();
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            HashSet<string> positiveSet = positive_feedback.ToHashSet();
+            HashSet<string> negativeSet = negative_feedback.ToHashSet();
+
+            for (int i = 0; i<student_id.Length;i++)
+            {
+                if (!dict.ContainsKey(student_id[i]))
+                    dict.Add(student_id[i], 0);
+
+                int score = 0;
+                var arr = report[i].Split(' ').ToArray();
+                foreach(var c in arr)
+                {
+                    if (positiveSet.Contains(c)) score+=3;
+                    if(negativeSet.Contains(c)) score-=1;
+                }
+                dict[student_id[i]] += score;
+            }
+
+
+            var keys = dict.Keys.OrderBy(x => -dict[x]).ThenBy(x => x).ToArray();
+            for(int i = 0; i<k&&i<keys.Length; i++)
+            {
+                res.Add(keys[i]);
+            }
+
+            return res;
+        }
+
         ///2517. Maximum Tastiness of Candy Basket, #Binary Search
         //The store sells baskets of k distinct candies. The tastiness of a candy basket is the smallest absolute difference
         //of the prices of any two candies in the basket.Return the maximum tastiness of a candy basket.
