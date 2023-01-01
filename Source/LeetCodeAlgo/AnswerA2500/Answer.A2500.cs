@@ -1,11 +1,12 @@
 ﻿using LeetCodeAlgo.Design;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCodeAlgo.AnswerA2500
+namespace LeetCodeAlgo
 {
     public partial class Answer
     {
@@ -42,8 +43,57 @@ namespace LeetCodeAlgo.AnswerA2500
             }
             return right;
         }
+        ///2521. Distinct Prime Factors of Product of Array, #Prime
+        public int DistinctPrimeFactors(int[] nums)
+        {
+            int res = 0;
+            HashSet<int> set = new HashSet<int>();
+            int max = 0;
+            foreach (var i in nums)
+            {
+                if (i>1)
+                {
+                    set.Add(i);
+                    max=Math.Max(max, i);
+                }
+            }
 
-
+            bool[] arr = new bool[max+1];
+            for (int i = 2; i<=max; i++)
+            {
+                if (arr[i]==false)
+                {
+                    for (int j = 2; j*i<=max; j++)
+                    {
+                        arr[j*i]=true;
+                    }
+                }
+            }
+            for (int i = 2; i<=max; i++)
+            {
+                if (set.Count ==0) break;
+                if (arr[i] == false)
+                {
+                    if (set.Any(x => x>1 && x%i==0))
+                    {
+                        res++;
+                        HashSet<int> next = new HashSet<int>();
+                        foreach (var j in set)
+                        {
+                            int k = j;
+                            while (k>1 && k%i==0)
+                            {
+                                k=k/i;
+                            }
+                            if (k>1)
+                                next.Add(k);
+                        }
+                        set=next;
+                    }
+                }
+            }
+            return res;
+        }
         ///2522. Partition String Into Substrings With Values at Most K, #Sliding Window
         //1 <= s.length <= 10^5, s[i] is a digit from '1' to '9',1 <= k <= 10^9
         //public int MinimumPartition(string s, int k)
