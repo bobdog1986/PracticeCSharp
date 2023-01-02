@@ -648,30 +648,42 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2395. Find Subarrays With Equal Sum
+        //public bool FindSubarrays(int[] nums)
+        //{
+        //    HashSet<int> set = new HashSet<int>();
+        //    for(int i = 0; i<nums.Length-1; i++)
+        //    {
+        //        int sum = nums[i]+nums[i+1];
+        //        if (set.Contains(sum)) return true;
+        //        set.Add(sum);
+        //    }
+        //    return false;
+        //}
 
         ///2396. Strictly Palindromic Number
         //An integer n is strictly palindromic if, for every base b between 2 and n - 2 (inclusive),
         //the string representation of the integer n in base b is palindromic.
-        public bool IsStrictlyPalindromic(int n)
-        {
-            for(int i = 2; i<=n-2; i++)
-            {
-                List<int> list = new List<int>();
-                int j = n;
-                while (j>=i)
-                {
-                    list.Add(j%i);
-                    j=j/i;
-                }
-                list.Add(j);
-                for(int k = 0; k<list.Count/2; k++)
-                {
-                    if (list[k]!=list[list.Count-1-k])
-                        return false;
-                }
-            }
-            return true;
-        }
+        //public bool IsStrictlyPalindromic(int n)
+        //{
+        //    for(int i = 2; i<=n-2; i++)
+        //    {
+        //        List<int> list = new List<int>();
+        //        int j = n;
+        //        while (j>=i)
+        //        {
+        //            list.Add(j%i);
+        //            j=j/i;
+        //        }
+        //        list.Add(j);
+        //        for(int k = 0; k<list.Count/2; k++)
+        //        {
+        //            if (list[k]!=list[list.Count-1-k])
+        //                return false;
+        //        }
+        //    }
+        //    return true;
+        //}
 
         ///2399. Check Distances Between Same Letters
         public bool CheckDistances(string s, int[] distance)
