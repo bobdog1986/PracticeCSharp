@@ -11,6 +11,31 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
+
+
+        ///2506. Count Pairs Of Similar Strings
+        public int SimilarPairs(string[] words)
+        {
+            int res = 0;
+            Dictionary<string, int> dict = new Dictionary<string, int>();
+
+            foreach(var w in words)
+            {
+                var s = string.Join("", w.ToHashSet().OrderBy(x => x).ToArray());
+                if (!dict.ContainsKey(s))
+                    dict.Add(s, 1);
+                else
+                    dict[s]++;
+            }
+
+            foreach(var k in dict.Keys)
+            {
+                res+=dict[k]*(dict[k]-1)/2;
+            }
+            return res;
+        }
+
+
         ///2507. Smallest Value After Replacing With Sum of Prime Factors, #Prime
         //public int SmallestValue(int n)
         //{
