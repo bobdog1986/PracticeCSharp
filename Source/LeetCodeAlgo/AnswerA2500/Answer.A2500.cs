@@ -78,6 +78,22 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
+        ///2515. Shortest Distance to Target String in a Circular Array
+        //public int ClosetTarget(string[] words, string target, int startIndex)
+        //{
+        //    List<int> list = new List<int>();
+        //    for(int i=0;i<words.Length;i++)
+        //    {
+        //        if (words[i] == target)
+        //        {
+        //            list.Add(i);
+        //        }
+        //    }
+        //    if (list.Count ==0) return -1;
+        //    return list.Min(x => Math.Min(Math.Abs(x-startIndex), words.Length -Math.Abs(x-startIndex)));
+        //}
+
+
         ///2517. Maximum Tastiness of Candy Basket, #Binary Search
         //The store sells baskets of k distinct candies. The tastiness of a candy basket is the smallest absolute difference
         //of the prices of any two candies in the basket.Return the maximum tastiness of a candy basket.
