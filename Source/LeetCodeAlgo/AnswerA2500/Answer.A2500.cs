@@ -114,6 +114,14 @@ namespace LeetCodeAlgo
         //    return right;
         //}
 
+
+        ///2520. Count the Digits That Divide a Number
+        //public int CountDigits(int num)
+        //{
+        //    string s = num.ToString();
+        //    return s.Count(x => num%(x-'0')==0);
+        //}
+
         ///2521. Distinct Prime Factors of Product of Array, #Prime
         //public int DistinctPrimeFactors(int[] nums)
         //{

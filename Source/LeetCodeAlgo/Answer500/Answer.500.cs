@@ -375,36 +375,11 @@ namespace LeetCodeAlgo
         ///Given a string word, return true if the usage of capitals in it is right.
         public bool DetectCapitalUse(string word)
         {
-            if (word.Length == 1)
-                return true;
-
-            bool lastIsUpper = char.IsUpper(word[word.Length - 1]);
-
-            bool ans = true;
-
-            if (lastIsUpper)
-            {
-                for (int i = 0; i < word.Length - 1; i++)
-                {
-                    if (!char.IsUpper(word[i]))
-                    {
-                        return false;
-                    }
-                }
-            }
-            else
-            {
-                for (int i = 1; i < word.Length - 1; i++)
-                {
-                    if (char.IsUpper(word[i]))
-                    {
-                        return false;
-                    }
-                }
-            }
-            return ans;
+            int n = word.Length;
+            int caps = word.Count(x => x>='A'&&x<='Z');
+            return n==caps || caps==0
+                || (caps==1&& word[0]>='A'&&word[0]<='Z');
         }
-
 
         ///521. Longest Uncommon Subsequence I
         public int FindLUSlength(string a, string b)
