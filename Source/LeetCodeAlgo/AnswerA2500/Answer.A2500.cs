@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,7 +11,6 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-
         ///2507. Smallest Value After Replacing With Sum of Prime Factors, #Prime
         //public int SmallestValue(int n)
         //{
@@ -46,7 +46,6 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
-
         ///2512. Reward Top K Students
         //public IList<int> TopStudents(string[] positive_feedback, string[] negative_feedback, string[] report, int[] student_id, int k)
         //{
@@ -69,7 +68,6 @@ namespace LeetCodeAlgo
         //        }
         //        dict[student_id[i]] += score;
         //    }
-
 
         //    var keys = dict.Keys.OrderBy(x => -dict[x]).ThenBy(x => x).ToArray();
         //    for(int i = 0; i<k&&i<keys.Length; i++)
@@ -113,7 +111,6 @@ namespace LeetCodeAlgo
         //    }
         //    return right;
         //}
-
 
         ///2520. Count the Digits That Divide a Number
         //public int CountDigits(int num)
@@ -173,6 +170,7 @@ namespace LeetCodeAlgo
         //    }
         //    return res;
         //}
+
         ///2522. Partition String Into Substrings With Values at Most K, #Sliding Window
         //1 <= s.length <= 10^5, s[i] is a digit from '1' to '9',1 <= k <= 10^9
         //public int MinimumPartition(string s, int k)
@@ -204,6 +202,40 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
+        ///2523. Closest Prime Numbers in Range, #Prime
+        //public int[] ClosestPrimes(int left, int right)
+        //{
+        //    int[] res = new int[] { -1, -1 };
+        //    if (left==right)
+        //        return res;
+        //    bool[] arr = new bool[right+1];
+        //    for(int i = 2; i<=right; i++)
+        //    {
+        //        if (arr[i]) continue;
+        //        for(int j = 2; j*i<=right; j++)
+        //        {
+        //            arr[j*i]=true;
+        //        }
+        //    }
 
+        //    int diff = int.MaxValue;
+        //    int prev = -1;
+        //    for(int i = left; i<=right; i++)
+        //    {
+        //        if (i==1) continue;
+        //        if (arr[i]) continue;
+        //        if (prev!=-1)
+        //        {
+        //            if (i-prev<diff)
+        //            {
+        //                res= new int[] { prev, i };
+        //                diff=i-prev;
+        //            }
+        //        }
+        //        prev=i;
+        //    }
+
+        //    return res;
+        //}
     }
 }
