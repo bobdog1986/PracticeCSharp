@@ -37,6 +37,27 @@ namespace LeetCodeAlgo
             return res.ToArray();
         }
 
+        public bool[] buildBoolArray(string str)
+        {
+            str = str.Replace(" ", "");
+            if (str[0] == '[') str = str.Substring(1);
+            if (str[str.Length - 1] == ']') str = str.Substring(0, str.Length - 1);
+            var arr = str.Split(",").Select(x => x.Trim()).Where(x => !string.IsNullOrEmpty(x)).ToList();
+            var res = new List<bool>();
+            foreach (var a in arr)
+            {
+                if (a.ToLower()=="true"||a=="1")
+                {
+                    res.Add(true);
+                }
+                else
+                {
+                    res.Add(false);
+                }
+            }
+            return res.ToArray();
+        }
+
         public long[][] buildLongMatrix(string str)
         {
             str = str.Replace(" ", "");

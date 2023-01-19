@@ -279,6 +279,14 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
+
+        ///2527. Find Xor-Beauty of Array
+        //public int XorBeauty(int[] nums)
+        //{
+        //    return nums.Aggregate((x, y) => x^y);
+        //}
+
+
         ///2529. Maximum Count of Positive Integer and Negative Integer
         //public int MaximumCount(int[] nums)
         //{
