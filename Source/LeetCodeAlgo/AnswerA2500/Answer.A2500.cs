@@ -321,5 +321,34 @@ namespace LeetCodeAlgo
         //    return Math.Max(neg, pos);
         //}
 
+
+        ///2537. Count the Number of Good Subarrays, #Sliding Window
+        //A subarray arr is good if it there are at least k pairs of indices (i, j) such that i < j and arr[i] == arr[j].
+        //A subarray is a contiguous non-empty sequence of elements within an array.
+        public long CountGood(int[] nums, int k)
+        {
+            long res = 0;
+            int left = 0;
+            int n = nums.Length;
+            Dictionary<int,int> dict = new Dictionary<int,int>();
+            long curr = 0;
+            for(int i = 0; i<n; i++)
+            {
+                if (!dict.ContainsKey(nums[i]))
+                    dict.Add(nums[i], 0);
+                dict[nums[i]]++;
+                curr+=dict[nums[i]]-1;
+                while (left<=i&&curr>=k)
+                {
+                    long right = n-1-i+1;
+                    res+=right;
+                    dict[nums[left]]--;
+                    curr-=dict[nums[left]];
+                    left++;
+                }
+            }
+            return res;
+        }
+
     }
 }
