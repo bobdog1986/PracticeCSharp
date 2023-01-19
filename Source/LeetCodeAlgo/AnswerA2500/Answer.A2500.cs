@@ -278,5 +278,19 @@ namespace LeetCodeAlgo
 
         //    return res;
         //}
+
+        ///2529. Maximum Count of Positive Integer and Negative Integer
+        //public int MaximumCount(int[] nums)
+        //{
+        //    int pos = 0;
+        //    int neg = 0;
+        //    foreach (var i in nums)
+        //    {
+        //        if (i > 0) pos++;
+        //        if (i < 0) neg++;
+        //    }
+        //    return Math.Max(neg, pos);
+        //}
+
     }
 }
