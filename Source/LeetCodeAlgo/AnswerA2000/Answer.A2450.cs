@@ -507,5 +507,20 @@ namespace LeetCodeAlgo
 
             return res;
         }
+
+        ///2496. Maximum Value of a String in an Array
+        //public int MaximumValue(string[] strs)
+        //{
+        //    return strs.Max(x => {
+        //        if (x.All(c => Char.IsDigit(c)))
+        //        {
+        //            return int.Parse(x);
+        //        }
+        //        else
+        //        {
+        //            return x.Length;
+        //        }
+        //    });
+        //}
     }
 }
