@@ -11,7 +11,26 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
+        ///2500. Delete Greatest Value in Each Row
+        //public int DeleteGreatestValue(int[][] grid)
+        //{
+        //    int m = grid.Length;
+        //    int n = grid[0].Length;
+        //    int res = 0;
+        //    for (int i = 0; i<m; i++)
+        //    {
+        //        Array.Sort(grid[i]);
+        //    }
 
+        //    for (int j = 0; j<n; j++)
+        //    {
+        //        int curr = int.MinValue;
+        //        for (int i = 0; i<m; i++)
+        //            curr=Math.Max(curr, grid[i][j]);
+        //        res+=curr;
+        //    }
+        //    return res;
+        //}
 
         ///2506. Count Pairs Of Similar Strings
         public int SimilarPairs(string[] words)
