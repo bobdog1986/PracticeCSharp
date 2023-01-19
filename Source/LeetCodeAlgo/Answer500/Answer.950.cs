@@ -329,6 +329,30 @@ namespace LeetCodeAlgo
             }
             return res.ToArray();
         }
+
+        ///974. Subarray Sums Divisible by K, #Prefix Sum
+        ///return the number of non-empty subarrays that have a sum divisible by k.
+        public int SubarraysDivByK(int[] nums, int k)
+        {
+            int res = 0;
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            int sum = 0;
+            dict.Add(0, 1);
+            foreach (var i in nums)
+            {
+                sum += i;
+                sum %= k;
+                if (sum < 0)
+                    sum += k;//may nagetive
+                if (dict.ContainsKey(sum))
+                    res += dict[sum]++;
+                else
+                    dict.Add(sum, 1);
+            }
+            return res;
+        }
+
+
         ///976. Largest Perimeter Triangle
         /// return the largest sum of perimeter of a triangle, formed from three of these lengths. Or 0 if impossible
         public int LargestPerimeter(int[] nums)
