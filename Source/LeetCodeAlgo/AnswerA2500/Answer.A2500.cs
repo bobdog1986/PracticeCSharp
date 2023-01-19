@@ -279,6 +279,8 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
+        ///2526. Find Consecutive Integers from a Data Stream, see DataStream2526
+
 
         ///2527. Find Xor-Beauty of Array
         //public int XorBeauty(int[] nums)
