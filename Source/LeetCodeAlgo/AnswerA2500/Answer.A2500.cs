@@ -321,6 +321,22 @@ namespace LeetCodeAlgo
         //    return Math.Max(neg, pos);
         //}
 
+        ///2535. Difference Between Element Sum and Digit Sum of an Array
+        //public int DifferenceOfSum(int[] nums)
+        //{
+        //    int sum = nums.Sum();
+        //    int digitSum = nums.Sum(x =>
+        //    {
+        //        int res = 0;
+        //        while (x>0)
+        //        {
+        //            res+=x%10;
+        //            x/=10;
+        //        }
+        //        return res;
+        //    });
+        //    return Math.Abs(sum-digitSum);
+        //}
 
         ///2537. Count the Number of Good Subarrays, #Sliding Window
         //A subarray arr is good if it there are at least k pairs of indices (i, j) such that i < j and arr[i] == arr[j].
