@@ -15,14 +15,14 @@ namespace LeetCodeAlgo
             int res = 0;
             int left = 0;
             Dictionary<int, int> dict = new Dictionary<int, int>();
-            for(int i = 0; i < fruits.Length; i++)
+            for (int i = 0; i < fruits.Length; i++)
             {
                 if (dict.ContainsKey(fruits[i])) dict[fruits[i]]++;
                 else dict.Add(fruits[i], 1);
-                while(dict.Keys.Count>2 && left <= i)
+                while (dict.Keys.Count > 2 && left <= i)
                 {
                     dict[fruits[left]]--;
-                    if(dict[fruits[left]]==0)
+                    if (dict[fruits[left]] == 0)
                         dict.Remove(fruits[left]);
                     left++;
                 }
@@ -53,6 +53,53 @@ namespace LeetCodeAlgo
             return Math.Max(0, max - min - 2 * k);
         }
 
+        ///909. Snakes and Ladders, #DFS
+        //Return the least number of moves required to reach the square n2.
+        //If it is not possible to reach the square, return -1.
+        public int SnakesAndLadders(int[][] board)
+        {
+            int n = board.Length;
+            int[] dp = new int[n * n + 1];
+            Array.Fill(dp, int.MaxValue);
+            dp[1] = 0;
+            SnakesAndLadders(1, board, dp);
+            return dp[n * n] == int.MaxValue ? -1 : dp[n * n];
+        }
+
+        private void SnakesAndLadders(int index, int[][] board, int[] dp)
+        {
+            int n = board.Length;
+            for (int i = index + 1; i <= index + 6 && i <= n * n; i++)
+            {
+                int[] arr = GetXY_SnakesAndLadders(i, n);
+                int ladder = board[arr[0]][arr[1]];
+                if (ladder == -1)
+                {
+                    if (dp[i] > dp[index] + 1)
+                    {
+                        dp[i] = dp[index] + 1;
+                        SnakesAndLadders(i, board, dp);
+                    }
+                }
+                else
+                {
+                    if (dp[ladder] > dp[index] + 1)
+                    {
+                        dp[ladder] = dp[index] + 1;
+                        SnakesAndLadders(ladder, board, dp);
+                    }
+                }
+            }
+        }
+
+        private int[] GetXY_SnakesAndLadders(int i, int n)
+        {
+            i = i - 1;
+            int r = n - 1 - i / n;
+            int c = (i / n % 2 == 0) ? i % n : n - 1 - i % n;
+            return new int[] { r, c };
+        }
+
         ///910. Smallest Range II
         ///For each index i where 0 <= i<nums.length, change nums[i] to be either nums[i] + k or nums[i] - k.
         ///Return the minimum difference between the max and min elements after changing the values at each index.
@@ -69,6 +116,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///
 
         ///911. Online Election, see TopVotedCandidate
 
@@ -83,12 +131,12 @@ namespace LeetCodeAlgo
         public bool HasGroupsSizeX(int[] deck)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
-            foreach(var d in deck)
+            foreach (var d in deck)
             {
                 if (!dict.ContainsKey(d)) dict.Add(d, 0);
                 dict[d]++;
             }
-            for(int x = 2; x <= deck.Length; x++)
+            for (int x = 2; x <= deck.Length; x++)
             {
                 if (deck.Length % x == 0 && !dict.Keys.Any(k => dict[k] % x != 0))
                     return true;
@@ -102,10 +150,10 @@ namespace LeetCodeAlgo
         //Return an array of all the universal strings in words1. You may return the answer in any order.
         public IList<string> WordSubsets(string[] words1, string[] words2)
         {
-            var res=new List<string>();
+            var res = new List<string>();
 
             int[] arr2 = new int[26];
-            foreach(var w2 in words2)
+            foreach (var w2 in words2)
             {
                 int[] temp = new int[26];
                 foreach (var c in w2)
@@ -115,13 +163,13 @@ namespace LeetCodeAlgo
                     arr2[i] = Math.Max(arr2[i], temp[i]);
             }
 
-            foreach(var w1 in words1)
+            foreach (var w1 in words1)
             {
                 int[] arr1 = new int[26];
                 foreach (var c1 in w1)
                     arr1[c1 - 'a']++;
                 bool find = true;
-                for(int i = 0; i < arr1.Length; i++)
+                for (int i = 0; i < arr1.Length; i++)
                 {
                     if (arr1[i] < arr2[i])
                     {
@@ -177,9 +225,9 @@ namespace LeetCodeAlgo
             int min = int.MaxValue;
             for (int i = 0; i < nums.Length; i++)
             {
-                sumOfNegative+= nums[i];
+                sumOfNegative += nums[i];
                 min = Math.Min(sumOfNegative, min);
-                if(sumOfNegative >0)
+                if (sumOfNegative > 0)
                     sumOfNegative = 0;
             }
             return Math.Max(max, nums.Sum() - min);
@@ -189,11 +237,11 @@ namespace LeetCodeAlgo
         ///Return the minimum number of moves required to make s valid. ()) to ()() or (())
         public int MinAddToMakeValid(string s)
         {
-            int left=0;
-            int right=0;
-            for(int i=0; i<s.Length; i++)
+            int left = 0;
+            int right = 0;
+            for (int i = 0; i < s.Length; i++)
             {
-                if(s[i] == '(')
+                if (s[i] == '(')
                 {
                     right++;
                 }
@@ -304,9 +352,9 @@ namespace LeetCodeAlgo
             int n = s.Length;
             int ones = s.Count(x => x == '1');
 
-            int res = Math.Min(ones,n-ones);
+            int res = Math.Min(ones, n - ones);
             int count = 0;
-            for(int i = 0; i < s.Length; i++)
+            for (int i = 0; i < s.Length; i++)
             {
                 if (res == 0) break; ;
                 count += s[i] - '0';
@@ -494,9 +542,9 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        private void RangeSumBST(TreeNode root, int low , int high, ref int res)
+        private void RangeSumBST(TreeNode root, int low, int high, ref int res)
         {
-            if(root == null) return;
+            if (root == null) return;
             else
             {
                 if (root.val > high)
@@ -521,7 +569,7 @@ namespace LeetCodeAlgo
         {
             int n = arr.Length;
             int i = 0;
-            while (i < n-1)
+            while (i < n - 1)
             {
                 if (arr[i] < arr[i + 1]) i++;
                 else if (arr[i] == arr[i + 1]) return false;
@@ -529,8 +577,8 @@ namespace LeetCodeAlgo
             }
             if (i == 0 || i == n - 1) return false;
 
-            int j = n-1;
-            while (j >0)
+            int j = n - 1;
+            while (j > 0)
             {
                 if (arr[j] < arr[j - 1]) j--;
                 else if (arr[j] == arr[j - 1]) return false;
@@ -612,10 +660,10 @@ namespace LeetCodeAlgo
             int row = strs.Length;
             int col = strs[0].Length;
             int res = 0;
-            for(int c = 0; c < col; c++)
+            for (int c = 0; c < col; c++)
             {
                 char curr = 'a';
-                for(int r = 0; r < row; r++)
+                for (int r = 0; r < row; r++)
                 {
                     if (strs[r][c] < curr)
                     {
@@ -635,11 +683,11 @@ namespace LeetCodeAlgo
             Array.Sort(nums);
             int res = 0;
             int prev = int.MinValue;
-            foreach(var n in nums)
+            foreach (var n in nums)
             {
                 if (n <= prev)
                 {
-                    res+= prev+1-n;
+                    res += prev + 1 - n;
                     prev++;
                 }
                 else
