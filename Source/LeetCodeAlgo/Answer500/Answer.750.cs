@@ -39,7 +39,7 @@ namespace LeetCodeAlgo
                         }
 
                         var down = curr.ToArray();
-                        down[j] = (char)((down[j] - '0' - 1+10) % 10 + '0');
+                        down[j] = (char)((down[j] - '0' - 1 + 10) % 10 + '0');
                         var downKey = new string(down);
                         if (!dead.Contains(downKey) && !visit.Contains(downKey))
                         {
@@ -86,7 +86,7 @@ namespace LeetCodeAlgo
             Dictionary<char, HashSet<int>> dict = new Dictionary<char, HashSet<int>>();
             for (int i = 0; i < s.Length; i++)
             {
-                if (!dict.ContainsKey(s[i]))dict.Add(s[i], new HashSet<int>());
+                if (!dict.ContainsKey(s[i])) dict.Add(s[i], new HashSet<int>());
                 dict[s[i]].Add(i);
             }
 
@@ -126,9 +126,9 @@ namespace LeetCodeAlgo
         public string ReorganizeString(string s)
         {
             Dictionary<char, int> dict = new Dictionary<char, int>();
-            foreach(var c in s)
+            foreach (var c in s)
             {
-                if (dict.ContainsKey(c)) dict[c] ++;
+                if (dict.ContainsKey(c)) dict[c]++;
                 else dict.Add(c, 1);
             }
 
@@ -138,7 +138,7 @@ namespace LeetCodeAlgo
             var keys = dict.Keys.OrderBy(x => -dict[x]).ToList();
             char[] res = new char[s.Length];
             int left = 0;
-            for(int i = 0; i < s.Length; i += 2)
+            for (int i = 0; i < s.Length; i += 2)
             {
                 res[i] = keys[left];
                 if (--dict[keys[left]] == 0) left++;
@@ -154,7 +154,7 @@ namespace LeetCodeAlgo
         public int NumJewelsInStones(string jewels, string stones)
         {
             var set = jewels.ToHashSet();
-            return stones.Count(c=>set.Contains(c));
+            return stones.Count(c => set.Contains(c));
         }
 
         ///777. Swap Adjacent in LR String, #Two Pointers
@@ -215,15 +215,15 @@ namespace LeetCodeAlgo
         public int NumRabbits(int[] answers)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
-            foreach(var n in answers)
+            foreach (var n in answers)
             {
                 if (dict.ContainsKey(n)) dict[n]++;
                 else dict.Add(n, 1);
             }
             int res = 0;
-            foreach(var k in dict.Keys)
+            foreach (var k in dict.Keys)
             {
-                res += (k+1)*(int)(Math.Ceiling(1.0 * dict[k] / (k + 1)));
+                res += (k + 1) * (int)(Math.Ceiling(1.0 * dict[k] / (k + 1)));
             }
             return res;
         }
@@ -231,9 +231,9 @@ namespace LeetCodeAlgo
         ///root of a Binary Search Tree (BST), return the minimum difference between any two different nodes
         public int MinDiffInBST(TreeNode root)
         {
-            int res=int.MaxValue;
+            int res = int.MaxValue;
             var list = PreorderTraversal_Iteratively(root);
-            var arr= list.OrderBy(x => x).ToList();
+            var arr = list.OrderBy(x => x).ToList();
             for (int i = 0; i < arr.Count - 1; i++)
                 res = Math.Min(res, arr[i + 1] - arr[i]);
             return res;
@@ -319,14 +319,60 @@ namespace LeetCodeAlgo
         private bool IsBipartite_dfs(int[][] graph, int[] visit, int index, int slot)
         {
             visit[index] = slot;
-            foreach(var i in graph[index])
+            foreach (var i in graph[index])
             {
                 if (visit[i] == slot) return false;
                 if (visit[i] == 0 && !IsBipartite_dfs(graph, visit, i, -slot)) return false;
             }
             return true;
         }
-
+        ///787. Cheapest Flights Within K Stops, #BFS
+        //There are n cities connected by some number of flights. 
+        //flights[i] = [fromi, toi, pricei] indicates that flight from city fromi to city toi with cost pricei.
+        //You are given integers src, dst, and k, return the cheapest price from src to dst with at most k stops.
+        //If there is no such route, return -1.
+        public int FindCheapestPrice(int n, int[][] flights, int src, int dst, int k)
+        {
+            int[][] graph = new int[n][];
+            for (int i = 0; i < n; i++)
+            {
+                graph[i] = new int[n];
+            }
+            foreach (var f in flights)
+            {
+                graph[f[0]][f[1]] = f[2];
+            }
+            int res = int.MaxValue;
+            var q = new Queue<int[]>();
+            q.Enqueue(new int[] { src, 0 });
+            int[] visit = new int[n];
+            Array.Fill(visit, int.MaxValue);
+            visit[src] = 0;
+            while (q.Count > 0 && k-- >= 0)
+            {
+                int size = q.Count;
+                while (size-- > 0)
+                {
+                    var top = q.Dequeue();
+                    for (int i = 0; i < n; i++)
+                    {
+                        if (graph[top[0]][i] == 0) continue;
+                        int total = top[1] + graph[top[0]][i];
+                        if (visit[i] <= total) continue;
+                        visit[i] = total;
+                        if (i == dst)
+                        {
+                            res = Math.Min(res, total);
+                        }
+                        else
+                        {
+                            q.Enqueue(new int[] { i, total });
+                        }
+                    }
+                }
+            }
+            return res == int.MaxValue ? -1 : res;
+        }
         ///789. Escape The Ghosts
         public bool EscapeGhosts(int[][] ghosts, int[] target)
         {
@@ -366,7 +412,7 @@ namespace LeetCodeAlgo
             List<int>[] posArr = new List<int>[26];
             for (int i = 0; i < posArr.Length; i++)
                 posArr[i] = new List<int>();
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
                 posArr[s[i] - 'a'].Add(i);
             return words.Count(w => isSubSequence_binarySearch(posArr, s, w));
         }
@@ -399,11 +445,11 @@ namespace LeetCodeAlgo
         public bool RotateString(string s, string goal)
         {
             if (s.Length != goal.Length) return false;
-            for(int i = 0; i < s.Length; i++)
+            for (int i = 0; i < s.Length; i++)
             {
-                if(s[i] == goal[0])
+                if (s[i] == goal[0])
                 {
-                    if(goal == s.Substring(i)+s.Substring(0,i))return true;
+                    if (goal == s.Substring(i) + s.Substring(0, i)) return true;
                 }
             }
             return false;
