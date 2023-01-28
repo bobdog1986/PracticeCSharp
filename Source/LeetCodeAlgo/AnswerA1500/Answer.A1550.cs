@@ -431,6 +431,30 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///1582. Special Positions in a Binary Matrix
+        //public int NumSpecial(int[][] mat)
+        //{
+        //    int res = 0;
+        //    int[] rows = mat.Select(x => x.Sum()).ToArray();
+        //    int[] cols = new int[ mat[0].Length];
+        //    for(int j = 0; j<mat[0].Length; j++)
+        //    {
+        //        int count = 0;
+        //        for (int i = 0; i<mat.Length; i++)
+        //            count+=mat[i][j];
+        //        cols[j] = count;
+        //    }
+
+        //    for(int i = 0; i<mat.Length; i++)
+        //    {
+        //        for(int j = 0; j<mat[0].Length; j++)
+        //        {
+        //            if (rows[i]==1 && cols[j]==1 && mat[i][j]==1)
+        //                res++;
+        //        }
+        //    }
+        //    return res;
+        //}
         ///1584. Min Cost to Connect All Points, #Greedy, #Prim's algorithm,
         ///Return the minimum cost to make all points connected.
         public int MinCostConnectPoints(int[][] points)
