@@ -215,6 +215,44 @@ namespace LeetCodeAlgo
             return (int)res;
         }
 
+        ///1013. Partition Array Into Three Parts With Equal Sum
+        public bool CanThreePartsEqualSum(int[] arr)
+        {
+            int sum = arr.Sum();
+            if (sum%3!=0) return false;
+            return CanThreePartsEqualSum(arr, 0, sum/3,0) ;
+        }
+
+        private bool CanThreePartsEqualSum(int[] arr ,int index, int target, int count)
+        {
+            int n = arr.Length;
+            if(count ==2)
+            {
+                if (index == arr.Length) return false;
+                int sum = 0;
+                while (index<n)
+                {
+                    sum+= arr[index];
+                    index++;
+                }
+                return sum==target;
+            }
+            else
+            {
+                int sum = 0;
+                for(; index<n; index++)
+                {
+                    sum+=arr[index];
+                    if(sum == target)
+                    {
+                        if(CanThreePartsEqualSum(arr,index+1,target,count+1))
+                            return true;
+                    }
+                }
+                return false;
+            }
+        }
+
         /// 1014. Best Sightseeing Pair
         ///find max = values[i] + values[j] + i - j, 1 <= values[i] <= 1000
         public int MaxScoreSightseeingPair(int[] values)
