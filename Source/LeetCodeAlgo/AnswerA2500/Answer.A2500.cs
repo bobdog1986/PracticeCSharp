@@ -366,5 +366,10 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2545. Sort the Students by Their Kth Score
+        //public int[][] SortTheStudents(int[][] score, int k)
+        //{
+        //    return score.OrderBy(x => -x[k]).ToArray();
+        //}
     }
 }
