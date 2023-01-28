@@ -371,5 +371,11 @@ namespace LeetCodeAlgo
         //{
         //    return score.OrderBy(x => -x[k]).ToArray();
         //}
+
+        ///2546. Apply Bitwise Operations to Make Strings Equal
+        //public bool MakeStringsEqual(string s, string target)
+        //{
+        //    return s.Contains('1') == target.Contains('1');
+        //}
     }
 }
