@@ -386,17 +386,20 @@ namespace LeetCodeAlgo
         //    }
         //}
 
-        ///2439. Minimize Maximum of Array
-
-        public int MinimizeArrayValue(int[] nums)
-        {
-            int n = nums.Length;
-            int res = 0 ;
-
-
-
-            return res;
-        }
+        ///2441. Largest Positive Integer That Exists With Its Negative
+        //public int FindMaxK(int[] nums)
+        //{
+        //    int res = -1;
+        //    HashSet<int> set = new HashSet<int>();
+        //    foreach(var i in nums)
+        //        set.Add(i);
+        //    foreach(var i in set)
+        //    {
+        //        if (i>0 && set.Contains(-i))
+        //            res=Math.Max(res, i);
+        //    }
+        //    return res;
+        //}
 
         ///2442. Count Number of Distinct Integers After Reverse Operations
         //public int CountDistinctIntegers(int[] nums)
