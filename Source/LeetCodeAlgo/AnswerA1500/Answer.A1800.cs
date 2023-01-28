@@ -442,6 +442,61 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///1834. Single-Threaded CPU, #PriorityQueue
+        //tasks[i] = [enqueueTimei, processingTimei]
+        // CPU execute shortest processing time, if multiple exist then execute smallest index one
+        public int[] GetOrder(int[][] tasks)
+        {
+            int n = tasks.Length;
+            int[] res = new int[n];
+            int index = 0;
+
+            var pq1 = new PriorityQueue<int[], int[]>(Comparer<int[]>.Create((x, y) =>
+            {
+                if (x[0]==y[0])
+                    return x[2]-y[2];
+                else return x[0]-y[0];
+            }));
+
+            for(int i=0;i<n; i++)
+            {
+                int[] curr = new int[] { tasks[i][0], tasks[i][1], i };
+                pq1.Enqueue(curr, curr);
+            }
+
+            var pq2 = new PriorityQueue<int[], int[]>(Comparer<int[]>.Create((x, y) =>
+            {
+                if (x[1]==y[1])
+                    return x[2]-y[2];
+                else return x[1]-y[1];
+            }));
+
+            int time = 0;
+            while(index<n)
+            {
+                while (pq1.Count>0 && pq1.Peek()[0]<=time)
+                {
+                    var top1 = pq1.Dequeue();
+                    pq2.Enqueue(top1, top1);
+                }
+
+                if(pq2.Count ==0)
+                {
+                    time = pq1.Peek()[0];
+                    while(pq1.Count>0 && pq1.Peek()[0]<=time)
+                    {
+                        var top2 = pq1.Dequeue();
+                        pq2.Enqueue(top2, top2);
+                    }
+                }
+
+                var top=pq2.Dequeue();
+                time += top[1];
+                res[index++] = top[2];
+            }
+            return res;
+        }
         ///1837. Sum of Digits in Base K
         public int SumBase(int n, int k)
         {
