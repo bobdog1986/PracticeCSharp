@@ -348,6 +348,21 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///1287. Element Appearing More Than 25% In Sorted Array
+        //public int FindSpecialInteger(int[] arr)
+        //{
+        //    Dictionary<int,int> dict = new Dictionary<int,int>();
+        //    int n = arr.Length;
+        //    foreach(var i in arr)
+        //    {
+        //        if (!dict.ContainsKey(i)) dict.Add(i, 0);
+        //        dict[i]++;
+        //        if (dict[i] > 0.25*n) return i;
+        //    }
+        //    return -1;
+        //}
+
+
         /// 1288. Remove Covered Intervals
         ///Given an array intervals where intervals[i] = [li, ri] represent the interval [li, ri),
         ///remove all intervals that are covered by another interval in the list.

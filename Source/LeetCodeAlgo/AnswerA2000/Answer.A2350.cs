@@ -562,25 +562,26 @@ namespace LeetCodeAlgo
         {
             int n = nums.Length;
             long[] res = new long[n];
-
-            List<int[]> list =new List<int[]>() { new int[] { 0, n-1 } };
-            long[] prefixSum = new long[n];
+            //list to store all intervals, sorted
+            List<int[]> list = new List<int[]>() { new int[] { 0, n-1 } };
+            long[] prefixSum = new long[n];//create prefixSum array
             long sum = 0;
-            for(int i = 0; i<n; i++)
+            for (int i = 0; i<n; i++)
             {
                 sum+= nums[i];
                 prefixSum[i]= sum;
             }
-
-            PriorityQueue<long, long> pq =new PriorityQueue<long, long>(Comparer<long>.Create((x, y) =>
+            //max heap
+            PriorityQueue<long, long> pq = new PriorityQueue<long, long>(Comparer<long>.Create((x, y) =>
             {
                 if (x>y) return -1;
                 else if (x<y) return 1;
                 else return 0;
             }));
 
+            //{maxValue, frequencies} pairs
             Dictionary<long, int> dict = new Dictionary<long, int>();
-            dict.Add(sum,1);
+            dict.Add(sum, 1);//if dict[k]==0, this k is invalid
 
             pq.Enqueue(sum, sum);
 
@@ -589,7 +590,7 @@ namespace LeetCodeAlgo
             {
                 int left = 0;
                 int right = list.Count-1;
-
+                //using binary search to get correct interval
                 while (left<right)
                 {
                     int mid = (left+right)/2;
@@ -609,27 +610,27 @@ namespace LeetCodeAlgo
                     }
                 }
 
-                int[] toDelete = list[left];
-                list.RemoveAt(left);
+                int[] toDelete = list[left];//split this interval
+                list.RemoveAt(left);//remove from list
                 long total = prefixSum[toDelete[1]];
-                if(toDelete[0]>0)
+                if (toDelete[0]>0)
                     total-=prefixSum[toDelete[0]-1];
 
-                dict[total]--;
-
+                dict[total]--;//subtract freq
+                //after split , right sub is valid
                 if (toDelete[1] > removeQueries[index])
                 {
                     list.Insert(left, new int[] { removeQueries[index]+1, toDelete[1] });
                     long sub = prefixSum[toDelete[1]]- prefixSum[removeQueries[index]];
                     if (!dict.ContainsKey(sub))
                         dict.Add(sub, 0);
-                    dict[sub]++;
+                    dict[sub]++;//update dict
                     pq.Enqueue(sub, sub);
                 }
-
+                //left sub is valid
                 if (toDelete[0] < removeQueries[index])
                 {
-                    list.Insert(left, new int[] { toDelete[0],removeQueries[index]-1 });
+                    list.Insert(left, new int[] { toDelete[0], removeQueries[index]-1 });
                     long sub = prefixSum[removeQueries[index]-1];
                     if (toDelete[0]>0)
                         sub-= prefixSum[toDelete[0]-1];
@@ -644,12 +645,13 @@ namespace LeetCodeAlgo
                 while (pq.Count>0)
                 {
                     long top = pq.Peek();
+                    //if currect max is valid
                     if (dict.ContainsKey(top)&&dict[top]>0)
                     {
                         max=top;
                         break;
                     }
-                    else pq.Dequeue();
+                    else pq.Dequeue();//discard invalid
                 }
                 res[index++] = max;
             }
