@@ -59,6 +59,8 @@ namespace LeetCodeAlgo
 
             LogHelper.log(result);
 
+            Console.WriteLine($"**********stop watch sec ={sw.Elapsed.TotalSeconds}*******");
+
             Console.WriteLine("=========Finish!========");
             Console.ReadLine();
         }

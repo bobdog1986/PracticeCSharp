@@ -553,6 +553,110 @@ namespace LeetCodeAlgo
             return new string(res);
         }
 
+        ///2382. Maximum Segment Sum After Removals, #Binary Search, #Prefix Sum , #PriorityQueue
+        //You are given two 0-indexed integer arrays nums and removeQueries, both of length n.
+        //For the ith query, the element in nums at the index removeQueries[i] is removed, splitting nums into different segments.
+        //A segment is a contiguous sequence of positive integers in nums.A segment sum is the sum of every element in a segment.
+        //Return an integer array answer, of length n, where answer[i] is the maximum segment sum after applying the ith removal.
+        public long[] MaximumSegmentSum(int[] nums, int[] removeQueries)
+        {
+            int n = nums.Length;
+            long[] res = new long[n];
+
+            List<int[]> list =new List<int[]>() { new int[] { 0, n-1 } };
+            long[] prefixSum = new long[n];
+            long sum = 0;
+            for(int i = 0; i<n; i++)
+            {
+                sum+= nums[i];
+                prefixSum[i]= sum;
+            }
+
+            PriorityQueue<long, long> pq =new PriorityQueue<long, long>(Comparer<long>.Create((x, y) =>
+            {
+                if (x>y) return -1;
+                else if (x<y) return 1;
+                else return 0;
+            }));
+
+            Dictionary<long, int> dict = new Dictionary<long, int>();
+            dict.Add(sum,1);
+
+            pq.Enqueue(sum, sum);
+
+            int index = 0;
+            while (index<n)
+            {
+                int left = 0;
+                int right = list.Count-1;
+
+                while (left<right)
+                {
+                    int mid = (left+right)/2;
+                    int[] curr = list[mid];
+                    if (curr[1]<removeQueries[index])
+                    {
+                        left = mid+1;
+                    }
+                    else if (list[mid][0]>removeQueries[index])
+                    {
+                        right = mid;
+                    }
+                    else
+                    {
+                        left=mid;
+                        break;
+                    }
+                }
+
+                int[] toDelete = list[left];
+                list.RemoveAt(left);
+                long total = prefixSum[toDelete[1]];
+                if(toDelete[0]>0)
+                    total-=prefixSum[toDelete[0]-1];
+
+                dict[total]--;
+
+                if (toDelete[1] > removeQueries[index])
+                {
+                    list.Insert(left, new int[] { removeQueries[index]+1, toDelete[1] });
+                    long sub = prefixSum[toDelete[1]]- prefixSum[removeQueries[index]];
+                    if (!dict.ContainsKey(sub))
+                        dict.Add(sub, 0);
+                    dict[sub]++;
+                    pq.Enqueue(sub, sub);
+                }
+
+                if (toDelete[0] < removeQueries[index])
+                {
+                    list.Insert(left, new int[] { toDelete[0],removeQueries[index]-1 });
+                    long sub = prefixSum[removeQueries[index]-1];
+                    if (toDelete[0]>0)
+                        sub-= prefixSum[toDelete[0]-1];
+
+                    if (!dict.ContainsKey(sub))
+                        dict.Add(sub, 0);
+                    dict[sub]++;
+                    pq.Enqueue(sub, sub);
+                }
+
+                long max = 0;
+                while (pq.Count>0)
+                {
+                    long top = pq.Peek();
+                    if (dict.ContainsKey(top)&&dict[top]>0)
+                    {
+                        max=top;
+                        break;
+                    }
+                    else pq.Dequeue();
+                }
+                res[index++] = max;
+            }
+
+            return res;
+        }
+
 
         ///2389. Longest Subsequence With Limited Sum
         public int[] AnswerQueries(int[] nums, int[] queries)
