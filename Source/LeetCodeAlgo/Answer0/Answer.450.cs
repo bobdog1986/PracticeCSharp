@@ -252,6 +252,8 @@ namespace LeetCodeAlgo
             return false;
         }
 
+        ///460. LFU Cache, see LFUCache
+
         /// 461. Hamming Distance
         ///return the Hamming distance between two integers, count of bits are different.
         public int HammingDistance(int x, int y)
