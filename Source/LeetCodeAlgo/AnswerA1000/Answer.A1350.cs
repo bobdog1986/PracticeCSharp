@@ -70,7 +70,7 @@ namespace LeetCodeAlgo
             foreach (var x in target)
             {
                 sum += x;
-                pq.Enqueue(x,-x);
+                pq.Enqueue(x, -x);
             }
             while (true)
             {
@@ -84,7 +84,7 @@ namespace LeetCodeAlgo
                 max %= sum;//avoid TLE for very large number
                 if (max <= 0) return false;
                 sum += max;
-                pq.Enqueue(max,-max);
+                pq.Enqueue(max, -max);
             }
         }
 
@@ -92,7 +92,7 @@ namespace LeetCodeAlgo
         ///1 <= arr.length <= 500, 0 <= arr[i] <= 10^4
         public int[] SortByBits(int[] arr)
         {
-            return arr.OrderBy(x=> SortByBits_BitsCount(x)).ThenBy(x => x).ToArray();
+            return arr.OrderBy(x => SortByBits_BitsCount(x)).ThenBy(x => x).ToArray();
         }
 
         public int SortByBits_BitsCount(int n)
@@ -138,23 +138,23 @@ namespace LeetCodeAlgo
         ///0 <= nums[i] <= 100, 2 <= nums.length <= 500
         public int[] SmallerNumbersThanCurrent(int[] nums)
         {
-            int[] arr=new int[101];
-            Dictionary<int, List<int>> map=new Dictionary<int, List<int>>();
-            for(int i = 0; i < nums.Length; i++)
+            int[] arr = new int[101];
+            Dictionary<int, List<int>> map = new Dictionary<int, List<int>>();
+            for (int i = 0; i < nums.Length; i++)
             {
                 arr[nums[i]]++;
-                if(!map.ContainsKey(nums[i]))
+                if (!map.ContainsKey(nums[i]))
                     map[nums[i]] = new List<int>();
                 map[nums[i]].Add(i);
             }
 
-            int count=nums.Length;
+            int count = nums.Length;
             int[] ans = new int[nums.Length];
-            for(int i=arr.Length-1; i>=0 && count>0; i--)
+            for (int i = arr.Length - 1; i >= 0 && count > 0; i--)
             {
                 if (arr[i] == 0) continue;
-                count-=arr[i];
-                foreach(var index in map[i])
+                count -= arr[i];
+                foreach (var index in map[i])
                     ans[index] = count;
             }
             return ans;
@@ -165,35 +165,35 @@ namespace LeetCodeAlgo
         {
             int len = votes[0].Length;//votes count in each vote string, eg "ABC" is 3
             int[][] matrix = new int[26][];//at most 26 teams from A to Z
-            for(int i=0;i<26;i++)
+            for (int i = 0; i < 26; i++)
                 matrix[i] = new int[len];
 
-            foreach(var vote in votes)
+            foreach (var vote in votes)
             {
-                for(int i=0;i<vote.Length;i++)
+                for (int i = 0; i < vote.Length; i++)
                 {
                     matrix[vote[i] - 'A'][i]++;//calculate all votes for every team
                 }
             }
-            var teams= votes[0].ToList();//get all teams
+            var teams = votes[0].ToList();//get all teams
             teams.Sort((x, y) =>
             {
                 //compare score from 0 index to len-1, higher votes win
                 int i = 0;
                 while (i < votes[0].Length)
                 {
-                    if(matrix[x-'A'][i]> matrix[y-'A'][ i])
+                    if (matrix[x - 'A'][i] > matrix[y - 'A'][i])
                     {
                         return -1;
                     }
-                    else if(matrix[x - 'A'][i]< matrix[y - 'A'][i])
+                    else if (matrix[x - 'A'][i] < matrix[y - 'A'][i])
                     {
                         return 1;
                     }
                     i++;
                 }
                 //if all same , sort by alphabetically
-                return x -y;
+                return x - y;
             });
             return new string(teams.ToArray());
         }
@@ -213,12 +213,12 @@ namespace LeetCodeAlgo
             if (root == null) return false;
             if (head.val == root.val)
             {
-                var leftOk = IsSubPath_Recursion(head.next, root.left,origin);
+                var leftOk = IsSubPath_Recursion(head.next, root.left, origin);
                 if (leftOk) return true;
                 var rightOk = IsSubPath_Recursion(head.next, root.right, origin);
                 if (rightOk) return true;
             }
-            if(head == origin)
+            if (head == origin)
             {
                 return IsSubPath_Recursion(head, root.left, origin) || IsSubPath_Recursion(head, root.right, origin);
             }
@@ -284,6 +284,20 @@ namespace LeetCodeAlgo
         //    return new string(res);
         //}
 
+        ///1374. Generate a String With Characters That Have Odd Counts
+        // public string GenerateTheString(int n)
+        // {
+        //     string res = new string(string.Join("", Enumerable.Repeat("a", n - 1)));
+        //     if (n % 2 == 1)
+        //     {
+        //         res += "a";
+        //     }
+        //     else
+        //     {
+        //         res += "b";
+        //     }
+        //     return res;
+        // }
         /// 1375. Number of Times Binary String Is Prefix-Aligned
         ///Return the number of times the binary string is prefix-aligned during the flipping process.
         public int NumTimesAllBlue(int[] flips)
@@ -291,7 +305,7 @@ namespace LeetCodeAlgo
             int right = 0;
             int ans = 0;
             int index = 1;
-            foreach(var n in flips)
+            foreach (var n in flips)
             {
                 right = Math.Max(right, n);
                 if (right == index) ans++;
@@ -311,7 +325,7 @@ namespace LeetCodeAlgo
 
         public int NumOfMinutes_BFS(int n, int headID, int[] manager, int[] informTime)
         {
-            List<int>[] graph =new List<int>[n];
+            List<int>[] graph = new List<int>[n];
             for (int i = 0; i < n; i++)
                 graph[i] = new List<int>();
 
@@ -321,7 +335,7 @@ namespace LeetCodeAlgo
             Queue<int[]> q = new Queue<int[]>(); // Since it's a tree, we don't need `visited` array
             q.Enqueue(new int[] { headID, 0 });
             int ans = 0;
-            while (q.Count>0)
+            while (q.Count > 0)
             {
                 int[] top = q.Dequeue();
                 int u = top[0], w = top[1];
@@ -357,10 +371,10 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        private void GetTargetCopy(TreeNode original, TreeNode cloned, TreeNode target,ref TreeNode found)
+        private void GetTargetCopy(TreeNode original, TreeNode cloned, TreeNode target, ref TreeNode found)
         {
-            if (original==null) return;
-            if (found!=null) return;
+            if (original == null) return;
+            if (found != null) return;
             if (original == target)
             {
                 found = cloned;
@@ -376,22 +390,22 @@ namespace LeetCodeAlgo
         public IList<int> LuckyNumbers(int[][] matrix)
         {
             var rowLen = matrix.Length;
-            var colLen=matrix[0].Length;
-            int[] minOfRows=new int[rowLen];
-            for(int i =0;i<rowLen;i++)
-                minOfRows[i]=int.MaxValue;
-            int[] maxOfCols=new int[colLen];
-            for(int i=0;i<rowLen;i++)
-                for(int j = 0; j < colLen; j++)
+            var colLen = matrix[0].Length;
+            int[] minOfRows = new int[rowLen];
+            for (int i = 0; i < rowLen; i++)
+                minOfRows[i] = int.MaxValue;
+            int[] maxOfCols = new int[colLen];
+            for (int i = 0; i < rowLen; i++)
+                for (int j = 0; j < colLen; j++)
                 {
                     minOfRows[i] = Math.Min(minOfRows[i], matrix[i][j]);
                     maxOfCols[j] = Math.Max(maxOfCols[j], matrix[i][j]);
                 }
-            var ans=new List<int>();
+            var ans = new List<int>();
             for (int i = 0; i < rowLen; i++)
                 for (int j = 0; j < colLen; j++)
                 {
-                    if(matrix[i][j] == minOfRows[i] && matrix[i][j] == maxOfCols[j])
+                    if (matrix[i][j] == minOfRows[i] && matrix[i][j] == maxOfCols[j])
                         ans.Add(matrix[i][j]);
                 }
             return ans;
@@ -426,8 +440,8 @@ namespace LeetCodeAlgo
             {
                 var mid = (left + right) / 2;
                 var leftTree = BalanceBST_Build(list, left, mid - 1);
-                var rightTree = BalanceBST_Build(list, mid+1,right );
-                return new TreeNode(list[mid],leftTree,rightTree);
+                var rightTree = BalanceBST_Build(list, mid + 1, right);
+                return new TreeNode(list[mid], leftTree, rightTree);
             }
         }
 
@@ -445,14 +459,14 @@ namespace LeetCodeAlgo
         {
             var dict = new Dictionary<int, int>();
             dict.Add(1, 0);
-            for(int i = lo; i <= hi; i++)
+            for (int i = lo; i <= hi; i++)
                 GetKth(i, dict);
 
             var pq = new PriorityQueue<int, int>(Comparer<int>.Create(
                 new Comparison<int>((x, y) =>
                 {
                     if (dict[x] != dict[y]) return dict[x] - dict[y];
-                    else return x-y;
+                    else return x - y;
                 })));
 
             for (int i = lo; i <= hi; i++)
@@ -464,7 +478,7 @@ namespace LeetCodeAlgo
             return pq.Dequeue();
         }
 
-        private int GetKth(int x, Dictionary<int,int> dict)
+        private int GetKth(int x, Dictionary<int, int> dict)
         {
             if (dict.ContainsKey(x))
             {
@@ -472,7 +486,7 @@ namespace LeetCodeAlgo
             }
             else
             {
-                var y = x % 2 == 0? x / 2 : 3 * x + 1;
+                var y = x % 2 == 0 ? x / 2 : 3 * x + 1;
                 var res = 1 + GetKth(y, dict);
                 if (!dict.ContainsKey(x))
                     dict.Add(x, res);
@@ -485,14 +499,14 @@ namespace LeetCodeAlgo
         ///Return the largest lucky integer in the array.If there is no lucky integer return -1.
         public int FindLucky(int[] arr)
         {
-            Dictionary<int,int> map = new Dictionary<int,int>();
-            foreach(var n in arr)
+            Dictionary<int, int> map = new Dictionary<int, int>();
+            foreach (var n in arr)
             {
                 if (map.ContainsKey(n)) map[n]++;
                 else map.Add(n, 1);
             }
-            var keys=map.Keys.OrderBy(x=>-x);
-            foreach(var key in keys)
+            var keys = map.Keys.OrderBy(x => -x);
+            foreach (var key in keys)
                 if (map[key] == key) return key;
             return -1;
         }
