@@ -144,6 +144,30 @@ namespace LeetCodeAlgo
             return false;
         }
 
+        ///915. Partition Array into Disjoint Intervals, #Prefix Sum
+        public int PartitionDisjoint(int[] nums)
+        {
+            int n = nums.Length;
+            int[] minArr = new int[n];
+            minArr[n - 1] = nums[n - 1];
+            for (int i = n - 2; i >= 0; i--)
+            {
+                minArr[i] = Math.Min(minArr[i + 1], nums[i]);
+            }
+            int max = int.MinValue;
+            int res = 0;
+            while (res < n)
+            {
+                max = Math.Max(max, nums[res]);
+                if (res < n - 1 && max <= minArr[res + 1])
+                {
+                    break;
+                }
+                res++;
+            }
+            return res + 1;
+        }
+
         ///916. Word Subsets
         //A string b is a subset of string a if every letter in b occurs in a including multiplicity.
         //A string a from words1 is universal if for every string b in words2, b is a subset of a.
