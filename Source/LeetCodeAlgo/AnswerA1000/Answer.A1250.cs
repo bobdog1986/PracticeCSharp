@@ -136,7 +136,7 @@ namespace LeetCodeAlgo
         {
             int res = 0;
             var prev = points[0];
-            foreach(var curr in points)
+            foreach (var curr in points)
             {
                 res += Math.Max(Math.Abs(curr[0] - prev[0]), Math.Abs(curr[1] - prev[1]));
                 prev = curr;
@@ -152,9 +152,9 @@ namespace LeetCodeAlgo
             int[] rows = new int[m];
             int[] cols = new int[n];
             int res = 0;
-            for(int i = 0; i < m; i++)
+            for (int i = 0; i < m; i++)
             {
-                for(int j = 0; j < n; j++)
+                for (int j = 0; j < n; j++)
                 {
                     if (grid[i][j] == 1)
                     {
@@ -184,21 +184,21 @@ namespace LeetCodeAlgo
         public IList<IList<string>> SuggestedProducts(string[] products, string searchWord)
         {
             var res = new IList<string>[searchWord.Length];
-            for(int i = 0; i < searchWord.Length; i++)
-                res[i]=new List<string>();
+            for (int i = 0; i < searchWord.Length; i++)
+                res[i] = new List<string>();
             products = products.OrderBy(x => x).ToArray();
             var root = new TrieItem();
-            foreach(var product in products)
+            foreach (var product in products)
             {
                 SuggestedProducts_build(product, root);
             }
             var curr = root;
-            for(int i = 0; i < searchWord.Length; i++)
+            for (int i = 0; i < searchWord.Length; i++)
             {
                 var c = searchWord[i];
                 if (!curr.dict.ContainsKey(c))
                     break;
-                res[i]=curr.dict[c].list.Take(3).ToList();
+                res[i] = curr.dict[c].list.Take(3).ToList();
                 curr = curr.dict[c];
             }
             return res;
@@ -207,15 +207,47 @@ namespace LeetCodeAlgo
         private void SuggestedProducts_build(string product, TrieItem root)
         {
             var curr = root;
-            foreach(var c in product)
+            foreach (var c in product)
             {
-                if(!curr.dict.ContainsKey(c))
+                if (!curr.dict.ContainsKey(c))
                     curr.dict.Add(c, new TrieItem());
                 curr.dict[c].list.Add(product);
                 curr = curr.dict[c];
             }
         }
 
+        ///1275. Find Winner on a Tic Tac Toe Game
+        // public string Tictactoe(int[][] moves)
+        // {
+        //     int[][] mat = new int[3][];
+        //     for (int i = 0; i < 3; i++)
+        //     {
+        //         mat[i] = new int[3];
+        //     }
+        //     int sign = 1;
+        //     foreach (var move in moves)
+        //     {
+        //         mat[move[0]][move[1]] = sign;
+        //         sign = -sign;
+        //     }
+        //     for (int i = 0; i < 3; i++)
+        //     {
+        //         if (mat[i].All(x => x == 1)) return "A";
+        //         if (mat[0][i] == 1 && mat[1][i] == 1 && mat[2][i] == 1)
+        //             return "A";
+        //         if (mat[i].All(x => x == -1)) return "B";
+        //         if (mat[0][i] == -1 && mat[1][i] == -1 && mat[2][i] == -1)
+        //             return "B";
+        //     }
+
+        //     if (mat[0][0] == 1 && mat[1][1] == 1 && mat[2][2] == 1) return "A";
+        //     if (mat[0][0] == -1 && mat[1][1] == -1 && mat[2][2] == -1) return "B";
+
+        //     if (mat[0][2] == 1 && mat[1][1] == 1 && mat[2][0] == 1) return "A";
+        //     if (mat[0][2] == -1 && mat[1][1] == -1 && mat[2][0] == -1) return "B";
+        //     return moves.Length == 9 ? "Draw" : "Pending";
+        // }
+        
         ///1277. Count Square Submatrices with All Ones, #DP
         ///Given a m * n matrix of ones and zeros, return how many square submatrices have all ones.
         public int CountSquares(int[][] matrix)
@@ -280,11 +312,11 @@ namespace LeetCodeAlgo
                 int mid = (left + right) / 2;
                 int sum = 0;
                 foreach (var n in nums)
-                    sum += (int)Math.Ceiling( 1.0*n / mid);
+                    sum += (int)Math.Ceiling(1.0 * n / mid);
                 if (sum <= threshold)
                     right = mid;
                 else
-                    left = mid+1;
+                    left = mid + 1;
             }
             return left;
         }
