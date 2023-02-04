@@ -371,6 +371,43 @@ namespace LeetCodeAlgo
             return nums.Select(x => x * x).OrderBy(x => x).ToArray();
         }
 
+        ///978. Longest Turbulent Subarray
+        public int MaxTurbulenceSize(int[] arr)
+        {
+            int n = arr.Length;
+            int[] diff = new int[n];
+            for (int i = 1; i < n; i++)
+                diff[i] = arr[i] - arr[i - 1];
+            int res = 1;
+            MaxTurbulenceSize(diff, 1, 1, 1, ref res);
+            MaxTurbulenceSize(diff, 1, -1, 1, ref res);
+            return res;
+        }
+
+        private void MaxTurbulenceSize(int[] diff, int i, int sign, int count, ref int res)
+        {
+            int n = diff.Length;
+            res = Math.Max(res, count);
+            if (i < n)
+            {
+                if (diff[i] == 0)
+                {
+                    MaxTurbulenceSize(diff, i + 1, -sign, 1, ref res);
+                }
+                else
+                {
+                    if (sign * diff[i] > 0)
+                    {
+                        MaxTurbulenceSize(diff, i + 1, -sign, 1, ref res);
+                    }
+                    else
+                    {
+                        MaxTurbulenceSize(diff, i + 1, -sign, count + 1, ref res);
+                    }
+                }
+            }
+        }
+
         /// 980. Unique Paths III, #DFS
         ///1 representing the starting square.There is exactly one starting square.
         ///2 representing the ending square. There is exactly one ending square.
