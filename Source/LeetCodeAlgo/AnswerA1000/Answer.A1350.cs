@@ -228,6 +228,62 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///1370. Increasing Decreasing String
+        //public string SortString(string s)
+        //{
+        //    int n = s.Length;
+        //    char[] res = new char[n];
+        //    int[] arr = new int[26];
+        //    foreach (var c in s)
+        //    {
+        //        arr[c-'a']++;
+        //    }
+        //    int left = 0;
+        //    int right = arr.Length-1;
+        //    int i = 0;
+        //    while (i<n)
+        //    {
+        //        //step1 pick smallest
+        //        while (i<n && left<arr.Length && arr[left]==0)
+        //            left++;
+        //        if (i<n && left<arr.Length && arr[left]>0)
+        //        {
+        //            res[i++]=(char)('a'+left);
+        //            arr[left]--;
+        //        }
+
+        //        //step 2, all smallest that greater than last
+        //        for (int j = left+1; j<arr.Length && i<n; j++)
+        //        {
+        //            if (arr[j] >0 && j>res[i-1]-'a')
+        //            {
+        //                res[i++]=(char)('a'+j);
+        //                arr[j]--;
+        //            }
+        //        }
+
+        //        //step 3, pick largest
+        //        while (i<n && right>=0 && arr[right]==0)
+        //            right--;
+        //        if (i<n && right>=0 && arr[right]>0)
+        //        {
+        //            res[i++]=(char)('a'+right);
+        //            arr[right]--;
+        //        }
+
+        //        //step 4, all laregest that last
+        //        for (int j = right-1; j>=0&&i<n; j--)
+        //        {
+        //            if (arr[j] >0 && j<res[i-1]-'a')
+        //            {
+        //                res[i++]=(char)('a'+j);
+        //                arr[j]--;
+        //            }
+        //        }
+        //    }
+        //    return new string(res);
+        //}
+
         /// 1375. Number of Times Binary String Is Prefix-Aligned
         ///Return the number of times the binary string is prefix-aligned during the flipping process.
         public int NumTimesAllBlue(int[] flips)
