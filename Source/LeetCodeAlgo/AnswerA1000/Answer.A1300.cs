@@ -21,10 +21,10 @@ namespace LeetCodeAlgo
             int left = 0;
             int right = arr[n - 1];
             int res = 1;
-            int diff = sum-target;
+            int diff = sum - target;
             while (left <= right)
             {
-                int mid = (left+right) / 2;
+                int mid = (left + right) / 2;
                 sum = FindBestValue_GetSum(arr, mid);
                 if (sum == target) return mid;
                 else if (sum > target)
@@ -51,27 +51,27 @@ namespace LeetCodeAlgo
         {
             int sum = 0;
             int i = 0;
-            for (;i<arr.Length;i++)
+            for (; i < arr.Length; i++)
             {
                 if (arr[i] >= mid) break;
                 sum += arr[i];
             }
-            return sum+(arr.Length-i)*mid;
+            return sum + (arr.Length - i) * mid;
         }
         /// 1302. Deepest Leaves Sum, #BTree
         public int DeepestLeavesSum(TreeNode root)
         {
             int res = 0;
-            List<TreeNode> list = new List<TreeNode>() { root};
+            List<TreeNode> list = new List<TreeNode>() { root };
 
-            while(list.Count > 0)
+            while (list.Count > 0)
             {
                 res = list.Sum(x => x.val);
                 List<TreeNode> next = new List<TreeNode>();
-                foreach(var node in list)
+                foreach (var node in list)
                 {
-                    if(node.left!=null)next.Add(node.left);
-                    if(node.right!=null)next.Add(node.right);
+                    if (node.left != null) next.Add(node.left);
+                    if (node.right != null) next.Add(node.right);
                 }
                 list = next;
             }
@@ -80,7 +80,7 @@ namespace LeetCodeAlgo
         ///1304. Find N Unique Integers Sum up to Zero
         public int[] SumZero(int n)
         {
-            var res=new int[n];
+            var res = new int[n];
             int seed = 1;
             int i = 0;
             while (n > 0)
@@ -131,7 +131,7 @@ namespace LeetCodeAlgo
         ///you can jump to i + arr[i] or i - arr[i], check if you can reach to any index with value 0.
         public bool CanReach(int[] arr, int start)
         {
-            if(start>=0 && start< arr.Length && arr[start] >= 0)
+            if (start >= 0 && start < arr.Length && arr[start] >= 0)
             {
                 if (arr[start] == 0) return true;
                 else
@@ -146,17 +146,17 @@ namespace LeetCodeAlgo
         public bool CanReach_My(int[] arr, int start)
         {
             bool[] visit = new bool[arr.Length];
-            List<int> list = new List<int>() { start};
+            List<int> list = new List<int>() { start };
             visit[start] = true;
-            while(list.Count > 0)
+            while (list.Count > 0)
             {
-                var next =new List<int>();
-                foreach(var i in list)
+                var next = new List<int>();
+                foreach (var i in list)
                 {
                     if (arr[i] == 0) return true;
                     int up = i + arr[i];
                     int down = i - arr[i];
-                    if(up>=0 && up<arr.Length && !visit[up])
+                    if (up >= 0 && up < arr.Length && !visit[up])
                     {
                         visit[up] = true;
                         next.Add(up);
@@ -178,18 +178,18 @@ namespace LeetCodeAlgo
         public string FreqAlphabets(string s)
         {
             if (string.IsNullOrEmpty(s)) return string.Empty;
-            if (s.Length < 3 || s[2]!='#' )
-                return ((char)(s[0]-'1'+'a')).ToString()+ FreqAlphabets(s.Substring(1));
+            if (s.Length < 3 || s[2] != '#')
+                return ((char)(s[0] - '1' + 'a')).ToString() + FreqAlphabets(s.Substring(1));
             else
-                return ((char)(int.Parse(s.Substring(0,2))-1+'a')).ToString() + FreqAlphabets(s.Substring(3));
+                return ((char)(int.Parse(s.Substring(0, 2)) - 1 + 'a')).ToString() + FreqAlphabets(s.Substring(3));
         }
         /// 1313. Decompress Run-Length Encoded List
         ///Consider each adjacent pair of elements[freq, val] = [nums[2 * i], nums[2 * i + 1]](with i >= 0).
         /// Return the decompressed list.
         public int[] DecompressRLElist(int[] nums)
         {
-            var ans=new List<int>();
-            for(int i = 0; i < nums.Length; i = i + 2)
+            var ans = new List<int>();
+            for (int i = 0; i < nums.Length; i = i + 2)
             {
                 int j = nums[i];
                 while (j-- > 0)
@@ -257,14 +257,14 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        private void SumEvenGrandparent(TreeNode root,ref int res)
+        private void SumEvenGrandparent(TreeNode root, ref int res)
         {
             if (root == null) return;
             if (root.val % 2 == 0)
             {
                 if (root.left != null)
                 {
-                    if (root.left.left != null) res+= root.left.left.val;
+                    if (root.left.left != null) res += root.left.left.val;
                     if (root.left.right != null) res += root.left.right.val;
                 }
                 if (root.right != null)
@@ -282,7 +282,7 @@ namespace LeetCodeAlgo
         {
             //make a|b=c;
             int res = 0;
-            for(int i= 0; i <= 30; i++)
+            for (int i = 0; i <= 30; i++)
             {
                 int j = 1 << i;
                 bool x = (a & j) != 0;
@@ -290,7 +290,7 @@ namespace LeetCodeAlgo
                 bool z = (c & j) != 0;
                 if (z)
                 {
-                    if (!x &&! y) res++;
+                    if (!x && !y) res++;
                 }
                 else
                 {
@@ -300,6 +300,19 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+        ///1317. Convert Integer to the Sum of Two No-Zero Integers
+        // public int[] GetNoZeroIntegers(int n)
+        // {
+        //     int i = 1;
+        //     while (i < n)
+        //     {
+        //         int j = n - i;
+        //         if (i.ToString().All(x => x != '0') && j.ToString().All(x => x != '0'))
+        //             return new int[] { i, j };
+        //         i++;
+        //     }
+        //     return null;
+        // }
 
         /// 1319. Number of Operations to Make Network Connected, #Union-Find, #Graph, DFS, #BFS
         public int MakeConnected(int n, int[][] connections)
@@ -373,7 +386,7 @@ namespace LeetCodeAlgo
             visited[src] = true;
             Queue<int> q = new Queue<int>();
             q.Enqueue(src);
-            while (q.Count>0)
+            while (q.Count > 0)
             {
                 int u = q.Dequeue();
                 foreach (int v in graph[u])
@@ -395,10 +408,10 @@ namespace LeetCodeAlgo
             var arr = s.Split(' ').ToArray();
             int n = arr.Max(x => x.Length);
             List<char> list = new List<char>();
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
                 list.Clear();
-                for(int j=0; j < arr.Length; j++)
+                for (int j = 0; j < arr.Length; j++)
                 {
                     if (i >= arr[j].Length) list.Add(' ');
                     else list.Add(arr[j][i]);
@@ -449,21 +462,21 @@ namespace LeetCodeAlgo
         public string BreakPalindrome(string palindrome)
         {
             int n = palindrome.Length;
-            if (n==1) return "";
+            if (n == 1) return "";
             char[] arr = palindrome.ToCharArray();
-            int mid = n%2==1 ? (n-1)/2 : -1;
-            for(int i = 0; i<n; i++)
+            int mid = n % 2 == 1 ? (n - 1) / 2 : -1;
+            for (int i = 0; i < n; i++)
             {
-                if (i==mid) continue;
-                if (i==n-1)
+                if (i == mid) continue;
+                if (i == n - 1)
                 {
-                    arr[i] = arr[i]=='a' ? 'b' : 'a';
+                    arr[i] = arr[i] == 'a' ? 'b' : 'a';
                     return new string(arr);
                 }
                 else
                 {
-                    if (arr[i]=='a') continue;
-                    arr[i]='a';
+                    if (arr[i] == 'a') continue;
+                    arr[i] = 'a';
                     return new string(arr);
                 }
             }
@@ -474,13 +487,13 @@ namespace LeetCodeAlgo
         public int[][] DiagonalSort(int[][] mat)
         {
             int rowLen = mat.Length;
-            int colLen=mat[0].Length;
-            for(int i=0; i < colLen + rowLen - 1; i++)
+            int colLen = mat[0].Length;
+            for (int i = 0; i < colLen + rowLen - 1; i++)
             {
-                int r = i < colLen ? 0 : i - (colLen -1);
-                int c = i < colLen ? colLen-1-i : 0;
+                int r = i < colLen ? 0 : i - (colLen - 1);
+                int c = i < colLen ? colLen - 1 - i : 0;
                 List<int> list = new List<int>();
-                while(r<rowLen && c < colLen)
+                while (r < rowLen && c < colLen)
                     list.Add(mat[r++][c++]);
 
                 list.Sort();
@@ -552,7 +565,7 @@ namespace LeetCodeAlgo
             var dp = getFloydCosts(n, edges);
             int res = -1;
             int count = n + 1;
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
                 int curr = dp[i].Count(x => x <= distanceThreshold);
                 if (curr <= count)
@@ -590,7 +603,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        private int FindTheCity_Dijkstra(List<int[]>[] graph, int threshold,int maxCount, int src = 0)
+        private int FindTheCity_Dijkstra(List<int[]>[] graph, int threshold, int maxCount, int src = 0)
         {
             int n = graph.Length;
             long[] dp = new long[n];//store cost
@@ -639,16 +652,16 @@ namespace LeetCodeAlgo
                 else return x - y;
             }));
 
-            for(int i=0; i < mat.Length; i++)
+            for (int i = 0; i < mat.Length; i++)
             {
                 priorityQueue.Enqueue(i, i);
             }
 
             int[] res = new int[k];
             int j = 0;
-            while (j<k)
+            while (j < k)
             {
-                res[j++]= priorityQueue.Dequeue();
+                res[j++] = priorityQueue.Dequeue();
             }
 
             return res;
@@ -661,13 +674,13 @@ namespace LeetCodeAlgo
             int count = 0;
             int n = arr.Length;
             var dict = new Dictionary<int, int>();
-            foreach(var i in arr)
+            foreach (var i in arr)
             {
                 if (dict.ContainsKey(i)) dict[i]++;
                 else dict.Add(i, 1);
             }
             var keys = dict.Keys.OrderBy(x => -dict[x]).ToList();
-            for(int i = 0; i < keys.Count; i++)
+            for (int i = 0; i < keys.Count; i++)
             {
                 if (count >= (n + 1) / 2) break;
                 count += dict[keys[i]];
@@ -696,7 +709,7 @@ namespace LeetCodeAlgo
             long m = (long)k * threshold;
             long sum = 0;
             int left = 0;
-            for(int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
                 sum += arr[i];
                 if (i - left + 1 == k)
@@ -884,10 +897,10 @@ namespace LeetCodeAlgo
         ///check if there exists two integers N and M such that N is the double of M ( i.e. N = 2 * M).
         public bool CheckIfExist(int[] arr)
         {
-            HashSet<int> set=new HashSet<int>();
-            foreach(var n in arr)
+            HashSet<int> set = new HashSet<int>();
+            foreach (var n in arr)
             {
-                if(set.Contains(n+n)||(n%2==0 && set.Contains(n/2)))return true;
+                if (set.Contains(n + n) || (n % 2 == 0 && set.Contains(n / 2))) return true;
                 set.Add(n);
             }
             return false;
