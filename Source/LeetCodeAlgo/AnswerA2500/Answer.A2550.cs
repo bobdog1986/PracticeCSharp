@@ -28,6 +28,31 @@ namespace LeetCodeAlgo
             return (int)((res - 2 + mod) % mod);
         }
 
+        ///2554. Maximum Number of Integers to Choose From a Range I
+        // public int MaxCount(int[] banned, int n, int maxSum)
+        // {
+        //     int res = 0;
+        //     int i = 1;
+        //     var set = banned.ToHashSet();
+        //     int sum = 0;
+        //     while (i <= n && sum <= maxSum)
+        //     {
+        //         if (i + sum > maxSum) break;
+        //         if (set.Contains(i))
+        //         {
+        //             i++;
+        //             continue;
+        //         }
+        //         else
+        //         {
+        //             res++;
+        //             sum += i;
+        //             i++;
+        //         }
+        //     }
+        //     return res;
+        // }
+
         ///2559. Count Vowel Strings in Ranges
         // public int[] VowelStrings(string[] words, int[][] queries)
         // {
