@@ -53,6 +53,28 @@ namespace LeetCodeAlgo
         //     return res;
         // }
 
+        ///2558. Take Gifts From the Richest Pile
+        // public long PickGifts(int[] gifts, int k)
+        // {
+        //     long res = 0;
+        //     var pq = new PriorityQueue<int, int>();
+        //     foreach (var i in gifts)
+        //     {
+        //         pq.Enqueue(i, -i);
+        //     }
+        //     while (k-- > 0)
+        //     {
+        //         int top = pq.Dequeue();
+        //         int next = (int)Math.Sqrt(top);
+        //         pq.Enqueue(next, -next);
+        //     }
+        //     while (pq.Count > 0)
+        //     {
+        //         res += pq.Dequeue();
+        //     }
+        //     return res;
+        // }
+
         ///2559. Count Vowel Strings in Ranges
         // public int[] VowelStrings(string[] words, int[][] queries)
         // {
