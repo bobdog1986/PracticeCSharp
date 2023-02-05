@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace LeetCodeAlgo
 {
-	public partial class Answer
-	{
+    public partial class Answer
+    {
         ///2550. Count Collisions of Monkeys on a Polygon
         public int MonkeyMove(int n)
         {
@@ -28,6 +28,30 @@ namespace LeetCodeAlgo
             return (int)((res - 2 + mod) % mod);
         }
 
+        ///2559. Count Vowel Strings in Ranges
+        // public int[] VowelStrings(string[] words, int[][] queries)
+        // {
+        //     int m = words.Length;
+        //     int[] prefix = new int[m];
+        //     HashSet<char> set = new HashSet<char>() { 'a', 'e', 'i', 'o', 'u' };
+        //     for (int i = 0; i < m; i++)
+        //     {
+        //         if (i > 0)
+        //             prefix[i] = prefix[i - 1];
+        //         if (set.Contains(words[i].First()) && set.Contains(words[i].Last()))
+        //             prefix[i]++;
+        //     }
+        //     int n = queries.Length;
+        //     int[] res = new int[n];
+        //     for (int i = 0; i < n; i++)
+        //     {
+        //         int curr = prefix[queries[i][1]];
+        //         if (queries[i][0] > 0)
+        //             curr -= prefix[queries[i][0] - 1];
+        //         res[i] = curr;
+        //     }
+        //     return res;
+        // }
 
     }
 }
