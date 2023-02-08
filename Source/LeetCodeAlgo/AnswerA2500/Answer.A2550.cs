@@ -28,6 +28,17 @@ namespace LeetCodeAlgo
             return (int)((res - 2 + mod) % mod);
         }
 
+        ///2553. Separate the Digits in an Array
+        // public int[] SeparateDigits(int[] nums)
+        // {
+        //     List<int> res = new List<int>();
+        //     foreach (var i in nums)
+        //     {
+        //         res.AddRange(i.ToString().Select(x => x - '0'));
+        //     }
+        //     return res.ToArray();
+        // }
+
         ///2554. Maximum Number of Integers to Choose From a Range I
         // public int MaxCount(int[] banned, int n, int maxSum)
         // {
