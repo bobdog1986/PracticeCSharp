@@ -111,8 +111,8 @@ namespace LeetCodeAlgo
             Array.Sort(horizontalCuts);
             Array.Sort(verticalCuts);
             long mod = 10_0000_0007;
-            long maxH = Math.Max(horizontalCuts[0], h- horizontalCuts.Last());
-            for(int i = 1; i < horizontalCuts.Length; i++)
+            long maxH = Math.Max(horizontalCuts[0], h - horizontalCuts.Last());
+            for (int i = 1; i < horizontalCuts.Length; i++)
                 maxH = Math.Max(maxH, horizontalCuts[i] - horizontalCuts[i - 1]);
 
             long maxW = Math.Max(verticalCuts[0], w - verticalCuts.Last());
@@ -170,7 +170,7 @@ namespace LeetCodeAlgo
         public int MinCost(int[] houses, int[][] cost, int m, int n, int target)
         {
             int MAX_COST = 1000001;
-            int[][][] dp = init3DMatrix(m, n + 1, target + 1,MAX_COST);
+            int[][][] dp = init3DMatrix(m, n + 1, target + 1, MAX_COST);
 
             for (int i = 1; i <= n; i++)
             {
@@ -355,14 +355,34 @@ namespace LeetCodeAlgo
                 if (n % i == 0) list.Add(i);
             return list.Count >= k ? list[k - 1] : -1;
         }
+        
+        ///1493. Longest Subarray of 1's After Deleting One Element,  #Sliding Window
+        // public int LongestSubarray(int[] nums)
+        // {
+        //     int n = nums.Length;
+        //     int zeros = 0;
+        //     int left = 0;
+        //     int res = 0;
+        //     for (int i = 0; i < n; i++)
+        //     {
+        //         if (nums[i] == 0) zeros++;
+        //         while (left <= i && zeros > 1)
+        //         {
+        //             if (nums[left] == 0) zeros--;
+        //             left++;
+        //         }
+        //         res = Math.Max(res, i - left);
+        //     }
+        //     return res;
+        // }
 
         ///1496. Path Crossing
         public bool IsPathCrossing(string path)
         {
-            int x=0, y = 0;
+            int x = 0, y = 0;
             HashSet<int> set = new HashSet<int>();
             set.Add(0);
-            foreach(var c in path)
+            foreach (var c in path)
             {
                 if (c == 'N') y++;
                 else if (c == 'S') y--;
