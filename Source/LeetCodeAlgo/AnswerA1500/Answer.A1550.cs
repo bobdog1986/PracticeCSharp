@@ -271,6 +271,44 @@ namespace LeetCodeAlgo
                 res -= mat[mat.Length / 2][mat.Length / 2];
             return res;
         }
+
+        ///1573. Number of Ways to Split a String
+        //Given a binary string s, you can split s into 3 non-empty strings s1, s2, and s3 where s1 + s2 + s3 = s.
+        //Return the number of ways s can be split such that the number of ones is the same in s1, s2, and s3. return it modulo 109 + 7.
+        public int NumWays(string s)
+        {
+            var list = new List<int>();//get all indexes of '1'
+            int n = s.Length;
+            for (int i = 0; i < n; i++)
+            {
+                if (s[i] == '1')
+                    list.Add(i);
+            }
+            long res = 0;
+            long mod = 1_000_000_007;
+            if (list.Count % 3 != 0) return 0;//no possible
+            if (list.Count == 0)
+            {
+                //there will be n-2 position that we can pick any 2 of them to split s to 3 segments
+                //eg, "0000", "0|0|0|0" , all position marked as | 
+                //eg, "00000", "0|0|0|0|0" , all position marked as | 
+                //=> calculate Combine(n-1,2) = Factoral(n-1,2)/Factoral(2);
+                long x = n - 1;
+                long y = n - 2;
+                res = x * y / 2 % mod;
+            }
+            else
+            {
+                //every segment must contain list.Count / 3 ones
+                //First split point : must start from list[list.Count / 3 - 1], then end before list[list.Count / 3],
+                //Second split point : must start from list[list.Count / 3 *2- 1], then end before list[list.Count / 3*2],
+                long x = list[list.Count / 3] - list[list.Count / 3 - 1];//all possible indexes for point1
+                long y = list[list.Count / 3 * 2] - list[list.Count / 3 * 2 - 1];//all possible indexes for point2
+                res = x * y % mod;
+            }
+            return (int)res;
+        }
+
         ///1574. Shortest Subarray to be Removed to Make Array Sorted, #Two Pointers
         //remove a subarray(can be empty) from arr such that the remaining elements in arr are non-decreasing.
         //Return the length of the shortest subarray(contiguous) to remove.
@@ -473,7 +511,7 @@ namespace LeetCodeAlgo
         //     }
         //     return res;
         // }
-        
+
         ///1578. Minimum Time to Make Rope Colorful, #Greedy
         public int MinCost(string colors, int[] neededTime)
         {
