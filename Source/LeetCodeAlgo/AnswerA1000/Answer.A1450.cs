@@ -163,6 +163,36 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///1471. The k Strongest Values in an Array
+        //arr[i] is stronger than arr[j] if |arr[i] - m| > |arr[j] - m| where m is the median, when equal compare if arr[i]>arr[j]
+        public int[] GetStrongest(int[] arr, int k)
+        {
+            Array.Sort(arr);
+            int n = arr.Length;
+            int median = n % 2 == 1 ? arr[n / 2] : arr[n / 2 - 1];
+            var pq = new PriorityQueue<int,int>(
+                Comparer<int>.Create((x, y) =>
+                {
+                    int absx = Math.Abs(x - median);
+                    int absy = Math.Abs(y - median);
+                    if (absx == absy)
+                    {
+                        return x-y;
+                    }
+                    else return absx - absy;
+                })
+            );
+            foreach(var i in arr){
+                pq.Enqueue(i,i);
+                if(pq.Count>k)pq.Dequeue();
+            }
+            int[] res= new int[k];
+            for(int i=0;i<k;i++){
+                res[i]=pq.Dequeue();
+            }
+            return res;
+        }
+
         ///1472. Design Browser History, see BrowserHistory
 
         ///1473. Paint House III, #DP
@@ -355,7 +385,7 @@ namespace LeetCodeAlgo
                 if (n % i == 0) list.Add(i);
             return list.Count >= k ? list[k - 1] : -1;
         }
-        
+
         ///1493. Longest Subarray of 1's After Deleting One Element,  #Sliding Window
         // public int LongestSubarray(int[] nums)
         // {
