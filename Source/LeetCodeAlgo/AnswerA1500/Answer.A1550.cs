@@ -12,7 +12,7 @@ namespace LeetCodeAlgo
         public bool ThreeConsecutiveOdds(int[] arr)
         {
             int count = 0;
-            foreach(var n in arr)
+            foreach (var n in arr)
             {
                 if (n % 2 == 1)
                 {
@@ -30,7 +30,7 @@ namespace LeetCodeAlgo
             int res = 0;
             int left = 0;
             int right = n - 1;
-            while(left < right)
+            while (left < right)
                 res += right-- - left++;
             return res;
         }
@@ -45,7 +45,7 @@ namespace LeetCodeAlgo
             int right = position[n - 1] - position[0];
             while (left < right)
             {
-                int mid = (left+right+1) / 2;//must select right side
+                int mid = (left + right + 1) / 2;//must select right side
                 if (MaxDistance_Count(mid, position) >= m)
                     left = mid;
                 else
@@ -78,13 +78,13 @@ namespace LeetCodeAlgo
         {
             var ans = new List<int>();
             int[] reachableArr = new int[n];
-            for (int i=0;i<edges.Count;i++)
+            for (int i = 0; i < edges.Count; i++)
             {
                 reachableArr[edges[i][1]]++;
             }
             for (int i = 0; i < reachableArr.Length; i++)
             {
-                if (reachableArr[i]==0)
+                if (reachableArr[i] == 0)
                     ans.Add(i);
             }
             return ans;
@@ -113,12 +113,12 @@ namespace LeetCodeAlgo
             Dictionary<int, int> tail = new Dictionary<int, int>();
             for (int i = 0; i < n; ++i)
             {
-                if(head.ContainsKey(arr[i]+1) && tail.ContainsKey(arr[i]-1))
+                if (head.ContainsKey(arr[i] + 1) && tail.ContainsKey(arr[i] - 1))
                 {
-                    var start1= tail[arr[i]-1];
-                    var end1= arr[i]-1;
+                    var start1 = tail[arr[i] - 1];
+                    var end1 = arr[i] - 1;
                     var start2 = arr[i] + 1;
-                    var end2 = head[arr[i]+1];
+                    var end2 = head[arr[i] + 1];
 
                     tail.Remove(head[arr[i] + 1]);
                     head.Remove(tail[arr[i] - 1]);
@@ -131,7 +131,7 @@ namespace LeetCodeAlgo
                     if (end1 - start1 + 1 == m) res = i;
                     if (end2 - start2 + 1 == m) res = i;
                 }
-                else if(head.ContainsKey(arr[i] + 1))
+                else if (head.ContainsKey(arr[i] + 1))
                 {
                     var start2 = arr[i] + 1;
                     var end2 = head[arr[i] + 1];
@@ -144,7 +144,7 @@ namespace LeetCodeAlgo
 
                     if (end2 - start2 + 1 == m) res = i;
                 }
-                else if(tail.ContainsKey(arr[i] - 1))
+                else if (tail.ContainsKey(arr[i] - 1))
                 {
                     var start1 = tail[arr[i] - 1];
                     var end1 = arr[i] - 1;
@@ -262,13 +262,13 @@ namespace LeetCodeAlgo
         public int DiagonalSum(int[][] mat)
         {
             int res = 0;
-            for(int i = 0; i < mat.Length; i++)
+            for (int i = 0; i < mat.Length; i++)
             {
                 res += mat[i][i];
                 res += mat[i][mat.Length - 1 - i];
             }
-            if(mat.Length%2==1)
-                res-=mat[mat.Length/2][mat.Length / 2];
+            if (mat.Length % 2 == 1)
+                res -= mat[mat.Length / 2][mat.Length / 2];
             return res;
         }
         ///1574. Shortest Subarray to be Removed to Make Array Sorted, #Two Pointers
@@ -343,12 +343,12 @@ namespace LeetCodeAlgo
             if (fuel < 0) return 0;
             if (memo[city][fuel] != -1) return memo[city][fuel];
             long res = 0;
-            if (city == finish) res +=1;
+            if (city == finish) res += 1;
             for (int i = 0; i < locations.Length; i++)
             {
                 if (i == city) continue;
                 int fuelLeft = fuel - Math.Abs(locations[i] - locations[city]);
-                if(fuelLeft >= 0)
+                if (fuelLeft >= 0)
                     res = (res + CountRoutes_DFS(locations, i, finish, fuelLeft, memo)) % mod;
             }
             memo[city][fuel] = res;
@@ -387,7 +387,7 @@ namespace LeetCodeAlgo
         public string ModifyString(string s)
         {
             var arr = s.ToCharArray();
-            for(int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
                 if (arr[i] == '?')
                 {
@@ -395,8 +395,8 @@ namespace LeetCodeAlgo
                     while (c <= 'z')
                     {
                         //if not same as previous or next char, update it
-                        if ((i == 0 || arr[i - 1]!=c)
-                            &&(i==arr.Length-1||arr[i+1]=='?'|| arr[i + 1] != c))
+                        if ((i == 0 || arr[i - 1] != c)
+                            && (i == arr.Length - 1 || arr[i + 1] == '?' || arr[i + 1] != c))
                         {
                             arr[i] = c;
                             break;
@@ -408,6 +408,72 @@ namespace LeetCodeAlgo
             return String.Join("", arr);
         }
 
+        ///1577. Number of Ways Where Square of Number Is Equal to Product of Two Numbers
+        // public int NumTriplets(int[] nums1, int[] nums2)
+        // {
+        //     int res = 0;
+        //     var square1 = new Dictionary<long, int>();
+        //     foreach (var i in nums1)
+        //     {
+        //         long x = (long)i * i;
+        //         if (square1.ContainsKey(x)) square1[x]++;
+        //         else square1.Add(x, 1);
+        //     }
+
+        //     var multiple1 = new Dictionary<long, int>();
+        //     for (int i = 0; i < nums2.Length; i++)
+        //     {
+        //         for (int j = i + 1; j < nums2.Length; j++)
+        //         {
+        //             long x = (long)nums2[i] * nums2[j];
+        //             if (multiple1.ContainsKey(x)) multiple1[x]++;
+        //             else multiple1.Add(x, 1);
+        //         }
+        //     }
+
+        //     foreach (var k1 in square1.Keys)
+        //     {
+        //         foreach (var k2 in multiple1.Keys)
+        //         {
+        //             if (k1 == k2)
+        //             {
+        //                 res += square1[k1] * multiple1[k2];
+        //             }
+        //         }
+        //     }
+        //     //
+        //     var square2 = new Dictionary<long, int>();
+        //     foreach (var i in nums2)
+        //     {
+        //         long x = (long)i * i;
+        //         if (square2.ContainsKey(x)) square2[x]++;
+        //         else square2.Add(x, 1);
+        //     }
+
+        //     var multiple2 = new Dictionary<long, int>();
+        //     for (int i = 0; i < nums1.Length; i++)
+        //     {
+        //         for (int j = i + 1; j < nums1.Length; j++)
+        //         {
+        //             long x = (long)nums1[i] * nums1[j];
+        //             if (multiple2.ContainsKey(x)) multiple2[x]++;
+        //             else multiple2.Add(x, 1);
+        //         }
+        //     }
+
+        //     foreach (var k1 in square2.Keys)
+        //     {
+        //         foreach (var k2 in multiple2.Keys)
+        //         {
+        //             if (k1 == k2)
+        //             {
+        //                 res += square2[k1] * multiple2[k2];
+        //             }
+        //         }
+        //     }
+        //     return res;
+        // }
+        
         ///1578. Minimum Time to Make Rope Colorful, #Greedy
         public int MinCost(string colors, int[] neededTime)
         {
@@ -415,9 +481,9 @@ namespace LeetCodeAlgo
             int sum = 0;
             int max = 0;
             int n = colors.Length;
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
-                if(i>0 && colors[i] != colors[i - 1])
+                if (i > 0 && colors[i] != colors[i - 1])
                 {
                     //remove all but exclude the max of consecutive same color balloons
                     res += sum - max;
@@ -455,6 +521,7 @@ namespace LeetCodeAlgo
         //    }
         //    return res;
         //}
+
         ///1584. Min Cost to Connect All Points, #Greedy, #Prim's algorithm,
         ///Return the minimum cost to make all points connected.
         public int MinCostConnectPoints(int[][] points)
@@ -501,7 +568,7 @@ namespace LeetCodeAlgo
             int res = 0, n = arr.Length;
             for (int i = 0; i < n; ++i)
             {
-                var count= ((i + 1) * (n - i) + 1) / 2;
+                var count = ((i + 1) * (n - i) + 1) / 2;
                 res += count * arr[i];
             }
             return res;
@@ -511,7 +578,7 @@ namespace LeetCodeAlgo
         public string ReorderSpaces(string text)
         {
             int n = text.Length;
-            var words=text.Split(' ').Where(x=>x.Length>0).ToArray();
+            var words = text.Split(' ').Where(x => x.Length > 0).ToArray();
             if (words.Length == 1)
                 return words[0].PadRight(n, ' ');
             int len = words.Sum(x => x.Length);

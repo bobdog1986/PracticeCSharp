@@ -8,99 +8,100 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        /// 1. Two Sum
+        /// 1. Two Sum, #Top Interview Questions
         // return indices of the two numbers such that they add up to target.
-        public int[] TwoSum(int[] nums, int target)
-        {
-            Dictionary<int, int> dict = new Dictionary<int, int>();
-            for (int i = 0; i < nums.Length; i++)
-            {
-                if (dict.ContainsKey(target - nums[i]))
-                    return new int[2] { dict[target - nums[i]], i };
-                if (!dict.ContainsKey(nums[i]))
-                    dict.Add(nums[i], i);
-            }
-            return new int[2];
-        }
+        // public int[] TwoSum(int[] nums, int target)
+        // {
+        //     Dictionary<int, int> dict = new Dictionary<int, int>();
+        //     for (int i = 0; i < nums.Length; i++)
+        //     {
+        //         if (dict.ContainsKey(target - nums[i]))
+        //             return new int[2] { dict[target - nums[i]], i };
+        //         if (!dict.ContainsKey(nums[i]))
+        //             dict.Add(nums[i], i);
+        //     }
+        //     return new int[2];
+        // }
 
-        ///2. Add Two Numbers
+        ///2. Add Two Numbers, #Top Interview Questions
         //Add the two numbers and return the sum as a linked list.
         //Input: l1 = [2,4,3], l2 = [5,6,4], Output: [7,0,8] ,Explanation: 342 + 465 = 807.
-        public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
-        {
-            ListNode root = new ListNode();
-            var curr = root;
-            int carry = 0;
-            while (l1 != null || l2 != null)
-            {
-                int a = l1 == null ? 0 : l1.val;
-                int b = l2 == null ? 0 : l2.val;
-                int c = a + b + carry;
-                curr.val = c % 10;
-                carry = c / 10;
-                if (l1 != null) l1 = l1.next;
-                if (l2 != null) l2 = l2.next;
-                if (l1 != null || l2 != null)
-                {
-                    curr.next = new ListNode();
-                    curr = curr.next;
-                }
-            }
-            if (carry != 0)
-                curr.next = new ListNode(carry);
-            return root;
-        }
+        // public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
+        // {
+        //     ListNode root = new ListNode();
+        //     var curr = root;
+        //     int carry = 0;
+        //     while (l1 != null || l2 != null)
+        //     {
+        //         int a = l1 == null ? 0 : l1.val;
+        //         int b = l2 == null ? 0 : l2.val;
+        //         int c = a + b + carry;
+        //         curr.val = c % 10;
+        //         carry = c / 10;
+        //         if (l1 != null) l1 = l1.next;
+        //         if (l2 != null) l2 = l2.next;
+        //         if (l1 != null || l2 != null)
+        //         {
+        //             curr.next = new ListNode();
+        //             curr = curr.next;
+        //         }
+        //     }
+        //     if (carry != 0)
+        //         curr.next = new ListNode(carry);
+        //     return root;
+        // }
 
-        /// 3. Longest Substring Without Repeating Characters, #Sliding Window
-        /// Given a string s, find the length of the longest substring without repeating characters.
-        /// s consists of English letters, digits, symbols and spaces.
-        public int LengthOfLongestSubstring(string s)
-        {
-            if (s.Length <= 1) return s.Length;
-            Dictionary<char, int> map = new Dictionary<char, int>();
-            int max = 0;
-            int left = 0;
-            for (int i = 0; i < s.Length; ++i)
-            {
-                if (map.ContainsKey(s[i]))
-                {
-                    left = Math.Max(left, map[s[i]] + 1);
-                    map[s[i]] = i;
-                }
-                else map.Add(s[i], i);
-                max = Math.Max(max, i - left + 1);
-            }
-            return max;
-        }
+        /// 3. Longest Substring Without Repeating Characters, #Sliding Window, #Top Interview Questions
+        // Given a string s, find the length of the longest substring without repeating characters.
+        // s consists of English letters, digits, symbols and spaces.
+        // public int LengthOfLongestSubstring(string s)
+        // {
+        //     int res = 0;
+        //     int n = s.Length;
+        //     int[] arr = new int[128];
+        //     int left = 0;
+        //     for (int i = 0; i < n; i++)
+        //     {
+        //         arr[s[i]]++;
+        //         while (left < i && arr[s[i]] > 1)
+        //         {
+        //             arr[s[left]]--;
+        //             left++;
+        //         }
+        //         res = Math.Max(res, i - left + 1);
+        //     }
+        //     return res;
+        // }
 
-        ///4. Median of Two Sorted Arrays, #Two Pointers
+        ///4. Median of Two Sorted Arrays, #Two Pointers, #Top Interview Questions
         //Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
         //The overall run time complexity should be O(log (m+n)).
-        public double FindMedianSortedArrays(int[] nums1, int[] nums2)
-        {
-            int n1 = nums1.Length, n2 = nums2.Length, n = n1 + n2;
-            if (n1 == 0 && n2 == 0) return 0;
-            int i = 0, j = 0;
-            int[] nums = new int[n];
-            while (i + j < n)
-            {
-                if (i == n1)
-                    nums[i + j] = nums2[j++];
-                else if (j == n2)
-                    nums[i + j] = nums1[i++];
-                else
-                {
-                    if (nums1[i] <= nums2[j])
-                        nums[i + j] = nums1[i++];
-                    else
-                        nums[i + j] = nums2[j++];
-                }
-            }
-            if (n % 2 == 0)
-                return (nums[n / 2 - 1] + nums[n / 2]) / 2.0;
-            else
-                return nums[n / 2];
-        }
+        // public double FindMedianSortedArrays(int[] nums1, int[] nums2)
+        // {
+        //     int n1 = nums1.Length;
+        //     int n2 = nums2.Length;
+        //     int n = n1 + n2;
+        //     int i = 0, j = 0;
+        //     int[] nums = new int[n];
+        //     while (i + j < n)
+        //     {
+        //         if (i == n1)
+        //             nums[i + j] = nums2[j++];
+        //         else if (j == n2)
+        //             nums[i + j] = nums1[i++];
+        //         else
+        //         {
+        //             if (nums1[i] <= nums2[j])
+        //                 nums[i + j] = nums1[i++];
+        //             else
+        //                 nums[i + j] = nums2[j++];
+        //         }
+        //     }
+        //     if (n % 2 == 0)
+        //         return (nums[n / 2 - 1] + nums[n / 2]) / 2.0;
+        //     else
+        //         return nums[n / 2];
+        // }
 
         ///5. Longest Palindromic Substring
         //Given a string s, return the longest palindromic substring in s.
@@ -159,7 +160,6 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
-
 
         ///6. Zigzag Conversion
         ///Zigzag is Z line, row=3
@@ -390,9 +390,9 @@ namespace LeetCodeAlgo
             int right = height.Length - 1;
             while (left < right)
             {
-                while (height[left] == 0 && left<right)
+                while (height[left] == 0 && left < right)
                     left++;
-                while (height[right] == 0 && left<right)
+                while (height[right] == 0 && left < right)
                     right--;
                 if (left < right)
                 {
@@ -401,7 +401,7 @@ namespace LeetCodeAlgo
                     {
                         left++;
                     }
-                    else if(height[left] > height[right])
+                    else if (height[left] > height[right])
                     {
                         right--;
                     }
@@ -506,16 +506,16 @@ namespace LeetCodeAlgo
             List<IList<int>> res = new List<IList<int>>();
 
             int prev = int.MinValue;
-            for(int i = 0; i < n-2; i++)
+            for (int i = 0; i < n - 2; i++)
             {
                 if (nums[i] + nums[i + 1] + nums[i + 2] > 0) break;//min is overflow
                 if (nums[i] == prev) continue;//skip duplicate
-                if (nums[i] + nums[n-1] + nums[n-2] < 0) continue;//max is underflow
+                if (nums[i] + nums[n - 1] + nums[n - 2] < 0) continue;//max is underflow
                 for (int j = i + 1; j < n - 1; j++)
                 {
                     if (j > i + 1 && nums[j] == nums[j - 1]) continue;//skip duplicate
                     if (nums[i] + nums[j] + nums[j + 1] > 0) break;//min is overflow
-                    if (nums[i] + nums[j] + nums[n-1] < 0) continue;//max is underflow
+                    if (nums[i] + nums[j] + nums[n - 1] < 0) continue;//max is underflow
                     int left = j + 1;
                     int right = n - 1;
                     while (left < right)
@@ -532,7 +532,7 @@ namespace LeetCodeAlgo
                             left = mid + 1;
                     }
                     if (nums[i] + nums[j] + nums[left] == 0)
-                        res.Add(new List<int>() { nums[i] , nums[j] , nums[left] });
+                        res.Add(new List<int>() { nums[i], nums[j], nums[left] });
                 }
                 prev = nums[i];
             }
@@ -662,7 +662,7 @@ namespace LeetCodeAlgo
                     {
                         while (left < right && left > j + 1 && nums[left] == nums[left - 1])
                             left++;
-                        while (left < right && right <n-1 && nums[right] == nums[right + 1])
+                        while (left < right && right < n - 1 && nums[right] == nums[right + 1])
                             right--;
                         if (left < right)
                         {
