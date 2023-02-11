@@ -65,6 +65,12 @@ namespace LeetCodeAlgo
             arr[node.val - 1]--;
         }
 
+        ///1460. Make Two Arrays Equal by Reversing Subarrays
+        // public bool CanBeEqual(int[] target, int[] arr)
+        // {
+        //     return string.Join(',', target.OrderBy(x => x)) == string.Join(',', arr.OrderBy(x => x));
+        // }
+
         /// 1461. Check If a String Contains All Binary Codes of Size K
         ///return true if every binary code of length k is a substring of s. Otherwise, return false.
         public bool HasAllCodes(string s, int k)
@@ -165,33 +171,33 @@ namespace LeetCodeAlgo
 
         ///1471. The k Strongest Values in an Array
         //arr[i] is stronger than arr[j] if |arr[i] - m| > |arr[j] - m| where m is the median, when equal compare if arr[i]>arr[j]
-        public int[] GetStrongest(int[] arr, int k)
-        {
-            Array.Sort(arr);
-            int n = arr.Length;
-            int median = n % 2 == 1 ? arr[n / 2] : arr[n / 2 - 1];
-            var pq = new PriorityQueue<int,int>(
-                Comparer<int>.Create((x, y) =>
-                {
-                    int absx = Math.Abs(x - median);
-                    int absy = Math.Abs(y - median);
-                    if (absx == absy)
-                    {
-                        return x-y;
-                    }
-                    else return absx - absy;
-                })
-            );
-            foreach(var i in arr){
-                pq.Enqueue(i,i);
-                if(pq.Count>k)pq.Dequeue();
-            }
-            int[] res= new int[k];
-            for(int i=0;i<k;i++){
-                res[i]=pq.Dequeue();
-            }
-            return res;
-        }
+        // public int[] GetStrongest(int[] arr, int k)
+        // {
+        //     Array.Sort(arr);
+        //     int n = arr.Length;
+        //     int median = n % 2 == 1 ? arr[n / 2] : arr[n / 2 - 1];
+        //     var pq = new PriorityQueue<int,int>(
+        //         Comparer<int>.Create((x, y) =>
+        //         {
+        //             int absx = Math.Abs(x - median);
+        //             int absy = Math.Abs(y - median);
+        //             if (absx == absy)
+        //             {
+        //                 return x-y;
+        //             }
+        //             else return absx - absy;
+        //         })
+        //     );
+        //     foreach(var i in arr){
+        //         pq.Enqueue(i,i);
+        //         if(pq.Count>k)pq.Dequeue();
+        //     }
+        //     int[] res= new int[k];
+        //     for(int i=0;i<k;i++){
+        //         res[i]=pq.Dequeue();
+        //     }
+        //     return res;
+        // }
 
         ///1472. Design Browser History, see BrowserHistory
 
