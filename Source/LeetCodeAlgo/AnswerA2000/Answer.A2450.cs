@@ -153,32 +153,32 @@ namespace LeetCodeAlgo
         public long MaximumSubarraySum(int[] nums, int k)
         {
             long res = 0;
-            int n=nums.Length;
-            var dict=new Dictionary<int, int>();
+            int n = nums.Length;
+            var dict = new Dictionary<int, int>();
             long sum = 0;
-            for(int i=0;i<n;i++)
+            for (int i = 0; i < n; i++)
             {
                 if (dict.ContainsKey(nums[i]))
                 {
-                    int start = i-dict.Count;
+                    int start = i - dict.Count;
                     int end = dict[nums[i]];
-                    while (start<= end)
+                    while (start <= end)
                     {
                         dict.Remove(nums[start]);
-                        sum-=nums[start];
+                        sum -= nums[start];
                         start++;
                     }
                 }
                 dict.Add(nums[i], i);
-                sum+=nums[i];
-                if (dict.Count==k+1)
+                sum += nums[i];
+                if (dict.Count == k + 1)
                 {
-                    dict.Remove(nums[i-k]);
-                    sum-=nums[i-k];
+                    dict.Remove(nums[i - k]);
+                    sum -= nums[i - k];
                 }
 
-                if (dict.Count==k)
-                    res=Math.Max(res, sum);
+                if (dict.Count == k)
+                    res = Math.Max(res, sum);
             }
 
             return res;
@@ -282,6 +282,48 @@ namespace LeetCodeAlgo
         //    }
         //    return res;
         //}
+
+        ///2477. Minimum Fuel Cost to Report to the Capital, #DFS
+        //There is a car in each city. You are given an integer seats that indicates the number of seats in each car.
+        //A representative can use the car in their city to travel or change the car and ride with another representative.
+        //The cost of traveling between two cities is one liter of fuel.
+        //Return the minimum number of liters of fuel to reach the capital city 0.
+        public long MinimumFuelCost(int[][] roads, int seats)
+        {
+            long res = 0;
+            int n = roads.Length + 1;
+            List<int>[] graph = new List<int>[n];
+            for (int i = 0; i < n; i++)
+            {
+                graph[i] = new List<int>();
+            }
+            foreach (var i in roads)
+            {
+                graph[i[0]].Add(i[1]);
+                graph[i[1]].Add(i[0]);
+            }
+            bool[] visit = new bool[n];
+            MinimumFuelCost(graph, 0, visit, seats, ref res);
+            return res;
+        }
+
+        private int MinimumFuelCost(List<int>[] graph, int index, bool[] visit,
+                    int seats, ref long res)
+        {
+            visit[index] = true;
+            int persons = 1;
+            foreach (var i in graph[index])
+            {
+                if (visit[i]) continue;
+                int next = MinimumFuelCost(graph, i, visit, seats, ref res);
+                persons += next;
+            }
+            if (index > 0)
+                res += (persons + seats - 1) / seats;
+            return persons;
+        }
+
+
 
         ///2481. Minimum Cuts to Divide a Circle
         //public int NumberOfCuts(int n)
@@ -409,23 +451,23 @@ namespace LeetCodeAlgo
         //Remove every node which has a node with a strictly greater value anywhere to the right side of it.
         public ListNode RemoveNodes_2487(ListNode head)
         {
-            if (head==null||head.next==null)
+            if (head == null || head.next == null)
                 return head;
             ListNode[] arr = new ListNode[100000];
             int i = -1;
-            while (head!=null)
+            while (head != null)
             {
-                if (i>=0)
+                if (i >= 0)
                 {
-                    if (head.val>arr[i].val)
+                    if (head.val > arr[i].val)
                     {
-                        arr[i]=null;
+                        arr[i] = null;
                         i--;
                     }
                     else
                     {
                         arr[++i] = head;
-                        head= head.next;
+                        head = head.next;
                     }
                 }
                 else
@@ -436,22 +478,22 @@ namespace LeetCodeAlgo
             }
 
             var res = arr[0];
-            for (int j = 0; j<=i; j++)
+            for (int j = 0; j <= i; j++)
             {
-                arr[j].next = arr[j+1];
+                arr[j].next = arr[j + 1];
             }
-            arr[i].next=null;
+            arr[i].next = null;
             return res;
         }
 
         public ListNode RemoveNodes_2487_Recurr(ListNode head)
         {
-            if (head==null) return null;
+            if (head == null) return null;
             var next = RemoveNodes_2487_Recurr(head.next);
             if (next == null) return head;
             else
             {
-                if (next.val>head.val) return next;
+                if (next.val > head.val) return next;
                 else
                 {
                     head.next = next;
@@ -493,9 +535,9 @@ namespace LeetCodeAlgo
         ///#TODO, timeout
         public int MinScore(int n, int[][] roads)
         {
-            List<int[]>[] graph = new List<int[]>[n+1];
-            for (int i = 0; i<graph.Length; i++)
-                graph[i]=new List<int[]>();
+            List<int[]>[] graph = new List<int[]>[n + 1];
+            for (int i = 0; i < graph.Length; i++)
+                graph[i] = new List<int[]>();
 
             foreach (var r in roads)
             {
