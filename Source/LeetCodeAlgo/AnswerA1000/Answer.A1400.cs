@@ -68,6 +68,20 @@ namespace LeetCodeAlgo
             return ans;
         }
 
+        ///1408. String Matching in an Array
+        //public IList<string> StringMatching(string[] words)
+        //{
+        //    var res = new List<string>();
+        //    foreach(var word in words)
+        //    {
+        //        if(words.Any(x=>x.Length>word.Length && x.Contains(word, StringComparison.OrdinalIgnoreCase)))
+        //        {
+        //            res.Add(word);
+        //        }
+        //    }
+        //    return res;
+        //}
+
         /// 1409. Queries on a Permutation With Key
         public int[] ProcessQueries(int[] queries, int m)
         {

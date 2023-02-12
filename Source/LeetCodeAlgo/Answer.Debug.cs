@@ -11,7 +11,7 @@ namespace LeetCodeAlgo
         ///Matrix build
         public int[][] buildMatrix(string str)
         {
-            str = str.Replace(" ", "");
+            str = str.Replace(" ", "").Replace("\r\n", "");
             if (str[0] == '[') str = str.Substring(1);
             if (str[str.Length - 1] == ']') str = str.Substring(0, str.Length - 1);
             var arr = str.Split("],[").Select(x => x.Trim()).Where(x => !string.IsNullOrEmpty(x)).ToList();
@@ -25,7 +25,7 @@ namespace LeetCodeAlgo
 
         public int[] buildArray(string str)
         {
-            str = str.Replace(" ", "");
+            str = str.Replace(" ", "").Replace("\r\n", "");
             if (str[0] == '[') str = str.Substring(1);
             if (str[str.Length - 1] == ']') str = str.Substring(0, str.Length - 1);
             var arr = str.Split(",").Select(x => x.Trim()).Where(x => !string.IsNullOrEmpty(x)).ToList();
@@ -39,7 +39,7 @@ namespace LeetCodeAlgo
 
         public bool[] buildBoolArray(string str)
         {
-            str = str.Replace(" ", "");
+            str = str.Replace(" ", "").Replace("\r\n", "");
             if (str[0] == '[') str = str.Substring(1);
             if (str[str.Length - 1] == ']') str = str.Substring(0, str.Length - 1);
             var arr = str.Split(",").Select(x => x.Trim()).Where(x => !string.IsNullOrEmpty(x)).ToList();
@@ -60,7 +60,7 @@ namespace LeetCodeAlgo
 
         public long[][] buildLongMatrix(string str)
         {
-            str = str.Replace(" ", "");
+            str = str.Replace(" ", "").Replace("\r\n", "");
             if (str[0] == '[') str = str.Substring(1);
             if (str[str.Length - 1] == ']') str = str.Substring(0, str.Length - 1);
             var arr = str.Split("],[").Select(x => x.Trim()).Where(x => !string.IsNullOrEmpty(x)).ToList();
@@ -74,7 +74,7 @@ namespace LeetCodeAlgo
 
         public long[] buildLongArray(string str)
         {
-            str = str.Replace(" ", "");
+            str = str.Replace(" ", "").Replace("\r\n", "");
             if (str[0] == '[') str = str.Substring(1);
             if (str[str.Length - 1] == ']') str = str.Substring(0, str.Length - 1);
             var arr = str.Split(",").Select(x => x.Trim()).Where(x => !string.IsNullOrEmpty(x)).ToList();
@@ -123,7 +123,7 @@ namespace LeetCodeAlgo
         //leetcode using "" wrap char, just move them
         public char[][] buildCharMatrix(string str)
         {
-            str = str.Replace("\"", "");//remove all double quote "
+            str = str.Replace("\"", "").Replace("\r\n", "");//remove all double quote "
             str = str.Replace(" ", "");
             if (str[0] == '[') str = str.Substring(1);
             if (str[str.Length - 1] == ']') str = str.Substring(0, str.Length - 1);
@@ -138,7 +138,7 @@ namespace LeetCodeAlgo
 
         public char[] buildCharArray(string str)
         {
-            str = str.Replace(" ", "");
+            str = str.Replace(" ", "").Replace("\r\n", "");
             if (str[0] == '[') str = str.Substring(1);
             if (str[str.Length - 1] == ']') str = str.Substring(0, str.Length - 1);
             var arr = str.Split(",").Select(x => x.Trim()).Where(x => !string.IsNullOrEmpty(x)).ToList();
