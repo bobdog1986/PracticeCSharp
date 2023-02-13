@@ -111,6 +111,42 @@ namespace LeetCodeAlgo
         //     return res;
         // }
 
+        ///2563. Count the Number of Fair Pairs, #Binary Search
+        //Given a 0-indexed integer array nums of size n and two integers lower and upper,
+        // return the number of fair pairs.
+        // A pair (i, j) is fair if:
+        // 0 <= i < j < n, and lower <= nums[i] + nums[j] <= upper
+        public long CountFairPairs(int[] nums, int lower, int upper)
+        {
+            long res = 0;
+            Array.Sort(nums);
+            int n = nums.Length;
+            for (int i = 0; i < n - 1; i++)
+            {
+                if (nums[i] + nums[i + 1] > upper) break;
+                if (nums[i] + nums[n - 1] < lower) continue;
+                int left = i + 1;
+                int right = n - 1;
+                while (left < right)
+                {
+                    int mid = (left + right) / 2;
+                    if (nums[i] + nums[mid] < lower) left = mid + 1;
+                    else right = mid;
+                }
+                int low = left;
+                left = i + 1;
+                right = n - 1;
+                while (left < right)
+                {
+                    int mid = (left + right + 1) / 2;
+                    if (nums[i] + nums[mid] > upper) right = mid - 1;
+                    else left = mid;
+                }
+                int high = left;
+                res += high - low + 1;
+            }
+            return res;
+        }
     }
 }
 
