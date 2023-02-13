@@ -147,6 +147,40 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///2564. Substring XOR Queries
+        public int[][] SubstringXorQueries(string s, int[][] queries)
+        {
+            int n = queries.Length;
+            var dict = new Dictionary<int, int[]>();
+            for (int i = 0; i < s.Length; i++)
+            {
+                int len = 30;
+                if (s[i] == '0') len++;//value must <= 10^9,if start at '0' can shift left 31 bits
+                int curr = 0;
+                for (int j = 0; j < len && j + i < s.Length; j++)
+                {
+                    curr <<= 1;
+                    curr += s[i + j] - '0';
+                    if (!dict.ContainsKey(curr))
+                    {
+                        dict.Add(curr, new int[] { i, i + j });
+                    }
+                    else if (dict[curr][1] - dict[curr][0] > j)//shorter than current
+                    {
+                        dict[curr] = new int[] { i, i + j };
+                    }
+                }
+            }
+            int[][] res = new int[n][];
+            for (int i = 0; i < n; i++)
+            {
+                int q = queries[i][0] ^ queries[i][1];
+                if (dict.ContainsKey(q)) res[i] = dict[q];
+                else res[i] = new int[] { -1, -1 };
+            }
+            return res;
+        }
     }
 }
 
