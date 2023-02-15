@@ -437,6 +437,9 @@ namespace LeetCodeAlgo
             return true;
         }
 
+        ///470. Implement Rand10() Using Rand7(), #Rejection Sampling
+
+
         ///472. Concatenated Words, #DP, #BFS
         ///Given an array of strings words (without duplicates), return all the concatenated words in the given list of words.
         ///A concatenated word is defined as a string that is comprised entirely of at least two shorter words in the given array.
