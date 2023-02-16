@@ -111,6 +111,25 @@ namespace LeetCodeAlgo
         //     return res;
         // }
 
+        ///2562. Find the Array Concatenation Value
+        //public long FindTheArrayConcVal(int[] nums)
+        //{
+        //    long res = 0;
+        //    int n = nums.Length;
+        //    for (int i = 0; i<=n-1-i; i++)
+        //    {
+        //        if (i==n-1-i)
+        //        {
+        //            res+=nums[i];
+        //        }
+        //        else
+        //        {
+        //            res+= int.Parse($"{nums[i]}{nums[n-1-i]}");
+        //        }
+        //    }
+        //    return res;
+        //}
+
         ///2563. Count the Number of Fair Pairs, #Binary Search
         //Given a 0-indexed integer array nums of size n and two integers lower and upper,
         // return the number of fair pairs.
@@ -183,4 +202,3 @@ namespace LeetCodeAlgo
         }
     }
 }
-
