@@ -213,5 +213,41 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
+        ///2566. Maximum Difference by Remapping a Digit
+        //public int MinMaxDifference(int num)
+        //{
+        //    string s= num.ToString();
+        //    int n = s.Length;
+        //    Dictionary<char,List<int>> dict=new Dictionary<char, List<int>>();
+        //    for(int i = 0; i<n; i++)
+        //    {
+        //        if (!dict.ContainsKey(s[i])) dict.Add(s[i], new List<int>());
+        //        dict[s[i]].Add(i);
+        //    }
+
+        //    int max = num;
+        //    for(int i = 0; i<n; i++)
+        //    {
+        //        if (s[i]!='9')
+        //        {
+        //            char[] arr1 = s.ToArray();
+        //            foreach(var j in dict[s[i]])
+        //            {
+        //                arr1[j]='9';
+        //            }
+        //            max = int.Parse(new string(arr1));
+        //            break;
+        //        }
+        //    }
+
+        //    char[] arr2 = s.ToArray();
+        //    foreach (var i in dict[s[0]])
+        //    {
+        //        arr2[i]='0';
+        //    }
+        //    int min = int.Parse(new string(arr2));
+        //    return max-min;
+        //}
+
     }
 }
