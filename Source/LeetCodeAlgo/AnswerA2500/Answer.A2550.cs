@@ -200,5 +200,18 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///2567. Minimum Score by Changing Two Elements
+        //public int MinimizeSum(int[] nums)
+        //{
+        //    int n = nums.Length;
+        //    Array.Sort(nums);
+        //    int res = int.MaxValue;
+        //    res = Math.Min(res, nums[n-1-1-1]-nums[0]);//two largest
+        //    res = Math.Min(res, nums[n-1-1]-nums[1]);//one largest, one smallest
+        //    res = Math.Min(res, nums[n-1]-nums[2]);//two smallest
+        //    return res;
+        //}
+
     }
 }
