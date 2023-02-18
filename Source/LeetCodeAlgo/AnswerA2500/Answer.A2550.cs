@@ -201,18 +201,6 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2567. Minimum Score by Changing Two Elements
-        //public int MinimizeSum(int[] nums)
-        //{
-        //    int n = nums.Length;
-        //    Array.Sort(nums);
-        //    int res = int.MaxValue;
-        //    res = Math.Min(res, nums[n-1-1-1]-nums[0]);//two largest
-        //    res = Math.Min(res, nums[n-1-1]-nums[1]);//one largest, one smallest
-        //    res = Math.Min(res, nums[n-1]-nums[2]);//two smallest
-        //    return res;
-        //}
-
         ///2566. Maximum Difference by Remapping a Digit
         //public int MinMaxDifference(int num)
         //{
@@ -249,5 +237,34 @@ namespace LeetCodeAlgo
         //    return max-min;
         //}
 
+        ///2567. Minimum Score by Changing Two Elements
+        //public int MinimizeSum(int[] nums)
+        //{
+        //    int n = nums.Length;
+        //    Array.Sort(nums);
+        //    int res = int.MaxValue;
+        //    res = Math.Min(res, nums[n-1-1-1]-nums[0]);//two largest
+        //    res = Math.Min(res, nums[n-1-1]-nums[1]);//one largest, one smallest
+        //    res = Math.Min(res, nums[n-1]-nums[2]);//two smallest
+        //    return res;
+        //}
+
+
+        //2568. Minimum Impossible OR, #Bit, #Good
+        //an integer is expressible if it can be written as the bitwise OR of some subsequence of nums.
+        //Return the minimum positive non-zero integer that is not expressible from nums.
+        public int MinImpossibleOR(int[] nums)
+        {
+            //if nums contain 1,2, then contain all less than 2^2, aka [1,3]
+            //if nums contains [1,4], then contains all less than 4^2, aka [1,7]
+            //so result must be 2^x, 2<<x
+            var set = nums.ToHashSet();
+            int i = 1;
+            while (set.Contains(i))
+            {
+                i<<=1;
+            }
+            return i;
+        }
     }
 }
