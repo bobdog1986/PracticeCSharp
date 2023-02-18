@@ -183,7 +183,7 @@ namespace LeetCodeAlgo
             var pq = new PriorityQueue<int, int>();
             foreach (var i in intervals)
             {
-                if (pq.Count >0 && pq.Peek() < i[0])
+                if (pq.Count > 0 && pq.Peek() < i[0])
                     pq.Dequeue();
                 pq.Enqueue(i[1], i[1]);
             }
@@ -208,10 +208,10 @@ namespace LeetCodeAlgo
             int res = 1;
             char prev = s[0];
             int curr = 1;
-            for (int i = 1; i<s.Length; i++)
+            for (int i = 1; i < s.Length; i++)
             {
-                if (s[i] - prev ==1) curr++;
-                else curr =1;
+                if (s[i] - prev == 1) curr++;
+                else curr = 1;
                 prev = s[i];
                 res = Math.Max(res, curr);
             }
@@ -288,9 +288,9 @@ namespace LeetCodeAlgo
         {
             int res = 0;
             int gcd = getGCD(a, b);
-            for(int i = 1; i<=gcd; i++)
+            for (int i = 1; i <= gcd; i++)
             {
-                if (gcd%i==0)
+                if (gcd % i == 0)
                     res++;
             }
             return res;
@@ -302,16 +302,16 @@ namespace LeetCodeAlgo
             int m = grid.Length;
             int n = grid[0].Length;
             int res = 0;
-            for (int i = 1; i<m-1; i++)
+            for (int i = 1; i < m - 1; i++)
             {
-                for (int j = 1; j<n-1; j++)
+                for (int j = 1; j < n - 1; j++)
                 {
                     int sum = grid[i][j];
-                    for (int k = -1; k<=1; k++)
-                        sum+=grid[i-1][j+k];
-                    for (int k = -1; k<=1; k++)
-                        sum+=grid[i+1][j+k];
-                    res= Math.Max(res, sum);
+                    for (int k = -1; k <= 1; k++)
+                        sum += grid[i - 1][j + k];
+                    for (int k = -1; k <= 1; k++)
+                        sum += grid[i + 1][j + k];
+                    res = Math.Max(res, sum);
                 }
             }
             return res;
@@ -323,10 +323,10 @@ namespace LeetCodeAlgo
         {
             int n = pref.Length;
             int[] res = new int[n];
-            for (int i = n-1; i>=0; i--)
+            for (int i = n - 1; i >= 0; i--)
             {
-                if (i==0) res[i]=pref[i]^0;
-                else res[i]=pref[i]^pref[i-1];
+                if (i == 0) res[i] = pref[i] ^ 0;
+                else res[i] = pref[i] ^ pref[i - 1];
             }
             return res;
         }
@@ -385,6 +385,37 @@ namespace LeetCodeAlgo
         //            return 0;
         //    }
         //}
+
+        ///2439. Minimize Maximum of Array, #Greedy, #PrefixSum
+        //Do any times of operation : nums[i]-=x, nums[i-1]+=x
+        //find possible min of max
+        public int MinimizeArrayValue(int[] nums)
+        {
+            int n = nums.Length;
+            long[] prefixSum = new long[n];
+            for (int i = 0; i < n; i++)
+            {
+                if (i == 0) prefixSum[i] = nums[i];
+                else prefixSum[i] = prefixSum[i - 1] + nums[i];
+            }
+            int res = 0;
+            for (int i = n - 1; i >= 0; i--)
+            {
+                if (i > 0)
+                {
+                    int possibleBest=(int)((prefixSum[i] + i) / (i + 1));
+                    int target = (int)Math.Max(res, possibleBest);
+                    if (nums[i] > target)
+                    {
+                        nums[i - 1] += nums[i] - target;
+                        nums[i] = target;
+                    }
+                }
+                res = Math.Max(res, nums[i]);
+            }
+            return res;
+        }
+
 
         ///2441. Largest Positive Integer That Exists With Its Negative
         //public int FindMaxK(int[] nums)
