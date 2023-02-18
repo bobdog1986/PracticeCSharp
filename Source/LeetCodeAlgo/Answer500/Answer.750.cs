@@ -150,6 +150,32 @@ namespace LeetCodeAlgo
             }
             return new string(res);
         }
+
+        ///769. Max Chunks To Make Sorted
+        //arr of length n that represents a permutation of the integers in the range [0, n - 1].
+        // split arr into some number of chunks (i.e., partitions), and individually sort each chunk.
+        // After concatenating them, the result should equal the sorted array.
+        //Return the largest number of chunks we can make to sort the array.
+        public int MaxChunksToSorted(int[] arr)
+        {
+            int n = arr.Length;
+            int[] max= new int[n];
+            max[0]=arr[0];
+            for(int i = 1; i<n; i++)
+            {
+                max[i]=Math.Max(arr[i], max[i-1]);
+            }
+
+            int res = 0;
+            for(int i = 0; i<n; i++)
+            {
+                //if max[i]==i. means [..,i] can be sorted
+                if (i==max[i])
+                    res++;
+            }
+            return res;
+        }
+
         /// 771. Jewels and Stones
         public int NumJewelsInStones(string jewels, string stones)
         {
@@ -327,7 +353,7 @@ namespace LeetCodeAlgo
             return true;
         }
         ///787. Cheapest Flights Within K Stops, #BFS
-        //There are n cities connected by some number of flights. 
+        //There are n cities connected by some number of flights.
         //flights[i] = [fromi, toi, pricei] indicates that flight from city fromi to city toi with cost pricei.
         //You are given integers src, dst, and k, return the cheapest price from src to dst with at most k stops.
         //If there is no such route, return -1.
