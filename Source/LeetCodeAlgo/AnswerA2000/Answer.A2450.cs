@@ -531,23 +531,39 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
-        ///2492. Minimum Score of a Path Between Two Cities
-        ///#TODO, timeout
+        ///2492. Minimum Score of a Path Between Two Cities, #Graph, #BFS
+        //find minimium distance from city 1 to n, roads[i]={next,distance} pairs
         public int MinScore(int n, int[][] roads)
         {
             List<int[]>[] graph = new List<int[]>[n + 1];
             for (int i = 0; i < graph.Length; i++)
+            {
                 graph[i] = new List<int[]>();
-
+            }
+            //build graph as {next,distance} pairs
             foreach (var r in roads)
             {
                 graph[r[0]].Add(new int[] { r[1], r[2] });
                 graph[r[1]].Add(new int[] { r[0], r[2] });
             }
-
-            int res = int.MaxValue;
-
-            return res;
+            //visit[] to discard visit of no value paths
+            int[] visit = new int[n + 1];
+            Array.Fill(visit, int.MaxValue);
+            var q = new Queue<int[]>();
+            q.Enqueue(new int[] { 1, int.MaxValue });
+            while (q.Count > 0)
+            {
+                var top = q.Dequeue();
+                foreach (var i in graph[top[0]])
+                {
+                    var next = new int[] { i[0], Math.Min(i[1], top[1]) };
+                    //must better than best of all paths we found, or discard it
+                    if (next[1] >= visit[next[0]]) continue;
+                    visit[next[0]] = next[1];
+                    q.Enqueue(next);
+                }
+            }
+            return visit[n];
         }
 
         ///2496. Maximum Value of a String in an Array
