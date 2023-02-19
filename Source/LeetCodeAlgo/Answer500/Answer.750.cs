@@ -120,6 +120,7 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+
         /// 767. Reorganize String
         //rearrange the characters of s so that any two adjacent characters are not the same.
         //Return any possible rearrangement of s or return "" if not possible.
@@ -159,15 +160,15 @@ namespace LeetCodeAlgo
         public int MaxChunksToSorted(int[] arr)
         {
             int n = arr.Length;
-            int[] max= new int[n];
+            int[] max = new int[n];
             max[0]=arr[0];
-            for(int i = 1; i<n; i++)
+            for (int i = 1; i<n; i++)
             {
                 max[i]=Math.Max(arr[i], max[i-1]);
             }
 
             int res = 0;
-            for(int i = 0; i<n; i++)
+            for (int i = 0; i<n; i++)
             {
                 //if max[i]==i. means [..,i] can be sorted
                 if (i==max[i])
@@ -212,6 +213,7 @@ namespace LeetCodeAlgo
 
             return i == j;
         }
+
         ///778. Swim in Rising Water, #Dijkstra
         //return the min of cost in all path from (0,0) to (n-1,n-1), cost is max cell of a path
         public int SwimInWater(int[][] grid)
@@ -253,6 +255,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 783. Minimum Distance Between BST Nodes
         ///root of a Binary Search Tree (BST), return the minimum difference between any two different nodes
         public int MinDiffInBST(TreeNode root)
@@ -264,6 +267,7 @@ namespace LeetCodeAlgo
                 res = Math.Min(res, arr[i + 1] - arr[i]);
             return res;
         }
+
         /// 784. Letter Case Permutation, ref 77 Combines()
         ///Given a string s, you can transform every letter individually to be lowercase or uppercase to create another string.
         ///Return a list of all possible strings we could create.Return the output in any order.
@@ -342,6 +346,7 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+
         private bool IsBipartite_dfs(int[][] graph, int[] visit, int index, int slot)
         {
             visit[index] = slot;
@@ -352,6 +357,7 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+
         ///787. Cheapest Flights Within K Stops, #BFS
         //There are n cities connected by some number of flights.
         //flights[i] = [fromi, toi, pricei] indicates that flight from city fromi to city toi with cost pricei.
@@ -399,12 +405,12 @@ namespace LeetCodeAlgo
             }
             return res == int.MaxValue ? -1 : res;
         }
+
         ///789. Escape The Ghosts
         public bool EscapeGhosts(int[][] ghosts, int[] target)
         {
             return !ghosts.Any(g => Math.Abs(g[0] - target[0]) + Math.Abs(g[1] - target[1]) <= Math.Abs(target[0]) + Math.Abs(target[1]));
         }
-
 
         ///791. Custom Sort String
         //Permute the characters of s so that they match the order that order was sorted.
@@ -429,6 +435,7 @@ namespace LeetCodeAlgo
             }
             return sb.ToString();
         }
+
         ///792. Number of Matching Subsequences, #Binary Search
         //return the number of words[i] that is a subsequence of s.For example, "ace" is a subsequence of "abcde".
         //A subsequence is generated from the original string with some(can be none) deleted without changing the order.
@@ -442,6 +449,7 @@ namespace LeetCodeAlgo
                 posArr[s[i] - 'a'].Add(i);
             return words.Count(w => isSubSequence_binarySearch(posArr, s, w));
         }
+
         private bool isSubSequence_binarySearch(List<int>[] posArr, string s, string t)
         {
             int n = s.Length;

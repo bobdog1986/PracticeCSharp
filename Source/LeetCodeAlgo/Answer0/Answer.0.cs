@@ -8,7 +8,7 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
-        /// 1. Two Sum, #Top Interview Questions
+        /// 1. Two Sum
         // return indices of the two numbers such that they add up to target.
         // public int[] TwoSum(int[] nums, int target)
         // {
@@ -23,7 +23,7 @@ namespace LeetCodeAlgo
         //     return new int[2];
         // }
 
-        ///2. Add Two Numbers, #Top Interview Questions
+        ///2. Add Two Numbers
         //Add the two numbers and return the sum as a linked list.
         //Input: l1 = [2,4,3], l2 = [5,6,4], Output: [7,0,8] ,Explanation: 342 + 465 = 807.
         // public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
@@ -51,7 +51,7 @@ namespace LeetCodeAlgo
         //     return root;
         // }
 
-        /// 3. Longest Substring Without Repeating Characters, #Sliding Window, #Top Interview Questions
+        /// 3. Longest Substring Without Repeating Characters, #Sliding Window
         // Given a string s, find the length of the longest substring without repeating characters.
         // s consists of English letters, digits, symbols and spaces.
         // public int LengthOfLongestSubstring(string s)
@@ -73,7 +73,7 @@ namespace LeetCodeAlgo
         //     return res;
         // }
 
-        ///4. Median of Two Sorted Arrays, #Two Pointers, #Top Interview Questions
+        ///4. Median of Two Sorted Arrays, #Two Pointers
         //Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
         //The overall run time complexity should be O(log (m+n)).
         // public double FindMedianSortedArrays(int[] nums1, int[] nums2)
@@ -110,7 +110,7 @@ namespace LeetCodeAlgo
         {
             if (s.Length <= 1)
                 return s;
-            string ans = string.Empty;
+            string res = string.Empty;
             int len = 0;
             for (int i = 0; i < s.Length; i++)
             {
@@ -132,7 +132,7 @@ namespace LeetCodeAlgo
                     if (count + count + 1 > len)
                     {
                         len = count + count + 1;
-                        ans = s.Substring((i - count), len);
+                        res = s.Substring((i - count), len);
                     }
                 }
 
@@ -154,66 +154,67 @@ namespace LeetCodeAlgo
                     if (count + count > len)
                     {
                         len = count + count;
-                        ans = s.Substring((i - count + 1), len);
+                        res = s.Substring((i - count + 1), len);
                     }
                 }
             }
-            return ans;
+            return res;
         }
 
         ///6. Zigzag Conversion
-        ///Zigzag is Z line, row=3
-        ///A     A     A
-        ///A  A  A  A  A
-        ///A     A
-        public string Convert_6_ZigZag(string s, int numRows)
-        {
-            if (s.Length <= numRows || numRows == 1)
-                return s;
-            int zagLen = numRows + (numRows - 2);
-            int zagColCount = 1 + (numRows - 2);
-            int zagCount = s.Length / zagLen;
-            if (s.Length % zagLen != 0) zagCount++;
+        // Zigzag is Z line, row=3
+        // A     A     A
+        // A  A  A  A  A
+        // A     A
+        //public string Convert_6_ZigZag(string s, int numRows)
+        //{
+        //    if (s.Length <= numRows || numRows == 1)
+        //        return s;
+        //    int zagLen = numRows + (numRows - 2);
+        //    int zagColCount = 1 + (numRows - 2);
+        //    int zagCount = s.Length / zagLen;
+        //    if (s.Length % zagLen != 0) zagCount++;
 
-            char[][] mat = new char[numRows][];
-            for (int i = 0; i < mat.Length; i++)
-            {
-                mat[i] = new char[zagCount * zagLen];
-            }
+        //    char[][] mat = new char[numRows][];
+        //    for (int i = 0; i < mat.Length; i++)
+        //    {
+        //        mat[i] = new char[zagCount * zagLen];
+        //    }
 
-            for (int i = 0; i < s.Length; i++)
-            {
-                int zagIndex = i / zagLen;
-                int zagModulo = i % zagLen;
+        //    for (int i = 0; i < s.Length; i++)
+        //    {
+        //        int zagIndex = i / zagLen;
+        //        int zagModulo = i % zagLen;
 
-                int c = zagIndex * zagColCount;
-                if (zagModulo == 0) { }
-                else if (zagModulo < numRows) { }
-                else { c += zagModulo - numRows + 1; }
+        //        int c = zagIndex * zagColCount;
+        //        if (zagModulo == 0) { }
+        //        else if (zagModulo < numRows) { }
+        //        else { c += zagModulo - numRows + 1; }
 
-                int r = 0;
-                if (zagModulo == 0) { }
-                else if (zagModulo < numRows) { r = zagModulo; }
-                else { r = numRows - 1 - (zagModulo - numRows + 1); }
+        //        int r = 0;
+        //        if (zagModulo == 0) { }
+        //        else if (zagModulo < numRows) { r = zagModulo; }
+        //        else { r = numRows - 1 - (zagModulo - numRows + 1); }
 
-                mat[r][c] = s[i];
-            }
+        //        mat[r][c] = s[i];
+        //    }
 
-            List<char> list = new List<char>();
-            foreach (var r in mat)
-            {
-                foreach (var a in r)
-                {
-                    if ((byte)a != 0)
-                        list.Add(a);
-                }
-            }
-            return new string(list.ToArray());
-        }
+        //    List<char> list = new List<char>();
+        //    foreach (var r in mat)
+        //    {
+        //        foreach (var a in r)
+        //        {
+        //            if ((byte)a != 0)
+        //                list.Add(a);
+        //        }
+        //    }
+        //    return new string(list.ToArray());
+        //}
+
         ///7. Reverse Integer
-        ///Given a signed 32-bit integer x, return x with its digits reversed.
-        ///If reversing x causes the value to go outside the signed 32-bit integer range [-2^31, 2^31 - 1], then return 0.
-        ///Assume the environment does not allow you to store 64-bit integers (signed or unsigned).
+        // Given a signed 32-bit integer x, return x with its digits reversed.
+        // If reversing x causes the value to go outside the signed 32-bit integer range [-2^31, 2^31 - 1], then return 0.
+        // Assume the environment does not allow you to store 64-bit integers (signed or unsigned).
         public int Reverse(int x)
         {
             if (x == 0 || x == int.MinValue)
@@ -291,9 +292,8 @@ namespace LeetCodeAlgo
         }
 
         ///9. Palindrome Number
-        ///An integer is a palindrome when it reads the same backward as forward.
-        ///For example, 121 is a palindrome while 123 is not.
-        /// -121 is not
+        // An integer is a palindrome when it reads the same backward as forward.
+        // For example, 121 is a palindrome while 123 is not. -121 is not
         public bool IsPalindrome(int x)
         {
             if (x < 0) return false;
@@ -314,12 +314,12 @@ namespace LeetCodeAlgo
             return true;
         }
 
-        ///10. Regular Expression Matching, #DP
-        ///Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*'
-        ///'.' Matches any single character​​​​, '*' Matches zero or more of the preceding element.
-        ///1 <= s.length <= 20, 1 <= p.length <= 30,
-        ///s contains only lowercase English letters.p contains only lowercase English letters, '.', and '*'.
-        ///It is guaranteed for each appearance of the character '*', there will be a previous valid character to match.
+        ///10. Regular Expression Matching, #DP, #Good
+        // Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*'
+        // '.' Matches any single character​​​​, '*' Matches zero or more of the preceding element.
+        // 1 <= s.length <= 20, 1 <= p.length <= 30,
+        // s contains only lowercase English letters.p contains only lowercase English letters, '.', and '*'.
+        // It is guaranteed for each appearance of the character '*', there will be a previous valid character to match.
         public bool IsMatch_10(string s, string p)
         {
             //All posibilities:
@@ -333,12 +333,16 @@ namespace LeetCodeAlgo
             //3. p[pIndex] == a~z
             //    3.1 p[pIndex] == s[sIndex]
             //    3.2 p[pIndex] != s[sIndex]
-            var sLen = s.Length;
-            var pLen = p.Length;
+            int sLen = s.Length;
+            int pLen = p.Length;
 
-            var dp = new bool[sLen + 1, pLen + 1];
+            bool[][] dp = new bool[sLen + 1][];
+            for(int i = 0; i<dp.Length; i++)
+            {
+                dp[i]=new bool[pLen + 1];
+            }
             // init - only s: "" and p: "" => true, the other all false
-            dp[0, 0] = true;
+            dp[0][0] = true;
             for (int i = 0; i <= sLen; i++)
             {
                 var sIndex = i - 1;
@@ -352,20 +356,20 @@ namespace LeetCodeAlgo
                         {
                             // aa    * = 0 (dp[i, j-2])   aa   * = 1~n (dp[i - 1, j])
                             //  a*                         a*
-                            dp[i, j] = dp[i, j - 2] || dp[i - 1, j];
+                            dp[i][j] = dp[i][j - 2] || dp[i - 1][j];
                         }
                         else
                         {
                             // ab   * = 0 (dp[i, j-2])
                             //  a*
-                            dp[i, j] = dp[i, j - 2];
+                            dp[i][j] = dp[i][j - 2];
                         }
                     }
                     else if (i > 0 && p[pIndex] == '.')
                     {
                         // abc
                         // ab.
-                        dp[i, j] = dp[i - 1, j - 1];
+                        dp[i][j] = dp[i - 1][j - 1];
                     }
                     else
                     {
@@ -373,16 +377,16 @@ namespace LeetCodeAlgo
                         {
                             // ab
                             // ab
-                            dp[i, j] = dp[i - 1, j - 1];
+                            dp[i][j] = dp[i - 1][j - 1];
                         }
                     }
                 }
             }
-            return dp[sLen, pLen];
+            return dp[sLen][pLen];
         }
 
-        /// 11. Container With Most Water, #Two Pointers
-        /// max value of (j-i)*min(arr[i],arr[j])
+        ///11. Container With Most Water, #Two Pointers
+        // max value of (j-i)*min(arr[i],arr[j])
         public int MaxArea(int[] height)
         {
             int max = 0;

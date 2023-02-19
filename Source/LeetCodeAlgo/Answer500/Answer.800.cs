@@ -255,6 +255,57 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///813. Largest Sum of Averages, #BackTracking, #Memo
+        // partition the array into at most k non-empty adjacent subarrays.
+        // The score of a partition is the sum of the averages of each subarray.
+        public double LargestSumOfAverages(int[] nums, int k)
+        {
+            int n = nums.Length;
+            int[] prefixSum = new int[n];
+            prefixSum[0]=nums[0];
+            for (int i = 1; i<n; i++)
+            {
+                prefixSum[i]=prefixSum[i-1]+nums[i];
+            }
+            //avoid no value search
+            double[][] memo = new double[n][];
+            for (int i = 0; i<n; i++)
+                memo[i]=new double[k+1];
+
+            double res = 0;
+            LargestSumOfAverages(prefixSum, memo, 0, 0, k, ref res);
+            return res;
+        }
+
+        private void LargestSumOfAverages(int[] prefixSum, double[][] memo, double currSum, int index, int k, ref double res)
+        {
+            int n = prefixSum.Length;
+            //if (k==0) return;
+            //if (index>=n) return;
+            if (k==1)
+            {
+                int sum = prefixSum[n-1];
+                if (index>0) sum-=prefixSum[index-1];
+                res = Math.Max(res, currSum + sum*1.0/(n-index));
+                //return;//must!!!
+            }
+            else
+            {
+                //no need to check
+                if (index!=0 && memo[index][k]>=currSum) return;
+                memo[index][k]=currSum;
+
+                for (int i = index; i<n-k+1; i++)
+                {
+                    int sum1 = prefixSum[i];
+                    if (index>0)
+                        sum1-=prefixSum[index-1];
+                    double avg1 = sum1*1.0/(i-index+1);
+                    LargestSumOfAverages(prefixSum, memo, currSum+avg1, i+1, k-1, ref res);
+                }
+            }
+        }
+
         /// 814. Binary Tree Pruning, #BTree
         ///return the same tree where every subtree (of the given tree) not containing a 1 has been removed.
         ///A subtree of a node node is node plus every node that is a descendant of node.
