@@ -36,18 +36,18 @@ namespace LeetCodeAlgo
         public int ScoreOfParentheses(string s)
         {
             if (string.IsNullOrEmpty(s)) return 0;
-            if(s.StartsWith("()"))return 1+ ScoreOfParentheses(s.Substring(2));
+            if (s.StartsWith("()")) return 1 + ScoreOfParentheses(s.Substring(2));
             if (s.StartsWith("()()")) return 2 + ScoreOfParentheses(s.Substring(4));
             if (s.StartsWith("(())")) return 2 + ScoreOfParentheses(s.Substring(4));
 
             int count = 0;//using a int var instead of stack, fast and simple
-            for(int i = 0; i < s.Length; i++)
+            for (int i = 0; i < s.Length; i++)
             {
                 if (s[i] == '(') count++;
                 else count--;
-                if(i!=0 && count == 0)
+                if (i != 0 && count == 0)
                 {
-                    return 2 * ScoreOfParentheses(s.Substring(1, i-1)) + ScoreOfParentheses(s.Substring(i+1));
+                    return 2 * ScoreOfParentheses(s.Substring(1, i - 1)) + ScoreOfParentheses(s.Substring(i + 1));
                 }
             }
             return 0;//never happen
@@ -62,7 +62,7 @@ namespace LeetCodeAlgo
             int h = 0;
             while (true)
             {
-                h += sign*q;
+                h += sign * q;
                 if (right)
                 {
                     if (h == p)
@@ -76,7 +76,7 @@ namespace LeetCodeAlgo
                         sign = -1;
                         if (h == 0)
                         {
-                            res=0;
+                            res = 0;
                             break;
                         }
                     }
@@ -160,7 +160,7 @@ namespace LeetCodeAlgo
         {
             ///index 1 =5 , 2=10, 4=20
             int[] arr = new int[5];
-            foreach(var bill in bills)
+            foreach (var bill in bills)
             {
                 int i = bill / 5;
                 arr[i--]++;// pay back bill-5 to customer
@@ -188,13 +188,13 @@ namespace LeetCodeAlgo
             int rowLen = grid.Length;
             int colLen = grid[0].Length;
             int res = 0;
-            res+= (1 << (colLen - 1)) * rowLen;//flip all row to start at 1, aka grid[i][0]=1
+            res += (1 << (colLen - 1)) * rowLen;//flip all row to start at 1, aka grid[i][0]=1
             for (int j = 1; j < colLen; j++)
             {
                 //then flip col [1,n-1] to max
                 int cur = 0;
                 for (int i = 0; i < rowLen; i++)
-                    cur += grid[i][j] == grid[i][0]?1:0;
+                    cur += grid[i][j] == grid[i][0] ? 1 : 0;
                 //max of 1s or 0s, we can flip all 0s to 1s, then rotate left
                 res += Math.Max(cur, rowLen - cur) * (1 << (colLen - j - 1));
             }
@@ -209,9 +209,9 @@ namespace LeetCodeAlgo
             for (int i = 0; i < n; i++)
                 res[i] = new int[m];
 
-            for(int i = 0; i < m; i++)
+            for (int i = 0; i < m; i++)
             {
-                for(int j = 0; j < n; j++)
+                for (int j = 0; j < n; j++)
                 {
                     res[j][i] = matrix[i][j];
                 }
@@ -269,7 +269,7 @@ namespace LeetCodeAlgo
             if (list1.Count != list2.Count) return false;
             else
             {
-                for(int i = 0; i < list1.Count; i++)
+                for (int i = 0; i < list1.Count; i++)
                 {
                     if (list1[i] != list2[i]) return false;
                 }
@@ -280,7 +280,7 @@ namespace LeetCodeAlgo
         private void LeafSimilar(TreeNode root, List<int> list)
         {
             if (root == null) return;
-            if(root.left==null && root.right == null)
+            if (root.left == null && root.right == null)
             {
                 list.Add(root.val);
             }
@@ -342,7 +342,7 @@ namespace LeetCodeAlgo
         public int NthMagicalNumber(int n, int a, int b)
         {
             int mod = 1_000_000_007;
-            int c = getLCM(a,b);
+            int c = getLCM(a, b);
 
             long low = 0;
             long high = (long)n * Math.Min(a, b);
@@ -387,10 +387,10 @@ namespace LeetCodeAlgo
             Dictionary<string, int> sentences = new Dictionary<string, int>();
             var word1 = s1.Split(' ');
             var word2 = s2.Split(' ');
-            foreach(var w1 in word1)
+            foreach (var w1 in word1)
             {
                 if (string.IsNullOrEmpty(w1)) continue;
-                if(!sentences.ContainsKey(w1))sentences.Add(w1, 1);
+                if (!sentences.ContainsKey(w1)) sentences.Add(w1, 1);
                 else sentences[w1]++;
             }
             foreach (var w2 in word2)
@@ -400,7 +400,7 @@ namespace LeetCodeAlgo
                 else sentences[w2]++;
             }
 
-            return sentences.Where(x=>x.Value==1).Select(x=>x.Key).ToArray();
+            return sentences.Where(x => x.Value == 1).Select(x => x.Key).ToArray();
         }
         ///886. Possible Bipartition, #Graph, #DFS, #BFS
         ///Given the integer n and the array dislikes where dislikes[i] = [ai, bi]
@@ -408,8 +408,8 @@ namespace LeetCodeAlgo
         ///return true if it is possible to split everyone into two groups in this way.
         public bool PossibleBipartition(int n, int[][] dislikes)
         {
-            int[,] graph = new int[n+1,n+1];
-            foreach(var dis in dislikes)
+            int[,] graph = new int[n + 1, n + 1];
+            foreach (var dis in dislikes)
             {
                 graph[dis[0], dis[1]] = 1;
                 graph[dis[1], dis[0]] = 1;
@@ -432,7 +432,7 @@ namespace LeetCodeAlgo
             visit[index] = slot;
             for (int i = 1; i < visit.Length; i++)
             {
-                if (graph[index,i] == 1)
+                if (graph[index, i] == 1)
                 {
                     if (visit[i] == slot)
                     {
@@ -465,16 +465,16 @@ namespace LeetCodeAlgo
                     visit[i] = 1;
                     Queue<int> q = new Queue<int>();
                     q.Enqueue(i);
-                    while (q.Count>0)
+                    while (q.Count > 0)
                     {
                         int cur = q.Dequeue();
-                        for(int j=1; j <= n; j++)
+                        for (int j = 1; j <= n; j++)
                         {
                             if (graph[cur, j] == 1)
                             {
                                 if (visit[j] == 0)
                                 {
-                                    visit[j] = -visit[cur] ;
+                                    visit[j] = -visit[cur];
                                     q.Enqueue(j);
                                 }
                                 else
@@ -523,7 +523,7 @@ namespace LeetCodeAlgo
             return BuildTree_PreorderAndPostorder(preorder, 0, preorder.Length - 1, postorder, 0, postorder.Length - 1);
         }
 
-        private TreeNode BuildTree_PreorderAndPostorder(int[] preorder,int preL,int preR, int[] postorder,int postL,int postR)
+        private TreeNode BuildTree_PreorderAndPostorder(int[] preorder, int preL, int preR, int[] postorder, int postL, int postR)
         {
             if (preL > preR) return null;
             else if (preL == preR) return new TreeNode(preorder[preL]);
@@ -532,16 +532,16 @@ namespace LeetCodeAlgo
                 var node = new TreeNode(preorder[preL]);
                 int i = postL;
                 for (; i < postR; i++)
-                    if (postorder[i] == preorder[preL+1]) break;
+                    if (postorder[i] == preorder[preL + 1]) break;
                 int count = i - postL + 1;
-                if(count == preR - preL)
+                if (count == preR - preL)
                 {
                     //assign all to left sub tree
                     node.left = BuildTree_PreorderAndPostorder(preorder, preL + 1, preR, postorder, postL, postR - 1);
                 }
                 else
                 {
-                    node.left = BuildTree_PreorderAndPostorder(preorder, preL + 1, preL+count, postorder, postL, postL+count-1);
+                    node.left = BuildTree_PreorderAndPostorder(preorder, preL + 1, preL + count, postorder, postL, postL + count - 1);
                     node.right = BuildTree_PreorderAndPostorder(preorder, preL + count + 1, preR, postorder, postL + count, postR - 1);
                 }
                 return node;
@@ -606,13 +606,13 @@ namespace LeetCodeAlgo
         ///Given a list of strings words and a string pattern, return a list of words[i] that match pattern
         public IList<string> FindAndReplacePattern(string[] words, string pattern)
         {
-            return words.Where(x => FindAndReplacePattern(x,pattern)).ToList();
+            return words.Where(x => FindAndReplacePattern(x, pattern)).ToList();
         }
 
-        private bool FindAndReplacePattern(string word , string pattern)
+        private bool FindAndReplacePattern(string word, string pattern)
         {
-            Dictionary<char,char> dict = new Dictionary<char,char>();
-            for(int i = 0; i < pattern.Length; i++)
+            Dictionary<char, char> dict = new Dictionary<char, char>();
+            for (int i = 0; i < pattern.Length; i++)
             {
                 //if (!dict.ContainsKey(pattern[i]) && dict.ContainsValue(word[i])) return false;
                 if (dict.ContainsKey(pattern[i]))
@@ -633,12 +633,12 @@ namespace LeetCodeAlgo
         {
             HashSet<string> set = new HashSet<string>();
 
-            foreach(var w in words)
+            foreach (var w in words)
             {
                 List<char> list1 = new List<char>();
                 List<char> list2 = new List<char>();
                 bool even = true;
-                foreach(var c in w)
+                foreach (var c in w)
                 {
                     if (even) list1.Add(c);
                     else list2.Add(c);
@@ -680,7 +680,7 @@ namespace LeetCodeAlgo
                     }
                 }
             }
-            return dp[n]?? new List<TreeNode>();
+            return dp[n] ?? new List<TreeNode>();
         }
         /// 895. Maximum Frequency Stack, see FreqStack
 
@@ -700,6 +700,23 @@ namespace LeetCodeAlgo
                 if (decreasing) decreasing = nums[i] >= nums[i + 1];
             }
             return increasing || decreasing;
+        }
+
+        ///899. Orderly Queue
+        //You can choose one of the first k letters of s and append it at the end of the string..
+        //Return the lexicographically smallest string you could have after applying any number of moves.
+        //if k>1 equal to sort whole string, if k==1 just rotate
+        public string OrderlyQueue(string s, int k)
+        {
+            if (k > 1) return new string(s.OrderBy(x => x).ToArray());
+            string res = s;
+            for (int i = 1; i < s.Length; i++)
+            {
+                string curr = s.Substring(i) + s.Substring(0, i);
+                if (curr.CompareTo(res) < 0)
+                    res = curr;
+            }
+            return res;
         }
     }
 }
