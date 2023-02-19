@@ -59,7 +59,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        private void MaxProduct_DFS(string s, int index, bool[] visit,ref int res)
+        private void MaxProduct_DFS(string s, int index, bool[] visit, ref int res)
         {
             if (index == s.Length)
             {
@@ -169,7 +169,7 @@ namespace LeetCodeAlgo
                 suffixMin[n-1-i] = min;
             }
             int res = 0;
-            for(int i = 1; i < n - 1; i++)
+            for (int i = 1; i < n - 1; i++)
             {
                 if (nums[i] > prefixMax[i - 1] && nums[i] < suffixMin[i + 1]) res += 2;
                 else if (nums[i] > nums[i - 1] && nums[i] < nums[i + 1]) res += 1;
@@ -216,11 +216,12 @@ namespace LeetCodeAlgo
             }
             for (int i = 0; i < n; i++)
             {
-                long max = Math.Max(sum0- prefixSum0[i], i==0?0: prefixSum1[i-1]);
+                long max = Math.Max(sum0- prefixSum0[i], i==0 ? 0 : prefixSum1[i-1]);
                 res = Math.Min(res, max);
             }
             return res;
         }
+
         /// 2018. Check if Word Can Be Placed In Crossword
         public bool PlaceWordInCrossword(char[][] board, string word)
         {
@@ -229,13 +230,13 @@ namespace LeetCodeAlgo
             int len = word.Length;
             for (int i = 0; i < m; i++)
             {
-                for(int j=0;j< n; j++)
+                for (int j = 0; j< n; j++)
                 {
                     if (board[i][j] == '#') continue;
                     if (i == 0 || board[i - 1][j] == '#')
                     {
                         int l = 0;
-                        for (int k=i;k< m && l<len;k++)
+                        for (int k = i; k< m && l<len; k++)
                         {
                             if (board[k][j] == '#') break;
                             if (board[k][j] != word[l] && board[k][j] != ' ') break;
@@ -281,7 +282,6 @@ namespace LeetCodeAlgo
                             }
                         }
                         if (l == len) return true;
-
                     }
 
                     if (j == n-1 || board[i][j + 1] == '#')
@@ -305,6 +305,7 @@ namespace LeetCodeAlgo
 
             return false;
         }
+
         /// 2022. Convert 1D Array Into 2D Array
         public int[][] Construct2DArray(int[] original, int m, int n)
         {
@@ -447,7 +448,7 @@ namespace LeetCodeAlgo
         ///2028. Find Missing Observations
         public int[] MissingRolls(int[] rolls, int mean, int n)
         {
-            int diff= (rolls.Length + n) * mean - rolls.Sum();
+            int diff = (rolls.Length + n) * mean - rolls.Sum();
             if (diff > 6 * n || diff < n) return new int[0];
             int mod = diff % n;
             int[] res = Enumerable.Repeat(diff / n, n).ToArray();
@@ -466,7 +467,7 @@ namespace LeetCodeAlgo
             int i = 0;
             for (; i < n; i++)
             {
-                if(s[i] == letter)
+                if (s[i] == letter)
                 {
                     list.Add(i);
                     continue;
@@ -481,7 +482,7 @@ namespace LeetCodeAlgo
             char[] res = new char[k];
             int x = 0, y = 0;
             int m = 0;
-            while(m<k)
+            while (m<k)
             {
                 //if e is just enough, add as many normal as possible
                 //<letter first
@@ -537,7 +538,6 @@ namespace LeetCodeAlgo
         }
 
         ///2034. Stock Price Fluctuation, see StockPrice
-
 
         /// 2037. Minimum Number of Moves to Seat Everyone
         /// Return the minimum number of moves required to move each student to a seat
@@ -604,14 +604,14 @@ namespace LeetCodeAlgo
                 long right = 0;
                 while (left < right)
                 {
-                    long mid = left + (right - left )/ 2;
+                    long mid = left + (right - left)/ 2;
                     long count = 0;
-                    if(neg1>0 && n2-neg2-zero2 > 0)
+                    if (neg1>0 && n2-neg2-zero2 > 0)
                     {
                         for (int i = 0; i < neg1 && count < k; i++)
                         {
                             if ((long)nums1[i] * nums2[n2 - 1] > mid) break;//min out of range
-                            if((long)nums1[i] * nums2[neg2+zero2] <= mid)
+                            if ((long)nums1[i] * nums2[neg2+zero2] <= mid)
                             {
                                 count += n2 - neg2 - zero2;
                             }
@@ -622,7 +622,7 @@ namespace LeetCodeAlgo
                                 while (low < high)
                                 {
                                     int center = (low + high) / 2;
-                                    if((long)nums1[i] * nums2[center] <= mid)
+                                    if ((long)nums1[i] * nums2[center] <= mid)
                                     {
                                         high=center;
                                     }
@@ -636,7 +636,7 @@ namespace LeetCodeAlgo
                         }
                     }
 
-                    if(neg2>0 && n1 - neg1 - zero1 > 0)
+                    if (neg2>0 && n1 - neg1 - zero1 > 0)
                     {
                         for (int i = 0; i < neg2 && count < k; i++)
                         {
@@ -685,7 +685,7 @@ namespace LeetCodeAlgo
                 {
                     long mid = left + (right - left) / 2;
                     long count = 0;
-                    if(neg1>0 && neg2 > 0)
+                    if (neg1>0 && neg2 > 0)
                     {
                         for (int i = neg1 - 1; i >= 0 && count < k; i--)
                         {
@@ -715,7 +715,7 @@ namespace LeetCodeAlgo
                         }
                     }
 
-                    if(n1-neg1-zero1>0 && n2 - neg2 - zero2 > 0)
+                    if (n1-neg1-zero1>0 && n2 - neg2 - zero2 > 0)
                     {
                         for (int i = neg1 + zero1; i<n1 && count < k; i++)
                         {
@@ -753,6 +753,7 @@ namespace LeetCodeAlgo
                 return left;
             }
         }
+
         /// 2042. Check if Numbers Are Ascending in a Sentence
         public bool AreNumbersAscending(string s)
         {
@@ -790,60 +791,72 @@ namespace LeetCodeAlgo
             CountMaxOrSubsets_BackTracking(nums, i + 1, currOr | nums[i], maxOr, ref res);
         }
 
-        ///2045. Second Minimum Time to Reach Destination, #TLE
+        ///2045. Second Minimum Time to Reach Destination, #Graph, #BFS
+        // vertex 1 to n, traffic light switching green/red by change interval, only leave any vertex at green
+        // cost from any 2 connected vertex u to v is time
+        // find 2nd minimum result from 1 to n
         public int SecondMinimum(int n, int[][] edges, int time, int change)
         {
-            List<int>[] graph = new List<int>[n + 1];
-            for (int i = 0; i < n + 1; i++)
+            List<int>[] graph = new List<int>[n+1];
+            for (int i = 0; i<graph.Length; i++)
+            {
                 graph[i] = new List<int>();
+            }
             foreach (var e in edges)
             {
-                graph[e[0]].Add(e[1]);
+                graph[e[0]].Add(e[1]);//build the graph
                 graph[e[1]].Add(e[0]);
             }
-            PriorityQueue<int, int> pq = new PriorityQueue<int, int>();
-            bool[] visit = new bool[n + 1];
-            visit[1] = true;
-            SecondMinimum_DFS(graph, 1, 0, time, change, visit, false, pq, int.MaxValue);
-            return pq.Peek();
-        }
-
-        private void SecondMinimum_DFS(List<int>[] graph, int index, int cost, int time, int change, bool[] visit, bool cycle, PriorityQueue<int, int> pq, int max)
-        {
-            if (index == graph.Length - 1)
+            int[][] memo = new int[n+1][];//build the memo
+            for (int i = 0; i<memo.Length; i++)
             {
-                pq.Enqueue(cost, -cost);//maxheap
-                if (pq.Count > 2) pq.Dequeue();
-                if (pq.Count == 2)
-                {
-                    max = Math.Min(max, pq.Peek());
-                }
+                memo[i] = new int[] { int.MaxValue, int.MaxValue };
             }
-            foreach (var v in graph[index])
+            //using queue to BFS, every element in q is [index,costTime] pair
+            var q = new Queue<int[]>();
+            int[] seed = new int[] { 1, 0 };
+            q.Enqueue(seed);
+            while (q.Count > 0)
             {
-                if (visit[v])
+                int size = q.Count;
+                while (size-->0)
                 {
-                    if (cycle) continue;
+                    var top = q.Dequeue();
+                    //we can only leave vertex on green light
+                    int offset = top[1]%(change*2);
+                    if (offset<change)//green light
+                    {
+                        foreach (var i in graph[top[0]])
+                        {
+                            int cost = top[1]+time;
+                            if (cost>memo[i][1])
+                                continue;//slower than 2nd, discard
+                            else if (cost==memo[i][0]|| cost==memo[i][1])
+                                continue;//want unique result, discard duplicate
+                            else
+                            {
+                                if (cost<memo[i][0])//better than 1st
+                                {
+                                    memo[i][1] = memo[i][0];
+                                    memo[i][0] = cost;
+                                }
+                                else
+                                {
+                                    memo[i][1] = cost;
+                                }
+                                q.Enqueue(new int[] { i, cost });
+                            }
+                        }
+                    }
                     else
                     {
-                        int nextCost = cost + time;
-                        int mod = cost % (2 * change);
-                        if (mod >= change)
-                            nextCost += 2 * change - mod;
-                        SecondMinimum_DFS(graph, v, nextCost, time, change, visit, true, pq, max);
+                        //wait unitl next green light
+                        top[1]+=2*change - offset;
+                        q.Enqueue(top);
                     }
                 }
-                else
-                {
-                    visit[v] = true;
-                    int nextCost = cost + time;
-                    int mod = cost % (2 * change);
-                    if (mod >= change)
-                        nextCost += 2 * change - mod;
-                    SecondMinimum_DFS(graph, v, nextCost, time, change, visit, cycle, pq, max);
-                    visit[v] = false;
-                }
             }
+            return memo[n][1];
         }
 
         ///2047. Number of Valid Words in a Sentence
