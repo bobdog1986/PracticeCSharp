@@ -137,6 +137,35 @@ namespace LeetCodeAlgo
         //    return list.Min(x => Math.Min(Math.Abs(x-startIndex), words.Length -Math.Abs(x-startIndex)));
         //}
 
+        ///2516. Take K of Each Character From Left and Right, #Sliding Window
+        // string s consisting of the characters 'a', 'b', and 'c' and a non-negative integer k.
+        // Each minute, you may take either the leftmost character of s, or the rightmost character of s.
+        //Return the minimum number of minutes needed for you to take at least k of each character,
+        //or return -1 if it is not possible to take k of each character.
+        public int TakeCharacters(string s, int k)
+        {
+            int res = int.MaxValue;
+            int n = s.Length;
+            int[] arr = new int[3];
+            for (int i = 0; i<n; i++)
+            {
+                arr[s[i]-'a']++;
+            }
+            if (arr.Any(x => x<k)) return -1;
+            int left = 0;
+            int[] curr = new int[3];
+            for (int i = 0; i<n; i++)
+            {
+                curr[s[i]-'a']++;
+                while (left<=i && (curr[0] >arr[0]- k||curr[1] >arr[1]- k || curr[2] >arr[2]- k))
+                {
+                    curr[s[left]-'a']--;
+                    left++;
+                }
+                res= Math.Min(res, n-(i-left+1));
+            }
+            return res;
+        }
 
         ///2517. Maximum Tastiness of Candy Basket, #Binary Search
         //The store sells baskets of k distinct candies. The tastiness of a candy basket is the smallest absolute difference
