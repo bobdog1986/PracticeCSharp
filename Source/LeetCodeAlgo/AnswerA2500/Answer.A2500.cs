@@ -420,6 +420,40 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
+        ///2541. Minimum Operations to Make Array Equal II
+        //Choose two indexes i and j and increment nums1[i] by k and decrement nums1[j] by k.
+        //In other words, nums1[i] = nums1[i] + k and nums1[j] = nums1[j] - k.
+        //nums1 is said to be equal to nums2 if for all indices i such that 0 <= i<n, nums1[i] == nums2[i].
+        //Return the minimum number of operations required to make nums1 equal to nums2.If it is impossible to make them equal, return -1.
+        public long MinOperations(int[] nums1, int[] nums2, int k)
+        {
+            if (k==0)
+            {
+                for(int i = 0; i<nums1.Length; i++)
+                {
+                    if (nums1[i]!=nums2[i]) return -1;
+                }
+                return 0;
+            }
+            else
+            {
+                long pos = 0;
+                long neg = 0;
+                for (int i = 0; i<nums1.Length; i++)
+                {
+                    int diff = nums1[i]-nums2[i];
+                    if (diff == 0) continue;
+                    if (diff%k !=0) return -1;
+                    if(diff>0)
+                        pos+= diff/k;//only count positive op
+                    else
+                        neg+= diff/k;
+                }
+                return (pos+neg ==0)?pos:-1;
+            }
+        }
+
+
         ///2545. Sort the Students by Their Kth Score
         //public int[][] SortTheStudents(int[][] score, int k)
         //{
