@@ -266,5 +266,28 @@ namespace LeetCodeAlgo
             }
             return i;
         }
+
+
+        ///2571. Minimum Operations to Reduce an Integer to 0, #Good , #Greedy
+        //add or substract 2^pow, return minimum ops
+        public int MinOperations(int n)
+        {
+            int res = 0;
+            while (n > 0)
+            {
+                if ((n & 3) == 3)
+                {
+                    n++;
+                    res++;
+                }
+                else
+                {
+                    res += n & 1;
+                    n >>= 1;
+                }
+            }
+            return res;
+        }
+
     }
 }
