@@ -350,6 +350,107 @@ namespace LeetCodeAlgo
         //    return Math.Max(neg, pos);
         //}
 
+        ///2531. Make Number of Distinct Characters Equal
+        //A move consists of choosing two indices i and j , swapping word1[i] with word2[j].
+        //Return true if can get the number of distinct characters in word1 and word2 to be equal with exactly one move. Return false otherwise.
+        //public bool IsItPossible(string word1, string word2)
+        //{
+        //    Dictionary<char, int> dict1 = new Dictionary<char, int>();
+        //    Dictionary<char, int> dict2 = new Dictionary<char, int>();
+        //    foreach (var c in word1)
+        //    {
+        //        if (dict1.ContainsKey(c)) dict1[c]++;
+        //        else dict1.Add(c, 1);
+        //    }
+        //    foreach (var c in word2)
+        //    {
+        //        if (dict2.ContainsKey(c)) dict2[c]++;
+        //        else dict2.Add(c, 1);
+        //    }
+
+        //    int diff = dict1.Keys.Count - dict2.Keys.Count;
+        //    if (diff == 0)
+        //    {
+        //        foreach (var k in dict1.Keys)
+        //        {
+        //            if (dict2.ContainsKey(k)) return true;
+        //            else
+        //            {
+        //                if (dict1[k]==1)
+        //                {
+        //                    //a-1, b+1, must b-1, a+1
+        //                    if (dict2.Keys.Any(x => dict2[x]==1 && !dict1.ContainsKey(x))) return true;
+        //                }
+        //                else
+        //                {
+        //                    //a, b+1, must a,b-1,  or a+1,b
+        //                    if (dict2.Keys.Any(x => dict2[x]==1 && dict1.ContainsKey(x))) return true;
+        //                    if (dict2.Keys.Any(x => dict2[x]>1 && !dict1.ContainsKey(x))) return true;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    else if (diff == 1)
+        //    {
+        //        foreach (var k in dict1.Keys)
+        //        {
+        //            if (dict2.ContainsKey(k))
+        //            {
+        //                //b, must a-1,b
+        //                if (dict1[k]==1 && dict2.Keys.Any(x => x!=k && dict2[x]>1 && dict1.ContainsKey(x))) return true;
+        //            }
+        //            else
+        //            {
+        //                //b+1, must a,b, or b-1,a-1
+        //                if (dict1[k]==1)
+        //                {
+        //                    if (dict2.Keys.Any(x => dict2[x]==1 && dict1.ContainsKey(x))) return true;
+        //                }
+        //                else
+        //                {
+        //                    if (dict2.Keys.Any(x => dict2[x]>1 && dict1.ContainsKey(x))) return true;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    else if (diff == -1)
+        //    {
+        //        foreach (var k in dict2.Keys)
+        //        {
+        //            if (dict1.ContainsKey(k))
+        //            {
+        //                if (dict2[k]==1 && dict1.Keys.Any(x => x!=k && dict1[x]>1 && dict2.ContainsKey(x))) return true;
+        //            }
+        //            else
+        //            {
+        //                if (dict2[k]==1)
+        //                {
+        //                    if (dict1.Keys.Any(x => dict1[x]==1 && dict2.ContainsKey(x))) return true;
+        //                }
+        //                else
+        //                {
+        //                    if (dict1.Keys.Any(x => dict1[x]>1 && dict2.ContainsKey(x))) return true;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    else if (diff == -2)
+        //    {
+        //        foreach (var k in dict2.Keys)
+        //        {
+        //            if (dict2[k] == 1 && !dict1.ContainsKey(k) && dict1.Keys.Any(x => dict1[x] > 1 && dict2.ContainsKey(x))) return true;
+        //        }
+        //    }
+        //    else if (diff == 2)
+        //    {
+        //        foreach (var k in dict1.Keys)
+        //        {
+        //            if (dict1[k] == 1 && !dict2.ContainsKey(k) && dict2.Keys.Any(x => dict2[x] > 1 && dict1.ContainsKey(x))) return true;
+        //        }
+        //    }
+        //    return false;
+        //}
+
         ///2535. Difference Between Element Sum and Digit Sum of an Array
         //public int DifferenceOfSum(int[] nums)
         //{

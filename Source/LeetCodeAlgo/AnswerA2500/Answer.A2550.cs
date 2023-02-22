@@ -269,21 +269,35 @@ namespace LeetCodeAlgo
 
 
         ///2571. Minimum Operations to Reduce an Integer to 0, #Good , #Greedy
-        //add or substract 2^pow, return minimum ops
+        //add or subtract 2^pow, return minimum ops
         public int MinOperations(int n)
         {
             int res = 0;
             while (n > 0)
             {
-                if ((n & 3) == 3)
+                int tail = n&3;
+                //always try the best way
+                if(tail == 0)
                 {
-                    n++;
+                    //0bxxxx00, right shift 2 bits
+                    n>>=2;
+                }else if(tail ==1)
+                {
+                    //0bxxxx01, res++, right shift 2 bits
                     res++;
-                }
-                else
+                    n>>=2;
+                }else if(tail ==2)
                 {
-                    res += n & 1;
-                    n >>= 1;
+                    //0bxxxx10, right shift 1 bits
+                    n>>=1;
+                }
+                else//==3
+                {
+                    //0bxxxx11
+                    //after +1, 0bxxxx00, right shift 2 bits
+                    n+=1;
+                    res++;
+                    n>>=2;
                 }
             }
             return res;
