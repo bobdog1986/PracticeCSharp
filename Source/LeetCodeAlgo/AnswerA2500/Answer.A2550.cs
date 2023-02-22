@@ -267,6 +267,42 @@ namespace LeetCodeAlgo
             return i;
         }
 
+        ///2570. Merge Two 2D Arrays by Summing Values
+        public int[][] MergeArrays(int[][] nums1, int[][] nums2)
+        {
+            List<int[]> res = new List<int[]>();
+            int i = 0;
+            int j =0;
+            while(i<nums1.Length || j<nums2.Length)
+            {
+                if (i==nums1.Length)
+                {
+                    res.Add(nums2[j++]);
+                }
+                else if(j==nums2.Length)
+                {
+                    res.Add(nums1[i++]);
+                }
+                else
+                {
+                    if (nums1[i][0]<nums2[j][0])
+                    {
+                        res.Add(nums1[i++]);
+                    }
+                    else if (nums1[i][0]>nums2[j][0])
+                    {
+                        res.Add(nums2[j++]);
+                    }
+                    else
+                    {
+                        res.Add(new int[] { nums1[i][0], nums1[i][1] +nums2[j][1] });
+                        i++;
+                        j++;
+                    }
+                }
+            }
+            return res.ToArray();
+        }
 
         ///2571. Minimum Operations to Reduce an Integer to 0, #Good , #Greedy
         //add or subtract 2^pow, return minimum ops
