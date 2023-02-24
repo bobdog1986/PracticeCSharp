@@ -38,7 +38,7 @@ namespace LeetCodeAlgo
             int res = 0;
             Dictionary<string, int> dict = new Dictionary<string, int>();
 
-            foreach(var w in words)
+            foreach (var w in words)
             {
                 var s = string.Join("", w.ToHashSet().OrderBy(x => x).ToArray());
                 if (!dict.ContainsKey(s))
@@ -47,13 +47,12 @@ namespace LeetCodeAlgo
                     dict[s]++;
             }
 
-            foreach(var k in dict.Keys)
+            foreach (var k in dict.Keys)
             {
                 res+=dict[k]*(dict[k]-1)/2;
             }
             return res;
         }
-
 
         ///2507. Smallest Value After Replacing With Sum of Prime Factors, #Prime
         //public int SmallestValue(int n)
@@ -329,13 +328,11 @@ namespace LeetCodeAlgo
 
         ///2526. Find Consecutive Integers from a Data Stream, see DataStream2526
 
-
         ///2527. Find Xor-Beauty of Array
         //public int XorBeauty(int[] nums)
         //{
         //    return nums.Aggregate((x, y) => x^y);
         //}
-
 
         ///2529. Maximum Count of Positive Integer and Negative Integer
         //public int MaximumCount(int[] nums)
@@ -476,9 +473,9 @@ namespace LeetCodeAlgo
             long res = 0;
             int left = 0;
             int n = nums.Length;
-            Dictionary<int,int> dict = new Dictionary<int,int>();
+            Dictionary<int, int> dict = new Dictionary<int, int>();
             long curr = 0;
-            for(int i = 0; i<n; i++)
+            for (int i = 0; i<n; i++)
             {
                 if (!dict.ContainsKey(nums[i]))
                     dict.Add(nums[i], 0);
@@ -530,7 +527,7 @@ namespace LeetCodeAlgo
         {
             if (k==0)
             {
-                for(int i = 0; i<nums1.Length; i++)
+                for (int i = 0; i<nums1.Length; i++)
                 {
                     if (nums1[i]!=nums2[i]) return -1;
                 }
@@ -545,15 +542,52 @@ namespace LeetCodeAlgo
                     int diff = nums1[i]-nums2[i];
                     if (diff == 0) continue;
                     if (diff%k !=0) return -1;
-                    if(diff>0)
+                    if (diff>0)
                         pos+= diff/k;//only count positive op
                     else
                         neg+= diff/k;
                 }
-                return (pos+neg ==0)?pos:-1;
+                return (pos+neg ==0) ? pos : -1;
             }
         }
 
+        ///2542. Maximum Subsequence Score, #PriorityQueue, #Good
+        //You must choose a subsequence of indices from nums1 of length k.
+        //It can defined simply as: (nums1[i0] + nums1[i1] +...+ nums1[ik - 1]) * min(nums2[i0] , nums2[i1], ... , nums2[ik - 1]).
+        //Return the maximum possible score.
+        public long MaxScore(int[] nums1, int[] nums2, int k)
+        {
+            long res = long.MinValue;
+            int n = nums1.Length;
+            int[][] mat = new int[n][];
+            for (int i = 0; i<n; i++)
+            {
+                mat[i]=new int[] { nums1[i], nums2[i] };
+            }
+            //descending sort by nums2[i]
+            mat=mat.OrderBy(x => -x[1]).ToArray();
+            //min heap, store max k elements of nums1
+            var pq = new PriorityQueue<int, int>();
+            long sum = 0;
+            for (int i = 0; i<n; i++)
+            {
+                sum+=mat[i][0];
+                pq.Enqueue(mat[i][0], mat[i][0]);
+                if (pq.Count>k)
+                {
+                    //if exceed k count, remove the min value in pq
+                    sum-=pq.Dequeue();
+                }
+                if (pq.Count>=k)
+                {
+                    //we can find k elements in [0,i] of mat
+                    //min must be mat[i][1]
+                    //maxSum is sum
+                    res= Math.Max(res, sum*mat[i][1]);
+                }
+            }
+            return res;
+        }
 
         ///2545. Sort the Students by Their Kth Score
         //public int[][] SortTheStudents(int[][] score, int k)
