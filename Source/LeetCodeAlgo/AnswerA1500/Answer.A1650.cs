@@ -12,8 +12,8 @@ namespace LeetCodeAlgo
         ///Given the circular array code and an integer key k, return the decrypted code to defuse the bomb!
         public int[] Decrypt(int[] code, int k)
         {
-            var ans=new int[code.Length];
-            for(int i=0; i<code.Length; i++)
+            var ans = new int[code.Length];
+            for (int i = 0; i<code.Length; i++)
             {
                 if (k > 0)
                 {
@@ -36,34 +36,35 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
         ///1654. Minimum Jumps to Reach Home, #Graph, #BFS
         public int MinimumJumps(int[] forbidden, int a, int b, int x)
         {
-            HashSet<int> skips=new HashSet<int>(forbidden);
+            HashSet<int> skips = new HashSet<int>(forbidden);
             HashSet<int> visits = new HashSet<int>();
             int max = x + a + b;
-            foreach(var f in forbidden)
+            foreach (var f in forbidden)
             {
                 max = Math.Max(max, f + a + b);
             }
             int res = 0;
-            List<int[]> list = new List<int[]>() { new int[] {0,0 } };
+            List<int[]> list = new List<int[]>() { new int[] { 0, 0 } };
             visits.Add(0);
             while (list.Count > 0)
             {
                 var next = new List<int[]>();
-                foreach(var i in list)
+                foreach (var i in list)
                 {
                     if (i[0] == x) return res;
                     var m = i[0] + a;
-                    if(m >0 && m<= max && !skips.Contains(m) && !visits.Contains(m))
+                    if (m >0 && m<= max && !skips.Contains(m) && !visits.Contains(m))
                     {
-                        next.Add(new int[] {m,0});
+                        next.Add(new int[] { m, 0 });
                         visits.Add(m);
                     }
 
                     var n = i[0] - b;
-                    if(i[1]==0 && n > 0 && n <= max && !skips.Contains(n) && !visits.Contains(n))
+                    if (i[1]==0 && n > 0 && n <= max && !skips.Contains(n) && !visits.Contains(n))
                     {
                         next.Add(new int[] { n, 1 });
                         //visits.Add(n);
@@ -86,7 +87,7 @@ namespace LeetCodeAlgo
             Dictionary<char, int> dict1 = new Dictionary<char, int>();
             Dictionary<char, int> dict2 = new Dictionary<char, int>();
 
-            foreach(var c in word1)
+            foreach (var c in word1)
             {
                 if (dict1.ContainsKey(c)) dict1[c]++;
                 else dict1.Add(c, 1);
@@ -116,6 +117,7 @@ namespace LeetCodeAlgo
 
             return true;
         }
+
         /// 1658. Minimum Operations to Reduce X to Zero, #Sliding Window
         ///Return the minimum number of operations to reduce x to exactly 0 if it is possible, otherwise, return -1.
         ///This problem is equivalent to finding the longest subarray whose sum is == totalSum - x
@@ -146,6 +148,7 @@ namespace LeetCodeAlgo
         {
             return string.Join("", word1) == string.Join("", word2);
         }
+
         /// 1663. Smallest String With A Given Numeric Value
         //The numeric value of a lowercase character is defined as its position (1-indexed) in the alphabet, a is 1,etc...
         //Return the lexicographically smallest string with length equal to n and numeric value equal to k.
@@ -170,10 +173,10 @@ namespace LeetCodeAlgo
             }
             return new string(list.ToArray());
         }
+
         ///1668. Maximum Repeating Substring
         public int MaxRepeating(string sequence, string word)
         {
-
             int ans = 1;
             while (sequence.Contains(string.Join("", Enumerable.Repeat(word, ans))))
                 ans++;
@@ -184,12 +187,12 @@ namespace LeetCodeAlgo
         {
             int res = 0;
             int n = word.Length;
-            for(int i = 0; i < sequence.Length-n+1; i++)
+            for (int i = 0; i < sequence.Length-n+1; i++)
             {
                 if (sequence.Substring(i, n) == word)
                 {
                     int k = 1;
-                    while(i+k*n< sequence.Length - n + 1)
+                    while (i+k*n< sequence.Length - n + 1)
                     {
                         if (sequence.Substring(i + k*n, n) == word) k++;
                         else break;
@@ -199,6 +202,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 1669. Merge In Between Linked Lists
         ///Remove list1's nodes from the ath node to the bth node, and put list2 in their place.
         public ListNode MergeInBetween(ListNode list1, int a, int b, ListNode list2)
@@ -234,7 +238,6 @@ namespace LeetCodeAlgo
             return accounts.Select(x => x.Sum()).Max();
         }
 
-
         ///1673. Find the Most Competitive Subsequence, #Monotonic Stack
         //return the most competitive subsequence of nums of size k.
         //For example, [1,3,4] is more competitive than [1,3,5]
@@ -254,6 +257,37 @@ namespace LeetCodeAlgo
             }
             return arr.Take(k).ToArray();
         }
+
+        ///1675. Minimize Deviation in Array, #Good
+        //You can perform two types of operations on any element of the array any number of times:
+        //If the element is even, divide it by 2.
+        //If the element is odd, multiply it by 2.
+        //The deviation of the array is the maximum difference between any two elements in the array.
+        //Return the minimum deviation the array can have after performing some number of operations.
+        public int MinimumDeviation(int[] nums)
+        {
+            int res = int.MaxValue;
+            int min = int.MaxValue;
+            var pq = new PriorityQueue<int, int>();
+            for (int i = 0; i<nums.Length; i++)
+            {
+                int curr = nums[i]%2==0 ? nums[i] : nums[i]*2;
+                min = Math.Min(min, curr);
+                pq.Enqueue(curr, -curr);//max heap
+            }
+
+            while (pq.Count > 0)
+            {
+                int top = pq.Dequeue();
+                res = Math.Min(res, top-min);
+                if (top%2==1) break;//cannot continue
+                min = Math.Min(min, top/2);
+                pq.Enqueue(top/2, -top/2);
+            }
+
+            return res;
+        }
+
         ///1678. Goal Parser Interpretation
         ///Given the string command, return the Goal Parser's interpretation of command.
         public string Interpret(string command)
@@ -264,15 +298,16 @@ namespace LeetCodeAlgo
             else if (command.StartsWith("(al)")) return "al" + Interpret(command.Substring(4));
             else return command;
         }
+
         ///1679. Max Number of K-Sum Pairs
         ///how many pairs n1+n2 = k
         public int MaxOperations(int[] nums, int k)
         {
             int res = 0;
             Dictionary<int, int> map = new Dictionary<int, int>();
-            foreach(var n in nums)
+            foreach (var n in nums)
             {
-                if(map.ContainsKey(k-n) && map[k-n] > 0)
+                if (map.ContainsKey(k-n) && map[k-n] > 0)
                 {
                     map[k - n]--;
                     res++;
@@ -285,19 +320,20 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 1684. Count the Number of Consistent Strings
         ///Return the number of consistent strings in the array words.
         public int CountConsistentStrings(string allowed, string[] words)
         {
             HashSet<char> map = new HashSet<char>();
-            foreach(var c in allowed)
+            foreach (var c in allowed)
                 if (!map.Contains(c)) map.Add(c);
 
             int res = 0;
-            foreach(var word in words)
+            foreach (var word in words)
             {
                 bool valid = true;
-                foreach(var w in word)
+                foreach (var w in word)
                 {
                     if (!map.Contains(w))
                     {
@@ -305,7 +341,7 @@ namespace LeetCodeAlgo
                         break;
                     }
                 }
-                if(valid) res++;
+                if (valid) res++;
             }
             return res;
         }
@@ -318,14 +354,14 @@ namespace LeetCodeAlgo
             int n = nums.Length;
             int sum = 0;
             int[] arr = new int[n];
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
                 sum += nums[i];
                 arr[i] = sum;
             }
 
             int[] res = new int[n];
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
                 int head = (i+1) * nums[i] - arr[i];
                 int tail = (sum - arr[i]) - (n - (i + 1)) * nums[i];
@@ -333,6 +369,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         ///1688. Count of Matches in Tournament
         public int NumberOfMatches(int n)
         {
@@ -356,7 +393,7 @@ namespace LeetCodeAlgo
         /// 1689. Partitioning Into Minimum Number Of Deci-Binary Numbers
         public int MinPartitions(string n)
         {
-            return n.Max(x=>x-'0');
+            return n.Max(x => x-'0');
         }
 
         /// 1694. Reformat Phone Number
@@ -409,9 +446,9 @@ namespace LeetCodeAlgo
         {
             int res = 0;
             int left = 0;
-            var dict=new Dictionary<int,int>();
+            var dict = new Dictionary<int, int>();
             int sum = 0;
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 if (dict.ContainsKey(nums[i]))
                 {
@@ -445,10 +482,9 @@ namespace LeetCodeAlgo
                 }
 
                 max = nums[i] + pq.Peek()[1];
-                pq.Enqueue(new int[] { i, max },-max);
+                pq.Enqueue(new int[] { i, max }, -max);
             }
             return max;
         }
-
     }
 }

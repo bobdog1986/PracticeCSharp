@@ -25,7 +25,7 @@ namespace LeetCodeAlgo
         }
 
         ///1551. Minimum Operations to Make Array Equal
-        public int MinOperations(int n)
+        public int MinOperations_1551(int n)
         {
             int res = 0;
             int left = 0;
@@ -290,8 +290,8 @@ namespace LeetCodeAlgo
             if (list.Count == 0)
             {
                 //there will be n-2 position that we can pick any 2 of them to split s to 3 segments
-                //eg, "0000", "0|0|0|0" , all position marked as | 
-                //eg, "00000", "0|0|0|0|0" , all position marked as | 
+                //eg, "0000", "0|0|0|0" , all position marked as |
+                //eg, "00000", "0|0|0|0|0" , all position marked as |
                 //=> calculate Combine(n-1,2) = Factoral(n-1,2)/Factoral(2);
                 long x = n - 1;
                 long y = n - 2;
