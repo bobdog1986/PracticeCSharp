@@ -70,6 +70,30 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
+        ///2453. Destroy Sequential Targets
+        //public int DestroyTargets(int[] nums, int space)
+        //{
+        //    Dictionary<int, int> minDict = new Dictionary<int, int>();
+        //    Dictionary<int, int> countDict = new Dictionary<int, int>();
+        //    foreach (var i in nums)
+        //    {
+        //        int mod = i%space;
+        //        if (minDict.ContainsKey(mod))
+        //        {
+        //            minDict[mod]=Math.Min(minDict[mod], i);
+        //            countDict[mod]++;
+        //        }
+        //        else
+        //        {
+        //            minDict.Add(mod, i);
+        //            countDict.Add(mod, 1);
+        //        }
+        //    }
+        //    int k = countDict.Keys.OrderBy(x => -countDict[x]).ThenBy(x => minDict[x]).First();
+        //    return minDict[k];
+        //}
+
+
         ///2455. Average Value of Even Numbers That Are Divisible by Three
         //public int AverageValue(int[] nums)
         //{
