@@ -339,6 +339,22 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2575. Find the Divisibility Array of a String
+        //div[i] = 1 if the numeric value of word[0,...,i] is divisible by m, or div[i] = 0 otherwise.
+        //Return the divisibility array of word.
+        //public int[] DivisibilityArray(string word, int m)
+        //{
+        //    int n=word.Length;
+        //    int[] res = new int[n];
+        //    long a = 0;
+        //    for(int i = 0; i<n; i++)
+        //    {
+        //        a = a*10+(word[i]-'0');
+        //        a = a % m;
+        //        res[i] = a == 0?1:0;
+        //    }
+        //    return res;
+        //}
 
         ///2576. Find the Maximum Number of Marked Indices
         //Pick two different unmarked indices i and j such that 2 * nums[i] <= nums[j], then mark i and j.
