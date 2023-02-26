@@ -339,5 +339,31 @@ namespace LeetCodeAlgo
             return res;
         }
 
+
+        ///2576. Find the Maximum Number of Marked Indices
+        //Pick two different unmarked indices i and j such that 2 * nums[i] <= nums[j], then mark i and j.
+        //Return the maximum possible number of marked indices in nums using the above operation any number of times.
+        //public int MaxNumOfMarkedIndices(int[] nums)
+        //{
+        //    Array.Sort(nums);
+        //    int n = nums.Length;
+        //    int n1 = (n+1)/2;
+        //    int i = 0;
+        //    int j = n1;
+        //    int res = 0;
+        //    while(i<n1 && j<n)
+        //    {
+        //        if (nums[i]*2<=nums[j])
+        //        {
+        //            i++;
+        //            j++;
+        //            res+=2;
+        //        }
+        //        else j++;
+        //    }
+        //    return res;
+        //}
+
+
     }
 }
