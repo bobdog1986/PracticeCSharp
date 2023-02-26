@@ -339,6 +339,24 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2574. Left and Right Sum Differences
+        //res[i]= abs(leftSum[i]-rightSum[i]);
+        //public int[] LeftRigthDifference(int[] nums)
+        //{
+        //    int sum = nums.Sum();
+        //    int curr = 0;
+        //    int n = nums.Length;
+        //    int[] res= new int[n];
+        //    for(int i = 0; i<n; i++)
+        //    {
+        //        curr+=nums[i];
+        //        res[i]=Math.Abs(curr-sum);
+        //        sum-=nums[i];
+        //    }
+        //    return res;
+        //}
+
+
         ///2575. Find the Divisibility Array of a String
         //div[i] = 1 if the numeric value of word[0,...,i] is divisible by m, or div[i] = 0 otherwise.
         //Return the divisibility array of word.
