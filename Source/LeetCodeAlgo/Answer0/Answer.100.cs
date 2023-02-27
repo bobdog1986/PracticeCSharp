@@ -576,55 +576,9 @@ namespace LeetCodeAlgo
             return dp.Last().Last();
         }
 
-        /// 116. Populating Next Right Pointers in Each Node
-        // You are given a perfect binary tree where all leaves are on the same level
-        // Populate each next pointer to point to its next right node.
-        // If there is no next right node, the next pointer should be set to NULL.
-        public Node_Next Connect_116(Node_Next root)
-        {
-            if (root == null)
-                return null;
-            List<Node_Next> list = new List<Node_Next> { root };
-            while (list.Count != 0)
-            {
-                List<Node_Next> subs = new List<Node_Next>();
-                for (int i = 0; i < list.Count; i++)
-                {
-                    list[i].next = i == list.Count - 1 ? null : list[i + 1];
-                    if (list[i].left != null)
-                        subs.Add(list[i].left);
-                    if (list[i].right != null)
-                        subs.Add(list[i].right);
-                }
-                list = subs;
-            }
+        /// 116. Populating Next Right Pointers in Each Node, see NextNode
 
-            return root;
-        }
-
-        /// 117. Populating Next Right Pointers in Each Node II
-        /// Populate each next pointer to point to its next right node.
-        /// If there is no next right node, the next pointer should be set to NULL.
-        public Node_Next Connect(Node_Next root)
-        {
-            if (root == null)
-                return null;
-            List<Node_Next> list = new List<Node_Next> { root };
-            while (list.Count != 0)
-            {
-                List<Node_Next> subs = new List<Node_Next>();
-                for (int i = 0; i < list.Count; i++)
-                {
-                    list[i].next = i == list.Count - 1 ? null : list[i + 1];
-                    if (list[i].left != null)
-                        subs.Add(list[i].left);
-                    if (list[i].right != null)
-                        subs.Add(list[i].right);
-                }
-                list = subs;
-            }
-            return root;
-        }
+        /// 117. Populating Next Right Pointers in Each Node II, see NextNode
 
         ///118. Pascal's Triangle
         ///Given an integer numRows, return the first numRows of Pascal's triangle.
@@ -1232,45 +1186,7 @@ namespace LeetCodeAlgo
             return cut[n - 1];
         }
 
-        /// 133. Clone Graph, #Graph, #DFS
-        ///Given a reference of a node in a connected undirected graph.
-        ///Return a deep copy(clone) of the graph.
-        ///Each node in the graph contains a value(int) and a list(List[Node]) of its neighbors.
-        public Node_Neighbors CloneGraph(Node_Neighbors node)
-        {
-            if (node == null) return null;
-            Node_Neighbors res = null;
-            Dictionary<Node_Neighbors, int> dict = new Dictionary<Node_Neighbors, int>();
-            List<Node_Neighbors> list = new List<Node_Neighbors>();
-            res = new Node_Neighbors(node.val);
-            dict.Add(node, list.Count);
-            list.Add(res);
-            res.neighbors = CloneGraph_DFS(node.neighbors, dict, list);
-            return res;
-        }
-
-        private IList<Node_Neighbors> CloneGraph_DFS(IList<Node_Neighbors> neighbors, IDictionary<Node_Neighbors, int> dict, IList<Node_Neighbors> list)
-        {
-            if (neighbors == null) return null;
-            if (neighbors.Count == 0) return new List<Node_Neighbors>();
-            var res = new List<Node_Neighbors>();
-            foreach (var node in neighbors)
-            {
-                if (dict.ContainsKey(node))
-                {
-                    res.Add(list[dict[node]]);
-                }
-                else
-                {
-                    dict.Add(node, list.Count);
-                    var clone = new Node_Neighbors(node.val);
-                    list.Add(clone);
-                    res.Add(clone);
-                    clone.neighbors = CloneGraph_DFS(node.neighbors, dict, list);
-                }
-            }
-            return res;
-        }
+        /// 133. Clone Graph, #Graph, #DFS, see NeighborsNode
 
         /// 134. Gas Station
         ///  Given two integer arrays gas and cost, return the starting gas station's index
@@ -1365,56 +1281,8 @@ namespace LeetCodeAlgo
         }
 
 
-        ///138. Copy List with Random Pointer, #Good!
-        ///Random may pointer to itself
-        public Node_Random CopyRandomList(Node_Random head)
-        {
-            Node_Random curr = head;
-            Node_Random next = null;
-            // First round: make copy of each node,
-            // and link them together side-by-side in a single list.
-            while (curr != null)
-            {
-                next = curr.next;
+        ///138. Copy List with Random Pointer, #Good!, see RandomNode
 
-                Node_Random copy1 = new Node_Random(curr.val);
-                curr.next = copy1;
-                copy1.next = next;
-
-                curr = next;
-            }
-
-            // Second round: assign random pointers for the copy nodes.
-            curr = head;
-            while (curr != null)
-            {
-                if (curr.random != null)
-                {
-                    //every copy node is the next of prev node in origin sequence
-                    curr.next.random = curr.random.next;
-                }
-                curr = curr.next.next;
-            }
-
-            // Third round: restore the original list, and extract the copy list.
-            curr = head;
-            Node_Random pseudoHead = new Node_Random(0);
-            Node_Random copyPrev = pseudoHead;
-            while (curr != null)
-            {
-                next = curr.next.next;//real next in origin sequence
-
-                // extract the copy
-                copyPrev.next = curr.next;
-                copyPrev = copyPrev.next;
-
-                // restore the original list
-                curr.next = next;
-
-                curr = next;
-            }
-            return pseudoHead.next;
-        }
 
         /// 139. Word Break, #DP, #Backtracking, #Trie
         ///return true if s can be segmented into a space-separated sequence of one or more dictionary words.

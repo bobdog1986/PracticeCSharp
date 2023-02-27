@@ -105,26 +105,7 @@ namespace LeetCodeAlgo
             return string.Join(' ', s.Split(' ').Select(x => new string(x.Reverse().ToArray())));
         }
 
-        ///559. Maximum Depth of N-ary Tree
-        ///Given a n-ary tree, find its maximum depth.
-        public int MaxDepth(Node_Childs root)
-        {
-            if(root == null)
-                return 0;
-            return 1 + MaxDepth(root.children);
-        }
-
-        private int MaxDepth(IList<Node_Childs> nodes)
-        {
-            if(nodes == null||nodes.Count==0)
-                return 0;
-            int max = 0;
-            foreach (var node in nodes)
-            {
-                max = Math.Max(max, 1 + MaxDepth(node.children));
-            }
-            return max;
-        }
+        ///559. Maximum Depth of N-ary Tree, see NaryNode
 
         /// 560. Subarray Sum Equals K ,#Prefix Sum
         ///Given an array of integers nums and an integer k, return the total number of continuous subarrays whose sum equals to k.
@@ -396,82 +377,9 @@ namespace LeetCodeAlgo
 
         ///584. Find Customer Referee, see sql script
 
-        /// 589. N-ary Tree Preorder Traversal
-        ///Given the root of an n-ary tree, return the preorder traversal of its nodes' values.
-        public IList<int> Preorder(Node_Childs root)
-        {
-            var ans=new List<int>();
-            PreorderNaryTree(root, ans);
-            return ans;
-        }
+        /// 589. N-ary Tree Preorder Traversal, see NaryNode
 
-        private void PreorderNaryTree(Node_Childs node, IList<int> ans)
-        {
-            if (node == null) return;
-            ans.Add(node.val);
-            foreach(var child in node.children)
-            {
-                if (child != null) PreorderNaryTree(child, ans);
-            }
-        }
-
-        public IList<int> Preorder_Iteration(Node_Childs root)
-        {
-            List<int> list = new List<int> ();
-            if (root == null) return list;
-            var stack = new Stack<Node_Childs>();
-            stack.Push(root);
-            while (stack.Count>0)
-            {
-                var node = stack.Pop();
-                list.Add(node.val);
-                if(node.children!=null && node.children.Count > 0)
-                {
-                    for (int i = node.children.Count - 1; i >= 0; i--)
-                        stack.Push(node.children[i]);
-                }
-            }
-            return list;
-        }
-
-        ///590. N-ary Tree Postorder Traversal
-        ///Given the root of an n-ary tree, return the postorder traversal of its nodes' values.
-        public IList<int> Postorder(Node_Childs root)
-        {
-            var ans = new List<int>();
-            PostorderNaryTree(root, ans);
-            return ans;
-        }
-
-        private void PostorderNaryTree(Node_Childs node, IList<int> ans)
-        {
-            if (node == null) return;
-            foreach (var child in node.children)
-            {
-                if (child != null) PostorderNaryTree(child, ans);
-            }
-            ans.Add(node.val);
-        }
-
-        public IList<int> Postorder_Iteration(Node_Childs root)
-        {
-            List<int> list = new List<int>();
-            if (root == null)
-                return list;
-
-            var stack = new Stack<Node_Childs>();
-            stack.Push(root);
-            while (stack.Count>0)
-            {
-                var curr = stack.Pop();
-                list.Insert(0,curr.val);
-                foreach (var child in curr.children)
-                {
-                    stack.Push(child);
-                }
-            }
-            return list;
-        }
+        ///590. N-ary Tree Postorder Traversal, see NaryNode
 
         ///594. Longest Harmonious Subsequence
         //difference between its maximum value and its minimum value is exactly 1.

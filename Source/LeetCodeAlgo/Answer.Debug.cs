@@ -169,41 +169,6 @@ namespace LeetCodeAlgo
             Console.WriteLine(str);
         }
 
-        public static void printRandomNode(Node_Random node, int maxLen = 20)
-        {
-            if (node == null)
-            {
-                Console.WriteLine("node is []");
-                return;
-            }
-            List<int> list = new List<int>();
-            List<Node_Random> rList = new List<Node_Random>();
-            while (node != null && list.Count <= maxLen)
-            {
-                list.Add(node.val);
-                rList.Add(node.random);
-                node = node.next;
-            }
-
-            Console.WriteLine($"Node is [{string.Join(",", list)}]");
-
-            StringBuilder sb = new StringBuilder();
-            sb.Append("Rand is [");
-            foreach (var n in rList)
-            {
-                if (n == null)
-                {
-                    sb.Append("-,");
-                }
-                else
-                {
-                    sb.Append(n.val + ",");
-                }
-            }
-            sb.Append("]");
-            Console.WriteLine(sb.ToString());
-
-        }
         public ListNode buildListNode(string arrStr)
         {
             if (string.IsNullOrEmpty(arrStr))

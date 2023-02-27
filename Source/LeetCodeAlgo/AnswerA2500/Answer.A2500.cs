@@ -326,6 +326,18 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
+        ///2525. Categorize Box According to Criteria
+        //public string CategorizeBox(int length, int width, int height, int mass)
+        //{
+        //    long volume = 1l*length*width*height;
+        //    bool bulky = volume>=1_000_000_000 || length>=10000||width>=10000||height>=10000;
+        //    bool heavy = mass>=100;
+        //    if (bulky && heavy) return "Both";
+        //    else if (bulky) return "Bulky";
+        //    else if (heavy) return "Heavy";
+        //    else return "Neither";
+        //}
+
         ///2526. Find Consecutive Integers from a Data Stream, see DataStream2526
 
         ///2527. Find Xor-Beauty of Array
