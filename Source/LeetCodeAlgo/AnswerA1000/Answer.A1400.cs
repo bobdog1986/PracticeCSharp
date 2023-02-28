@@ -111,18 +111,18 @@ namespace LeetCodeAlgo
             List<string> list = new List<string>();
 
             GetHappyString(arr, "", -1, n, k, list);
-            return list.Count<k ?string.Empty:list.Last();
+            return list.Count < k ? string.Empty : list.Last();
         }
-        private void GetHappyString(char[] arr,string curr, int index, int count,int k, List<string> res)
+        private void GetHappyString(char[] arr, string curr, int index, int count, int k, List<string> res)
         {
             if (res.Count == k) return;
-            if(count == 0)
+            if (count == 0)
             {
                 res.Add(curr);
                 return;
             }
 
-            for(int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
                 if (i == index) continue;
                 GetHappyString(arr, curr + arr[i], i, count - 1, k, res);
@@ -186,27 +186,27 @@ namespace LeetCodeAlgo
         {
             Dictionary<string, Dictionary<string, int>> dict = new Dictionary<string, Dictionary<string, int>>();
             HashSet<string> foodSet = new HashSet<string>();
-            foreach(var order in orders)
+            foreach (var order in orders)
             {
                 foodSet.Add(order[2]);
 
                 if (!dict.ContainsKey(order[1])) dict.Add(order[1], new Dictionary<string, int>());
                 if (dict[order[1]].ContainsKey(order[2])) dict[order[1]][order[2]]++;
-                else dict[order[1]].Add(order[2],1);
+                else dict[order[1]].Add(order[2], 1);
             }
-            var foods = foodSet.OrderBy(x=>x, StringComparer.Ordinal).ToList();
+            var foods = foodSet.OrderBy(x => x, StringComparer.Ordinal).ToList();
 
-            var res=new List<IList<string>>();
-            var headers=new List<string>();
+            var res = new List<IList<string>>();
+            var headers = new List<string>();
             headers.Add("Table");
             headers.AddRange(foods);
             res.Add(headers);
-            var keys=dict.Keys.OrderBy(x=>int.Parse(x)).ToList();
+            var keys = dict.Keys.OrderBy(x => int.Parse(x)).ToList();
             foreach (var table in keys)
             {
-                var curr=new List<string>();
+                var curr = new List<string>();
                 curr.Add(table);
-                foreach(var food in foods)
+                foreach (var food in foods)
                 {
                     if (!dict[table].ContainsKey(food)) curr.Add("0");
                     else curr.Add(dict[table][food].ToString());
@@ -251,10 +251,10 @@ namespace LeetCodeAlgo
             {
                 sum += cardPoints[i];
                 count++;
-                if (count ==n- k)
+                if (count == n - k)
                 {
                     min = Math.Min(min, sum);
-                    sum -= cardPoints[i - count+1];
+                    sum -= cardPoints[i - count + 1];
                     count--;
                 }
             }
@@ -301,13 +301,56 @@ namespace LeetCodeAlgo
             for (int i = 1; i < n; ++i)
                 prefixXor[i] = arr[i - 1] ^ prefixXor[i - 1];
 
-            for (int i = 0; i < n-1; ++i)
+            for (int i = 0; i < n - 1; ++i)
                 for (int j = i + 1; j < n; ++j)
                     if (prefixXor[i] == prefixXor[j])
                         res += j - i - 1;
             return res;
         }
 
+        ///1144. Decrease Elements To Make Array Zigzag
+        // public int MovesToMakeZigzag(int[] nums)
+        // {
+        //     int n = nums.Length;
+        //     if (n == 1) return 0;
+        //     int res = int.MaxValue;
+        //     int op1 = 0;
+        //     int op2 = 0;
+        //     for (int i = 0; i < nums.Length; i++)
+        //     {
+        //         if (i % 2 == 1)
+        //         {
+        //             int min = nums[i - 1];
+        //             if (i < nums.Length - 1)
+        //             {
+        //                 min = Math.Min(min, nums[i + 1]);
+        //             }
+        //             if (nums[i] >= min)
+        //             {
+        //                 op1 += nums[i] - min + 1;
+        //             }
+        //         }
+        //         else
+        //         {
+        //             int min = int.MaxValue;
+        //             if (i > 0)
+        //             {
+        //                 min = Math.Min(min, nums[i - 1]);
+        //             }
+        //             if (i < nums.Length - 1)
+        //             {
+        //                 min = Math.Min(min, nums[i + 1]);
+        //             }
+        //             if (nums[i] >= min)
+        //             {
+        //                 op2 += nums[i] - min + 1;
+        //             }
+        //         }
+        //     }
+        //     res = Math.Min(res, op1);
+        //     res = Math.Min(res, op2);
+        //     return res;
+        // }
 
         /// 1446. Consecutive Characters
         ///The power of the string is the maximum length of a non-empty substring that contains only one unique character.
