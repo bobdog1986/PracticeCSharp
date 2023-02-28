@@ -407,6 +407,26 @@ namespace LeetCodeAlgo
             return dp[rowLen,colLen];
         }
 
+        ///1145. Binary Tree Coloring Game, #Good
+        //Split tree to two parts, the one without x has more nodes than x-part tree
+        public bool BtreeGameWinningMove(TreeNode root, int n, int x) {
+            int max=0;
+            BtreeGameWinningMove(root,n,x,ref max);
+            return max>n-max;
+        }
+
+        private int BtreeGameWinningMove(TreeNode root,int n, int x, ref int max){
+            if(root == null) return 0;
+            int left = BtreeGameWinningMove(root.left,n,x, ref max);
+            int right = BtreeGameWinningMove(root.right,n,x, ref max);
+            if(root.val==x){
+                max = Math.Max(max,left);
+                max = Math.Max(max,right);
+                max= Math.Max(max, n-(left+right+1));
+            }
+            return left+right+1;
+        }
+
         ///1146. Snapshot Array, see SnapshotArray
 
     }
