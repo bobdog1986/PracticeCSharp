@@ -272,10 +272,43 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///1981. Minimize the Difference Between Target and Chosen Elements
+        // Pick one element in each row, find minimal abs(sum-target)
+        //public int MinimizeTheDifference(int[][] mat, int target)
+        //{
+        //    int m = mat.Length;
+        //    int n = mat[0].Length;
+        //    int res = int.MaxValue;
+        //    HashSet<int>[] setArr = new HashSet<int>[m];
+        //    for (int i = 0; i< m; i++)
+        //        setArr[i]=new HashSet<int>();
+        //    MinimizeTheDifference(mat, 0, target, 0, setArr, ref res);
+        //    return res;
+        //}
+
+        //private void MinimizeTheDifference(int[][] mat, int row, int target, int sum, HashSet<int>[] setArr , ref int res)
+        //{
+        //    if (res==0) return;
+
+        //    if(row == mat.Length)
+        //    {
+        //        res = Math.Min(res, Math.Abs(sum-target));
+        //    }
+        //    else
+        //    {
+        //        if (setArr[row].Contains(sum)) return;
+        //        setArr[row].Add(sum);
+        //        for (int i = 0; i<mat[row].Length; i++)
+        //        {
+        //            MinimizeTheDifference(mat,row+1,target, sum+ mat[row][i], setArr, ref res);
+        //        }
+        //    }
+        //}
+
         /// 1984. Minimum Difference Between Highest and Lowest of K Scores
-        ///You are given a 0-indexed integer array nums, where nums[i] represents the score of the ith student.
-        ///You are also given an integer k. Pick the scores of any k students from the array
-        ///so that the difference between the highest and the lowest of the k scores is minimized.Return it;
+        //You are given a 0-indexed integer array nums, where nums[i] represents the score of the ith student.
+        //You are also given an integer k. Pick the scores of any k students from the array
+        //so that the difference between the highest and the lowest of the k scores is minimized.Return it;
         public int MinimumDifference(int[] nums, int k)
         {
             if (k == 1) return 0;

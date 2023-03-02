@@ -17,7 +17,7 @@ namespace LeetCodeAlgo
             long range = 9;
             while (n > len * range)
             {
-                n -=(int)( len * range);
+                n -=(int)(len * range);
                 len++;
                 range *= 10;
                 i *= 10;
@@ -35,14 +35,14 @@ namespace LeetCodeAlgo
         public IList<string> ReadBinaryWatch_Bits(int turnedOn)
         {
             List<string> res = new List<string>();
-            for(int hour = 0; hour < 12; hour++)
+            for (int hour = 0; hour < 12; hour++)
             {
                 int hourBits = getOnesCount(hour);
                 if (hourBits > turnedOn) continue;
                 for (int minute = 0; minute < 60; minute++)
                 {
                     int minuteBits = getOnesCount(minute);
-                    if(hourBits+ minuteBits == turnedOn)
+                    if (hourBits+ minuteBits == turnedOn)
                     {
                         res.Add($"{hour}:{minute.ToString("00")}");
                     }
@@ -64,19 +64,19 @@ namespace LeetCodeAlgo
 
         public IList<string> ReadBinaryWatch(int turnedOn)
         {
-            List<string> res =new List<string>();
+            List<string> res = new List<string>();
             Dictionary<int, List<int>> hourDict = new Dictionary<int, List<int>>();
             List<int> hours = new List<int>() { 1, 2, 4, 8 };
-            for(int i = 0; i <= hours.Count; i++)
+            for (int i = 0; i <= hours.Count; i++)
             {
                 List<int> list = new List<int>();
                 ReadBinaryWatch_GetHour_BackTracking(i, 0, 0, hours, list);
-                if(list.Count>0)
+                if (list.Count>0)
                     hourDict.Add(i, list);
             }
 
             Dictionary<int, List<int>> minuteDict = new Dictionary<int, List<int>>();
-            List<int> minutes = new List<int>() { 1, 2, 4, 8,16,32 };
+            List<int> minutes = new List<int>() { 1, 2, 4, 8, 16, 32 };
             for (int i = 0; i <= minutes.Count; i++)
             {
                 List<int> list = new List<int>();
@@ -85,13 +85,13 @@ namespace LeetCodeAlgo
                     minuteDict.Add(i, list);
             }
 
-            for(int i = 0; i <= turnedOn; i++)
+            for (int i = 0; i <= turnedOn; i++)
             {
                 if (!hourDict.ContainsKey(i)) continue;
                 if (!minuteDict.ContainsKey(turnedOn-i)) continue;
-                foreach(var hour in hourDict[i])
+                foreach (var hour in hourDict[i])
                 {
-                    foreach(var minute in minuteDict[turnedOn - i])
+                    foreach (var minute in minuteDict[turnedOn - i])
                     {
                         res.Add($"{hour}:{minute.ToString("00")}");
                     }
@@ -100,9 +100,9 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        private void ReadBinaryWatch_GetHour_BackTracking(int count, int index, int curr, List<int> list, List<int> res,int max= 11, int min = 0)
+        private void ReadBinaryWatch_GetHour_BackTracking(int count, int index, int curr, List<int> list, List<int> res, int max = 11, int min = 0)
         {
-            if(count == 0)
+            if (count == 0)
             {
                 if (curr >= min && curr <= max && !res.Contains(curr))
                     res.Add(curr);
@@ -172,6 +172,7 @@ namespace LeetCodeAlgo
             }
             return digits.Count == 0 ? "0" : new string(digits.ToArray());
         }
+
         ///404. Sum of Left Leaves
         ///Given the root of a binary tree, return the sum of all left leaves.
         public int SumOfLeftLeaves(TreeNode root)
@@ -179,7 +180,7 @@ namespace LeetCodeAlgo
             int sum = 0;
             Queue<TreeNode> queue = new Queue<TreeNode>();
             queue.Enqueue(root);
-            while(queue.Count > 0)
+            while (queue.Count > 0)
             {
                 int size = queue.Count;
                 while (size-- > 0)
@@ -199,9 +200,9 @@ namespace LeetCodeAlgo
         ///For negative integers, two’s complement method is used.
         public string ToHex(int num)
         {
-            if(num==0) return "0";
+            if (num==0) return "0";
             string res = "";
-            List<string> digits = new List<string>() {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
+            List<string> digits = new List<string>() { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
             int count = 0;
             while (num != 0)
             {
@@ -225,7 +226,7 @@ namespace LeetCodeAlgo
         {
             var mat = people.OrderBy(p => p[1]).ThenBy(p => p[0]).ToList();
             List<int[]> res = new List<int[]>();
-            for(int i = 0; i < mat.Count; i++)
+            for (int i = 0; i < mat.Count; i++)
             {
                 var p = mat[i];
                 int count = p[1];
@@ -253,6 +254,7 @@ namespace LeetCodeAlgo
             }
             return res.ToArray();
         }
+
         /// 409. Longest Palindrome
         ///case sensitive, Aa is different
         public int LongestPalindrome_409(string s)
@@ -305,7 +307,7 @@ namespace LeetCodeAlgo
                 int mid = (left + right) / 2;
                 int curr = 0;
                 int count = 1;
-                foreach(var x in nums)
+                foreach (var x in nums)
                 {
                     if (curr + x > mid)
                     {
@@ -355,6 +357,7 @@ namespace LeetCodeAlgo
             }
             return res.Skip(1).ToList();
         }
+
         /// 413. Arithmetic Slices, #DP
         ///at least 3 nums with same distance, eg. [1,2,3,4], [1,1,1]
         ///-1000 <= nums[i] <= 1000
@@ -396,7 +399,6 @@ namespace LeetCodeAlgo
             pq.Dequeue();
             return pq.Dequeue();
         }
-
 
         /// 415. Add Strings
         ///Given two non-negative integers, num1 and num2 represented as string, return the sum of num1 and num2 as a string.
@@ -491,18 +493,18 @@ namespace LeetCodeAlgo
         ///Return a 2D list where result[i] = [ri, ci] denotes that rain water can flow to both the Pacific and Atlantic.
         public IList<IList<int>> PacificAtlantic(int[][] heights)
         {
-            var res=new List<IList<int>>();
+            var res = new List<IList<int>>();
             int rowLen = heights.Length;
-            int colLen=heights[0].Length;
+            int colLen = heights[0].Length;
             int[][] dxy4 = new int[4][] { new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { 1, 0 }, new int[] { -1, 0 } };
             bool[,] visitPacific = new bool[rowLen, colLen];//store all cells that can flow to Pacific
-            Queue<int[]> q1=new Queue<int[]>();
+            Queue<int[]> q1 = new Queue<int[]>();
             //add seed cells of Pacific
-            for (int i=0; i<rowLen; i++)
+            for (int i = 0; i<rowLen; i++)
             {
                 if (i == 0)
                 {
-                    for(int j=0;j<colLen; j++)
+                    for (int j = 0; j<colLen; j++)
                     {
                         q1.Enqueue(new int[] { i, j });
                         visitPacific[i, j] = true;
@@ -517,12 +519,12 @@ namespace LeetCodeAlgo
 
             while (q1.Count > 0)
             {
-                var p=q1.Dequeue();
-                foreach(var d in dxy4)
+                var p = q1.Dequeue();
+                foreach (var d in dxy4)
                 {
-                    var r=p[0]+ d[0];
+                    var r = p[0]+ d[0];
                     var c = p[1] + d[1];
-                    if(r>=0 && r<rowLen && c>=0 &&c<colLen && !visitPacific[r, c] && heights[r][c] >= heights[p[0]][p[1]])
+                    if (r>=0 && r<rowLen && c>=0 &&c<colLen && !visitPacific[r, c] && heights[r][c] >= heights[p[0]][p[1]])
                     {
                         visitPacific[r, c] = true;
                         q1.Enqueue(new int[] { r, c });
@@ -552,7 +554,7 @@ namespace LeetCodeAlgo
             while (atlanticQ.Count > 0)
             {
                 var p = atlanticQ.Dequeue();
-                if(visitPacific[p[0], p[1]])
+                if (visitPacific[p[0], p[1]])
                 {
                     res.Add(new List<int>() { p[0], p[1] });
                 }
@@ -570,15 +572,14 @@ namespace LeetCodeAlgo
             return res;
         }
 
-
         ///419. Battleships in a Board, #DFS
         public int CountBattleships(char[][] board)
         {
             int res = 0;
             int[][] dxy = new int[4][] { new int[] { 1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 }, new int[] { -1, 0 } };
-            for(int i = 0; i < board.Length; i++)
+            for (int i = 0; i < board.Length; i++)
             {
-                for(int j = 0; j < board[i].Length; j++)
+                for (int j = 0; j < board[i].Length; j++)
                 {
                     if (board[i][j] == '.') continue;
                     res++;
@@ -589,19 +590,20 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        private void CountBattleships_DFS(char[][] board, int row,int col, int[][] dxy)
+        private void CountBattleships_DFS(char[][] board, int row, int col, int[][] dxy)
         {
-            foreach(var d in dxy)
+            foreach (var d in dxy)
             {
                 int r = row + d[0];
                 int c = col + d[1];
-                if(r>=0 && r<board.Length && c >=0 && c<board[0].Length && board[r][c] != '.')
+                if (r>=0 && r<board.Length && c >=0 && c<board[0].Length && board[r][c] != '.')
                 {
                     board[r][c] = '.';
                     CountBattleships_DFS(board, r, c, dxy);
                 }
             }
         }
+
         /// 421. Maximum XOR of Two Numbers in an Array, #Trie, #Greedy, #Bit Manipulation
         //return the maximum result of nums[i] XOR nums[j], where 0 <= i <= j < n.
         //1 <= nums.length <= 2 * 10^5, 0 <= nums[i] <= 2^31 - 1
@@ -617,7 +619,6 @@ namespace LeetCodeAlgo
             from the very begining, aka, the 31st postition of bits. */
             for (int i = 31; i >= 0; i--)
             {
-
                 //The mask will grow like  100..000 , 110..000, 111..000,  then 1111...111
                 //for each iteration, we only care about the left parts
                 mask = mask | (1 << i);
@@ -753,10 +754,10 @@ namespace LeetCodeAlgo
             int res = 0;
             int[] arr = new int[26];
             int left = 0;
-            for(int i = 0; i < s.Length; i++)
+            for (int i = 0; i < s.Length; i++)
             {
                 arr[s[i] - 'A']++;
-                while(left<=i && arr.Max()+k< i-left+1)
+                while (left<=i && arr.Max()+k< i-left+1)
                 {
                     arr[s[left++] - 'A']--;
                 }
@@ -775,19 +776,19 @@ namespace LeetCodeAlgo
         ///return the minimum number of mutations needed to mutate from start to end.Or return -1 if not exist
         public int MinMutation(string start, string end, string[] bank)
         {
-            bool[] visit=new bool[bank.Length];
+            bool[] visit = new bool[bank.Length];
             if (!bank.Contains(end)) return -1;
             List<string> list = new List<string>() { start };
             int step = 1;
             while (list.Count > 0)
             {
                 List<string> next = new List<string>();
-                foreach(var str in list)
+                foreach (var str in list)
                 {
-                    for(int j=0;j< bank.Length;j++)
+                    for (int j = 0; j< bank.Length; j++)
                     {
                         if (visit[j]) continue;
-                        if(MinMutation_Can(str, bank[j]))
+                        if (MinMutation_Can(str, bank[j]))
                         {
                             if (bank[j] == end) return step;
                             next.Add(bank[j]);
@@ -800,10 +801,11 @@ namespace LeetCodeAlgo
             }
             return -1;
         }
+
         private bool MinMutation_Can(string s1, string s2)
         {
             int diff = 0;
-            for(int i=0;i<s1.Length; i++)
+            for (int i = 0; i<s1.Length; i++)
             {
                 if (s1[i] != s2[i]) diff++;
                 if (diff >= 2) return false;
@@ -852,12 +854,12 @@ namespace LeetCodeAlgo
             if (n == 1) return new int[] { -1 };
             int[] res = new int[n];
             Dictionary<int, int> dict = new Dictionary<int, int>();
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
                 dict.Add(intervals[i][0], i);
 
-            var keys=dict.Keys.OrderBy(x=>x).ToArray();
+            var keys = dict.Keys.OrderBy(x => x).ToArray();
 
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
                 int currEnd = intervals[i][1];
                 if (currEnd <= keys[0])
@@ -874,7 +876,7 @@ namespace LeetCodeAlgo
                     int right = n - 1;
                     while (left < right)
                     {
-                        int mid =(left + right)/2;
+                        int mid = (left + right)/2;
                         if (keys[mid] >= currEnd)
                         {
                             right = mid;
@@ -900,6 +902,7 @@ namespace LeetCodeAlgo
             PathSum_Recur(root, prefixSumDict, targetSum, ref res);
             return res;
         }
+
         private void PathSum_Recur(TreeNode root, Dictionary<int, int> prefixSumDict, int targetSum, ref int res)
         {
             if (root == null) return;
@@ -940,13 +943,13 @@ namespace LeetCodeAlgo
             int[] arr = new int[26];
             int[] target = new int[26];
 
-            for(int i = 0; i < p.Length; i++)
+            for (int i = 0; i < p.Length; i++)
             {
                 arr[s[i] - 'a']++;
                 target[p[i] - 'a']++;
             }
 
-            for(int i = p.Length - 1; i < s.Length; i++)
+            for (int i = p.Length - 1; i < s.Length; i++)
             {
                 if (i > p.Length - 1)
                 {
@@ -980,10 +983,11 @@ namespace LeetCodeAlgo
             while (n > 0)
             {
                 n -= row++;
-                if(n>=0) res++;
+                if (n>=0) res++;
             }
             return res;
         }
+
         public int ArrangeCoins_BinarySearch(int n)
         {
             long left = 0;
@@ -998,6 +1002,7 @@ namespace LeetCodeAlgo
             }
             return (int)right;
         }
+
         ///442. Find All Duplicates in an Array
         ///Given an integer array nums of length n where all of nums in the range [1, n]
         ///and each integer appears once or twice, return an array of all the integers that appears twice.
@@ -1011,40 +1016,44 @@ namespace LeetCodeAlgo
             }
             return dict.Keys.Where(k => dict[k] == 2).ToList();
         }
-        /// 443
-        public int Compress(char[] chars)
-        {
-            if (chars.Length == 1) return chars.Length;
-            List<char> result = new List<char>();
-            char pre = chars[0];
-            int occured = 1;
-            char current;
-            for (int i = 1; i < chars.Length; i++)
-            {
-                current = chars[i];
-                if (current == pre)
-                {
-                    occured++;
-                }
-                else
-                {
-                    result.Add(pre);
-                    if (occured > 1) { result.AddRange(occured.ToString().ToCharArray()); }
 
-                    pre = current;
-                    occured = 1;
-                }
+        /// 443. String Compression
+        //public int Compress(char[] chars)
+        //{
+        //    int n = chars.Length;
+        //    int res = 0;
+        //    int count = 0;
+        //    char prev = chars[0];
+        //    for (int i = 0; i<n; i++)
+        //    {
+        //        if (prev != chars[i])
+        //        {
+        //            chars[res++] = prev;
+        //            if (count>1)
+        //            {
+        //                foreach (var c in count.ToString())
+        //                {
+        //                    chars[res++] = c;
+        //                }
+        //            }
 
-                if (i == chars.Length - 1)
-                {
-                    result.Add(pre);
-                    if (occured > 1) { result.AddRange(occured.ToString().ToCharArray()); }
-                }
-            }
+        //            count=0;
+        //        }
+        //        count++;
+        //        prev = chars[i];
+        //    }
 
-            Array.Copy(result.ToArray(), chars, result.Count);
-            return result.Count;
-        }
+        //    chars[res++] = prev;
+        //    if (count>1)
+        //    {
+        //        foreach (var c in count.ToString())
+        //        {
+        //            chars[res++] = c;
+        //        }
+        //    }
+
+        //    return res;
+        //}
 
         public char GetSingleNumChar(int num)
         {
@@ -1076,19 +1085,19 @@ namespace LeetCodeAlgo
             }
             int carry = 0;
             List<int> list = new List<int>();
-            for (int i = 0; i < list1.Count || i<list2.Count ; i++)
+            for (int i = 0; i < list1.Count || i<list2.Count; i++)
             {
                 int a = i < list1.Count ? list1[i] : 0;
                 int b = i < list2.Count ? list2[i] : 0;
                 int sum = a + b + carry;
-                list.Insert(0,sum%10);
+                list.Insert(0, sum%10);
                 carry = sum/10;
             }
 
             if (carry != 0) list.Insert(0, carry);
             ListNode res = new ListNode();
             var curr = res;
-            for(int i=0; i<list.Count; i++)
+            for (int i = 0; i<list.Count; i++)
             {
                 curr.val = list[i];
                 if (i != list.Count - 1)
@@ -1140,18 +1149,17 @@ namespace LeetCodeAlgo
         ///return an array of all the integers in the range [1, n] that do not appear in nums.
         public IList<int> FindDisappearedNumbers(int[] nums)
         {
-            var res=new List<int>();
+            var res = new List<int>();
             HashSet<int> set = new HashSet<int>();
-            foreach(var n in nums)
+            foreach (var n in nums)
                 set.Add(n);
 
-            for (int i=1;i<= nums.Length; i++)
-                if(!set.Contains(i))res.Add(i);
+            for (int i = 1; i<= nums.Length; i++)
+                if (!set.Contains(i)) res.Add(i);
 
             return res;
         }
 
         ///449. Serialize and Deserialize BST, see Codec_449
-
     }
 }
