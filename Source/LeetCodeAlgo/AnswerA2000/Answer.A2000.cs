@@ -147,6 +147,27 @@ namespace LeetCodeAlgo
             return res.ToArray();
         }
 
+        ///2008. Maximum Earnings From Taxi, #DP
+        // The n points on the road are labeled from 1 to n , there are rides, rides[i] = [starti, endi, tipi]
+        //For each passenger i you pick up, earn endi - starti + tipi . only drive at most one passenger at a time.
+        //Given n and rides, return the maximum number of dollars you can earn by picking up the passengers optimally.
+        public long MaxTaxiEarnings(int n, int[][] rides)
+        {
+            rides = rides.OrderBy(x => x[0]).ToArray();
+            long[] dp = new long[n + 1];
+            int j = 0;
+            for (int i = 1; i <= n; ++i)
+            {
+                dp[i] = Math.Max(dp[i], dp[i - 1]);
+                while (j < rides.Length && rides[j][0] <= i)
+                {
+                    dp[rides[j][1]] = Math.Max(dp[rides[j][1]], dp[i] + rides[j][1] - rides[j][0] + rides[j][2]);
+                    j++;
+                }
+            }
+            return dp[n];
+        }
+
         ///2011. Final Value of Variable After Performing Operations
         public int FinalValueAfterOperations(string[] operations)
         {
