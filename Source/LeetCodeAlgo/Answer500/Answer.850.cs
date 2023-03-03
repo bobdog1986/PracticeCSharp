@@ -200,6 +200,54 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///865. Smallest Subtree with all the Deepest Nodes
+        //Return the smallest subtree such that it contains all the deepest nodes in the original tree.
+        //public TreeNode SubtreeWithAllDeepest(TreeNode root)
+        //{
+        //    int max = -1;
+        //    int count = 0;
+        //    SubtreeWithAllDeepest(root, 0, ref max, ref count);
+        //    TreeNode res = null;
+        //    SubtreeWithAllDeepest(root, 0, max, count, ref res);
+        //    return res;
+        //}
+
+        //private void SubtreeWithAllDeepest(TreeNode root, int depth, ref int max, ref int count)
+        //{
+        //    if(root==null) return;
+        //    if(root.left == null && root.right == null)
+        //    {
+        //        if (depth>max)
+        //        {
+        //            max= depth;
+        //            count=1;
+        //        }else if(depth == max)
+        //        {
+        //            count++;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        SubtreeWithAllDeepest(root.left, depth+1, ref max, ref count);
+        //        SubtreeWithAllDeepest(root.right, depth+1, ref max, ref count);
+        //    }
+        //}
+
+        //private int SubtreeWithAllDeepest(TreeNode root, int depth, int target,int count, ref TreeNode res)
+        //{
+        //    if (root == null) return 0;
+        //    int total = 0;
+        //    if(root.left!=null)
+        //        total+=SubtreeWithAllDeepest(root.left, depth+1, target,count, ref res);
+        //    if (root.right!=null)
+        //        total+=SubtreeWithAllDeepest(root.right, depth+1, target, count, ref res);
+        //    if (depth == target) total++;
+        //    if (total == count && res==null)
+        //        res = root;
+        //    return total;
+        //}
+
         ///867. Transpose Matrix
         public int[][] Transpose(int[][] matrix)
         {
