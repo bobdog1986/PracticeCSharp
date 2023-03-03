@@ -9,9 +9,25 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
+        ///1750. Minimum Length of String After Deleting Similar Ends
+        //public int MinimumLength(string s)
+        //{
+        //    int n = s.Length;
+        //    int i = 0;
+        //    int j = n-1;
+        //    while (i<j)
+        //    {
+        //        if (s[i]!=s[j]) break;
+        //        char prev = s[i];
+        //        while (i<=j && s[i]==prev) i++;
+        //        while (i<=j && s[j]==prev) j--;
+        //    }
+        //    return j-i+1;
+        //}
+
         /// 1752. Check if Array Is Sorted and Rotated
-        ///Given an array nums, return true if the array sorted in non-decreasing order, then rotated some
-        ///[1,2,3,3,4],[2,3,4,1],[3,4,5,1,2]=>true, [2,1,3,4]=>false
+        //Given an array nums, return true if the array sorted in non-decreasing order, then rotated some
+        //[1,2,3,3,4],[2,3,4,1],[3,4,5,1,2]=>true, [2,1,3,4]=>false
         public bool Check_1752(int[] nums)
         {
             bool ans = true;
