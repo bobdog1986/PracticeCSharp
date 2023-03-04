@@ -457,6 +457,73 @@ namespace LeetCodeAlgo
         //    return (int)res;
         //}
 
+        ///2581. Count Number of Possible Root Nodes, #DFS, #Memo
+        //how many nodes can used as root, so at least k in guesses are correct!
+        //using edges to build an undirected graph
+        //using guesses to build a directed graph
+        //For each node i, using it as root, then traverse the graph to find all correct guesses, if >=k, then i is a possible one
+        //Must avoid duplicate traversal, we using memo to cache the result of [parent-node, child-node]
+        //so we only need to traverse the whole graph(all edges) twice.
+        public int RootCount(int[][] edges, int[][] guesses, int k)
+        {
+            int res = 0;
+            int n = edges.Length+1;
+            //build undirect graph by edges
+            List<int>[] graph = new List<int>[n];
+            for (int i = 0; i<n; i++)
+                graph[i]=new List<int>();
+
+            foreach(var e in edges)
+            {
+                graph[e[0]].Add(e[1]);
+                graph[e[1]].Add(e[0]);
+            }
+
+            //build direct graph by guesses
+            HashSet<int>[] directGraph = new HashSet<int>[n];
+            for (int i = 0; i<n; i++)
+                directGraph[i]=new HashSet<int>();
+
+            foreach (var e in guesses)
+            {
+                directGraph[e[0]].Add(e[1]);
+            }
+
+            //cache {parent, {child, count}}, count is all valid guesses traverse from parent to all childs
+
+            var memo =new Dictionary<int, Dictionary<int,int>>();
+
+            for(int i = 0; i<n; i++)
+            {
+                int count = RootCount(i, -1, graph, directGraph, memo);
+                if (count>=k)
+                    res++;
+            }
+
+            return res;
+        }
+
+        private int RootCount(int curr, int parent, List<int>[] graph, HashSet<int>[] set, Dictionary<int, Dictionary<int, int>> memo)
+        {
+            //already traversed from
+            if (!memo.ContainsKey(parent))
+                memo.Add(parent, new Dictionary<int, int>());
+
+            if (memo[parent].ContainsKey(curr))
+                return memo[parent][curr];
+            else
+            {
+                int res = 0;
+                foreach (var next in graph[curr])
+                {
+                    if (next == parent) continue;
+                    if (set[curr].Contains(next)) res++;//{curr,next} is existed in guesses
+                    res+=RootCount(next, curr, graph, set, memo);//DFS
+                }
+                memo[parent].Add(curr, res);
+                return memo[parent][curr];
+            }
+        }
 
     }
 }
