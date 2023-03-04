@@ -424,6 +424,39 @@ namespace LeetCodeAlgo
         //    return 1l*n*(1+n)/2*4 - 3 - (n-1)*4l;
         //}
 
+        ///2580. Count Ways to Group Overlapping Ranges
+        //Any two overlapping ranges must belong to the same group.
+        //assign ranges[i] to any of 2 group
+        //Return the total number of ways to split ranges into two groups. return it modulo 109 + 7.
+        //public int CountWays(int[][] ranges)
+        //{
+        //    ranges = ranges.OrderBy(x => x[0]).ThenBy(x => -x[1]).ToArray();
+        //    //find how many groups
+        //    int groups = 1;
+        //    int end = ranges[0][1];
+        //    for (int i = 1; i<ranges.Length; i++)
+        //    {
+        //        int[] curr = ranges[i];
+        //        if (curr[0]>end)
+        //        {
+        //            groups++;
+        //            end = curr[1];
+        //        }
+        //        else
+        //        {
+        //            end = Math.Max(end, curr[1]);
+        //        }
+        //    }
+        //    long res = 1;
+        //    long mod = 1_000_000_007;
+        //    while (groups-->0)
+        //    {
+        //        res<<=1;
+        //        res%=mod;
+        //    }
+        //    return (int)res;
+        //}
+
 
     }
 }
