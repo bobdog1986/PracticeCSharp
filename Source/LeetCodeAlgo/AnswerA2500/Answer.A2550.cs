@@ -249,7 +249,6 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
-
         //2568. Minimum Impossible OR, #Bit, #Good
         //an integer is expressible if it can be written as the bitwise OR of some subsequence of nums.
         //Return the minimum positive non-zero integer that is not expressible from nums.
@@ -272,14 +271,14 @@ namespace LeetCodeAlgo
         {
             List<int[]> res = new List<int[]>();
             int i = 0;
-            int j =0;
-            while(i<nums1.Length || j<nums2.Length)
+            int j = 0;
+            while (i<nums1.Length || j<nums2.Length)
             {
                 if (i==nums1.Length)
                 {
                     res.Add(nums2[j++]);
                 }
-                else if(j==nums2.Length)
+                else if (j==nums2.Length)
                 {
                     res.Add(nums1[i++]);
                 }
@@ -313,16 +312,18 @@ namespace LeetCodeAlgo
             {
                 int tail = n&3;
                 //always try the best way
-                if(tail == 0)
+                if (tail == 0)
                 {
                     //0bxxxx00, right shift 2 bits
                     n>>=2;
-                }else if(tail ==1)
+                }
+                else if (tail ==1)
                 {
                     //0bxxxx01, res++, right shift 2 bits
                     res++;
                     n>>=2;
-                }else if(tail ==2)
+                }
+                else if (tail ==2)
                 {
                     //0bxxxx10, right shift 1 bits
                     n>>=1;
@@ -355,7 +356,6 @@ namespace LeetCodeAlgo
         //    }
         //    return res;
         //}
-
 
         ///2575. Find the Divisibility Array of a String
         //div[i] = 1 if the numeric value of word[0,...,i] is divisible by m, or div[i] = 0 otherwise.
@@ -396,6 +396,26 @@ namespace LeetCodeAlgo
         //        else j++;
         //    }
         //    return res;
+        //}
+
+        ///2578. Split With Minimum Sum
+        //public int SplitNum(int num)
+        //{
+        //    int[] digits = num.ToString().ToArray().Select(x => x-'0').OrderBy(x => x).ToArray();
+        //    int a = 0;
+        //    int b = 0;
+        //    for (int i = 0; i<digits.Length; i++)
+        //    {
+        //        if (i%2==0)
+        //        {
+        //            a = a*10+digits[i];
+        //        }
+        //        else
+        //        {
+        //            b = b*10+digits[i];
+        //        }
+        //    }
+        //    return a+b;
         //}
 
 
