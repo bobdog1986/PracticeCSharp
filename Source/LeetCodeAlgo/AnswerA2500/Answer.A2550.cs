@@ -418,6 +418,12 @@ namespace LeetCodeAlgo
         //    return a+b;
         //}
 
+        ///2579. Count Total Number of Colored Cells
+        //public long ColoredCells(int n)
+        //{
+        //    return 1l*n*(1+n)/2*4 - 3 - (n-1)*4l;
+        //}
+
 
     }
 }
