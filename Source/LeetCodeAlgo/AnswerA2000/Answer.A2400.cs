@@ -444,6 +444,33 @@ namespace LeetCodeAlgo
         //    return res.Count;
         //}
 
+
+        ///2444. Count Subarrays With Fixed Bounds, #Sliding Window, #Good
+        //A fixed-bound subarray of nums is a subarray that satisfies the following conditions:
+        //The minimum value in the subarray is equal to minK.
+        //The maximum value in the subarray is equal to maxK.
+        //Return the number of fixed-bound subarrays. A subarray is a contiguous part of an array.
+        public long CountSubarrays(int[] nums, int minK, int maxK)
+        {
+            long res = 0;
+            int jbad = -1;
+            int jmin = -1;
+            int jmax = -1;
+            int n = nums.Length;
+            for (int i = 0; i<n; ++i)
+            {
+                if (nums[i] < minK || nums[i] > maxK) jbad = i;//no possible if including this element
+                if (nums[i] == minK) jmin = i;
+                if (nums[i] == maxK) jmax = i;
+                //startIndex can in [jbad+1,Min(jmin,jmax)], end at current i
+                //if not possible,add 0
+                //res += Math.Max(0L, Math.Min(jmin, jmax) - jbad);
+                if (jbad<Math.Min(jmin, jmax))
+                    res+=Math.Min(jmin, jmax) - jbad;
+            }
+            return res;
+        }
+
         ///2446. Determine if Two Events Have Conflict
         //HH:MM, if overlap
         //public bool HaveConflict(string[] event1, string[] event2)
