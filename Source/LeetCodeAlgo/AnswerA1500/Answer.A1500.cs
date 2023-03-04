@@ -112,6 +112,41 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///1514. Path with Maximum Probability
+        //find the path with the maximum probability of success to go from start to end
+        public double MaxProbability(int n, int[][] edges, double[] succProb, int start, int end)
+        {
+            double[] res = new double[n];
+            res[start]=1;
+            List<double[]>[] graph = new List<double[]>[n];
+            for (int i = 0; i<n; i++)
+                graph[i]=new List<double[]>();
+
+            for(int i=0;i< edges.Length; i++)
+            {
+                graph[edges[i][0]].Add(new double[] { edges[i][1], succProb[i] });
+                graph[edges[i][1]].Add(new double[] { edges[i][0], succProb[i] });
+            }
+
+            Queue<int> q = new Queue<int>();
+            q.Enqueue(start);
+            while (q.Count > 0)
+            {
+                int top = q.Dequeue();
+                foreach(var i in graph[top])
+                {
+                    double product = res[top] * i[1];
+                    int j = (int)i[0];
+                    if (res[j]<product)
+                    {
+                        res[j] = product;
+                        q.Enqueue(j);
+                    }
+                }
+            }
+            return res[end];
+        }
+
         ///1518. Water Bottles
         public int NumWaterBottles(int numBottles, int numExchange)
         {
