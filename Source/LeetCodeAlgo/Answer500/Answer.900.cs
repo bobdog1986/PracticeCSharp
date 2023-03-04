@@ -402,6 +402,46 @@ namespace LeetCodeAlgo
             return map.Count;
         }
 
+        ///930. Binary Subarrays With Sum, #Sliding Window, #Good
+        //Given a binary array nums and an integer goal, return the number of non-empty subarrays with a sum goal.
+        //A subarray is a contiguous part of the array.
+        public int NumSubarraysWithSum(int[] nums, int goal)
+        {
+            int res = 0;
+            int sum = 0;
+            int left = 0;
+            int one = -1;
+            for(int i=0;i<nums.Length; i++)
+            {
+                sum+=nums[i];
+                while(sum>goal && left<=i)
+                {
+                    sum-=nums[left];
+                    left++;
+                }
+                //if Sum of [left,i] == goal
+                if (sum == goal)
+                {
+                    if(goal ==0)
+                    {
+                        res+= i-left+1;//all subarray from [left,i] to i
+                    }
+                    else
+                    {
+                        //find leftmost available index of 1
+                        while (one<=i)
+                        {
+                            if (one<left) one++;
+                            else if (nums[one]==0) one++;
+                            else break;
+                        }
+                        res+= one-left+1;
+                    }
+                }
+            }
+            return res;
+        }
+
         /// 931. Minimum Falling Path Sum
         /// Given an n x n array of integers matrix, return the minimum sum of any falling path through matrix.
         public int MinFallingPathSum(int[][] matrix)
