@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace LeetCodeAlgo
 {
@@ -717,6 +718,38 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
+        ///833. Find And Replace in String
+        //public string FindReplaceString(string s, int[] indices, string[] sources, string[] targets)
+        //{
+        //    int n = s.Length;
+        //    string[] arr = new string[n];
+        //    Dictionary<int, int> dict = new Dictionary<int, int>();
+        //    for(int i = 0; i<indices.Length; i++)
+        //    {
+        //        if (n-indices[i]<sources[i].Length) continue;
+        //        if (s.Substring(indices[i], sources[i].Length) == sources[i])
+        //        {
+        //            arr[indices[i]]= targets[i];
+        //            dict.Add(indices[i], sources[i].Length);
+        //        }
+        //    }
+
+        //    StringBuilder sb = new StringBuilder();
+        //    for(int i = 0; i<s.Length; i++)
+        //    {
+        //        if (dict.ContainsKey(i))
+        //        {
+        //            sb.Append(arr[i]);
+        //            i+=dict[i]-1;
+        //        }
+        //        else
+        //        {
+        //            sb.Append(s[i]);
+        //        }
+        //    }
+        //    return sb.ToString();
+        //}
 
         ///835. Image Overlap
         public int LargestOverlap(int[][] img1, int[][] img2)
