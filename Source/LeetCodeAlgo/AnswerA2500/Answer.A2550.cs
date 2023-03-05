@@ -525,5 +525,20 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///2582. Pass the Pillow
+        //public int PassThePillow(int n, int time)
+        //{
+        //    int a = time % (n-1);
+        //    int b = time / (n-1);
+        //    if(b % 2==0)
+        //    {
+        //        return a+1;
+        //    }
+        //    else
+        //    {
+        //        return n-a;
+        //    }
+        //}
+
     }
 }
