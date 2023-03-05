@@ -561,5 +561,34 @@ namespace LeetCodeAlgo
         //    KthLargestLevelSum(root.left, level+1, dict);
         //    KthLargestLevelSum(root.right, level+1, dict);
         //}
+
+        ///2585. Number of Ways to Earn Points, #DP
+        //types[i] = [counti, marksi] indicates that there are counti questions of the ith type, and each one of them is worth marksi points.
+        //Return the number of ways you can earn exactly target points in the exam.modulo 109 + 7.
+        public int WaysToReachTarget(int target, int[][] types)
+        {
+            int n =types.Length;
+            int[][] dp = new int[n+1][];
+            for (int i = 0; i<dp.Length; i++)
+                dp[i]=new int[target+1];
+
+            dp[0][0]=1;
+            int mod = 1_000_000_007;
+            for(int i = 1; i<=n; i++)
+            {
+                int[] curr = types[i-1];
+                for(int j=0; j<=target; j++)
+                {
+                    dp[i][j] = (dp[i][j]+dp[i-1][j])% mod;
+                    for(int k = 1; k<=curr[0] && j+k*curr[1]<=target; k++)
+                    {
+                        dp[i][j+k*curr[1]] = (dp[i][j+k*curr[1]]+dp[i-1][j])% mod;
+                    }
+                }
+            }
+            return dp[n][target];
+        }
+
+
     }
 }

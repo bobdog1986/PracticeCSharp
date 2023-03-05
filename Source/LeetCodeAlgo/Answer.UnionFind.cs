@@ -53,4 +53,32 @@ namespace LeetCodeAlgo
         }
     }
 
+
+    public class UnionFindSimple
+    {
+        public int[] parent;
+        public UnionFindSimple(int n)
+        {
+            parent = new int[n];
+            for (int i = 0; i < n; i++)
+                parent[i] = i;
+        }
+
+        public int Find(int i)
+        {
+            while (parent[i] != i)
+                i = parent[i];
+            return i;
+        }
+
+        public bool Union(int p, int q)
+        {
+            int rootP = Find(p);
+            int rootQ = Find(q);
+            if (rootP == rootQ) return false;
+            parent[rootQ] = rootP;
+            return true;
+        }
+    }
+
 }
