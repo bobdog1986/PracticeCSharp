@@ -540,5 +540,26 @@ namespace LeetCodeAlgo
         //    }
         //}
 
+        ///2583. Kth Largest Sum in a Binary Tree
+        //public long KthLargestLevelSum(TreeNode root, int k)
+        //{
+
+        //    var dict = new Dictionary<int, long>();
+        //    KthLargestLevelSum(root, 0, dict);
+        //    if (dict.Keys.Count<k) return -1;
+
+        //    var x = dict.Keys.OrderBy(x => -dict[x]).Skip(k-1).First();
+        //    return dict[x];
+        //}
+
+        //private void KthLargestLevelSum(TreeNode root, int level, Dictionary<int, long> dict)
+        //{
+        //    if (root == null) return;
+        //    if(!dict.ContainsKey(level))
+        //        dict.Add(level, 0);
+        //    dict[level]+=root.val;
+        //    KthLargestLevelSum(root.left, level+1, dict);
+        //    KthLargestLevelSum(root.right, level+1, dict);
+        //}
     }
 }
