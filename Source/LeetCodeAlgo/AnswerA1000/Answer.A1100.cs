@@ -85,6 +85,35 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///1110. Delete Nodes And Return Forest, #DFS
+        //Given the root of a binary tree, each node in the tree has a distinct value.
+        //After deleting all nodes with a value in to_delete, we are left with a forest (a disjoint union of trees).
+        //Return the roots of the trees in the remaining forest. You may return the result in any order.
+        public IList<TreeNode> DelNodes(TreeNode root, int[] to_delete)
+        {
+            var list = new List<TreeNode>();
+            var set = to_delete.ToHashSet();
+            DelNodes_DFS(ref root, true, set, list);
+            return list;
+        }
+
+        private void DelNodes_DFS(ref TreeNode root, bool canRoot, HashSet<int> set, List<TreeNode> list)
+        {
+            if (root == null) return;
+            if (set.Contains(root.val))
+            {
+                if (root.left != null) DelNodes_DFS(ref root.left, true, set, list);
+                if (root.right != null) DelNodes_DFS(ref root.right, true, set, list);
+                root = null;
+            }
+            else
+            {
+                if (canRoot) list.Add(root);
+                if (root.left != null) DelNodes_DFS(ref root.left, false, set, list);
+                if (root.right != null) DelNodes_DFS(ref root.right, false, set, list);
+            }
+        }
+
         ///1122. Relative Sort Array
         //Given two arrays arr1 and arr2, the elements of arr2 are distinct, and all elements in arr2 are also in arr1.
         //Sort the elements of arr1 such that the relative ordering of items in arr1 are the same as in arr2.
