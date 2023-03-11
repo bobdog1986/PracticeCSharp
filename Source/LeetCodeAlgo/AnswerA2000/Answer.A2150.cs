@@ -480,21 +480,21 @@ namespace LeetCodeAlgo
             int n = nums.Length;
             int res = 0;
             int[][][] dp = new int[n][][];
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
                 dp[i] = new int[numSlots * 2 + 2][];
                 for (int j = 0; j < dp[i].Length; j++)
                     dp[i][j] = new int[2];
             }
 
-            for(int i = 2; i < numSlots * 2 + 2;i++)
+            for (int i = 2; i < numSlots * 2 + 2; i++)
             {
                 dp[0][i][1] = (i / 2 & nums[0]);
             }
 
-            for(int i = 1; i < n; i++)
+            for (int i = 1; i < n; i++)
             {
-                for(int j = 2; j < dp[i].Length; j++)
+                for (int j = 2; j < dp[i].Length; j++)
                 {
                     for (int k = 2; k < dp[i].Length; k++)
                     {
@@ -713,22 +713,29 @@ namespace LeetCodeAlgo
         }
 
         ///2187. Minimum Time to Complete Trips, #Binary Search
-        /// Return the minimum time required for all buses to complete at least totalTrips trips.
-        public long MinimumTime(int[] time, int totalTrips)
-        {
-            long left = 1;
-            long right = 100_000_000_000_000_000;
-            while (left < right)
-            {
-                long mid = left + (right - left) / 2;
-                double sum = time.Sum(x => (mid / x) * 1.0);
-                if (sum >= totalTrips)
-                    right = mid;
-                else
-                    left = mid + 1;
-            }
-            return left;
-        }
+        // Return the minimum time required for all buses to complete at least totalTrips trips.
+        // public long MinimumTime(int[] time, int totalTrips)
+        // {
+        //     int n = time.Length;
+        //     Array.Sort(time);
+        //     long left = 1;
+        //     long right = long.MaxValue;
+        //     while (left < right)
+        //     {
+        //         long mid = left + (right - left) / 2;
+        //         long sum = 0;
+        //         for (int i = 0; i < n; i++)
+        //         {
+        //             sum += mid / time[i];
+        //             if (sum >= totalTrips) break;
+        //         }
+        //         if (sum >= totalTrips)
+        //             right = mid;
+        //         else left = mid + 1;
+
+        //     }
+        //     return left;
+        // }
 
         ///2188. Minimum Time to Finish the Race, #DP
         //xth successive lap in fi * ri(x-1) seconds.

@@ -286,23 +286,23 @@ namespace LeetCodeAlgo
         }
 
         /// 1539. Kth Missing Positive Number, #Binary Search
-        ///Given an array arr of positive integers sorted in a strictly increasing order, and an integer k.
-        ///Find the kth positive integer that is missing from this array.
-        public int FindKthPositive(int[] arr, int k)
-        {
-            int left = 0;
-            int right = arr.Length;
-            int mid;
-            while (left < right)
-            {
-                mid = (left + right) / 2;
-                if (arr[mid] - 1 - mid < k)
-                    left = mid + 1;
-                else
-                    right = mid;
-            }
-            return left + k;
-        }
+        //Given an array arr of positive integers sorted in a strictly increasing order, and an integer k.
+        //Find the kth positive integer that is missing from this array.
+        // public int FindKthPositive(int[] arr, int k)
+        // {
+        //     int left = 0;
+        //     int right = arr.Length;
+        //     int mid;
+        //     while (left < right)
+        //     {
+        //         mid = (left + right) / 2;
+        //         if (arr[mid] - 1 - mid < k)
+        //             left = mid + 1;
+        //         else
+        //             right = mid;
+        //     }
+        //     return left + k;
+        // }
 
         ///1544. Make The String Great
         public string MakeGood(string s)
