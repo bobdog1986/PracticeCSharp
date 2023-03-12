@@ -590,5 +590,18 @@ namespace LeetCodeAlgo
         }
 
 
+        ///2586. Count the Number of Vowel Strings in Range
+        //public int VowelStrings(string[] words, int left, int right)
+        //{
+        //    int res = 0;
+        //    var set = new HashSet<char>() {'a','e','i','o','u' };
+        //    for(int i = left; i<=right; i++)
+        //    {
+        //        if (set.Contains(words[i].First())&&set.Contains(words[i].Last()))
+        //            res++;
+        //    }
+        //    return res;
+        //}
+
     }
 }
