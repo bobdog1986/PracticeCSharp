@@ -603,5 +603,23 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
+
+        ///2587. Rearrange Array to Maximize Prefix Score
+        public int MaxScore(int[] nums)
+        {
+            nums = nums.OrderBy(x => -x).ToArray();
+            int n = nums.Length;
+            int res = 0;
+            long sum = 0;
+            for(int i = 0; i<n; i++)
+            {
+                sum+=nums[i];
+                if (sum>0) res++;
+                else break;
+            }
+            return res;
+        }
+
+
     }
 }
