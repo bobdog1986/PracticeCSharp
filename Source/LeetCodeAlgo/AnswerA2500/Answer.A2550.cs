@@ -621,5 +621,27 @@ namespace LeetCodeAlgo
         }
 
 
+        ///2588. Count the Number of Beautiful Subarrays,#HashMap
+        //public long BeautifulSubarrays(int[] nums)
+        //{
+        //    long res = 0;
+        //    int n = nums.Length;
+        //    int curr = 0;
+        //    var dict = new Dictionary<int, int>();
+        //    dict.Add(0, 1);
+        //    for(int i = 0; i<n; i++)
+        //    {
+        //        curr^=nums[i];
+        //        if (dict.ContainsKey(curr))
+        //        {
+        //            res+=dict[curr];
+        //            dict[curr]++;
+        //        }
+        //        else dict.Add(curr, 1);
+        //    }
+        //    return res;
+        //}
+
+
     }
 }
