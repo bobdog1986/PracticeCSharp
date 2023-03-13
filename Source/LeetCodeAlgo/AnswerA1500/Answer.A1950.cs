@@ -403,6 +403,9 @@ namespace LeetCodeAlgo
             return res.ToArray();
         }
 
+        ///1993. Operations on Tree, see LockingTree
+
+
         ///1995. Count Special Quadruplets
         //nums[a] + nums[b] + nums[c] == nums[d], and a<b<c<d
         public int CountQuadruplets(int[] nums)
