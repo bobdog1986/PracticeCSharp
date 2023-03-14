@@ -472,7 +472,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///2271. Maximum White Tiles Covered by a Carpet, #Sliding Window, #SegmentTree
+        ///2271. Maximum White Tiles Covered by a Carpet, #Sliding Window, #Segment Tree
         //tiles no overlap,return max sum in range [tiles[i][0],tiles[i][0]+carpetLen)
         public int MaximumWhiteTiles(int[][] tiles, int carpetLen)
         {

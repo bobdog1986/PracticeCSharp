@@ -112,14 +112,14 @@ namespace LeetCodeAlgo.Design
 
         public int[] Gather(int k, int maxRow)
         {
-            if (root.MinRange(0, maxRow) + k > seats)
+            if (root.MinOfRange(0, maxRow) + k > seats)
                 return new int[] { };
             return root.Gather(0, rows-1, k, seats);
         }
 
         public bool Scatter(int k, int maxRow)
         {
-            long total = root.SumRange(0, maxRow);
+            long total = root.SumOfRange(0, maxRow);
             if (total + k > (maxRow + 1) * (long)seats)
                 return false;
             root.Scatter(0, rows - 1, k, seats);

@@ -26,19 +26,11 @@ namespace LeetCodeAlgo
         }
 
         protected readonly SegmentNode root;
-
-        /// <summary>
-        /// Lazy Build
-        /// </summary>
-        /// <param name="start"></param>
-        /// <param name="end"></param>
-        public SegmentTree(int start,int end)
-        {
-            this.root = new SegmentNode(start, end);
-        }
+        public int[] arr;
 
         public SegmentTree(int[] nums)
         {
+            this.arr=nums;
             this.root = buildInternal(nums, 0, nums.Length-1);
         }
 
@@ -81,6 +73,7 @@ namespace LeetCodeAlgo
                     node.sum = val;
                     node.min = val;
                     node.max = val;
+                    this.arr[node.start]=val;
                 }
                 else
                 {
@@ -105,12 +98,12 @@ namespace LeetCodeAlgo
             }
         }
 
-        public long SumRange(int left,int right)
+        public long SumOfRange(int left,int right)
         {
-            return sumRangeInternal(root, Math.Max(root.start, left), Math.Min(root.end, right));
+            return sumOfRangeInternal(root, Math.Max(root.start, left), Math.Min(root.end, right));
         }
 
-        protected long sumRangeInternal(SegmentNode node, int left,int right)
+        protected long sumOfRangeInternal(SegmentNode node, int left,int right)
         {
             if (node == null) return 0;
             if (node.start > right || node.end < left) return 0;
@@ -128,20 +121,20 @@ namespace LeetCodeAlgo
                 }
                 if (mid < left)
                 {
-                    return sumRangeInternal(node.right, left, right);
+                    return sumOfRangeInternal(node.right, left, right);
                 }
                 else if(mid>= right)
                 {
-                    return sumRangeInternal(node.left, left, right);
+                    return sumOfRangeInternal(node.left, left, right);
                 }
                 else
                 {
-                    return sumRangeInternal(node.left, left, mid) + sumRangeInternal(node.right, mid+1, right);
+                    return sumOfRangeInternal(node.left, left, mid) + sumOfRangeInternal(node.right, mid+1, right);
                 }
             }
         }
 
-        public int MinRange(int left, int right)
+        public int MinOfRange(int left, int right)
         {
             return minRangeInternal(root, Math.Max(root.start, left), Math.Min(root.end, right));
         }
@@ -177,12 +170,12 @@ namespace LeetCodeAlgo
             }
         }
 
-        public int MaxRange(int left, int right)
+        public int MaxOfRange(int left, int right)
         {
-            return maxRangeInternal(root, Math.Max(root.start, left), Math.Min(root.end, right));
+            return maxOfRangeInternal(root, Math.Max(root.start, left), Math.Min(root.end, right));
         }
 
-        private int maxRangeInternal(SegmentNode node, int left, int right)
+        private int maxOfRangeInternal(SegmentNode node, int left, int right)
         {
             if (node == null) return int.MinValue;
             if (node.start > right || node.end < left) return int.MinValue;
@@ -200,15 +193,15 @@ namespace LeetCodeAlgo
                 }
                 if (mid < left)
                 {
-                    return maxRangeInternal(node.right, left, right);
+                    return maxOfRangeInternal(node.right, left, right);
                 }
                 else if (mid >= right)
                 {
-                    return maxRangeInternal(node.left, left, right);
+                    return maxOfRangeInternal(node.left, left, right);
                 }
                 else
                 {
-                    return Math.Max(maxRangeInternal(node.left, left, mid), maxRangeInternal(node.right, mid + 1, right));
+                    return Math.Max(maxOfRangeInternal(node.left, left, mid), maxOfRangeInternal(node.right, mid + 1, right));
                 }
             }
         }

@@ -190,6 +190,41 @@ namespace LeetCodeAlgo
             return pq.Count;
         }
 
+        ///2407. Longest Increasing Subsequence II, #DP, #Segment Tree, #Good
+        //Find the longest subsequence of nums that meets the following requirements:
+        //- The subsequence is strictly increasing and
+        //- The difference between adjacent elements in the subsequence is at most k.
+        //Return the length of the longest subsequence that meets the requirements.
+        //1 <= nums.length <= 105, 1 <= nums[i], k <= 105
+
+        //public int LengthOfLIS_DP_TLE(int[] nums, int k)
+        //{
+        //    int max = nums.Max();
+        //    int[] dp = new int[max+1];
+        //    //O(nk) will time out
+        //    foreach (var i in nums)
+        //    {
+        //        for (int j = Math.Max(0, i-k); j<i; j++)
+        //        {
+        //            dp[i]=Math.Max(dp[i], dp[j]+1);
+        //        }
+        //    }
+        //    return dp.Max();
+        //}
+        public int LengthOfLIS(int[] nums, int k)
+        {
+            int max = nums.Max();
+            //O(nlogk)
+            var tree = new SegmentTree(new int[max+1]);
+            foreach(var i in nums)
+            {
+                var prev = tree.MaxOfRange(i-k, i-1);
+                tree.Update(i, Math.Max(prev+1, tree.arr[i]));
+            }
+            return tree.MaxOfRange(0, max);
+        }
+
+
         ///2413. Smallest Even Multiple
         //public int SmallestEvenMultiple(int n)
         //{
@@ -403,7 +438,7 @@ namespace LeetCodeAlgo
             {
                 if (i > 0)
                 {
-                    int possibleBest=(int)((prefixSum[i] + i) / (i + 1));
+                    int possibleBest = (int)((prefixSum[i] + i) / (i + 1));
                     int target = (int)Math.Max(res, possibleBest);
                     if (nums[i] > target)
                     {
@@ -415,7 +450,6 @@ namespace LeetCodeAlgo
             }
             return res;
         }
-
 
         ///2441. Largest Positive Integer That Exists With Its Negative
         //public int FindMaxK(int[] nums)
@@ -443,7 +477,6 @@ namespace LeetCodeAlgo
         //    }
         //    return res.Count;
         //}
-
 
         ///2444. Count Subarrays With Fixed Bounds, #Sliding Window, #Good
         //A fixed-bound subarray of nums is a subarray that satisfies the following conditions:
