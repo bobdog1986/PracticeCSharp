@@ -125,7 +125,6 @@ namespace LeetCodeAlgo
             return (int)dp;
         }
 
-
         ///1360. Number of Days Between Two Dates
         ///Write a program to count the number of days between two dates.
         ///The two dates are given as strings, their format is YYYY-MM-DD as shown in the examples.
@@ -133,6 +132,7 @@ namespace LeetCodeAlgo
         {
             return Math.Abs((DateTime.Parse(date1) - DateTime.Parse(date2)).Days);
         }
+
         /// 1365. How Many Numbers Are Smaller Than the Current Number
         ///for each nums[i] find out how many numbers in the array are smaller than it.
         ///0 <= nums[i] <= 100, 2 <= nums.length <= 500
@@ -159,6 +159,7 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
         /// 1366. Rank Teams by Votes
         ///Return a string of all teams sorted by the ranking system.
         public string RankTeams(string[] votes)
@@ -345,6 +346,7 @@ namespace LeetCodeAlgo
             }
             return ans;
         }
+
         public int NumOfMinutes_DFS(int n, int headID, int[] manager, int[] informTime)
         {
             List<int>[] graph = new List<int>[n];
@@ -355,6 +357,7 @@ namespace LeetCodeAlgo
 
             return NumOfMinutes_DFS(graph, headID, informTime);
         }
+
         public int NumOfMinutes_DFS(List<int>[] graph, int u, int[] informTime)
         {
             int ans = 0;
@@ -411,7 +414,6 @@ namespace LeetCodeAlgo
             return ans;
         }
 
-
         ///1381. Design a Stack With Increment Operation, see CustomStack
 
         /// 1382. Balance a Binary Search Tree, #BTree, #BST
@@ -445,6 +447,43 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///1386. Cinema Seat Allocation
+        //public int MaxNumberOfFamilies(int n, int[][] reservedSeats)
+        //{
+        //    int res = n*2;
+        //    var dict = new Dictionary<int, int>();
+
+        //    foreach (var seat in reservedSeats)
+        //    {
+        //        if (seat[1]==1||seat[1]==10) continue;
+        //        if (!dict.ContainsKey(seat[0])) dict.Add(seat[0], 0);
+        //        if (seat[1]>=8)
+        //        {
+        //            dict[seat[0]]|=0b100;
+        //        }
+        //        else if (seat[1]>=6)
+        //        {
+        //            dict[seat[0]]|=0b110;
+        //        }
+        //        else if (seat[1]>=4)
+        //        {
+        //            dict[seat[0]]|=0b011;
+        //        }
+        //        else if (seat[1]>=2)
+        //        {
+        //            dict[seat[0]]|=0b001;
+        //        }
+        //    }
+
+        //    foreach (var k in dict.Keys)
+        //    {
+        //        if (dict[k]==0b111) res-=2;
+        //        else res-=1;
+        //    }
+
+        //    return res;
+        //}
+
         ///1389. Create Target Array in the Given Order
         // public int[] CreateTargetArray(int[] nums, int[] index)
         // {
@@ -463,6 +502,7 @@ namespace LeetCodeAlgo
         {
             return arr1.Where(a => !arr2.Any(b => Math.Abs(a - b) <= d)).Count();
         }
+
         ///1387. Sort Integers by The Power Value, #PriorityQueue
         //if x is even then x = x / 2
         //if x is odd then x = 3 * x + 1
@@ -523,6 +563,5 @@ namespace LeetCodeAlgo
         }
 
         ///1396. Design Underground System, see UndergroundSystem
-
     }
 }
