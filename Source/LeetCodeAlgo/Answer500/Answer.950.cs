@@ -27,7 +27,6 @@ namespace LeetCodeAlgo
             return list.ToArray();
         }
 
-
         ///951. Flip Equivalent Binary Trees, #BTree
         public bool FlipEquiv(TreeNode root1, TreeNode root2)
         {
@@ -46,24 +45,70 @@ namespace LeetCodeAlgo
         ///return true if and only if the given words are sorted lexicographically in this alien language.
         public bool IsAlienSorted(string[] words, string order)
         {
-            Dictionary<char,int> dict=new Dictionary<char, int>();
-            for(int i = 0; i < order.Length; i++)
+            Dictionary<char, int> dict = new Dictionary<char, int>();
+            for (int i = 0; i < order.Length; i++)
                 dict.Add(order[i], i);
-            for (int i=0; i < words.Length-1; i++)
+            for (int i = 0; i < words.Length-1; i++)
                 if (!IsAlienSorted(words[i], words[i + 1], dict)) return false;
             return true;
         }
 
-        public bool IsAlienSorted(string s1,string s2, Dictionary<char, int> dict)
+        public bool IsAlienSorted(string s1, string s2, Dictionary<char, int> dict)
         {
             int i = 0;
-            while(i< s1.Length && i < s2.Length)
+            while (i< s1.Length && i < s2.Length)
             {
                 if (dict[s1[i]] > dict[s2[i]]) return false;
-                else if(dict[s1[i]] < dict[s2[i]]) return true;
+                else if (dict[s1[i]] < dict[s2[i]]) return true;
                 i++;
             }
             return i >= s1.Length;
+        }
+
+        ///958. Check Completeness of a Binary Tree
+        //Given the root of a binary tree, determine if it is a complete binary tree.
+        public bool IsCompleteTree(TreeNode root)
+        {
+            var q = new Queue<TreeNode>();
+            q.Enqueue(root);
+            bool lastRow = false;
+            while (q.Count > 0)
+            {
+                int size = q.Count;
+                bool end = false;
+                while (size-->0)
+                {
+                    var top = q.Dequeue();
+                    if (lastRow)
+                    {
+                        if (top.left!=null || top.right!=null) return false;
+                    }
+                    else
+                    {
+                        if (top.left!=null)
+                        {
+                            if (end) return false;
+                            else q.Enqueue(top.left);
+                        }
+                        else
+                        {
+                            lastRow=true;
+                            end = true;
+                        }
+                        if (top.right!=null)
+                        {
+                            if (end) return false;
+                            else q.Enqueue(top.right);
+                        }
+                        else
+                        {
+                            lastRow=true;
+                            end = true;
+                        }
+                    }
+                }
+            }
+            return true;
         }
 
         ///959. Regions Cut By Slashes, #Union Find
@@ -79,9 +124,9 @@ namespace LeetCodeAlgo
             int n = grid.Length;
             var uf = new UnionFind(n * n * 4);
 
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
-                for(int j = 0; j < n; j++)
+                for (int j = 0; j < n; j++)
                 {
                     int up = RegionsBySlashes_getIndex(i, j, 0, n);
                     int right = RegionsBySlashes_getIndex(i, j, 1, n);
@@ -104,7 +149,7 @@ namespace LeetCodeAlgo
                         uf.Union(up, left);
                         uf.Union(right, bottom);
                     }
-                    else if(grid[i][j] == ' ')
+                    else if (grid[i][j] == ' ')
                     {
                         uf.Union(up, left);
                         uf.Union(left, bottom);
@@ -120,7 +165,7 @@ namespace LeetCodeAlgo
             return uf.GroupCount;
         }
 
-        private int RegionsBySlashes_getIndex(int i, int j, int k,int n)
+        private int RegionsBySlashes_getIndex(int i, int j, int k, int n)
         {
             return (i * n + j)*4 + k;
         }
@@ -138,7 +183,7 @@ namespace LeetCodeAlgo
         {
             if (root == null) return;
             if (!res) return;
-            if(set.Count>0 && !set.Contains(root.val))
+            if (set.Count>0 && !set.Contains(root.val))
             {
                 res = false;
                 return;
@@ -150,6 +195,7 @@ namespace LeetCodeAlgo
                 IsUnivalTree(root.right, set, ref res);
             }
         }
+
         /// 966. Vowel Spellchecker
         ///Given a wordlist, we want to implement a spellchecker that converts a query word into a correct word.
         public string[] Spellchecker(string[] wordlist, string[] queries)
@@ -255,14 +301,14 @@ namespace LeetCodeAlgo
         public int[] NumsSameConsecDiff(int n, int k)
         {
             List<int> res = new List<int>();
-            for(int i = 1; i <= 9; i++)
+            for (int i = 1; i <= 9; i++)
                 NumsSameConsecDiff(n - 1, k, i, i, res);
             return res.ToArray();
         }
 
         private void NumsSameConsecDiff(int n, int k, int prev, int curr, List<int> res)
         {
-            if(n == 0)
+            if (n == 0)
                 res.Add(curr);
             else
             {
@@ -313,13 +359,14 @@ namespace LeetCodeAlgo
                 return 0;
             }
         }
+
         /// 973. K Closest Points to Origin, #PriorityQueue,
         ///return the k closest points to the origin (0, 0).
         public int[][] KClosest(int[][] points, int k)
         {
-            List<int[]> res=new List<int[]>();
-            PriorityQueue<int[],int> priorityQueue = new PriorityQueue<int[],int>();
-            foreach(var p in points)
+            List<int[]> res = new List<int[]>();
+            PriorityQueue<int[], int> priorityQueue = new PriorityQueue<int[], int>();
+            foreach (var p in points)
             {
                 priorityQueue.Enqueue(p, p[0] * p[0] + p[1] * p[1]);
             }
@@ -352,19 +399,19 @@ namespace LeetCodeAlgo
             return res;
         }
 
-
         ///976. Largest Perimeter Triangle
         /// return the largest sum of perimeter of a triangle, formed from three of these lengths. Or 0 if impossible
         public int LargestPerimeter(int[] nums)
         {
             Array.Sort(nums);
-            for(int i=nums.Length-1; i>=2; i--)
+            for (int i = nums.Length-1; i>=2; i--)
             {
-                if(nums[i] < nums[i-1] + nums[i-2])
+                if (nums[i] < nums[i-1] + nums[i-2])
                     return nums[i] + nums[i - 1] + nums[i - 2];
             }
             return 0;
         }
+
         /// 977. Squares of a Sorted Array
         public int[] SortedSquares(int[] nums)
         {
@@ -419,12 +466,12 @@ namespace LeetCodeAlgo
         {
             int total = 0;
             int res = 0;
-            int startRow=0 ,startCol=0;
-            for(int i=0; i<grid.Length; i++)
+            int startRow = 0, startCol = 0;
+            for (int i = 0; i<grid.Length; i++)
             {
-                for(int j=0; j<grid[i].Length; j++)
+                for (int j = 0; j<grid[i].Length; j++)
                 {
-                    if(grid[i][j] == 1)
+                    if (grid[i][j] == 1)
                     {
                         startRow = i;
                         startCol = j;
@@ -440,7 +487,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        private void UniquePathsIII_DFS(int[][] grid,int row, int col, int count,int[][] dxy, ref int res)
+        private void UniquePathsIII_DFS(int[][] grid, int row, int col, int count, int[][] dxy, ref int res)
         {
             if (row < 0 || row >= grid.Length || col < 0 || col >= grid[0].Length) return;
             if (grid[row][col] == -1) return;
@@ -454,7 +501,7 @@ namespace LeetCodeAlgo
                 var temp = grid[row][col];
                 grid[row][col] = -1;
                 int nextCount = temp == 0 ? count - 1 : count;
-                foreach(var d in dxy)
+                foreach (var d in dxy)
                 {
                     var r = row + d[0];
                     var c = col + d[1];
@@ -465,13 +512,14 @@ namespace LeetCodeAlgo
                 grid[row][col] = temp;
             }
         }
+
         ///981. Time Based Key-Value Storem ,see TimeMap
 
         /// 984. String Without AAA or BBB
         public string StrWithout3a3b(int a, int b)
         {
             var sb = new StringBuilder();
-            while(a>0 && b > 0)
+            while (a>0 && b > 0)
             {
                 if (a > b)
                 {
@@ -484,7 +532,7 @@ namespace LeetCodeAlgo
                 {
                     sb.Append("bb");
                     sb.Append('a');
-                    a --;
+                    a--;
                     b-=2;
                 }
                 else
@@ -502,6 +550,7 @@ namespace LeetCodeAlgo
                 sb.Append('b');
             return sb.ToString();
         }
+
         ///985. Sum of Even Numbers After Queries
         public int[] SumEvenAfterQueries(int[] nums, int[][] queries)
         {
@@ -528,6 +577,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 986. Interval List Intersections
         ///The intersection of two closed intervals is a set of real numbers that are either empty or represented as a closed interval.
         ///For example, the intersection of [1, 3] and [2, 4] is [2, 3].
@@ -556,9 +606,7 @@ namespace LeetCodeAlgo
             }
 
             return list.ToArray();
-
         }
-
 
         ///987. Vertical Order Traversal of a Binary Tree
         public IList<IList<int>> VerticalTraversal(TreeNode root)
@@ -567,18 +615,18 @@ namespace LeetCodeAlgo
             var dict = new Dictionary<int, Dictionary<int, List<int>>>();
             VerticalTraversal(root, 0, 0, dict);
             var cols = dict.Keys.OrderBy(x => x).ToArray();
-            foreach(var c in cols)
+            foreach (var c in cols)
             {
                 var list = new List<int>();
                 var rows = dict[c].Keys.OrderBy(x => x).ToArray();
-                foreach(var r in rows)
+                foreach (var r in rows)
                     list.AddRange(dict[c][r].OrderBy(x => x));
                 res.Add(list);
             }
             return res;
         }
 
-        private void VerticalTraversal(TreeNode node,int row , int col , Dictionary<int, Dictionary<int, List<int>>> dict)
+        private void VerticalTraversal(TreeNode node, int row, int col, Dictionary<int, Dictionary<int, List<int>>> dict)
         {
             if (node == null)
                 return;
@@ -592,7 +640,6 @@ namespace LeetCodeAlgo
             if (node.right != null)
                 VerticalTraversal(node.right, row + 1, col + 1, dict);
         }
-
 
         ///988. Smallest String Starting From Leaf, #BTree
         ///each node has a value in the range [0, 25] representing the letters 'a' to 'z'.
@@ -630,7 +677,7 @@ namespace LeetCodeAlgo
         public IList<int> AddToArrayForm(int[] num, int k)
         {
             int carry = 0;
-            for(int i = num.Length - 1; i >= 0; i--)
+            for (int i = num.Length - 1; i >= 0; i--)
             {
                 int curr = num[i] + k + carry;
                 k = 0;
@@ -841,6 +888,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         ///996. Number of Squareful Arrays, #Backtracking
         //An array is squareful if the sum of every pair of adjacent elements is a perfect square.
         //Given an integer array nums, return the number of permutations of nums that are squareful.
@@ -851,7 +899,7 @@ namespace LeetCodeAlgo
             Dictionary<int, HashSet<int>> squareMap = new Dictionary<int, HashSet<int>>();
             int cnt = 0;
 
-            foreach(int num in nums)
+            foreach (int num in nums)
             {
                 if (!cntMap.ContainsKey(num))
                 {
@@ -878,7 +926,7 @@ namespace LeetCodeAlgo
 
             foreach (int num in cntMap.Keys)
             {
-                NumSquarefulPerms_DFS(num, nums.Length - 1,cntMap, squareMap, ref cnt);
+                NumSquarefulPerms_DFS(num, nums.Length - 1, cntMap, squareMap, ref cnt);
             }
 
             return cnt;
@@ -894,7 +942,7 @@ namespace LeetCodeAlgo
                 {
                     if (cntMap[next] != 0)
                     {
-                        NumSquarefulPerms_DFS(next, left - 1,cntMap,squareMap,ref cnt);
+                        NumSquarefulPerms_DFS(next, left - 1, cntMap, squareMap, ref cnt);
                     }
                 }
             }
@@ -914,14 +962,14 @@ namespace LeetCodeAlgo
         {
             int[] beTrustedArr = new int[n+1];
             int[] trustArr = new int[n+1];
-            foreach(var t in trust)
+            foreach (var t in trust)
             {
                 beTrustedArr[t[1]]++;
                 trustArr[t[0]]++;
             }
-            for(int i = 1; i <= n; i++)
+            for (int i = 1; i <= n; i++)
             {
-                if(beTrustedArr[i]==n-1 && trustArr[i]==0)
+                if (beTrustedArr[i]==n-1 && trustArr[i]==0)
                     return i;
             }
             return -1;
@@ -933,11 +981,11 @@ namespace LeetCodeAlgo
             int m = board.Length;
             int n = board[0].Length;
             int r = 0, c = 0;
-            for(int i=0;i< m; i++)
+            for (int i = 0; i< m; i++)
             {
-                for(int j = 0; j < n; j++)
+                for (int j = 0; j < n; j++)
                 {
-                    if(board[i][j] == 'R')
+                    if (board[i][j] == 'R')
                     {
                         r = i;
                         c = j;
@@ -945,7 +993,7 @@ namespace LeetCodeAlgo
                 }
             }
             int res = 0;
-            for(int i = r + 1; i < m; i++)
+            for (int i = r + 1; i < m; i++)
             {
                 if (board[i][c] == 'B') break;
                 else if (board[i][c] == 'p')
