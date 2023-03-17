@@ -116,7 +116,7 @@ namespace LeetCodeAlgo
         {
             int n = changed.Length;
             var res = new List<int>();
-            if ((n&1) ==1) return Array.Empty<int>();
+            if ((n & 1) == 1) return Array.Empty<int>();
             var dict = new Dictionary<int, int>();
             foreach (var i in changed)
             {
@@ -125,24 +125,24 @@ namespace LeetCodeAlgo
             }
 
             var keys = dict.Keys.OrderBy(x => x).ToArray();
-            for (int i = 0; i<keys.Length; i++)
+            for (int i = 0; i < keys.Length; i++)
             {
-                if (keys[i] == 0 || dict[keys[i]]==0) continue;
-                if (dict.ContainsKey(2*keys[i]))
+                if (keys[i] == 0 || dict[keys[i]] == 0) continue;
+                if (dict.ContainsKey(2 * keys[i]))
                 {
-                    if (dict[2*keys[i]]<dict[keys[i]]) return Array.Empty<int>();
+                    if (dict[2 * keys[i]] < dict[keys[i]]) return Array.Empty<int>();
                     else
                     {
                         res.AddRange(Enumerable.Repeat(keys[i], dict[keys[i]]));
-                        dict[2*keys[i]]-=dict[keys[i]];
+                        dict[2 * keys[i]] -= dict[keys[i]];
                         //dict[keys[i]]=0;
                     }
                 }
                 else return Array.Empty<int>();
             }
-            if (res.Count <n/2)
+            if (res.Count < n / 2)
             {
-                res.AddRange(Enumerable.Repeat(0, n/2 - res.Count));
+                res.AddRange(Enumerable.Repeat(0, n / 2 - res.Count));
             }
             return res.ToArray();
         }
@@ -185,9 +185,9 @@ namespace LeetCodeAlgo
             for (int i = 0; i < n; i++)
             {
                 max = Math.Max(max, nums[i]);
-                min = Math.Min(min, nums[n-1-i]);
+                min = Math.Min(min, nums[n - 1 - i]);
                 prefixMax[i] = max;
-                suffixMin[n-1-i] = min;
+                suffixMin[n - 1 - i] = min;
             }
             int res = 0;
             for (int i = 1; i < n - 1; i++)
@@ -237,7 +237,7 @@ namespace LeetCodeAlgo
             }
             for (int i = 0; i < n; i++)
             {
-                long max = Math.Max(sum0- prefixSum0[i], i==0 ? 0 : prefixSum1[i-1]);
+                long max = Math.Max(sum0 - prefixSum0[i], i == 0 ? 0 : prefixSum1[i - 1]);
                 res = Math.Min(res, max);
             }
             return res;
@@ -251,18 +251,18 @@ namespace LeetCodeAlgo
             int len = word.Length;
             for (int i = 0; i < m; i++)
             {
-                for (int j = 0; j< n; j++)
+                for (int j = 0; j < n; j++)
                 {
                     if (board[i][j] == '#') continue;
                     if (i == 0 || board[i - 1][j] == '#')
                     {
                         int l = 0;
-                        for (int k = i; k< m && l<len; k++)
+                        for (int k = i; k < m && l < len; k++)
                         {
                             if (board[k][j] == '#') break;
                             if (board[k][j] != word[l] && board[k][j] != ' ') break;
                             l++;
-                            if (l==len && k!=m-1 && board[k+1][j]!='#')
+                            if (l == len && k != m - 1 && board[k + 1][j] != '#')
                             {
                                 l = -1;
                                 break;
@@ -271,10 +271,10 @@ namespace LeetCodeAlgo
                         if (l == len) return true;
                     }
 
-                    if (i == m-1 || board[i + 1][j] == '#')
+                    if (i == m - 1 || board[i + 1][j] == '#')
                     {
                         int l = 0;
-                        for (int k = i; k >=0 && l < len; k--)
+                        for (int k = i; k >= 0 && l < len; k--)
                         {
                             if (board[k][j] == '#') break;
                             if (board[k][j] != word[l] && board[k][j] != ' ') break;
@@ -288,7 +288,7 @@ namespace LeetCodeAlgo
                         if (l == len) return true;
                     }
 
-                    if (j == 0 || board[i][j-1] == '#')
+                    if (j == 0 || board[i][j - 1] == '#')
                     {
                         int l = 0;
                         for (int k = j; k < n && l < len; k++)
@@ -296,7 +296,7 @@ namespace LeetCodeAlgo
                             if (board[i][k] == '#') break;
                             if (board[i][k] != word[l] && board[i][k] != ' ') break;
                             l++;
-                            if (l == len && k != n-1 && board[i][k+1] != '#')
+                            if (l == len && k != n - 1 && board[i][k + 1] != '#')
                             {
                                 l = -1;
                                 break;
@@ -305,15 +305,15 @@ namespace LeetCodeAlgo
                         if (l == len) return true;
                     }
 
-                    if (j == n-1 || board[i][j + 1] == '#')
+                    if (j == n - 1 || board[i][j + 1] == '#')
                     {
                         int l = 0;
-                        for (int k = j; k >=0 && l < len; k--)
+                        for (int k = j; k >= 0 && l < len; k--)
                         {
                             if (board[i][k] == '#') break;
                             if (board[i][k] != word[l] && board[i][k] != ' ') break;
                             l++;
-                            if (l == len && k !=0 && board[i][k - 1] != '#')
+                            if (l == len && k != 0 && board[i][k - 1] != '#')
                             {
                                 l = -1;
                                 break;
@@ -503,7 +503,7 @@ namespace LeetCodeAlgo
             char[] res = new char[k];
             int x = 0, y = 0;
             int m = 0;
-            while (m<k)
+            while (m < k)
             {
                 //if e is just enough, add as many normal as possible
                 //<letter first
@@ -619,20 +619,20 @@ namespace LeetCodeAlgo
 
             long totalNeg = (long)neg1 * (n2 - neg2 - zero2) + (long)neg2 * (n1 - neg1 - zero1);
             long totalZero = (long)zero1 * n2 + (long)zero2 * n1 - (long)zero1 * zero2;
-            if (k<= totalNeg)
+            if (k <= totalNeg)
             {
                 long left = -10_000_000_000;
                 long right = 0;
                 while (left < right)
                 {
-                    long mid = left + (right - left)/ 2;
+                    long mid = left + (right - left) / 2;
                     long count = 0;
-                    if (neg1>0 && n2-neg2-zero2 > 0)
+                    if (neg1 > 0 && n2 - neg2 - zero2 > 0)
                     {
                         for (int i = 0; i < neg1 && count < k; i++)
                         {
                             if ((long)nums1[i] * nums2[n2 - 1] > mid) break;//min out of range
-                            if ((long)nums1[i] * nums2[neg2+zero2] <= mid)
+                            if ((long)nums1[i] * nums2[neg2 + zero2] <= mid)
                             {
                                 count += n2 - neg2 - zero2;
                             }
@@ -645,19 +645,19 @@ namespace LeetCodeAlgo
                                     int center = (low + high) / 2;
                                     if ((long)nums1[i] * nums2[center] <= mid)
                                     {
-                                        high=center;
+                                        high = center;
                                     }
                                     else
                                     {
-                                        low = center+1;
+                                        low = center + 1;
                                     }
                                 }
-                                count += n2-low; //[low,n2-1]
+                                count += n2 - low; //[low,n2-1]
                             }
                         }
                     }
 
-                    if (neg2>0 && n1 - neg1 - zero1 > 0)
+                    if (neg2 > 0 && n1 - neg1 - zero1 > 0)
                     {
                         for (int i = 0; i < neg2 && count < k; i++)
                         {
@@ -679,7 +679,7 @@ namespace LeetCodeAlgo
                                     }
                                     else
                                     {
-                                        low = center+1;
+                                        low = center + 1;
                                     }
                                 }
                                 count += n1 - low; //[low,n1-1]
@@ -690,7 +690,7 @@ namespace LeetCodeAlgo
                     if (count >= k)
                         right = mid;
                     else
-                        left = mid+1;
+                        left = mid + 1;
                 }
                 return left;
             }
@@ -706,7 +706,7 @@ namespace LeetCodeAlgo
                 {
                     long mid = left + (right - left) / 2;
                     long count = 0;
-                    if (neg1>0 && neg2 > 0)
+                    if (neg1 > 0 && neg2 > 0)
                     {
                         for (int i = neg1 - 1; i >= 0 && count < k; i--)
                         {
@@ -728,7 +728,7 @@ namespace LeetCodeAlgo
                                     }
                                     else
                                     {
-                                        low = center+1;
+                                        low = center + 1;
                                     }
                                 }
                                 count += neg2 - low; //[low,neg2-1]
@@ -736,14 +736,14 @@ namespace LeetCodeAlgo
                         }
                     }
 
-                    if (n1-neg1-zero1>0 && n2 - neg2 - zero2 > 0)
+                    if (n1 - neg1 - zero1 > 0 && n2 - neg2 - zero2 > 0)
                     {
-                        for (int i = neg1 + zero1; i<n1 && count < k; i++)
+                        for (int i = neg1 + zero1; i < n1 && count < k; i++)
                         {
-                            if ((long)nums1[i] * nums2[neg2 +zero2] > mid) break;//min out of range
-                            if ((long)nums1[i] * nums2[n2-1] <= mid)
+                            if ((long)nums1[i] * nums2[neg2 + zero2] > mid) break;//min out of range
+                            if ((long)nums1[i] * nums2[n2 - 1] <= mid)
                             {
-                                count += n2-neg2-zero2;
+                                count += n2 - neg2 - zero2;
                             }
                             else
                             {
@@ -751,17 +751,17 @@ namespace LeetCodeAlgo
                                 int high = n2 - 1;
                                 while (low < high)
                                 {
-                                    int center = (low + high+1) / 2;
+                                    int center = (low + high + 1) / 2;
                                     if ((long)nums1[i] * nums2[center] <= mid)
                                     {
                                         low = center;
                                     }
                                     else
                                     {
-                                        high = center -1;
+                                        high = center - 1;
                                     }
                                 }
-                                count += low-neg2-zero2+1; //[neg2+zero2,low]
+                                count += low - neg2 - zero2 + 1; //[neg2+zero2,low]
                             }
                         }
                     }
@@ -818,8 +818,8 @@ namespace LeetCodeAlgo
         // find 2nd minimum result from 1 to n
         public int SecondMinimum(int n, int[][] edges, int time, int change)
         {
-            List<int>[] graph = new List<int>[n+1];
-            for (int i = 0; i<graph.Length; i++)
+            List<int>[] graph = new List<int>[n + 1];
+            for (int i = 0; i < graph.Length; i++)
             {
                 graph[i] = new List<int>();
             }
@@ -828,8 +828,8 @@ namespace LeetCodeAlgo
                 graph[e[0]].Add(e[1]);//build the graph
                 graph[e[1]].Add(e[0]);
             }
-            int[][] memo = new int[n+1][];//build the memo
-            for (int i = 0; i<memo.Length; i++)
+            int[][] memo = new int[n + 1][];//build the memo
+            for (int i = 0; i < memo.Length; i++)
             {
                 memo[i] = new int[] { int.MaxValue, int.MaxValue };
             }
@@ -840,23 +840,23 @@ namespace LeetCodeAlgo
             while (q.Count > 0)
             {
                 int size = q.Count;
-                while (size-->0)
+                while (size-- > 0)
                 {
                     var top = q.Dequeue();
                     //we can only leave vertex on green light
-                    int offset = top[1]%(change*2);
-                    if (offset<change)//green light
+                    int offset = top[1] % (change * 2);
+                    if (offset < change)//green light
                     {
                         foreach (var i in graph[top[0]])
                         {
-                            int cost = top[1]+time;
-                            if (cost>memo[i][1])
+                            int cost = top[1] + time;
+                            if (cost > memo[i][1])
                                 continue;//slower than 2nd, discard
-                            else if (cost==memo[i][0]|| cost==memo[i][1])
+                            else if (cost == memo[i][0] || cost == memo[i][1])
                                 continue;//want unique result, discard duplicate
                             else
                             {
-                                if (cost<memo[i][0])//better than 1st
+                                if (cost < memo[i][0])//better than 1st
                                 {
                                     memo[i][1] = memo[i][0];
                                     memo[i][0] = cost;
@@ -872,7 +872,7 @@ namespace LeetCodeAlgo
                     else
                     {
                         //wait unitl next green light
-                        top[1]+=2*change - offset;
+                        top[1] += 2 * change - offset;
                         q.Enqueue(top);
                     }
                 }
@@ -931,5 +931,50 @@ namespace LeetCodeAlgo
 
             return res;
         }
+
+        ///2049. Count Nodes With the Highest Score, #DFS
+        //The score of the node is the product of the sizes of all those subtrees created by removing this node
+        //Return the number of nodes that have the highest score.
+        public int CountHighestScoreNodes(int[] parents)
+        {
+            int count =0;
+            double max = 0;
+            int n = parents.Length;
+            List<int>[] graph = new List<int>[n];
+            for (int i = 0; i < n; i++)
+            {
+                graph[i] = new List<int>();
+            }
+
+            for (int i = 1; i < n; i++)
+            {
+                graph[parents[i]].Add(i);
+            }
+            CountHighestScoreNodes(0,graph,ref max,ref count);
+            return count;
+        }
+        private int CountHighestScoreNodes(int i, List<int>[] graph, ref double max, ref int count)
+        {
+            int n = graph.Length;
+            double product = 1.0;
+            int childs = 0;
+            foreach (var j in graph[i])
+            {
+                int k = CountHighestScoreNodes(j, graph, ref max,ref count);
+                product *= k;
+                childs+=k;
+            }
+
+            if(n - childs - 1>0)
+                product *= n - childs - 1;
+            if(product>max){
+                max=product;
+                count=1;
+            }else if(product==max){
+                count++;
+            }
+            return childs + 1;
+        }
+
     }
 }
