@@ -15,7 +15,7 @@ namespace LeetCodeAlgo
         {
             int n = students.Length;
             int squares = students.Sum();
-            int circulars = n-squares;
+            int circulars = n - squares;
             var q = new Queue<int>();
             foreach (var student in students)
                 q.Enqueue(student);
@@ -33,7 +33,7 @@ namespace LeetCodeAlgo
                 {
                     if (sandwiches[i] == 0 && squares == q.Count) break;
                     if (sandwiches[i] == 1 && circulars == q.Count) break;
-                    while(q.Peek()!= sandwiches[i])
+                    while (q.Peek() != sandwiches[i])
                     {
                         q.Enqueue(q.Dequeue());
                     }
@@ -71,7 +71,7 @@ namespace LeetCodeAlgo
                 { 'a', 0 },{ 'e', 0 },{ 'i', 0 },{ 'o', 0 },{ 'u', 0 },
                 { 'A', 0 },{ 'E', 0 },{ 'I', 0 },{ 'O', 0 },{ 'U', 0 },
             };
-            for(int i = 0; i < s.Length; ++i)
+            for (int i = 0; i < s.Length; ++i)
             {
                 if (dict.ContainsKey(s[i]))
                     res += i < s.Length / 2 ? 1 : -1;
@@ -216,9 +216,9 @@ namespace LeetCodeAlgo
             int n = encoded.Length;
             int[] res = new int[n + 1];
             res[0] = first;
-            for(int i=1; i < res.Length; i++)
+            for (int i = 1; i < res.Length; i++)
             {
-                res[i] = encoded[i - 1] ^ res[i-1];
+                res[i] = encoded[i - 1] ^ res[i - 1];
             }
             return res;
         }
@@ -266,12 +266,12 @@ namespace LeetCodeAlgo
         {
             int max = 0;
             int res = 0;
-            foreach(var rect in rectangles)
+            foreach (var rect in rectangles)
             {
                 var len = Math.Min(rect[0], rect[1]);
                 if (len > max) res = 1;
                 else if (len == max) res++;
-                max=Math.Max(max, len);
+                max = Math.Max(max, len);
             }
             return res;
         }
@@ -311,9 +311,9 @@ namespace LeetCodeAlgo
         public string MaximumTime(string time)
         {
             //The valid times are those inclusively between 00:00 and 23:59.
-            for(int i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++)
             {
-                if(time[i] == '?')
+                if (time[i] == '?')
                 {
                     if (i == 0)
                     {
@@ -329,7 +329,7 @@ namespace LeetCodeAlgo
                             }
                             else
                             {
-                                time = "2"+ time.Substring(1);
+                                time = "2" + time.Substring(1);
                             }
                         }
                     }
@@ -356,6 +356,31 @@ namespace LeetCodeAlgo
             }
             return time;
         }
+
+        ///1738. Find Kth Largest XOR Coordinate Value, #DP, #Good
+        //The value of coordinate (a, b) of the matrix is the XOR of all matrix[i][j] where 0 <= i <= a < m and 0 <= j <= b < n (0-indexed).
+        //Find the kth largest value (1-indexed) of all the coordinates of matrix.
+        public int KthLargestValue(int[][] matrix, int k)
+        {
+            int m = matrix.Length;
+            int n = matrix[0].Length;
+            var pq = new PriorityQueue<int, int>();
+            int[][] dp = new int[m + 1][];
+            for (int i = 0; i < dp.Length; i++)
+                dp[i] = new int[n + 1];
+            for (int i = 1; i < dp.Length; i++)
+            {
+                for (int j = 1; j < dp[0].Length; j++)
+                {
+                    dp[i][j] = dp[i - 1][j - 1] ^ dp[i - 1][j] ^ dp[i][j - 1] ^ matrix[i - 1][j - 1];
+                    pq.Enqueue(dp[i][j], dp[i][j]);
+                    if (pq.Count > k)
+                        pq.Dequeue();//min heap, remove the smallest one
+                }
+            }
+            return pq.Dequeue();
+        }
+
         /// 1742. Maximum Number of Balls in a Box
         ///For example, the ball number 321 will be put in the box number 3 + 2 + 1 = 6 and
         ///the ball number 10 will be put in the box number 1 + 0 = 1.
@@ -393,7 +418,7 @@ namespace LeetCodeAlgo
             int n = adjacentPairs.Length + 1;
             int[] res = new int[n];
             var dict = new Dictionary<int, List<int>>();
-            foreach(var adj in adjacentPairs)
+            foreach (var adj in adjacentPairs)
             {
                 if (!dict.ContainsKey(adj[0])) dict.Add(adj[0], new List<int>());
                 if (!dict.ContainsKey(adj[1])) dict.Add(adj[1], new List<int>());
@@ -404,7 +429,7 @@ namespace LeetCodeAlgo
             var prev = dict.Keys.Where(x => dict[x].Count == 1).First();
             var curr = dict[prev].First();
             res[0] = prev;
-            for(int i=1; i < n; i++)
+            for (int i = 1; i < n; i++)
             {
                 res[i] = curr;
                 if (dict[curr].First() == prev)
