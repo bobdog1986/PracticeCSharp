@@ -724,6 +724,29 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
-
+        ///2594. Minimum Time to Repair Cars, #Binary Search
+        //A mechanic with a rank r can repair n cars in r * n2 minutes.
+        //Return the minimum time taken to repair all the cars. All the mechanics can repair the cars simultaneously.
+        public long RepairCars(int[] ranks, int cars)
+        {
+            long left = 1;
+            long right = long.MaxValue;
+            while (left<right)
+            {
+                long mid = left + (right-left)/2;
+                long sum = 0;
+                foreach(var r in ranks)
+                {
+                    long curr = (long)Math.Sqrt(mid/r);
+                    sum+=curr;
+                    if (sum>=cars) break;
+                }
+                if (sum>=cars)
+                    right = mid;
+                else
+                    left = mid+1;
+            }
+            return left;
+        }
     }
 }
