@@ -677,6 +677,24 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2592. Maximize Greatness of an Array, #Two Pointer
+        //public int MaximizeGreatness(int[] nums)
+        //{
+        //    int n = nums.Length;
+        //    nums = nums.OrderBy(x=>x).ToArray();
+        //    int res = 0;
+        //    int j = 0;
+        //    for(int i=0;i<n; i++)
+        //    {
+        //        if (nums[i]>nums[j])
+        //        {
+        //            res++;
+        //            j++;
+        //        }
+        //    }
+        //    return res;
+        //}
+
 
     }
 }
