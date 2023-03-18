@@ -642,6 +642,41 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
+        ///2591. Distribute Money to Maximum Children
+        //- All money must be distributed.
+        //- Everyone must receive at least 1 dollar.
+        //- Nobody receives 4 dollars.
+        //Return the maximum number of children who may receive exactly 8 dollars.
+        //If there is no way to distribute the money, return -1.
+        public int DistMoney(int money, int children)
+        {
+            if (money<children) return -1;
+            int res = 0;
+            while (children>0)
+            {
+                if(children ==1)
+                {
+                    if (money == 8) res++;
+                    else if (money==4) res--;
+                    break;
+                }
+                else
+                {
+                    if (money-8>=children-1)
+                    {
+                        money-=8;
+                        children--;
+                        res++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            return res;
+        }
+
 
     }
 }
