@@ -695,6 +695,35 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
+        ///2593. Find Score of an Array After Marking All Elements, #PriorityQueue
+        //public long FindScore(int[] nums)
+        //{
+        //    long res = 0;
+        //    var pq = new PriorityQueue<int[], int[]>(Comparer<int[]>.Create((x, y) =>
+        //    {
+        //        if (x[0]==y[0]) return x[1]-y[1];
+        //        return x[0]-y[0];
+        //    }));
+        //    int n = nums.Length;
+        //    bool[] marked = new bool[n];
+        //    for(int i=0;i<n; i++)
+        //    {
+        //        var curr = new int[] { nums[i], i };
+        //        pq.Enqueue(curr, curr);
+        //    }
+
+        //    while (pq.Count>0)
+        //    {
+        //        var top = pq.Dequeue();
+        //        if (marked[top[1]]) continue;
+        //        marked[top[1]]=true;
+        //        res+=top[0];
+        //        if (top[1]-1>=0) marked[top[1]-1]=true;
+        //        if (top[1]+1<n) marked[top[1]+1]=true;
+        //    }
+        //    return res;
+        //}
+
 
     }
 }
