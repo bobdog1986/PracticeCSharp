@@ -795,5 +795,34 @@ namespace LeetCodeAlgo
         //    return true;
         //}
 
+        ///2597. The Number of Beautiful Subsets, #Backtracking
+        //A subset of nums is beautiful if it does not contain two integers with an absolute difference equal to k.
+        //Return the number of non-empty beautiful subsets of the array nums.
+        public int BeautifulSubsets(int[] nums, int k)
+        {
+            int res = 0;
+            BeautifulSubsets(nums, 0, 0, k, new HashSet<int>(), ref res);
+            return res;
+        }
+
+        private void BeautifulSubsets(int[] nums, int i, int count, int k, HashSet<int> set, ref int res)
+        {
+            int n = nums.Length;
+            if (i==n)
+            {
+                if (count>0) res++;
+            }
+            else
+            {
+                BeautifulSubsets(nums, i+1, count, k, set, ref res);
+                if (!set.Contains(nums[i]+k)&&!set.Contains(nums[i]-k))
+                {
+                    set.Add(nums[i]);
+                    BeautifulSubsets(nums, i+1, count+1, k, set, ref res);
+                    set.Remove(nums[i]);
+                }
+            }
+        }
+
     }
 }
