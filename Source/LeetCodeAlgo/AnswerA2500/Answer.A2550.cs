@@ -473,7 +473,7 @@ namespace LeetCodeAlgo
             for (int i = 0; i<n; i++)
                 graph[i]=new List<int>();
 
-            foreach(var e in edges)
+            foreach (var e in edges)
             {
                 graph[e[0]].Add(e[1]);
                 graph[e[1]].Add(e[0]);
@@ -491,9 +491,9 @@ namespace LeetCodeAlgo
 
             //cache {parent, {child, count}}, count is all valid guesses traverse from parent to all childs
 
-            var memo =new Dictionary<int, Dictionary<int,int>>();
+            var memo = new Dictionary<int, Dictionary<int, int>>();
 
-            for(int i = 0; i<n; i++)
+            for (int i = 0; i<n; i++)
             {
                 int count = RootCount(i, -1, graph, directGraph, memo);
                 if (count>=k)
@@ -543,7 +543,6 @@ namespace LeetCodeAlgo
         ///2583. Kth Largest Sum in a Binary Tree
         //public long KthLargestLevelSum(TreeNode root, int k)
         //{
-
         //    var dict = new Dictionary<int, long>();
         //    KthLargestLevelSum(root, 0, dict);
         //    if (dict.Keys.Count<k) return -1;
@@ -567,20 +566,20 @@ namespace LeetCodeAlgo
         //Return the number of ways you can earn exactly target points in the exam.modulo 109 + 7.
         public int WaysToReachTarget(int target, int[][] types)
         {
-            int n =types.Length;
+            int n = types.Length;
             int[][] dp = new int[n+1][];
             for (int i = 0; i<dp.Length; i++)
                 dp[i]=new int[target+1];
 
             dp[0][0]=1;
             int mod = 1_000_000_007;
-            for(int i = 1; i<=n; i++)
+            for (int i = 1; i<=n; i++)
             {
                 int[] curr = types[i-1];
-                for(int j=0; j<=target; j++)
+                for (int j = 0; j<=target; j++)
                 {
                     dp[i][j] = (dp[i][j]+dp[i-1][j])% mod;
-                    for(int k = 1; k<=curr[0] && j+k*curr[1]<=target; k++)
+                    for (int k = 1; k<=curr[0] && j+k*curr[1]<=target; k++)
                     {
                         dp[i][j+k*curr[1]] = (dp[i][j+k*curr[1]]+dp[i-1][j])% mod;
                     }
@@ -588,7 +587,6 @@ namespace LeetCodeAlgo
             }
             return dp[n][target];
         }
-
 
         ///2586. Count the Number of Vowel Strings in Range
         //public int VowelStrings(string[] words, int left, int right)
@@ -603,7 +601,6 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
-
         ///2587. Rearrange Array to Maximize Prefix Score
         public int MaxScore(int[] nums)
         {
@@ -611,7 +608,7 @@ namespace LeetCodeAlgo
             int n = nums.Length;
             int res = 0;
             long sum = 0;
-            for(int i = 0; i<n; i++)
+            for (int i = 0; i<n; i++)
             {
                 sum+=nums[i];
                 if (sum>0) res++;
@@ -619,7 +616,6 @@ namespace LeetCodeAlgo
             }
             return res;
         }
-
 
         ///2588. Count the Number of Beautiful Subarrays,#HashMap
         //public long BeautifulSubarrays(int[] nums)
@@ -654,7 +650,7 @@ namespace LeetCodeAlgo
             int res = 0;
             while (children>0)
             {
-                if(children ==1)
+                if (children ==1)
                 {
                     if (money == 8) res++;
                     else if (money==4) res--;
@@ -735,7 +731,7 @@ namespace LeetCodeAlgo
             {
                 long mid = left + (right-left)/2;
                 long sum = 0;
-                foreach(var r in ranks)
+                foreach (var r in ranks)
                 {
                     long curr = (long)Math.Sqrt(mid/r);
                     sum+=curr;
@@ -748,7 +744,6 @@ namespace LeetCodeAlgo
             }
             return left;
         }
-
 
         ///2595. Number of Even and Odd Bits
         //public int[] EvenOddBit(int n)
@@ -768,5 +763,37 @@ namespace LeetCodeAlgo
         //    }
         //    return res;
         //}
+
+        ///2596. Check Knight Tour Configuration
+        //public bool CheckValidGrid(int[][] grid)
+        //{
+        //    int n = grid.Length;
+        //    int[][] mat = new int[n*n][];
+        //    for(int i = 0; i<n; i++)
+        //    {
+        //        for(int j = 0; j<n; j++)
+        //        {
+        //            mat[grid[i][j]] = new int[] { i, j};
+        //        }
+        //    }
+        //    if (mat[0][0]!=0||mat[0][1]!=0) return false;
+        //    int[] curr = new int[] { 0, 0 };
+        //    for(int i = 1; i<mat.Length; i++)
+        //    {
+        //        int x = mat[i][0]-curr[0];
+        //        int y = mat[i][1]-curr[1];
+        //        if ((x==1&&y==2)||(x==1&&y==-2)||(x==-1&&y==2)||(x==-1&&y==-2)
+        //            ||(x==2&&y==1)||(x==2&&y==-1)||(x==-2&&y==1)||(x==-2&&y==-1))
+        //        {
+        //            curr = mat[i];
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    return true;
+        //}
+
     }
 }
