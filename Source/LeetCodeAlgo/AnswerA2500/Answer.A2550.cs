@@ -824,5 +824,32 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///2598. Smallest Missing Non-negative Integer After Operations
+        //In one operation, you can add or subtract value from any element of nums.
+        //The MEX (minimum excluded) of an array is the smallest missing non-negative integer in it.
+        //Return the maximum MEX of nums after applying the mentioned operation any number of times.
+        //public int FindSmallestInteger(int[] nums, int value)
+        //{
+        //    int[] arr = new int[value];
+        //    for (int i = 0; i<nums.Length; i++)
+        //    {
+        //        int j = (nums[i]%value + value)%value;
+        //        arr[j]++;
+        //    }
+
+        //    int min = int.MaxValue;
+        //    int index = -1;
+        //    for (int i = 0; i<arr.Length; i++)
+        //    {
+        //        if (arr[i] < min)
+        //        {
+        //            min= arr[i];
+        //            index=i;
+        //        }
+        //    }
+        //    return min*value + index;
+        //}
+
+
     }
 }
