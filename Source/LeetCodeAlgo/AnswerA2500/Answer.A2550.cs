@@ -748,5 +748,25 @@ namespace LeetCodeAlgo
             }
             return left;
         }
+
+
+        ///2595. Number of Even and Odd Bits
+        //public int[] EvenOddBit(int n)
+        //{
+        //    var arr = Convert.ToString(n,2).Reverse().ToArray();
+        //    int[] res = new int[2];
+        //    for(int i = 0; i<arr.Length; i++)
+        //    {
+        //        if (i%2==0)
+        //        {
+        //            if (arr[i]=='1') res[0]++;
+        //        }
+        //        else
+        //        {
+        //            if (arr[i]=='1') res[1]++;
+        //        }
+        //    }
+        //    return res;
+        //}
     }
 }
