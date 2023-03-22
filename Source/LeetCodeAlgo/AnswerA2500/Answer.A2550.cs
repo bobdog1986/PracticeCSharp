@@ -801,25 +801,33 @@ namespace LeetCodeAlgo
         public int BeautifulSubsets(int[] nums, int k)
         {
             int res = 0;
-            BeautifulSubsets(nums, 0, 0, k, new HashSet<int>(), ref res);
+            BeautifulSubsets(nums, 0, 0, k, new Dictionary<int, int>(), ref res);
             return res;
         }
 
-        private void BeautifulSubsets(int[] nums, int i, int count, int k, HashSet<int> set, ref int res)
+        private void BeautifulSubsets(int[] nums, int i, int count, int k, Dictionary<int, int> dict, ref int res)
         {
             int n = nums.Length;
             if (i==n)
             {
                 if (count>0) res++;
+                return;
             }
             else
             {
-                BeautifulSubsets(nums, i+1, count, k, set, ref res);
-                if (!set.Contains(nums[i]+k)&&!set.Contains(nums[i]-k))
+                BeautifulSubsets(nums, i+1, count, k, dict, ref res);
+                if (!dict.ContainsKey(nums[i]))
+                    dict.Add(nums[i], 0);
+                if (!dict.ContainsKey(nums[i]-k))
+                    dict.Add(nums[i]-k, 0);
+                if (!dict.ContainsKey(nums[i]+k))
+                    dict.Add(nums[i]+k, 0);
+
+                if (dict[nums[i]+k]==0 && dict[nums[i]-k]==0)
                 {
-                    set.Add(nums[i]);
-                    BeautifulSubsets(nums, i+1, count+1, k, set, ref res);
-                    set.Remove(nums[i]);
+                    dict[nums[i]]++;
+                    BeautifulSubsets(nums, i+1, count+1, k, dict, ref res);
+                    dict[nums[i]]--;
                 }
             }
         }

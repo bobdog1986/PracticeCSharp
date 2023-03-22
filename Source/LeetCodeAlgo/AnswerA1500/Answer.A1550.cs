@@ -627,5 +627,27 @@ namespace LeetCodeAlgo
                 str += " ";
             return string.Join(str, words).PadRight(n, ' ');
         }
+
+        ///1598. Crawler Log Folder
+        //public int MinOperations(string[] logs)
+        //{
+        //    var s = new Stack<string>();
+        //    foreach (var i in logs)
+        //    {
+        //        if (i=="../")
+        //        {
+        //            if (s.Count>0) s.Pop();
+        //        }
+        //        else if (i=="./")
+        //        {
+
+        //        }
+        //        else
+        //        {
+        //            s.Push(i);
+        //        }
+        //    }
+        //    return s.Count;
+        //}
     }
 }
