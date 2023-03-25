@@ -46,7 +46,7 @@ namespace LeetCodeAlgo
         {
             if (s.Length % 3 != 0) return false;
             var stack = new Stack<string>();
-            foreach(var c in s)
+            foreach (var c in s)
             {
                 if (c == 'a') stack.Push("a");
                 else if (c == 'b')
@@ -150,15 +150,15 @@ namespace LeetCodeAlgo
         {
             return BstFromPreorder_N2_Recurr(preorder, 0, preorder.Length - 1);
         }
-        public TreeNode BstFromPreorder_N2_Recurr(int[] preorder,int left,int right)
+        public TreeNode BstFromPreorder_N2_Recurr(int[] preorder, int left, int right)
         {
-            if(left>right) return null;
-            else if(left==right)return new TreeNode(preorder[left]);
+            if (left > right) return null;
+            else if (left == right) return new TreeNode(preorder[left]);
             else
             {
                 var node = new TreeNode(preorder[left]);
                 int i = left + 1;
-                while(i <= right)
+                while (i <= right)
                 {
                     if (preorder[i] < preorder[left])
                         i++;
@@ -177,7 +177,7 @@ namespace LeetCodeAlgo
             if (n == 0) return 1;
             int res = 0;
             int seed = 1;
-            while (n >0)
+            while (n > 0)
             {
                 if ((n & 1) == 0) res += seed;
                 seed <<= 1;
@@ -192,10 +192,10 @@ namespace LeetCodeAlgo
         public int NumPairsDivisibleBy60(int[] time)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
-            for(int i=0;i<60;i++)
+            for (int i = 0; i < 60; i++)
                 dict.Add(i, 0);
             long res = 0;
-            foreach(var n in time)
+            foreach (var n in time)
             {
                 int mod = n % 60;
                 dict[mod]++;
@@ -219,33 +219,33 @@ namespace LeetCodeAlgo
         public bool CanThreePartsEqualSum(int[] arr)
         {
             int sum = arr.Sum();
-            if (sum%3!=0) return false;
-            return CanThreePartsEqualSum(arr, 0, sum/3,0) ;
+            if (sum % 3 != 0) return false;
+            return CanThreePartsEqualSum(arr, 0, sum / 3, 0);
         }
 
-        private bool CanThreePartsEqualSum(int[] arr ,int index, int target, int count)
+        private bool CanThreePartsEqualSum(int[] arr, int index, int target, int count)
         {
             int n = arr.Length;
-            if(count ==2)
+            if (count == 2)
             {
                 if (index == arr.Length) return false;
                 int sum = 0;
-                while (index<n)
+                while (index < n)
                 {
-                    sum+= arr[index];
+                    sum += arr[index];
                     index++;
                 }
-                return sum==target;
+                return sum == target;
             }
             else
             {
                 int sum = 0;
-                for(; index<n; index++)
+                for (; index < n; index++)
                 {
-                    sum+=arr[index];
-                    if(sum == target)
+                    sum += arr[index];
+                    if (sum == target)
                     {
-                        if(CanThreePartsEqualSum(arr,index+1,target,count+1))
+                        if (CanThreePartsEqualSum(arr, index + 1, target, count + 1))
                             return true;
                     }
                 }
@@ -292,7 +292,7 @@ namespace LeetCodeAlgo
         {
             var res = new List<bool>();
             int curr = 0;
-            foreach(var n in nums)
+            foreach (var n in nums)
             {
                 curr = (curr << 1) + n;
                 res.Add(curr % 5 == 0);
@@ -314,7 +314,7 @@ namespace LeetCodeAlgo
             }
             int[] res = new int[list.Count];
             Stack<int> stack = new Stack<int>();
-            for(int i = 0; i < list.Count; i++)
+            for (int i = 0; i < list.Count; i++)
             {
                 while (stack.Count > 0 && list[stack.Peek()] < list[i])
                 {
@@ -376,7 +376,7 @@ namespace LeetCodeAlgo
             StringBuilder sb = new StringBuilder();
             int left = 0;
             int count = 0;
-            for(int i = 0; i < s.Length; i++)
+            for (int i = 0; i < s.Length; i++)
             {
                 if (s[i] == '(') count++;
                 else count--;
@@ -398,14 +398,14 @@ namespace LeetCodeAlgo
 
         private void SumRootToLeaf(TreeNode root, int curr, ref int res)
         {
-            if(root == null)
+            if (root == null)
             {
                 return;
             }
             else
             {
                 curr = (curr << 1) + root.val;
-                if (root.left == null && root.right==null)
+                if (root.left == null && root.right == null)
                 {
                     res += curr;
                 }
@@ -420,9 +420,9 @@ namespace LeetCodeAlgo
         //can insert any lower chars to queries[i]
         public IList<bool> CamelMatch(string[] queries, string pattern)
         {
-            int n=queries.Length;
-            bool[] res=new bool[n];
-            for(int i = 0; i < queries.Length; i++)
+            int n = queries.Length;
+            bool[] res = new bool[n];
+            for (int i = 0; i < queries.Length; i++)
             {
                 res[i] = CamelMatch(queries[i], pattern);
             }
@@ -442,7 +442,7 @@ namespace LeetCodeAlgo
             int curr = clips[0][1];
             int res = 1;
             int n = clips.Length;
-            for (int i = 1; i <n  && curr<time; i++)
+            for (int i = 1; i < n && curr < time; i++)
             {
                 if (clips[i][0] > curr) return -1;
                 else if (clips[i][1] < curr) continue;
@@ -460,16 +460,16 @@ namespace LeetCodeAlgo
                     i = j - 1;
                 }
             }
-            return curr>=time?res:-1;
+            return curr >= time ? res : -1;
         }
 
         private bool CamelMatch(string query, string pattern)
         {
             int i = 0;
             int j = 0;
-            while (i<query.Length && j<pattern.Length)
+            while (i < query.Length && j < pattern.Length)
             {
-                if(query[i] == pattern[j])
+                if (query[i] == pattern[j])
                 {
                     i++;
                     j++;
@@ -506,15 +506,15 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        private void MaxAncestorDiff(TreeNode root,int max, int min, ref int res)
+        private void MaxAncestorDiff(TreeNode root, int max, int min, ref int res)
         {
             if (root == null) return;
-            if(max!= int.MinValue)
+            if (max != int.MinValue)
                 res = Math.Max(res, Math.Abs(max - root.val));
-            if(min!= int.MaxValue)
+            if (min != int.MaxValue)
                 res = Math.Max(res, Math.Abs(min - root.val));
-            max=Math.Max(max, root.val);
-            min=Math.Min(min, root.val);
+            max = Math.Max(max, root.val);
+            min = Math.Min(min, root.val);
             MaxAncestorDiff(root.left, max, min, ref res);
             MaxAncestorDiff(root.right, max, min, ref res);
         }
@@ -528,9 +528,9 @@ namespace LeetCodeAlgo
         {
 
             int sum = 0;
-            int leftStart=-1;
-            int rightStart=-1;
-            for(int i = 0; i <str.Length; i++)
+            int leftStart = -1;
+            int rightStart = -1;
+            for (int i = 0; i < str.Length; i++)
             {
                 if (str[i] != '-')
                 {
@@ -540,7 +540,7 @@ namespace LeetCodeAlgo
                         {
                             leftStart = i;
                         }
-                        else if(rightStart == -1)
+                        else if (rightStart == -1)
                         {
                             rightStart = i;
                             break;
@@ -554,7 +554,7 @@ namespace LeetCodeAlgo
                 }
             }
 
-            if(leftStart==-1 && rightStart == -1)
+            if (leftStart == -1 && rightStart == -1)
             {
                 return new TreeNode(int.Parse(str));
             }
@@ -562,7 +562,7 @@ namespace LeetCodeAlgo
             {
                 var val = int.Parse(str.Substring(0, leftStart - count));
                 var leftNode = RecoverFromPreorder(str.Substring(leftStart), count + 1);
-                var res=new TreeNode(val);
+                var res = new TreeNode(val);
                 res.left = leftNode;
                 return res;
             }
@@ -584,7 +584,7 @@ namespace LeetCodeAlgo
         public int TwoCitySchedCost(int[][] costs)
         {
             int res = costs.Sum(x => x[0]);
-            int[] diff = costs.Select(x=>x[1]-x[0]).ToArray();
+            int[] diff = costs.Select(x => x[1] - x[0]).ToArray();
             Array.Sort(diff);
             for (int i = 0; i < diff.Length / 2; i++)
                 res += diff[i];
@@ -593,8 +593,8 @@ namespace LeetCodeAlgo
         ///1030. Matrix Cells in Distance Order
         public int[][] AllCellsDistOrder(int rows, int cols, int rCenter, int cCenter)
         {
-            PriorityQueue<int[],int> pq = new PriorityQueue<int[],int>();
-            for(int i = 0; i < rows; i++)
+            PriorityQueue<int[], int> pq = new PriorityQueue<int[], int>();
+            for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < cols; j++)
                 {
@@ -603,8 +603,8 @@ namespace LeetCodeAlgo
             }
             var res = new int[rows * cols][];
             int index = 0;
-            while(pq.Count>0)
-                res[index++]=pq.Dequeue();
+            while (pq.Count > 0)
+                res[index++] = pq.Dequeue();
             return res;
         }
 
@@ -614,7 +614,7 @@ namespace LeetCodeAlgo
         {
             int m = grid.Length;
             int n = grid[0].Length;
-            var visit = initVisitMatrix(m,n);
+            var visit = initVisitMatrix(m, n);
             var dxy4 = new int[4][] { new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 } };
             var queue = new Queue<int[]>();
             queue.Enqueue(new int[] { row, col });
@@ -642,14 +642,14 @@ namespace LeetCodeAlgo
                                     queue.Enqueue(new int[] { r, c });
                                 }
                             }
-                            else isBorder=true;
+                            else isBorder = true;
                         }
                     }
                     if (isBorder)
                         list.Add(cell);
                 }
             }
-            foreach(var cell in list)
+            foreach (var cell in list)
                 grid[cell[0]][cell[1]] = color;
             return grid;
         }
@@ -663,12 +663,12 @@ namespace LeetCodeAlgo
             //The Longest Common Subsequence
             int m = nums1.Length;
             int n = nums2.Length;
-            var dp = new int[m+1, n+1];
-            for(int i = 1; i <= m; i++)
+            var dp = new int[m + 1, n + 1];
+            for (int i = 1; i <= m; i++)
             {
-                for(int j = 1; j <= n; j++)
+                for (int j = 1; j <= n; j++)
                 {
-                    if(nums1[i-1] == nums2[j-1])
+                    if (nums1[i - 1] == nums2[j - 1])
                     {
                         dp[i, j] = dp[i - 1, j - 1] + 1;
                     }
@@ -684,7 +684,7 @@ namespace LeetCodeAlgo
         /// 1037. Valid Boomerang
         public bool IsBoomerang(int[][] points)
         {
-            var x=points[0];
+            var x = points[0];
             var y = points[1];
             var z = points[2];
 
@@ -725,11 +725,11 @@ namespace LeetCodeAlgo
             return root;
         }
 
-        private int BstToGst_Recursion(TreeNode root,int sum)
+        private int BstToGst_Recursion(TreeNode root, int sum)
         {
             if (root == null)
                 return sum;
-            var rightVal = BstToGst_Recursion(root.right,sum);
+            var rightVal = BstToGst_Recursion(root.right, sum);
             root.val += rightVal;
             return BstToGst_Recursion(root.left, root.val);
         }
@@ -764,13 +764,40 @@ namespace LeetCodeAlgo
                 }
 
                 //Now just use a color that has not been used yet
-                for (int c = 1; c<=4; c++)
+                for (int c = 1; c <= 4; c++)
                 {
-                    if (colors[c] ==0) //colors[c] == 0 => the color has not been used yet,
+                    if (colors[c] == 0) //colors[c] == 0 => the color has not been used yet,
                         res[i] = c; //so let's use that one
                 }
             }
             return res;
+        }
+
+        ///1043. Partition Array for Maximum Sum, #DP , #Good
+        //partition array into (contiguous) subarrays of length at most k. 
+        //After partitioning, each subarray has their values changed to the maximum value of that subarray.
+        //Return the largest sum of the given array after partitioning. 
+        public int MaxSumAfterPartitioning(int[] arr, int k)
+        {
+            int n = arr.Length;
+            int[] dp = new int[n];
+            int max = 0;
+            for (int i = 0; i < k; i++)
+            {
+                max = Math.Max(max, arr[i]);
+                dp[i] = max * (i + 1);
+            }
+            //Time Complex : O(nk)
+            for (int i = k; i < n; i++)
+            {
+                int curr = 0;
+                for (int j = i; j > i - k; j--)
+                {
+                    curr = Math.Max(curr, arr[j]);
+                    dp[i] = Math.Max(dp[i], dp[j - 1] + curr * (i - j + 1));
+                }
+            }
+            return (int)dp[n - 1];
         }
 
         /// 1046. Last Stone Weight, #PriorityQueue
@@ -784,10 +811,10 @@ namespace LeetCodeAlgo
                 pq.Enqueue(n, -n);
             while (pq.Count >= 2)
             {
-                int max1=pq.Dequeue();
-                int max2=pq.Dequeue();
-                if(max1>max2)
-                    pq.Enqueue(max1-max2,max2-max1);
+                int max1 = pq.Dequeue();
+                int max2 = pq.Dequeue();
+                if (max1 > max2)
+                    pq.Enqueue(max1 - max2, max2 - max1);
             }
             return pq.Count > 0 ? pq.Dequeue() : 0;
         }
@@ -839,7 +866,7 @@ namespace LeetCodeAlgo
                 for (int i = 0; i < word.Length; ++i)
                 {
                     string prev = word.Substring(0, i) + word.Substring(i + 1);
-                    int count = dp.ContainsKey(prev) ? dp[prev] +1 : 1;
+                    int count = dp.ContainsKey(prev) ? dp[prev] + 1 : 1;
                     best = Math.Max(best, count);
                 }
                 dp.Add(word, best);
