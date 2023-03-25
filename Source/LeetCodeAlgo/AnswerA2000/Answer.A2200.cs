@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -278,22 +279,16 @@ namespace LeetCodeAlgo
         }
 
         ///2213. Longest Substring of One Repeating Character , #Segment Tree
+        //The ith query updates the character in s at index queryIndices[i] to the character queryCharacters[i].
+        //Return an array where lengths[i] is the longest substring length of s consisting of only one repeating character after the ith query.
         public int[] LongestRepeating(string s, string queryCharacters, int[] queryIndices)
         {
             int n = queryCharacters.Length;
-            var root = new SegmentLongestSubstrTree(s);
-            char[] arr = s.ToArray();
+            var tree = new SegmentRepeatCharTree(s);
             int[] res = new int[n];
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
-                int j = queryIndices[i];
-                char c = queryCharacters[i];
-                if ( c != arr[j])
-                {
-                    root.Update(j, c);
-                    arr[j] = c;
-                }
-                res[i] = root.Max();
+                res[i] = tree.Update(queryIndices[i], queryCharacters[i]);
             }
             return res;
         }
