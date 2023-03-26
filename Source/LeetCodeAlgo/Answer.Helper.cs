@@ -55,6 +55,24 @@ namespace LeetCodeAlgo
             return getFactorial(n, count) / getFactorial(count);
         }
 
+        private bool[] getPrime(int n)
+        {
+            //using Sieve_of_Eratosthenes to check every prime between [2,max]
+            //https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
+            bool[] arr = new bool[n+1];
+            arr[0]=true;
+            arr[1]= true;
+            for (int i = 2; i <= n; i++)
+            {
+                if (arr[i] == true) continue;//if i is not a prime, skip
+                for (int j = 2; j * i <= n; j++)
+                {
+                    arr[i * j] = true;//check all times of this i-prime in range of [1, max/i]
+                }
+            }
+            return arr;
+        }
+
         private bool[][] initVisitMatrix(int m,int n)
         {
             var visit=new bool[m][];

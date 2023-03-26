@@ -866,6 +866,37 @@ namespace LeetCodeAlgo
         //    else return numOnes-(k-numZeros-numOnes);
         //}
 
+        ///2601. Prime Subtraction Operation, #Prime
+        // Pick an index i that haven’t picked, and pick a prime p strictly less than nums[i], then subtract p from nums[i].
+        // Return true if you can make nums a strictly increasing array using the above operation and false otherwise.
+        public bool PrimeSubOperation(int[] nums)
+        {
+            int n = nums.Length;
+            int max = nums.Max();
+            bool[] arr = getPrime(max);
+
+            int prev = 0;
+            foreach(var i in nums)
+            {
+                if (i<=prev)
+                    return false;
+                prev = PrimeSubOperation(prev, i, arr);
+            }
+            return true;
+        }
+
+        private int PrimeSubOperation(int prev, int curr, bool[] primeArr)
+        {
+            for (int i = curr-1; i>=0; i--)
+            {
+                if (primeArr[i] == true) continue;
+                if (curr-i<=prev) continue;
+                curr-=i;
+                break;
+            }
+            return curr;
+        }
+
 
     }
 }
