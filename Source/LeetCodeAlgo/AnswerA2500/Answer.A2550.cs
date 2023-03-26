@@ -858,6 +858,14 @@ namespace LeetCodeAlgo
         //    return min*value + index;
         //}
 
+        ///2600. K Items With the Maximum Sum
+        //public int KItemsWithMaximumSum(int numOnes, int numZeros, int numNegOnes, int k)
+        //{
+        //    if (numOnes>=k) return k;
+        //    else if (numZeros+numOnes>=k) return numOnes;
+        //    else return numOnes-(k-numZeros-numOnes);
+        //}
+
 
     }
 }
