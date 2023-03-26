@@ -897,6 +897,60 @@ namespace LeetCodeAlgo
             return curr;
         }
 
+        ///2602. Minimum Operations to Make All Array Elements Equal, #BinarySearch
+        //For the ith query, you want to make all of the elements of nums equal to queries[i].
+        //You can perform the following operation on the array any number of times:
+        // - Increase or decrease an element of the array by 1.
+        //Return an array where answer[i] is the minimum number of operations to make all elements equal to queries[i].
+        public IList<long> MinOperations_2602(int[] nums, int[] queries)
+        {
+            int n = nums.Length;
+            Array.Sort(nums);
+            var res = new List<long>();
+            long[] prefix = new long[n];
+            long sum = 0;
+            for(int i = 0; i<n; i++)
+            {
+                sum+=nums[i];
+                prefix[i] = sum;
+            }
+
+            foreach(var q in queries)
+            {
+                if (nums[0]>=q)
+                {
+                    long ans = prefix[n-1] - 1l*q*n;
+                    res.Add(ans);
+                }
+                else if (nums[n-1]<=q)
+                {
+                    long ans = 1l*q*n - prefix[n-1];
+                    res.Add(ans);
+                }
+                else
+                {
+                    int left = 0;
+                    int right = n-1;
+                    while (left < right)
+                    {
+                        int mid = (left+right+1)/2;
+                        if (nums[mid]<=q)
+                        {
+                            left = mid;
+                        }
+                        else
+                        {
+                            right = mid-1;
+                        }
+                    }
+                    long ans = 1l*q*(left+1) - prefix[left];
+                    ans += prefix[n-1]- prefix[left] -1l*q*(n-1-(left+1)+1);
+                    res.Add(ans);
+                }
+            }
+            return res;
+        }
+
 
     }
 }
