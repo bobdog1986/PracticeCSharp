@@ -64,6 +64,44 @@ namespace LeetCodeAlgo
         //     return res;
         // }
 
+        ///2555. Maximize Win From Two Segments, #SlidingWindow ,#DP ,#Good
+        // Pick two segments [start,end], that end-start<=k
+        //prizePositions that is sorted in non-decreasing order
+        //Return the maximum number of prizes you can win if you choose the two segments optimally.
+        public int MaximizeWin(int[] prizePositions, int k)
+        {
+            int res = int.MinValue;
+            int n = prizePositions.Length;
+            int[] dp = new int[n];
+            dp[0]=1;
+            int left = 0;
+            for(int i = 0; i<n; i++)
+            {
+                while(left<i && prizePositions[left]+k<prizePositions[i])
+                {
+                    left++;
+                }
+
+                if (left>0)
+                {
+                    //largest segment to left-1 and current segment [left,i]
+                    res= Math.Max(res, dp[left-1]+(i-left+1));
+                }
+                else
+                {
+                    res= (i-left+1);
+                }
+
+                if (i>0)
+                {
+                    //dp[i] is the largest segment to i
+                    dp[i] = Math.Max(dp[i-1], (i-left+1));
+                }
+            }
+
+            return res;
+        }
+
         ///2558. Take Gifts From the Richest Pile
         // public long PickGifts(int[] gifts, int k)
         // {
