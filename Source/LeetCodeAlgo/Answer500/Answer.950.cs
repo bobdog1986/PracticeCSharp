@@ -515,6 +515,62 @@ namespace LeetCodeAlgo
 
         ///981. Time Based Key-Value Storem ,see TimeMap
 
+        ///983. Minimum Cost For Tickets, #DP
+        //Train tickets are sold in three different ways:
+        //a 1-day pass is sold for costs[0] dollars,
+        //a 7-day pass is sold for costs[1] dollars, and
+        //a 30-day pass is sold for costs[2] dollars.
+        //Return the minimum number of dollars you need to travel every day in the given list of days.
+        public int MincostTickets(int[] days, int[] costs)
+        {
+            int n = days.Length;
+            int[] arr = new int[365+1];
+            int[] dp = new int[366+1];
+            foreach (var i in days)
+            {
+                arr[i]++;
+            }
+            int j = 0;
+            int k = 0;
+            int sum7 = 0;
+            int sum30 = 0;
+            for (int i = 1; i<=365; i++)
+            {
+                dp[i]=dp[i-1];
+                if (arr[i]>0)
+                {
+                    dp[i]= dp[i-1]+costs[0];
+                    sum7++;
+                    sum30++;
+                }
+
+                while (j+6<i)
+                {
+                    sum7-=arr[j];
+                    j++;
+                }
+
+                if (sum7>0)
+                {
+                    if (i>=7) dp[i]=Math.Min(dp[i], dp[i-7]+costs[1]);
+                    else dp[i]=Math.Min(dp[i], costs[1]);
+                }
+
+                while (k+29<i)
+                {
+                    sum30-=arr[k];
+                    k++;
+                }
+
+                if (sum30>0)
+                {
+                    if (i>=30) dp[i]=Math.Min(dp[i], dp[i-30]+costs[2]);
+                    else dp[i]=Math.Min(dp[i], costs[2]);
+                }
+            }
+            return dp.Last();
+        }
+
         /// 984. String Without AAA or BBB
         public string StrWithout3a3b(int a, int b)
         {
