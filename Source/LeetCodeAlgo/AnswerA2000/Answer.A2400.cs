@@ -421,7 +421,7 @@ namespace LeetCodeAlgo
         //    }
         //}
 
-        ///2439. Minimize Maximum of Array, #Greedy, #PrefixSum
+        ///2439. Minimize Maximum of Array, #Greedy, #Prefix Sum
         //Do any times of operation : nums[i]-=x, nums[i-1]+=x
         //find possible min of max
         public int MinimizeArrayValue(int[] nums)

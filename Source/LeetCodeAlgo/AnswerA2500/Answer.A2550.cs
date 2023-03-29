@@ -676,6 +676,52 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
+        ///2589. Minimum Time to Complete All Tasks, #Greedy, #Prefix Sum, #PriorityQueue
+        //There is a computer that can run an unlimited number of tasks at the same time.
+        // tasks[i] = [starti, endi, durationi] indicates durationi seconds (not necessarily continuous) within [starti, endi].
+        //Return the minimum time during which the computer should be turned on to complete all tasks.
+        public int FindMinimumTime(int[][] tasks)
+        {
+            var pq = new PriorityQueue<int[], int[]>(Comparer<int[]>.Create((x, y) =>
+            {
+                return x[1] - x[2] - (y[1] - y[2]);
+            }));
+
+            int[] dp = new int[2001];
+            foreach (var t in tasks)
+            {
+                pq.Enqueue(t, t);
+            }
+            int i = 1;
+            while (pq.Count > 0)
+            {
+                var t = pq.Dequeue();
+                if (t[0] >= i)
+                {
+                    while (i <= t[1])
+                    {
+                        dp[i] = dp[i - 1];
+                        if (i >= t[1] - t[2] + 1)
+                        {
+                            dp[i]++;
+                        }
+                        i++;
+                    }
+                }
+                else
+                {
+                    int visit = dp[i - 1] - dp[t[0] - 1];
+                    if (visit >= t[2]) continue;
+                    else
+                    {
+                        int[] next = new int[] { i, t[1], t[2] - visit };
+                        pq.Enqueue(next, next);
+                    }
+                }
+            }
+
+            return dp[i-1];
+        }
         ///2591. Distribute Money to Maximum Children
         //- All money must be distributed.
         //- Everyone must receive at least 1 dollar.
@@ -895,99 +941,6 @@ namespace LeetCodeAlgo
         //    }
         //    return min*value + index;
         //}
-
-        ///2600. K Items With the Maximum Sum
-        //public int KItemsWithMaximumSum(int numOnes, int numZeros, int numNegOnes, int k)
-        //{
-        //    if (numOnes>=k) return k;
-        //    else if (numZeros+numOnes>=k) return numOnes;
-        //    else return numOnes-(k-numZeros-numOnes);
-        //}
-
-        ///2601. Prime Subtraction Operation, #Prime
-        // Pick an index i that haven’t picked, and pick a prime p strictly less than nums[i], then subtract p from nums[i].
-        // Return true if you can make nums a strictly increasing array using the above operation and false otherwise.
-        public bool PrimeSubOperation(int[] nums)
-        {
-            int n = nums.Length;
-            int max = nums.Max();
-            bool[] arr = getPrime(max);
-
-            int prev = 0;
-            foreach(var i in nums)
-            {
-                if (i<=prev)
-                    return false;
-                prev = PrimeSubOperation(prev, i, arr);
-            }
-            return true;
-        }
-
-        private int PrimeSubOperation(int prev, int curr, bool[] primeArr)
-        {
-            for (int i = curr-1; i>=0; i--)
-            {
-                if (primeArr[i] == true) continue;
-                if (curr-i<=prev) continue;
-                curr-=i;
-                break;
-            }
-            return curr;
-        }
-
-        ///2602. Minimum Operations to Make All Array Elements Equal, #BinarySearch
-        //For the ith query, you want to make all of the elements of nums equal to queries[i].
-        //You can perform the following operation on the array any number of times:
-        // - Increase or decrease an element of the array by 1.
-        //Return an array where answer[i] is the minimum number of operations to make all elements equal to queries[i].
-        public IList<long> MinOperations_2602(int[] nums, int[] queries)
-        {
-            int n = nums.Length;
-            Array.Sort(nums);
-            var res = new List<long>();
-            long[] prefix = new long[n];
-            long sum = 0;
-            for(int i = 0; i<n; i++)
-            {
-                sum+=nums[i];
-                prefix[i] = sum;
-            }
-
-            foreach(var q in queries)
-            {
-                if (nums[0]>=q)
-                {
-                    long ans = prefix[n-1] - 1l*q*n;
-                    res.Add(ans);
-                }
-                else if (nums[n-1]<=q)
-                {
-                    long ans = 1l*q*n - prefix[n-1];
-                    res.Add(ans);
-                }
-                else
-                {
-                    int left = 0;
-                    int right = n-1;
-                    while (left < right)
-                    {
-                        int mid = (left+right+1)/2;
-                        if (nums[mid]<=q)
-                        {
-                            left = mid;
-                        }
-                        else
-                        {
-                            right = mid-1;
-                        }
-                    }
-                    long ans = 1l*q*(left+1) - prefix[left];
-                    ans += prefix[n-1]- prefix[left] -1l*q*(n-1-(left+1)+1);
-                    res.Add(ans);
-                }
-            }
-            return res;
-        }
 
 
     }
