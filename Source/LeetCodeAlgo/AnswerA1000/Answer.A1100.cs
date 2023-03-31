@@ -478,6 +478,50 @@ namespace LeetCodeAlgo
             return dp[rowLen, colLen];
         }
 
+        ///1144. Decrease Elements To Make Array Zigzag
+        // public int MovesToMakeZigzag(int[] nums)
+        // {
+        //     int n = nums.Length;
+        //     if (n == 1) return 0;
+        //     int res = int.MaxValue;
+        //     int op1 = 0;
+        //     int op2 = 0;
+        //     for (int i = 0; i < nums.Length; i++)
+        //     {
+        //         if (i % 2 == 1)
+        //         {
+        //             int min = nums[i - 1];
+        //             if (i < nums.Length - 1)
+        //             {
+        //                 min = Math.Min(min, nums[i + 1]);
+        //             }
+        //             if (nums[i] >= min)
+        //             {
+        //                 op1 += nums[i] - min + 1;
+        //             }
+        //         }
+        //         else
+        //         {
+        //             int min = int.MaxValue;
+        //             if (i > 0)
+        //             {
+        //                 min = Math.Min(min, nums[i - 1]);
+        //             }
+        //             if (i < nums.Length - 1)
+        //             {
+        //                 min = Math.Min(min, nums[i + 1]);
+        //             }
+        //             if (nums[i] >= min)
+        //             {
+        //                 op2 += nums[i] - min + 1;
+        //             }
+        //         }
+        //     }
+        //     res = Math.Min(res, op1);
+        //     res = Math.Min(res, op2);
+        //     return res;
+        // }
+
         ///1145. Binary Tree Coloring Game, #Good
         //Split tree to two parts, the one without x has more nodes than x-part tree
         public bool BtreeGameWinningMove(TreeNode root, int n, int x)

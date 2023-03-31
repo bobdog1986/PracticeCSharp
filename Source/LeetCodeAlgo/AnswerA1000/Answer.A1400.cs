@@ -308,49 +308,75 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///1144. Decrease Elements To Make Array Zigzag
-        // public int MovesToMakeZigzag(int[] nums)
-        // {
-        //     int n = nums.Length;
-        //     if (n == 1) return 0;
-        //     int res = int.MaxValue;
-        //     int op1 = 0;
-        //     int op2 = 0;
-        //     for (int i = 0; i < nums.Length; i++)
-        //     {
-        //         if (i % 2 == 1)
-        //         {
-        //             int min = nums[i - 1];
-        //             if (i < nums.Length - 1)
-        //             {
-        //                 min = Math.Min(min, nums[i + 1]);
-        //             }
-        //             if (nums[i] >= min)
-        //             {
-        //                 op1 += nums[i] - min + 1;
-        //             }
-        //         }
-        //         else
-        //         {
-        //             int min = int.MaxValue;
-        //             if (i > 0)
-        //             {
-        //                 min = Math.Min(min, nums[i - 1]);
-        //             }
-        //             if (i < nums.Length - 1)
-        //             {
-        //                 min = Math.Min(min, nums[i + 1]);
-        //             }
-        //             if (nums[i] >= min)
-        //             {
-        //                 op2 += nums[i] - min + 1;
-        //             }
-        //         }
-        //     }
-        //     res = Math.Min(res, op1);
-        //     res = Math.Min(res, op2);
-        //     return res;
-        // }
+        ///1444. Number of Ways of Cutting a Pizza, #DP
+        //'A' (an apple) and '.' (empty cell) and given the integer k. You have to cut the pizza into k pieces using k-1 cuts.
+        // If you cut the pizza vertically, give the left part of the pizza to a person.
+        // If you cut the pizza horizontally, give the upper part of the pizza to a person.
+        // Give the last piece of pizza to the last person.
+        //public int Ways(string[] pizza, int k)
+        //{
+        //    int res = 0;
+        //    int m = pizza.Length;
+        //    int n = pizza[0].Length;
+
+        //    int[][] sum = new int[m+1][];
+        //    for(int i = 0; i<sum.Length; i++)
+        //    {
+        //        sum[i]=new int[n+1];
+        //    }
+
+        //    for(int i = 1; i<=m; i++)
+        //    {
+        //        for(int j=1;j<=n; j++)
+        //        {
+        //            sum[i][j] = sum[i-1][j]+sum[i][j-1]-sum[i-1][j-1];
+        //            if (pizza[i-1][j-1]=='A') sum[i][j]++;
+        //        }
+        //    }
+        //    var memo = new Dictionary<string, Dictionary<int, int>>();
+
+        //    res = Ways(0, 0, m-1, n-1, sum, k, memo);
+        //    return res;
+        //}
+
+        //private int Ways(int x1,int y1,int x2,int y2,int[][] sum, int k, Dictionary<string,Dictionary<int,int>> memo)
+        //{
+        //    if (x1>x2||y1>y2) return 0;
+        //    int count = sum[x2+1][y2+1] - sum[x1][y2+1]-sum[x2+1][y1]+sum[x1][y1];
+        //    if(k>count) return 0;
+
+        //    string key = $"[{x1},{y1}],[{x2},{y2}]";
+        //    if (!memo.ContainsKey(key))
+        //        memo.Add(key, new Dictionary<int, int>());
+        //    if (!memo[key].ContainsKey(k))
+        //    {
+        //        if (k==1)
+        //        {
+        //            memo[key].Add(k,1);
+        //        }
+        //        else
+        //        {
+        //            int res = 0;
+        //            int mod = 1_000_000_007;
+
+        //            for (int i = x1; i<x2; i++)
+        //            {
+        //                int a = Ways(x1, y1, i, y2, sum, 1, memo) * Ways(i+1, y1, x2, y2, sum, k-1, memo);
+        //                res = (res + a)%mod;
+        //            }
+
+        //            for(int i = y1; i<y2; i++)
+        //            {
+        //                int a = Ways(x1, y1, x2, i, sum, 1, memo) * Ways(x1, i+1, x2, y2, sum, k-1, memo);
+        //                res = (res + a)%mod;
+        //            }
+        //            memo[key].Add(k, res);
+        //        }
+        //    }
+
+        //    return memo[key][k];
+        //}
+
 
         /// 1446. Consecutive Characters
         ///The power of the string is the maximum length of a non-empty substring that contains only one unique character.
