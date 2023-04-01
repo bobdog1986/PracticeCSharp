@@ -102,6 +102,95 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2556. Disconnect Path in a Binary Matrix by at Most One Flip, #Good
+        //The matrix is disconnected if there is no path from (0, 0) to (m - 1, n - 1).
+        //You can flip the value of at most one(possibly none) cell.You cannot flip the cells(0, 0) and(m - 1, n - 1).
+        //Return true if it is possible to make the matrix disconnect or false otherwise.
+        public bool IsPossibleToCutPath(int[][] grid)
+        {
+            int m = grid.Length;
+            int n = grid[0].Length;
+            //Prume first, remove all invalid 1, from both backward and forward
+            IsPossibleToCutPath_Forward_Prune(grid, 0, 0, new HashSet<int>());
+            if (grid[0][0]==0)
+                return true;
+            IsPossibleToCutPath_Backward_Prune(grid, m-1, n-1, new HashSet<int>());
+            if (grid[m-1][n-1]==0)
+                return true;
+            for(int i = 1; i<m+n-1-1; i++)
+            {
+                int count=0;
+                //[1,0]->[0,1], check if any diagonal contains only one '1'
+                for(int j = 0; j<=i; j++)
+                {
+                    if(i-j<m && j<n)
+                    {
+                        if (grid[i-j][j]==1)
+                            count++;
+                    }
+                }
+                if (count==1)
+                    return true;
+            }
+            return false;
+        }
+
+        private bool IsPossibleToCutPath_Forward_Prune(int[][] grid,int i,int j, HashSet<int> visit)
+        {
+            if (visit.Contains(i*1000+j))
+                return grid[i][j]==1;
+            int m= grid.Length;
+            int n = grid[0].Length;
+            if (i>=m||j>=n)
+                return false;
+            if (grid[i][j]==0)
+                return false;
+            else
+            {
+                if (i == m-1 && j==n-1) return true;
+                else
+                {
+                    bool res = false;
+                    if (i<m-1)
+                        res|=IsPossibleToCutPath_Forward_Prune(grid, i+1, j, visit);
+                    if (j<n-1)
+                        res|=IsPossibleToCutPath_Forward_Prune(grid, i, j+1, visit);
+                    if (!res)
+                        grid[i][j]=0;
+                    visit.Add(i*1000+j);
+                    return res;
+                }
+            }
+        }
+
+        private bool IsPossibleToCutPath_Backward_Prune(int[][] grid, int i, int j, HashSet<int> visit)
+        {
+            int m = grid.Length;
+            int n = grid[0].Length;
+            if (visit.Contains(i*1000+j))
+                return grid[i][j]==1;
+            if (i<0||j<0)
+                return false;
+            if (grid[i][j]==0)
+                return false;
+            else
+            {
+                if (i == 0 && j==0) return true;
+                else
+                {
+                    bool res = false;
+                    if (i>0)
+                        res|=IsPossibleToCutPath_Backward_Prune(grid, i-1, j, visit);
+                    if (j>0)
+                        res|=IsPossibleToCutPath_Backward_Prune(grid, i, j-1,visit);
+                    if (!res)
+                        grid[i][j]=0;
+                    visit.Add(i*1000+j);
+                    return res;
+                }
+            }
+        }
+
         ///2558. Take Gifts From the Richest Pile
         // public long PickGifts(int[] gifts, int k)
         // {
