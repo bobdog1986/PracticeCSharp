@@ -101,6 +101,32 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2606. Find the Substring With Maximum Cost, #Kadane
+        //if chars[i] == s[j], score of s[j]=vals[i], else score of s[j]= s[j]-'a'+1
+        //return max score of all substring of s
+        public int MaximumCostSubstring(string s, string chars, int[] vals)
+        {
+            int res = 0;
+            int max = 0;
+            Dictionary<char, int> dict = new Dictionary<char, int>();
 
+            for (int i = 0; i<chars.Length; i++)
+            {
+                dict.Add(chars[i], vals[i]);
+            }
+
+            for (int i = 0; i<s.Length; i++)
+            {
+                if (dict.ContainsKey(s[i]))
+                {
+                    max+=dict[s[i]];
+                }
+                else max+= s[i]-'a'+1;
+                if (max<0) max=0;
+                res=Math.Max(res, max);
+            }
+
+            return res;
+        }
     }
 }
