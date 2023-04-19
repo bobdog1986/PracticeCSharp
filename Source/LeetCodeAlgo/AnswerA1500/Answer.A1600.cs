@@ -15,16 +15,16 @@ namespace LeetCodeAlgo
         ///0 <= rowSum[i], colSum[i] <= 10^8
         public int[][] RestoreMatrix(int[] rowSum, int[] colSum)
         {
-            int rowLen= rowSum.Length;
-            int colLen= colSum.Length;
+            int rowLen = rowSum.Length;
+            int colLen = colSum.Length;
 
-            int[][] res= new int[rowLen][];
-            for(int i=0; i<rowLen; i++)
+            int[][] res = new int[rowLen][];
+            for (int i = 0; i<rowLen; i++)
                 res[i]=new int[colLen];
 
-            for(int i=0;i<rowLen; i++)
+            for (int i = 0; i<rowLen; i++)
             {
-                for(int j=0;j<colLen; j++)
+                for (int j = 0; j<colLen; j++)
                 {
                     var val = Math.Min(rowSum[i], colSum[j]);
                     res[i][j]=val;
@@ -34,17 +34,18 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 1608. Special Array With X Elements Greater Than or Equal X
         ///Return x if the array is special, otherwise, return -1.
         ///0 <= nums[i] <= 1000
         public int SpecialArray(int[] nums)
         {
             int[] arr = new int[1001];
-            foreach(var n in nums)
+            foreach (var n in nums)
                 arr[n]++;
 
             int count = 0;
-            for(int i = 1000; i >= 0; i--)
+            for (int i = 1000; i >= 0; i--)
             {
                 count += arr[i];
                 if (count == i) return i;
@@ -71,15 +72,16 @@ namespace LeetCodeAlgo
             }
             return -1;
         }
+
         /// 1609. Even Odd Tree, #BFS, #BTree
         ///A binary tree is named Even-Odd if it meets the following conditions:
         ///odd-indexed level, all nodes at the level have even integer values in strictly decreasing order(from left to right).
         ///even-indexed level, all nodes at the level have odd integer values in strictly increasing order (from left to right).
         public bool IsEvenOddTree(TreeNode root)
         {
-            List<TreeNode> list =new List<TreeNode>() { root};
+            List<TreeNode> list = new List<TreeNode>() { root };
             bool odd = false;
-            while(list.Count > 0)
+            while (list.Count > 0)
             {
                 List<TreeNode> next = new List<TreeNode>();
                 for (int i = 0; i < list.Count; i++)
@@ -128,7 +130,6 @@ namespace LeetCodeAlgo
                     else
                         max = Math.Max(max, graph[i].Count + graph[j].Count);
                 }
-
             }
             return max;
         }
@@ -140,7 +141,7 @@ namespace LeetCodeAlgo
             Array.Sort(arr);
             int sum = arr.Sum();
             int skips = arr.Length / 20;
-            for(int i = 0; i < skips; i++)
+            for (int i = 0; i < skips; i++)
             {
                 sum -= arr[i];
                 sum -= arr[arr.Length - 1 - i];
@@ -150,37 +151,33 @@ namespace LeetCodeAlgo
 
         ///1622. Fancy Sequence, see Fancy
 
-
-
         ///1629. Slowest Key
         public char SlowestKey(int[] releaseTimes, string keysPressed)
         {
             Dictionary<char, int> dict = new Dictionary<char, int>();
-            for(int i = 0; i < releaseTimes.Length; i++)
+            for (int i = 0; i < releaseTimes.Length; i++)
             {
-                int duration = i == 0? releaseTimes[i]: releaseTimes[i]- releaseTimes[i-1];
+                int duration = i == 0 ? releaseTimes[i] : releaseTimes[i]- releaseTimes[i-1];
                 if (dict.ContainsKey(keysPressed[i]))
                     dict[keysPressed[i]] = Math.Max(duration, dict[keysPressed[i]]);
                 else dict.Add(keysPressed[i], duration);
             }
 
-            var keys =dict.Keys.OrderBy(k => -dict[k]).ThenBy(k=>-k).ToArray();
+            var keys = dict.Keys.OrderBy(k => -dict[k]).ThenBy(k => -k).ToArray();
             return keys[0];
         }
-
-
 
         ///1630. Arithmetic Subarrays
         ///Return a list of boolean elements answer, where answer[i] is true if the subarray
         ///nums[l[i]], nums[l[i]+1], ... , nums[r[i]] can be rearranged to form an arithmetic sequence or false.
         public IList<bool> CheckArithmeticSubarrays_QuickSort(int[] nums, int[] l, int[] r)
         {
-            bool[] res=new bool[l.Length];
-            for(int i= 0; i < l.Length; i++)
+            bool[] res = new bool[l.Length];
+            for (int i = 0; i < l.Length; i++)
             {
                 int len = r[i] -l[i]+1;
-                int[] arr=new int[len];
-                for(int j = l[i]; j <= r[i]; j++)
+                int[] arr = new int[len];
+                for (int j = l[i]; j <= r[i]; j++)
                 {
                     arr[j - l[i]] = nums[j];
                 }
@@ -189,15 +186,16 @@ namespace LeetCodeAlgo
             }
             return res.ToList();
         }
+
         private bool CheckArithmeticSubarrays_QuickSort(int[] arr)
         {
             if (arr.Length <= 2) return true;
 
             Array.Sort(arr);
             int diff = arr[1] - arr[0];
-            for(int i = 2; i < arr.Length; i++)
+            for (int i = 2; i < arr.Length; i++)
             {
-                if(arr[i] - arr[i-1]!= diff) return false;
+                if (arr[i] - arr[i-1]!= diff) return false;
             }
             return true;
         }
@@ -233,6 +231,7 @@ namespace LeetCodeAlgo
             }
             return true;
         }
+
         ///1631. Path With Minimum Effort, #Dijkstra，#Graph
         //A route's effort is the maximum absolute difference in heights between two consecutive cells of the route.
         //Return the minimum effort required to travel from the top-left cell to the bottom-right cell.
@@ -247,15 +246,15 @@ namespace LeetCodeAlgo
         public int[] FrequencySort(int[] nums)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
-            foreach(var n in nums)
+            foreach (var n in nums)
             {
-                if(dict.ContainsKey(n))dict[n]++;
+                if (dict.ContainsKey(n)) dict[n]++;
                 else dict.Add(n, 1);
             }
-            var keys=dict.Keys.OrderBy(x=>dict[x]).ThenBy(x=>-x);
+            var keys = dict.Keys.OrderBy(x => dict[x]).ThenBy(x => -x);
             var res = new int[nums.Length];
             int i = 0;
-            foreach(var key in keys)
+            foreach (var key in keys)
             {
                 while (dict[key]-- > 0)
                 {
@@ -269,24 +268,64 @@ namespace LeetCodeAlgo
         public int MaxWidthOfVerticalArea(int[][] points)
         {
             int res = 0;
-            var list = points.Select(x=>x[0]).OrderBy(x =>x).ToList();
+            var list = points.Select(x => x[0]).OrderBy(x => x).ToList();
             for (int i = 0; i < list.Count - 1; i++)
                 res = Math.Max(res, list[i + 1] - list[i]);
             return res;
+        }
+
+        ///1639. Number of Ways to Form a Target String Given a Dictionary, #DP
+        //Your task is to form target using the given words under the following rules:
+        //- target should be formed from left to right.
+        //- can choose the kth character of the jth string in words if target[i] = words[j][k].
+        //- Once you use the kth character of the jth string of words, no longer use the xth character of any string in words where x <= k.
+        //  In other words, all characters to the left of or at index k become unusuable for every string.
+        //Repeat the process until you form the string target.
+        //Notice that you can use multiple characters from the same string in words provided the conditions above are met.
+        //Return the number of ways to form target from words. Since the answer may be too large, return it modulo 109 + 7.
+        public int NumWays(string[] words, string target)
+        {
+            int m = words[0].Length;
+            long[][] dp = new long[m + 1][];
+            int n = target.Length;
+            for (int i = 0; i < dp.Length; i++)
+            {
+                dp[i] = new long[n + 1];
+            }
+            dp[0][0] = 1;
+            long mod = 1_000_000_007;
+            for (int i = 1; i <= m; i++)
+            {
+                for (int j = 0; j <= n; j++)
+                {
+                    dp[i][j] += dp[i - 1][j];
+                }
+                long[] arr = new long[26];
+                foreach (var w in words)
+                {
+                    arr[w[i - 1] - 'a']++;
+                }
+                for (int j = 1; j <= n; j++)
+                {
+                    dp[i][j] += dp[i - 1][j - 1] * arr[target[j - 1] - 'a'];
+                    dp[i][j] %= mod;
+                }
+            }
+            return (int)dp[m][n];
         }
 
         ///1640. Check Array Formation Through Concatenation
         public bool CanFormArray(int[] arr, int[][] pieces)
         {
             Dictionary<int, int[]> dict = new Dictionary<int, int[]>();
-            foreach(var p in pieces)
+            foreach (var p in pieces)
                 dict.Add(p[0], p);
 
-            for(int i = 0; i < arr.Length;)
+            for (int i = 0; i < arr.Length;)
             {
-                if(!dict.ContainsKey(arr[i]))return false;
+                if (!dict.ContainsKey(arr[i])) return false;
                 var curr = dict[arr[i]];
-                for(int j=0; j < curr.Length; j++)
+                for (int j = 0; j < curr.Length; j++)
                 {
                     if (arr[i + j] != curr[j]) return false;
                 }
@@ -334,7 +373,7 @@ namespace LeetCodeAlgo
             int n = heights.Length;
             var minHeap = new PriorityQueue<int, int>();
             int total = 0;
-            for(int i = 0; i < n - 1; i++)
+            for (int i = 0; i < n - 1; i++)
             {
                 int gap = heights[i + 1] - heights[i];
                 if (gap > 0)
@@ -342,7 +381,7 @@ namespace LeetCodeAlgo
                     minHeap.Enqueue(gap, gap);
                     if (minHeap.Count > ladders)
                     {
-                        var top=minHeap.Dequeue();
+                        var top = minHeap.Dequeue();
                         total += top;
                         if (total > bricks) return i;
                     }
@@ -361,7 +400,7 @@ namespace LeetCodeAlgo
             else if (n == 1) return 1;
             int[] arr = new int[n + 1];
             arr[1] = 1;
-            for(int i=2;i<= n; i++)
+            for (int i = 2; i<= n; i++)
             {
                 if (i % 2 == 0) arr[i] = arr[i / 2];
                 else arr[i] = arr[i / 2] + arr[i/2+1];
@@ -375,7 +414,7 @@ namespace LeetCodeAlgo
         public int MinDeletions_1647(string s)
         {
             var dict = new Dictionary<char, int>();
-            foreach(var c in s)
+            foreach (var c in s)
             {
                 if (dict.ContainsKey(c)) dict[c]++;
                 else dict.Add(c, 1);
@@ -383,7 +422,7 @@ namespace LeetCodeAlgo
             int res = 0;
             var freqs = dict.Values.OrderBy(x => -x).ToList();
             int prev = int.MaxValue;
-            foreach(var freq in freqs)
+            foreach (var freq in freqs)
             {
                 if (freq >= prev)
                 {
@@ -450,7 +489,6 @@ namespace LeetCodeAlgo
             return (int)(res % mod);
         }
 
-
         ///1649. Create Sorted Array through Instructions, #BITree, #Fenwick
         //The cost of each insertion is the minimum of the following:
         //The number of elements currently in nums that are strictly less than instructions[i].
@@ -461,7 +499,7 @@ namespace LeetCodeAlgo
             var root = new BinaryIndexedTree(100000);
             long res = 0;
             long mod = 1_000_000_007;
-            for(int i = 0; i < instructions.Length; i++)
+            for (int i = 0; i < instructions.Length; i++)
             {
                 res += Math.Min(root.get(instructions[i] - 1), i - root.get(instructions[i]));
                 res %= mod;
@@ -469,6 +507,5 @@ namespace LeetCodeAlgo
             }
             return (int)((res + mod) % mod);
         }
-
     }
 }
