@@ -285,6 +285,40 @@ namespace LeetCodeAlgo
         //    return new string(res);
         //}
 
+        ///1372. Longest ZigZag Path in a Binary Tree
+        public int LongestZigZag(TreeNode root)
+        {
+            int res = 0;
+            LongestZigZag(root, 0, true, ref res);
+            LongestZigZag(root, 0, false, ref res);
+            return res;
+        }
+
+        private void LongestZigZag(TreeNode root, int count, bool isLeft, ref int max)
+        {
+            max = Math.Max(max, count);
+            if (root != null)
+            {
+                if (isLeft)
+                {
+                    if (root.right!=null)
+                    {
+                        LongestZigZag(root.right, count + 1, false, ref max);
+                        LongestZigZag(root.right, 0, true, ref max);
+                    }
+                }
+                else
+                {
+                    if (root.left!=null)
+                    {
+                        LongestZigZag(root.left, count + 1, true, ref max);
+                        LongestZigZag(root.left, 0, false, ref max);
+                    }
+                }
+
+            }
+        }
+
         ///1374. Generate a String With Characters That Have Odd Counts
         // public string GenerateTheString(int n)
         // {
