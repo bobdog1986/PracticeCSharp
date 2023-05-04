@@ -553,5 +553,59 @@ namespace LeetCodeAlgo
             return string.Join(" ", res);
         }
 
+        ///649. Dota2 Senate
+        //public string PredictPartyVictory(string senate)
+        //{
+        //    int n = senate.Length;
+        //    int totalR = senate.Count(x => x=='R'); //"Radiant" or "Dire".
+        //    int totalD = n - totalR;
+        //    bool[] banArr = new bool[n];
+        //    int banR = 0;
+        //    int banD = 0;
+        //    int j = 0;
+        //    while (j++<1000)
+        //    {
+        //        for (int i = 0; i < n; i++)
+        //        {
+        //            if (!banArr[i])
+        //            {
+        //                if (senate[i] == 'R')
+        //                {
+        //                    if (banR > 0)
+        //                    {
+        //                        banR--;
+        //                        banArr[i] = true;
+        //                        totalR--;
+        //                    }
+        //                    else
+        //                    {
+        //                        if (totalD == 0)
+        //                            return "Radiant";
+        //                        else
+        //                            banD++;
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    if (banD > 0)
+        //                    {
+        //                        banD--;
+        //                        banArr[i] = true;
+        //                        totalD--;
+        //                    }
+        //                    else
+        //                    {
+        //                        if (totalR == 0)
+        //                            return "Dire";
+        //                        else
+        //                            banR++;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return string.Empty;
+        //}
+
     }
 }
