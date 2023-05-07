@@ -110,6 +110,38 @@ namespace LeetCodeAlgo
             return (stack_size + 1) / 2;//both ]][[, ][ need 1 swap
         }
 
+        ///1964. Find the Longest Valid Obstacle Course at Each Position, #Patience Sort, #LIS
+        //Same as Q300
+        public int[] LongestObstacleCourseAtEachPosition(int[] obstacles)
+        {
+            int n =obstacles.Length;
+            int[] res = new int[n];
+            int[] mono = new int[n];
+            int end = 0;
+            for(int i = 0; i<n; i++)
+            {
+                int left = 0;
+                int right = end;
+                while (left<right)
+                {
+                    int mid = (left+right)/2;
+                    if (obstacles[i]>=mono[mid])
+                    {
+                        left=mid+1;
+                    }
+                    else
+                    {
+                        right=mid;
+                    }
+                }
+                res[i]= left+1;
+                mono[left]=obstacles[i];
+                if (left==end)
+                    end++;
+            }
+            return res;
+        }
+
         ///1967. Number of Strings That Appear as Substrings in Word
         public int NumOfStrings(string[] patterns, string word)
         {
