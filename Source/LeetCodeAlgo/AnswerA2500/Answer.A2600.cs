@@ -128,5 +128,34 @@ namespace LeetCodeAlgo
 
             return res;
         }
+
+        ///2610. Convert an Array Into a 2D Array With Conditions
+        //public IList<IList<int>> FindMatrix(int[] nums)
+        //{
+        //    int n = nums.Length;
+        //    int[] arr = new int[n+1];
+        //    foreach (var i in nums)
+        //    {
+        //        arr[i]++;
+        //    }
+
+        //    int max = arr.Max();
+
+        //    IList<IList<int>> res = new List<IList<int>>();
+        //    while (max-->0)
+        //    {
+        //        IList<int> list = new List<int>();
+        //        for (int i = 0; i<arr.Length; i++)
+        //        {
+        //            if (arr[i]>0)
+        //            {
+        //                list.Add(i);
+        //                arr[i]--;
+        //            }
+        //        }
+        //        res.Add(list);
+        //    }
+        //    return res;
+        //}
     }
 }
