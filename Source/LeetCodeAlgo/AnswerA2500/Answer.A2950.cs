@@ -22,6 +22,18 @@ namespace LeetCodeAlgo
         //    return arr;
         //}
 
+        ///2980. Check if Bitwise OR Has Trailing Zeros
+        //public bool HasTrailingZeros(int[] nums)
+        //{
+        //    int evens = 0;
+        //    foreach (var i in nums)
+        //    {
+        //        if (i%2==0) evens++;
+        //        if (evens>=2) return true;
+        //    }
+        //    return false;
+        //}
+
         ///2981. Find Longest Special Substring That Occurs Thrice I
         //public int MaximumLength(string s)
         //{
