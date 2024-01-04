@@ -8,6 +8,24 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
+        ///2966. Divide Array Into Arrays With Max Difference
+        //public int[][] DivideArray(int[] nums, int k)
+        //{
+        //    Array.Sort(nums);
+        //    int n = nums.Length;
+        //    List<int[]> res = new List<int[]>();
+        //    for (int i = 0; i<n; i+=3)
+        //    {
+        //        if (nums[i+2]-nums[i]>k)
+        //            return new int[0][];
+        //        else
+        //        {
+        //            res.Add(new int[] { nums[i], nums[i+1], nums[i+2] });
+        //        }
+        //    }
+        //    return res.ToArray();
+        //}
+
         /// 2974. Minimum Number Game
         //public int[] NumberGame(int[] nums)
         //{
