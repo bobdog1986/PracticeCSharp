@@ -62,5 +62,51 @@ namespace LeetCodeAlgo
         //    }
         //    return res==0 ? -1 : res;
         //}
+
+        ///2982. Find Longest Special Substring That Occurs Thrice II
+        //public int MaximumLength(string s)
+        //{
+        //    var dict = new Dictionary<char, Dictionary<int, int>>();
+
+        //    int res = 0;
+        //    int len = 0;
+        //    char c = ' ';
+        //    for (int i = 0; i<s.Length; i++)
+        //    {
+        //        if (s[i]==c)
+        //        {
+        //            len++;
+        //        }
+        //        else
+        //        {
+        //            c=s[i];
+        //            len=1;
+        //        }
+        //        if (!dict.ContainsKey(c))
+        //            dict.Add(c, new Dictionary<int, int>());
+        //        if (!dict[c].ContainsKey(len))
+        //            dict[c].Add(len, 0);
+
+        //        dict[c][len]++;
+        //    }
+
+        //    foreach (var k in dict.Keys)
+        //    {
+        //        int i = 0;
+        //        int max = dict[k].Keys.Max();
+        //        while (max>0)
+        //        {
+        //            i+=dict[k][max];
+        //            if (i>=3)
+        //            {
+        //                res=Math.Max(res, max);
+        //                break;
+        //            }
+        //            max--;
+        //        }
+        //    }
+
+        //    return res==0 ? -1 : res;
+        //}
     }
 }
