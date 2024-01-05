@@ -8,6 +8,30 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
+        ///2961. Double Modular Exponentiation
+        //public IList<int> GetGoodIndices(int[][] variables, int target)
+        //{
+        //    var res = new List<int>();
+        //    for (int i = 0; i<variables.Length; i++)
+        //    {
+        //        int val = 1;
+        //        while (variables[i][1]>0)
+        //        {
+        //            val = (val * variables[i][0])%10;
+        //            variables[i][1]--;
+        //        }
+        //        int ans = 1;
+        //        while (variables[i][2]>0)
+        //        {
+        //            ans = (ans * val)%variables[i][3];
+        //            variables[i][2]--;
+        //        }
+        //        if (ans == target)
+        //            res.Add(i);
+        //    }
+        //    return res;
+        //}
+
         ///2966. Divide Array Into Arrays With Max Difference
         //public int[][] DivideArray(int[] nums, int k)
         //{
