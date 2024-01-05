@@ -8,6 +8,21 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
+        ///2957. Remove Adjacent Almost-Equal Characters
+        //public int RemoveAlmostEqualCharacters(string word)
+        //{
+        //    int res = 0;
+        //    for (int i = 1; i<word.Length; i++)
+        //    {
+        //        if (word[i]-word[i-1]<=1 &&word[i]-word[i-1]>=-1)
+        //        {
+        //            res++;
+        //            i++;
+        //        }
+        //    }
+        //    return res;
+        //}
+
         ///2958. Length of Longest Subarray With at Most K Frequency, #Two Pointers
         //public int MaxSubarrayLength(int[] nums, int k)
         //{
