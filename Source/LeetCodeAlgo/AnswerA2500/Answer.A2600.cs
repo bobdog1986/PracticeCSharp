@@ -129,6 +129,45 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2607. Make K-Subarray Sums Equal
+        //public long MakeSubKSumEqual(int[] arr, int k)
+        //{
+        //    var dict = new Dictionary<int, List<int>>();
+        //    int n = arr.Length;
+        //    bool[] visit = new bool[n];
+        //    for (int i = 0; i<n; i++)
+        //    {
+        //        if (visit[i]) continue;
+        //        int j = i;
+        //        dict.Add(i, new List<int>());
+        //        while (!visit[j])
+        //        {
+        //            visit[j]=true;
+        //            dict[i].Add(arr[j]);
+        //            j=(j+k)%n;
+        //        }
+        //    }
+        //    long res = 0;
+        //    foreach (var i in dict.Keys)
+        //    {
+        //        var list = dict[i].OrderBy(x => x).ToList();
+        //        int median;
+        //        if (list.Count %2 == 1)
+        //        {
+        //            median = list[list.Count/2];
+        //        }
+        //        else
+        //        {
+        //            median = (list[list.Count/2-1]+list[list.Count/2])/2;
+        //        }
+        //        foreach (var j in list)
+        //        {
+        //            res+= Math.Abs(j-median);
+        //        }
+        //    }
+        //    return res;
+        //}
+
         ///2610. Convert an Array Into a 2D Array With Conditions
         //public IList<IList<int>> FindMatrix(int[] nums)
         //{
