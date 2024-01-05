@@ -8,6 +8,27 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
+        ///2958. Length of Longest Subarray With at Most K Frequency, #Two Pointers
+        //public int MaxSubarrayLength(int[] nums, int k)
+        //{
+        //    int res = 0;
+        //    int left = 0;
+        //    var dict = new Dictionary<int, int>();
+        //    for (int i = 0; i<nums.Length; i++)
+        //    {
+        //        if (dict.ContainsKey(nums[i])) dict[nums[i]]++;
+        //        else dict.Add(nums[i], 1);
+        //        while (left<=i&&dict[nums[i]]>k)
+        //        {
+        //            dict[nums[left]]--;
+        //            left++;
+        //        }
+        //        res = Math.Max(res, i-left+1);
+        //    }
+
+        //    return res;
+        //}
+
         ///2961. Double Modular Exponentiation
         //public IList<int> GetGoodIndices(int[][] variables, int target)
         //{
