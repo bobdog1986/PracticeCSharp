@@ -68,6 +68,31 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
+        ///2962. Count Subarrays Where Max Element Appears at Least K Times, #Sliding Window
+        //Return the number of subarrays where the maximum element of nums appears at least k times in that subarray.
+        //A subarray is a contiguous sequence of elements within an array.
+        public long CountSubarrays(int[] nums, int k)
+        {
+            long res = 0;
+            int max = nums.Max();
+            int n = nums.Length;
+            int left = 0;
+            int count = 0;
+            for (int i = 0; i<n; i++)
+            {
+                if (nums[i]==max) count++;
+                while (count>=k)
+                {
+                    if (nums[left]==max) count--;
+                    left++;
+                };
+                //window [left,i] contains k-1 max elements
+                //all subarrays start in [0,left-1] , end at i, match the rule, so add (left-1-0+1)
+                res+= left;
+            }
+            return res;
+        }
+
         ///2966. Divide Array Into Arrays With Max Difference
         //public int[][] DivideArray(int[] nums, int k)
         //{
