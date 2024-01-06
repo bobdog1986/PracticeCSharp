@@ -383,6 +383,39 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///1235. Maximum Profit in Job Scheduling, #DP
+        //n jobs where every job to be done from startTime[i] to endTime[i], obtaining profit[i].
+        //return the maximum profit you can take such that there are no two jobs in the subset with overlapping time range.
+        //If you choose a job that ends at time X you will be able to start another job that starts at time X.
+        public int JobScheduling(int[] startTime, int[] endTime, int[] profit)
+        {
+            int n = startTime.Length;
+            List<int[]> jobs = new List<int[]>();
+
+            for (int i = 0; i < n; i++)
+            {
+                jobs.Add(new int[3] { startTime[i], endTime[i], profit[i] });
+            }
+
+            jobs.Sort((x, y) => x[1].CompareTo(y[1]));
+
+            int[] dp = new int[n + 1];
+
+            for (int i = 1; i <= n; i++)
+            {
+                dp[i] = Math.Max(dp[i - 1], jobs[i - 1][2]);
+                for (int j = i - 1; j > 0; j--)
+                {
+                    if (jobs[i - 1][0] >= jobs[j - 1][1])
+                    {
+                        dp[i] = Math.Max(dp[i], dp[j] + jobs[i - 1][2]);
+                        break;//why break
+                    }
+                }
+            }
+            return dp[n];
+        }
+
         ///1239. Maximum Length of a Concatenated String with Unique Characters
         public int MaxLength(IList<string> arr)
         {
