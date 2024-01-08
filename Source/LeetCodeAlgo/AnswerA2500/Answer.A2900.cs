@@ -41,5 +41,26 @@ namespace LeetCodeAlgo
 
         //    return dp[n];
         //}
+
+        ///2947. Count Beautiful Substrings I
+        //public int BeautifulSubstrings(string s, int k)
+        //{
+        //    HashSet<char> set = new HashSet<char>() { 'a', 'e', 'i', 'o', 'u' };
+        //    int n = s.Length;
+        //    int res = 0;
+        //    for (int i = 0; i<n; i++)
+        //    {
+        //        int v = 0;
+        //        int c = 0;
+        //        for (int j = i; j<n; j++)
+        //        {
+        //            if (set.Contains(s[j])) v++;
+        //            else c++;
+        //            if (v==c && (v*c%k==0))
+        //                res++;
+        //        }
+        //    }
+        //    return res;
+        //}
     }
 }
