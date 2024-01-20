@@ -38,6 +38,38 @@ namespace LeetCodeAlgo
             return nums.OrderBy(x => x % 2).ToArray();
         }
 
+        /// 907. Sum of Subarray Minimums
+        /// find the sum of min(b), where b ranges over every (contiguous) subarray of arr. return modulo 109 + 7.
+        public int SumSubarrayMins(int[] arr)
+        {
+            int n = arr.Length;
+            long res = 0;
+            long mod = 1_000_000_007;
+            for(int i = 0; i<n; i++)
+            {
+                int j = i-1;
+                while (j>=0)
+                {
+                    if (arr[j]>arr[i])
+                        j--;
+                    else
+                        break;
+                }
+                int k = i+1;
+                while (k<n)
+                {
+                    if (arr[k]>arr[i])
+                        k++;
+                    else break;
+                }
+
+                res+= (i-j)*(k-i)*arr[i];
+                res%=mod;
+            }
+
+            return (int)res;
+        }
+
         ///908. Smallest Range I
         ///The score of nums is the difference between the maximum and minimum elements in nums.
         ///Return the minimum score of nums after applying the mentioned operation at most once for each index in it.
@@ -116,6 +148,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         ///
 
         ///911. Online Election, see TopVotedCandidate
@@ -205,6 +238,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 917. Reverse Only Letters
         ///not English letters remain in the same position.English letters(lowercase or uppercase) should be reversed.
         public string ReverseOnlyLetters(string s)
@@ -386,6 +420,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 929. Unique Email Addresses
         ///If you add periods '.' between some characters in the local name part of an email address, ignored
         ///If you add a plus '+' in the local name, everything after the first plus sign will be ignored.
@@ -411,10 +446,10 @@ namespace LeetCodeAlgo
             int sum = 0;
             int left = 0;
             int one = -1;
-            for(int i=0;i<nums.Length; i++)
+            for (int i = 0; i<nums.Length; i++)
             {
                 sum+=nums[i];
-                while(sum>goal && left<=i)
+                while (sum>goal && left<=i)
                 {
                     sum-=nums[left];
                     left++;
@@ -422,7 +457,7 @@ namespace LeetCodeAlgo
                 //if Sum of [left,i] == goal
                 if (sum == goal)
                 {
-                    if(goal ==0)
+                    if (goal ==0)
                     {
                         res+= i-left+1;//all subarray from [left,i] to i
                     }
@@ -479,7 +514,6 @@ namespace LeetCodeAlgo
         }
 
         ///933. Number of Recent Calls, see RecentCounter
-
 
         ///934. Shortest Bridge, #Graph, #DFS
         ///You are given an n x n binary matrix grid where 1 represents land and 0 represents water.
@@ -627,6 +661,7 @@ namespace LeetCodeAlgo
                 }
             }
         }
+
         /// 941. Valid Mountain Array, #Two Pointers
         ///len>=3, arr[i]> all [0,i-1],and [i+1,len-1]
         public bool ValidMountainArray_TwoPointer(int[] arr)
@@ -739,6 +774,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         ///945. Minimum Increment to Make Array Unique, #Greedy
         //In one move, you can pick an index i where 0 <= i < nums.length and increment nums[i] by 1.
         //Return the minimum number of moves to make every value in nums unique.
@@ -761,6 +797,7 @@ namespace LeetCodeAlgo
             }
             return res;
         }
+
         /// 946. Validate Stack Sequences
         ///Given two integer arrays pushed and popped each with distinct values,
         ///return true if this could have been the result of a sequence of push and pop operations on an initially empty stack, or false otherwise.
@@ -843,6 +880,5 @@ namespace LeetCodeAlgo
             }
             return res;
         }
-
     }
 }
