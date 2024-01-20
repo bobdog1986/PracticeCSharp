@@ -129,6 +129,35 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///1416. Restore The Array, #DP
+        //all we know is that all integers in the array were in the range [1, k] and there are no leading zeros in the array.
+        //Given the string s and the integer k, return the number of the possible arrays. return it modulo 109 + 7.
+        public int NumberOfArrays(string s, int k)
+        {
+            if (s[0] == '0')
+                return 0;
+            int n = s.Length;
+            long[] dp = new long[n + 1];
+            long mod = 1_000_000_007;
+            dp[0] = 1;
+            for (int i = 1; i <= n; i++)
+            {
+                for (int j = i; j >= 1; j--)
+                {
+                    if (i - j + 1 > 10)
+                        break;
+                    if (dp[j - 1] == 0)
+                        continue;
+                    if (s[j - 1] == '0')
+                        continue;
+                    long m = long.Parse(s.Substring(j - 1, i - 1 - (j - 1) + 1));
+                    if (m > k) break;
+                    dp[i] = (dp[i] + dp[j - 1]) % mod;
+                }
+            }
+
+            return (int)dp.Last();
+        }
 
         /// 1417. Reformat The String
         ///You are given an alphanumeric string s. Only lowercase English letters and digits.
