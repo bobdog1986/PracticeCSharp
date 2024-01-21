@@ -69,5 +69,25 @@ namespace LeetCodeAlgo
         //    return res;
 
         //}
+
+        ///3016. Minimum Number of Pushes to Type Word II
+        //public int MinimumPushes(string word)
+        //{
+        //    int[] arr = new int[26];
+        //    foreach (var i in word)
+        //    {
+        //        arr[i-'a']++;
+        //    }
+        //    int res = 0;
+        //    arr=arr.OrderBy(x => -x).ToArray();
+        //    for (int i = 0; i<arr.Length; i++)
+        //    {
+        //        if (arr[i]==0) break;
+        //        res+=arr[i]*(i/8+1);
+        //    }
+        //    return res;
+        //}
+
+
     }
 }
