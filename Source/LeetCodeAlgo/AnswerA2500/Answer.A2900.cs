@@ -8,6 +8,54 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
+        ///2918. Minimum Equal Sum of Two Arrays After Replacing Zeros
+        //public long MinSum(int[] nums1, int[] nums2)
+        //{
+        //    long zeros1 = 0;
+        //    long zeros2 = 0;
+        //    long sum1 = 0;
+        //    long sum2 = 0;
+        //    foreach (var i in nums1)
+        //    {
+        //        if (i==0) zeros1++;
+        //        sum1+=i;
+        //    }
+        //    foreach (var i in nums2)
+        //    {
+        //        if (i==0) zeros2++;
+        //        sum2+=i;
+        //    }
+
+        //    if (zeros1>0)
+        //    {
+        //        if (zeros2>0)
+        //        {
+        //            if (sum1==sum2) return sum1+Math.Max(zeros1, zeros2);
+        //            else if (sum1>sum2) return sum1+zeros1;
+        //            else return Math.Max(sum1+zeros1, sum2+zeros2);
+        //        }
+        //        else
+        //        {
+        //            if (sum1+zeros1>sum2) return -1;
+        //            else return sum2;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (zeros2>0)
+        //        {
+        //            if (sum2+zeros2>sum1) return -1;
+        //            else return sum1;
+        //        }
+        //        else
+        //        {
+        //            if (sum1==sum2) return sum1;
+        //            else return -1;
+        //        }
+        //    }
+
+        //}
+
         ///2938. Separate Black and White Balls
         //public long MinimumSteps(string s)
         //{
