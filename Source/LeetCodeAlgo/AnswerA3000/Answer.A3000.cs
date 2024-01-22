@@ -135,6 +135,58 @@ namespace LeetCodeAlgo
         //    return (count+1)/2;
         //}
 
+
+        ///3015. Count the Number of Houses at a Certain Distance I
+        //public int[] CountOfPairs(int n, int x, int y)
+        //{
+        //    int[] res = new int[n];
+        //    List<int>[] graph = new List<int>[n+1];
+        //    for (int i = 1; i<=n; i++)
+        //    {
+        //        graph[i]=new List<int>();
+        //        if (i-1>=1) graph[i].Add(i-1);
+        //        if (i+1<=n) graph[i].Add(i+1);
+        //    }
+        //    if (x!=y)
+        //    {
+        //        graph[x].Add(y);
+        //        graph[y].Add(x);
+        //    }
+        //    int[][] mat = new int[n+1][];
+        //    for (int i = 1; i<=n; i++)
+        //    {
+        //        mat[i]=new int[n+1];
+        //        Array.Fill(mat[i], n);
+        //    }
+
+        //    for (int i = 1; i<=n; i++)
+        //    {
+        //        CountOfPairs(i, 0, mat[i], graph);
+        //    }
+
+        //    for (int i = 1; i<=n; i++)
+        //    {
+        //        for (int j = 1; j<=n; j++)
+        //        {
+        //            if (i!=j)
+        //            {
+        //                res[mat[i][j]-1]++;
+        //            }
+        //        }
+        //    }
+        //    return res;
+        //}
+
+        //private void CountOfPairs(int curr, int step, int[] arr, List<int>[] graph)
+        //{
+        //    if (step>=arr[curr]) return;
+        //    arr[curr]=step;
+        //    foreach (var i in graph[curr])
+        //    {
+        //        CountOfPairs(i, step+1, arr, graph);
+        //    }
+        //}
+
         ///3016. Minimum Number of Pushes to Type Word II
         //public int MinimumPushes(string word)
         //{
