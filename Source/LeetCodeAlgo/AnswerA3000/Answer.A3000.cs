@@ -70,6 +70,21 @@ namespace LeetCodeAlgo
 
         //}
 
+
+        ///3012. Minimize Length of Array Using Operations
+        //public int MinimumArrayLength(int[] nums)
+        //{
+        //    int min = nums.Min();
+        //    int count = 0;
+        //    foreach (var i in nums)
+        //    {
+        //        if (i%min>0) return 1;
+        //        if (i==min) count++;
+        //    }
+
+        //    return (count+1)/2;
+        //}
+
         ///3016. Minimum Number of Pushes to Type Word II
         //public int MinimumPushes(string word)
         //{
