@@ -70,6 +70,56 @@ namespace LeetCodeAlgo
 
         //}
 
+        ///3011. Find if Array Can Be Sorted
+        //public bool CanSortArray(int[] nums)
+        //{
+        //    int n = nums.Length;
+        //    int[] arr = nums.OrderBy(x => x).ToArray();
+        //    int prev = -1;
+        //    var dict = new Dictionary<int, int>();
+        //    for (int i = 0; i < n; i++)
+        //    {
+        //        int bit1 = CanSortArray_Bits(nums[i]);
+        //        int bit2 = CanSortArray_Bits(arr[i]);
+
+        //        if (bit1 != bit2)
+        //            return false;
+
+        //        if (bit1 != prev)
+        //        {
+        //            if (dict.Keys.Any(x => dict[x] != 0))
+        //                return false;
+
+        //            dict.Clear();
+        //            prev = bit1;
+        //        }
+
+        //        if (arr[i] != nums[i])
+        //        {
+        //            if (dict.ContainsKey(arr[i])) dict[arr[i]]++;
+        //            else dict.Add(arr[i], 1);
+
+        //            if (dict.ContainsKey(nums[i])) dict[nums[i]]--;
+        //            else dict.Add(nums[i], -1);
+        //        }
+        //    }
+
+        //    if (dict.Keys.Any(x => dict[x] != 0))
+        //        return false;
+
+        //    return true;
+        //}
+
+        //private int CanSortArray_Bits(int x)
+        //{
+        //    int res = 0;
+        //    while (x > 0)
+        //    {
+        //        res += x & 1;
+        //        x >>= 1;
+        //    }
+        //    return res;
+        //}
 
         ///3012. Minimize Length of Array Using Operations
         //public int MinimumArrayLength(int[] nums)
