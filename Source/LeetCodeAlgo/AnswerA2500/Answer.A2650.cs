@@ -8,6 +8,25 @@ namespace LeetCodeAlgo
 {
     public partial class Answer
     {
+        ///2657. Find the Prefix Common Array of Two Arrays
+        //public int[] FindThePrefixCommonArray(int[] A, int[] B)
+        //{
+        //    int n = A.Length;
+        //    int[] arr = new int[n+1];
+        //    int[] res = new int[n];
+        //    int count = 0;
+        //    for (int i = 0; i<n; i++)
+        //    {
+        //        arr[A[i]]++;
+        //        if (arr[A[i]]==2) count++;
+        //        arr[B[i]]++;
+        //        if (arr[B[i]]==2) count++;
+        //        res[i]=count;
+        //    }
+
+        //    return res;
+        //}
+
         ///2658. Maximum Number of Fish in a Grid
         //public int FindMaxFish(int[][] grid)
         //{
