@@ -67,5 +67,32 @@ namespace LeetCodeAlgo
         //        }
         //    }
         //}
+
+        ///2680. Maximum OR, #Prefix Sum
+        //public long MaximumOr(int[] nums, int k)
+        //{
+        //    int n = nums.Length;
+        //    int[] arr1 = new int[n];
+        //    int or1 = 0;
+        //    for (int i = 0; i<n; i++)
+        //    {
+        //        arr1[i]=or1;
+        //        or1|=nums[i];
+        //    }
+        //    int[] arr2 = new int[n];
+        //    int or2 = 0;
+        //    for (int i = n-1; i>=0; i--)
+        //    {
+        //        arr2[i]=or2;
+        //        or2|=nums[i];
+        //    }
+        //    long res = 0;
+        //    for (int i = 0; i<n; i++)
+        //    {
+        //        long curr = ((long)nums[i])<<k;
+        //        res=Math.Max(res, curr|arr1[i]|arr2[i]);
+        //    }
+        //    return res;
+        //}
     }
 }
