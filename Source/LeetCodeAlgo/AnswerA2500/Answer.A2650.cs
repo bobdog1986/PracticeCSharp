@@ -68,6 +68,30 @@ namespace LeetCodeAlgo
         //    }
         //}
 
+        ///2679. Sum in a Matrix
+        //public int MatrixSum(int[][] nums)
+        //{
+        //    int res = 0;
+        //    int m = nums.Length;
+        //    int n = nums[0].Length;
+        //    for (int i = 0; i<m; i++)
+        //    {
+        //        nums[i]=nums[i].OrderBy(x => -x).ToArray();
+        //    }
+
+        //    for (int j = 0; j<n; j++)
+        //    {
+        //        int max = 0;
+        //        for (int i = 0; i<m; i++)
+        //        {
+        //            max=Math.Max(max, nums[i][j]);
+        //        }
+        //        res+=max;
+        //    }
+
+        //    return res;
+        //}
+
         ///2680. Maximum OR, #Prefix Sum
         //public long MaximumOr(int[] nums, int k)
         //{
