@@ -223,5 +223,43 @@ namespace LeetCodeAlgo
 
         //    return res==0 ? -1 : res;
         //}
+
+        ///2997. Minimum Number of Operations to Make Array XOR Equal to K
+        //public int MinOperations(int[] nums, int k)
+        //{
+        //    int max = Math.Max(k, nums.Max());
+        //    int len = 1;
+        //    while ((1<<(len-1)) <max)
+        //    {
+        //        len++;
+        //    }
+        //    int[] bits = new int[len];
+        //    foreach (var i in nums)
+        //    {
+        //        int a = i;
+        //        int j = 0;
+        //        while (a>0)
+        //        {
+        //            if ((a&1)==1) bits[j]++;
+        //            j++;
+        //            a>>=1;
+        //        }
+        //    }
+        //    int res = 0;
+        //    for (int i = 0; i<bits.Length; i++)
+        //    {
+        //        if ((k&(1<<i))==0)
+        //        {
+        //            if (bits[i]%2!=0) res++;
+        //        }
+        //        else
+        //        {
+        //            if (bits[i]%2==0) res++;
+        //        }
+        //    }
+
+        //    return res;
+        //}
+
     }
 }
