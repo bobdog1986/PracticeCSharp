@@ -32,5 +32,25 @@ namespace LeetCodeAlgo
         //    }
         //    return res;
         //}
+
+        ///2895. Minimum Processing Time
+        //public int MinProcessingTime(IList<int> processorTime, IList<int> tasks)
+        //{
+        //    processorTime = processorTime.OrderBy(x=>x).ToList();
+        //    tasks = tasks.OrderBy(x=>-x).ToList();
+        //    int n = processorTime.Count;
+        //    int res = 0;
+        //    for(int i=0;i<n; i++)
+        //    {
+        //        int max = 0;
+        //        for(int j = i*4; j<i*4+4; j++)
+        //        {
+        //            max=Math.Max(max, tasks[j]);
+        //        }
+        //        res= Math.Max(res, processorTime[i]+max);
+        //    }
+        //    return res;
+        //}
+
     }
 }
