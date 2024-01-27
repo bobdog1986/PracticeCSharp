@@ -261,5 +261,57 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
+        ///2998. Minimum Number of Operations to Make X and Y Equal
+        //public int MinimumOperationsToMakeEqual(int x, int y)
+        //{
+        //    int step = 0;
+        //    HashSet<int> set = new HashSet<int>();
+
+        //    Queue<int> q = new Queue<int>();
+        //    q.Enqueue(x);
+        //    set.Add(x);
+        //    while (true)
+        //    {
+        //        int count = q.Count;
+        //        while (count-->0)
+        //        {
+        //            int top = q.Dequeue();
+        //            if (top==y) return step;
+        //            else
+        //            {
+        //                if (top%11==0)
+        //                {
+        //                    int a = top/11;
+        //                    if (!set.Contains(a))
+        //                    {
+        //                        q.Enqueue(a);
+        //                        set.Add(a);
+        //                    }
+        //                }
+        //                if (top%5==0)
+        //                {
+        //                    int a = top/5;
+        //                    if (!set.Contains(a))
+        //                    {
+        //                        q.Enqueue(a);
+        //                        set.Add(a);
+        //                    }
+        //                }
+        //                if (!set.Contains(top+1))
+        //                {
+        //                    q.Enqueue(top+1);
+        //                    set.Add(top+1);
+        //                }
+        //                if (!set.Contains(top-1)&&top-1>=0)
+        //                {
+        //                    q.Enqueue(top-1);
+        //                    set.Add(top-1);
+        //                }
+        //            }
+        //        }
+        //        step++;
+        //    }
+        //    return -1;
+        //}
     }
 }
