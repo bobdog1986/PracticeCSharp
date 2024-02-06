@@ -206,5 +206,37 @@ namespace LeetCodeAlgo
         //}
 
 
+        ///3020. Find the Maximum Number of Elements in Subset
+        //public int MaximumLength(int[] nums)
+        //{
+        //    var dict = new Dictionary<long, int>();
+        //    foreach (var i in nums)
+        //    {
+        //        if (dict.ContainsKey(i)) dict[i]++;
+        //        else dict.Add(i, 1);
+        //    }
+
+        //    var keys = dict.Keys.OrderBy(x => x).ToArray();
+        //    int res = 1;
+        //    if (dict.ContainsKey(1))
+        //    {
+        //        res=Math.Max(res, (dict[1]+1)/2*2-1);
+        //    }
+        //    for (int i = 0; i<keys.Length; i++)
+        //    {
+        //        long j = keys[i];
+        //        if (j==1) continue;
+        //        int len = 0;
+        //        while (dict.ContainsKey(j))
+        //        {
+        //            len++;
+        //            if (dict[j]==1) break;
+        //            j=j*j;
+        //        }
+        //        res=Math.Max(res, len*2-1);
+        //    }
+
+        //    return res;
+        //}
     }
 }
