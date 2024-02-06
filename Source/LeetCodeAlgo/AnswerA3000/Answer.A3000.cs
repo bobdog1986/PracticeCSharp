@@ -238,5 +238,28 @@ namespace LeetCodeAlgo
 
         //    return res;
         //}
+
+        ///3029. Minimum Time to Revert Word to Initial State I
+        //public int MinimumTimeToInitialState(string word, int k)
+        //{
+        //    int res = 0;
+        //    int n = word.Length;
+        //    while (true)
+        //    {
+        //        res++;
+        //        bool same = true;
+        //        for (int i = 0; i<n-res*k; i++)
+        //        {
+        //            if (word[i]!=word[(i+k*res)%n])
+        //            {
+        //                same=false;
+        //                break;
+        //            }
+        //        }
+        //        if (same) break;
+        //    }
+
+        //    return res;
+        //}
     }
 }
