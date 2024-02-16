@@ -257,6 +257,32 @@ namespace LeetCodeAlgo
             return nums;
         }
 
+        ///1481. Least Number of Unique Integers after K Removals
+        //public int FindLeastNumOfUniqueInts(int[] arr, int k)
+        //{
+        //    var dict = new Dictionary<int, int>();
+        //    foreach (var i in arr)
+        //    {
+        //        if (dict.ContainsKey(i)) dict[i]++;
+        //        else dict.Add(i, 1);
+        //    }
+
+        //    var keys = dict.Keys.OrderBy(x => dict[x]).ToArray();
+        //    for (int i = 0; i<keys.Length; i++)
+        //    {
+        //        if (k>=dict[keys[i]])
+        //        {
+        //            k-=dict[keys[i]];
+        //            dict[keys[i]]=0;
+        //        }
+        //        else
+        //        {
+        //            return (keys.Length-1-i+1);
+        //        }
+        //    }
+        //    return 0;
+        //}
+
         /// 1482. Minimum Number of Days to Make m Bouquets , # Binary Search
         ///You want to make m bouquets. To make a bouquet, you need to use k adjacent flowers from the garden.
         ///The garden consists of n flowers, the ith flower will bloom in the bloomDay[i] and then can be used in exactly one bouquet.
