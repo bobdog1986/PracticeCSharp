@@ -135,6 +135,30 @@ namespace LeetCodeAlgo
             return true;
         }
 
+        ///1072. Flip Columns For Maximum Number of Equal Rows, #HashMap
+        ///You can choose any number of columns and flip every cell in that column(i.e., Change the value of the cell from 0 to 1 or vice versa).
+        ///Return the maximum number of rows that have all values equal after some number of flips.
+        public int MaxEqualRowsAfterFlips(int[][] matrix)
+        {
+            int m = matrix.Length;
+            int n = matrix[0].Length;
+            var dict = new Dictionary<string, int>();
+
+            for(int r = 0; r<m; r++)
+            {
+                char[] arr = new char[n];
+                for (int c = 0; c<n; c++)
+                {
+                    arr[c] = matrix[r][c] == matrix[r][0] ? '1' : '0';
+                }
+                var key = new string(arr);
+                if(dict.ContainsKey(key)) dict[key]++;
+                else dict[key] = 1;
+            }
+            return dict.Values.Max();
+        }
+
+
         ///1074. Number of Submatrices That Sum to Target, #Prefix Sum
         ///Given a matrix and a target, return the number of non-empty submatrices that sum to target.
         public int NumSubmatrixSumTarget(int[][] matrix, int target)
