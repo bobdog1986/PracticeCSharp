@@ -13,10 +13,10 @@ namespace LeetCodeAlgo
             Console.WriteLine("Run\r\n****************************\r\n");
             Answer answer = new Answer();
             ///!!!*** read from string files
-            //List<string> strMatLines = File.ReadLines("StringMatrix.txt").ToList();
-            //List<string> strArrLines = File.ReadLines("StringArr.txt").ToList();
-            List<string> intArrLines = File.ReadLines("IntArr.txt").ToList();
-            List<string> intMatLines = File.ReadLines("IntMatrix.txt").ToList();
+            //List<string> strMatLines = File.ReadLines("Text_StringMatrix.txt").ToList();
+            //List<string> strArrLines = File.ReadLines("Text_StringArray.txt").ToList();
+            List<string> intArrLines = File.ReadLines("Text_IntArray.txt").ToList();
+            List<string> intMatLines = File.ReadLines("Text_IntMatrix.txt").ToList();
 
             //var matStrLine0 = answer.buildStringMatrix(strMatLines[0]);//build string[][] from file
             //char[][] matCharLine0 = answer.buildCharMatrix(strMatLines[0]);//build char[][] from file due to leetcode using ""

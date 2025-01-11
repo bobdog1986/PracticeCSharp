@@ -78,7 +78,7 @@ namespace LeetCodeAlgo
             Console.WriteLine($"!!!Result count = {result.Count()}");
             if (result.Count() > 0)
             {
-                Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+                Console.WriteLine(string.Join("\r\n", result.Select(o => string.Join(",", o))));
             }
         }
 
@@ -87,7 +87,7 @@ namespace LeetCodeAlgo
             Console.WriteLine($"!!!Result count = {result.Count()}");
             if (result.Count() > 0)
             {
-                Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+                Console.WriteLine(string.Join("\r\n", result.Select(o => string.Join(",", o))));
             }
         }
 
@@ -96,7 +96,7 @@ namespace LeetCodeAlgo
             Console.WriteLine($"!!!Result count = {result.Count()}");
             if (result.Count() > 0)
             {
-                Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+                Console.WriteLine(string.Join("\r\n", result.Select(o => string.Join(",", o))));
             }
         }
 
@@ -105,7 +105,7 @@ namespace LeetCodeAlgo
             Console.WriteLine($"!!!Result count = {result.Count()}");
             if (result.Count() > 0)
             {
-                Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+                Console.WriteLine(string.Join("\r\n", result.Select(o => string.Join(",", o))));
             }
         }
 
@@ -114,7 +114,7 @@ namespace LeetCodeAlgo
             Console.WriteLine($"!!!Result count = {result.Count()}");
             if (result.Count() > 0)
             {
-                Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+                Console.WriteLine(string.Join("\r\n", result.Select(o => string.Join(",", o))));
             }
         }
 
@@ -123,7 +123,7 @@ namespace LeetCodeAlgo
             Console.WriteLine($"!!!Result count = {result.Count()}");
             if (result.Count() > 0)
             {
-                Console.WriteLine(String.Join("\r\n", result.Select(o => String.Join(",", o))));
+                Console.WriteLine(string.Join("\r\n", result.Select(o => string.Join(",", o))));
             }
         }
     }

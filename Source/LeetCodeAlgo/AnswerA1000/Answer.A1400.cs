@@ -25,6 +25,37 @@ namespace LeetCodeAlgo
             return k >= singleCount;
         }
 
+        public bool CanConstruct2(string s, int k)
+        {
+            int[] arr = new int[26];
+            foreach (var c in s)
+            {
+                arr[c-'a']++;
+            }
+
+            int evens = 0;
+            int odds = 0;
+            foreach (var i in arr)
+            {
+                odds += i%2;
+                evens += i/2;
+            }
+
+            if (k>odds+evens*2) return false;
+            else if (k>=odds+evens) return true;
+            else
+            {
+                //k<odds+evens
+                if (k==odds) return true;
+                else if (k<odds) return false;
+                else
+                {
+                    //k>odds
+                    return true;
+                }
+            }
+        }
+
         ///1402. Reducing Dishes
         public int MaxSatisfaction(int[] satisfaction)
         {

@@ -7,16 +7,16 @@
     <BaseOutputPath>..\..\Artifacts\LeetCodeAlgo</BaseOutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <None Update="StringMatrix.txt">
+    <None Update="Text_StringMatrix.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="StringArr.txt">
+    <None Update="Text_StringArr.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="IntMatrix.txt">
+    <None Update="Text_IntMatrix.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="IntArr.txt">
+    <None Update="Text_IntArray.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
