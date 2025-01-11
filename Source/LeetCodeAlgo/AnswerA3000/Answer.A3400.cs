@@ -32,5 +32,28 @@ namespace LeetCodeAlgo
         //    }
         //    return res;
         //}
+
+        ///3412. Find Mirror Score of a String
+        //public long CalculateScore(string s)
+        //{
+        //    var dict = new Dictionary<char, Stack<int>>();
+        //    long res = 0;
+        //    for (int i = 0; i<s.Length; i++)
+        //    {
+        //        var c = s[i];
+        //        char r = (char)('a'+'z'-c);
+        //        if (dict.ContainsKey(r)&&dict[r].Count>0)
+        //        {
+        //            res+= i-dict[r].Pop();
+        //        }
+        //        else
+        //        {
+        //            if (!dict.ContainsKey(c)) dict.Add(c, new Stack<int>());
+        //            dict[c].Push(i);
+        //        }
+        //    }
+        //    return res;
+        //}
+
     }
 }
