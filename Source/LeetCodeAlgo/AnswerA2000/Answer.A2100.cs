@@ -355,32 +355,49 @@ namespace LeetCodeAlgo
         public bool CanBeValid(string s, string locked)
         {
             int n = s.Length;
-            if (n % 2 == 1) return false;
-            int changes = 0, open = 0, closed = 0;
+            //if(n%2==1)return false;
 
-            for (int i = n - 1; i >= 0; i--)
+            var stack = new Stack<int>();
+            var changes = new Stack<int>();
+            for (int i = 0; i<s.Length; i++)
             {
-                if (locked[i]== '0') changes++;
+                if (locked[i]=='0')
+                {
+                    changes.Push(i);//stac this unlocked index
+                }
                 else
                 {
-                    if (s[i] == '(') open ++;
-                    else if (s[i] == ')') closed++;
+                    if (s[i]=='(')
+                    {
+                        stack.Push(i);
+                    }
+                    else
+                    {
+                        if (stack.Count>0)
+                        {
+                            stack.Pop();//eliminate unchanged first
+                        }
+                        else if (changes.Count>0)
+                        {
+                            changes.Pop();//then must using a unlocked
+                        }
+                        else return false;//impossible
+                    }
                 }
-                if (changes + closed - open  < 0) return false;//not enough to valid
             }
 
-            changes = open = closed = 0;
-            for (int i = 0; i < n; i++)
+            //check if we can eliminate all pairs
+            while (stack.Count>0)
             {
-                if (locked[i] == '0') changes++;
-                else
+                if (changes.Count>0 && changes.Peek()>stack.Peek())
                 {
-                    if (s[i] == '(') open ++;
-                    else if (s[i] == ')') closed ++;
+                    stack.Pop();
+                    changes.Pop();
                 }
-                if (changes + open - closed < 0) return false;//not enough to valid
+                else return false;
             }
-            return true;
+
+            return changes.Count % 2 ==0;
         }
         /// 2119. A Number After a Double Reversal
         ///eg. 1234 reverse to 4321, then again to 1234== origin 1234, return true
