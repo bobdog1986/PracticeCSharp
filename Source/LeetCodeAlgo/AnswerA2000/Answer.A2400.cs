@@ -352,6 +352,60 @@ namespace LeetCodeAlgo
             return res;
         }
 
+        ///2429. Minimize XOR
+        //Given two positive integers num1 and num2, find the positive integer x such that:
+        //x has the same number of set bits as num2, and The value x XOR num1 is minimal.
+        //public int MinimizeXor(int num1, int num2)
+        //{
+        //    int bits1 = getBitsOfInt(num1);
+        //    int bits2 = getBitsOfInt(num2);
+
+        //    if (bits1 == bits2) return num1;
+        //    else if (bits1>bits2)
+        //    {
+        //        int a = 0;
+        //        int diff = bits1-bits2;
+        //        int i = 0;
+        //        while (diff>0)
+        //        {
+        //            if ((num1 & (1<<i))!=0)
+        //            {
+        //                a|= 1<<i;
+        //                diff--;
+        //            }
+        //            i++;
+        //        }
+        //        return a^num1;
+        //    }
+        //    else
+        //    {
+        //        int a = 0;
+        //        int diff = bits2-bits1;
+        //        int i = 0;
+        //        while (diff>0)
+        //        {
+        //            if ((num1 & (1<<i))==0)
+        //            {
+        //                a|= 1<<i;
+        //                diff--;
+        //            }
+        //            i++;
+        //        }
+        //        return a|num1;
+        //    }
+        //}
+
+        //public int getBitsOfInt(int num)
+        //{
+        //    int bits = 0;
+        //    while (num>0)
+        //    {
+        //        bits += num&1;
+        //        num>>=1;
+        //    }
+        //    return bits;
+        //}
+
         ///2433. Find The Original Array of Prefix Xor
         //pref[i] = arr[0] ^ arr[1] ^ ... ^ arr[i].
         public int[] FindArray(int[] pref)
