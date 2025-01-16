@@ -321,6 +321,24 @@ namespace LeetCodeAlgo
             return cardPoints.Sum() - min;
         }
 
+        ///1427. Perform String Shifts
+        //public string StringShift(string s, int[][] shift)
+        //{
+        //    int left = 0;
+        //    foreach (var i in shift)
+        //    {
+        //        if (i[0]==0)
+        //        {
+        //            left+=i[1];
+        //        }
+        //        else left-=i[1];
+        //    }
+
+        //    int n = s.Length;
+        //    left  = (left % n + n)%n;
+        //    return s.Substring(left, n-left)+ s.Substring(0, left);
+        //}
+
         ///1431. Kids With the Greatest Number of Candies
         //public IList<bool> KidsWithCandies(int[] candies, int extraCandies)
         //{
