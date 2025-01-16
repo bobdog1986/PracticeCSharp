@@ -388,6 +388,41 @@ namespace LeetCodeAlgo
 
         ///2166. Design Bitset, see Bitset
 
+        ///2168. Unique Substrings With Equal Digit Frequency
+        //Given a digit string s, return the number of unique substrings of s where every digit appears the same number of times
+        public int EqualDigitFrequency(string s)
+        {
+            HashSet<string> set = new HashSet<string>();
+            int n = s.Length;
+            for (int i = 0; i<n; i++)
+            {
+                int[] arr = new int[10];
+                for (int j = i; j<n; j++)
+                {
+                    arr[s[j]-'0']++;
+                    bool valid = true;
+                    int prev = -1;
+                    foreach (var k in arr)
+                    {
+                        if (k>0)
+                        {
+                            if (prev==-1) prev = k;
+                            else
+                            {
+                                if (k!=prev)
+                                {
+                                    valid = false;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (valid) set.Add(s.Substring(i, j-i+1));
+                }
+            }
+            return set.Count();
+        }
+
         /// 2169. Count Operations to Obtain Zero
         public int CountOperations(int num1, int num2)
         {
