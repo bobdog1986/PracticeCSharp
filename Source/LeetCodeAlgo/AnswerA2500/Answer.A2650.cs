@@ -118,5 +118,24 @@ namespace LeetCodeAlgo
         //    }
         //    return res;
         //}
+
+        ///2683. Neighboring Bitwise XOR
+        //public bool DoesValidArrayExist(int[] derived)
+        //{
+        //    int n = derived.Length;
+        //    int[] arr = new int[n];
+        //    for (int i = 1; i<n; i++)
+        //    {
+        //        arr[i]= arr[i-1]^derived[i];
+        //    }
+        //    if (arr[0] == (arr[n-1]^derived[0])) return true;
+        //    arr[0]=1;
+        //    for (int i = 1; i<n; i++)
+        //    {
+        //        arr[i]= arr[i-1]^derived[i];
+        //    }
+        //    if (arr[0] == (arr[n-1]^derived[0])) return true;
+        //    return false; ;
+        //}
     }
 }
