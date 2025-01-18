@@ -229,6 +229,46 @@ namespace LeetCodeAlgo
             }
         }
 
+        ///1368. Minimum Cost to Make at Least One Valid Path in a Grid, #Dijkstra
+        public int MinCost_1368_Dij(int[][] grid)
+        {
+            int m = grid.Length;
+            int n = grid[0].Length;
+            int[][] dp = new int[m][];
+            for (int i = 0; i<m; i++)
+            {
+                dp[i]=new int[n];
+                Array.Fill(dp[i], int.MaxValue);
+            }
+            int[] dxy4 = new int[] { 1, 0, -1, 0, 1 };
+            int[] dir = new int[] { 0, 3, 1, 0, 2 };
+            //dp[0][0]=0;
+            var pq = new PriorityQueue<int[],int>();
+            pq.Enqueue(new int[] { 0, 0, 0 }, 0);
+            while (pq.Count>0)
+            {
+                var top = pq.Dequeue();
+                int i = top[0];
+                int j = top[1];
+                if (top[2]>=dp[i][j]) continue;
+                else
+                {
+                    dp[i][j] = top[2];
+                    for (int k = 0; k<4; k++)
+                    {
+                        int r = i+dxy4[k];
+                        int c = j+dxy4[k+1];
+                        if (r>=0 && r<m && c>=0 && c<n)
+                        {
+                            int next = dir[grid[i][j]] == k ? dp[i][j] : dp[i][j]+1;
+                            pq.Enqueue(new int[] { r, c, next }, next);
+                        }
+                    }
+                }
+            }
+            return dp[m-1][n-1];
+        }
+
         ///1370. Increasing Decreasing String
         //public string SortString(string s)
         //{
