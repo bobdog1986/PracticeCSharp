@@ -68,6 +68,36 @@ namespace LeetCodeAlgo
         //    }
         //}
 
+        ///2661. First Completely Painted Row or Column
+        //public int FirstCompleteIndex(int[] arr, int[][] mat)
+        //{
+        //    int m = mat.Length;
+        //    int n = mat[0].Length;
+        //    var dict = new Dictionary<int, int[]>();
+        //    for (int i = 0; i<m; i++)
+        //    {
+        //        for (int j = 0; j<n; j++)
+        //        {
+        //            dict.Add(mat[i][j], new int[] { i, j });
+        //        }
+        //    }
+
+        //    int[] rows = new int[m];
+        //    int[] cols = new int[n];
+        //    bool hasRow = false;
+        //    bool hasCol = false;
+        //    for (int i = 0; i<arr.Length; i++)
+        //    {
+        //        var curr = dict[arr[i]];
+        //        rows[curr[0]]++;
+        //        cols[curr[1]]++;
+        //        if (rows[curr[0]]==n) hasRow =true;
+        //        if (cols[curr[1]]==m) hasCol =true;
+        //        if (hasRow||hasCol) return i;
+        //    }
+        //    return -1;
+        //}
+
         ///2679. Sum in a Matrix
         //public int MatrixSum(int[][] nums)
         //{
