@@ -33,6 +33,26 @@ namespace LeetCodeAlgo
         //    return res;
         //}
 
+        ///3407. Substring Matching Pattern
+        //You are given a string s and a pattern string p, where p contains exactly one '*' character.
+        //The '*' in p can be replaced with any sequence of zero or more characters.
+        //Return true if p can be made a substring  of s, and false otherwise.
+        public bool HasMatch(string s, string p)
+        {
+            int m = s.Length;
+            int n = p.Length;
+            if (m+1<n) return false;
+
+            var arr = p.Split('*').ToArray();
+            if (!string.IsNullOrEmpty(arr[0]))
+            {
+                int i = s.IndexOf(arr[0]);
+                if (i==-1) return false;
+                s=s.Substring(i+arr[0].Length, s.Length-(i+arr[0].Length));
+            }
+            return string.IsNullOrEmpty(arr[1]) || s.Contains(arr[1]);
+        }
+
         ///3412. Find Mirror Score of a String
         //public long CalculateScore(string s)
         //{
@@ -54,6 +74,5 @@ namespace LeetCodeAlgo
         //    }
         //    return res;
         //}
-
     }
 }
