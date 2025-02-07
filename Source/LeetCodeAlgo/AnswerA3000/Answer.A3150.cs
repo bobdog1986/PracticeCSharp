@@ -17,5 +17,34 @@ namespace LeetCodeAlgo
         //    }
         //    return true;
         //}
+
+        ///3160. Find the Number of Distinct Colors Among the Balls
+        //public int[] QueryResults(int limit, int[][] queries)
+        //{
+        //    int n = queries.Length;
+        //    int[] res = new int[n];
+        //    var ballDict = new Dictionary<int, int>();
+        //    var colorDict = new Dictionary<int, int>();
+        //    for (int i = 0; i<n; i++)
+        //    {
+        //        if (ballDict.ContainsKey(queries[i][0]))
+        //        {
+        //            colorDict[ballDict[queries[i][0]]]--;
+        //            if (colorDict[ballDict[queries[i][0]]]==0)
+        //                colorDict.Remove(ballDict[queries[i][0]]);
+        //            ballDict[queries[i][0]]=queries[i][1];
+        //        }
+        //        else
+        //        {
+        //            ballDict.Add(queries[i][0], queries[i][1]);
+        //        }
+        //        if (!colorDict.ContainsKey(queries[i][1]))
+        //            colorDict.Add(queries[i][1], 0);
+        //        colorDict[queries[i][1]]++;
+        //        res[i] = colorDict.Keys.Count();
+        //    }
+
+        //    return res;
+        //}
     }
 }
