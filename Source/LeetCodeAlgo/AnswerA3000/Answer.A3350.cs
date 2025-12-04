@@ -32,7 +32,7 @@ namespace LeetCodeAlgo
             return res;
         }
 
-        ///3381. Maximum Subarray Sum With Length Divisible by K, #PrefixSum , #Kadane
+        ///3381. Maximum Subarray Sum With Length Divisible by K, #Prefix Sum , #Kadane
         //Return the maximum sum of a subarray of nums, such that the size of the subarray is divisible by k.
         public long MaxSubarraySum(int[] nums, int k)
         {
